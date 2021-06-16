@@ -16,7 +16,7 @@ def validate(d, is_root=True):
     assert isinstance(d["description"], str)
     assert isinstance(d["options"], list)
     for opt in d["options"]:
-        assert validate_option(opt), f"{opt = }"
+        assert validate_option(opt), f"opt = {opt}"
     if is_root and "subcommands" in keys:
         assert isinstance(d["subcommands"], list)
         for sub in d["subcommands"]:
@@ -26,10 +26,10 @@ def validate(d, is_root=True):
 def validate_option(opt):
     keys = set(opt.keys())
     assert isinstance(opt, dict)
-    assert keys == {"names", "description", "argument"}, f"{keys = }"
+    assert keys == {"names", "description", "argument"}, f"keys = {keys}"
     assert isinstance(opt["names"], list)
     for n in opt["names"]:
-        assert isinstance(n, str), f"{n = }"
+        assert isinstance(n, str), f"n = {n}"
     assert isinstance(opt["description"], str)
     assert isinstance(opt["argument"], str)
     return True

@@ -9,14 +9,14 @@ mandatory_keys_with_optionals = mandatory_keys | {"subcommands"}
 def validate(d, is_root=True):
     keys = set(d.keys())
     if is_root:
-        assert keys == mandatory_keys or keys == mandatory_keys_with_optionals
+        assert keys == mandatory_keys or keys == mandatory_keys_with_optionals, f"keys = {keys}"
     else:
-        assert keys == mandatory_keys, keys
+        assert keys == mandatory_keys, f"keys = {keys}"
     assert isinstance(d["name"], str)
     assert isinstance(d["description"], str)
     assert isinstance(d["options"], list)
     for opt in d["options"]:
-        assert validate_option(opt), f"opt = {opt}"
+        validate_option(opt)
     if is_root and "subcommands" in keys:
         assert isinstance(d["subcommands"], list)
         for sub in d["subcommands"]:
@@ -26,10 +26,10 @@ def validate(d, is_root=True):
 def validate_option(opt):
     keys = set(opt.keys())
     assert isinstance(opt, dict)
-    assert keys == {"names", "description", "argument"}, f"keys = {keys}"
+    assert keys == {"names", "description", "argument"}, f"opt = {opt}, keys = {keys}"
     assert isinstance(opt["names"], list)
     for n in opt["names"]:
-        assert isinstance(n, str), f"n = {n}"
+        assert isinstance(n, str), f"opt = {opt}, n = {n}"
     assert isinstance(opt["description"], str)
     assert isinstance(opt["argument"], str)
     return True

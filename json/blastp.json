@@ -1,6 +1,6 @@
 {
-  "name": "blastn",
-  "description": "blastn",
+  "name": "blastp",
+  "description": "blastp",
   "options": [
     {
       "names": [
@@ -39,24 +39,17 @@
     },
     {
       "names": [
-        "-strand"
-      ],
-      "argument": "<String, `both', `minus', `plus'>",
-      "description": "Query strand(s) to search against database/subject (Default = `both')"
-    },
-    {
-      "names": [
         "-task"
       ],
-      "argument": "<String, Permissible values: 'blastn' 'blastn-short' 'dc-megablast' 'megablast' 'rmblastn' >",
-      "description": "Task to execute (Default = `megablast')"
+      "argument": "<String, Permissible values: 'blastp' 'blastp-fast' 'blastp-short' >",
+      "description": "Task to execute (Default = `blastp')"
     },
     {
       "names": [
         "-db"
       ],
       "argument": "<String>",
-      "description": "BLAST database name"
+      "description": "BLAST database name (* Incompatible with:  subject, subject_loc)"
     },
     {
       "names": [
@@ -76,8 +69,8 @@
       "names": [
         "-word_size"
       ],
-      "argument": "\"<Integer, >=4>\"",
-      "description": "Word size for wordfinder algorithm (length of best perfect match)"
+      "argument": "<Integer, >=2>",
+      "description": "Word size for wordfinder algorithm"
     },
     {
       "names": [
@@ -95,31 +88,24 @@
     },
     {
       "names": [
-        "-penalty"
-      ],
-      "argument": "\"<Integer, <=0>\"",
-      "description": "Penalty for a nucleotide mismatch"
-    },
-    {
-      "names": [
-        "-reward"
-      ],
-      "argument": "\"<Integer, >=0>\"",
-      "description": "Reward for a nucleotide match"
-    },
-    {
-      "names": [
-        "-use_index"
-      ],
-      "argument": "<Boolean>",
-      "description": "Use MegaBLAST database index (Default = `false')"
-    },
-    {
-      "names": [
-        "-index_name"
+        "-matrix"
       ],
       "argument": "<String>",
-      "description": "MegaBLAST database index name (deprecated; use only for old style indices)"
+      "description": "Scoring matrix name (normally BLOSUM62)"
+    },
+    {
+      "names": [
+        "-threshold"
+      ],
+      "argument": "<Real, >=0>",
+      "description": "Minimum word score such that the word is added to the BLAST lookup table"
+    },
+    {
+      "names": [
+        "-comp_based_stats"
+      ],
+      "argument": "<String>",
+      "description": "Use composition-based statistics: D or d: default (equivalent to 2 ) 0 or F or f: No composition-based statistics 1: Composition-based statistics as in NAR 29:2994-3005, 2001 2 or T or t : Composition-based score adjustment as in Bioinformatics (Default = `2')"
     },
     {
       "names": [
@@ -153,22 +139,22 @@
       "names": [
         "-num_descriptions"
       ],
-      "argument": "\"<Integer, >=0>\"",
-      "description": "Number of database sequences to show one-line descriptions for. Not applicable for outfmt > 4. (Default = `500')"
+      "argument": "<Integer, >=0>",
+      "description": "Number of database sequences to show one-line descriptions for. Not applicable for outfmt > 4 (Default = `500')"
     },
     {
       "names": [
         "-num_alignments"
       ],
-      "argument": "\"<Integer, >=0>\"",
+      "argument": "<Integer, >=0>",
       "description": "Number of database sequences to show alignments for (Default = `250')"
     },
     {
       "names": [
         "-line_length"
       ],
-      "argument": "\"<Integer, >=1>\"",
-      "description": "Line length for formatting alignments. Not applicable for outfmt > 4. (Default = `60')"
+      "argument": "<Integer, >=1>",
+      "description": "Line length for formatting alignments. Not applicable for outfmt > 4 (Default = `60')"
     },
     {
       "names": [
@@ -181,50 +167,29 @@
       "names": [
         "-sorthits"
       ],
-      "argument": "\"<Integer, (>=0 and =<4)>\"",
-      "description": "Sorting option for hits:"
+      "argument": "<Integer, (>=0 and =<4)>",
+      "description": "Sorting option for hits alignment view options: 0 = Sort by evalue, 1 = Sort by bit score, 2 = Sort by total score, 3 = Sort by percent identity, 4 = Sort by query coverage Not applicable for outfmt > 4"
     },
     {
       "names": [
         "-sorthsps"
       ],
-      "argument": "\"<Integer, (>=0 and =<4)>\"",
-      "description": "Sorting option for hps:"
+      "argument": "<Integer, (>=0 and =<4)>",
+      "description": "Sorting option for hps: 0 = Sort by hsp evalue, 1 = Sort by hsp score, 2 = Sort by hsp query start, 3 = Sort by hsp percent identity, 4 = Sort by hsp subject start Not applicable for outfmt != 0"
     },
     {
       "names": [
-        "-dust"
+        "-seg"
       ],
       "argument": "<String>",
-      "description": "Filter query sequence with DUST (Format: 'yes', 'level window linker', or 'no' to disable) (Default = `20 64 1')"
-    },
-    {
-      "names": [
-        "-filtering_db"
-      ],
-      "argument": "<String>",
-      "description": "BLAST database containing filtering elements (i.e.: repeats)"
-    },
-    {
-      "names": [
-        "-window_masker_taxid"
-      ],
-      "argument": "<Integer>",
-      "description": "Enable WindowMasker filtering using a Taxonomic ID"
-    },
-    {
-      "names": [
-        "-window_masker_db"
-      ],
-      "argument": "<String>",
-      "description": "Enable WindowMasker filtering using this repeats database."
+      "description": "Filter query sequence with SEG (Format: 'yes', 'window locut hicut', or"
     },
     {
       "names": [
         "-soft_masking"
       ],
       "argument": "<Boolean>",
-      "description": "Apply filtering locations as soft masks (Default = `true')"
+      "description": "Apply filtering locations as soft masks"
     },
     {
       "names": [
@@ -291,6 +256,20 @@
     },
     {
       "names": [
+        "-ipglist"
+      ],
+      "argument": "<String>",
+      "description": "Restrict search of database to list of IPGs"
+    },
+    {
+      "names": [
+        "-negative_ipglist"
+      ],
+      "argument": "<String>",
+      "description": "Restrict search of database to everything except the specified IPGs"
+    },
+    {
+      "names": [
         "-entrez_query"
       ],
       "argument": "<String>",
@@ -312,13 +291,6 @@
     },
     {
       "names": [
-        "-perc_identity"
-      ],
-      "argument": "<Real, 0..100>",
-      "description": "Percent identity"
-    },
-    {
-      "names": [
         "-qcov_hsp_perc"
       ],
       "argument": "<Real, 0..100>",
@@ -328,28 +300,28 @@
       "names": [
         "-max_hsps"
       ],
-      "argument": "\"<Integer, >=1>\"",
+      "argument": "<Integer, >=1>",
       "description": "Set maximum number of HSPs per subject sequence to save for each query"
     },
     {
       "names": [
         "-culling_limit"
       ],
-      "argument": "\"<Integer, >=0>\"",
+      "argument": "<Integer, >=0>",
       "description": "If the query range of a hit is enveloped by that of at least this many higher-scoring hits, delete the hit"
     },
     {
       "names": [
         "-best_hit_overhang"
       ],
-      "argument": "\"<Real, (>0 and <0.5)>\"",
+      "argument": "<Real, (>0 and <0.5)>",
       "description": "Best Hit algorithm overhang value (recommended value: 0.1)"
     },
     {
       "names": [
         "-best_hit_score_edge"
       ],
-      "argument": "\"<Real, (>0 and <0.5)>\"",
+      "argument": "<Real, (>0 and <0.5)>",
       "description": "Best Hit algorithm score edge value (recommended value: 0.1)"
     },
     {
@@ -363,22 +335,8 @@
       "names": [
         "-max_target_seqs"
       ],
-      "argument": "\"<Integer, >=1>\"",
+      "argument": "<Integer, >=1>",
       "description": "Maximum number of aligned sequences to keep (value of 5 or more is recommended) (Default = `500')"
-    },
-    {
-      "names": [
-        "-template_type"
-      ],
-      "argument": "<String, `coding', `coding_and_optimal', `optimal'>",
-      "description": "Discontiguous MegaBLAST template type"
-    },
-    {
-      "names": [
-        "-template_length"
-      ],
-      "argument": "<Integer, Permissible values: '16' '18' '21' >",
-      "description": "Discontiguous MegaBLAST template length"
     },
     {
       "names": [
@@ -391,15 +349,8 @@
       "names": [
         "-searchsp"
       ],
-      "argument": "\"<Int8, >=0>\"",
+      "argument": "<Int8, >=0>",
       "description": "Effective length of the search space"
-    },
-    {
-      "names": [
-        "-sum_stats"
-      ],
-      "argument": "<Boolean>",
-      "description": "Use sum statistics"
     },
     {
       "names": [
@@ -438,17 +389,10 @@
     },
     {
       "names": [
-        "-no_greedy"
+        "-xdwindow_size"
       ],
-      "argument": "",
-      "description": "Use non-greedy dynamic programming extension"
-    },
-    {
-      "names": [
-        "-min_raw_gapped_score"
-      ],
-      "argument": "<Integer>",
-      "description": "Minimum raw gapped score to keep an alignment in the preliminary gapped and"
+      "argument": "<Integer, >=0>",
+      "description": "Multiple hits window size, use 0 to specify 1-hit algorithm"
     },
     {
       "names": [
@@ -456,20 +400,6 @@
       ],
       "argument": "",
       "description": "Perform ungapped alignment only?"
-    },
-    {
-      "names": [
-        "-window_size"
-      ],
-      "argument": "\"<Integer, >=0>\"",
-      "description": "Multiple hits window size, use 0 to specify 1-hit algorithm"
-    },
-    {
-      "names": [
-        "-off_diagonal_range"
-      ],
-      "argument": "\"<Integer, >=0>\"",
-      "description": "Number of off-diagonals to search for the 2nd hit, use 0 to turn off (Default = `0')"
     },
     {
       "names": [
@@ -482,8 +412,8 @@
       "names": [
         "-num_threads"
       ],
-      "argument": "\"<Integer, >=1>\"",
-      "description": "Number of threads (CPUs) to use in the BLAST search (Default = `1')"
+      "argument": "<Integer, >=1>",
+      "description": "SNumber of threads (CPUs) to use in the BLAST search (Default = `1')"
     },
     {
       "names": [
@@ -491,6 +421,13 @@
       ],
       "argument": "",
       "description": "Execute search remotely?"
+    },
+    {
+      "names": [
+        "-use_sw_tback"
+      ],
+      "argument": "",
+      "description": "Compute locally optimal Smith-Waterman alignments?"
     }
   ]
 }

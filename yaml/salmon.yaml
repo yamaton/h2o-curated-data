@@ -1,0 +1,414 @@
+name: salmon
+description: salmon
+options: []
+subcommands:
+  - name: alevin
+    description: single cell analysis
+    options:
+      - names:
+          - -l
+          - --libType
+        argument: arg
+        description: Format string describing the library type
+      - names:
+          - -i
+          - --index
+        argument: arg
+        description: salmon index
+      - names:
+          - -r
+          - --unmatedReads
+        argument: arg
+        description: List of files containing unmated reads of (e.g. single-end reads)
+      - names:
+          - "-1"
+          - --mates1
+        argument: arg
+        description: 'File containing the #1 mates'
+      - names:
+          - "-2"
+          - --mates2
+        argument: arg
+        description: 'File containing the #2 mates'
+      - names:
+          - -v
+          - --version
+        argument: ""
+        description: print version string
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: produce help message
+      - names:
+          - -o
+          - --output
+        argument: arg
+        description: Output quantification directory.
+      - names:
+          - -j
+          - --rad
+        argument: ""
+        description: just selectively align the data and write the results to a RAD file.  Do not perform the rest of the quantification procedure.
+      - names:
+          - --sketch
+        argument: ""
+        description: perform sketching rather than selective alignment and write the results to a RAD file. Requires the `--rad` flag. Do not perform the rest of the quantification procedure.
+      - names:
+          - -p
+          - --threads
+        argument: arg
+        description: The number of threads to use concurrently.
+      - names:
+          - --tgMap
+        argument: arg
+        description: transcript to gene map tsv file
+      - names:
+          - --hash
+        argument: arg
+        description: Secondary input point for Alevin using Big freaking Hash (bfh.txt) file. Works Only with --chromium
+      - names:
+          - --dropseq
+        argument: ""
+        description: Use DropSeq Single Cell protocol for the library
+      - names:
+          - --chromiumV3
+        argument: ""
+        description: Use 10x chromium v3 Single Cell protocol for the library.
+      - names:
+          - --chromium
+        argument: ""
+        description: Use 10x chromium v2 Single Cell protocol for the library.
+      - names:
+          - --gemcode
+        argument: ""
+        description: Use 10x gemcode v1 Single Cell protocol for the library.
+      - names:
+          - --citeseq
+        argument: ""
+        description: Use CITESeq Single Cell protocol for the library, 16 CB, 12 UMI and features.
+      - names:
+          - --celseq
+        argument: ""
+        description: Use CEL-Seq Single Cell protocol for the library.
+      - names:
+          - --celseq2
+        argument: ""
+        description: Use CEL-Seq2 Single Cell protocol for the library.
+      - names:
+          - --quartzseq2
+        argument: ""
+        description: Use Quartz-Seq2 v3.2 Single Cell protocol for the library assumes 15 length barcode and 8 length UMI.
+      - names:
+          - --whitelist
+        argument: arg
+        description: File containing white-list barcodes
+      - names:
+          - --featureStart
+        argument: arg
+        description: This flag should be used with citeseq and specifies the starting index of the feature barcode on Read2.
+      - names:
+          - --featureLength
+        argument: arg
+        description: This flag should be used with citeseq and specifies the length of the feature barcode.
+      - names:
+          - --noQuant
+        argument: ""
+        description: Don't run downstream barcode-salmon model.
+      - names:
+          - --numCellBootstraps
+        argument: arg
+        description: Generate mean and variance for cell x gene matrix quantification estimates.
+      - names:
+          - --numCellGibbsSamples
+        argument: arg
+        description: Generate mean and variance for cell x gene matrix quantification by running gibbs chain estimates.
+      - names:
+          - --forceCells
+        argument: arg
+        description: Explicitly specify the number of cells.
+      - names:
+          - --expectCells
+        argument: arg
+        description: define a close upper bound on expected number of cells
+      - names:
+          - --mrna
+        argument: arg
+        description: path to a file containing mito-RNA gene, one per line
+      - names:
+          - --rrna
+        argument: arg
+        description: path to a file containing ribosomal RNA, one per line
+      - names:
+          - --keepCBFraction
+        argument: arg
+        description: fraction of CB to keep, value must be in range (0,1], use 1 to quantify all CB.
+      - names:
+          - --read-geometry
+        argument: arg
+        description: format string describing the geometry of the read
+      - names:
+          - --bc-geometry
+        argument: arg
+        description: format string describing the geometry of the cell barcode
+      - names:
+          - --umi-geometry
+        argument: arg
+        description: format string describing the genometry of the umi
+      - names:
+          - --end
+        argument: arg
+        description: Cell-Barcodes end (5 or 3) location in the read sequence from where barcode has to be extracted. (end, umiLength, barcodeLength) should all be provided if using this option
+      - names:
+          - --umiLength
+        argument: arg
+        description: umi length Parameter for unknown protocol. (end, umiLength, barcodeLength) should all be provided if using this option
+      - names:
+          - --barcodeLength
+        argument: arg
+        description: barcode length Parameter for unknown protocol. (end, umiLength, barcodeLength) should all be provided if using this option
+      - names:
+          - --noem
+        argument: ""
+        description: do not run em
+      - names:
+          - --freqThreshold
+        argument: arg
+        description: threshold for the frequency of the barcodes
+      - names:
+          - --umiEditDistance
+        argument: arg
+        description: Maximum allowble edit distance to collapse UMIs, Expect delay in running time if != 1
+      - names:
+          - --dumpfq
+        argument: ""
+        description: Dump barcode modified fastq file for downstream analysis by using coin toss for multi-mapping.
+      - names:
+          - --dumpBfh
+        argument: ""
+        description: dump the big hash with all the barcodes and the UMI sequence.
+      - names:
+          - --dumpArborescences
+        argument: ""
+        description: dump the gene-v-cell matrix for the total number of fragments used in the UMI deduplicaiton.
+      - names:
+          - --dumpUmiGraph
+        argument: ""
+        description: dump the per cell level Umi Graph.
+      - names:
+          - --dumpCellEq
+        argument: ""
+        description: dump the per cell level deduplicated equivalence classes.
+      - names:
+          - --dumpFeatures
+        argument: ""
+        description: Dump features for whitelist and downstream analysis.
+      - names:
+          - --dumpMtx
+        argument: ""
+        description: Dump cell v transcripts count matrix in sparse mtx format.
+      - names:
+          - --lowRegionMinNumBarcodes
+        argument: arg
+        description: 'Minimum Number of CB to use for learning Low confidence region (Default: 200).'
+      - names:
+          - --maxNumBarcodes
+        argument: arg
+        description: 'Maximum allowable limit to process the cell barcodes. (Default: 100000)'
+  - name: index
+    description: create a salmon index
+    options:
+      - names:
+          - -v
+        argument: '[ --version ]'
+        description: print version string
+      - names:
+          - -h
+        argument: '[ --help ]'
+        description: produce help message
+      - names:
+          - -t
+        argument: ""
+        description: arg   Transcript fasta file.
+      - names:
+          - -t
+          - --transcripts
+        argument: ""
+        description: arg   Transcript fasta file.
+      - names:
+          - -t
+        argument: arg
+        description: Transcript fasta file.
+      - names:
+          - -t
+          - --transcripts
+        argument: arg
+        description: Transcript fasta file.
+      - names:
+          - -k
+        argument: ""
+        description: arg (=31)   The size of k-mers that should be used for the quasi index.
+      - names:
+          - -k
+          - --kmerLen
+        argument: ""
+        description: arg (=31)   The size of k-mers that should be used for the quasi index.
+      - names:
+          - -k
+        argument: arg
+        description: The size of k-mers that should be used for the quasi index.
+      - names:
+          - -k
+          - --kmerLen
+        argument: arg
+        description: The size of k-mers that should be used for the quasi index.
+      - names:
+          - -i
+        argument: ""
+        description: arg   salmon index.
+      - names:
+          - -i
+          - --index
+        argument: ""
+        description: arg   salmon index.
+      - names:
+          - -i
+        argument: arg
+        description: salmon index.
+      - names:
+          - -i
+          - --index
+        argument: arg
+        description: salmon index.
+      - names:
+          - --gencode
+        argument: ""
+        description: This flag will expect the input transcript fasta to be in GENCODE format, and will split the transcript name at the first '|' character. These reduced names will be used in the output and when looking for these transcripts in a gene to transcript GTF.
+      - names:
+          - --features
+        argument: ""
+        description: This flag will expect the input reference to be in the tsv file format, and will split the feature name at the first 'tab' character. These reduced names will be used in the output and when looking for the sequence of the features.GTF.
+      - names:
+          - --keepDuplicates
+        argument: ""
+        description: This flag will disable the default indexing behavior of discarding sequence-identical duplicate transcripts.  If this flag is passed, then duplicate transcripts that appear in the input will be retained and quantified separately.
+      - names:
+          - -p
+        argument: ""
+        description: arg (=2)   Number of threads to use during indexing.
+      - names:
+          - -p
+          - --threads
+        argument: ""
+        description: arg (=2)   Number of threads to use during indexing.
+      - names:
+          - -p
+        argument: arg
+        description: Number of threads to use during indexing.
+      - names:
+          - -p
+          - --threads
+        argument: arg
+        description: Number of threads to use during indexing.
+      - names:
+          - --keepFixedFasta
+        argument: ""
+        description: Retain the fixed fasta file (without short transcripts and duplicates, clipped, etc.) generated during indexing
+      - names:
+          - -f
+        argument: ""
+        description: arg (=-1)   The size of the Bloom filter that will be used by TwoPaCo during indexing. The filter will be of size 2^{filterSize}. The default value of -1 means that the filter size will be automatically set based on the number of distinct k-mers in the input, as estimated by nthll.
+      - names:
+          - -f
+          - --filterSize
+        argument: ""
+        description: arg (=-1)   The size of the Bloom filter that will be used by TwoPaCo during indexing. The filter will be of size 2^{filterSize}. The default value of -1 means that the filter size will be automatically set based on the number of distinct k-mers in the input, as estimated by nthll.
+      - names:
+          - -f
+        argument: arg
+        description: The size of the Bloom filter that will be used by TwoPaCo during indexing. The filter will be of size 2^{filterSize}. The default value of -1 means that the filter size will be automatically set based on the number of distinct k-mers in the input, as estimated by nthll.
+      - names:
+          - -f
+          - --filterSize
+        argument: arg
+        description: The size of the Bloom filter that will be used by TwoPaCo during indexing. The filter will be of size 2^{filterSize}. The default value of -1 means that the filter size will be automatically set based on the number of distinct k-mers in the input, as estimated by nthll.
+      - names:
+          - --tmpdir
+        argument: arg
+        description: The directory location that will be used for TwoPaCo temporary files; it will be created if need be and be removed prior to indexing completion. The default value will cause a (temporary) subdirectory of the salmon index directory to be used for this purpose.
+      - names:
+          - --sparse
+        argument: ""
+        description: Build the index using a sparse sampling of k-mer positions This will require less memory (especially during quantification), but will take longer to construct and can slow down mapping / alignment
+      - names:
+          - -d
+        argument: ""
+        description: arg   Treat these sequences ids from the reference as the decoys that may have sequence homologous to some known transcript. for example in case of the genome, provide a list of chromosome name --- one per line
+      - names:
+          - -d
+          - --decoys
+        argument: ""
+        description: arg   Treat these sequences ids from the reference as the decoys that may have sequence homologous to some known transcript. for example in case of the genome, provide a list of chromosome name --- one per line
+      - names:
+          - -d
+        argument: arg
+        description: Treat these sequences ids from the reference as the decoys that may have sequence homologous to some known transcript. for example in case of the genome, provide a list of chromosome name --- one per line
+      - names:
+          - -d
+          - --decoys
+        argument: arg
+        description: Treat these sequences ids from the reference as the decoys that may have sequence homologous to some known transcript. for example in case of the genome, provide a list of chromosome name --- one per line
+      - names:
+          - --type
+        argument: arg
+        description: The type of index to build; the only option is "puff" in this version of salmon.
+  - name: quant
+    description: quantify a sample
+    options:
+      - names:
+          - --help-reads
+        argument: ""
+        description: view the help for salmon's selective-alignment-based mode
+      - names:
+          - --help-alignment
+        argument: ""
+        description: view the help for salmon's alignment-based mode
+  - name: quantmerge
+    description: merge multiple quantifications into a single file
+    options:
+      - names:
+          - -v
+          - --version
+        argument: ""
+        description: print version string
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: produce help message
+      - names:
+          - --quants
+        argument: arg
+        description: List of quantification directories.
+      - names:
+          - --names
+        argument: arg
+        description: Optional list of names to give to the samples.
+      - names:
+          - -c
+          - --column
+        argument: arg
+        description: The name of the column that will be merged together into the output files. The options are {len, elen, tpm, numreads}
+      - names:
+          - --genes
+        argument: ""
+        description: Use gene quantification instead of transcript.
+      - names:
+          - --missing
+        argument: arg
+        description: The value of missing values.
+      - names:
+          - -o
+          - --output
+        argument: arg
+        description: Output quantification file.

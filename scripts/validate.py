@@ -1,4 +1,13 @@
 #!/usr/bin/env python
+#
+# Validate JSON schema
+#
+# Example:
+#   Check JSON schema of json/conda.json
+#
+#   $ ./validate.py conda
+#
+
 import json
 import argparse
 

@@ -1,4 +1,9 @@
 #!/usr/bin/env bash
+#
+# Create all.json.gz from json/*.json
+#
+#   $ ./make-gzip.sh
+#
 
 basedir="$(dirname "$(readlink -f "$0")")"
 

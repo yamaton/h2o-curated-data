@@ -1,4 +1,12 @@
 #!/usr/bin/env python
+#
+# Apply validate.py to all files in json/*.json
+#
+# Usage:
+#
+#   $ ./validate_all.py
+#
+
 import pathlib
 import json
 from validate import validate

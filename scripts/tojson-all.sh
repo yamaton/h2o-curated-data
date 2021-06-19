@@ -1,4 +1,13 @@
 #!/usr/bin/env bash
+#
+# Batch run tojson.sh s.t.
+#
+#   yaml/*.yaml  -->  json/*.json
+#
+# Usage:
+#
+#     $ ./tojson-all.sh
+#
 
 basedir="$(dirname "$(readlink -f "$0")")"
 

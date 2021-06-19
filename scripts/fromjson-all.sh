@@ -1,4 +1,13 @@
 #!/usr/bin/env bash
+#
+# Batch run fromjson.sh s.t.
+#
+#   json/*.json  -->  yaml/*.yaml
+#
+# Usage:
+#
+#   $ ./fromjson-all.sh
+#
 
 basedir="$(dirname "$(readlink -f "$0")")"
 mkdir -p "$basedir"/../yaml

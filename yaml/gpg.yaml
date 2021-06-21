@@ -1,0 +1,1040 @@
+name: gpg
+description: gpg
+options:
+  - names:
+      - --version
+    argument: ""
+    description: Print the program version and licensing information. Note that you cannot abbreviate this command.
+  - names:
+      - -h
+    argument: ""
+    description: Print a usage message summarizing the most useful command-line options. Note that you cannot arbitrarily abbreviate this command (though you can use its short form -h).
+  - names:
+      - --warranty
+    argument: ""
+    description: Print warranty information.
+  - names:
+      - --dump-options
+    argument: ""
+    description: Print a list of all available options and commands. Note that you cannot abbreviate this command.
+  - names:
+      - --sign
+      - -s
+    argument: ""
+    description: Sign a message. This command may be combined with --encrypt (to sign and encrypt a message), --symmetric (to sign
+  - names:
+      - -s
+    argument: ""
+    description: Sign a message. This command may be combined with --encrypt (to sign and encrypt a message), --symmetric (to sign and symmetrically encrypt a message), or both --encrypt and --symmetric (to sign and encrypt a message that can be decrypted using a secret key or a passphrase). The signing key is chosen by default or can be set explicitly using the --local-user and --default-key options.
+  - names:
+      - --clearsign
+    argument: ""
+    description: Make a cleartext signature. The content in a cleartext signature is readable without any special software. OpenPGP software is only needed to verify the signature. cleartext signatures may modify end-of-line whitespace for platform independence and are not intended to be reversible. The signing key is chosen by default or can be set explicitly using the --local-user and --default-key options.
+  - names:
+      - -b
+    argument: ""
+    description: Make a detached signature.
+  - names:
+      - -e
+    argument: ""
+    description: Encrypt data to one or more public keys. This command may be combined with --sign (to sign and encrypt a message), --symmetric (to encrypt a message that can be decrypted using a secret key or a passphrase), or --sign and --symmetric together (for a signed message that can be decrypted using a secret key or a passphrase). --recipient and related options specify which public keys to use for encryption.
+  - names:
+      - -c
+    argument: ""
+    description: Encrypt with a symmetric cipher using a passphrase. The default symmetric cipher used is AES-128, but may be chosen with the --cipher-algo option. This command may be combined with --sign (for a signed and symmetrically encrypted message), --encrypt (for a message that may be decrypted via a secret key or a passphrase), or --sign and --encrypt together (for a signed message that may be decrypted via a secret key or a passphrase). gpg caches the passphrase used for symmetric encryption so that a decrypt operation may not require that the user needs to enter the passphrase. The option --no-symkey-cache can be used to disable this feature.
+  - names:
+      - --store
+    argument: ""
+    description: Store only (make a simple literal data packet).
+  - names:
+      - -d
+    argument: ""
+    description: Decrypt the file given on the command line (or STDIN if no file is specified) and write it to STDOUT (or the file specified with --output). If the decrypted file is signed, the signature is also verified. This command differs from the default operation, as it never writes to the filename which is included in the file and it rejects files that don't begin with an encrypted message.
+  - names:
+      - --verify
+    argument: ""
+    description: Assume that the first argument is a signed file and verify it without generating any output. With no arguments, the signature packet is read from STDIN. If only one argument is given, the specified file is expected to include a complete signature.
+  - names:
+      - --multifile
+    argument: ""
+    description: This modifies certain other commands to accept multiple files for processing on the command line or read from STDIN with each filename on a separate line. This allows for many files to be processed at once. --multifile may currently be used along with --verify, --encrypt, and --decrypt. Note that --multifile --verify may not be used with detached signatures.
+  - names:
+      - --verify-files
+    argument: ""
+    description: Identical to --multifile --verify.
+  - names:
+      - --encrypt-files
+    argument: ""
+    description: Identical to --multifile --encrypt.
+  - names:
+      - --decrypt-files
+    argument: ""
+    description: Identical to --multifile --decrypt.
+  - names:
+      - --list-public-keys
+    argument: ""
+    description: List the specified keys. If no keys are specified, then all keys from the configured public keyrings are listed.
+  - names:
+      - --list-secret-keys
+      - -K
+    argument: ""
+    description: 'List the specified secret keys. If no keys are specified, then all known secret keys are listed. A # after the'
+  - names:
+      - -K
+    argument: ""
+    description: 'List the specified secret keys. If no keys are specified, then all known secret keys are listed. A # after the initial tags sec or ssb means that the secret key or subkey is currently not usable. We also say that this key has been taken offline (for example, a primary key can be taken offline by exporting the key using the command --export-secret-subkeys). A > after these tags indicate that the key is stored on a smartcard. See also --list-keys.'
+  - names:
+      - --check-sigs
+    argument: ""
+    description: Same as --list-keys, but the key signatures are verified and listed too. Note that for performance reasons the revocation status of a signing key is not shown. This command has the same effect as using --list-keys with --withsig-check.
+  - names:
+      - --locate-external-keys
+    argument: ""
+    description: Locate the keys given as arguments. This command basically uses the same algorithm as used when locating keys for encryption or signing and may thus be used to see what keys gpg might use. In particular external methods as defined by --auto-key-locate may be used to locate a key. Only public keys are listed. The variant --locate-external-keys does not consider a locally existing key and can thus be used to force the refresh of a key via the defined external methods.
+  - names:
+      - --show-keys
+    argument: ""
+    description: This commands takes OpenPGP keys as input and prints information about them in the same way the command --list-keys does for locally stored key. In addition the list options show-unusable-uids, show-unusable-subkeys, show-notations and show-policy-urls are also enabled. As usual for automated processing, this command should be combined with the option --with-colons.
+  - names:
+      - --fingerprint
+    argument: ""
+    description: List all keys (or the specified ones) along with their fingerprints. This is the same output as --list-keys but with the additional output of a line with the fingerprint. May also be combined with --check-signatures. If this command is given twice, the fingerprints of all secondary keys are listed too. This command also forces pretty printing of fingerprints if the keyid format has been set to "none".
+  - names:
+      - --list-packets
+    argument: ""
+    description: List only the sequence of packets. This command is only useful for debugging. When used with option --verbose the actual MPI values are dumped and not only their lengths. Note that the output of this command may change with new releases.
+  - names:
+      - --card-edit
+    argument: ""
+    description: Present a menu to work with a smartcard. The subcommand "help" provides an overview on available commands. For a detailed description, please see the Card HOWTO at https://gnupg.org/documentation/howtos.html#GnuPG-cardHOWTO .
+  - names:
+      - --card-status
+    argument: ""
+    description: Show the content of the smart card.
+  - names:
+      - --change-pin
+    argument: ""
+    description: Present a menu to allow changing the PIN of a smartcard. This functionality is also available as the subcommand "passwd" with the --edit-card command.
+  - names:
+      - --delete-keys
+    argument: name
+    description: Remove key from the public keyring. In batch mode either --yes is required or the key must be specified by fingerprint. This is a safeguard against accidental deletion of multiple keys. If the exclamation mark syntax is used with the fingerprint of a subkey only that subkey is deleted; if the exclamation mark is used with the fingerprint of the primary key the entire public key is deleted.
+  - names:
+      - --delete-secret-keys
+    argument: name
+    description: Remove key from the secret keyring. In batch mode the key must be specified by fingerprint. The option --yes can be used to advice gpg-agent not to request a confirmation. This extra pre-caution is done because gpg can't be sure that the secret key (as controlled by gpg-agent) is only used for the given OpenPGP public key. If the exclamation mark syntax is used with the fingerprint of a subkey only the secret part of that subkey is deleted; if the exclamation mark is used with the fingerprint of the primary key only the secret part of the primary key is deleted.
+  - names:
+      - --delete-secret-and-public-key
+    argument: name
+    description: Same as --delete-key, but if a secret key exists, it will be removed first. In batch mode the key must be specified by fingerprint. The option --yes can be used to advice gpg-agent not to request a confirmation.
+  - names:
+      - --export
+    argument: ""
+    description: Either export all keys from all keyrings (default keyrings and those registered via option --keyring), or if at least one name is given, those of the given name. The exported keys are written to STDOUT or to the file given with option --output. Use together with --armor to mail those keys.
+  - names:
+      - --send-keys
+    argument: keyIDs
+    description: Similar to --export but sends the keys to a keyserver. Fingerprints may be used instead of key IDs. Don't send your complete keyring to a keyserver --- select only those keys which are new or changed by you. If no keyIDs are given, gpg does nothing.
+  - names:
+      - --export-secret-subkeys
+    argument: ""
+    description: Same as --export, but exports the secret keys instead. The exported keys are written to STDOUT or to the file given with option --output. This command is often used along with the option --armor to allow for easy printing of the key for paper backup; however the external tool paperkey does a better job of creating backups on paper. Note that exporting a secret key can be a security risk if the exported keys are sent over an insecure channel.
+  - names:
+      - --export-ssh-key
+    argument: ""
+    description: This command is used to export a key in the OpenSSH public key format. It requires the specification of one key by the usual means and exports the latest valid subkey which has an authentication capability to STDOUT or to the file given with option --output. That output can directly be added to ssh's ‘authorized_key’ file.
+  - names:
+      - --fast-import
+    argument: ""
+    description: Import/merge keys. This adds the given keys to the keyring. The fast version is currently just a synonym.
+  - names:
+      - --recv-keys
+    argument: keyIDs
+    description: Import the keys with the given keyIDs from a keyserver.
+  - names:
+      - --refresh-keys
+    argument: ""
+    description: Request updates from a keyserver for keys that already exist on the local keyring. This is useful for updating a key with the latest signatures, user IDs, etc. Calling this with no arguments will refresh the entire keyring.
+  - names:
+      - --search-keys
+    argument: names
+    description: Search the keyserver for the given names. Multiple names given here will be joined together to create the search string for the keyserver. Note that keyservers search for names in a different and simpler way than gpg does. The best choice is to use a mail address. Due to data privacy reasons keyservers may even not even allow searching by user id or mail address and thus may only return results when being used with the --recv-key command to search by key fingerprint or keyid.
+  - names:
+      - --fetch-keys
+    argument: URIs
+    description: Retrieve keys located at the specified URIs. Note that different installations of GnuPG may support different protocols (HTTP, FTP, LDAP, etc.). When using HTTPS the system provided root certificates are used by this command.
+  - names:
+      - --update-trustdb
+    argument: ""
+    description: Do trust database maintenance. This command iterates over all keys and builds the Web of Trust. This is an interactive command because it may have to ask for the "ownertrust" values for keys. The user has to give an estimation of how far she trusts the owner of the displayed key to correctly certify (sign) other keys. GnuPG only asks  for  the ownertrust value if it has not yet been assigned to a key. Using the --edit-key menu, the assigned value can be changed at any time.
+  - names:
+      - --check-trustdb
+    argument: ""
+    description: Do trust database maintenance without user interaction. From time to time the trust database must be updated so that expired keys or signatures and the resulting changes in the Web of Trust can be tracked. Normally, GnuPG will calculate when this is required and do it automatically unless --no-auto-check-trustdb is set. This command can be used to force a trust database check at any time. The processing is identical to that of --update-trustdb but it skips keys with a not yet defined "ownertrust".
+  - names:
+      - --export-ownertrust
+    argument: ""
+    description: 'Send the ownertrust values to STDOUT. This is useful for backup purposes as these values are the only ones which can''t be re-created from a corrupted trustdb. Example: gpg --export-ownertrust > otrust.txt'
+  - names:
+      - --import-ownertrust
+    argument: ""
+    description: Update the trustdb with the ownertrust values stored in files (or STDIN if not given); existing values will be overwritten.
+  - names:
+      - --rebuild-keydb-caches
+    argument: ""
+    description: When updating from version 1.0.6 to 1.0.7 this command should be used to create signature caches in the keyring. It might be handy in other situations too.
+  - names:
+      - --print-mds
+    argument: ""
+    description: Print message digest of algorithm algo for all given files or STDIN. With the second form (or a deprecated "*" for algo) digests for all available algorithms are printed.
+  - names:
+      - --gen-random
+    argument: 0|1|2 count
+    description: Emit count random bytes of the given quality level 0, 1 or 2. If count is not given or zero, an endless sequence of random bytes will be emitted. If used with --armor the output will be base64 encoded. PLEASE, don't use this command unless you know what you are doing; it may remove precious entropy from the system!
+  - names:
+      - --gen-prime
+    argument: mode bits
+    description: Use the source, Luke :-). The output format is subject to change with ant release.
+  - names:
+      - --dearmor
+    argument: ""
+    description: Pack or unpack an arbitrary input into/from an OpenPGP ASCII armor. This is a GnuPG extension to OpenPGP and in general not very useful.
+  - names:
+      - --tofu-policy
+    argument: '{auto|good|unknown|bad|ask} keys'
+    description: 'Set the TOFU policy for all the bindings associated with the specified keys. For more information about the meaning of the policies, see: [trust-model-tofu]. The keys may be specified either by their fingerprint (preferred) or their keyid.'
+  - names:
+      - --quick-gen-key
+    argument: ""
+    description: This is a simple command to generate a standard key with one user id. In contrast to --generate-key the key is generated directly without the need to answer a bunch of prompts. Unless the option --yes is given, the key creation will be canceled if the given user id already exists in the keyring.
+  - names:
+      - --quick-set-expire
+    argument: fpr expire [*|subfprs]
+    description: With two arguments given, directly set the expiration time of the primary key identified by fpr to expire. To remove the expiration time 0 can be used. With three arguments and the third given as an asterisk, the expiration time of all non-revoked and not yet expired subkeys are set to expire. With more than two arguments and a list of fingerprints given for subfprs, all non-revoked subkeys matching these fingerprints are set to expire.
+  - names:
+      - --quick-add-key
+    argument: fpr [algo]
+    description: Directly add a subkey to the key identified by the fingerprint fpr. Without the optional arguments an encryption subkey is added. If any of the arguments are given a more specific subkey is added.
+  - names:
+      - --gen-key
+    argument: ""
+    description: Generate a new key pair using the current default parameters. This is the standard command to create a new key. In addition to the key a revocation certificate is created and stored in the ‘openpgp-revocs.d’ directory below the GnuPG home directory.
+  - names:
+      - --full-gen-key
+    argument: ""
+    description: Generate a new key pair with dialogs for all options. This is an extended version of --generate-key.
+  - names:
+      - --gen-revoke
+    argument: name
+    description: Generate a revocation certificate for the complete key. To only revoke a subkey or a key signature, use the --edit command.
+  - names:
+      - --desig-revoke
+    argument: name
+    description: Generate a designated revocation certificate for a key. This allows a user (with the permission of the keyholder) to revoke someone else's key.
+  - names:
+      - --edit-key
+    argument: ""
+    description: Present a menu which enables you to do most of the key management related tasks. It expects the specification of a key on the command line.
+  - names:
+      - --sign-key
+    argument: name
+    description: Signs a public key with your secret key. This is a shortcut version of the subcommand "sign" from --edit.
+  - names:
+      - --lsign-key
+    argument: name
+    description: Signs a public key with your secret key but marks it as non-exportable. This is a shortcut version of the subcommand "lsign" from --edit-key.
+  - names:
+      - --quick-lsign-key
+    argument: fpr [names]
+    description: Directly sign a key from the passphrase without any further user interaction. The fpr must be the verified primary fingerprint of a key in the local keyring. If no names are given, all useful user ids are signed; with given [names] only useful user ids matching one of theses names are signed. By default, or if a name is prefixed with a '*', a case insensitive substring match is used. If a name is prefixed with a '=' a case sensitive exact match is done.
+  - names:
+      - --quick-add-uid
+    argument: user-id new-user-id
+    description: This command adds a new user id to an existing key. In contrast to the interactive sub-command adduid of --editkey the new-user-id is added verbatim with only leading and trailing white space removed, it is expected to be UTF-8 encoded, and no checks on its form are applied.
+  - names:
+      - --quick-revoke-uid
+    argument: user-id user-id-to-revoke
+    description: This command revokes a user ID on an existing key. It cannot be used to revoke the last user ID on key (some nonrevoked user ID must remain), with revocation reason ``User ID is no longer valid''. If you want to specify a different revocation reason, or to supply supplementary revocation text, you should use the interactive sub-command revuid of --edit-key.
+  - names:
+      - --quick-set-primary-uid
+    argument: user-id primary-user-id
+    description: This command sets or updates the primary user ID flag on an existing key. user-id specifies the key and primaryuser-id the user ID which shall be flagged as the primary user ID. The primary user ID flag is removed from all other user ids and the timestamp of all affected self-signatures is set one second ahead.
+  - names:
+      - --passwd
+    argument: user-id
+    description: Change the passphrase of the secret key belonging to the certificate specified as user-id. This is a shortcut for the sub-command passwd of the edit key menu. When using together with the option --dry-run this will not actually change the passphrase but check that the current passphrase is correct.
+  - names:
+      - --default-key
+    argument: name
+    description: Use name as the default key to sign with. If this option is not used, the default key is the first key found in the secret keyring. Note that -u or --local-user overrides this option. This option may be given multiple times. In this case, the last key for which a secret key is available is used. If there is no secret key available for any of the specified values, GnuPG will not emit an error message but continue as if this option wasn't given.
+  - names:
+      - --default-recipient
+    argument: name
+    description: Use name as default recipient if option --recipient is not used and don't ask if this is a valid one. name must be non-empty.
+  - names:
+      - --default-recipient-self
+    argument: ""
+    description: Use the default key as default recipient if option --recipient is not used and don't ask if this is a valid one. The default key is the first one from the secret keyring or the one set with --default-key.
+  - names:
+      - --no-default-recipient
+    argument: ""
+    description: Reset --default-recipient and --default-recipient-self.
+  - names:
+      - -v
+      - --verbose
+    argument: ""
+    description: Give more information during processing. If used twice, the input data is listed in detail.
+  - names:
+      - --no-verbose
+    argument: ""
+    description: Reset verbose level to 0.
+  - names:
+      - -q
+      - --quiet
+    argument: ""
+    description: Try to be as quiet as possible.
+  - names:
+      - --no-batch
+    argument: ""
+    description: Use batch mode. Never ask, do not allow interactive commands. --no-batch disables this option. Note that even with a filename given on the command line, gpg might still need to read from STDIN (in particular if gpg figures that the input is a detached signature and no data file has been specified). Thus if you do not want to feed data via STDIN, you should connect STDIN to g‘/dev/null’.
+  - names:
+      - --no-tty
+    argument: ""
+    description: Make sure that the TTY (terminal) is never used for any output. This option is needed in some cases because GnuPG sometimes prints warnings to the TTY even if --batch is used.
+  - names:
+      - --yes
+    argument: ""
+    description: Assume "yes" on most questions.
+  - names:
+      - --no
+    argument: ""
+    description: Assume "no" on most questions.
+  - names:
+      - --list-options
+    argument: parameters
+    description: 'This is a space or comma delimited string that gives options used when listing keys and signatures (that is, --list-keys, --check-signatures, --list-public-keys, --list-secret-keys, and the --edit-key functions). Options can be prepended with a no- (after the two dashes) to give the opposite meaning. The options are:'
+  - names:
+      - --verify-options
+    argument: parameters
+    description: 'This is a space or comma delimited string that gives options used when verifying signatures. Options can be prepended with a `no-'' to give the opposite meaning. The options are:'
+  - names:
+      - --disable-large-rsa
+    argument: ""
+    description: 'With --generate-key and --batch, enable the creation of RSA secret keys as large as 8192 bit. Note: 8192 bit is more than is generally recommended. These large keys don''t significantly improve security, but they are more expensive to use, and their signatures and certifications are larger. This option is only available if the binary was build with large-secmem support.'
+  - names:
+      - --disable-dsa2
+    argument: ""
+    description: Enable hash truncation for all DSA keys even for old DSA Keys up to 1024 bit. This is also the default with --openpgp. Note that older versions of GnuPG also required this flag to allow the generation of DSA larger than 1024 bit.
+  - names:
+      - --photo-viewer
+    argument: string
+    description: This is the command line that should be run to view a photo ID. "%i" will be expanded to a filename containing the photo. "%I" does the same, except the file will not be deleted once the viewer exits. Other flags are "%k" for the key ID, "%K" for the long key ID, "%f" for the key fingerprint, "%t" for the extension of the image type (e.g. "jpg"), "%T" for the MIME type of the image (e.g. "image/jpeg"), "%v" for the single-character calculated validity of the image being viewed (e.g. "f"), "%V" for the calculated validity as a string (e.g. "full"), "%U" for a base32 encoded hash of the user ID, and "%%" for an actual percent sign. If neither %i or %I are present, then the photo will be supplied to the viewer on standard input.
+  - names:
+      - --exec-path
+    argument: string
+    description: Sets a list of directories to search for photo viewers If not provided photo viewers use the PATH environment variable.
+  - names:
+      - --keyring
+    argument: file
+    description: Add file to the current list of keyrings. If file begins with a tilde and a slash, these are replaced by the $HOME directory. If the filename does not contain a slash, it is assumed to be in the GnuPG home directory ("~/.gnupg" if --homedir or $GNUPGHOME is not used).
+  - names:
+      - --secret-keyring
+    argument: file
+    description: This is an obsolete option and ignored. All secret keys are stored in the ‘private-keys-v1.d’ directory below the GnuPG home directory.
+  - names:
+      - --primary-keyring
+    argument: file
+    description: Designate file as the primary public keyring. This means that newly imported keys (via --import or keyserver --recv-from) will go to this keyring.
+  - names:
+      - --trustdb-name
+    argument: file
+    description: Use file instead of the default trustdb. If file begins with a tilde and a slash, these are replaced by the $HOME directory. If the filename does not contain a slash, it is assumed to be in the GnuPG home directory (‘~/.gnupg’ if --homedir or $GNUPGHOME is not used).
+  - names:
+      - --homedir
+    argument: dir
+    description: Set the name of the home directory to dir. If this option is not used, the home directory defaults to ‘~/.gnupg’. It is only recognized when given on the command line. It also overrides any home directory stated through the environment variable ‘GNUPGHOME’ or (on Windows systems) by means of the Registry entry HKCU\Software\GNU\GnuPG:HomeDir.
+  - names:
+      - --display-charset
+    argument: '{utf-8|iso-8859-1|iso-8859-2|iso-8859-15|koi8-r}'
+    description: 'Set the name of the native character set. This is used to convert some informational strings like user IDs to the proper UTF-8 encoding. Note that this has nothing to do with the character set of data to be encrypted or signed; GnuPG does not recode user-supplied data. If this option is not used, the default character set is determined from the current locale. A verbosity level of 3 shows the chosen set. Valid values for name are:'
+  - names:
+      - --no-utf8-strings
+    argument: ""
+    description: Assume that command line arguments are given as UTF-8 strings. The default (--no-utf8-strings) is to assume that arguments are encoded in the character set as specified by --display-charset. These options affect all following arguments. Both options may be used multiple times.
+  - names:
+      - --options
+    argument: file
+    description: Read options from file and do not try to read them from the default options file in the homedir (see --homedir). This option is ignored if used in an options file.
+  - names:
+      - --no-options
+    argument: ""
+    description: Shortcut for --options /dev/null. This option is detected before an attempt to open an option file. Using this option will also prevent the creation of a ‘~/.gnupg’ homedir.
+  - names:
+      - --bzip2-compress-level
+    argument: n
+    description: Set compression level to n for the ZIP and ZLIB compression algorithms. The default is to use the default compression level of zlib (normally 6). --bzip2-compress-level sets the compression level for the BZIP2 compression algorithm (defaulting to 6 as well). This is a different option from --compress-level since BZIP2 uses a significant amount of memory for each additional compression level. -z sets both. A value of 0 for n disables compression.
+  - names:
+      - --bzip2-decompress-lowmem
+    argument: ""
+    description: Use a different decompression method for BZIP2 compressed files. This alternate method uses a bit more than half the memory, but also runs at half the speed. This is useful under extreme low memory circumstances when the file was originally compressed at a high --bzip2-compress-level.
+  - names:
+      - --no-mangle-dos-filenames
+    argument: ""
+    description: Older version of Windows cannot handle filenames with more than one dot. --mangle-dos-filenames causes GnuPG to replace (rather than add to) the extension of an output filename to avoid this problem. This option is off by default and has no effect on non-Windows platforms.
+  - names:
+      - --no-ask-cert-level
+    argument: ""
+    description: When making a key signature, prompt for a certification level. If this option is not specified, the certification level used is set via --default-cert-level. See --default-cert-level for information on the specific levels and how they are used. --no-ask-cert-level disables this option. This option defaults to no.
+  - names:
+      - --default-cert-level
+    argument: n
+    description: The default to use for the check level when signing a key.
+  - names:
+      - --min-cert-level
+    argument: ""
+    description: When building the trust database, treat any signatures with a certification level below this as invalid. Defaults to 2, which disregards level 1 signatures. Note that level 0 "no particular claim" signatures are always accepted.
+  - names:
+      - --trusted-key
+    argument: long key ID
+    description: Assume that the specified key (which must be given as a full 8 byte key ID) is as trustworthy as one of your own secret keys. This option is useful if you don't want to keep your secret keys (or one of them) online but still want to be able to check the validity of a given recipient's or signator's key.
+  - names:
+      - --trust-model
+    argument: '{pgp|classic|tofu|tofu+pgp|direct|always|auto}'
+    description: 'Set what trust model GnuPG should follow. The models are:'
+  - names:
+      - --no-auto-key-locate
+    argument: ""
+    description: GnuPG can automatically locate and retrieve keys as needed using this option. This happens when encrypting to an email address (in the "user@example.com" form), and there are no "user@example.com" keys on the local keyring. This option takes any number of the mechanisms listed below, in the order they are to be tried. Instead of listing the mechanisms as comma delimited arguments, the option may also be given several times to add more mechanism. The option --no-auto-key-locate or the mechanism "clear" resets the list. The default is "local,wkd".
+  - names:
+      - --no-auto-key-retrieve
+    argument: ""
+    description: These options enable or disable the automatic retrieving of keys from a keyserver when verifying signatures made by keys that are not on the local keyring. The default is --no-auto-key-retrieve.
+  - names:
+      - --keyid-format
+    argument: '{none|short|0xshort|long|0xlong}'
+    description: Select how to display key IDs. "none" does not show the key ID at all but shows the  fingerprint  in  a  separate line. "short" is the traditional 8-character key ID. "long" is the more accurate (but less convenient) 16-character key ID. Add an "0x" to either to include an "0x" at the beginning of the key ID, as in 0x99242560. Note  that this option is ignored if the option --with-colons is used.
+  - names:
+      - --keyserver
+    argument: name
+    description: This option is deprecated - please use the --keyserver in ‘dirmngr.conf’ instead.
+  - names:
+      - --keyserver-options
+    argument: '{name=value}'
+    description: This is a space or comma delimited string that gives options for the keyserver. Options can be prefixed with a `no-' to give the opposite meaning. Valid import-options or export-options may be used here as well to apply to importing (--recv-key) or exporting (--send-key) a key from a keyserver.
+  - names:
+      - --completes-needed
+    argument: n
+    description: Number of completely trusted users to introduce a new key signer (defaults to 1).
+  - names:
+      - --marginals-needed
+    argument: n
+    description: Number of marginally trusted users to introduce a new key signer (defaults to 3)
+  - names:
+      - --tofu-default-policy
+    argument: '{auto|good|unknown|bad|ask}'
+    description: 'The default TOFU policy (defaults to auto). For more information about the meaning of this  option,  see:  [trustmodel-tofu].'
+  - names:
+      - --max-cert-depth
+    argument: n
+    description: Maximum depth of a certification chain (default is 5).
+  - names:
+      - --no-sig-cache
+    argument: ""
+    description: Do not cache the verification status of key signatures. Caching gives a much better performance in key listings. However, if you suspect that your public keyring is not safe against write modifications, you can use this option to disable the caching. It probably does not make sense to disable it because all kind of damage can be done if someone else has write access to your public keyring.
+  - names:
+      - --no-auto-check-trustdb
+    argument: ""
+    description: If GnuPG feels that its information about the Web of Trust has to be updated, it automatically runs the --checktrustdb command internally. This may be a time consuming process. --no-auto-check-trustdb disables this option.
+  - names:
+      - --no-use-agent
+    argument: ""
+    description: This is dummy option. gpg always requires the agent.
+  - names:
+      - --gpg-agent-info
+    argument: ""
+    description: This is dummy option. It has no effect when used with gpg.
+  - names:
+      - --agent-program
+    argument: file
+    description: Specify an agent program to be used for secret key operations. The default value is determined by running gpgconf with the option --list-dirs. Note that the pipe symbol (|) is used for a regression test suite hack and may thus not be used in the file name.
+  - names:
+      - --dirmngr-program
+    argument: file
+    description: Specify a dirmngr program to be used for keyserver access. The default value is ‘/usr/bin/dirmngr’.
+  - names:
+      - --disable-dirmngr
+    argument: ""
+    description: Entirely disable the use of the Dirmngr.
+  - names:
+      - --no-autostart
+    argument: ""
+    description: Do not start the gpg-agent or the dirmngr if it has not yet been started and its service is required. This option is mostly useful on machines where the connection to gpg-agent has been redirected to another machines. If dirmngr is required on the remote machine, it may be started manually using gpgconf --launch dirmngr.
+  - names:
+      - --lock-once
+    argument: ""
+    description: Lock the databases the first time a lock is requested and do not release the lock until the process terminates.
+  - names:
+      - --lock-multiple
+    argument: ""
+    description: Release the locks every time a lock is no longer needed. Use this to override a previous --lock-once from a config file.
+  - names:
+      - --lock-never
+    argument: ""
+    description: Disable locking entirely. This option should be used only in very special environments, where it can be assured that only one process is accessing those files. A bootable floppy with a stand-alone encryption system will probably use this. Improper usage of this option may lead to data and key corruption.
+  - names:
+      - --exit-on-status-write-error
+    argument: ""
+    description: This option will cause write errors on the status FD to immediately terminate the process. That should in fact be the default but it never worked this way and thus we need an option to enable this, so that the change won't break applications which close their end of a status fd connected pipe too early. Using this option along with --enableprogress-filter may be used to cleanly cancel long running gpg operations.
+  - names:
+      - --limit-card-insert-tries
+    argument: n
+    description: With n greater than 0 the number of prompts asking to insert a smartcard gets limited to N-1. Thus with a value of 1 gpg won't at all ask to insert a card if none has been inserted at startup. This option is useful in the configuration file in case an application does not know about the smartcard support and waits ad infinitum for an inserted card.
+  - names:
+      - --no-random-seed-file
+    argument: ""
+    description: GnuPG uses a file to store its internal random pool over invocations. This makes random generation faster; however sometimes write operations are not desired. This option can be used to achieve that with the cost of slower random generation.
+  - names:
+      - --no-greeting
+    argument: ""
+    description: Suppress the initial copyright message.
+  - names:
+      - --no-secmem-warning
+    argument: ""
+    description: Suppress the warning about "using insecure memory".
+  - names:
+      - --no-permission-warning
+    argument: ""
+    description: Suppress the warning about unsafe file and home directory (--homedir) permissions. Note that the permission checks that GnuPG performs are not intended to be authoritative, but rather they simply warn about certain common permission problems. Do not assume that the lack of a warning means that your system is secure.
+  - names:
+      - --no-require-secmem
+    argument: ""
+    description: Refuse to run if GnuPG cannot get secure memory. Defaults to no (i.e. run, but give a warning).
+  - names:
+      - --no-require-cross-certification
+    argument: ""
+    description: When verifying a signature made from a subkey, ensure that the cross certification "back signature" on the subkey is present and valid. This protects against a subtle attack against subkeys that can sign. Defaults to --requirecross-certification for gpg.
+  - names:
+      - --no-expert
+    argument: ""
+    description: Allow the user to do certain nonsensical or "silly" things like signing an expired or revoked key, or certain potentially incompatible things like generating unusual key types. This also disables certain warning messages about potentially incompatible actions. As the name implies, this option is for experts only. If you don't fully understand the implications of what it allows you to do, leave this off. --no-expert disables this option.
+  - names:
+      - -r
+    argument: ""
+    description: Encrypt for user id name. If this option or --hidden-recipient is not specified, GnuPG asks for the user-id unless --default-recipient is given.
+  - names:
+      - -R
+    argument: ""
+    description: Encrypt for user ID name, but hide the key ID of this user's key. This option helps to hide the receiver of the message and is a limited countermeasure against traffic analysis. If this option or --recipient is not specified, GnuPG asks for the user ID unless --default-recipient is given.
+  - names:
+      - -f
+    argument: ""
+    description: This option is similar to --recipient except that it encrypts to a key stored in the given file. file must be the name of a file containing exactly one key. gpg assumes that the key in this file is fully valid.
+  - names:
+      - -F
+    argument: ""
+    description: This option is similar to --hidden-recipient except that it encrypts to a key stored in the given file. file must be the name of a file containing exactly one key. gpg assumes that the key in this file is fully valid.
+  - names:
+      - --encrypt-to
+    argument: name
+    description: Same as --recipient but this one is intended for use in the options file and may be used with your own user-id as an "encrypt-to-self". These keys are only used when there are other recipients given either by use of --recipient or by the asked user id. No trust checking is performed for these user ids and even disabled keys can be used.
+  - names:
+      - --hidden-encrypt-to
+    argument: name
+    description: Same as --hidden-recipient but this one is intended for use in the options file and may be used with your own userid as a hidden "encrypt-to-self". These keys are only used when there are other recipients given either by use of --recipient or by the asked user id. No trust checking is performed for these user ids and even disabled keys can be used.
+  - names:
+      - --no-encrypt-to
+    argument: ""
+    description: Disable the use of all --encrypt-to and --hidden-encrypt-to keys.
+  - names:
+      - --group
+    argument: '{name=value}'
+    description: Sets up a named group, which is similar to aliases in email programs. Any time the group name is a recipient (-r or --recipient), it will be expanded to the values specified. Multiple groups with the same name are automatically merged into a single group.
+  - names:
+      - --ungroup
+    argument: name
+    description: Remove a given entry from the --group list.
+  - names:
+      - --no-groups
+    argument: ""
+    description: Remove all entries from the --group list.
+  - names:
+      - -u
+    argument: ""
+    description: Use name as the key to sign with. Note that this option overrides --default-key.
+  - names:
+      - --sender
+    argument: mbox
+    description: This option has two purposes. mbox must either be a complete user id with a proper mail address or just a mail address. When creating a signature this option tells gpg the user id of a key used to make a signature if the key was not directly specified by a user id. When verifying a signature the mbox is used to restrict  the  information printed by the TOFU code to matching user ids.
+  - names:
+      - --try-secret-key
+    argument: name
+    description: For hidden recipients GPG needs to know the keys to use for trial decryption. The key set with --default-key is always tried first, but this is often not sufficient. This option allows setting more keys to be  used  for  trial decryption. Although any valid user-id specification may be used for name it makes sense to use at least the long keyid to avoid ambiguities. Note that gpg-agent might pop up a pinentry for a lot keys to do the trial decryption. If you want to stop all further trial decryption you may use close-window button instead of the cancel button.
+  - names:
+      - --try-all-secrets
+    argument: ""
+    description: Don't look at the key ID as stored in the message but try all secret keys in turn to find the right decryption key. This option forces the behaviour as used by anonymous recipients (created by using --throw-keyids  or  --hidden-recipient) and might come handy in case where an encrypted message contains a bogus key ID.
+  - names:
+      - --no-skip-hidden-recipients
+    argument: ""
+    description: During decryption skip all anonymous recipients. This option helps in the case that people use the hidden recipients feature to hide their own encrypt-to key from others. If one has many secret keys this may lead  to  a  major annoyance because all keys are tried in turn to decrypt something which was not really intended for it. The drawback of this option is that it is currently not possible to decrypt a message which includes real anonymous recipients.
+  - names:
+      - -a
+    argument: ""
+    description: Create ASCII armored output. The default is to create the binary OpenPGP format.
+  - names:
+      - --no-armor
+    argument: ""
+    description: Assume the input data is not in ASCII armored format.
+  - names:
+      - -o
+    argument: file
+    description: Write output to file. To write to stdout use - as the filename.
+  - names:
+      - --max-output
+    argument: n
+    description: This option sets a limit on the number of bytes that will be generated when processing a file. Since OpenPGP supports various levels of compression, it is possible that the plaintext of a given message may be significantly larger than the original OpenPGP message. While GnuPG works properly with such messages, there is often a desire to set a maximum file size that will be generated before processing is forced to stop by the OS limits. Defaults to 0, which means "no limit".
+  - names:
+      - --input-size-hint
+    argument: n
+    description: This option can be used to tell GPG the size of the input data in bytes. n must be a positive base-10 number. This option is only useful if the input is not taken from a file. GPG may use this hint to optimize its buffer allocation strategy. It is also used by the --status-fd line ``PROGRESS'' to provide a value for ``total'' if that is not available by other means.
+  - names:
+      - --key-origin
+    argument: string[,url]
+    description: gpg can track the origin of a key. Certain origins are implicitly known (e.g. keyserver, web key directory) and set. For a standard import the origin of the keys imported can be set with this option. To list the possible values use "help" for string. Some origins can store an optional url argument. That URL can appended to string after a comma.
+  - names:
+      - --import-options
+    argument: parameters
+    description: 'This is a space or comma delimited string that gives options for importing keys. Options can be prepended with a `no-'' to give the opposite meaning. The options are:'
+  - names:
+      - --export-filter
+    argument: '{name=expr}'
+    description: These options define an import/export filter which are applied to the imported/exported keyblock right before it will be stored/written. name defines the type of filter to use, expr the expression to evaluate. The option can be used several times which then appends more expression to the same name.
+  - names:
+      - --export-options
+    argument: parameters
+    description: This is a space or comma delimited string that gives options for exporting keys. Options can be prepended with a `no-' to give the opposite meaning.
+  - names:
+      - --with-colons
+    argument: ""
+    description: Print key listings delimited by colons. Note that the output will be encoded in UTF-8 regardless of any --displaycharset setting. This format is useful when GnuPG is called from scripts and other programs as it is easily machine parsed. The details of this format are documented in the file ‘doc/DETAILS’, which is included in the GnuPG source distribution.
+  - names:
+      - --fixed-list-mode
+    argument: ""
+    description: Do not merge primary user ID and primary key in --with-colon listing mode and print all timestamps as seconds since 1970-01-01. Since GnuPG 2.0.10, this mode is always used and thus this option is obsolete; it does not harm to use it though.
+  - names:
+      - --legacy-list-mode
+    argument: ""
+    description: Revert to the pre-2.1 public key list mode. This only affects the human readable output and not the machine interface (i.e. --with-colons). Note that the legacy format does not convey suitable information for elliptic curves.
+  - names:
+      - --with-fingerprint
+    argument: ""
+    description: Same as the command --fingerprint but changes only the format of the output and may be used together with another command.
+  - names:
+      - --with-subkey-fingerprint
+    argument: ""
+    description: If a fingerprint is printed for the primary key, this option forces printing of the fingerprint for all subkeys. This could also be achieved by using the --with-fingerprint twice but by using this option along with keyid-format "none" a compact fingerprint is printed.
+  - names:
+      - --with-icao-spelling
+    argument: ""
+    description: Print the ICAO spelling of the fingerprint in addition to the hex digits.
+  - names:
+      - --with-keygrip
+    argument: ""
+    description: Include the keygrip in the key listings. In --with-colons mode this is implicitly enable for secret keys.
+  - names:
+      - --with-key-origin
+    argument: ""
+    description: Include the locally held information on the origin and last update of a key in a key listing. In --with-colons mode this is always printed. This data is currently experimental and shall not be considered part of the stable API.
+  - names:
+      - --with-wkd-hash
+    argument: ""
+    description: Print a Web Key Directory identifier along with each user ID in key listings. This is an experimental feature and semantics may change.
+  - names:
+      - --with-secret
+    argument: ""
+    description: Include info about the presence of a secret key in public key listings done with --with-colons.
+  - names:
+      - --no-textmode
+    argument: ""
+    description: Treat input files as text and store them in the OpenPGP canonical text form with standard "CRLF" line endings. This also sets the necessary flags to inform the recipient that the encrypted or signed data is text and may need its line endings converted back to whatever the local system uses. This option is useful when communicating between two platforms that have different line ending conventions (UNIX-like to Mac, Mac to Windows, etc). --no-textmode disables this option, and is the default.
+  - names:
+      - --disable-mdc
+    argument: ""
+    description: 'These options are obsolete and have no effect since GnuPG 2.2.8. The MDC is always used. But note: If the creation of a legacy non-MDC message is exceptionally required, the option --rfc2440 allows for this.'
+  - names:
+      - --disable-signer-uid
+    argument: ""
+    description: By default the user ID of the signing key is embedded in the data signature. As of now this is only done if the signing key has been specified with local-user using a mail address, or with sender. This information can be helpful for verifier to locate the key; see option --auto-key-retrieve.
+  - names:
+      - --personal-cipher-preferences
+    argument: string
+    description: Set the list of personal cipher preferences to string. Use gpg --version to get a list of available algorithms, and use none to set no preference at all. This allows the user to safely override the algorithm chosen by the recipient key preferences, as GPG will only select an algorithm that is usable by all recipients. The most highly ranked cipher in this list is also used for the --symmetric encryption command.
+  - names:
+      - --personal-digest-preferences
+    argument: string
+    description: Set the list of personal digest preferences to string. Use gpg --version to get a list of available algorithms, and use none to set no preference at all. This allows the user to safely override the algorithm chosen by the recipient key preferences, as GPG will only select an algorithm that is usable by all recipients. The most highly ranked digest algorithm in this list is also used when signing without encryption (e.g. --clear-sign or --sign).
+  - names:
+      - --personal-compress-preferences
+    argument: string
+    description: Set the list of personal compression preferences to string. Use gpg --version to get a list of available algorithms, and use none to set no preference at all. This allows the user to safely override the algorithm chosen by the recipient key preferences, as GPG will only select an algorithm that is usable by all recipients. The most highly ranked compression algorithm in this list is also used when there are no recipient keys to consider (e.g. --symmetric).
+  - names:
+      - --s2k-cipher-algo
+    argument: name
+    description: Use name as the cipher algorithm for symmetric encryption with a passphrase if --personal-cipher-preferences and --cipher-algo are not given. The default is AES-128.
+  - names:
+      - --s2k-digest-algo
+    argument: name
+    description: Use name as the digest algorithm used to mangle the passphrases for symmetric encryption. The default is SHA-1.
+  - names:
+      - --s2k-mode
+    argument: n
+    description: Selects how passphrases for symmetric encryption are mangled. If n is 0 a plain passphrase (which is in general not recommended) will be used, a 1 adds a salt (which should not be used) to the passphrase and a 3 (the default) iterates the whole process a number of times (see --s2k-count).
+  - names:
+      - --s2k-count
+    argument: n
+    description: Specify how many times the passphrases mangling for symmetric encryption is repeated. This value may range between 1024 and 65011712 inclusive. The default is inquired from gpg-agent. Note that not all values in the 1024-65011712 range are legal and if an illegal value is selected, GnuPG will round up to the nearest legal value. This option is only meaningful if --s2k-mode is set to the default of 3.
+  - names:
+      - --gnupg
+    argument: ""
+    description: Use standard GnuPG behavior. This is essentially OpenPGP behavior (see --openpgp), but with some additional workarounds for common compatibility problems in different versions of PGP. This is the default option, so it is not generally needed, but it may be useful to override a different compliance option in the gpg.conf file.
+  - names:
+      - --openpgp
+    argument: ""
+    description: Reset all packet, cipher and digest options to strict OpenPGP behavior. Use this option to reset all previous options like --s2k-*, --cipher-algo, --digest-algo and --compress-algo to OpenPGP compliant values. All PGP workarounds are disabled.
+  - names:
+      - --rfc4880
+    argument: ""
+    description: Reset all packet, cipher and digest options to strict RFC-4880 behavior. Note that this is currently the same thing as --openpgp.
+  - names:
+      - --rfc4880bis
+    argument: ""
+    description: 'Enable experimental features from proposed updates to RFC-4880. This option can be used in addition to  the  other compliance  options.  Warning:  The behavior may change with any GnuPG release and created keys or data may not be usable with future GnuPG versions.'
+  - names:
+      - --rfc2440
+    argument: ""
+    description: Reset all packet, cipher and digest options to strict RFC-2440 behavior. Note that by using this option encryption packets  are  created  in a legacy mode without MDC protection. This is dangerous and should thus only be used for experiments. See also option --ignore-mdc-error.
+  - names:
+      - --pgp6
+    argument: ""
+    description: Set up all options to be as PGP 6 compliant as possible. This restricts you to the ciphers IDEA (if the IDEA plugin is  installed),  3DES,  and CAST5, the hashes MD5, SHA1 and RIPEMD160, and the compression algorithms none and ZIP. This also disables --throw-keyids, and making signatures with signing subkeys as PGP 6 does not  understand  signatures made by signing subkeys.
+  - names:
+      - --pgp7
+    argument: ""
+    description: Set  up all options to be as PGP 7 compliant as possible. This is identical to --pgp6 except that MDCs are not disabled, and the list of allowable ciphers is expanded to add AES128, AES192, AES256, and TWOFISH.
+  - names:
+      - --pgp8
+    argument: ""
+    description: Set up all options to be as PGP 8 compliant as possible. PGP 8 is a lot closer to the OpenPGP standard than  previous  versions  of  PGP, so all this does is disable --throw-keyids and set --escape-from-lines. All algorithms are allowed except for the SHA224, SHA384, and SHA512 digests.
+  - names:
+      - --compliance
+    argument: string
+    description: This option can be used instead of one of the options above. Valid values for string are the  above  option  names (without the double dash) and possibly others as shown when using "help" for value.
+  - names:
+      - --dry-run
+    argument: ""
+    description: Don't make any changes (this is not completely implemented).
+  - names:
+      - --list-only
+    argument: ""
+    description: Changes  the  behaviour  of some commands. This is like --dry-run but different in some cases. The semantic of this option may be extended in the future. Currently it only skips the actual decryption pass and  therefore  enables a fast listing of the encryption keys.
+  - names:
+      - --interactive
+    argument: ""
+    description: Prompt before overwriting any files.
+  - names:
+      - --debug-level
+    argument: '{none|basic|advanced|expert|guru}'
+    description: Select the debug level for investigating problems. level may be a numeric value or by a keyword.
+  - names:
+      - --debug
+    argument: flags
+    description: Set  debugging  flags. All flags are or-ed and flags may be given in C syntax (e.g. 0x0042) or as a comma separated list of flag names. To get a list of all supported flags the single word "help" can be used.
+  - names:
+      - --debug-all
+    argument: ""
+    description: Set all useful debugging flags.
+  - names:
+      - --debug-iolbf
+    argument: ""
+    description: Set stdout into line buffered mode. This option is only honored when given on the command line.
+  - names:
+      - --faked-system-time
+    argument: epoch
+    description: This option is only useful for testing; it sets the system time back or forth to epoch which is the number of  seconds  elapsed  since  the  year  1970.  Alternatively  epoch  may  be  given  as  a  full  ISO  time  string (e.g. "20070924T154812").
+  - names:
+      - --enable-progress-filter
+    argument: ""
+    description: Enable certain PROGRESS status outputs. This option allows frontends to display a progress indicator while  gpg  is processing larger files. There is a slight performance overhead using it.
+  - names:
+      - --status-fd
+    argument: n
+    description: Write  special status strings to the file descriptor n. See the file DETAILS in the documentation for a listing of them.
+  - names:
+      - --status-file
+    argument: file
+    description: Same as --status-fd, except the status data is written to file file.
+  - names:
+      - --logger-fd
+    argument: n
+    description: Write log output to file descriptor n and not to STDERR.
+  - names:
+      - --logger-file
+    argument: file
+    description: Same as --logger-fd, except the logger data is written to file file. Use ‘socket://’ to log  to a  socket.  Note that in this version of gpg the option has only an effect if --batch is also used.
+  - names:
+      - --attribute-fd
+    argument: n
+    description: Write attribute subpackets to the file descriptor n. This is most useful for use with --status-fd, since the status messages are needed to separate out the various subpackets from the stream delivered to the file descriptor.
+  - names:
+      - --attribute-file
+    argument: file
+    description: Same as --attribute-fd, except the attribute data is written to file file.
+  - names:
+      - --no-comments
+    argument: ""
+    description: Use string as a comment string in cleartext signatures and ASCII armored messages or keys (see  --armor). The  default  behavior  is  not to use a comment string. --comment may be repeated multiple times to get multiple comment strings. --no-comments removes all comments. It is a good idea to keep the length of a  single  comment below  60 characters  to  avoid  problems  with  mail  programs wrapping such lines. Note that comment lines, like all other header lines, are not protected by the signature.
+  - names:
+      - --no-emit-version
+    argument: ""
+    description: Force inclusion of the version string in ASCII armored output. If given once only the name of the program and  the major number is emitted,  given twice the minor is also emitted, given thrice the micro is added, and given four times an operating system identification is also emitted. --no-emit-version (default) disables the version line.
+  - names:
+      - -N
+      - --set-notation
+    argument: '{name=value}'
+    description: Put the name value pair into the signature as notation data. name must consist only  of printable  characters  or spaces,  and must contain a '@' character in the form keyname@domain.example.com (substituting the appropriate keyname and domain name, of course). This is to help prevent pollution of the IETF reserved notation  namespace. The --expert flag  overrides  the  '@'  check. value may be any printable string; it will be encoded in UTF-8, so you should check that your --display-charset is set correctly. If you prefix name with an exclamation mark (!), the notation  data  will  be  flagged as critical (rfc4880:5.2.3.16). --sig-notation sets a notation for data signatures. --cert-notation sets a notation for key signatures (certifications). --set-notation sets both.
+  - names:
+      - --known-notation
+    argument: name
+    description: Adds name to a list of known critical signature notations. The effect of this is that gpg will not mark a  signature  with  a  critical signature notation of that name as bad. Note that gpg already knows by default about a few critical signatures notation names.
+  - names:
+      - --set-policy-url
+    argument: string
+    description: Use string as a Policy URL for signatures (rfc4880:5.2.3.20). If you prefix it with an exclamation mark (!),  the policy  URL packet will be flagged as critical. --sig-policy-url sets a policy url for data signatures. --cert-policy-url sets a policy url for key signatures (certifications). --set-policy-url sets both.
+  - names:
+      - --sig-keyserver-url
+    argument: string
+    description: Use string as a preferred keyserver URL for data signatures. If you prefix it with an  exclamation  mark (!),  the keyserver URL packet will be flagged as critical.
+  - names:
+      - --set-filename
+    argument: string
+    description: Use string as the filename which is stored inside messages. This overrides the default, which is to use the actual filename of the file being encrypted. Using the empty string for string effectively removes the filename from  the output.
+  - names:
+      - --no-for-your-eyes-only
+    argument: ""
+    description: Set  the `for your eyes only' flag in the message. This causes GnuPG to refuse to save the file unless the --output option is given, and PGP to use a "secure viewer" with a claimed Tempest-resistant font  to  display  the  message. This option overrides --set-filename. --no-for-your-eyes-only disables this option.
+  - names:
+      - --no-use-embedded-filename
+    argument: ""
+    description: Try  to create a file with a name as embedded in the data. This can be a dangerous option as it enables overwriting files. Defaults to no. Note that the option --output overrides this option.
+  - names:
+      - --cipher-algo
+    argument: name
+    description: Use name as cipher algorithm. Running the program with the command --version yields a list of supported algorithms. If  this is not used the cipher algorithm is selected from the preferences stored with the key. In general, you do not want to use this option as it allows you to violate the OpenPGP standard. --personal-cipher-preferences is the safe way to accomplish the same thing.
+  - names:
+      - --digest-algo
+    argument: name
+    description: Use name as the message digest algorithm. Running the program with the command --version yields a list of supported algorithms. In general, you do not want to use this option as it allows you to violate the OpenPGP standard. --personal-digest-preferences is the safe way to accomplish the same thing.
+  - names:
+      - --compress-algo
+    argument: name
+    description: Use  compression algorithm  name. "zlib" is RFC-1950 ZLIB compression. "zip" is RFC-1951 ZIP compression which is used by PGP. "bzip2" is a more modern compression scheme that can compress some things better than  zip or  zlib, but  at  the  cost of more memory used during compression and decompression. "uncompressed" or "none" disables compression. If this option is not used, the default behavior is to examine the recipient key preferences to see which algorithms the recipient supports. If all else fails, ZIP is used for maximum compatibility.
+  - names:
+      - --cert-digest-algo
+    argument: name
+    description: Use name as the message digest algorithm used when signing a key. Running the program with  the  command --version yields  a  list  of  supported  algorithms. Be aware that if you choose an algorithm that GnuPG supports but other OpenPGP implementations do not, then some users will not be able to use the key signatures you make, or quite  possibly your entire key.
+  - names:
+      - --disable-cipher-algo
+    argument: name
+    description: Never  allow  the use of name as cipher algorithm. The given name will not be checked so that a later loaded algorithm will still get disabled.
+  - names:
+      - --disable-pubkey-algo
+    argument: name
+    description: Never allow the use of name as public key algorithm. The given name will not be checked so that a later loaded algorithm will still get disabled.
+  - names:
+      - --no-throw-keyids
+    argument: ""
+    description: Do  not put the recipient key IDs into encrypted messages. This helps to hide the receivers of the message and is a limited countermeasure against traffic analysis. ([Using a little social engineering anyone who is able to  decrypt the  message can check whether one of the other recipients is the one he suspects.])  On the receiving side, it may slow down the decryption process because all available secret keys must be tried. --no-throw-keyids disables  this option. This option is essentially the same as using --hidden-recipient for all recipients.
+  - names:
+      - --not-dash-escaped
+    argument: ""
+    description: This  option  changes the behavior of cleartext signatures so that they can be used for patch files. You should not send such an armored file via email because all spaces and line endings are hashed too. You can not use this option for  data  which has 5 dashes at the beginning of a line, patch files don't have this. A special armor header line tells GnuPG about this cleartext signature option.
+  - names:
+      - --no-escape-from-lines
+    argument: ""
+    description: Because some mailers change lines starting with "From " to ">From " it is good to handle such lines  in  a  special way  when creating cleartext signatures to prevent the mail system from breaking the signature. Note that all other PGP versions do it this way too. Enabled by default. --no-escape-from-lines disables this option.
+  - names:
+      - --passphrase-repeat
+    argument: n
+    description: Specify how many times gpg will request a new passphrase be repeated.  This  is useful for  helping  memorize a passphrase. Defaults to 1 repetition.
+  - names:
+      - --passphrase-fd
+    argument: n
+    description: Read  the  passphrase from file descriptor n. Only the first line will be read from file descriptor n. If you use 0 for n, the passphrase will be read from STDIN. This can only be used if only one passphrase is supplied.
+  - names:
+      - --passphrase-file
+    argument: file
+    description: Read  the passphrase from file file. Only the first line will be read from file file. This can only be used if only one passphrase is supplied. Obviously, a passphrase stored in a file is of questionable security if other users can read this file. Don't use this option if you can avoid it.
+  - names:
+      - --passphrase
+    argument: string
+    description: Use string as the passphrase. This can only be used if only one passphrase is supplied. Obviously, this is of  very questionable security on a multi-user system. Don't use this option if you can avoid it.
+  - names:
+      - --pinentry-mode
+    argument: '{default|ask|cancel|error|loopback}'
+    description: Set the pinentry mode to mode.
+  - names:
+      - --no-symkey-cache
+    argument: ""
+    description: Disable  the passphrase cache used for symmetrical en- and decryption. This cache is based on the message specific salt value (cf. --s2k-mode).
+  - names:
+      - --request-origin
+    argument: origin
+    description: 'Tell gpg to assume that the operation ultimately originated at origin. Depending on the origin certain  restrictions are applied and the Pinentry may include an extra note on the origin. Supported values for origin are: local which is the default, remote to indicate a remote origin or browser for an operation requested by a web browser.'
+  - names:
+      - --command-fd
+    argument: n
+    description: This is a replacement for the deprecated shared-memory IPC mode. If this option is enabled, user  input on  questions is not expected from the TTY but from the given file descriptor. It should be used together with --status-fd. See the file doc/DETAILS in the source distribution for details on how to use it.
+  - names:
+      - --command-file
+    argument: file
+    description: Same as --command-fd, except the commands are read out of file file
+  - names:
+      - --no-allow-non-selfsigned-uid
+    argument: ""
+    description: Allow the import and use of keys with user IDs which are not self-signed. This is not recommended, as a  non  selfsigned user ID is trivial to forge. --no-allow-non-selfsigned-uid disables.
+  - names:
+      - --allow-freeform-uid
+    argument: ""
+    description: Disable  all  checks on the form of the user ID while generating a new one. This option should only be used in very special environments as it does not ensure the de-facto standard format of user IDs.
+  - names:
+      - --ignore-time-conflict
+    argument: ""
+    description: GnuPG normally checks that the timestamps associated with keys and signatures have plausible values. However, sometimes a signature seems to be older than the key due to clock problems. This option makes these checks just a warning. See also --ignore-valid-from for timestamp issues on subkeys.
+  - names:
+      - --ignore-valid-from
+    argument: ""
+    description: GnuPG normally does not select and use subkeys created in the future. This option allows the use of such keys  and thus  exhibits the pre-1.0.7 behaviour. You should not use this option unless there is some clock problem. See also --ignore-time-conflict for timestamp issues with signatures.
+  - names:
+      - --ignore-crc-error
+    argument: ""
+    description: The ASCII armor used by OpenPGP is protected by a CRC checksum against transmission errors. Occasionally  the  CRC gets mangled somewhere on the transmission channel but the actual content (which is protected by the OpenPGP protocol anyway) is still okay. This option allows GnuPG to ignore CRC errors.
+  - names:
+      - --ignore-mdc-error
+    argument: ""
+    description: This option changes a MDC integrity protection failure into a warning. It is  required  to  decrypt  old  messages which  did  not use an MDC. It may also be useful if a message is partially garbled, but it is necessary to get as much data as possible out of that garbled message. Be aware that a missing or failed MDC can be an  indication  of an attack. Use with great caution; see also option --rfc2440.
+  - names:
+      - --allow-weak-digest-algos
+    argument: ""
+    description: Signatures  made with known-weak digest algorithms are normally rejected with an ``invalid digest algorithm'' message. This option allows the verification of signatures made with such weak algorithms. MD5 is the  only  digest algorithm considered weak by default. See also --weak-digest to reject other digest algorithms.
+  - names:
+      - --weak-digest
+    argument: name
+    description: Treat  the specified digest algorithm as weak. Signatures made over weak digests algorithms are normally rejected. This option can be supplied multiple times if multiple algorithms should be considered  weak.  See  also  --allowweak-digest-algos  to  disable  rejection  of weak digests. MD5 is always considered weak, and does not need to be listed explicitly.
+  - names:
+      - --allow-weak-key-signatures
+    argument: ""
+    description: To avoid a minor risk of collision attacks on third-party key signatures made using SHA-1, those key signatures are considered invalid. This options allows to override this restriction.
+  - names:
+      - --no-default-keyring
+    argument: ""
+    description: Do  not add the default keyrings to the list of keyrings. Note that GnuPG will not operate without any keyrings, so if you use this option and do not provide alternate keyrings via --keyring or  --secret-keyring, then  GnuPG  will still use the default public or secret keyrings.
+  - names:
+      - --no-keyring
+    argument: ""
+    description: Do not use any keyring at all. This overrides the default and all options which specify keyrings.
+  - names:
+      - --skip-verify
+    argument: ""
+    description: Skip  the signature verification step. This may be used to make the decryption faster if the signature verification is not needed.
+  - names:
+      - --with-key-data
+    argument: ""
+    description: Print key listings delimited by colons (like --with-colons) and print the public key data.
+  - names:
+      - --list-sigs
+    argument: ""
+    description: Same as --list-keys, but the signatures are listed too. This command has the same effect as using --list-keys with --with-sig-list. Note  that  in contrast to --check-signatures the key signatures are not verified. This command can be used to create a list of signing keys missing in the local keyring;
+  - names:
+      - --fast-list-mode
+    argument: ""
+    description: Changes the output of the list commands to work faster; this is achieved by leaving some parts empty. Some applications  don't need the user ID and the trust information given in the listings. By using this options they can get a faster listing. The exact behaviour of this option may change in future versions. If you are missing some information, don't use this option.
+  - names:
+      - --no-literal
+    argument: ""
+    description: This is not for normal use. Use the source to see for what it might be useful.
+  - names:
+      - --set-filesize
+    argument: ""
+    description: This is not for normal use. Use the source to see for what it might be useful.
+  - names:
+      - --show-session-key
+    argument: ""
+    description: Display the session key used for one message. See --override-session-key for the counterpart of this option.
+  - names:
+      - --override-session-key-fd
+    argument: fd
+    description: Don't  use the public key but the session key string respective the session key taken from the first line read from file descriptor fd. The format of this string is the same as the one printed by --show-session-key. This option is normally not  used but comes handy in case someone forces you to reveal the content of an encrypted message; using this option you can do this without handing out the secret key. Note that using --override-session-key may  reveal the  session  key  to all local users via the global process table. Often it is useful to combine this option with --no-keyring.
+  - names:
+      - --no-ask-sig-expire
+    argument: ""
+    description: When making a data signature, prompt for an expiration time. If this option is not specified, the  expiration  time set via --default-sig-expire is used. --no-ask-sig-expire disables this option.
+  - names:
+      - --default-sig-expire
+    argument: ""
+    description: The  default expiration time to use for signature expiration. Valid values are "0" for no expiration, a number followed by the letter d (for days), w (for weeks), m (for months), or y (for years) (for example "2m" for two months, or "5y" for five years), or an absolute date in the form YYYY-MM-DD. Defaults to "0".
+  - names:
+      - --no-ask-cert-expire
+    argument: ""
+    description: When  making  a  key signature, prompt for an expiration time. If this option is not specified, the expiration time set via --default-cert-expire is used. --no-ask-cert-expire disables this option.
+  - names:
+      - --default-cert-expire
+    argument: ""
+    description: The default expiration time to use for key signature expiration. Valid values are "0" for no expiration, a  number followed by  the  letter  d  (for days), w (for weeks), m (for months), or y (for years) (for example "2m" for two months, or "5y" for five years), or an absolute date in the form YYYY-MM-DD. Defaults to "0".
+  - names:
+      - --default-new-key-algo
+    argument: string
+    description: This option can be used to change the default algorithms for key generation. The string is similar to the arguments required  for   the  command  --quick-add-key  but  slightly  different.  For  example the  current  default  of "rsa2048/cert,sign+rsa2048/encr" (or "rsa3072") can be changed to the value of what we currently call  future  default,  which is "ed25519/cert,sign+cv25519/encr". You need to consult the source code to learn the details. Note that the advanced key generation commands can always be used to specify a key algorithm directly.
+  - names:
+      - --allow-secret-key-import
+    argument: ""
+    description: This is an obsolete option and is not used anywhere.
+  - names:
+      - --no-allow-multiple-messages
+    argument: ""
+    description: Allow processing of multiple OpenPGP messages contained in a single file or stream. Some programs  that call  GPG are not prepared to deal with multiple messages being processed together, so this option defaults to no. Note that versions of GPG prior to 1.4.7 always allowed multiple messages.
+  - names:
+      - --enable-special-filenames
+    argument: ""
+    description: This option enables a mode in which filenames of the form ‘-&n’, where n is a non-negative decimal number, refer to the file descriptor n and not to a file with that name.
+  - names:
+      - --no-expensive-trust-checks
+    argument: ""
+    description: Experimental use only.
+  - names:
+      - --preserve-permissions
+    argument: ""
+    description: Don't  change  the permissions of a secret keyring back to user read/write only. Use this option only if you really know what you are doing.
+  - names:
+      - --default-preference-list
+    argument: string
+    description: Set the list of default preferences to string. This preference list is used for new keys and  becomes  the  default for "setpref" in the edit menu.
+  - names:
+      - --default-keyserver-url
+    argument: name
+    description: Set  the default  keyserver URL to name. This keyserver will be used as the keyserver URL when writing a new selfsignature on a key, which includes key generation and changing preferences.
+  - names:
+      - --list-config
+    argument: ""
+    description: Display various internal configuration parameters of GnuPG. This option is intended for external programs that call GnuPG to perform tasks, and is thus not generally useful. See the file ‘doc/DETAILS’ in the source distribution for the details of which configuration items may be listed. --list-config is only usable with --with-colons set.
+  - names:
+      - --list-gcrypt-config
+    argument: ""
+    description: Display various internal configuration parameters of Libgcrypt.
+  - names:
+      - --gpgconf-list
+    argument: ""
+    description: This command is similar to --list-config but in general only internally used by the gpgconf tool.
+  - names:
+      - --gpgconf-test
+    argument: ""
+    description: This is more or less dummy action. However it parses the configuration file and returns with failure if the  configuration  file would  prevent gpg from startup. Thus it may be used to run a syntax check on the configuration file.

@@ -87,26 +87,6 @@
   ],
   "subcommands": [
     {
-      "name": "app",
-      "description": "Docker App (Docker Inc., v0.9.1-beta3)",
-      "options": [
-        {
-          "names": [
-            "--installer-context"
-          ],
-          "argument": "string",
-          "description": "Context on which the installer image"
-        },
-        {
-          "names": [
-            "--version"
-          ],
-          "argument": "",
-          "description": "Print version information"
-        }
-      ]
-    },
-    {
       "name": "builder",
       "description": "Manage builds",
       "options": []
@@ -121,6 +101,61 @@
           ],
           "argument": "string",
           "description": "Override the configured builder instance"
+        }
+      ]
+    },
+    {
+      "name": "checkpoint",
+      "description": "Manage checkpoints",
+      "options": []
+    },
+    {
+      "name": "compose",
+      "description": "Docker Compose (Docker Inc., 2.0.0-beta.3)",
+      "options": [
+        {
+          "names": [
+            "--ansi"
+          ],
+          "argument": "string",
+          "description": "Control when to print ANSI control characters (\"never\"|\"always\"|\"auto\") (default \"auto\")"
+        },
+        {
+          "names": [
+            "--env-file"
+          ],
+          "argument": "string",
+          "description": "Specify an alternate environment file."
+        },
+        {
+          "names": [
+            "-f",
+            "--file"
+          ],
+          "argument": "stringArray",
+          "description": "Compose configuration files"
+        },
+        {
+          "names": [
+            "--profile"
+          ],
+          "argument": "stringArray",
+          "description": "Specify a profile to enable"
+        },
+        {
+          "names": [
+            "--project-directory"
+          ],
+          "argument": "string",
+          "description": "Specify an alternate working directory (default: the path of the Compose file)"
+        },
+        {
+          "names": [
+            "-p",
+            "--project-name"
+          ],
+          "argument": "string",
+          "description": "Project name"
         }
       ]
     },
@@ -345,56 +380,6 @@
         },
         {
           "names": [
-            "--cgroup-parent"
-          ],
-          "argument": "string",
-          "description": "Optional parent cgroup for the container"
-        },
-        {
-          "names": [
-            "--compress"
-          ],
-          "argument": "",
-          "description": "Compress the build context using gzip"
-        },
-        {
-          "names": [
-            "--cpu-period"
-          ],
-          "argument": "int",
-          "description": "Limit the CPU CFS (Completely Fair Scheduler) period"
-        },
-        {
-          "names": [
-            "--cpu-quota"
-          ],
-          "argument": "int",
-          "description": "Limit the CPU CFS (Completely Fair Scheduler) quota"
-        },
-        {
-          "names": [
-            "-c",
-            "--cpu-shares"
-          ],
-          "argument": "int",
-          "description": "CPU shares (relative weight)"
-        },
-        {
-          "names": [
-            "--cpuset-cpus"
-          ],
-          "argument": "string",
-          "description": "CPUs in which to allow execution (0-3, 0,1)"
-        },
-        {
-          "names": [
-            "--cpuset-mems"
-          ],
-          "argument": "string",
-          "description": "MEMs in which to allow execution (0-3, 0,1)"
-        },
-        {
-          "names": [
             "--disable-content-trust"
           ],
           "argument": "",
@@ -407,13 +392,6 @@
           ],
           "argument": "string",
           "description": "Name of the Dockerfile (Default is 'PATH/Dockerfile')"
-        },
-        {
-          "names": [
-            "--force-rm"
-          ],
-          "argument": "",
-          "description": "Always remove intermediate containers"
         },
         {
           "names": [
@@ -438,21 +416,6 @@
         },
         {
           "names": [
-            "-m",
-            "--memory"
-          ],
-          "argument": "bytes",
-          "description": "Memory limit"
-        },
-        {
-          "names": [
-            "--memory-swap"
-          ],
-          "argument": "bytes",
-          "description": "Swap limit equal to memory plus swap: '-1' to enable unlimited swap"
-        },
-        {
-          "names": [
             "--network"
           ],
           "argument": "string",
@@ -464,6 +427,28 @@
           ],
           "argument": "",
           "description": "Do not use cache when building the image"
+        },
+        {
+          "names": [
+            "-o",
+            "--output"
+          ],
+          "argument": "stringArray",
+          "description": "Output destination (format: type=local,dest=path)"
+        },
+        {
+          "names": [
+            "--platform"
+          ],
+          "argument": "string",
+          "description": "Set platform if server is multi-platform capable"
+        },
+        {
+          "names": [
+            "--progress"
+          ],
+          "argument": "string",
+          "description": "Set type of progress output (auto, plain, tty). Use plain to show container output (default \"auto\")"
         },
         {
           "names": [
@@ -482,24 +467,24 @@
         },
         {
           "names": [
-            "--rm"
+            "--secret"
+          ],
+          "argument": "stringArray",
+          "description": "Secret file to expose to the build (only if BuildKit enabled): id=mysecret,src=/local/secret"
+        },
+        {
+          "names": [
+            "--squash"
           ],
           "argument": "",
-          "description": "Remove intermediate containers after a successful build (default true)"
+          "description": "Squash newly built layers into a single new layer"
         },
         {
           "names": [
-            "--security-opt"
+            "--ssh"
           ],
-          "argument": "strings",
-          "description": "Security options"
-        },
-        {
-          "names": [
-            "--shm-size"
-          ],
-          "argument": "bytes",
-          "description": "Size of /dev/shm"
+          "argument": "stringArray",
+          "description": "SSH agent socket or keys to expose to the build (only if BuildKit enabled) (format: default|<id>[=<socket>|<key>[,<key>]])"
         },
         {
           "names": [
@@ -515,13 +500,6 @@
           ],
           "argument": "string",
           "description": "Set the target build stage to build."
-        },
-        {
-          "names": [
-            "--ulimit"
-          ],
-          "argument": "ulimit",
-          "description": "Ulimit options (default [])"
         }
       ]
     },
@@ -2632,10 +2610,24 @@
         },
         {
           "names": [
+            "--checkpoint"
+          ],
+          "argument": "string",
+          "description": "Restore from this checkpoint"
+        },
+        {
+          "names": [
+            "--checkpoint-dir"
+          ],
+          "argument": "string",
+          "description": "Use a custom checkpoint storage directory"
+        },
+        {
+          "names": [
             "--detach-keys"
           ],
           "argument": "string",
-          "description": "Override the key sequence for detaching a"
+          "description": "Override the key sequence for detaching a container"
         },
         {
           "names": [

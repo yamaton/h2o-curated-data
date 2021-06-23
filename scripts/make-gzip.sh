@@ -7,5 +7,8 @@
 
 basedir="$(dirname "$(readlink -f "$0")")"
 
-ls "$basedir"/../json/*.json | parallel python "$basedir"/validate.py
-jq -s . "$basedir"/../json/*.json | gzip > "$basedir"/../all.json.gz
+ls "$basedir"/../general/json/*.json | parallel python "$basedir"/validate.py
+jq -s . "$basedir"/../general/json/*.json | gzip > "$basedir"/../general.json.gz
+
+ls "$basedir"/../bio/json/*.json | parallel python "$basedir"/validate.py
+jq -s . "$basedir"/../bio/json/*.json | gzip > "$basedir"/../bio.json.gz

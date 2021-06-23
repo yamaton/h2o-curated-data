@@ -11,10 +11,13 @@ import pathlib
 import json
 from validate import validate
 
-p = pathlib.Path(__file__).parent.parent.absolute() / 'json'
-files = p.glob('*.json')
-for q in files:
-    with q.open('r') as f:
-        print(f"validating: {q.name}")
-        d = json.load(f)
-        validate(d)
+dirs = ["general", "bio"]
+
+for dir_ in dirs:
+    p = pathlib.Path(__file__).parent.parent.absolute() / dir_ / "json"
+    files = p.glob("*.json")
+    for q in files:
+        with q.open("r") as f:
+            print(f"validating: ({q.parent.parent.name})   {q.name}")
+            d = json.load(f)
+            validate(d)

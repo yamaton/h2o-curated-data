@@ -6,15 +6,19 @@
 #
 # Usage:
 #
-#   $ ./fromjson-all.sh
+#   $ ./fromjson-batch.sh <dir>
+#
+#  <dir> can be either general or bioinformatics
 #
 
 basedir="$(dirname "$(readlink -f "$0")")"
-mkdir -p "$basedir"/../yaml
+dir="$1"
 
-for f in "$basedir"/../json/*.json; do
+mkdir -p "$basedir"/../"$dir"/yaml
+
+for f in "$basedir"/../"$dir"/json/*.json; do
     file="$(basename "$f")"
     name="${file%.*}"
-    echo " ... creating ${name}.yaml"
+    echo " ... creating ${name}.yaml in "$dir"/yaml"
     "$basedir"/fromjson.sh "$name"
 done

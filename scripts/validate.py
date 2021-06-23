@@ -5,7 +5,7 @@
 # Example:
 #   Check JSON schema of json/conda.json
 #
-#   $ ./validate.py conda
+#   $ ./validate.py json/conda.json
 #
 
 import json
@@ -46,7 +46,7 @@ def validate_option(opt):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("file", help="Input JSON file to validate")
+    parser.add_argument("file", help="JSON file to validate")
     args = parser.parse_args()
 
     print(f"  ... validating {args.file}")

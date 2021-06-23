@@ -10,7 +10,19 @@
 basedir="$(dirname "$(readlink -f "$0")")"
 name="$1"
 
-json="$basedir/../json/$name.json"
-yaml="$basedir/../yaml/$name.yaml"
+json="$basedir/../general/json/$name.json"
+if [[ -f "$json" ]]; then
+    yaml="$basedir/../general/yaml/$name.yaml"
+    echo "from: $json"
+    echo "to  : $yaml"
+    yq eval -P "$json" > "$yaml"
+fi
 
-yq eval -P "$json" > "$yaml"
+
+json="$basedir/../bio/json/$name.json"
+if [[ -f "$json" ]]; then
+    yaml="$basedir/../bio/yaml/$name.yaml"
+    echo "from: $json"
+    echo "to  : $yaml"
+    yq eval -P "$json" > "$yaml"
+fi

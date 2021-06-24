@@ -1,0 +1,183 @@
+name: fd
+description: fd
+options:
+  - names:
+      - -H
+      - --hidden
+    argument: ""
+    description: 'Include hidden directories and files in the search results (default: hidden files and directories are skipped). Files and directories are considered to be hidden if their name starts with a `.` sign (dot).'
+  - names:
+      - -I
+      - --no-ignore
+    argument: ""
+    description: Show search results from files and directories that would otherwise be ignored by '.gitignore', '.ignore', '.fdignore', or the global ignore file.
+  - names:
+      - --no-ignore-vcs
+    argument: ""
+    description: Show search results from files and directories that would otherwise be ignored by '.gitignore' files.
+  - names:
+      - -u
+      - --unrestricted
+    argument: ""
+    description: Alias for '--no-ignore'. Can be repeated. '-uu' is an alias for '--no-ignore --hidden'.
+  - names:
+      - -s
+      - --case-sensitive
+    argument: ""
+    description: Perform a case-sensitive search. By default, fd uses case-insensitive searches, unless the pattern contains an uppercase character (smart case).
+  - names:
+      - -i
+      - --ignore-case
+    argument: ""
+    description: Perform a case-insensitive search. By default, fd uses case-insensitive searches, unless the pattern contains an uppercase character (smart case).
+  - names:
+      - -g
+      - --glob
+    argument: ""
+    description: Perform a glob-based search instead of a regular expression search.
+  - names:
+      - --regex
+    argument: ""
+    description: Perform a regular-expression based search (default). This can be used to override --glob.
+  - names:
+      - -F
+      - --fixed-strings
+    argument: ""
+    description: Treat the pattern as a literal string instead of a regular expression. Note that this also performs substring comparison. If you want to match on an exact filename, consider using '--glob'.
+  - names:
+      - -a
+      - --absolute-path
+    argument: ""
+    description: Shows the full path starting from the root as opposed to relative paths.
+  - names:
+      - -l
+      - --list-details
+    argument: ""
+    description: Use a detailed listing format like 'ls -l'. This is basically an alias for '--exec-batch ls -l' with some additional 'ls' options. This can be used to see more metadata, to show symlink targets and to achieve a deterministic sort order.
+  - names:
+      - -L
+      - --follow
+    argument: ""
+    description: By default, fd does not descend into symlinked directories. Using this flag, symbolic links are also traversed.
+  - names:
+      - -p
+      - --full-path
+    argument: ""
+    description: By default, the search pattern is only matched against the filename (or directory name). Using this flag, the pattern is matched against the full path.
+  - names:
+      - "-0"
+      - --print0
+    argument: ""
+    description: Separate search results by the null character (instead of newlines). Useful for piping results to 'xargs'.
+  - names:
+      - --prune
+    argument: ""
+    description: Do not traverse into matching directories.
+  - names:
+      - "-1"
+    argument: ""
+    description: Limit the search to a single result and quit immediately. This is an alias for '--max-results=1'.
+  - names:
+      - --show-errors
+    argument: ""
+    description: Enable the display of filesystem errors for situations such as insufficient permissions or dead symlinks.
+  - names:
+      - --one-file-system
+    argument: ""
+    description: By default, fd will traverse the file system tree as far as other options dictate. With this flag, fd ensures that it does not descend into a different file system than the one it started in. Comparable to the -mount or -xdev filters of find(1).
+  - names:
+      - -h
+      - --help
+    argument: ""
+    description: Prints help information
+  - names:
+      - -V
+      - --version
+    argument: ""
+    description: Prints version information
+  - names:
+      - -d
+      - --max-depth
+    argument: <depth>
+    description: Limit the directory traversal to a given depth. By default, there is no limit on the search depth.
+  - names:
+      - --min-depth
+    argument: <depth>
+    description: 'Only show search results starting at the given depth. See also: ''--max-depth'' and ''--exact-depth'''
+  - names:
+      - --exact-depth
+    argument: <depth>
+    description: Only show search results at the exact given depth. This is an alias for '--min-depth <depth> --max-depth <depth>'.
+  - names:
+      - -t
+      - --type
+    argument: <filetype>...
+    description: 'Filter the search by type (multiple allowable filetypes can be specified):'
+  - names:
+      - -e
+      - --extension
+    argument: <ext>...
+    description: (Additionally) filter search results by their file extension. Multiple allowable file extensions can be specified. If you want to search for files without extension, you can use the regex '^[^.]+$' as a normal search pattern.
+  - names:
+      - -x
+      - --exec
+    argument: <cmd>
+    description: 'Execute a command for each search result. All arguments following --exec are taken to be arguments to the command until the argument '';'' is encountered. Each occurrence of the following placeholders is substituted by a path derived from the current search result before the command is executed:'
+  - names:
+      - -X
+      - --exec-batch
+    argument: <cmd>
+    description: 'Execute a command with all search results at once. All arguments following --exec-batch are taken to be arguments to the command until the argument '';'' is encountered. A single occurrence of the following placeholders is authorized and substituted by the paths derived from the search results before the command is executed:'
+  - names:
+      - -E
+      - --exclude
+    argument: <pattern>...
+    description: Exclude files/directories that match the given glob pattern. This overrides any other ignore logic. Multiple exclude patterns can be specified.
+  - names:
+      - --ignore-file
+    argument: <path>...
+    description: Add a custom ignore-file in '.gitignore' format. These files have a low precedence.
+  - names:
+      - -c
+      - --color
+    argument: <when>
+    description: 'Declare when to use color for the pattern match output:'
+  - names:
+      - -j
+      - --threads
+    argument: <num>
+    description: 'Set number of threads to use for searching & executing (default: number of available CPU cores)'
+  - names:
+      - -S
+      - --size
+    argument: <size>...
+    description: Limit results based on the size of files using the format <+-><NUM><UNIT>.
+  - names:
+      - --changed-within
+    argument: <date|dur>
+    description: 'Filter results based on the file modification time. The argument can be provided as a specific point in time (YYYY-MM-DD HH:MM:SS) or as a duration (10h, 1d, 35min). ''--change-newer-than'' can be used as an alias. Examples:'
+  - names:
+      - --changed-before
+    argument: <date|dur>
+    description: 'Filter results based on the file modification time. The argument can be provided as a specific point in time (YYYY-MM-DD HH:MM:SS) or as a duration (10h, 1d, 35min). ''--change-older-than'' can be used as an alias. Examples:'
+  - names:
+      - --max-results
+    argument: <count>
+    description: Limit the number of search results to 'count' and quit immediately.
+  - names:
+      - --base-directory
+    argument: <path>
+    description: Change the current working directory of fd to the provided path. This means that search results will be shown with respect to the given base path. Note that relative paths which are passed to fd via the positional <path> argument or the '--searchpath' option will also be resolved relative to this directory.
+  - names:
+      - --path-separator
+    argument: <separator>
+    description: Set the path separator to use when printing file paths. The default is the OS-specific separator ('/' on Unix, '\' on Windows).
+  - names:
+      - --search-path
+    argument: <search-path>...
+    description: Provide paths to search as an alternative to the positional <path> argument. Changes the usage to `fd [FLAGS/OPTIONS] --search-path <path> --search-path <path2> [<pattern>]`
+  - names:
+      - -o
+      - --owner
+    argument: <user:group>
+    description: 'Filter files by their user and/or group. Format: [(user|uid)][:(group|gid)]. Either side is optional. Precede either side with a ''!'' to exclude files instead. Examples:'

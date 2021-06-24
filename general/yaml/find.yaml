@@ -1,0 +1,378 @@
+name: find
+description: find
+options:
+  - names:
+      - -P
+    argument: ""
+    description: Never follow symbolic links. This is the default behaviour. When find examines or prints information a file, and the file is a symbolic link, the information used shall be taken from the properties of the symbolic link itself.
+  - names:
+      - -L
+    argument: ""
+    description: Follow symbolic links. When find examines or prints information about files, the information used shall be taken from the properties of the file to which the link points, not from the link itself (unless it is a broken symbolic link  or find is unable to examine the file to which the link points). Use of this option implies -noleaf. If you later use the -P option, -noleaf will still be in effect. If -L is in effect and find discovers a symbolic link to a  subdirectory during its search, the subdirectory pointed to by the symbolic link will be searched.
+  - names:
+      - -H
+    argument: ""
+    description: Do not follow symbolic links, except while processing the command line arguments. When find examines or prints information about files, the information used shall be taken from the properties of the symbolic link itself. The only exception to this behaviour is when a file specified on the command line is a symbolic link, and the  link can  be  resolved. For that situation, the information used is taken from whatever the link points to (that is, the link is followed). The information about the link itself is used as a fallback if the file pointed to by the symbolic link cannot be examined. If -H is in effect and one of the paths specified on the command line is a symbolic link to a directory, the contents of that directory will be examined (though of course -maxdepth 0 would prevent this).
+  - names:
+      - -D
+    argument: debugopts
+    description: Print diagnostic information; this can be helpful to diagnose problems with why find is not doing what you want. The list of debug options should be comma separated. Compatibility of the debug options is not guaranteed between releases of findutils. For a complete list of valid debug options, see the output of find -D help. Valid debug options include exec|opt|rates|search|stat|tree|all|help
+  - names:
+      - -O
+    argument: level
+    description: 'Enables query optimisation. The find program reorders tests to speed up execution while preserving  the overall  effect; that is, predicates with side effects are not reordered relative to each other. The optimisations performed at each optimisation level are as follows: 0|1|2|3'
+  - names:
+      - -daystart
+    argument: ""
+    description: Measure times (for -amin, -atime, -cmin, -ctime, -mmin, and -mtime) from the beginning of today rather  than  from  24 hours ago. This option only affects tests which appear later on the command line.
+  - names:
+      - -follow
+    argument: ""
+    description: Deprecated; use the -L option instead. Dereference symbolic links. Implies -noleaf. The -follow option affects only those tests which appear after it on the command line. Unless the -H or -L option has been specified, the position of the -follow option changes the behaviour of the -newer predicate; any files listed as the argument of -newer will be dereferenced if they are symbolic links. The same consideration applies to -newerXY, -anewer and -cnewer. Similarly, the -type predicate will always match against the type of the file that a symbolic link points to rather than the link itself. Using -follow causes the -lname and -ilname predicates always to return false.
+  - names:
+      - -regextype
+    argument: type
+    description: Changes the regular expression syntax understood by -regex and -iregex tests which occur later on  the  command  line. To see which regular expression types are known, use -regextype help. The Texinfo documentation (see SEE ALSO) explains the meaning of and differences between the various types of regular expression.
+  - names:
+      - -warn
+      - -nowarn
+    argument: ""
+    description: Turn warning messages on or off. These warnings apply only to the command line usage, not to any conditions that find might encounter when it searches directories. The default behaviour corresponds to -warn if standard input is a tty, and to -nowarn otherwise. If a warning message relating to command-line usage is produced, the exit status of find is not affected. If the POSIXLY_CORRECT environment variable is set, and -warn is also used, it is not specified which, if any, warnings will be active.
+  - names:
+      - -d
+    argument: ""
+    description: A synonym for -depth, for compatibility with FreeBSD, NetBSD, MacOS X and OpenBSD.
+  - names:
+      - -depth
+    argument: ""
+    description: Process each directory's contents before the directory itself. The -delete action also implies -depth.
+  - names:
+      - -help
+      - --help
+    argument: ""
+    description: Print a summary of the command-line usage of find and exit.
+  - names:
+      - -ignore_readdir_race
+    argument: ""
+    description: Normally, find will emit an error message when it fails to stat a file. If you give this option and a file is deleted between the time find reads the name of the file from the directory and the time it tries to stat the file,  no  error message will be issued. This also applies to files or directories whose names are given on the command line. This option takes effect at the time the command line is read, which means that you cannot search one part of the  filesystem with this option on and part of it with this option off (if you need to do that, you will need to issue two find commands instead, one with the option and one without it).
+  - names:
+      - -maxdepth
+    argument: levels
+    description: Descend at most levels (a non-negative integer) levels of directories below the starting-points. -maxdepth  0  means only apply the tests and actions to the starting-points themselves.
+  - names:
+      - -mindepth
+    argument: levels
+    description: Do not apply any tests or actions at levels less than levels (a non-negative integer). -mindepth 1 means process all files except the starting-points.
+  - names:
+      - -mount
+    argument: ""
+    description: Don't descend directories on other filesystems. An alternate name for -xdev, for compatibility with some  other versions of find.
+  - names:
+      - -noignore_readdir_race
+    argument: ""
+    description: Turns off the effect of -ignore_readdir_race.
+  - names:
+      - -noleaf
+    argument: ""
+    description: 'Do not optimize by assuming that directories contain 2 fewer subdirectories than their hard link count. This option is needed when searching filesystems that do not follow the Unix directory-link convention, such as CD-ROM  or  MS-DOS filesystems or AFS volume mount points. Each directory on a normal Unix filesystem has at least 2 hard links: its name and its `.'' entry. Additionally, its subdirectories (if any) each have a `..'' entry linked to  that  directory. When find is examining a directory, after it has statted 2 fewer subdirectories than the directory''s link count, it knows that the rest of the entries in the directory are non-directories (`leaf'' files in the directory tree). If only the files''names need to be examined, there is no need to stat them; this gives a significant increase in search speed.'
+  - names:
+      - -version
+      - --version
+    argument: ""
+    description: Print the find version number and exit.
+  - names:
+      - -xdev
+    argument: ""
+    description: Don't descend directories on other filesystems.
+  - names:
+      - -amin
+    argument: n
+    description: File was last accessed n minutes ago.
+  - names:
+      - -anewer
+    argument: reference
+    description: Time of the last access of the current file is more recent than that of the last data modification  of  the  reference file. If reference is a symbolic link and the -H option or the -L option is in effect, then the time of the last data modification of the file it points to is always used.
+  - names:
+      - -atime
+    argument: n
+    description: File was last accessed n*24 hours ago. When find figures out how many 24-hour periods ago the file was last accessed, any fractional part is ignored, so to match -atime +1, a file has to have been accessed at least two days ago.
+  - names:
+      - -cmin
+    argument: n
+    description: File's status was last changed n minutes ago.
+  - names:
+      - -cnewer
+    argument: reference
+    description: Time of the last status change of the current file is more recent than that of the last data modification of the reference file. If reference is a symbolic link and the -H option or the -L option is in effect, then the  time  of  the last data modification of the file it points to is always used.
+  - names:
+      - -ctime
+    argument: n
+    description: File's status was last changed n*24 hours ago. See the comments for -atime to understand how rounding affects the interpretation of file status change times.
+  - names:
+      - -empty
+    argument: ""
+    description: File is empty and is either a regular file or a directory.
+  - names:
+      - -executable
+    argument: ""
+    description: Matches files which are executable and directories which are searchable (in a file name resolution sense) by the current user. This takes into account access control lists and other permissions artefacts which the -perm test ignores. This test makes use of the access(2) system call, and so can be fooled by NFS servers which do UID mapping  (or  rootsquashing), since many systems implement access(2) in the client's kernel and so cannot make use of the UID mapping information held on the server. Because this test is based only on the result of the access(2) system call, there  is no guarantee that a file for which this test succeeds can actually be executed.
+  - names:
+      - -false
+    argument: ""
+    description: Always false.
+  - names:
+      - -fstype
+    argument: type
+    description: 'File is on a filesystem of type type. The valid filesystem types vary among different versions of Unix; an incomplete list of filesystem types that are accepted on some version of Unix or another is: ufs, 4.2, 4.3, nfs, tmp, mfs,  S51K, S52K. You can use -printf with the %F directive to see the types of your filesystems.'
+  - names:
+      - -gid
+    argument: n
+    description: File's numeric group ID is n.
+  - names:
+      - -group
+    argument: gname
+    description: File belongs to group gname (numeric group ID allowed).
+  - names:
+      - -ilname
+    argument: pattern
+    description: Like -lname, but the match is case insensitive. If the -L option or the -follow option is in effect, this test returns false unless the symbolic link is broken.
+  - names:
+      - -iname
+    argument: pattern
+    description: Like -name, but the match is case insensitive. For example, the patterns `fo*' and `F??' match the file names  `Foo', `FOO', `foo', `fOo', etc. The pattern `*foo*` will also match a file called '.foobar'.
+  - names:
+      - -inum
+    argument: n
+    description: File has inode number n. It is normally easier to use the -samefile test instead.
+  - names:
+      - -ipath
+    argument: pattern
+    description: Like -path. but the match is case insensitive.
+  - names:
+      - -iregex
+    argument: pattern
+    description: Like -regex, but the match is case insensitive.
+  - names:
+      - -iwholename
+    argument: pattern
+    description: See -ipath. This alternative is less portable than -ipath.
+  - names:
+      - -links
+    argument: n
+    description: File has n hard links.
+  - names:
+      - -lname
+    argument: pattern
+    description: File is a symbolic link whose contents match shell pattern pattern. The metacharacters do not treat `/' or `.' specially. If the -L option or the -follow option is in effect, this test returns false unless the symbolic link is broken.
+  - names:
+      - -mmin
+    argument: n
+    description: File's data was last modified n minutes ago.
+  - names:
+      - -mtime
+    argument: n
+    description: File's data was last modified n*24 hours ago. See the comments for -atime to understand how rounding affects the interpretation of file modification times.
+  - names:
+      - -name
+    argument: pattern
+    description: Base of file name (the path with the leading directories removed) matches shell pattern pattern. Because the leading directories are removed, the file names considered for a match with -name will never include a slash, so `-name a/b' will never match anything (you probably need to use -path instead). A warning is issued if you try to do this, unless the environment variable POSIXLY_CORRECT is set. The metacharacters (`*', `?', and `[]') match a `.' at the start of the base name (this is a change in findutils-4.2.2; see section STANDARDS CONFORMANCE below). To ignore a directory and the files under it, use -prune rather than checking every file in the tree; see an example in the description of that action. Braces are not recognised as being special, despite the fact that some shells including Bash imbue braces with a special meaning in shell patterns. The filename matching is performed with the use of the fnmatch(3) library function. Don't forget to enclose the pattern in quotes in order to protect it from expansion by the shell.
+  - names:
+      - -newer
+    argument: reference
+    description: Time of the last data modification of the current file is more recent than that of the last data modification of the reference file. If reference is a symbolic link and the -H option or the -L option is in effect, then the time of the last data modification of the file it points to is always used.
+  - names:
+      - -newerXY
+    argument: reference
+    description: 'Succeeds if timestamp X of the file being considered is newer than timestamp Y of the file reference. The letters X and Y can be any of the following letters:'
+  - names:
+      - -nogroup
+    argument: ""
+    description: No group corresponds to file's numeric group ID.
+  - names:
+      - -nouser
+    argument: ""
+    description: No user corresponds to file's numeric user ID.
+  - names:
+      - -path
+    argument: pattern
+    description: File name matches shell pattern pattern. The metacharacters do not treat `/' or `.' specially; so, for example,
+  - names:
+      - -perm
+    argument: <mode>
+    description: File's permission bits are exactly mode (octal or symbolic). Since an exact match is required, if  you  want  to  use this form for symbolic modes, you may have to specify a rather complex mode string. For example `-perm g=w' will only match files which have mode 0020 (that is, ones for which group write permission is the only permission set).  It  is more likely that you will want to use the `/' or `-' forms, for example `-perm -g=w', which matches any file with group write permission. See the EXAMPLES section for some illustrative examples.
+  - names:
+      - -perm
+    argument: <-mode>
+    description: All of the permission bits mode are set for the file. Symbolic modes are accepted in this form, and this is usually the way in which you would want to use them. You must specify `u', `g' or `o' if you use a symbolic mode. See the EXAMPLES section for some illustrative examples.
+  - names:
+      - -perm
+    argument: </mode>
+    description: Any of the permission bits mode are set for the file. Symbolic modes are accepted in this form. You must specify `u', `g' or `o' if you use a symbolic mode. See the EXAMPLES section for some illustrative examples. If no permission bits in mode are set, this test matches any file (the idea here is to be consistent with the behaviour of -perm -000).
+  - names:
+      - -perm
+    argument: <+mode>
+    description: This is no longer supported (and has been deprecated since 2005). Use -perm /mode instead.
+  - names:
+      - -readable
+    argument: ""
+    description: Matches files which are readable by the current user. This takes into account access control lists and other permissions artefacts which the -perm test ignores. This test makes use of the access(2) system call, and so can be fooled by NFS servers which do UID mapping (or root-squashing), since many systems implement access(2) in the client's kernel and so cannot make use of the UID mapping information held on the server.
+  - names:
+      - -regex
+    argument: pattern
+    description: File name matches regular expression pattern. This is a match on the whole path, not a search. For example, to match a file named `./fubar3', you can use the regular expression `.*bar.' or `.*b.*3', but not `f.*r3'. The regular expressions understood by find are by default Emacs Regular Expressions (except that `.' matches newline), but this can be changed with the -regextype option.
+  - names:
+      - -samefile
+    argument: name
+    description: File refers to the same inode as name. When -L is in effect, this can include symbolic links.
+  - names:
+      - -size
+    argument: n[cwbkMG]
+    description: 'File uses n units of space, rounding up. The following suffixes can be used:'
+  - names:
+      - -true
+    argument: ""
+    description: Always true.
+  - names:
+      - -type
+    argument: c
+    description: 'File is of type c:'
+  - names:
+      - -uid
+    argument: n
+    description: File's numeric user ID is n.
+  - names:
+      - -used
+    argument: n
+    description: File was last accessed n days after its status was last changed.
+  - names:
+      - -user
+    argument: uname
+    description: File is owned by user uname (numeric user ID allowed).
+  - names:
+      - -wholename
+    argument: pattern
+    description: See -path. This alternative is less portable than -path.
+  - names:
+      - -writable
+    argument: ""
+    description: Matches files which are writable by the current user. This takes into account access control lists and other permissions artefacts which the -perm test ignores. This test makes use of the access(2) system call, and so can be fooled by NFS servers which do UID mapping (or root-squashing), since many systems implement access(2) in the client's kernel and so cannot make use of the UID mapping information held on the server.
+  - names:
+      - -xtype
+    argument: c
+    description: 'The same as -type unless the file is a symbolic link. For symbolic links: if the -H or -P option was specified, true if the file is a link to a file of type c; if the -L option has been given, true if c is `l''. In other words, for symbolic links, -xtype checks the type of the file that -type does not check.'
+  - names:
+      - -context
+    argument: pattern
+    description: (SELinux only) Security context of the file matches glob pattern.
+  - names:
+      - -delete
+    argument: ""
+    description: Delete files; true if removal succeeded. If the removal failed, an error message is issued. If -delete fails, find's exit status will be nonzero (when it eventually exits). Use of -delete automatically turns on the `-depth' option.
+  - names:
+      - -exec
+    argument: command
+    description: Execute command; true if 0 status is returned. All following arguments to find are taken to be arguments to the command until an argument consisting of `;' is encountered. The string `{}' is replaced by the current file name being processed everywhere it occurs in the arguments to the command, not just in arguments where it is alone, as in some versions of find. Both of these constructions might need to be escaped (with a `\') or quoted to protect them from expansion by the shell. See the EXAMPLES section for examples of the use of the -exec option. The specified command is run once for each matched file. The command is executed in the starting directory. There are unavoidable security problems surrounding use of the -exec action; you should use the -execdir option instead.
+  - names:
+      - -exec
+    argument: command
+    description: This variant of the -exec action runs the specified command on the selected files, but the command line is built by appending each selected file name at the end; the total number of invocations of the command will be much less than the number of matched files. The command line is built in much the same way that xargs builds its command lines. Only one instance of `{}' is allowed within the command, and (when find is being invoked from a shell) it should be quoted (for example, '{}') to protect it from interpretation by shells. The command is executed in the starting directory. If any invocation with the `+' form returns a non-zero value as exit status, then find returns a non-zero exit status. If find encounters an error, this can sometimes cause an immediate exit, so some pending commands may not be run at all. This variant of -exec always returns true.
+  - names:
+      - -execdir
+    argument: command
+    description: Like -exec, but the specified command is run from the subdirectory containing the matched file, which is not normally the directory in which you started find. As with -exec, the {} should be quoted if find is being invoked from a shell. This a much more secure method for invoking commands, as it avoids race conditions during resolution of the paths to the matched files. As with the -exec action, the `+' form of -execdir will build a command line to process more than one matched file, but any given invocation of command will only list files that exist in the same subdirectory. If you use this option, you must ensure that your $PATH environment variable does not reference `.'; otherwise, an attacker can run any commands they like by leaving an appropriately-named file in a directory in which you will run -execdir. The same applies to having entries in $PATH which are empty or which are not absolute directory names. If any invocation with the `+' form returns a non-zero value as exit status, then find returns a non-zero exit status. If find encounters an error, this can sometimes cause an immediate exit, so some pending commands may not be run at all. The result of the action depends on whether the + or the ; variant is being used; -execdir command {} + always returns true, while -execdir command {} ; returns true only if command returns 0.
+  - names:
+      - -fls
+    argument: file
+    description: True; like -ls but write to file like -fprint. The output file is always created, even if the predicate is never matched. See the UNUSUAL FILENAMES section for information about how unusual characters in filenames are handled.
+  - names:
+      - -fprint
+    argument: file
+    description: True; print the full file name into file file. If file does not exist when find is run, it is created; if it does exist, it is truncated. The file names `/dev/stdout' and `/dev/stderr' are handled specially; they refer to the standard output and standard error output, respectively. The output file is always created, even if the predicate is never matched. See the UNUSUAL FILENAMES section for information about how unusual characters in filenames are handled.
+  - names:
+      - -fprint0
+    argument: file
+    description: True; like -print0 but write to file like -fprint. The output file is always created, even if the predicate is never matched. See the UNUSUAL FILENAMES section for information about how unusual characters in filenames are handled.
+  - names:
+      - -fprintf
+    argument: file format
+    description: True; like -printf but write to file like -fprint. The output file is always created, even if the predicate is never matched. See the UNUSUAL FILENAMES section for information about how unusual characters in filenames are handled.
+  - names:
+      - -ls
+    argument: ""
+    description: True; list current file in ls -dils format on standard output. The block counts are of 1 KB blocks, unless the environment variable POSIXLY_CORRECT is set, in which case 512-byte blocks are used. See the UNUSUAL FILENAMES section for information about how unusual characters in filenames are handled.
+  - names:
+      - -ok
+    argument: command
+    description: Like -exec but ask the user first. If the user agrees, run the command. Otherwise just return false. If the command is run, its standard input is redirected from /dev/null.
+  - names:
+      - -okdir
+    argument: command
+    description: Like -execdir but ask the user first in the same way as for -ok. If the user does not agree, just return false. If the command is run, its standard input is redirected from /dev/null.
+  - names:
+      - -print
+    argument: ""
+    description: True; print the full file name on the standard output, followed by a newline. If you are piping the  output  of find into another program and there is the faintest possibility that the files which you are searching for might contain a newline, then you should seriously consider using the -print0 option instead of -print. See the  UNUSUAL  FILENAMES section for information about how unusual characters in filenames are handled.
+  - names:
+      - -print0
+    argument: ""
+    description: True; print the full file name on the standard output, followed by a null character (instead of the newline character that -print uses). This allows file names that contain newlines or other types of white space to be correctly interpreted by programs that process the find output. This option corresponds to the -0 option of xargs.
+  - names:
+      - -printf
+    argument: format
+    description: True;  print  format on the standard output, interpreting `\' escapes and `%' directives. Field widths and precisions can be specified as with the `printf' C function. Please note that many of the fields are printed as %s rather than %d, and this may mean that flags don't work as you might expect. This also means that the `-' flag does work (it forces fields to be left-aligned). Unlike -print, -printf does not add a newline at the end of the string.
+  - names:
+      - -prune
+    argument: ""
+    description: True; if the file is a directory, do not descend into it. If -depth is given, then -prune has no effect. Because -delete implies -depth, you cannot usefully use -prune and -delete together.
+  - names:
+      - -quit
+    argument: ""
+    description: Exit  immediately.  No  child processes will be left running, but no more paths specified on the command line will be processed. For example, find /tmp/foo /tmp/bar -print -quit will print only /tmp/foo. Any command lines  which have been  built  up with -execdir ... {} + will be invoked before find exits. The exit status may or may not be zero, depending on whether an error has already occurred.
+  - names:
+      - -print0
+      - -fprint0
+    argument: ""
+    description: Always print the exact filename, unchanged, even if the output is going to a terminal.
+  - names:
+      - -ls
+      - -fls
+    argument: ""
+    description: Unusual characters are always escaped. White space, backslash, and double quote characters are printed using  C-style escaping (for example `\f', `\"'). Other unusual characters are printed using an octal escape. Other printable characters (for -ls and -fls these are the characters between octal 041 and 0176) are printed as-is.
+  - names:
+      - -printf
+      - -fprintf
+    argument: ""
+    description: If the output is not going to a terminal, it is printed as-is. Otherwise, the result depends on which directive is in use. The directives %D, %F, %g, %G, %H, %Y, and %y expand to values which are not under control of files' owners, and so are printed as-is. The directives %a, %b, %c, %d, %i, %k, %m, %M, %n, %s, %t, %u and %U have values which are  under the control  of  files' owners but which cannot be used to send arbitrary data to the terminal, and so these are printed as-is. The directives %f, %h, %l, %p and %P are quoted. This quoting is performed in the same way as for GNU ls.  This  is not the same quoting mechanism as the one used for -ls and -fls. If you are able to decide what format to use for the output of find then it is normally better to use `\0' as a terminator than  to  use  newline,  as file names  can  contain white space and newline characters. The setting of the `LC_CTYPE' environment variable is used to determine which characters need to be quoted.
+  - names:
+      - -print
+      - -fprint
+    argument: ""
+    description: Quoting is handled in the same way as for -printf and -fprintf. If you are using find in a script or in a  situation where the matched files might have arbitrary names, you should consider using -print0 instead of -print.
+  - names:
+      - -H
+    argument: ""
+    description: This option is supported.
+  - names:
+      - -L
+    argument: ""
+    description: This option is supported.
+  - names:
+      - -name
+    argument: ""
+    description: This option is supported, but POSIX conformance depends on the POSIX conformance of the system's fnmatch(3) library function. As of findutils-4.2.2, shell metacharacters (`*', `?' or `[]' for example) will match a leading `.', because IEEE PASC interpretation 126 requires this. This is a change from previous versions of findutils.
+  - names:
+      - -type
+    argument: ""
+    description: Supported. POSIX specifies `b', `c', `d', `l', `p', `f' and `s'. GNU find also supports `D', representing a Door, where the OS provides these. Furthermore, GNU find allows multiple types to be specified at once in a comma-separated list.
+  - names:
+      - -ok
+    argument: ""
+    description: Supported. Interpretation of the response is according to the `yes' and `no' patterns selected by setting the `LC_MESSAGES' environment variable. When the `POSIXLY_CORRECT' environment variable is set, these patterns are taken system's definition of a positive (yes) or negative (no) response. See the system's documentation for nl_langinfo(3), in particular YESEXPR and NOEXPR. When `POSIXLY_CORRECT' is not set, the patterns are instead taken from find's own message catalogue.
+  - names:
+      - -newer
+    argument: ""
+    description: Supported. If the file specified is a symbolic link, it is always dereferenced. This is a change from previous behaviour, which used to take the relevant time from the symbolic link; see the HISTORY section below.
+  - names:
+      - -perm
+    argument: ""
+    description: Supported. If the POSIXLY_CORRECT environment variable is not set, some mode arguments (for example +a+x) which are not valid in POSIX are supported for backward-compatibility.

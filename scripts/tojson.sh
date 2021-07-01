@@ -12,8 +12,8 @@ name="$1"
 yaml="$basedir/../general/yaml/$name.yaml"
 if [[ -f "$yaml" ]]; then
     json="$basedir/../general/json/$name.json"
-    echo "from: $json"
-    echo "to  : $yaml"
+    echo "from: $yaml"
+    echo "to  : $json"
     yq eval --tojson "$yaml" > "$json"
 fi
 
@@ -21,7 +21,7 @@ fi
 yaml="$basedir/../bio/yaml/$name.yaml"
 if [[ -f "$yaml" ]]; then
     json="$basedir/../bio/json/$name.json"
-    echo "from: $json"
-    echo "to  : $yaml"
+    echo "from: $yaml"
+    echo "to  : $json"
     yq eval --tojson "$yaml" > "$json"
 fi

@@ -1,0 +1,287 @@
+{
+  "name": "hifiasm",
+  "description": "hifiasm",
+  "options": [
+    {
+      "names": [
+        "-o"
+      ],
+      "argument": "FILE",
+      "description": "Prefix of output files [hifiasm.asm]. For detailed description of all assembly graphs, please see the OUTPUTS section of this man-page."
+    },
+    {
+      "names": [
+        "-t"
+      ],
+      "argument": "INT",
+      "description": "Number of CPU threads used by hifiasm [1]."
+    },
+    {
+      "names": [
+        "-h"
+      ],
+      "argument": "",
+      "description": "Show help information."
+    },
+    {
+      "names": [
+        "--version"
+      ],
+      "argument": "",
+      "description": "Show version number."
+    },
+    {
+      "names": [
+        "-k"
+      ],
+      "argument": "INT",
+      "description": "K-mer length [51]. This option must be less than 64."
+    },
+    {
+      "names": [
+        "-w"
+      ],
+      "argument": "INT",
+      "description": "Minimizer window size [51]."
+    },
+    {
+      "names": [
+        "-f"
+      ],
+      "argument": "INT",
+      "description": "Number of bits for bloom filter; 0 to disable [37]. This bloom filter is used to filter out singleton k-mers when counting all k-mers. It takes 2^(INT-3) bytes of memory. A proper setting saves memory. 37 is recommended for human assembly."
+    },
+    {
+      "names": [
+        "-r"
+      ],
+      "argument": "INT",
+      "description": "Rounds of haplotype-aware error corrections [3]. This option affects all outputs of hifiasm."
+    },
+    {
+      "names": [
+        "--min-hist-cnt"
+      ],
+      "argument": "INT",
+      "description": "When analyzing the k-mer spectrum, ignore counts below INT."
+    },
+    {
+      "names": [
+        "-a"
+      ],
+      "argument": "INT",
+      "description": "Rounds of assembly graph cleaning [4]. This option is used with -x and -y. Note that unlike -r, this option does not affect error corrected reads and all-to-all overlaps."
+    },
+    {
+      "names": [
+        "-z"
+      ],
+      "argument": "INT",
+      "description": "Length of adapters that should be removed [0]. This option remove INT bases from both ends of each read. Some old Hifi reads may consist of short adapters (e.g., 20bp adapter at one end). For such data, trimming short adapters would significantly improve the assembly quality."
+    },
+    {
+      "names": [
+        "-m"
+      ],
+      "argument": "INT",
+      "description": "Maximal probing distance for bubble popping when generating primary/alternate contig graphs [10000000]. Bubbles longer than INT bases will not be popped. For detailed description of these graphs, please see the OUTPUTS section of this man-page."
+    },
+    {
+      "names": [
+        "-p"
+      ],
+      "argument": "INT",
+      "description": "Maximal probing distance for bubble popping when generating haplotype-resolved processed unitig graph without small bubbles [100000]. Bubbles longer than INT bases will not be popped. Small bubbles might be caused by somatic mutations or noise in data, which are not the real haplotype information. For detailed description of this graph, please see the OUTPUTS section of this man-page."
+    },
+    {
+      "names": [
+        "-n"
+      ],
+      "argument": "INT",
+      "description": "A unitig is considered small if it is composed of less than INT reads [3]. Hifiasm may try to remove small unitigs at various steps."
+    },
+    {
+      "names": [
+        "-x",
+        "-y"
+      ],
+      "argument": "FLOAT",
+      "description": "Max and min overlap drop ratio [0.8, 0.2]. This option is used with -r. Given a node N in the assembly graph, let max(N) be the length of the largest overlap of N. Hifiasm iteratively drops overlaps of N if their length / max(N) are below a threshold controlled by -x and -y. Hifiasm applies -r rounds of short overlap removal with an increasing threshold between -x and -y."
+    },
+    {
+      "names": [
+        "-i"
+      ],
+      "argument": "",
+      "description": "Ignore error corrected reads and overlaps saved in prefix.*.bin files. Apart from assembly graphs, hifiasm also outputs three binary files that save all overlap information during assembly step. With these files, hifiasm can avoid the time-consuming all-to-all overlap calculation step, and do the assembly directly and quickly. This might be helpful when users want to get an optimized assembly by multiple rounds of experiments with different parameters."
+    },
+    {
+      "names": [
+        "--pri-range"
+      ],
+      "argument": "INT1[,INT2]",
+      "description": "Min and max coverage cutoff of primary contigs. Keep contigs with coverage in this range at p_ctg.gfa. Inferred automatically in default. If INT2 is not specified, it is set to infinity. Set -1 to disable."
+    },
+    {
+      "names": [
+        "--lowQ"
+      ],
+      "argument": "INT",
+      "description": "Output contig regions with >=INT% inconsistency to the bed file with suffix lowQ.bed [70]. Set 0 to disable."
+    },
+    {
+      "names": [
+        "--b-cov"
+      ],
+      "argument": "INT",
+      "description": "Break contigs at potential misassemblies with <INT-fold coverage [0]. Work with --m-rate. Set 0 to disable."
+    },
+    {
+      "names": [
+        "--h-cov"
+      ],
+      "argument": "INT",
+      "description": "Break contigs at potential misassemblies with >INT-fold coverage [-1]. Work with --m-rate. Set -1 to disable."
+    },
+    {
+      "names": [
+        "--m-rate"
+      ],
+      "argument": "FLOAT",
+      "description": "Break contigs with <=FLOAT*coverage exact overlaps [0.75]. Only work with --b-cov and --h-cov."
+    },
+    {
+      "names": [
+        "--primary"
+      ],
+      "argument": "",
+      "description": "Output a primary assembly and an alternate assembly. Hifiasm outputs two balanced assemblies and a primary assembly in default. Enable this option or -l0 outputs a primary assembly and an alternate assembly."
+    },
+    {
+      "names": [
+        "-1"
+      ],
+      "argument": "FILE",
+      "description": "K-mer dump generated by yak count from the paternal/haplotype1 reads []"
+    },
+    {
+      "names": [
+        "-2"
+      ],
+      "argument": "FILE",
+      "description": "K-mer dump generated by yak count from the maternal/haplotype2 reads []"
+    },
+    {
+      "names": [
+        "-3"
+      ],
+      "argument": "FILE",
+      "description": "List of paternal/haplotype1 read names []"
+    },
+    {
+      "names": [
+        "-4"
+      ],
+      "argument": "FILE",
+      "description": "List of maternal/haplotype2 read names []"
+    },
+    {
+      "names": [
+        "-c"
+      ],
+      "argument": "INT",
+      "description": "Lower bound of the binned k-mer's frequency [2]. When doing trio binning, a k-mer is said to be differentiating if it occurs >= -d times in one sample but occurs < -c times in the other sample."
+    },
+    {
+      "names": [
+        "-d"
+      ],
+      "argument": "INT",
+      "description": "Upper bound of the binned k-mer's frequency [5]. When doing trio binning, a k-mer is said to be differentiating if it occurs >= -d times in one sample but occurs < -c times in the other sample."
+    },
+    {
+      "names": [
+        "-l"
+      ],
+      "argument": "INT",
+      "description": "Level of purge-dup. 0 to disable purge-dup, 1 to only purge contained haplotigs, 2 to purge all types of haplotigs, 3 to purge all types of haplotigs in most aggressive way for high heterozygosity sample. In default, [3] for nontrio assembly, [0] for trio assembly. For trio assembly, only level 0 and level 1 are allowed."
+    },
+    {
+      "names": [
+        "-s"
+      ],
+      "argument": "FLOAT",
+      "description": "Similarity threshold for duplicate haplotigs that should be purged [0.75 for -l1/-l2, 0.55 for -l3]."
+    },
+    {
+      "names": [
+        "-O"
+      ],
+      "argument": "FLOAT",
+      "description": "Min number of overlapped reads for duplicate haplotigs that should be purged [1]."
+    },
+    {
+      "names": [
+        "--purge-cov"
+      ],
+      "argument": "INT",
+      "description": "Coverage upper bound of Purge-dups, which is inferred automatically in default. If the coverage of a contig is higher than this bound, don't apply Purge-dups."
+    },
+    {
+      "names": [
+        "--n-hap"
+      ],
+      "argument": "INT",
+      "description": "Assumption of haplotype number."
+    },
+    {
+      "names": [
+        "--dbg-gfa"
+      ],
+      "argument": "",
+      "description": "Write additional files to speed up the debugging of graph cleaning."
+    },
+    {
+      "names": [
+        "--h1"
+      ],
+      "argument": "FILEs",
+      "description": "File names of input Hi-C R1 [r1_1.fq,r1_2.fq,...]."
+    },
+    {
+      "names": [
+        "--h2"
+      ],
+      "argument": "FILEs",
+      "description": "File names of input Hi-C R2 [r2_1.fq,r2_2.fq,...]."
+    },
+    {
+      "names": [
+        "--n-weight"
+      ],
+      "argument": "INT",
+      "description": "Rounds of reweighting Hi-C links [3]. Increasing this may improves phasing results but takes longer time."
+    },
+    {
+      "names": [
+        "--n-perturb"
+      ],
+      "argument": "INT",
+      "description": "Rounds of perturbation [10000]. Increasing this may improves phasing results but takes longer time."
+    },
+    {
+      "names": [
+        "--f-perturb"
+      ],
+      "argument": "FLOAT",
+      "description": "Fraction to flip for perturbation [0.1]. Increasing this may improves phasing results but takes longer time."
+    },
+    {
+      "names": [
+        "--seed"
+      ],
+      "argument": "INT",
+      "description": "RNG seed [11]."
+    }
+  ]
+}

@@ -15,8 +15,8 @@ name="$2"
 json="$basedir/../$dir/json/$name.json"
 yaml="$basedir/../$dir/yaml/$name.yaml"
 
-h2o --command "$name" --json | yq eval -P > "$yaml"
+h2o --command "$name" --format json | yq eval -P > "$yaml"
 echo "Created: $yaml"
 
-yq eval --tojson "$yaml" > "$json"
+yq eval --output-format=json "$yaml" > "$json"
 echo "Created: $json"

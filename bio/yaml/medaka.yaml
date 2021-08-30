@@ -1,0 +1,397 @@
+name: medaka
+description: medaka
+options:
+  - names:
+      - -h
+      - --help
+    argument: ""
+    description: show this help message and exit
+  - names:
+      - --version
+    argument: ""
+    description: show program's version number and exit
+subcommands:
+  - name: features
+    description: Create features for inference.
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --debug
+        argument: ""
+        description: 'Verbose logging of debug information. (default: 20)'
+      - names:
+          - --quiet
+        argument: ""
+        description: 'Minimal logging; warnings only). (default: 20)'
+      - names:
+          - --batch_size
+        argument: BATCH_SIZE
+        description: 'Inference batch size. (default: 100)'
+      - names:
+          - --chunk_len
+        argument: CHUNK_LEN
+        description: 'Chunk length of samples. (default: 10000)'
+      - names:
+          - --chunk_ovlp
+        argument: CHUNK_OVLP
+        description: 'Overlap of chunks. (default: 1000)'
+      - names:
+          - --regions
+        argument: REGIONS [REGIONS ...]
+        description: 'Genomic regions to analyse, or a bed file. (default: None)'
+      - names:
+          - --truth
+        argument: TRUTH
+        description: 'Bam of truth aligned to ref to create features for training. (default: None)'
+      - names:
+          - --truth_haplotag
+        argument: TRUTH_HAPLOTAG
+        description: 'Two-letter tag defining haplotype of alignments for polyploidy labels. (default: None)'
+      - names:
+          - --threads
+        argument: THREADS
+        description: 'Number of threads for parallel execution. (default: 1)'
+      - names:
+          - --label_scheme
+        argument: '{DiploidLabelScheme,DiploidZygosityLabelScheme,HaploidLabelScheme,RLELabelScheme}'
+        description: 'Labelling scheme. (default: HaploidLabelScheme)'
+      - names:
+          - --label_scheme_args
+        argument: KE
+        description: 'Y1=VAL1 KEY2=VAL2a,VAL2b... [KEY1=VAL1 KEY2=VAL2a,VAL2b... ...] Label scheme key-word arguments. (default: {})'
+      - names:
+          - --feature_encoder
+        argument: '{CountsFeatureEncoder,HardRLEFeatureEncoder,SoftRLEFeatureEncoder,SymHardRLEFeatureEncoder}'
+        description: 'FeatureEncoder used to create the features. (default: CountsFeatureEncoder)'
+      - names:
+          - --feature_encoder_args
+        argument: ""
+        description: 'KEY1=VAL1 KEY2=VAL2a,VAL2b... [KEY1=VAL1 KEY2=VAL2a,VAL2b... ...] Feature encoder key-word arguments. (default: {})'
+  - name: train
+    description: Train a model from features.
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --debug
+        argument: ""
+        description: 'Verbose logging of debug information. (default: 20)'
+      - names:
+          - --quiet
+        argument: ""
+        description: 'Minimal logging; warnings only). (default: 20)'
+      - names:
+          - --train_name
+        argument: TRAIN_NAME
+        description: 'Name for training run. (default: keras_train)'
+      - names:
+          - --model
+        argument: MODEL
+        description: 'Model definition and initial weights .hdf, or .yml with kwargs to build model. {r103_fast_g507, r103_fast_snp_g507, r103_fast_variant_g507, r103_hac_g507, r103_hac_snp_g507, r103_hac_variant_g507, r103_min_high_g345, r103_min_high_g360, r103_prom_high_g360, r103_prom_snp_g3210, r103_prom_variant_g3210, r103_sup_g507, r103_sup_snp_g507, r103_sup_variant_g507, r10_min_high_g303, r10_min_high_g340, r941_min_fast_g303, r941_min_fast_g507, r941_min_fast_snp_g507, r941_min_fast_variant_g507, r941_min_hac_g507, r941_min_hac_snp_g507, r941_min_hac_variant_g507, r941_min_high_g303, r941_min_high_g330, r941_min_high_g340_rle, r941_min_high_g344, r941_min_high_g351, r941_min_high_g360, r941_min_sup_g507, r941_min_sup_snp_g507, r941_min_sup_variant_g507, r941_prom_fast_g303, r941_prom_fast_g507, r941_prom_fast_snp_g507, r941_prom_fast_variant_g507, r941_prom_hac_g507, r941_prom_hac_snp_g507, r941_prom_hac_variant_g507, r941_prom_high_g303, r941_prom_high_g330, r941_prom_high_g344, r941_prom_high_g360, r941_prom_high_g4011, r941_prom_snp_g303, r941_prom_snp_g322, r941_prom_snp_g360, r941_prom_sup_g507, r941_prom_sup_snp_g507, r941_prom_sup_variant_g507, r941_prom_variant_g303, r941_prom_variant_g322, r941_prom_variant_g360} (default: None)'
+      - names:
+          - --epochs
+        argument: EPOCHS
+        description: 'Maximum number of trainig epochs. (default: 5000)'
+      - names:
+          - --batch_size
+        argument: BATCH_SIZE
+        description: 'Training batch size. (default: 100)'
+      - names:
+          - --max_samples
+        argument: MAX_SAMPLES
+        description: 'Only train on max_samples. (default: inf)'
+      - names:
+          - --mini_epochs
+        argument: MINI_EPOCHS
+        description: 'Reduce fraction of data per epoch by this factor (default: 1)'
+      - names:
+          - --seed
+        argument: SEED
+        description: 'Seed for random batch shuffling. (default: None)'
+      - names:
+          - --threads_io
+        argument: THREADS_IO
+        description: 'Number of threads for parallel IO. (default: 1)'
+      - names:
+          - --device
+        argument: DEVICE
+        description: 'GPU device to use. (default: 0)'
+      - names:
+          - --optimizer
+        argument: '{nadam,rmsprop}'
+        description: 'Optimizer to use. (default: rmsprop)'
+      - names:
+          - --optim_args
+        argument: KEY1=VAL1,KEY2=VAL2... [KEY1=VAL1,KEY2=VAL2... ...]
+        description: 'Optimizer key-word arguments. (default: None)'
+      - names:
+          - --validation_split
+        argument: VALIDATION_SPLIT
+        description: 'Fraction of data to validate on. (default: 0.2)'
+      - names:
+          - --validation_features
+        argument: ""
+        description: 'VALIDATION_FEATURES [VALIDATION_FEATURES ...] Paths to validation data (default: None)'
+  - name: consensus
+    description: Run inference from a trained model and alignments.
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --debug
+        argument: ""
+        description: 'Verbose logging of debug information. (default: 20)'
+      - names:
+          - --quiet
+        argument: ""
+        description: 'Minimal logging; warnings only). (default: 20)'
+      - names:
+          - --batch_size
+        argument: BATCH_SIZE
+        description: 'Inference batch size. (default: 100)'
+      - names:
+          - --chunk_len
+        argument: CHUNK_LEN
+        description: 'Chunk length of samples. (default: 10000)'
+      - names:
+          - --chunk_ovlp
+        argument: CHUNK_OVLP
+        description: 'Overlap of chunks. (default: 1000)'
+      - names:
+          - --regions
+        argument: REGIONS [REGIONS ...]
+        description: 'Genomic regions to analyse, or a bed file. (default: None)'
+      - names:
+          - --model
+        argument: MODEL
+        description: 'Model to use. {r103_fast_g507, r103_fast_snp_g507, r103_fast_variant_g507, r103_hac_g507, r103_hac_snp_g507, r103_hac_variant_g507, r103_min_high_g345, r103_min_high_g360, r103_prom_high_g360, r103_prom_snp_g3210, r103_prom_variant_g3210, r103_sup_g507, r103_sup_snp_g507, r103_sup_variant_g507, r10_min_high_g303, r10_min_high_g340, r941_min_fast_g303, r941_min_fast_g507, r941_min_fast_snp_g507, r941_min_fast_variant_g507, r941_min_hac_g507, r941_min_hac_snp_g507, r941_min_hac_variant_g507, r941_min_high_g303, r941_min_high_g330, r941_min_high_g340_rle, r941_min_high_g344, r941_min_high_g351, r941_min_high_g360, r941_min_sup_g507, r941_min_sup_snp_g507, r941_min_sup_variant_g507, r941_prom_fast_g303, r941_prom_fast_g507, r941_prom_fast_snp_g507, r941_prom_fast_variant_g507, r941_prom_hac_g507, r941_prom_hac_snp_g507, r941_prom_hac_variant_g507, r941_prom_high_g303, r941_prom_high_g330, r941_prom_high_g344, r941_prom_high_g360, r941_prom_high_g4011, r941_prom_snp_g303, r941_prom_snp_g322, r941_prom_snp_g360, r941_prom_sup_g507, r941_prom_sup_snp_g507, r941_prom_sup_variant_g507, r941_prom_variant_g303, r941_prom_variant_g322, r941_prom_variant_g360} (default: r941_min_hac_g507)'
+      - names:
+          - --threads
+        argument: THREADS
+        description: 'Number of threads used by inference. (default: 1)'
+      - names:
+          - --bam_workers
+        argument: BAM_WORKERS
+        description: 'Number of workers used to prepare data from bam. (default: 2)'
+      - names:
+          - --bam_chunk
+        argument: BAM_CHUNK
+        description: 'Size of reference chunks each worker parses from bam. (can be used to control memory use). (default: 1000000)'
+      - names:
+          - --check_output
+        argument: ""
+        description: 'Verify integrity of output file after inference. (default: False)'
+      - names:
+          - --save_features
+        argument: ""
+        description: 'Save features with consensus probabilities. (default: False)'
+      - names:
+          - --RG
+        argument: READGROUP
+        description: 'Read group to select. (default: None)'
+      - names:
+          - --tag_name
+        argument: TAG_NAME
+        description: 'Two-letter tag name. (default: None)'
+      - names:
+          - --tag_value
+        argument: TAG_VALUE
+        description: 'Value of tag. (default: None)'
+      - names:
+          - --tag_keep_missing
+        argument: ""
+        description: 'Keep alignments when tag is missing. (default: False)'
+  - name: smolecule
+    description: Create consensus sequences from single-molecule reads.
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --debug
+        argument: ""
+        description: 'Verbose logging of debug information. (default: 20)'
+      - names:
+          - --quiet
+        argument: ""
+        description: 'Minimal logging; warnings only). (default: 20)'
+      - names:
+          - --batch_size
+        argument: BATCH_SIZE
+        description: 'Inference batch size. (default: 100)'
+      - names:
+          - --chunk_len
+        argument: CHUNK_LEN
+        description: 'Chunk length of samples. (default: 1000)'
+      - names:
+          - --chunk_ovlp
+        argument: CHUNK_OVLP
+        description: 'Overlap of chunks. (default: 500)'
+      - names:
+          - --model
+        argument: MODEL
+        description: 'Model to use. {r103_fast_g507, r103_fast_snp_g507, r103_fast_variant_g507, r103_hac_g507, r103_hac_snp_g507, r103_hac_variant_g507, r103_min_high_g345, r103_min_high_g360, r103_prom_high_g360, r103_prom_snp_g3210, r103_prom_variant_g3210, r103_sup_g507, r103_sup_snp_g507, r103_sup_variant_g507, r10_min_high_g303, r10_min_high_g340, r941_min_fast_g303, r941_min_fast_g507, r941_min_fast_snp_g507, r941_min_fast_variant_g507, r941_min_hac_g507, r941_min_hac_snp_g507, r941_min_hac_variant_g507, r941_min_high_g303, r941_min_high_g330, r941_min_high_g340_rle, r941_min_high_g344, r941_min_high_g351, r941_min_high_g360, r941_min_sup_g507, r941_min_sup_snp_g507, r941_min_sup_variant_g507, r941_prom_fast_g303, r941_prom_fast_g507, r941_prom_fast_snp_g507, r941_prom_fast_variant_g507, r941_prom_hac_g507, r941_prom_hac_snp_g507, r941_prom_hac_variant_g507, r941_prom_high_g303, r941_prom_high_g330, r941_prom_high_g344, r941_prom_high_g360, r941_prom_high_g4011, r941_prom_snp_g303, r941_prom_snp_g322, r941_prom_snp_g360, r941_prom_sup_g507, r941_prom_sup_snp_g507, r941_prom_sup_variant_g507, r941_prom_variant_g303, r941_prom_variant_g322, r941_prom_variant_g360} (default: r941_min_hac_g507)'
+      - names:
+          - --method
+        argument: '{racon,spoa}'
+        description: 'Pre-medaka consensus generation method. (default: spoa)'
+      - names:
+          - --depth
+        argument: DEPTH
+        description: 'Minimum subread count. (default: 3)'
+      - names:
+          - --length
+        argument: LENGTH
+        description: 'Minimum median subread length. (default: 400)'
+      - names:
+          - --threads
+        argument: THREADS
+        description: 'Number of threads used by inference. (default: 1)'
+      - names:
+          - --check_output
+        argument: ""
+        description: 'Verify integrity of output file after inference. (default: False)'
+      - names:
+          - --save_features
+        argument: ""
+        description: 'Save features with consensus probabilities. (default: False)'
+  - name: fastrle
+    description: Create run-length encoded fastq (lengths in quality
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --debug
+        argument: ""
+        description: 'Verbose logging of debug information. (default: 20)'
+      - names:
+          - --quiet
+        argument: ""
+        description: 'Minimal logging; warnings only). (default: 20)'
+      - names:
+          - --block_size
+        argument: BLOCK_SIZE
+        description: 'Block size for hompolymer splitting, e.g. with a value of blocksize=3, AAAA -> A3 A1. (default: 94)'
+  - name: stitch
+    description: Stitch together output from medaka consensus into
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --debug
+        argument: ""
+        description: 'Verbose logging of debug information. (default: 20)'
+      - names:
+          - --quiet
+        argument: ""
+        description: 'Minimal logging; warnings only). (default: 20)'
+      - names:
+          - --regions
+        argument: REGIONS [REGIONS ...]
+        description: 'Genomic ref_names to process, or a bed file. (default: None)'
+      - names:
+          - --threads
+        argument: THREADS
+        description: 'Number of worker processes to use. (default: 1)'
+      - names:
+          - --no-fillgaps
+        argument: ""
+        description: 'Don''t fill gaps in consensus sequence with draft sequence. (default: True)'
+  - name: variant
+    description: Decode probabilities to VCF.
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --debug
+        argument: ""
+        description: 'Verbose logging of debug information. (default: 20)'
+      - names:
+          - --quiet
+        argument: ""
+        description: 'Minimal logging; warnings only). (default: 20)'
+      - names:
+          - --regions
+        argument: REGIONS [REGIONS ...]
+        description: 'Genomic ref_names to process, or a bed file. (default: None)'
+      - names:
+          - --verbose
+        argument: ""
+        description: 'Populate VCF info fields. (default: False)'
+      - names:
+          - --ambig_ref
+        argument: ""
+        description: 'Decode variants at ambiguous reference positions. (default: False)'
+      - names:
+          - --gvcf
+        argument: ""
+        description: 'Output VCF records for reference loci predicted to be non-variant. (default: False)'
+  - name: snp
+    description: Decode probabilities to SNPs.
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --debug
+        argument: ""
+        description: 'Verbose logging of debug information. (default: 20)'
+      - names:
+          - --quiet
+        argument: ""
+        description: 'Minimal logging; warnings only). (default: 20)'
+      - names:
+          - --regions
+        argument: REGIONS [REGIONS ...]
+        description: 'Genomic ref_names to process, or a bed file. (default: None)'
+      - names:
+          - --threshold
+        argument: THRESHOLD
+        description: 'Threshold for considering secondary calls. A value of 1 will result in haploid decoding. (default: 0.04)'
+      - names:
+          - --ref_vcf
+        argument: REF_VCF
+        description: 'Reference vcf. (default: None)'
+      - names:
+          - --verbose
+        argument: ""
+        description: 'Populate VCF info fields. (default: False)'
+  - name: tools
+    description: tools subcommand.
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --debug
+        argument: ""
+        description: 'Verbose logging of debug information. (default: 20)'
+      - names:
+          - --quiet
+        argument: ""
+        description: 'Minimal logging; warnings only). (default: 20)'

@@ -11,6 +11,34 @@ options:
     argument: ""
     description: show program's version number and exit
 subcommands:
+  - name: compress_bam
+    description: Compress an alignment into RLE form.
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --debug
+        argument: ""
+        description: 'Verbose logging of debug information. (default: 20)'
+      - names:
+          - --quiet
+        argument: ""
+        description: 'Minimal logging; warnings only). (default: 20)'
+      - names:
+          - --regions
+        argument: REGIONS [REGIONS ...]
+        description: 'Genomic regions to analyse, or a bed file. (default: None)'
+      - names:
+          - --threads
+        argument: THREADS
+        description: 'Number of threads for parallel execution. (default: 1)'
+      - names:
+          - --use_fast5_info
+        argument: <fast5_dir> <index> <fast5_dir> <index>
+        description: 'Root directory containing the fast5 files and .tsv file with columns filename and read_id. (default: None)'
   - name: features
     description: Create features for inference.
     options:
@@ -267,8 +295,28 @@ subcommands:
           - --save_features
         argument: ""
         description: 'Save features with consensus probabilities. (default: False)'
+  - name: consensus_from_features
+    description: Run inference from a trained model on existing features.
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --debug
+        argument: ""
+        description: 'Verbose logging of debug information. (default: 20)'
+      - names:
+          - --quiet
+        argument: ""
+        description: 'Minimal logging; warnings only). (default: 20)'
+      - names:
+          - --model
+        argument: MODEL
+        description: 'Model to use. {r103_fast_g507, r103_fast_snp_g507, r103_fast_variant_g507, r103_hac_g507, r103_hac_snp_g507, r103_hac_variant_g507, r103_min_high_g345, r103_min_high_g360, r103_prom_high_g360, r103_prom_snp_g3210, r103_prom_variant_g3210, r103_sup_g507, r103_sup_snp_g507, r103_sup_variant_g507, r10_min_high_g303, r10_min_high_g340, r941_min_fast_g303, r941_min_fast_g507, r941_min_fast_snp_g507, r941_min_fast_variant_g507, r941_min_hac_g507, r941_min_hac_snp_g507, r941_min_hac_variant_g507, r941_min_high_g303, r941_min_high_g330, r941_min_high_g340_rle, r941_min_high_g344, r941_min_high_g351, r941_min_high_g360, r941_min_sup_g507, r941_min_sup_snp_g507, r941_min_sup_variant_g507, r941_prom_fast_g303, r941_prom_fast_g507, r941_prom_fast_snp_g507, r941_prom_fast_variant_g507, r941_prom_hac_g507, r941_prom_hac_snp_g507, r941_prom_hac_variant_g507, r941_prom_high_g303, r941_prom_high_g330, r941_prom_high_g344, r941_prom_high_g360, r941_prom_high_g4011, r941_prom_snp_g303, r941_prom_snp_g322, r941_prom_snp_g360, r941_prom_sup_g507, r941_prom_sup_snp_g507, r941_prom_sup_variant_g507, r941_prom_variant_g303, r941_prom_variant_g322, r941_prom_variant_g360} (default: r941_min_hac_g507)'
   - name: fastrle
-    description: Create run-length encoded fastq (lengths in quality
+    description: Create run-length encoded fastq (lengths in quality track).
     options:
       - names:
           - -h
@@ -288,7 +336,7 @@ subcommands:
         argument: BLOCK_SIZE
         description: 'Block size for hompolymer splitting, e.g. with a value of blocksize=3, AAAA -> A3 A1. (default: 94)'
   - name: stitch
-    description: Stitch together output from medaka consensus into
+    description: Stitch together output from medaka consensus into final output.
     options:
       - names:
           - -h

@@ -1,0 +1,71 @@
+#compdef _fd fd
+
+# Generated with h2o 0.1.18
+
+
+function _fd {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        '(-H --hidden)'{-H,--hidden}'[Include hidden directories and files in the search results (default: hidden files and directories are skipped). Files and directories are considered to be hidden if their name starts with a `.` sign (dot).]' \
+        '(-I --no-ignore)'{-I,--no-ignore}'[Show search results from files and directories that would otherwise be ignored by '\''.gitignore'\'', '\''.ignore'\'', '\''.fdignore'\'', or the global ignore file.]' \
+        '--no-ignore-vcs[Show search results from files and directories that would otherwise be ignored by '\''.gitignore'\'' files.]' \
+        '(-u --unrestricted)'{-u,--unrestricted}'[Alias for '\''--no-ignore'\''. Can be repeated. '\''-uu'\'' is an alias for '\''--no-ignore --hidden'\''.]' \
+        '(-s --case-sensitive)'{-s,--case-sensitive}'[Perform a case-sensitive search. By default, fd uses case-insensitive searches, unless the pattern contains an uppercase character (smart case).]' \
+        '(-i --ignore-case)'{-i,--ignore-case}'[Perform a case-insensitive search. By default, fd uses case-insensitive searches, unless the pattern contains an uppercase character (smart case).]' \
+        '(-g --glob)'{-g,--glob}'[Perform a glob-based search instead of a regular expression search.]' \
+        '--regex[Perform a regular-expression based search (default). This can be used to override --glob.]' \
+        '(-F --fixed-strings)'{-F,--fixed-strings}'[Treat the pattern as a literal string instead of a regular expression. Note that this also performs substring comparison. If you want to match on an exact filename, consider using '\''--glob'\''.]' \
+        '(-a --absolute-path)'{-a,--absolute-path}'[Shows the full path starting from the root as opposed to relative paths.]' \
+        '(-l --list-details)'{-l,--list-details}'[Use a detailed listing format like '\''ls -l'\''. This is basically an alias for '\''--exec-batch ls -l'\'' with some additional '\''ls'\'' options. This can be used to see more metadata, to show symlink targets and to achieve a deterministic sort order.]' \
+        '(-L --follow)'{-L,--follow}'[By default, fd does not descend into symlinked directories. Using this flag, symbolic links are also traversed.]' \
+        '(-p --full-path)'{-p,--full-path}'[By default, the search pattern is only matched against the filename (or directory name). Using this flag, the pattern is matched against the full path.]' \
+        '(-0 --print0)'{-0,--print0}'[Separate search results by the null character (instead of newlines). Useful for piping results to '\''xargs'\''.]' \
+        '--prune[Do not traverse into matching directories.]' \
+        '-1[Limit the search to a single result and quit immediately. This is an alias for '\''--max-results=1'\''.]' \
+        '--show-errors[Enable the display of filesystem errors for situations such as insufficient permissions or dead symlinks.]' \
+        '--one-file-system[By default, fd will traverse the file system tree as far as other options dictate. With this flag, fd ensures that it does not descend into a different file system than the one it started in. Comparable to the -mount or -xdev filters of find(1).]' \
+        '(-h --help)'{-h,--help}'[Prints help information]' \
+        '(-V --version)'{-V,--version}'[Prints version information]' \
+        '(-d --max-depth)'{-d,--max-depth}'[Limit the directory traversal to a given depth. By default, there is no limit on the search depth.]' \
+        '--min-depth[Only show search results starting at the given depth. See also: '\''--max-depth'\'' and '\''--exact-depth'\'']' \
+        '--exact-depth[Only show search results at the exact given depth. This is an alias for '\''--min-depth <depth> --max-depth <depth>'\''.]' \
+        '(-t --type)'{-t,--type}'[Filter the search by type (multiple allowable filetypes can be specified):]:file:_files' \
+        '(-e --extension)'{-e,--extension}'[(Additionally) filter search results by their file extension. Multiple allowable file extensions can be specified. If you want to search for files without extension, you can use the regex '\''^\[^.\]+$'\'' as a normal search pattern.]' \
+        '(-x --exec)'{-x,--exec}'[Execute a command for each search result. All arguments following --exec are taken to be arguments to the command until the argument '\'';'\'' is encountered. Each occurrence of the following placeholders is substituted by a path derived from the current search result before the command is executed:]' \
+        '(-X --exec-batch)'{-X,--exec-batch}'[Execute a command with all search results at once. All arguments following --exec-batch are taken to be arguments to the command until the argument '\'';'\'' is encountered. A single occurrence of the following placeholders is authorized and substituted by the paths derived from the search results before the command is executed:]' \
+        '(-E --exclude)'{-E,--exclude}'[Exclude files/directories that match the given glob pattern. This overrides any other ignore logic. Multiple exclude patterns can be specified.]' \
+        '--ignore-file[Add a custom ignore-file in '\''.gitignore'\'' format. These files have a low precedence.]:file:_files' \
+        '(-c --color)'{-c,--color}'[Declare when to use color for the pattern match output:]' \
+        '(-j --threads)'{-j,--threads}'[Set number of threads to use for searching & executing (default: number of available CPU cores)]' \
+        '(-S --size)'{-S,--size}'[Limit results based on the size of files using the format <+-><NUM><UNIT>.]' \
+        '--changed-within[Filter results based on the file modification time. The argument can be provided as a specific point in time (YYYY-MM-DD HH:MM:SS) or as a duration (10h, 1d, 35min). '\''--change-newer-than'\'' can be used as an alias. Examples:]' \
+        '--changed-before[Filter results based on the file modification time. The argument can be provided as a specific point in time (YYYY-MM-DD HH:MM:SS) or as a duration (10h, 1d, 35min). '\''--change-older-than'\'' can be used as an alias. Examples:]' \
+        '--max-results[Limit the number of search results to '\''count'\'' and quit immediately.]' \
+        '--base-directory[Change the current working directory of fd to the provided path. This means that search results will be shown with respect to the given base path. Note that relative paths which are passed to fd via the positional <path> argument or the '\''--search-path'\'' option will also be resolved relative to this directory.]:file:_files' \
+        '--path-separator[Set the path separator to use when printing file paths. The default is the OS-specific separator ('\''/'\'' on Unix, '\''\'\'' on Windows).]' \
+        '--search-path[Provide paths to search as an alternative to the positional <path> argument. Changes the usage to `fd \[FLAGS/OPTIONS\] --search-path <path> --search-path <path2> \[<pattern>\]`]:file:_files' \
+        '(-o --owner)'{-o,--owner}'[Filter files by their user and/or group. Format: \[(user|uid)\]\[:(group|gid)\]. Either side is optional. Precede either side with a '\''!'\'' to exclude files instead. Examples:]' \
+        '1: :_commands' \
+        '*: :_files'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        esac
+        ;;
+     esac
+
+}
+

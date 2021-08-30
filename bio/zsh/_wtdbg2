@@ -1,0 +1,125 @@
+#compdef _wtdbg2 wtdbg2
+
+# Generated with h2o 0.1.18
+
+
+function _wtdbg2 {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        '-i[Long reads sequences file (REQUIRED; can be multiple), \[\]]' \
+        '-o[Prefix of output files (REQUIRED), \[\]]' \
+        '-t[Number of threads, 0 for all cores, \[4\]]' \
+        '-f[Force to overwrite output files]' \
+        '-x[Presets, comma delimited, \[\]]' \
+        '-g[Approximate genome size (k/m/g suffix allowed) \[0\]]' \
+        '-X[Choose the best <float> depth from input reads(effective with -g) \[50.0\]]' \
+        '-L[Choose the longest subread and drop reads shorter than <int> (5000 recommended for PacBio) \[0\]   Negative integer indicate tidying read names too, e.g. -5000.]' \
+        '-k[Kmer fsize, 0 <= k <= 23, \[0\]]' \
+        '-p[Kmer psize, 0 <= p <= 23, \[21\]   k + p <= 25, seed is <k-mer>+<p-homopolymer-compressed>]' \
+        '-K[Filter high frequency kmers, maybe repetitive, \[1000.05\]   >= 1000 and indexing >= (1 - 0.05) * total_kmers_count]' \
+        '-S[Subsampling kmers, 1/(<-S>) kmers are indexed, \[4.00\]   -S is very useful in saving memeory and speeding up please note that subsampling kmers will have less matched length]' \
+        '-l[Min length of alignment, \[2048\]]' \
+        '-m[Min matched length by kmer matching, \[200\]]' \
+        '-R[Enable realignment mode]' \
+        '-A[Keep contained reads during alignment]' \
+        '-s[Min similarity, calculated by kmer matched length / aligned length, \[0.05\]]' \
+        '-e[Min read depth of a valid edge, \[3\]]' \
+        '(-q -v)'{-q,-v}'[Verbose (can be multiple)]' \
+        '-V[Print version information and then exit]' \
+        '--help[Show more options]' \
+        '--cpu[See -t 0, default: all cores]' \
+        '--input[See -i]' \
+        '--force[See -f]' \
+        '--prefix[See -o]' \
+        '--preset[See -x]' \
+        '--kmer-fsize[See -k 0]' \
+        '--kmer-psize[See -p 21]' \
+        '--kmer-depth-max[See -K 1000.05]' \
+        '(-E --kmer-depth-min)'{-E,--kmer-depth-min}'[Min kmer frequency, \[2\]]' \
+        '--kmer-subsampling[See -S 4.0]' \
+        '--kbm-parts[Split total reads into multiple parts, index one part by one to save memory, \[1\]]' \
+        '--aln-kmer-sampling[Select no more than n seeds in a query bin, default: 256]' \
+        '--dp-max-gap[Max number of bin(256bp) in one gap, \[4\]]' \
+        '--dp-max-var[Max number of bin(256bp) in one deviation, \[4\]]' \
+        '--dp-penalty-gap[Penalty for BIN gap, \[-7\]]' \
+        '--dp-penalty-var[Penalty for BIN deviation, \[-21\]]' \
+        '--aln-min-length[See -l 2048]' \
+        '--aln-min-match[See -m 200. Here the num of matches counting basepair of the matched kmer'\''s regions]' \
+        '--aln-min-similarity[See -s 0.05]' \
+        '--aln-max-var[Max length variation of two aligned fragments, default: 0.25]' \
+        '--aln-dovetail[Retain dovetail overlaps only, the max overhang size is <--aln-dovetail>, the value should be times of 256, -1 to disable filtering, default: 256]' \
+        '--aln-strand[1: forward, 2: reverse, 3: both. Please don'\''t change the deault vaule 3, unless you exactly know what you are doing]' \
+        '--aln-maxhit[Max n hits for each read in build graph, default: 1000]' \
+        '--aln-bestn[Use best n hits for each read in build graph, 0: keep all, default: 500 <prefix>.alignments always store all alignments]' \
+        '(-R --realign)'{-R,--realign}'[Enable re-alignment, see --realn-kmer-psize=15, --realn-kmer-subsampling=1, --realn-min-length=2048, --realn-min-match=200, --realn-min-similarity=0.1, --realn-max-var=0.25]' \
+        '--realn-kmer-psize[Set kmer-psize in realignment, (kmer-ksize always eq 0), default:15]' \
+        '--realn-kmer-subsampling[Set kmer-subsampling in realignment, default:1]' \
+        '--realn-min-length[Set aln-min-length in realignment, default: 2048]' \
+        '--realn-min-match[Set aln-min-match in realignment, default: 200]' \
+        '--realn-min-similarity[Set aln-min-similarity in realignment, default: 0.1]' \
+        '--realn-max-var[Set aln-max-var in realignment, default: 0.25]' \
+        '(-A --aln-noskip)'{-A,--aln-noskip}'[Even a read was contained in previous alignment, still align it against other reads]' \
+        '--keep-multiple-alignment-parts[By default, wtdbg will keep only the best alignment between two reads after chainning. This option will disable it, and keep multiple]' \
+        '--verbose[See -v. -vvvv will display the most detailed information]' \
+        '--quiet[See -q]' \
+        '--limit-input[Limit the input sequences to at most <int> M bp. Usually for test]' \
+        '(-L --tidy-reads)'{-L,--tidy-reads}'[Default: 0. Pick longest subreads if possible. Filter reads less than <--tidy-reads>. Please add --tidy-name or set --tidy-reads to nagetive value if want to rename reads. Set to 0 bp to disable tidy. Suggested value is 5000 for pacbio RSII reads]' \
+        '--tidy-name[Rename reads into '\''S%010d'\'' format. The first read is named as S0000000001]' \
+        '--rdname-filter[A file contains lines of reads name to be discarded in loading. If you want to filter reads by yourself, please also set -X 0]' \
+        '--rdname-includeonly[Reverse manner with --rdname-filter]' \
+        '(-g --genome-size)'{-g,--genome-size}'[Provide genome size, e.g. 100.4m, 2.3g. In this version, it is used with -X/--rdcov-cutoff in selecting reads just after readed all.]' \
+        '(-X --rdcov-cutoff)'{-X,--rdcov-cutoff}'[Default: 50.0. Retaining 50.0 folds of genome coverage, combined with -g and --rdcov-filter.]' \
+        '--rdcov-filter[Default 0. Strategy 0: retaining longest reads. Strategy 1: retaining medain length reads.]' \
+        '--err-free-nodes[Select nodes from error-free-sequences only. E.g. you have contigs assembled from NGS-WGS reads, and long noisy reads. You can type '\''--err-free-seq your_ctg.fa --input your_long_reads.fa --err-free-nodes'\'' to perform assembly somehow act as long-reads scaffolding]' \
+        '--node-len[The default value is 1024, which is times of KBM_BIN_SIZE(always equals 256 bp). It specifies the length of intervals (or call nodes after selecting). kbm indexs sequences into BINs of 256 bp in size, so that many parameter should be times of 256 bp. There are: --node-len, --node-ovl, --aln-min-length, --aln-dovetail . Other parameters are counted in BINs, --dp-max-gap, --dp-max-var .]' \
+        '--node-matched-bins[Min matched bins in a node, default:1]' \
+        '--node-ovl[Default: 256. Max overlap size between two adjacent intervals in any read. It is used in selecting best nodes representing reads in graph]' \
+        '--node-drop[Default: 0.25. Will discard an node when has more this ratio intervals are conflicted with previous generated node]' \
+        '(-e --edge-min)'{-e,--edge-min}'[Default: 3. The minimal depth of a valid edge is set to 3. In another word, Valid edges must be supported by at least 3 reads When the sequence depth is low, have a try with --edge-min 2. Or very high, try --edge-min 4]' \
+        '--edge-max-span[Default: 1024 BINs. Program will build edges of length no large than 1024]' \
+        '--drop-low-cov-edges[Don'\''t attempt to rescue low coverage edges]' \
+        '--node-min[Min depth of an interval to be selected as valid node. Defaultly, this value is automaticly the same with --edge-min.]' \
+        '--node-max[Nodes with too high depth will be regarded as repetitive, and be masked. Default: 200, more than 200 reads contain this node]' \
+        '(--ttr-cutoff-depth --ttr-cutoff-ratio)'{--ttr-cutoff-depth,--ttr-cutoff-ratio}'[Tiny Tandom Repeat. A node located inside ttr will bring noisy in graph, should be masked. The pattern of such nodes is: depth >= <--ttr-cutoff-depth>, and none of their edges have depth greater than depth * <--ttr-cutoff-ratio 0.5> set --ttr-cutoff-depth 0 to disable ttr masking]' \
+        '--dump-kbm[Dump kbm index into file for loaded by `kbm` or `wtdbg`]' \
+        '--dump-seqs[Dump kbm index (only sequences, no k-mer index) into file for loaded by `kbm` or `wtdbg` Please note: normally load it with --load-kbm, not with --load-seqs]' \
+        '--load-kbm[Instead of reading sequences and building kbm index, which is time-consumed, loading kbm-index from already dumped file. Please note that, once kbm-index is mmaped by kbm -R <kbm-index> start, will just get the shared memory in minute time. See `kbm` -R <your_seqs.kbmidx> \[start | stop\]]' \
+        '--load-seqs[Similar with --load-kbm, but only use the sequences in kbmidx, and rebuild index in process'\''s RAM.]' \
+        '--load-alignments[`wtdbg` output reads'\'' alignments into <--prefix>.alignments, program can load them to fastly build assembly graph. Or you can offer other source of alignments to `wtdbg`. When --load-alignment, will only reading long sequences but skip building kbm index You can type --load-alignments <file> more than once to load alignments from many files]' \
+        '--load-clips[Combined with --load-nodes. Load reads clips. You can find it in `wtdbg`'\''s <--prefix>.clps]' \
+        '--load-nodes[Load dumped nodes from previous execution for fast construct the assembly graph, should be combined with --load-clips. You can find it in `wtdbg`'\''s <--prefix>.1.nodes]' \
+        '--bubble-step[Max step to search a bubble, meaning the max step from the starting node to the ending node. Default: 40]' \
+        '--tip-step[Max step to search a tip, 10]' \
+        '--ctg-min-length[Min length of contigs to be output, 5000]' \
+        '--ctg-min-nodes[Min num of nodes in a contig to be ouput, 3]' \
+        '--minimal-output[Will generate as less output files (<--prefix>.*) as it can]' \
+        '--bin-complexity-cutoff[Used in filtering BINs. If a BIN has less indexed valid kmers than <--bin-complexity-cutoff 2>, masks it.]' \
+        '--no-local-graph-analysis[Before building edges, for each node, local-graph-analysis reads all related reads and according nodes, and builds a local graph to judge whether to mask it The analysis aims to find repetitive nodes]' \
+        '--no-read-length-sort[Defaultly, `wtdbg` sorts input sequences by length DSC. The order of reads affects the generating of nodes in selecting important intervals]' \
+        '--keep-isolated-nodes[In graph clean, `wtdbg` normally masks isolated (orphaned) nodes]' \
+        '--no-read-clip[Defaultly, `wtdbg` clips a input sequence by analyzing its overlaps to remove high error endings, rolling-circle repeats (see PacBio CCS), and chimera. When building edges, clipped region won'\''t contribute. However, `wtdbg` will use them in the final linking of unitigs]' \
+        '--no-chainning-clip[Defaultly, performs alignments chainning in read clipping ** If '\''--aln-bestn 0 --no-read-clip'\'', alignments will be parsed directly, and less RAM spent on recording alignments]' \
+        '1: :_commands' \
+        '*: :_files'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        esac
+        ;;
+     esac
+
+}
+

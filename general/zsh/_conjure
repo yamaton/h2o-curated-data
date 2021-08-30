@@ -1,0 +1,53 @@
+#compdef _conjure conjure
+
+# Generated with h2o 0.1.18
+
+    function _conjure_conjure {
+        _arguments \
+            "*: :_files"
+
+    }
+
+
+function _conjure {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'conjure:-size 100x100 -color blue -foo bar script.msl'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        '-monitor[monitor progress]' \
+        '-quiet[suppress all warning messages]' \
+        '-regard-warnings[pay attention to warning messages]' \
+        '-seed[seed a new sequence of pseudo-random numbers]' \
+        '-verbose[print detailed information about the image]' \
+        '-debug[display copious debugging information]' \
+        '-help[print program options]' \
+        '-list[print a list of supported option arguments]' \
+        '-log[format of debugging information]' \
+        '-version[print version information]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (conjure)
+            _conjure_conjure
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+

@@ -1,0 +1,266 @@
+#compdef _seqtk seqtk
+
+# Generated with h2o 0.1.18
+
+    function _seqtk_seq {
+        _arguments \
+            '-X[mask bases with quality higher than INT \[255\]]' \
+            '-n[masked bases converted to CHAR; 0 for lowercase \[0\]]' \
+            '-l[number of residues per line; 0 for 2^32-1 \[0\]]' \
+            '-Q[quality shift: ASCII-INT gives base quality \[33\]]' \
+            '-s[random seed (effective with -f) \[11\]]' \
+            '-f[sample FLOAT fraction of sequences \[1\]]' \
+            '-M[mask regions in BED or name list FILE \[null\]]' \
+            '-L[drop sequences with length shorter than INT \[0\]]' \
+            '-F[fake FASTQ quality \[\]]' \
+            '-c[mask complement region (effective with -M)]' \
+            '-r[reverse complement]' \
+            '-A[force FASTA output (discard quality)]' \
+            '-C[drop comments at the header lines]' \
+            '-N[drop sequences containing ambiguous bases]' \
+            '-1[output the 2n-1 reads only]' \
+            '-2[output the 2n reads only]' \
+            '-V[shift quality by '\''(-Q) - 33'\'']' \
+            '-U[convert all bases to uppercases]' \
+            '-S[strip of white spaces in sequences]' \
+            "*: :_files"
+
+    }
+
+    function _seqtk_comp {
+        _arguments \
+            '-u[Upper only]' \
+            '-r[Specify input BED file]:file:_files' \
+            "*: :_files"
+
+    }
+
+    function _seqtk_sample {
+        _arguments \
+            '-s[RNG seed \[11\]]' \
+            '-2[2-pass mode: twice as slow but with much reduced memory]' \
+            "*: :_files"
+
+    }
+
+    function _seqtk_subseq {
+        _arguments \
+            '-t[TAB delimited output]' \
+            '-l[sequence line length \[0\]]' \
+            "*: :_files"
+
+    }
+
+    function _seqtk_fqchk {
+        _arguments \
+            '-q[Quality value. Set 0 to get the distribution of all quality values.]' \
+            "*: :_files"
+
+    }
+
+    function _seqtk_mergepe {
+        _arguments \
+            "*: :_files"
+
+    }
+
+    function _seqtk_trimfq {
+        _arguments \
+            '-q[error rate threshold (disabled by -b/-e) \[0.05\]]' \
+            '-l[maximally trim down to INT bp (disabled by -b/-e) \[30\]]' \
+            '-b[trim INT bp from left (non-zero to disable -q/-l) \[0\]]' \
+            '-e[trim INT bp from right (non-zero to disable -q/-l) \[0\]]' \
+            '-L[retain at most INT bp from the 5'\''-end (non-zero to disable -q/-l) \[0\]]' \
+            '-Q[force FASTQ output]' \
+            "*: :_files"
+
+    }
+
+    function _seqtk_hety {
+        _arguments \
+            '-w[window size \[50000\]]' \
+            '-t[# start positions in a window \[5\]]' \
+            '-m[treat lowercases as masked]' \
+            "*: :_files"
+
+    }
+
+    function _seqtk_gc {
+        _arguments \
+            '-w[identify high-AT regions]' \
+            '-f[min GC fraction (or AT fraction for -w) \[0.60\]]' \
+            '-l[min region length to output \[20\]]' \
+            '-x[X-dropoff \[10.0\]]' \
+            "*: :_files"
+
+    }
+
+    function _seqtk_mutfa {
+        _arguments \
+            "*: :_files"
+
+    }
+
+    function _seqtk_mergefa {
+        _arguments \
+            '-q[quality threshold \[0\]]' \
+            '-i[take intersection]' \
+            '-m[convert to lowercase when one of the input base is N]' \
+            '-r[pick a random allele from het]' \
+            '-h[suppress hets in the input]' \
+            "*: :_files"
+
+    }
+
+    function _seqtk_famask {
+        _arguments \
+            "*: :_files"
+
+    }
+
+    function _seqtk_dropse {
+        _arguments \
+            "*: :_files"
+
+    }
+
+    function _seqtk_rename {
+        _arguments \
+            "*: :_files"
+
+    }
+
+    function _seqtk_randbase {
+        _arguments \
+            "*: :_files"
+
+    }
+
+    function _seqtk_cutN {
+        _arguments \
+            '-n[min size of N tract \[1000\]]' \
+            '-p[penalty for a non-N \[10\]]' \
+            '-g[print gaps only, no sequence]' \
+            "*: :_files"
+
+    }
+
+    function _seqtk_listhet {
+        _arguments \
+            "*: :_files"
+
+    }
+
+
+function _seqtk {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'seq:common transformation of FASTA/Q'
+            'comp:get the nucleotide composition of FASTA/Q'
+            'sample:subsample sequences'
+            'subseq:extract subsequences from FASTA/Q'
+            'fqchk:fastq QC (base/quality summary)'
+            'mergepe:interleave two PE FASTA/Q files'
+            'trimfq:trim FASTQ using the Phred algorithm'
+            'hety:regional heterozygosity'
+            'gc:identify high- or low-GC regions'
+            'mutfa:point mutate FASTA at specified positions'
+            'mergefa:merge two FASTA/Q files'
+            'famask:apply a X-coded FASTA to a source FASTA'
+            'dropse:drop unpaired from interleaved PE FASTA/Q'
+            'rename:rename sequence names'
+            'randbase:choose a random base from hets'
+            'cutN:cut sequence at long N'
+            'listhet:extract the position of each het'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (seq)
+            _seqtk_seq
+            ;;
+
+        (comp)
+            _seqtk_comp
+            ;;
+
+        (sample)
+            _seqtk_sample
+            ;;
+
+        (subseq)
+            _seqtk_subseq
+            ;;
+
+        (fqchk)
+            _seqtk_fqchk
+            ;;
+
+        (mergepe)
+            _seqtk_mergepe
+            ;;
+
+        (trimfq)
+            _seqtk_trimfq
+            ;;
+
+        (hety)
+            _seqtk_hety
+            ;;
+
+        (gc)
+            _seqtk_gc
+            ;;
+
+        (mutfa)
+            _seqtk_mutfa
+            ;;
+
+        (mergefa)
+            _seqtk_mergefa
+            ;;
+
+        (famask)
+            _seqtk_famask
+            ;;
+
+        (dropse)
+            _seqtk_dropse
+            ;;
+
+        (rename)
+            _seqtk_rename
+            ;;
+
+        (randbase)
+            _seqtk_randbase
+            ;;
+
+        (cutN)
+            _seqtk_cutN
+            ;;
+
+        (listhet)
+            _seqtk_listhet
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+

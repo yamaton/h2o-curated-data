@@ -1,0 +1,154 @@
+#compdef _trycycler trycycler
+
+# Generated with h2o 0.1.18
+
+    function _trycycler_subsample {
+        _arguments \
+            '(-r --reads)'{-r,--reads}'[Input long reads (FASTQ format)]' \
+            '(-o --out_dir)'{-o,--out_dir}'[Output directory]' \
+            '--count[Number of subsampled read sets to output (default: 12)]' \
+            '--genome_size[Approximate genome size (default: auto)]' \
+            '--min_read_depth[Minimum allowed read depth (default: 25.0)]' \
+            '(-t --threads)'{-t,--threads}'[Number of threads to use for alignment (default: 4)]' \
+            '(-h --help)'{-h,--help}'[Show this help message and exit]' \
+            '--version[Show program'\''s version number and exit]' \
+            "*: :_files"
+
+    }
+
+    function _trycycler_cluster {
+        _arguments \
+            '(-a --assemblies)'{-a,--assemblies}'[Input assemblies whose contigs will be clustered (multiple FASTA files)]' \
+            '(-r --reads)'{-r,--reads}'[Long reads (FASTQ format) used to generate the assemblies]' \
+            '(-o --out_dir)'{-o,--out_dir}'[Output directory]' \
+            '--min_contig_len[Exclude contigs shorter than this many base pairs in length (default: 1000)]' \
+            '--min_contig_depth[Exclude contigs with less than this much read depth relative to the mean read depth (default: 0.1)]' \
+            '--distance[Mash distance complete-linkage clustering threshold (default: 0.01)]' \
+            '(-t --threads)'{-t,--threads}'[Number of threads to use for alignment (default: 4)]' \
+            '(-h --help)'{-h,--help}'[Show this help message and exit]' \
+            '--version[Show program'\''s version number and exit]' \
+            "*: :_files"
+
+    }
+
+    function _trycycler_reconcile {
+        _arguments \
+            '(-c --cluster_dir)'{-c,--cluster_dir}'[Cluster directory (should contain a 1_contigs subdirectory)]' \
+            '(-r --reads)'{-r,--reads}'[Long reads (FASTQ format) used to generate the assemblies]' \
+            '--linear[The input contigs are not circular (default: assume the input contigs are circular)]' \
+            '(-t --threads)'{-t,--threads}'[Number of threads to use for alignment (default: 4)]' \
+            '--verbose[Display extra output (for debugging) (default: False)]' \
+            '--max_mash_dist[Maximum allowed pairwise Mash distance (default: 0.02)]' \
+            '--max_length_diff[Maximum allowed pairwise relative length difference (default: 1.1)]' \
+            '--max_add_seq[Maximum allowed sequence length to be added in order to fix circularisation (default: 1000)]' \
+            '--max_add_seq_percent[Maximum allowed percent relative sequence length to be added in order to fix circularisation (default: 5.0)]' \
+            '--max_trim_seq[Maximum allowed sequence length to be trimmed in order to fix circularisation (default: 50000)]' \
+            '--max_trim_seq_percent[Maximum allowed percent relative sequence length to be trimmed in order to fix circularisation (default: 10.0)]' \
+            '--min_identity[Minimum allowed pairwise percent identity (default: 98.0)]' \
+            '--max_indel_size[Maximum allowed pairwise indel size (default: 250)]' \
+            '(-h --help)'{-h,--help}'[Show this help message and exit]' \
+            '--version[Show program'\''s version number and exit]' \
+            "*: :_files"
+
+    }
+
+    function _trycycler_msa {
+        _arguments \
+            '(-c --cluster_dir)'{-c,--cluster_dir}'[Cluster directory (should contain a 1_contigs subdirectory)]' \
+            '(-k --kmer)'{-k,--kmer}'[K-mer size used for sequence partitioning (default: 32)]' \
+            '(-s --step)'{-s,--step}'[Step size used for sequence partitioning (default: 1000)]' \
+            '(-l --lookahead)'{-l,--lookahead}'[Look-ahead margin used for sequence partitioning (default: 10000)]' \
+            '(-t --threads)'{-t,--threads}'[Number of threads to use for multiple sequence alignment (default: 4)]' \
+            '(-h --help)'{-h,--help}'[Show this help message and exit]' \
+            '--version[Show program'\''s version number and exit]' \
+            "*: :_files"
+
+    }
+
+    function _trycycler_partition {
+        _arguments \
+            '(-c --cluster_dirs)'{-c,--cluster_dirs}'[Cluster directories (each should contain 2_all_seqs.fasta and 3_pairwise_alignments files)]' \
+            '(-r --reads)'{-r,--reads}'[Long reads (FASTQ format) used to generate the assemblies]' \
+            '--min_aligned_len[Do not consider reads with less than this many bases aligned (default: 1000)]' \
+            '--min_read_cov[Do not consider reads with less than this percentages of their length covered by alignments (default: 90.0)]' \
+            '(-t --threads)'{-t,--threads}'[Number of threads to use for alignment (default: 4)]' \
+            '(-h --help)'{-h,--help}'[Show this help message and exit]' \
+            '--version[Show program'\''s version number and exit]' \
+            "*: :_files"
+
+    }
+
+    function _trycycler_consensus {
+        _arguments \
+            '(-c --cluster_dir)'{-c,--cluster_dir}'[Cluster directory (should contain 2_all_seqs.fasta, 3_pairwise_alignments and 4_reads.fastq files)]' \
+            '--linear[The input contigs are not circular (default: assume the input contigs are circular)]' \
+            '--min_aligned_len[Do not consider reads with less than this many bases aligned (default: 1000)]' \
+            '--min_read_cov[Do not consider reads with less than this percentages of their length covered by alignments (default: 90.0)]' \
+            '(-t --threads)'{-t,--threads}'[Number of threads to use for alignment (default: 4)]' \
+            '--verbose[Display extra output (for debugging) (default: False)]' \
+            '(-h --help)'{-h,--help}'[Show this help message and exit]' \
+            '--version[Show program'\''s version number and exit]' \
+            "*: :_files"
+
+    }
+
+
+function _trycycler {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'subsample:subsample a long-read set'
+            'cluster:cluster contigs by similarity'
+            'reconcile:reconcile contig sequences'
+            'msa:multiple sequence alignment'
+            'partition:partition reads by cluster'
+            'consensus:derive a consensus sequence'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        '(-h --help)'{-h,--help}'[Show this help message and exit]' \
+        '--version[Show program'\''s version number and exit]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (subsample)
+            _trycycler_subsample
+            ;;
+
+        (cluster)
+            _trycycler_cluster
+            ;;
+
+        (reconcile)
+            _trycycler_reconcile
+            ;;
+
+        (msa)
+            _trycycler_msa
+            ;;
+
+        (partition)
+            _trycycler_partition
+            ;;
+
+        (consensus)
+            _trycycler_consensus
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+

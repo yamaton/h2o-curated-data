@@ -1,0 +1,109 @@
+#compdef _platanus_b platanus_b
+
+# Generated with h2o 0.1.18
+
+    function _platanus_b_assemble {
+        _arguments \
+            '-o[prefix of output files (default out, length <= 200)]' \
+            '-f[reads file (fasta or fastq, number <= 100)]' \
+            '-k[initial k-mer size (default 32)]' \
+            '-K[maximum-k-mer factor (maximum-k = FLOAT*read-length, default  0.5)]' \
+            '-s[step size of k-mer extension (>= 1, default 10)]' \
+            '-n[initial k-mer coverage cutoff (default 0, 0 means auto)]' \
+            '-c[minimun k-mer coverage (default 1)]' \
+            '-a[k-mer extension safety level (default 10.0)]' \
+            '-u[maximum difference for bubble crush (identity, default 0)]' \
+            '-d[maximum difference for branch cutting (coverage ratio, default 0.5)]' \
+            '-e[k-mer coverage depth (k = initial k-mer size specified by -k) of homozygous region (default auto)]' \
+            '-t[number of threads (<= 100, default 1)]' \
+            '-m[memory limit for making kmer distribution (GB, >=1, default 16)]' \
+            '-tmp[directory for temporary files (default .)]' \
+            '-kmer_occ_only[only output k-mer occurrence table (out_kmer_occ.bin; default off)]' \
+            '-repeat[mode to assemble repetitive sequences (e.g. 16s rRNA))]' \
+            "*: :_files"
+
+    }
+
+    function _platanus_b_combine {
+        _arguments \
+            '-o[prefix of output file and directory (do not use "/", default out, length <= 200)]' \
+            '-c[contig (or scaffold) file (fasta format)]' \
+            '-gc[Guiding contig file; i.e. other assemblies, synthetic long-reads or corrected reads (fasta or fastq)]' \
+            '-p[PacBio long-read file (fasta or fastq)]' \
+            '-ont[Oxford Nanopore long-read file (fasta or fastq)]' \
+            '-t[number of threads (default 1)]' \
+            '-tmp[directory for temporary files (default .)]' \
+            '-sub_bin[directory for binary files which platanus_b use internally (e.g. minimap2) (default /home/vierbein/repos/Platanus_B/sub_bin)]' \
+            '-no_gap_close[not close gaps by guiding contigs (default, false)]' \
+            '-keep_file[keep intermediate files (default, off)]' \
+            "*: :_files"
+
+    }
+
+    function _platanus_b_iterate {
+        _arguments \
+            '-o[prefix of output file and directory (do not use "/", default out, length <= 200)]' \
+            '-c[contig (or scaffold) file (fasta format)]' \
+            '-i[number of iterations (default 6)]' \
+            '-l[-l value of "scaffold" step]' \
+            '-u[maximum difference for bubble crush (identity, default 0)]' \
+            '-ip[lib_id inward_pair_file (reads in 1 file, fasta or fastq)]' \
+            '-IP[lib_id inward_pair_files (reads in 2 files, fasta or fastq)]' \
+            '-op[lib_id outward_pair_file (reads in 1 file, fasta or fastq)]' \
+            '-OP[lib_id outward_pair_files (reads in 2 files, fasta or fastq)]' \
+            '-ont[Oxford Nanopore long-read file (fasta or fastq)]' \
+            '-p[PacBio long-read file (fasta or fastq)]' \
+            '-gc[Guiding contig file; i.e. other assemblies, synthetic long-reads or corrected reads (fasta or fastq)]' \
+            '-t[number of threads (default 1)]' \
+            '-m[memory limit for making kmer distribution (GB, >=1, default 1)]' \
+            '-tmp[directory for temporary files (default .)]' \
+            '-sub_bin[directory for binary files which platanus_b use internally (e.g. minimap2) (default /home/vierbein/repos/Platanus_B/sub_bin)]' \
+            '-keep_file[keep intermediate files (default, off)]' \
+            '-trim_overlap[trim overlapping edges of scaffolds (default, off)]' \
+            "*: :_files"
+
+    }
+
+
+function _platanus_b {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'assemble:assemble'
+            'combine:combine'
+            'iterate:iterate'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (assemble)
+            _platanus_b_assemble
+            ;;
+
+        (combine)
+            _platanus_b_combine
+            ;;
+
+        (iterate)
+            _platanus_b_iterate
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+

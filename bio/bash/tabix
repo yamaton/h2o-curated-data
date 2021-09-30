@@ -1,0 +1,30 @@
+# Auto-generated with h2o
+
+_tabix()
+{
+    local i=1 cmd cur word_list
+    cur="${COMP_WORDS[COMP_CWORD]}"
+
+    # take the last word that's NOT starting with -
+    while [[ ( "$i" < "$COMP_CWORD" ) ]]; do
+        local s="${COMP_WORDS[i]}"
+        case "$s" in
+          -*) ;;
+          *)
+            cmd="$s"
+            ;;
+        esac
+        (( i++ ))
+    done
+
+    case "$cmd" in
+      *)
+          word_list="  -0 --zero-based -b --begin -c --comment -C --csi -e --end -f --force -m --min-shift -p --preset -s --sequence -S --skip-lines -h --print-header -H --only-header -l --list-chroms -r --reheader -R --regions -T --targets -D --cache --separate-regions --verbosity" 
+          COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+          ;;
+    esac
+
+}
+
+## -o bashdefault and -o default are fallback
+complete -o bashdefault -o default -F _tabix tabix

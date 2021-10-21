@@ -21,7 +21,7 @@ options:
   - names:
       - --events-backend
     argument: string
-    description: Events backend to use ("file"|"journald"|"none") (default "journald")
+    description: Events backend to use ("file"|"journald"|"none") (default "file")
   - names:
       - --help
     argument: ""
@@ -82,11 +82,11 @@ options:
   - names:
       - --tmpdir
     argument: string
-    description: 'Path to the tmp directory for libpod state content.   Note: use the environment variable ''TMPDIR'' to change the temporary storage location for container images, ''/var/tmp''.'
+    description: Path to the tmp directory for libpod state content.
   - names:
       - --url
     argument: string
-    description: URL to access Podman service (CONTAINER_HOST) (default "unix:/run/user/1000/podman/podman.sock")
+    description: URL to access Podman service (CONTAINER_HOST) (default "unix:/tmp/podman-run-1000/podman/podman.sock")
   - names:
       - -v
       - --version
@@ -98,72 +98,367 @@ subcommands:
     options:
       - names:
           - --detach-keys
-        argument: sequence
-        description: 'Specify the key sequence for detaching a container. Format is a single character [a-Z] or one or more ctrl-<value> characters where <value> is one of: a-z, @, ^, [, , or _. Specifying "" will disable this feature. The default is ctrl-p,ctrl-q.'
+        argument: '[a-Z]'
+        description: 'Select the key sequence for detaching a container. Format is a single character [a-Z] or a comma separated sequence of `ctrl-<value>`, where `<value>` is one of: `a-z`, `@`, `^`, `[`, `\`, `]`, `^` or `_` (default "ctrl-p,ctrl-q")'
       - names:
-          - --latest
           - -l
+          - --latest
         argument: ""
-        description: 'Instead of providing the container ID or name, use the last created container. If other methods than Podman are used to run containers such as CRI-O, the last started container could be from either of those methods. The default is false. IMPORTANT: This OPTION is not available with the remote Podman client. This OPTION does not need a container name or ID as input argument.'
+        description: Act on the latest container podman is aware of Not supported with the "--remote" flag
       - names:
           - --no-stdin
         argument: ""
-        description: Do not attach STDIN. The default is false.
+        description: Do not attach STDIN. The default is false
       - names:
           - --sig-proxy
         argument: ""
-        description: Proxy received signals to the process (non-TTY mode only). SIGCHLD, SIGSTOP, and SIGKILL are not proxied. The default is true.
+        description: Proxy received signals to the process (default true)
+  - name: auto-update
+    description: Auto update containers according to their auto-update policy
+    options:
+      - names:
+          - --authfile
+        argument: string
+        description: Path to the authentication file. Use REGISTRY_AUTH_FILE environment variable to override
+      - names:
+          - --dry-run
+        argument: ""
+        description: Check for pending updates
+      - names:
+          - --format
+        argument: string
+        description: Change the output format to JSON or a Go template
   - name: build
     description: Build an image using instructions from Containerfiles
     options:
       - names:
-          - --manifest
-        argument: ma
-        description: nifest
-      - names:
-          - --timestamp
-        argument: s
-        description: econds
+          - --add-host
+        argument: host:ip
+        description: add a custom host-to-IP mapping (host:ip) (default [])
       - names:
           - --annotation
-        argument: run.oci.keep_original_groups=1.
-        description: --disable-compression, -D
+        argument: stringArray
+        description: Set metadata for an image (default [])
+      - names:
+          - --arch
+        argument: string
+        description: set the ARCH of the image to the provided value instead of the architecture of the host (default "amd64")
+      - names:
+          - --authfile
+        argument: string
+        description: path of the authentication file.
+      - names:
+          - --build-arg
+        argument: argument=value
+        description: argument=value to supply to the builder
+      - names:
+          - --cache-from
+        argument: string
+        description: Images to utilise as potential cache sources. The build process does not currently support caching so this is a NOOP.
+      - names:
+          - --cap-add
+        argument: strings
+        description: add the specified capability when running (default [])
+      - names:
+          - --cap-drop
+        argument: strings
+        description: drop the specified capability when running (default [])
+      - names:
+          - --cert-dir
+        argument: string
+        description: use certificates at the specified path to access the registry
+      - names:
+          - --cgroup-parent
+        argument: string
+        description: optional parent cgroup for the container
+      - names:
+          - --cni-plugin-path
+        argument: path
+        description: path of CNI network plugins (default "/usr/libexec/cni:/opt/cni/bin")
+      - names:
+          - --compress
+        argument: ""
+        description: This is legacy option, which has no effect on the image
+      - names:
+          - --cpu-period
+        argument: uint
+        description: limit the CPU CFS (Completely Fair Scheduler) period
+      - names:
+          - --cpu-quota
+        argument: int
+        description: limit the CPU CFS (Completely Fair Scheduler) quota
+      - names:
+          - -c
+          - --cpu-shares
+        argument: uint
+        description: CPU shares (relative weight)
+      - names:
+          - --cpuset-cpus
+        argument: string
+        description: CPUs in which to allow execution (0-3, 0,1)
+      - names:
+          - --cpuset-mems
+        argument: string
+        description: memory nodes (MEMs) in which to allow execution (0-3, 0,1). Only effective on NUMA systems.
+      - names:
+          - --creds
+        argument: '[username[:password]]'
+        description: use [username[:password]] for accessing the registry
+      - names:
+          - --decryption-key
+        argument: strings
+        description: key needed to decrypt the image
+      - names:
+          - --device
+        argument: stringArray
+        description: Additional devices to be used within containers (default [])
+      - names:
+          - -D
+          - --disable-compression
+        argument: ""
+        description: don't compress layers by default (default true)
+      - names:
+          - --disable-content-trust
+        argument: ""
+        description: This is a Docker specific option and is a NOOP
+      - names:
+          - --dns-option
+        argument: strings
+        description: Set custom DNS options
+      - names:
+          - --dns-search
+        argument: strings
+        description: Set custom DNS search domains
+      - names:
+          - -f
+          - --file
+        argument: pathname or URL
+        description: pathname or URL of a Dockerfile
+      - names:
+          - --force-rm
+        argument: ""
+        description: Always remove intermediate containers after a build, even if the build is unsuccessful. (default true)
+      - names:
+          - --format
+        argument: format
+        description: format of the built image's manifest and metadata. Use BUILDAH_FORMAT environment variable to override. (default "oci")
+      - names:
+          - --from
+        argument: string
+        description: image name used to replace the value in the first FROM instruction in the Containerfile
+      - names:
+          - --http-proxy
+        argument: ""
+        description: pass through HTTP Proxy environment variables (default true)
+      - names:
+          - --ignorefile
+        argument: string
+        description: path to an alternate .dockerignore file
+      - names:
+          - --iidfile
+        argument: file
+        description: file to write the image ID to
+      - names:
+          - --ipc
+        argument: path
+        description: '''private'', path of IPC namespace to join, or ''host'''
+      - names:
+          - --isolation
+        argument: type
+        description: type of process isolation to use. Use BUILDAH_ISOLATION environment variable to override. (default "rootless")
+      - names:
+          - --jobs
+        argument: int
+        description: how many stages to run in parallel (default 1)
+      - names:
+          - --label
+        argument: stringArray
+        description: Set metadata for an image (default [])
+      - names:
+          - --layers
+        argument: ""
+        description: cache intermediate layers during build. Use BUILDAH_LAYERS environment variable to override. (default true)
+      - names:
+          - --logfile
+        argument: file
+        description: log to file instead of stdout/stderr
+      - names:
+          - --manifest
+        argument: string
+        description: add the image to the specified manifest list. Creates manifest if it does not exist
+      - names:
+          - -m
+          - --memory
+        argument: string
+        description: 'memory limit (format: <number>[<unit>], where unit = b, k, m or g)'
+      - names:
+          - --memory-swap
+        argument: string
+        description: 'swap limit equal to memory plus swap: ''-1'' to enable unlimited swap'
+      - names:
+          - --network
+        argument: string
+        description: '''private'', ''none'', ''ns:path'' of network namespace to join, or ''host'''
+      - names:
+          - --no-cache
+        argument: ""
+        description: Do not use existing cached images for the container build. Build from the start with a new set of cached layers.
+      - names:
+          - --os
+        argument: string
+        description: set the OS to the provided value instead of the current operating system of the host (default "linux")
+      - names:
+          - --pid
+        argument: path
+        description: private, path of PID namespace to join, or 'host'
+      - names:
+          - --platform
+        argument: linux/arm
+        description: set the OS/ARCH to the provided value instead of the current operating system and architecture of the host (for example linux/arm) (default "linux/amd64")
+      - names:
+          - --pull
+        argument: ""
+        description: Always attempt to pull the image (errors are fatal) (default true)
+      - names:
+          - --pull-always
+        argument: ""
+        description: pull the image even if the named image is present in store
+      - names:
+          - --pull-never
+        argument: ""
+        description: do not pull the image, use the image present in store if available
+      - names:
+          - -q
+          - --quiet
+        argument: ""
+        description: refrain from announcing build instructions and image read/write progress
+      - names:
+          - --rm
+        argument: ""
+        description: Remove intermediate containers after a successful build (default true)
+      - names:
+          - --secret
+        argument: stringArray
+        description: secret file to expose to the build
+      - names:
+          - --security-opt
+        argument: stringArray
+        description: security options (default [])
+      - names:
+          - --shm-size
+        argument: <number><unit>
+        description: size of '/dev/shm'. The format is <number><unit>. (default "65536k")
+      - names:
+          - --sign-by
+        argument: FINGERPRINT
+        description: sign the image using a GPG key with the specified FINGERPRINT
+      - names:
+          - --squash
+        argument: ""
+        description: squash newly built layers into a single new layer
+      - names:
+          - --squash-all
+        argument: ""
+        description: Squash all layers into a single layer
+      - names:
+          - --stdin
+        argument: ""
+        description: pass stdin into containers
+      - names:
+          - -t
+          - --tag
+        argument: name
+        description: tagged name to apply to the built image
+      - names:
+          - --target
+        argument: string
+        description: set the target build stage to build
+      - names:
+          - --timestamp
+        argument: int
+        description: set created timestamp to the specified epoch seconds to allow for deterministic builds, defaults to current time
+      - names:
+          - --tls-verify
+        argument: ""
+        description: require HTTPS and verify certificates when accessing the registry (default true)
+      - names:
+          - --ulimit
+        argument: strings
+        description: ulimit options (default [nproc=32768:32768])
+      - names:
+          - --userns
+        argument: path
+        description: '''container'', path of user namespace to join, or ''host'''
+      - names:
+          - --userns-gid-map
+        argument: containerGID:hostGID:length
+        description: containerGID:hostGID:length GID mapping to use in user namespace
+      - names:
+          - --userns-gid-map-group
+        argument: name
+        description: name of entries from /etc/subgid to use to set user namespace GID mapping
+      - names:
+          - --userns-uid-map
+        argument: containerUID:hostUID:length
+        description: containerUID:hostUID:length UID mapping to use in user namespace
+      - names:
+          - --userns-uid-map-user
+        argument: name
+        description: name of entries from /etc/subuid to use to set user namespace UID mapping
+      - names:
+          - --uts
+        argument: path
+        description: private, :path of UTS namespace to join, or 'host'
+      - names:
+          - --variant
+        argument: variant
+        description: override the variant of the specified image
+      - names:
+          - -v
+          - --volume
+        argument: stringArray
+        description: bind mount a volume into the container
   - name: commit
     description: Create new image based on the changed container
     options:
       - names:
-          - --author
           - -a
-        argument: author
-        description: Set the author for the committed image.
+          - --author
+        argument: string
+        description: Set the author for the image committed
       - names:
-          - --change
           - -c
-        argument: instruction
-        description: 'Apply the following possible instructions to the created image:'
+          - --change
+        argument: stringArray
+        description: 'Apply the following possible instructions to the created image (default []): CMD | ENTRYPOINT | ENV | EXPOSE | LABEL | ONBUILD | STOPSIGNAL | USER | VOLUME | WORKDIR'
+      - names:
+          - -f
+          - --format
+        argument: Format
+        description: Format of the image manifest and metadata (default "oci")
       - names:
           - --iidfile
-        argument: ImageIDfile
-        description: Write the image ID to the file.
+        argument: file
+        description: file to write the image ID to
       - names:
           - --include-volumes
         argument: ""
-        description: Include in the committed image any volumes added to the container by the --volume or --mount OPTIONS to the podman create and podman run commands. The default is false.
+        description: Include container volumes as image volumes
       - names:
-          - --message
           - -m
-        argument: message
-        description: 'Set commit message for committed image. IMPORTANT: The message field is not supported in oci format.'
+          - --message
+        argument: string
+        description: Set commit message for imported image
       - names:
-          - --pause
           - -p
+          - --pause
         argument: ""
-        description: Pause the container when creating an image. The default is false.
+        description: Pause container during commit
       - names:
-          - --quiet
           - -q
+          - --quiet
         argument: ""
-        description: Suppresses output. The default is false.
+        description: Suppress output
   - name: container
     description: Manage containers
     options: []
@@ -171,640 +466,604 @@ subcommands:
     description: Copy files/folders between a container and the local filesystem
     options:
       - names:
-          - --archive
           - -a
-        argument: true | false
-        description: Archive mode (copy all uid/gid information). When set to true, files copied to a container will have changed ownership to the primary UID/GID of the container. When set to false, maintain uid/gid from archive sources instead of changing them to the primary uid/gid of the destination container. The default is true.
+          - --archive
+        argument: ""
+        description: Chown copied files to the primary uid/gid of the destination container. (default true)
   - name: create
     description: Create but do not start a container
     options:
       - names:
           - --add-host
-        argument: host
-        description: Add a custom host-to-IP mapping (host:ip)
+        argument: strings
+        description: Add a custom host-to-IP mapping (host:ip) (default [])
       - names:
           - --annotation
-        argument: key=value
-        description: Add an annotation to the container. The format is key=value. The --annotation option can be set multiple times.
+        argument: strings
+        description: Add annotations to container (key:value)
       - names:
           - --arch
         argument: ARCH
-        description: Override the architecture, defaults to hosts, of the image to be pulled. For example, arm.
+        description: use ARCH instead of the architecture of the machine for choosing images
       - names:
-          - --attach
           - -a
-        argument: location
-        description: Attach to STDIN, STDOUT or STDERR.
+          - --attach
+        argument: strings
+        description: Attach to STDIN, STDOUT or STDERR
       - names:
           - --authfile
-        argument: path
-        description: Path of the authentication file. Default is ${XDG_RUNTIME_DIR}/containers/auth.json
+        argument: string
+        description: Path of the authentication file. Use REGISTRY_AUTH_FILE environment variable to override
       - names:
           - --blkio-weight
-        argument: weight
+        argument: string
         description: Block IO weight (relative weight) accepts a weight value between 10 and 1000.
       - names:
           - --blkio-weight-device
-        argument: weight
-        description: 'Block IO weight (relative device weight, format: DEVICE_NAME:WEIGHT).'
+        argument: DEVICE_NAME:WEIGHT
+        description: 'Block IO weight (relative device weight, format: DEVICE_NAME:WEIGHT)'
       - names:
           - --cap-add
-        argument: capability
-        description: Add Linux capabilities
+        argument: strings
+        description: Add capabilities to the container
       - names:
           - --cap-drop
-        argument: capability
-        description: Drop Linux capabilities
-      - names:
-          - --cgroupns
-        argument: mode
-        description: Set the cgroup namespace mode for the container.
-      - names:
-          - --cgroups
-        argument: mode
-        description: Determines whether the container will create CGroups. Valid values are enabled, disabled, no-conmon, split, which the default being enabled.
-      - names:
-          - --cgroup-parent
-        argument: path
-        description: Path to cgroups under which the cgroup for the container will be created. If the path is not absolute, the path is considered to be relative to the cgroups path of the init process. Cgroups will be created if they do not already exist.
+        argument: strings
+        description: Drop capabilities from the container
       - names:
           - --cgroup-conf
-        argument: KEY=VALUE
-        description: When running on cgroup v2, specify the cgroup file to write to and its value. For example --cgroup-conf=memory.high=1073741824 sets the memory.high limit to 1GB.
+        argument: strings
+        description: Configure cgroup v2 (key=value)
+      - names:
+          - --cgroup-parent
+        argument: string
+        description: Optional parent cgroup for the container
+      - names:
+          - --cgroupns
+        argument: string
+        description: cgroup namespace to use
+      - names:
+          - --cgroups
+        argument: string
+        description: control container cgroup configuration ("enabled"|"disabled"|"no-conmon"|"split") (default "enabled")
       - names:
           - --cidfile
-        argument: id
+        argument: string
         description: Write the container ID to the file
       - names:
           - --conmon-pidfile
-        argument: path
-        description: Write the pid of the conmon process to a file. conmon runs in a separate process than Podman, so this is necessary when using systemd to restart Podman containers. (This option is not available with the remote Podman client)
+        argument: string
+        description: Path to the file that will receive the PID of conmon
       - names:
           - --cpu-period
-        argument: limit
-        description: Set the CPU period for the Completely Fair Scheduler (CFS), which is a duration in microseconds. Once the container's CPU quota is used up, it will not be scheduled to run until the current period ends. Defaults to 100000 microseconds.
+        argument: uint
+        description: Limit the CPU CFS (Completely Fair Scheduler) period
       - names:
           - --cpu-quota
-        argument: limit
-        description: Limit the CPU Completely Fair Scheduler (CFS) quota.
+        argument: int
+        description: Limit the CPU CFS (Completely Fair Scheduler) quota
       - names:
           - --cpu-rt-period
-        argument: microseconds
+        argument: uint
         description: Limit the CPU real-time period in microseconds
       - names:
           - --cpu-rt-runtime
-        argument: microseconds
+        argument: int
         description: Limit the CPU real-time runtime in microseconds
       - names:
           - --cpu-shares
-        argument: shares
+        argument: uint
         description: CPU shares (relative weight)
       - names:
           - --cpus
-        argument: number
-        description: Number of CPUs. The default is 0.0 which means no limit. This is shorthand for --cpu-period and --cpu-quota, so you may only set either
-      - names:
-          - --cpus
-          - --cpu-period
-          - --cpu-quota.
-        argument: and
-        description: On some systems, changing the CPU limits may not be allowed for non-root users. For more details, see
+        argument: float
+        description: Number of CPUs. The default is 0.000 which means no limit
       - names:
           - --cpuset-cpus
-        argument: cpus
+        argument: string
         description: CPUs in which to allow execution (0-3, 0,1)
       - names:
           - --cpuset-mems
-        argument: nodes
+        argument: string
         description: Memory nodes (MEMs) in which to allow execution (0-3, 0,1). Only effective on NUMA systems.
       - names:
           - --device
-        argument: host-device[:container-device][:permissions]
-        description: Add a host device to the container. Optional permissions parameter can be used to specify device permissions, it is combination of r for read, w for write, and m for mknod(2).
+        argument: strings
+        description: Add a host device to the container
       - names:
           - --device-cgroup-rule
-        argument: '"type major:minor mode"'
-        description: 'Add a rule to the cgroup allowed devices list. The rule is expected to be in the format specified in the Linux kernel documentation (Documentation/cgroup-v1/devices.txt):'
+        argument: strings
+        description: Add a rule to the cgroup allowed devices list
       - names:
           - --device-read-bps
-        argument: path
+        argument: strings
         description: Limit read rate (bytes per second) from a device (e.g. --device-read-bps=/dev/sda:1mb)
       - names:
           - --device-read-iops
-        argument: path
+        argument: strings
         description: Limit read rate (IO per second) from a device (e.g. --device-read-iops=/dev/sda:1000)
       - names:
           - --device-write-bps
-        argument: path
+        argument: strings
         description: Limit write rate (bytes per second) to a device (e.g. --device-write-bps=/dev/sda:1mb)
       - names:
           - --device-write-iops
-        argument: path
+        argument: strings
         description: Limit write rate (IO per second) to a device (e.g. --device-write-iops=/dev/sda:1000)
       - names:
           - --disable-content-trust
         argument: ""
-        description: This is a Docker specific option to disable image verification to a Docker registry and is not supported by Podman. This flag is a NOOP and provided solely for scripting compatibility.
+        description: This is a Docker specific option and is a NOOP
       - names:
           - --dns
-        argument: dns
-        description: Set custom DNS servers. Invalid if using --dns and --network that is set to 'none' or container:<name|id>.
+        argument: strings
+        description: Set custom DNS servers
       - names:
           - --dns-opt
-        argument: option
-        description: Set custom DNS options. Invalid if using --dns-opt and --network that is set to 'none' or container:<name|id>.
+        argument: strings
+        description: Set custom DNS options
       - names:
           - --dns-search
-        argument: domain
-        description: Set custom DNS search domains. Invalid if using --dns-search and --network that is set to 'none' or container:<name|id>. (Use --dns-search=. if you don't wish to set the search domain)
+        argument: strings
+        description: Set custom DNS search domains
       - names:
           - --entrypoint
-        argument: '"command" | ''["command", arg1 , ...]'''
+        argument: string
         description: Overwrite the default ENTRYPOINT of the image
       - names:
-          - --env
           - -e
-        argument: env
-        description: Set environment variables
-      - names:
-          - --env-host
-        argument: true|false
-        description: Use host environment inside of the container. See Environment note below for precedence. (This option is not available with the remote Podman client)
+          - --env
+        argument: stringArray
+        description: Set environment variables in container (default [PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin,TERM=xterm])
       - names:
           - --env-file
-        argument: file
-        description: Read in a line delimited file of environment variables. See Environment note below for precedence.
+        argument: strings
+        description: Read in a file of environment variables
+      - names:
+          - --env-host
+        argument: ""
+        description: Use all current host environment variables in container
       - names:
           - --expose
-        argument: port
-        description: Expose a port, or a range of ports (e.g. --expose=3300-3310) to set up port redirection on the host system.
+        argument: strings
+        description: Expose a port or a range of ports
       - names:
           - --gidmap
-        argument: container_gid:host_gid:amount
-        description: GID map for the user namespace. Using this flag will run the container with user namespace enabled. It conflicts with the --userns and --subgidname flags.
+        argument: strings
+        description: GID map to use for the user namespace
       - names:
           - --group-add
-        argument: group|keep-groups
-        description: Add additional groups to assign to primary user running within the container process.
+        argument: strings
+        description: Add additional groups to the primary container process. 'keep-groups' allows container processes to use supplementary groups.
       - names:
           - --health-cmd
-        argument: '"command" | ''["command", arg1 , ...]'''
-        description: Set or alter a healthcheck command for a container. The command is a command to be executed inside your container that determines your container health. The command is required for other healthcheck options to be applied. A value of none disables existing healthchecks.
+        argument: string
+        description: set a healthcheck command for the container ('none' disables the existing healthcheck)
       - names:
           - --health-interval
-        argument: interval
-        description: Set an interval for the healthchecks (a value of disable results in no automatic timer setup) (default "30s")
+        argument: string
+        description: set an interval for the healthchecks (a value of disable results in no automatic timer setup) (default "30s")
       - names:
           - --health-retries
-        argument: retries
-        description: The number of retries allowed before a healthcheck is considered to be unhealthy. The default value is 3.
+        argument: uint
+        description: the number of retries allowed before a healthcheck is considered to be unhealthy (default 3)
       - names:
           - --health-start-period
-        argument: period
-        description: The initialization time needed for a container to bootstrap. The value can be expressed in time format like 2m3s. The default value is 0s
+        argument: string
+        description: the initialization time needed for a container to bootstrap (default "0s")
       - names:
           - --health-timeout
-        argument: timeout
-        description: The maximum time allowed to complete the healthcheck before an interval is considered failed. Like start-period, the value can be expressed in a time format such as 1m22s. The default value is 30s.
+        argument: string
+        description: the maximum time allowed to complete the healthcheck before an interval is considered failed (default "30s")
       - names:
-          - --hostname
           - -h
-        argument: name
-        description: Container host name
-      - names:
-          - --help
-        argument: ""
-        description: Print usage statement
+          - --hostname
+        argument: string
+        description: Set container hostname
       - names:
           - --http-proxy
-        argument: true|false
-        description: By default proxy environment variables are passed into the container if set for the Podman process. This can be disabled by setting the --http-proxy option to false. The environment variables passed in include http_proxy, https_proxy, ftp_proxy, no_proxy, and also the upper case versions of those. This option is only needed when the host system must use a proxy but the container should not use any proxy. Proxy environment variables specified for the container in any other way will override the values that would have been passed through from the host. (Other ways to specify the proxy for the container include passing the values with the --env flag, or hard coding the proxy environment at container build time.) (This option is not available with the remote Podman client)
+        argument: ""
+        description: Set proxy environment variables in the container based on the host proxy vars (default true)
+      - names:
+          - --image-volume
+        argument: string
+        description: Tells podman how to handle the builtin image volumes ("bind"|"tmpfs"|"ignore") (default "bind")
       - names:
           - --init
         argument: ""
-        description: Run an init inside the container that forwards signals and reaps processes.
+        description: Run an init binary inside the container that forwards signals and reaps processes
       - names:
           - --init-path
-        argument: path
-        description: Path to the container-init binary.
+        argument: string
+        description: Path to the container-init binary
       - names:
-          - --interactive
           - -i
-        argument: true|false
-        description: Keep STDIN open even if not attached. The default is false.
-      - names:
-          - --ip6
-        argument: ip
-        description: Not implemented
+          - --interactive
+        argument: ""
+        description: Keep STDIN open even if not attached
       - names:
           - --ip
-        argument: ip
-        description: Specify a static IP address for the container, for example 10.88.64.128. This option can only be used if the container is joined to only a single network - i.e., --network=_network-name_ is used at most once - and if the container is not joining another container's network namespace via --network=container:_id_. The address must be within the CNI network's IP address pool (default 10.88.0.0/16).
+        argument: string
+        description: Specify a static IPv4 address for the container
       - names:
           - --ipc
-        argument: ipc
-        description: Default is to create a private IPC namespace (POSIX SysV IPC) for the container
+        argument: string
+        description: IPC namespace to use
       - names:
           - --kernel-memory
-        argument: number[unit]
+        argument: <number>[<unit>]
         description: 'Kernel memory limit (format: <number>[<unit>], where unit = b (bytes), k (kilobytes), m (megabytes), or g (gigabytes))'
       - names:
-          - --label
           - -l
-        argument: label
-        description: Add metadata to a container (e.g., --label com.example.key=value)
+          - --label
+        argument: stringArray
+        description: Set metadata on container
       - names:
           - --label-file
-        argument: file
+        argument: strings
         description: Read in a line delimited file of labels
       - names:
-          - --link-local-ip
-        argument: ip
-        description: Not implemented
-      - names:
           - --log-driver
-        argument: '"k8s-file"'
-        description: Logging driver for the container. Currently available options are k8s-file, journald, and none, with json-file aliased to k8s-file for scripting compatibility.
+        argument: string
+        description: Logging driver for the container (default "k8s-file")
       - names:
           - --log-opt
-        argument: name=value
-        description: 'Set custom logging configuration. The following *name*s are supported:'
+        argument: strings
+        description: Logging driver options
       - names:
           - --mac-address
-        argument: address
+        argument: string
         description: Container MAC address (e.g. 92:d0:c6:0a:29:33)
       - names:
-          - --memory
           - -m
-        argument: limit
+          - --memory
+        argument: <number>[<unit>]
         description: 'Memory limit (format: <number>[<unit>], where unit = b (bytes), k (kilobytes), m (megabytes), or g (gigabytes))'
       - names:
           - --memory-reservation
-        argument: limit
+        argument: <number>[<unit>]
         description: 'Memory soft limit (format: <number>[<unit>], where unit = b (bytes), k (kilobytes), m (megabytes), or g (gigabytes))'
       - names:
           - --memory-swap
-        argument: limit
-        description: A limit value equal to memory plus swap. Must be used with the -m (--memory) flag. The swap LIMIT should always be larger than -m (--memory) value. By default, the swap LIMIT will be set to double the value of --memory.
+        argument: string
+        description: 'Swap limit equal to memory plus swap: ''-1'' to enable unlimited swap'
       - names:
           - --memory-swappiness
-        argument: number
-        description: Tune a container's memory swappiness behavior. Accepts an integer between 0 and 100.
+        argument: int
+        description: Tune container memory swappiness (0 to 100, or -1 for system default) (default -1)
       - names:
           - --mount
-        argument: type=TYPE,TYPE-SPECIFIC-OPTION[,...]
+        argument: stringArray
         description: Attach a filesystem mount to the container
       - names:
           - --name
-        argument: name
+        argument: string
         description: Assign a name to the container
       - names:
           - --network
-          - --net
-        argument: mode
-        description: Set the network mode for the container. Invalid if using --dns, --dns-opt, or --dns-search with --network that is set to none or container:id. If used together with --pod, the container will not join the pod's network namespace.
+        argument: string
+        description: Connect a container to a network
       - names:
           - --network-alias
-        argument: alias
+        argument: strings
         description: Add network-scoped alias for the container
       - names:
           - --no-healthcheck
-        argument: true|false
-        description: Disable any defined healthchecks for container.
+        argument: ""
+        description: Disable healthchecks on container
       - names:
           - --no-hosts
-        argument: true|false
-        description: Do not create /etc/hosts for the container. By default, Podman will manage /etc/hosts, adding the container's own IP address and any hosts from --add-host.
+        argument: ""
+        description: Do not create /etc/hosts within the container, instead use the version from the image
       - names:
           - --oom-kill-disable
-        argument: true|false
-        description: Whether to disable OOM Killer for the container or not.
+        argument: ""
+        description: Disable OOM Killer
       - names:
           - --oom-score-adj
-        argument: num
-        description: Tune the host's OOM preferences for containers (accepts -1000 to 1000)
+        argument: int
+        description: Tune the host's OOM preferences (-1000 to 1000)
       - names:
           - --os
         argument: OS
-        description: Override the OS, defaults to hosts, of the image to be pulled. For example, windows.
+        description: use OS instead of the running OS for choosing images
       - names:
           - --pid
-        argument: pid
-        description: 'Set the PID mode for the container Default is to create a private PID namespace for the container - container:<name|id>: join another container''s PID namespace - host: use the host''s PID namespace for the container. Note: the host mode gives the container full access to local PID and is therefore considered insecure. - ns: join the specified PID namespace - private: create a new namespace for the container (default)'
+        argument: string
+        description: PID namespace to use
+      - names:
+          - --pidfile
+        argument: string
+        description: Write the container process ID to the file
       - names:
           - --pids-limit
-        argument: limit
-        description: Tune the container's pids limit. Set 0 to have unlimited pids for the container. (default "4096" on systems that support PIDS cgroups).
+        argument: int
+        description: Tune container pids limit (set 0 for unlimited, -1 for server defaults)
       - names:
           - --platform
-        argument: OS/ARCH
-        description: Specify the platform for selecting the image. (Conflicts with --arch and --os) The --platform option can be used to override the current architecture and operating system.
+        argument: string
+        description: Specify the platform for selecting the image. (Conflicts with --arch and --os)
       - names:
           - --pod
-        argument: name
-        description: Run container in an existing pod. If you want Podman to make the pod for you, preference the pod name with new:. To make a pod with more granular options, use the podman pod create command before creating a container.
+        argument: string
+        description: Run container in an existing pod
       - names:
           - --pod-id-file
-        argument: path
-        description: Run container in an existing pod and read the pod's ID from the specified file. If a container is run within a pod, and the pod has an infra-container, the infra-container will be started before the container is.
+        argument: string
+        description: Read the pod ID from the file
       - names:
           - --privileged
-        argument: true|false
-        description: Give extended privileges to this container. The default is false.
+        argument: ""
+        description: Give extended privileges to container
       - names:
-          - --publish
           - -p
-        argument: port
-        description: Publish a container's port, or range of ports, to the host
+          - --publish
+        argument: strings
+        description: Publish a container's port, or a range of ports, to the host (default [])
       - names:
-          - --publish-all
           - -P
-        argument: true|false
-        description: Publish all exposed ports to random ports on the host interfaces. The default is false.
+          - --publish-all
+        argument: ""
+        description: Publish all exposed ports to random ports on the host interface
       - names:
           - --pull
-        argument: missing
-        description: Pull image before creating ("always"|"missing"|"never") (default "missing").
+        argument: string
+        description: Pull image before creating ("always"|"missing"|"never") (default "missing")
       - names:
-          - --quiet
           - -q
+          - --quiet
         argument: ""
         description: Suppress output information when pulling images
       - names:
           - --read-only
-        argument: true|false
-        description: Mount the container's root filesystem as read only.
+        argument: ""
+        description: Make containers root filesystem read-only
       - names:
           - --read-only-tmpfs
-        argument: true|false
-        description: If container is running in --read-only mode, then mount a read-write tmpfs on /run, /tmp, and /var/tmp. The default is true
+        argument: ""
+        description: When running containers in read-only mode mount a read-write tmpfs on /run, /tmp and /var/tmp (default true)
       - names:
           - --replace
-        argument: true|false
-        description: If another container with the same name already exists, replace and remove it. The default is false.
+        argument: ""
+        description: If a container with the same name exists, replace it
       - names:
           - --requires
-        argument: container
-        description: Specify one or more requirements. A requirement is a dependency container that will be started before this container. Containers can be specified by name or ID, with multiple containers being separated by commas.
+        argument: strings
+        description: Add one or more requirement containers that must be started before this container will start
       - names:
           - --restart
-        argument: policy
-        description: Restart policy to follow when containers exit. Restart policy will not take effect if a container is stopped via the podman kill or podman stop commands.
+        argument: string
+        description: Restart policy to apply when a container exits ("always"|"no"|"on-failure"|"unless-stopped")
       - names:
           - --rm
-        argument: true|false
-        description: Automatically remove the container when it exits. The default is false.
+        argument: ""
+        description: Remove container (and pod if created) after exit
       - names:
           - --rootfs
         argument: ""
-        description: If specified, the first argument refers to an exploded container on the file system.
+        description: The first argument is not an image but the rootfs to the exploded container
       - names:
           - --sdnotify
-        argument: container|conmon|ignore
-        description: Determines how to use the NOTIFY_SOCKET, as passed with systemd and Type=notify.
+        argument: string
+        description: control sd-notify behavior ("container"|"conmon"|"ignore") (default "container")
       - names:
           - --seccomp-policy
-        argument: policy
-        description: Specify the policy to select the seccomp profile. If set to image, Podman will look for a "io.containers.seccomp.profile" label in the container-image config and use its value as a seccomp profile. Otherwise, Podman will follow the default policy by applying the default profile unless specified otherwise via --security-opt seccomp as described below.
+        argument: string
+        description: Policy for selecting a seccomp profile (experimental) (default "default")
       - names:
           - --secret
-        argument: secret[,opt=opt ...]
-        description: Give the container access to a secret. Can be specified multiple times.
+        argument: stringArray
+        description: Add secret to container
       - names:
           - --security-opt
-        argument: option
+        argument: stringArray
         description: Security Options
       - names:
           - --shm-size
-        argument: size
-        description: 'Size of /dev/shm (format: <number>[<unit>], where unit = b (bytes), k (kilobytes), m (megabytes), or g (gigabytes)) If you omit the unit, the system uses bytes. If you omit the size entirely, the system uses 64m. When size is 0, there is no limit on the amount of memory used for IPC by the container.'
+        argument: <number>[<unit>]
+        description: 'Size of /dev/shm (format: <number>[<unit>], where unit = b (bytes), k (kilobytes), m (megabytes), or g (gigabytes)) (default "65536k")'
       - names:
           - --stop-signal
-        argument: SIGTERM
-        description: Signal to stop a container. Default is SIGTERM.
+        argument: string
+        description: Signal to stop a container. Default is SIGTERM
       - names:
           - --stop-timeout
-        argument: seconds
-        description: Timeout (in seconds) to stop a container. Default is 10. Remote connections use local containers.conf for defaults
+        argument: uint
+        description: Timeout (in seconds) that containers stopped by user command have to exit. If exceeded, the container will be forcibly stopped via SIGKILL. (default 10)
       - names:
           - --subgidname
-        argument: name
-        description: Name for GID map from the /etc/subgid file. Using this flag will run the container with user namespace enabled. This flag conflicts with --userns and --gidmap.
+        argument: string
+        description: Name of range listed in /etc/subgid for use in user namespace
       - names:
           - --subuidname
-        argument: name
-        description: Name for UID map from the /etc/subuid file. Using this flag will run the container with user namespace enabled. This flag conflicts with --userns and --uidmap.
+        argument: string
+        description: Name of range listed in /etc/subuid for use in user namespace
       - names:
           - --sysctl
-        argument: SYSCTL
-        description: Configure namespaced kernel parameters at runtime
+        argument: strings
+        description: Sysctl options
       - names:
           - --systemd
-        argument: true|false|always
-        description: Run container in systemd mode. The default is true.
+        argument: string
+        description: Run container in systemd mode ("true"|"false"|"always") (default "true")
       - names:
           - --timeout
-        argument: seconds
-        description: Maximum time a container is allowed to run before conmon sends it the kill signal. By default containers will run until they exit or are stopped by podman stop.
+        argument: uint
+        description: Maximum length of time a container is allowed to run. The container will be killed automatically after the time expires.
       - names:
           - --tmpfs
-        argument: fs
-        description: Create a tmpfs mount
+        argument: tmpfs
+        description: Mount a temporary filesystem (tmpfs) into a container
       - names:
-          - --tty
           - -t
-        argument: true|false
-        description: Allocate a pseudo-TTY. The default is false.
+          - --tty
+        argument: ""
+        description: Allocate a pseudo-TTY for container
       - names:
           - --tz
-        argument: timezone
-        description: Set timezone in container. This flag takes area-based timezones, GMT time, as well as local, which sets the timezone in the container to match the host machine. See /usr/share/zoneinfo/ for valid timezones. Remote connections use local containers.conf for defaults
-      - names:
-          - --umask
-        argument: umask
-        description: Set the umask inside the container. Defaults to 0022. Remote connections use local containers.conf for defaults
+        argument: string
+        description: Set timezone in container
       - names:
           - --uidmap
-        argument: container_uid:from_uid:amount
-        description: Run the container in a new user namespace using the supplied mapping. This option conflicts with the --userns and --subuidname options. This option provides a way to map host UIDs to container UIDs. It can be passed several times to map different ranges.
+        argument: strings
+        description: UID map to use for the user namespace
       - names:
           - --ulimit
-        argument: option
-        description: Ulimit options
+        argument: strings
+        description: Ulimit options (default [nproc=32768:32768])
       - names:
-          - --user
+          - --umask
+        argument: string
+        description: Set umask in container (default "0022")
+      - names:
           - -u
-        argument: user
-        description: Sets the username or UID used and optionally the groupname or GID for the specified command.
+          - --user
+        argument: string
+        description: 'Username or UID (format: <name|uid>[:<group|gid>])'
       - names:
           - --userns
-        argument: mode
-        description: Set the user namespace mode for the container. It defaults to the PODMAN_USERNS environment variable. An empty value ("") means user namespaces are disabled unless an explicit mapping is set with the --uidmap and --gidmap options.
+        argument: string
+        description: User namespace to use
       - names:
           - --uts
-        argument: mode
-        description: 'Set the UTS namespace mode for the container. The following values are supported:'
+        argument: string
+        description: UTS namespace to use
       - names:
           - --variant
-        argument: VARIANT
-        description: Use VARIANT instead of the default architecture variant of the container image. Some images can use multiple variants of the arm architectures, such as arm/v5 and arm/v7.
+        argument: string
+        description: Use _VARIANT_ instead of the running architecture variant for choosing images
       - names:
-          - --volume
           - -v
-        argument: '[=[[SOURCE-VOLUME|HOST-DIR:]CONTAINER-DIR[:OPTIONS]]]'
-        description: 'Create a bind mount. If you specify, -v /HOST-DIR:/CONTAINER-DIR, Podman bind mounts /HOST-DIR in the host to /CONTAINER-DIR in the Podman container. Similarly, -v SOURCE-VOLUME:/CONTAINER-DIR will mount the volume in the host to the container. If no such named volume exists, Podman will create one. The OPTIONS are a comma-separated list and can be: [1] ⟨#Footnote1⟩ (Note when using the remote client, the volumes will be mounted from the remote server, not necessarily the client machine.)'
+          - --volume
+        argument: stringArray
+        description: Bind mount a volume into the container
       - names:
           - --volumes-from
-        argument: '[=CONTAINER[:OPTIONS]]'
-        description: 'Mount volumes from the specified container(s). Used to share volumes between containers. The options is a comma-separated list with the following available elements:'
+        argument: stringArray
+        description: Mount volumes from the specified container(s)
       - names:
-          - --workdir
           - -w
-        argument: dir
+          - --workdir
+        argument: string
         description: Working directory inside the container
-      - names:
-          - --pidfile
-        argument: path
-        description: When the pidfile location is specified, the container process' PID will be written to the pidfile. (This option is not available with the remote Podman client) If the pidfile option is not specified, the container process' PID will be written to /run/containers/storage/${storage-driver}-containers/$CID/userdata/pidfile.
   - name: diff
     description: Display the changes to the object's file system
     options:
       - names:
           - --format
-        argument: ""
-        description: Alter the output into a different format. The only valid format for podman diff is json.
+        argument: string
+        description: Change the output format (json)
       - names:
-          - --latest
           - -l
+          - --latest
         argument: ""
-        description: Instead of providing the container name or ID, use the last created container. If you use methods other than Podman to run containers such as CRI-O, the last started container could be from either of those methods. (This option is not available with the remote Podman client)
+        description: Act on the latest container podman is aware of Not supported with the "--remote" flag
   - name: events
     description: Show podman events
     options:
       - names:
-          - '-'
-        argument: ""
-        description: -until.
-      - names:
-          - --help
-        argument: ""
-        description: Print usage statement.
+          - --filter
+        argument: stringArray
+        description: filter output
       - names:
           - --format
-        argument: ""
-        description: Format the output to JSON Lines or using the given Go template.
-      - names:
-          - --filter
-        argument: filter
-        description: 'Filter events that are displayed. They must be in the format of "filter=value". The following filters are supported:'
+        argument: string
+        description: format the output using a Go template
       - names:
           - --since
-        argument: timestamp
-        description: Show all events created since the given timestamp
+        argument: string
+        description: show all events created since timestamp
       - names:
           - --until
-        argument: timestamp
-        description: Show all events created until the given timestamp
+        argument: string
+        description: show all events until timestamp
   - name: exec
     description: Run a process in a running container
     options:
       - names:
-          - --detach
           - -d
+          - --detach
         argument: ""
-        description: Start the exec session, but do not attach to it. The command will run in the background and the exec session will be automatically removed when it completes. The podman exec command will print the ID of the exec session and exit immediately after it starts.
+        description: Run the exec session in detached mode (backgrounded)
       - names:
           - --detach-keys
-        argument: sequence
-        description: 'Specify the key sequence for detaching a container. Format is a single character [a-Z] or one or more ctrl-<value> characters where <value> is one of: a-z, @, ^, [, , or _. Specifying "" will disable this feature. The default is ctrl-p,ctrl-q.'
+        argument: string
+        description: 'Select the key sequence for detaching a container. Format is a single character [a-Z] or ctrl-<value> where <value> is one of: a-z, @, ^, [, , or _ (default "ctrl-p,ctrl-q")'
       - names:
-          - --env
           - -e
-        argument: ""
-        description: You may specify arbitrary environment variables that are available for the command to be executed.
+          - --env
+        argument: stringArray
+        description: Set environment variables
       - names:
           - --env-file
-        argument: file
-        description: Read in a line delimited file of environment variables.
+        argument: strings
+        description: Read in a file of environment variables
       - names:
-          - --interactive
           - -i
-        argument: true|false
-        description: When set to true, keep stdin open even if not attached. The default is false.
-      - names:
-          - --latest
-          - -l
+          - --interactive
         argument: ""
-        description: Instead of providing the container name or ID, use the last created container. If you use methods other than Podman to run containers such as CRI-O, the last started container could be from either of those methods. (This option is not available with the remote Podman client)
+        description: Keep STDIN open even if not attached
+      - names:
+          - -l
+          - --latest
+        argument: ""
+        description: Act on the latest container podman is aware of Not supported with the "--remote" flag
       - names:
           - --preserve-fds
-        argument: "N"
-        description: Pass down to the process N additional file descriptors (in addition to 0, 1, 2). The total FDs will be 3+N.
+        argument: uint
+        description: Pass N additional file descriptors to the container
       - names:
           - --privileged
         argument: ""
-        description: Give extended privileges to this container. The default is false.
+        description: Give the process extended Linux capabilities inside the container. The default is false
       - names:
-          - --tty
           - -t
+          - --tty
         argument: ""
-        description: Allocate a pseudo-TTY.
+        description: Allocate a pseudo-TTY. The default is false
       - names:
-          - --user
           - -u
-        argument: ""
-        description: 'Sets the username or UID used and optionally the groupname or GID for the specified command. The following examples are all valid: --user [user | user:group | uid | uid:gid | user:gid | uid:group ]'
+          - --user
+        argument: string
+        description: Sets the username or UID used and optionally the groupname or GID for the specified command
       - names:
-          - --workdir
           - -w
-        argument: path
+          - --workdir
+        argument: string
         description: Working directory inside the container
   - name: export
     description: Export container's filesystem contents as a tar archive
     options:
       - names:
-          - --output
           - -o
-        argument: ""
-        description: Write to a file, default is STDOUT
-      - names:
-          - --help
-          - -h
-        argument: ""
-        description: Print usage statement
-  - name: generate
-    description: Generate structured data based on containers, pods or volumes.
-    options: []
+          - --output
+        argument: string
+        description: 'Write to a specified file (default: stdout, which must be redirected)'
   - name: history
     description: Show history of a specified image
     options:
       - names:
-          - --human
+          - --format
+        argument: string
+        description: Change the output to JSON or a Go template
+      - names:
           - -H
-        argument: true|false
-        description: Display sizes and dates in human readable format (default true).
+          - --human
+        argument: ""
+        description: Display sizes and dates in human readable format (default true)
       - names:
           - --no-trunc
-        argument: true|false
-        description: Do not truncate the output (default false).
+        argument: ""
+        description: Do not truncate the output
       - names:
           - --notruncate
         argument: ""
         description: Do not truncate the output
       - names:
-          - --quiet
           - -q
-        argument: true|false
-        description: Print the numeric IDs only (default false).
-      - names:
-          - --format
-        argument: format
-        description: Alter the output for a format like 'json' or a Go template.
-      - names:
-          - --help
-          - -h
+          - --quiet
         argument: ""
-        description: Print usage statement
+        description: Display the numeric IDs only
   - name: image
     description: Manage images
     options: []
@@ -812,181 +1071,166 @@ subcommands:
     description: List images in local storage
     options:
       - names:
-          - --all
           - -a
+          - --all
         argument: ""
-        description: Show all images (by default filter out the intermediate image layers). The default is false.
+        description: Show all images (default hides intermediate images)
       - names:
           - --digests
         argument: ""
-        description: Show image digests
+        description: Show digests
       - names:
-          - --filter
           - -f
-        argument: filter
-        description: Filter output based on conditions provided
+          - --filter
+        argument: strings
+        description: Filter output based on conditions provided (default [])
       - names:
           - --format
-        argument: format
-        description: 'Change the default output format. This can be of a supported type like ''json'' or a Go template. Valid placeholders for the Go template are listed below:'
+        argument: string
+        description: Change the output format to JSON or a Go template
       - names:
           - --history
         argument: ""
-        description: Display the history of image names. If an image gets re-tagged or untagged, then the image name history gets prepended (latest image first). This is especially useful when undoing a tag operation or an image does not contain any name because it has been untagged.
-      - names:
-          - --noheading
-          - -n
-        argument: ""
-        description: Omit the table headings from the listing of images.
+        description: Display the image name history
       - names:
           - --no-trunc
         argument: ""
-        description: Do not truncate output.
+        description: Do not truncate output
       - names:
-          - --quiet
-          - -q
+          - -n
+          - --noheading
         argument: ""
-        description: Lists only the image IDs.
+        description: Do not print column headings
+      - names:
+          - -q
+          - --quiet
+        argument: ""
+        description: Display only image IDs
       - names:
           - --sort
-        argument: sort
-        description: 'Sort by created, id, repository, size or tag (default: created)'
+        argument: string
+        description: Sort by created, id, repository, size, tag (default "created")
   - name: import
     description: Import a tarball to create a filesystem image
     options:
       - names:
-          - --change
           - -c
-        argument: instruction
-        description: 'Apply the following possible instructions to the created image: CMD | ENTRYPOINT | ENV | EXPOSE | LABEL | STOPSIGNAL | USER | VOLUME | WORKDIR'
+          - --change
+        argument: stringArray
+        description: 'Apply the following possible instructions to the created image (default []): CMD | ENTRYPOINT | ENV | EXPOSE | LABEL | ONBUILD | STOPSIGNAL | USER | VOLUME | WORKDIR'
       - names:
-          - --message
           - -m
-        argument: message
+          - --message
+        argument: string
         description: Set commit message for imported image
       - names:
-          - --quiet
           - -q
+          - --quiet
         argument: ""
-        description: Shows progress on the import
-      - names:
-          - --help
-          - -h
-        argument: ""
-        description: Print usage statement
+        description: Suppress output
   - name: info
     description: Display podman system information
     options:
       - names:
-          - --debug
           - -D
+          - --debug
         argument: ""
-        description: Show additional information
+        description: Display additional debug information
       - names:
-          - --format
           - -f
-        argument: format
-        description: Change output format to "json" or a Go template.
+          - --format
+        argument: string
+        description: Change the output format to JSON or a Go template
   - name: init
     description: Initialize one or more containers
     options:
       - names:
-          - --all
           - -a
+          - --all
         argument: ""
-        description: Initialize all containers. Containers that have already initialized (including containers that have been started and are running) are ignored.
+        description: Initialize all containers
       - names:
-          - --latest
           - -l
+          - --latest
         argument: ""
-        description: Instead of providing the container name or ID, use the last created container. If you use methods other than Podman to run containers such as CRI-O, the last started container could be from either of those methods. (This option is not available with the remote Podman client)
+        description: Act on the latest container podman is aware of Not supported with the "--remote" flag
   - name: inspect
     description: Display the configuration of object denoted by ID
     options:
       - names:
-          - --type
-          - -t
-        argument: type
-        description: 'Return JSON for the specified type. Type can be ''container'', ''image'', ''volume'', ''network'', ''pod'', or ''all'' (default: all) (Only meaningful when invoked as podman inspect)'
-      - names:
-          - --format
           - -f
-        argument: format
-        description: Format the output using the given Go template. The keys of the returned JSON can be used as the values for the --format flag (see examples below).
+          - --format
+        argument: string
+        description: Format the output to a Go template or json (default "json")
       - names:
-          - --latest
           - -l
+          - --latest
         argument: ""
-        description: Instead of providing the container name or ID, use the last created container. If you use methods other than Podman to run containers such as CRI-O, the last started container could be from either of those methods.
+        description: Act on the latest container podman is aware of Not supported with the "--remote" flag
       - names:
-          - --size
           - -s
+          - --size
         argument: ""
-        description: In addition to normal output, display the total file size if the type is a container.
+        description: Display total file size
+      - names:
+          - -t
+          - --type
+        argument: string
+        description: Specify inspect-object type ("image", "container" or "all") (default "all")
   - name: kill
     description: Kill one or more running containers with a specific signal
     options:
       - names:
-          - --all
           - -a
+          - --all
         argument: ""
-        description: Signal all running containers. This does not include paused containers.
+        description: Signal all running containers
       - names:
           - --cidfile
-        argument: ""
-        description: Read container ID from the specified file and remove the container. Can be specified multiple times.
+        argument: stringArray
+        description: Read the container ID from the file
       - names:
-          - --latest
           - -l
+          - --latest
         argument: ""
-        description: Instead of providing the container name or ID, use the last created container. If you use methods other than Podman to run containers such as CRI-O, the last started container could be from either of those methods. (This option is not available with the remote Podman client)
+        description: Act on the latest container podman is aware of Not supported with the "--remote" flag
       - names:
-          - --signal
           - -s
-        argument: ""
-        description: Signal to send to the container. For more information on Linux signals, refer to man signal(7).
+          - --signal
+        argument: string
+        description: Signal to send to the container (default "KILL")
   - name: load
     description: Load image(s) from a tar archive
     options:
       - names:
-          - --input
           - -i
-        argument: input
-        description: Read from archive file, default is STDIN.
+          - --input
+        argument: string
+        description: 'Read from specified archive file (default: stdin)'
       - names:
-          - --quiet
           - -q
+          - --quiet
         argument: ""
-        description: Suppress the progress output
-      - names:
-          - --help
-          - -h
-        argument: ""
-        description: Print usage statement
+        description: Suppress the output
   - name: login
     description: Login to a container registry
     options:
       - names:
           - --authfile
-        argument: path
-        description: Path of the authentication file. Default is ${XDG_RUNTIME_DIR}/containers/auth.json.
+        argument: string
+        description: path of the authentication file. Use REGISTRY_AUTH_FILE environment variable to override
       - names:
           - --cert-dir
-        argument: path
-        description: Use certificates at path (*.crt, *.cert, *.key) to connect to the registry. Please refer to containers-certs.d(5) for details. (This option is not available with the remote Podman client)
+        argument: string
+        description: use certificates at the specified path to access the registry
       - names:
           - --get-login
         argument: ""
-        description: Return the logged-in user for the registry. Return error if no login is found.
+        description: Return the current login user for the registry
       - names:
-          - --help
-          - -h
-        argument: ""
-        description: Print usage statement
-      - names:
-          - --password
           - -p
-        argument: password
+          - --password
+        argument: string
         description: Password for registry
       - names:
           - --password-stdin
@@ -994,91 +1238,92 @@ subcommands:
         description: Take the password from stdin
       - names:
           - --tls-verify
-        argument: true|false
-        description: 'Require HTTPS and verify certificates when contacting registries (default: true). If explicitly set to true, then TLS verification will be used. If set to false, then TLS verification will not be used. If not specified, TLS verification will be used unless the target registry is listed as an insecure registry in registries.conf.'
+        argument: ""
+        description: Require HTTPS and verify certificates when contacting registries
       - names:
-          - --username
           - -u
-        argument: username
+          - --username
+        argument: string
         description: Username for registry
       - names:
-          - --verbose
           - -v
+          - --verbose
         argument: ""
-        description: print detailed information about credential store
+        description: Write more detailed information to stdout
   - name: logout
     description: Logout of a container registry
     options:
       - names:
-          - --authfile
-        argument: path
-        description: Path of the authentication file. Default is ${XDG_RUNTIME_DIR}/containers/auth.json.
-      - names:
-          - --all
           - -a
+          - --all
         argument: ""
         description: Remove the cached credentials for all registries in the auth file
       - names:
-          - --help
-          - -h
-        argument: ""
-        description: Print usage statement
+          - --authfile
+        argument: string
+        description: path of the authentication file. Use REGISTRY_AUTH_FILE environment variable to override
   - name: logs
     description: Fetch the logs of one or more containers
     options:
       - names:
-          - --follow
           - -f
+          - --follow
         argument: ""
-        description: Follow log output. Default is false.
+        description: Follow log output. The default is false
       - names:
-          - --latest
           - -l
+          - --latest
         argument: ""
-        description: Instead of providing the container name or ID, use the last created container. If you use methods other than Podman to run containers such as CRI-O, the last started container could be from either of those methods. (This option is not available with the remote Podman client)
+        description: Act on the latest container podman is aware of Not supported with the "--remote" flag
       - names:
-          - --names
           - -n
+          - --names
         argument: ""
         description: Output the container name in the log
       - names:
           - --since
-        argument: TIMESTAMP
-        description: Show logs since TIMESTAMP. The --since option can be Unix timestamps, date formatted timestamps, or Go duration strings (e.g. 10m, 1h30m) computed relative to the client machine's time. Supported formats for date formatted time stamps include RFC3339Nano, RFC3339, 2006-01-02T15:04:05, 2006-01-02T15:04:05.999999999, 2006-01-02Z07:00, and 2006-01-02.
-      - names:
-          - --until
-        argument: TIMESTAMP
-        description: Show logs until TIMESTAMP. The --until option can be Unix timestamps, date formatted timestamps, or Go duration strings (e.g. 10m, 1h30m) computed relative to the client machine's time. Supported formats for date formatted time stamps include RFC3339Nano, RFC3339, 2006-01-02T15:04:05, 2006-01-02T15:04:05.999999999, 2006-01-02Z07:00, and 2006-01-02.
+        argument: string
+        description: Show logs since TIMESTAMP
       - names:
           - --tail
-        argument: LINES
-        description: Output the specified number of LINES at the end of the logs. LINES must be an integer. Defaults to -1, which prints all lines
+        argument: int
+        description: Output the specified number of LINES at the end of the logs. Defaults to -1, which prints all lines (default -1)
       - names:
-          - --timestamps
           - -t
+          - --timestamps
         argument: ""
-        description: Show timestamps in the log outputs. The default is false
+        description: Output the timestamps in the log
+      - names:
+          - --until
+        argument: string
+        description: Show logs until TIMESTAMP
+  - name: machine
+    description: Manage a virtual machine
+    options: []
+  - name: manifest
+    description: Manipulate manifest lists and image indexes
+    options: []
   - name: mount
     description: Mount a working container's root filesystem
     options:
       - names:
-          - --all
           - -a
+          - --all
         argument: ""
-        description: Mount all podman containers. (External containers will not be mounted)
+        description: Mount all containers
       - names:
           - --format
-        argument: format
-        description: Print the mounted containers in specified format (json).
+        argument: string
+        description: Print the mounted containers in specified format (json)
       - names:
-          - --latest
           - -l
+          - --latest
         argument: ""
-        description: Instead of providing the container name or ID, use the last created container. If you use methods other than Podman to run containers such as CRI-O, the last started container could be from either of those methods. (This option is not available with the remote Podman client)
+        description: Act on the latest container podman is aware of Not supported with the "--remote" flag
       - names:
           - --notruncate
         argument: ""
-        description: Do not truncate IDs in output.
+        description: Do not truncate output
   - name: network
     description: Manage networks
     options: []
@@ -1086,13 +1331,10 @@ subcommands:
     description: Pause all the processes in one or more containers
     options:
       - names:
-          - --all
           - -a
+          - --all
         argument: ""
-        description: Pause all running containers.
-  - name: play
-    description: Play containers, pods or volumes from a structured file.
-    options: []
+        description: Pause all running containers
   - name: pod
     description: Manage pods
     options: []
@@ -1100,510 +1342,945 @@ subcommands:
     description: List port mappings or a specific mapping for the container
     options:
       - names:
-          - --all
           - -a
+          - --all
         argument: ""
-        description: List all known port mappings for running containers. When using this option, you cannot pass any container names or private ports/protocols as filters.
+        description: Display port information for all containers
       - names:
-          - --latest
           - -l
+          - --latest
         argument: ""
-        description: Instead of providing the container name or ID, use the last created container. If you use methods other than Podman to run containers such as CRI-O, the last started container could be from either of those methods. (This option is not available with the remote Podman client)
+        description: Act on the latest container podman is aware of Not supported with the "--remote" flag
   - name: ps
     description: List containers
     options:
       - names:
-          - --all
           - -a
+          - --all
         argument: ""
-        description: Show all the containers created by Podman, default is only running containers.
+        description: Show all the containers, default is only running containers
       - names:
           - --external
         argument: ""
-        description: Display external containers that are not controlled by Podman but are stored in containers storage. These external containers are generally created via other container technology such as Buildah or CRI-O and may depend on the same container images that Podman is also using. External containers are denoted with either a 'buildah' or 'storage' in the COMMAND and STATUS column of the ps output. Only used with the --all option.
+        description: Show containers in storage not controlled by Podman
       - names:
-          - --filter
           - -f
-        argument: ""
-        description: Filter what containers are shown in the output. Multiple filters can be given with multiple uses of the --filter flag. Filters with the same key work inclusive with the only exception being label which is exclusive. Filters with different keys always work exclusive.
+          - --filter
+        argument: strings
+        description: Filter output based on conditions given
       - names:
           - --format
-        argument: format
+        argument: string
         description: Pretty-print containers to JSON or using a Go template
       - names:
-          - --help
-          - -h
-        argument: ""
-        description: Print usage statement
-      - names:
-          - --last
           - -n
-        argument: ""
-        description: Print the n last created containers (all states)
+          - --last
+        argument: int
+        description: Print the n last created containers (all states) (default -1)
       - names:
-          - --latest
           - -l
+          - --latest
         argument: ""
-        description: Show the latest container created (all states) (This option is not available with the remote Podman client)
-      - names:
-          - --namespace
-          - --ns
-        argument: ""
-        description: Display namespace information
-      - names:
-          - --noheading
-        argument: ""
-        description: Omit the table headings from the listing of containers.
+        description: Act on the latest container podman is aware of Not supported with the "--remote" flag
       - names:
           - --no-trunc
         argument: ""
         description: Display the extended information
       - names:
-          - --pod
-          - -p
+          - --noheading
         argument: ""
-        description: Display the pods the containers are associated with
+        description: Do not print headers
       - names:
-          - --quiet
+          - --ns
+        argument: ""
+        description: Display namespace information
+      - names:
+          - -p
+          - --pod
+        argument: ""
+        description: Print the ID and name of the pod the containers are associated with
+      - names:
           - -q
+          - --quiet
         argument: ""
         description: Print the numeric IDs of the containers only
       - names:
-          - --sort
-        argument: ""
-        description: 'Sort by command, created, id, image, names, runningfor, size, or status", Note: Choosing size will sort by size of rootFs, not alphabetically like the rest of the options Default: created'
-      - names:
-          - --size
           - -s
+          - --size
         argument: ""
-        description: Display the total file size
+        description: Display the total file sizes
+      - names:
+          - --sort
+        argument: choice
+        description: 'Sort output by: command, created, id, image, names, runningfor, size, status'
       - names:
           - --sync
         argument: ""
-        description: Force a sync of container state with the OCI runtime. In some cases, a container's state in the runtime can become out of sync with Podman's state. This will update Podman's state based on what the OCI runtime reports. Forcibly syncing is much slower, but can resolve inconsistent state issues.
+        description: Sync container state with OCI runtime
       - names:
-          - --watch
           - -w
-        argument: ""
-        description: Refresh the output with current containers on an interval in seconds.
+          - --watch
+        argument: uint
+        description: Watch the ps output on an interval in seconds
   - name: pull
     description: Pull an image from a registry
     options:
       - names:
+          - --all-tags
+        argument: ""
+        description: All tagged images in the repository will be pulled
+      - names:
           - --arch
         argument: ARCH
-        description: Override the architecture, defaults to hosts, of the image to be pulled. For example, arm.
+        description: Use ARCH instead of the architecture of the machine for choosing images
       - names:
           - --authfile
-        argument: path
-        description: Path of the authentication file. If the authorization state is not found there, $HOME/.docker/config.json is checked, which is set using docker login.
+        argument: string
+        description: Path of the authentication file. Use REGISTRY_AUTH_FILE environment variable to override
       - names:
           - --cert-dir
-        argument: path
-        description: Use certificates at path (*.crt, *.cert, *.key) to connect to the registry. Please refer to containers-certs.d(5) for details. (This option is not available with the remote Podman client)
+        argument: Pathname
+        description: Pathname of a directory containing TLS certificates and keys
       - names:
           - --creds
-        argument: '[username[:password]]'
-        description: The [username[:password]] to use to authenticate with the registry if required. If one or both values are not supplied, a command line prompt will appear and the value can be entered. The password is entered without echo.
+        argument: Credentials
+        description: Credentials (USERNAME:PASSWORD) to use for authenticating to a registry
       - names:
           - --disable-content-trust
         argument: ""
-        description: This is a Docker specific option to disable image verification to a Docker registry and is not supported by Podman. This flag is a NOOP and provided solely for scripting compatibility.
-      - names:
-          - --help
-          - -h
-        argument: ""
-        description: Print the usage statement.
+        description: This is a Docker specific option and is a NOOP
       - names:
           - --os
         argument: OS
-        description: Override the OS, defaults to hosts, of the image to be pulled. For example, windows.
+        description: Use OS instead of the running OS for choosing images
       - names:
           - --platform
-        argument: OS/ARCH
-        description: Specify the platform for selecting the image. The --platform option can be used to override the current architecture and operating system.
+        argument: string
+        description: Specify the platform for selecting the image. (Conflicts with arch and os)
       - names:
-          - --quiet
           - -q
+          - --quiet
         argument: ""
         description: Suppress output information when pulling images
       - names:
           - --tls-verify
-        argument: true|false
-        description: 'Require HTTPS and verify certificates when contacting registries (default: true). If explicitly set to true, then TLS verification will be used. If set to false, then TLS verification will not be used. If not specified, TLS verification will be used unless the target registry is listed as an insecure registry in registries.conf.'
+        argument: ""
+        description: Require HTTPS and verify certificates when contacting registries (default true)
       - names:
           - --variant
-        argument: VARIANT
-        description: Use VARIANT instead of the default architecture variant of the container image. Some images can use multiple variants of the arm architectures, such as arm/v5 and arm/v7.
+        argument: string
+        description: use VARIANT instead of the running architecture variant for choosing images
   - name: push
     description: Push an image to a specified destination
     options:
       - names:
           - --authfile
-        argument: path
-        description: Path of the authentication file. Default is ${XDG_RUNTIME_DIR}/containers/auth.json, which is set using podman login. If the authorization state is not found there, $HOME/.docker/config.json is checked, which is set using docker login.
-      - names:
-          - --creds
-        argument: '[username[:password]]'
-        description: The [username[:password]] to use to authenticate with the registry if required. If one or both values are not supplied, a command line prompt will appear and the value can be entered. The password is entered without echo.
+        argument: string
+        description: Path of the authentication file. Use REGISTRY_AUTH_FILE environment variable to override
       - names:
           - --cert-dir
-        argument: path
-        description: Use certificates at path (*.crt, *.cert, *.key) to connect to the registry. Please refer to containers-certs.d(5) for details. (This option is not available with the remote Podman client)
+        argument: string
+        description: Path to a directory containing TLS certificates and keys
       - names:
           - --compress
         argument: ""
-        description: 'Compress tarball image layers when pushing to a directory using the ''dir'' transport. (default is same compression type, compressed or uncompressed, as source) Note: This flag can only be set when using the dir transport'
+        description: Compress tarball image layers when pushing to a directory using the 'dir' transport. (default is same compression type as source)
+      - names:
+          - --creds
+        argument: Credentials
+        description: Credentials (USERNAME:PASSWORD) to use for authenticating to a registry
       - names:
           - --digestfile
-        argument: Digestfile
-        description: After copying the image, write the digest of the resulting image to the file. (This option is not available with the remote Podman client)
+        argument: string
+        description: Write the digest of the pushed image to the specified file
       - names:
           - --disable-content-trust
         argument: ""
-        description: This is a Docker specific option to disable image verification to a Docker registry and is not supported by Podman. This flag is a NOOP and provided solely for scripting compatibility.
+        description: This is a Docker specific option and is a NOOP
       - names:
-          - --format
           - -f
-        argument: format
-        description: Manifest Type (oci, v2s2, or v2s1) to use when pushing an image.
+          - --format
+        argument: string
+        description: Manifest type (oci, v2s2, or v2s1) to use in the destination (default is manifest type of source, with fallbacks)
       - names:
-          - --quiet
           - -q
+          - --quiet
         argument: ""
-        description: When writing the output image, suppress progress output
+        description: Suppress output information when pushing images
       - names:
           - --remove-signatures
         argument: ""
-        description: Discard any pre-existing signatures in the image. (This option is not available with the remote Podman client)
+        description: Discard any pre-existing signatures in the image
       - names:
           - --sign-by
-        argument: key
-        description: Add a signature at the destination using the specified key. (This option is not available with the remote Podman client)
+        argument: string
+        description: Add a signature at the destination using the specified key
       - names:
           - --tls-verify
-        argument: true|false
-        description: 'Require HTTPS and verify certificates when contacting registries (default: true). If explicitly set to true, then TLS verification will be used. If set to false, then TLS verification will not be used. If not specified, TLS verification will be used unless the target registry is listed as an insecure registry in registries.conf.'
+        argument: ""
+        description: Require HTTPS and verify certificates when contacting registries (default true)
   - name: restart
     description: Restart one or more containers
     options:
       - names:
-          - --all
           - -a
+          - --all
         argument: ""
-        description: Restart all containers regardless of their current state.
+        description: Restart all non-running containers
       - names:
-          - --latest
           - -l
+          - --latest
         argument: ""
-        description: Instead of providing the container name or ID, use the last created container. If you use methods other than Podman to run containers such as CRI-O, the last started container could be from either of those methods. (This option is not available with the remote Podman client)
+        description: Act on the latest container podman is aware of Not supported with the "--remote" flag
       - names:
           - --running
         argument: ""
-        description: Restart all containers that are already in the running state.
+        description: Restart only running containers when --all is used
       - names:
-          - --time
           - -t
-        argument: time
-        description: Timeout to wait before forcibly stopping the container.
+          - --time
+        argument: uint
+        description: Seconds to wait for stop before killing the container (default 10)
   - name: rm
     description: Remove one or more containers
     options:
       - names:
-          - --all
           - -a
+          - --all
         argument: ""
-        description: Remove all containers. Can be used in conjunction with -f as well.
+        description: Remove all containers
       - names:
           - --cidfile
-        argument: ""
-        description: Read container ID from the specified file and remove the container. Can be specified multiple times.
+        argument: stringArray
+        description: Read the container ID from the file
       - names:
-          - --force
           - -f
+          - --force
         argument: ""
-        description: Force the removal of running and paused containers. Forcing a container removal also removes containers from container storage even if the container is not known to podman. Containers could have been created by a different container engine. In addition, forcing can be used to remove unusable containers, e.g. containers whose OCI runtime has become unavailable.
+        description: Force removal of a running or unusable container. The default is false
       - names:
-          - --ignore
           - -i
+          - --ignore
         argument: ""
-        description: Ignore errors when specified containers are not in the container store. A user might have decided to manually remove a container which would lead to a failure during the ExecStop directive of a systemd service referencing that container.
+        description: Ignore errors when a specified container is missing
       - names:
-          - --latest
           - -l
+          - --latest
         argument: ""
-        description: Instead of providing the container name or ID, use the last created container. If you use methods other than Podman to run containers such as CRI-O, the last started container could be from either of those methods. (This option is not available with the remote Podman client)
+        description: Act on the latest container podman is aware of Not supported with the "--remote" flag
       - names:
-          - --volumes
           - -v
+          - --volumes
         argument: ""
-        description: Remove anonymous volumes associated with the container. This does not include named volumes created with podman volume create, or the --volume option of podman run and podman create.
+        description: Remove anonymous volumes associated with the container
   - name: rmi
     description: Removes one or more images from local storage
     options:
       - names:
-          - --all
           - -a
+          - --all
         argument: ""
-        description: Remove all images in the local storage.
+        description: Remove all images
       - names:
-          - --force
           - -f
+          - --force
         argument: ""
-        description: This option will cause podman to remove all containers that are using the image before removing the image from the system.
+        description: Force Removal of the image
   - name: run
     description: Run a command in a new container
     options:
       - names:
+          - --add-host
+        argument: strings
+        description: Add a custom host-to-IP mapping (host:ip) (default [])
+      - names:
+          - --annotation
+        argument: strings
+        description: Add annotations to container (key:value)
+      - names:
+          - --arch
+        argument: ARCH
+        description: use ARCH instead of the architecture of the machine for choosing images
+      - names:
+          - -a
+          - --attach
+        argument: strings
+        description: Attach to STDIN, STDOUT or STDERR
+      - names:
+          - --authfile
+        argument: string
+        description: Path of the authentication file. Use REGISTRY_AUTH_FILE environment variable to override
+      - names:
+          - --blkio-weight
+        argument: string
+        description: Block IO weight (relative weight) accepts a weight value between 10 and 1000.
+      - names:
+          - --blkio-weight-device
+        argument: DEVICE_NAME:WEIGHT
+        description: 'Block IO weight (relative device weight, format: DEVICE_NAME:WEIGHT)'
+      - names:
+          - --cap-add
+        argument: strings
+        description: Add capabilities to the container
+      - names:
+          - --cap-drop
+        argument: strings
+        description: Drop capabilities from the container
+      - names:
+          - --cgroup-conf
+        argument: strings
+        description: Configure cgroup v2 (key=value)
+      - names:
+          - --cgroup-parent
+        argument: string
+        description: Optional parent cgroup for the container
+      - names:
+          - --cgroupns
+        argument: string
+        description: cgroup namespace to use
+      - names:
+          - --cgroups
+        argument: string
+        description: control container cgroup configuration ("enabled"|"disabled"|"no-conmon"|"split") (default "enabled")
+      - names:
+          - --cidfile
+        argument: string
+        description: Write the container ID to the file
+      - names:
+          - --conmon-pidfile
+        argument: string
+        description: Path to the file that will receive the PID of conmon
+      - names:
+          - --cpu-period
+        argument: uint
+        description: Limit the CPU CFS (Completely Fair Scheduler) period
+      - names:
+          - --cpu-quota
+        argument: int
+        description: Limit the CPU CFS (Completely Fair Scheduler) quota
+      - names:
+          - --cpu-rt-period
+        argument: uint
+        description: Limit the CPU real-time period in microseconds
+      - names:
+          - --cpu-rt-runtime
+        argument: int
+        description: Limit the CPU real-time runtime in microseconds
+      - names:
+          - --cpu-shares
+        argument: uint
+        description: CPU shares (relative weight)
+      - names:
+          - --cpus
+        argument: float
+        description: Number of CPUs. The default is 0.000 which means no limit
+      - names:
+          - --cpuset-cpus
+        argument: string
+        description: CPUs in which to allow execution (0-3, 0,1)
+      - names:
+          - --cpuset-mems
+        argument: string
+        description: Memory nodes (MEMs) in which to allow execution (0-3, 0,1). Only effective on NUMA systems.
+      - names:
+          - -d
+          - --detach
+        argument: ""
+        description: Run container in background and print container ID
+      - names:
+          - --detach-keys
+        argument: '[a-Z]'
+        description: 'Override the key sequence for detaching a container. Format is a single character [a-Z] or a comma separated sequence of `ctrl-<value>`, where `<value>` is one of: `a-cf`, `@`, `^`, `[`, `\`, `]`, `^` or `_` (default "ctrl-p,ctrl-q")'
+      - names:
+          - --device
+        argument: strings
+        description: Add a host device to the container
+      - names:
+          - --device-cgroup-rule
+        argument: strings
+        description: Add a rule to the cgroup allowed devices list
+      - names:
+          - --device-read-bps
+        argument: strings
+        description: Limit read rate (bytes per second) from a device (e.g. --device-read-bps=/dev/sda:1mb)
+      - names:
+          - --device-read-iops
+        argument: strings
+        description: Limit read rate (IO per second) from a device (e.g. --device-read-iops=/dev/sda:1000)
+      - names:
+          - --device-write-bps
+        argument: strings
+        description: Limit write rate (bytes per second) to a device (e.g. --device-write-bps=/dev/sda:1mb)
+      - names:
+          - --device-write-iops
+        argument: strings
+        description: Limit write rate (IO per second) to a device (e.g. --device-write-iops=/dev/sda:1000)
+      - names:
+          - --disable-content-trust
+        argument: ""
+        description: This is a Docker specific option and is a NOOP
+      - names:
+          - --dns
+        argument: strings
+        description: Set custom DNS servers
+      - names:
+          - --dns-opt
+        argument: strings
+        description: Set custom DNS options
+      - names:
+          - --dns-search
+        argument: strings
+        description: Set custom DNS search domains
+      - names:
+          - --entrypoint
+        argument: string
+        description: Overwrite the default ENTRYPOINT of the image
+      - names:
+          - -e
+          - --env
+        argument: stringArray
+        description: Set environment variables in container (default [PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin,TERM=xterm])
+      - names:
+          - --env-file
+        argument: strings
+        description: Read in a file of environment variables
+      - names:
+          - --env-host
+        argument: ""
+        description: Use all current host environment variables in container
+      - names:
+          - --expose
+        argument: strings
+        description: Expose a port or a range of ports
+      - names:
+          - --gidmap
+        argument: strings
+        description: GID map to use for the user namespace
+      - names:
+          - --group-add
+        argument: strings
+        description: Add additional groups to the primary container process. 'keep-groups' allows container processes to use supplementary groups.
+      - names:
+          - --health-cmd
+        argument: string
+        description: set a healthcheck command for the container ('none' disables the existing healthcheck)
+      - names:
+          - --health-interval
+        argument: string
+        description: set an interval for the healthchecks (a value of disable results in no automatic timer setup) (default "30s")
+      - names:
+          - --health-retries
+        argument: uint
+        description: the number of retries allowed before a healthcheck is considered to be unhealthy (default 3)
+      - names:
+          - --health-start-period
+        argument: string
+        description: the initialization time needed for a container to bootstrap (default "0s")
+      - names:
+          - --health-timeout
+        argument: string
+        description: the maximum time allowed to complete the healthcheck before an interval is considered failed (default "30s")
+      - names:
+          - -h
+          - --hostname
+        argument: string
+        description: Set container hostname
+      - names:
+          - --http-proxy
+        argument: ""
+        description: Set proxy environment variables in the container based on the host proxy vars (default true)
+      - names:
+          - --image-volume
+        argument: string
+        description: Tells podman how to handle the builtin image volumes ("bind"|"tmpfs"|"ignore") (default "bind")
+      - names:
+          - --init
+        argument: ""
+        description: Run an init binary inside the container that forwards signals and reaps processes
+      - names:
+          - --init-path
+        argument: string
+        description: Path to the container-init binary
+      - names:
+          - -i
           - --interactive
         argument: ""
-        description: ', -i=true|false'
+        description: Keep STDIN open even if not attached
+      - names:
+          - --ip
+        argument: string
+        description: Specify a static IPv4 address for the container
+      - names:
+          - --ipc
+        argument: string
+        description: IPC namespace to use
+      - names:
+          - --kernel-memory
+        argument: <number>[<unit>]
+        description: 'Kernel memory limit (format: <number>[<unit>], where unit = b (bytes), k (kilobytes), m (megabytes), or g (gigabytes))'
+      - names:
+          - -l
+          - --label
+        argument: stringArray
+        description: Set metadata on container
+      - names:
+          - --label-file
+        argument: strings
+        description: Read in a line delimited file of labels
+      - names:
+          - --log-driver
+        argument: string
+        description: Logging driver for the container (default "k8s-file")
+      - names:
+          - --log-opt
+        argument: strings
+        description: Logging driver options
+      - names:
+          - --mac-address
+        argument: string
+        description: Container MAC address (e.g. 92:d0:c6:0a:29:33)
+      - names:
+          - -m
+          - --memory
+        argument: <number>[<unit>]
+        description: 'Memory limit (format: <number>[<unit>], where unit = b (bytes), k (kilobytes), m (megabytes), or g (gigabytes))'
+      - names:
+          - --memory-reservation
+        argument: <number>[<unit>]
+        description: 'Memory soft limit (format: <number>[<unit>], where unit = b (bytes), k (kilobytes), m (megabytes), or g (gigabytes))'
+      - names:
+          - --memory-swap
+        argument: string
+        description: 'Swap limit equal to memory plus swap: ''-1'' to enable unlimited swap'
+      - names:
+          - --memory-swappiness
+        argument: int
+        description: Tune container memory swappiness (0 to 100, or -1 for system default) (default -1)
+      - names:
+          - --mount
+        argument: stringArray
+        description: Attach a filesystem mount to the container
+      - names:
+          - --name
+        argument: string
+        description: Assign a name to the container
+      - names:
+          - --network
+        argument: string
+        description: Connect a container to a network
+      - names:
+          - --network-alias
+        argument: strings
+        description: Add network-scoped alias for the container
+      - names:
+          - --no-healthcheck
+        argument: ""
+        description: Disable healthchecks on container
       - names:
           - --no-hosts
-        argument: di
-        description: sables this, and the image's /etc/hosts will be preserved unmodified.
-      - names:
-          - --publish
-          - -p
         argument: ""
-        description: =ip:hostPort:containerPort | ip::containerPort | hostPort:containerPort | containerPort
+        description: Do not create /etc/hosts within the container, instead use the version from the image
       - names:
+          - --oom-kill-disable
+        argument: ""
+        description: Disable OOM Killer
+      - names:
+          - --oom-score-adj
+        argument: int
+        description: Tune the host's OOM preferences (-1000 to 1000)
+      - names:
+          - --os
+        argument: OS
+        description: use OS instead of the running OS for choosing images
+      - names:
+          - --pid
+        argument: string
+        description: PID namespace to use
+      - names:
+          - --pidfile
+        argument: string
+        description: Write the container process ID to the file
+      - names:
+          - --pids-limit
+        argument: int
+        description: Tune container pids limit (set 0 for unlimited, -1 for server defaults)
+      - names:
+          - --platform
+        argument: string
+        description: Specify the platform for selecting the image. (Conflicts with --arch and --os)
+      - names:
+          - --pod
+        argument: string
+        description: Run container in an existing pod
+      - names:
+          - --pod-id-file
+        argument: string
+        description: Read the pod ID from the file
+      - names:
+          - --preserve-fds
+        argument: uint
+        description: Pass a number of additional file descriptors into the container
+      - names:
+          - --privileged
+        argument: ""
+        description: Give extended privileges to container
+      - names:
+          - -p
+          - --publish
+        argument: strings
+        description: Publish a container's port, or a range of ports, to the host (default [])
+      - names:
+          - -P
           - --publish-all
         argument: ""
-        description: ', -P=true|false'
+        description: Publish all exposed ports to random ports on the host interface
       - names:
-          - '-'
-        argument: ""
-        description: The `O` flag conflicts with other options listed above.
+          - --pull
+        argument: string
+        description: Pull image before creating ("always"|"missing"|"never") (default "missing")
       - names:
-          - --workdir
-          - -w
+          - -q
+          - --quiet
         argument: ""
-        description: =dir
+        description: Suppress output information when pulling images
+      - names:
+          - --read-only
+        argument: ""
+        description: Make containers root filesystem read-only
+      - names:
+          - --read-only-tmpfs
+        argument: ""
+        description: When running containers in read-only mode mount a read-write tmpfs on /run, /tmp and /var/tmp (default true)
+      - names:
+          - --replace
+        argument: ""
+        description: If a container with the same name exists, replace it
+      - names:
+          - --requires
+        argument: strings
+        description: Add one or more requirement containers that must be started before this container will start
+      - names:
+          - --restart
+        argument: string
+        description: Restart policy to apply when a container exits ("always"|"no"|"on-failure"|"unless-stopped")
+      - names:
+          - --rm
+        argument: ""
+        description: Remove container (and pod if created) after exit
+      - names:
+          - --rmi
+        argument: ""
+        description: Remove container image unless used by other containers
+      - names:
+          - --rootfs
+        argument: ""
+        description: The first argument is not an image but the rootfs to the exploded container
+      - names:
+          - --sdnotify
+        argument: string
+        description: control sd-notify behavior ("container"|"conmon"|"ignore") (default "container")
+      - names:
+          - --seccomp-policy
+        argument: string
+        description: Policy for selecting a seccomp profile (experimental) (default "default")
+      - names:
+          - --secret
+        argument: stringArray
+        description: Add secret to container
       - names:
           - --security-opt
-        argument: flag.
-        description: $ podman run --security-opt mask=/foo/bar:/second/path fedora bash
+        argument: stringArray
+        description: Security Options
+      - names:
+          - --shm-size
+        argument: <number>[<unit>]
+        description: 'Size of /dev/shm (format: <number>[<unit>], where unit = b (bytes), k (kilobytes), m (megabytes), or g (gigabytes)) (default "65536k")'
+      - names:
+          - --sig-proxy
+        argument: ""
+        description: Proxy received signals to the process (default true)
+      - names:
+          - --stop-signal
+        argument: string
+        description: Signal to stop a container. Default is SIGTERM
+      - names:
+          - --stop-timeout
+        argument: uint
+        description: Timeout (in seconds) that containers stopped by user command have to exit. If exceeded, the container will be forcibly stopped via SIGKILL. (default 10)
+      - names:
+          - --subgidname
+        argument: string
+        description: Name of range listed in /etc/subgid for use in user namespace
+      - names:
+          - --subuidname
+        argument: string
+        description: Name of range listed in /etc/subuid for use in user namespace
+      - names:
+          - --sysctl
+        argument: strings
+        description: Sysctl options
+      - names:
+          - --systemd
+        argument: string
+        description: Run container in systemd mode ("true"|"false"|"always") (default "true")
+      - names:
+          - --timeout
+        argument: uint
+        description: Maximum length of time a container is allowed to run. The container will be killed automatically after the time expires.
+      - names:
+          - --tmpfs
+        argument: tmpfs
+        description: Mount a temporary filesystem (tmpfs) into a container
+      - names:
+          - -t
+          - --tty
+        argument: ""
+        description: Allocate a pseudo-TTY for container
+      - names:
+          - --tz
+        argument: string
+        description: Set timezone in container
+      - names:
+          - --uidmap
+        argument: strings
+        description: UID map to use for the user namespace
+      - names:
+          - --ulimit
+        argument: strings
+        description: Ulimit options (default [nproc=32768:32768])
+      - names:
+          - --umask
+        argument: string
+        description: Set umask in container (default "0022")
+      - names:
+          - -u
+          - --user
+        argument: string
+        description: 'Username or UID (format: <name|uid>[:<group|gid>])'
+      - names:
+          - --userns
+        argument: string
+        description: User namespace to use
+      - names:
+          - --uts
+        argument: string
+        description: UTS namespace to use
+      - names:
+          - --variant
+        argument: string
+        description: Use _VARIANT_ instead of the running architecture variant for choosing images
+      - names:
+          - -v
+          - --volume
+        argument: stringArray
+        description: Bind mount a volume into the container
+      - names:
+          - --volumes-from
+        argument: stringArray
+        description: Mount volumes from the specified container(s)
+      - names:
+          - -w
+          - --workdir
+        argument: string
+        description: Working directory inside the container
   - name: save
     description: Save image(s) to an archive
     options:
       - names:
           - --compress
         argument: ""
-        description: 'Compress tarball image layers when pushing to a directory using the ''dir'' transport. (default is same compression type, compressed or uncompressed, as source) Note: This flag can only be set when using the dir transport i.e --format=oci-dir or --format=docker-dir'
-      - names:
-          - --output
-          - -o
-        argument: file
-        description: Write to a file, default is STDOUT
+        description: Compress tarball image layers when saving to a directory using the 'dir' transport. (default is same compression type as source)
       - names:
           - --format
-        argument: format
-        description: Save image to docker-archive, oci-archive (see containers-transports(5)), oci-dir (oci transport), or docker-dir (dir transport with v2s2 manifest type).
+        argument: string
+        description: Save image to oci-archive, oci-dir (directory with oci manifest type), docker-archive, docker-dir (directory with v2s2 manifest type) (default "docker-archive")
       - names:
-          - --multi-image-archive
           - -m
+          - --multi-image-archive
         argument: ""
-        description: Allow for creating archives with more than one image. Additional names will be interpreted as images instead of tags. Only supported for docker-archive. The default for this option can be modified via the multi_image_archive="true"|"false" flag in containers.conf.
+        description: Interpret additional arguments as images not tags and create a multi-image-archive (only for docker-archive)
       - names:
-          - --quiet
+          - -o
+          - --output
+        argument: string
+        description: 'Write to a specified file (default: stdout, which must be redirected)'
+      - names:
           - -q
+          - --quiet
         argument: ""
         description: Suppress the output
-      - names:
-          - --help
-          - -h
-        argument: ""
-        description: Print usage statement
   - name: search
     description: Search registry for image
     options:
       - names:
           - --authfile
-        argument: path
-        description: Path of the authentication file. Default is ${XDG_RUNTIME_DIR}/containers/auth.json
+        argument: string
+        description: Path of the authentication file. Use REGISTRY_AUTH_FILE environment variable to override
       - names:
-          - --filter
           - -f
-        argument: filter
+          - --filter
+        argument: strings
         description: Filter output based on conditions provided (default [])
       - names:
           - --format
-        argument: format
-        description: Change the output format to a Go template
+        argument: string
+        description: Change the output format to JSON or a Go template
       - names:
           - --limit
-        argument: limit
-        description: 'Limit the number of results (default 25). Note: The results from each registry will be limited to this value. Example if limit is 10 and two registries are being searched, the total number of results will be 20, 10 from each (if there are at least 10 matches in each). The order of the search results is the order in which the API endpoint returns the results.'
+        argument: int
+        description: Limit the number of results
       - names:
           - --list-tags
         argument: ""
-        description: 'List the available tags in the repository for the specified image. Note: --list-tags requires the search term to be a fully specified image name. The result contains the Image name and its tag, one line for every tag associated with the image.'
+        description: List the tags of the input registry
       - names:
           - --no-trunc
         argument: ""
         description: Do not truncate the output
       - names:
           - --tls-verify
-        argument: true|false
-        description: 'Require HTTPS and verify certificates when contacting registries (default: true). If explicitly set to true, then TLS verification will be used. If set to false, then TLS verification will not be used if needed. If not specified, default registries will be searched through (in /etc/containers/registries.conf), and TLS will be skipped if a default registry is listed in the insecure registries.'
-      - names:
-          - --help
-          - -h
         argument: ""
-        description: Print usage statement
+        description: Require HTTPS and verify certificates when contacting registries (default true)
+  - name: secret
+    description: Manage secrets
+    options: []
   - name: start
     description: Start one or more containers
     options:
       - names:
-          - --attach
-          - -a
-        argument: ""
-        description: Attach container's STDOUT and STDERR. The default is false. This option cannot be used when starting multiple containers.
-      - names:
-          - --detach-keys
-        argument: sequence
-        description: 'Specify the key sequence for detaching a container. Format is a single character [a-Z] or one or more ctrl-<value> characters where <value> is one of: a-z, @, ^, [, , or _. Specifying "" will disable this feature. The default is ctrl-p,ctrl-q.'
-      - names:
-          - --interactive
-          - -i
-        argument: ""
-        description: Attach container's STDIN. The default is false.
-      - names:
-          - --latest
-          - -l
-        argument: ""
-        description: Instead of providing the container name or ID, use the last created container. If you use methods other than Podman to run containers such as CRI-O, the last started container could be from either of those methods. (This option is not available with the remote Podman client)
-      - names:
-          - --sig-proxy
-        argument: true|false
-        description: Proxy received signals to the process (non-TTY mode only). SIGCHLD, SIGSTOP, and SIGKILL are not proxied. The default is true when attaching, false otherwise.
-      - names:
           - --all
         argument: ""
-        description: Start all the containers created by Podman, default is only running containers.
+        description: Start all containers regardless of their state or configuration
       - names:
-          - --filter
-          - -f
+          - -a
+          - --attach
         argument: ""
-        description: Filter what containers are going to be started from the given arguments. Multiple filters can be given with multiple uses of the --filter flag. Filters with the same key work inclusive with the only exception being label which is exclusive. Filters with different keys always work exclusive.
+        description: Attach container's STDOUT and STDERR
+      - names:
+          - --detach-keys
+        argument: '[a-Z]'
+        description: 'Select the key sequence for detaching a container. Format is a single character [a-Z] or a comma separated sequence of `ctrl-<value>`, where `<value>` is one of: `a-z`, `@`, `^`, `[`, `\`, `]`, `^` or `_` (default "ctrl-p,ctrl-q")'
+      - names:
+          - -f
+          - --filter
+        argument: strings
+        description: Filter output based on conditions given
+      - names:
+          - -i
+          - --interactive
+        argument: ""
+        description: Keep STDIN open even if not attached
+      - names:
+          - -l
+          - --latest
+        argument: ""
+        description: Act on the latest container podman is aware of Not supported with the "--remote" flag
+      - names:
+          - --sig-proxy
+        argument: ""
+        description: Proxy received signals to the process (default true if attaching, false otherwise)
   - name: stats
     description: Display a live stream of container resource usage statistics
     options:
       - names:
-          - --all
           - -a
+          - --all
         argument: ""
-        description: Show all containers. Only running containers are shown by default
+        description: Show all containers. Only running containers are shown by default. The default is false
       - names:
-          - --latest
+          - --format
+        argument: string
+        description: Pretty-print container statistics to JSON or using a Go template
+      - names:
           - -l
+          - --latest
         argument: ""
-        description: Instead of providing the container name or ID, use the last created container. If you use methods other than Podman to run containers such as CRI-O, the last started container could be from either of those methods. (This option is not available with the remote Podman client)
+        description: Act on the latest container podman is aware of Not supported with the "--remote" flag
       - names:
           - --no-reset
         argument: ""
-        description: Do not clear the terminal/screen in between reporting intervals
+        description: Disable resetting the screen between intervals
       - names:
           - --no-stream
         argument: ""
         description: Disable streaming stats and only pull the first result, default setting is false
-      - names:
-          - --format
-        argument: template
-        description: Pretty-print container statistics to JSON or using a Go template
   - name: stop
     description: Stop one or more containers
     options:
       - names:
-          - --all
           - -a
+          - --all
         argument: ""
-        description: Stop all running containers. This does not include paused containers.
+        description: Stop all running containers
       - names:
           - --cidfile
-        argument: ""
-        description: Read container ID from the specified file and remove the container. Can be specified multiple times.
+        argument: stringArray
+        description: Read the container ID from the file
       - names:
-          - --ignore
           - -i
+          - --ignore
         argument: ""
-        description: Ignore errors when specified containers are not in the container store. A user might have decided to manually remove a container which would lead to a failure during the ExecStop directive of a systemd service referencing that container.
+        description: Ignore errors when a specified container is missing
       - names:
-          - --latest
           - -l
+          - --latest
         argument: ""
-        description: Instead of providing the container name or ID, use the last created container. If you use methods other than Podman to run containers such as CRI-O, the last started container could be from either of those methods. (This option is not available with the remote Podman client)
+        description: Act on the latest container podman is aware of Not supported with the "--remote" flag
       - names:
-          - --time
           - -t
-        argument: time
-        description: Time to wait before forcibly stopping the container
+          - --time
+        argument: uint
+        description: Seconds to wait for stop before killing the container (default 10)
   - name: system
     description: Manage podman
     options: []
   - name: tag
     description: Add an additional name to a local image
-    options:
-      - names:
-          - --help
-          - -h
-        argument: ""
-        description: Print usage statement
+    options: []
   - name: top
     description: Display the running processes of a container
     options:
       - names:
-          - --help
-          - -h
-        argument: ""
-        description: Print usage statement
-      - names:
-          - --latest
           - -l
+          - --latest
         argument: ""
-        description: Instead of providing the container name or ID, use the last created container. If you use methods other than Podman to run containers such as CRI-O, the last started container could be from either of those methods.(This option is not available with the remote Podman client)
+        description: Act on the latest container podman is aware of Not supported with the "--remote" flag
+  - name: unmount
+    description: Unmounts working container's root filesystem
+    options:
+      - names:
+          - -a
+          - --all
+        argument: ""
+        description: Unmount all of the currently mounted containers
+      - names:
+          - -f
+          - --force
+        argument: ""
+        description: Force the complete unmount of the specified mounted containers
+      - names:
+          - -l
+          - --latest
+        argument: ""
+        description: Act on the latest container podman is aware of Not supported with the "--remote" flag
   - name: unpause
     description: Unpause the processes in one or more containers
     options:
       - names:
-          - --all
           - -a
+          - --all
         argument: ""
-        description: Unpause all paused containers.
+        description: Pause all running containers
   - name: unshare
     description: Run a command in a modified user namespace
     options:
       - names:
-          - --help
-          - -h
-        argument: ""
-        description: Print usage statement
-      - names:
           - --rootless-cni
         argument: ""
-        description: 'Join the rootless network namespace used for CNI networking. It can be used to connect to a rootless container via IP address (CNI networking). This is otherwise not possible from the host network namespace. Note: Using this option with more than one unshare session can have unexpected results.'
+        description: Join the rootless network namespace used for CNI networking
   - name: untag
     description: Remove a name from a local image
-    options:
-      - names:
-          - --help
-          - -h
-        argument: ""
-        description: Print usage statement
-  - name: version
-    description: Display the Podman Version Information
-    options:
-      - names:
-          - --help
-          - -h
-        argument: ""
-        description: Print usage statement
-      - names:
-          - --format
-          - -f
-        argument: format
-        description: Change output format to "json" or a Go template.
+    options: []
   - name: volume
     description: Manage volumes
     options: []
@@ -1612,20 +2289,15 @@ subcommands:
     options:
       - names:
           - --condition
-        argument: state
+        argument: string
         description: Condition to wait on (default "stopped")
       - names:
-          - --help
-          - -h
-        argument: ""
-        description: Print usage statement
-      - names:
-          - --interval
           - -i
-        argument: duration
-        description: Time interval to wait before polling for completion. A duration string is a sequence of decimal numbers, each with optional fraction and a unit suffix, such as "300ms", "-1.5h" or "2h45m". Valid time units are "ns", "us" (or "µs"), "ms", "s", "m", "h". Time unit defaults to "ms".
+          - --interval
+        argument: string
+        description: Time Interval to wait before polling for completion (default "250ms")
       - names:
-          - --latest
           - -l
+          - --latest
         argument: ""
-        description: Instead of providing the container name or ID, use the last created container. If you use methods other than Podman to run containers such as CRI-O, the last started container could be from either of those methods. (This option is not available with the remote Podman client)
+        description: Act on the latest container podman is aware of Not supported with the "--remote" flag

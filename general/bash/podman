@@ -22,6 +22,10 @@ _podman()
             return
             ;;
 
+          auto-update) _podman_auto-update
+            return
+            ;;
+
           build) _podman_build
             return
             ;;
@@ -55,10 +59,6 @@ _podman()
             ;;
 
           export) _podman_export
-            return
-            ;;
-
-          generate) _podman_generate
             return
             ;;
 
@@ -110,6 +110,14 @@ _podman()
             return
             ;;
 
+          machine) _podman_machine
+            return
+            ;;
+
+          manifest) _podman_manifest
+            return
+            ;;
+
           mount) _podman_mount
             return
             ;;
@@ -119,10 +127,6 @@ _podman()
             ;;
 
           pause) _podman_pause
-            return
-            ;;
-
-          play) _podman_play
             return
             ;;
 
@@ -170,6 +174,10 @@ _podman()
             return
             ;;
 
+          secret) _podman_secret
+            return
+            ;;
+
           start) _podman_start
             return
             ;;
@@ -194,6 +202,10 @@ _podman()
             return
             ;;
 
+          unmount) _podman_unmount
+            return
+            ;;
+
           unpause) _podman_unpause
             return
             ;;
@@ -206,10 +218,6 @@ _podman()
             return
             ;;
 
-          version) _podman_version
-            return
-            ;;
-
           volume) _podman_volume
             return
             ;;
@@ -219,7 +227,7 @@ _podman()
             ;;
 
       *)
-          word_list=" attach build commit container cp create diff events exec export generate history image images import info init inspect kill load login logout logs mount network pause play pod port ps pull push restart rm rmi run save search start stats stop system tag top unpause unshare untag version volume wait --cgroup-manager --cni-config-dir --conmon -c --connection --events-backend --help --hooks-dir --identity --log-level --namespace --network-cmd-path -r --remote --root --runroot --runtime --runtime-flag --storage-driver --storage-opt --syslog --tmpdir --url -v --version" 
+          word_list=" attach auto-update build commit container cp create diff events exec export history image images import info init inspect kill load login logout logs machine manifest mount network pause pod port ps pull push restart rm rmi run save search secret start stats stop system tag top unmount unpause unshare untag volume wait --cgroup-manager --cni-config-dir --conmon -c --connection --events-backend --help --hooks-dir --identity --log-level --namespace --network-cmd-path -r --remote --root --runroot --runtime --runtime-flag --storage-driver --storage-opt --syslog --tmpdir --url -v --version" 
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac
@@ -229,7 +237,15 @@ _podman()
 _podman_attach ()
 {
     local cur word_list
-    word_list=" --detach-keys --latest -l --no-stdin --sig-proxy" 
+    word_list=" --detach-keys -l --latest --no-stdin --sig-proxy" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_podman_auto-update ()
+{
+    local cur word_list
+    word_list=" --authfile --dry-run --format" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -237,7 +253,7 @@ _podman_attach ()
 _podman_build ()
 {
     local cur word_list
-    word_list=" --manifest --timestamp --annotation" 
+    word_list=" --add-host --annotation --arch --authfile --build-arg --cache-from --cap-add --cap-drop --cert-dir --cgroup-parent --cni-plugin-path --compress --cpu-period --cpu-quota -c --cpu-shares --cpuset-cpus --cpuset-mems --creds --decryption-key --device -D --disable-compression --disable-content-trust --dns-option --dns-search -f --file --force-rm --format --from --http-proxy --ignorefile --iidfile --ipc --isolation --jobs --label --layers --logfile --manifest -m --memory --memory-swap --network --no-cache --os --pid --platform --pull --pull-always --pull-never -q --quiet --rm --secret --security-opt --shm-size --sign-by --squash --squash-all --stdin -t --tag --target --timestamp --tls-verify --ulimit --userns --userns-gid-map --userns-gid-map-group --userns-uid-map --userns-uid-map-user --uts --variant -v --volume" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -245,7 +261,7 @@ _podman_build ()
 _podman_commit ()
 {
     local cur word_list
-    word_list=" --author -a --change -c --iidfile --include-volumes --message -m --pause -p --quiet -q" 
+    word_list=" -a --author -c --change -f --format --iidfile --include-volumes -m --message -p --pause -q --quiet" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -253,7 +269,7 @@ _podman_commit ()
 _podman_cp ()
 {
     local cur word_list
-    word_list=" --archive -a" 
+    word_list=" -a --archive" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -261,7 +277,7 @@ _podman_cp ()
 _podman_create ()
 {
     local cur word_list
-    word_list=" --add-host --annotation --arch --attach -a --authfile --blkio-weight --blkio-weight-device --cap-add --cap-drop --cgroupns --cgroups --cgroup-parent --cgroup-conf --cidfile --conmon-pidfile --cpu-period --cpu-quota --cpu-rt-period --cpu-rt-runtime --cpu-shares --cpus --cpus --cpu-period --cpu-quota. --cpuset-cpus --cpuset-mems --device --device-cgroup-rule --device-read-bps --device-read-iops --device-write-bps --device-write-iops --disable-content-trust --dns --dns-opt --dns-search --entrypoint --env -e --env-host --env-file --expose --gidmap --group-add --health-cmd --health-interval --health-retries --health-start-period --health-timeout --hostname -h --help --http-proxy --init --init-path --interactive -i --ip6 --ip --ipc --kernel-memory --label -l --label-file --link-local-ip --log-driver --log-opt --mac-address --memory -m --memory-reservation --memory-swap --memory-swappiness --mount --name --network --net --network-alias --no-healthcheck --no-hosts --oom-kill-disable --oom-score-adj --os --pid --pids-limit --platform --pod --pod-id-file --privileged --publish -p --publish-all -P --pull --quiet -q --read-only --read-only-tmpfs --replace --requires --restart --rm --rootfs --sdnotify --seccomp-policy --secret --security-opt --shm-size --stop-signal --stop-timeout --subgidname --subuidname --sysctl --systemd --timeout --tmpfs --tty -t --tz --umask --uidmap --ulimit --user -u --userns --uts --variant --volume -v --volumes-from --workdir -w --pidfile" 
+    word_list=" --add-host --annotation --arch -a --attach --authfile --blkio-weight --blkio-weight-device --cap-add --cap-drop --cgroup-conf --cgroup-parent --cgroupns --cgroups --cidfile --conmon-pidfile --cpu-period --cpu-quota --cpu-rt-period --cpu-rt-runtime --cpu-shares --cpus --cpuset-cpus --cpuset-mems --device --device-cgroup-rule --device-read-bps --device-read-iops --device-write-bps --device-write-iops --disable-content-trust --dns --dns-opt --dns-search --entrypoint -e --env --env-file --env-host --expose --gidmap --group-add --health-cmd --health-interval --health-retries --health-start-period --health-timeout -h --hostname --http-proxy --image-volume --init --init-path -i --interactive --ip --ipc --kernel-memory -l --label --label-file --log-driver --log-opt --mac-address -m --memory --memory-reservation --memory-swap --memory-swappiness --mount --name --network --network-alias --no-healthcheck --no-hosts --oom-kill-disable --oom-score-adj --os --pid --pidfile --pids-limit --platform --pod --pod-id-file --privileged -p --publish -P --publish-all --pull -q --quiet --read-only --read-only-tmpfs --replace --requires --restart --rm --rootfs --sdnotify --seccomp-policy --secret --security-opt --shm-size --stop-signal --stop-timeout --subgidname --subuidname --sysctl --systemd --timeout --tmpfs -t --tty --tz --uidmap --ulimit --umask -u --user --userns --uts --variant -v --volume --volumes-from -w --workdir" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -269,7 +285,7 @@ _podman_create ()
 _podman_diff ()
 {
     local cur word_list
-    word_list=" --format --latest -l" 
+    word_list=" --format -l --latest" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -277,7 +293,7 @@ _podman_diff ()
 _podman_events ()
 {
     local cur word_list
-    word_list=" - --help --format --filter --since --until" 
+    word_list=" --filter --format --since --until" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -285,7 +301,7 @@ _podman_events ()
 _podman_exec ()
 {
     local cur word_list
-    word_list=" --detach -d --detach-keys --env -e --env-file --interactive -i --latest -l --preserve-fds --privileged --tty -t --user -u --workdir -w" 
+    word_list=" -d --detach --detach-keys -e --env --env-file -i --interactive -l --latest --preserve-fds --privileged -t --tty -u --user -w --workdir" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -293,7 +309,7 @@ _podman_exec ()
 _podman_export ()
 {
     local cur word_list
-    word_list=" --output -o --help -h" 
+    word_list=" -o --output" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -301,7 +317,7 @@ _podman_export ()
 _podman_history ()
 {
     local cur word_list
-    word_list=" --human -H --no-trunc --notruncate --quiet -q --format --help -h" 
+    word_list=" --format -H --human --no-trunc --notruncate -q --quiet" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -309,7 +325,7 @@ _podman_history ()
 _podman_images ()
 {
     local cur word_list
-    word_list=" --all -a --digests --filter -f --format --history --noheading -n --no-trunc --quiet -q --sort" 
+    word_list=" -a --all --digests -f --filter --format --history --no-trunc -n --noheading -q --quiet --sort" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -317,7 +333,7 @@ _podman_images ()
 _podman_import ()
 {
     local cur word_list
-    word_list=" --change -c --message -m --quiet -q --help -h" 
+    word_list=" -c --change -m --message -q --quiet" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -325,7 +341,7 @@ _podman_import ()
 _podman_info ()
 {
     local cur word_list
-    word_list=" --debug -D --format -f" 
+    word_list=" -D --debug -f --format" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -333,7 +349,7 @@ _podman_info ()
 _podman_init ()
 {
     local cur word_list
-    word_list=" --all -a --latest -l" 
+    word_list=" -a --all -l --latest" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -341,7 +357,7 @@ _podman_init ()
 _podman_inspect ()
 {
     local cur word_list
-    word_list=" --type -t --format -f --latest -l --size -s" 
+    word_list=" -f --format -l --latest -s --size -t --type" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -349,7 +365,7 @@ _podman_inspect ()
 _podman_kill ()
 {
     local cur word_list
-    word_list=" --all -a --cidfile --latest -l --signal -s" 
+    word_list=" -a --all --cidfile -l --latest -s --signal" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -357,7 +373,7 @@ _podman_kill ()
 _podman_load ()
 {
     local cur word_list
-    word_list=" --input -i --quiet -q --help -h" 
+    word_list=" -i --input -q --quiet" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -365,7 +381,7 @@ _podman_load ()
 _podman_login ()
 {
     local cur word_list
-    word_list=" --authfile --cert-dir --get-login --help -h --password -p --password-stdin --tls-verify --username -u --verbose -v" 
+    word_list=" --authfile --cert-dir --get-login -p --password --password-stdin --tls-verify -u --username -v --verbose" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -373,7 +389,7 @@ _podman_login ()
 _podman_logout ()
 {
     local cur word_list
-    word_list=" --authfile --all -a --help -h" 
+    word_list=" -a --all --authfile" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -381,7 +397,7 @@ _podman_logout ()
 _podman_logs ()
 {
     local cur word_list
-    word_list=" --follow -f --latest -l --names -n --since --until --tail --timestamps -t" 
+    word_list=" -f --follow -l --latest -n --names --since --tail -t --timestamps --until" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -389,7 +405,7 @@ _podman_logs ()
 _podman_mount ()
 {
     local cur word_list
-    word_list=" --all -a --format --latest -l --notruncate" 
+    word_list=" -a --all --format -l --latest --notruncate" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -397,7 +413,7 @@ _podman_mount ()
 _podman_pause ()
 {
     local cur word_list
-    word_list=" --all -a" 
+    word_list=" -a --all" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -405,7 +421,7 @@ _podman_pause ()
 _podman_port ()
 {
     local cur word_list
-    word_list=" --all -a --latest -l" 
+    word_list=" -a --all -l --latest" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -413,7 +429,7 @@ _podman_port ()
 _podman_ps ()
 {
     local cur word_list
-    word_list=" --all -a --external --filter -f --format --help -h --last -n --latest -l --namespace --ns --noheading --no-trunc --pod -p --quiet -q --sort --size -s --sync --watch -w" 
+    word_list=" -a --all --external -f --filter --format -n --last -l --latest --no-trunc --noheading --ns -p --pod -q --quiet -s --size --sort --sync -w --watch" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -421,7 +437,7 @@ _podman_ps ()
 _podman_pull ()
 {
     local cur word_list
-    word_list=" --arch --authfile --cert-dir --creds --disable-content-trust --help -h --os --platform --quiet -q --tls-verify --variant" 
+    word_list=" --all-tags --arch --authfile --cert-dir --creds --disable-content-trust --os --platform -q --quiet --tls-verify --variant" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -429,7 +445,7 @@ _podman_pull ()
 _podman_push ()
 {
     local cur word_list
-    word_list=" --authfile --creds --cert-dir --compress --digestfile --disable-content-trust --format -f --quiet -q --remove-signatures --sign-by --tls-verify" 
+    word_list=" --authfile --cert-dir --compress --creds --digestfile --disable-content-trust -f --format -q --quiet --remove-signatures --sign-by --tls-verify" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -437,7 +453,7 @@ _podman_push ()
 _podman_restart ()
 {
     local cur word_list
-    word_list=" --all -a --latest -l --running --time -t" 
+    word_list=" -a --all -l --latest --running -t --time" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -445,7 +461,7 @@ _podman_restart ()
 _podman_rm ()
 {
     local cur word_list
-    word_list=" --all -a --cidfile --force -f --ignore -i --latest -l --volumes -v" 
+    word_list=" -a --all --cidfile -f --force -i --ignore -l --latest -v --volumes" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -453,7 +469,7 @@ _podman_rm ()
 _podman_rmi ()
 {
     local cur word_list
-    word_list=" --all -a --force -f" 
+    word_list=" -a --all -f --force" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -461,7 +477,7 @@ _podman_rmi ()
 _podman_run ()
 {
     local cur word_list
-    word_list=" --interactive --no-hosts --publish -p --publish-all - --workdir -w --security-opt" 
+    word_list=" --add-host --annotation --arch -a --attach --authfile --blkio-weight --blkio-weight-device --cap-add --cap-drop --cgroup-conf --cgroup-parent --cgroupns --cgroups --cidfile --conmon-pidfile --cpu-period --cpu-quota --cpu-rt-period --cpu-rt-runtime --cpu-shares --cpus --cpuset-cpus --cpuset-mems -d --detach --detach-keys --device --device-cgroup-rule --device-read-bps --device-read-iops --device-write-bps --device-write-iops --disable-content-trust --dns --dns-opt --dns-search --entrypoint -e --env --env-file --env-host --expose --gidmap --group-add --health-cmd --health-interval --health-retries --health-start-period --health-timeout -h --hostname --http-proxy --image-volume --init --init-path -i --interactive --ip --ipc --kernel-memory -l --label --label-file --log-driver --log-opt --mac-address -m --memory --memory-reservation --memory-swap --memory-swappiness --mount --name --network --network-alias --no-healthcheck --no-hosts --oom-kill-disable --oom-score-adj --os --pid --pidfile --pids-limit --platform --pod --pod-id-file --preserve-fds --privileged -p --publish -P --publish-all --pull -q --quiet --read-only --read-only-tmpfs --replace --requires --restart --rm --rmi --rootfs --sdnotify --seccomp-policy --secret --security-opt --shm-size --sig-proxy --stop-signal --stop-timeout --subgidname --subuidname --sysctl --systemd --timeout --tmpfs -t --tty --tz --uidmap --ulimit --umask -u --user --userns --uts --variant -v --volume --volumes-from -w --workdir" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -469,7 +485,7 @@ _podman_run ()
 _podman_save ()
 {
     local cur word_list
-    word_list=" --compress --output -o --format --multi-image-archive -m --quiet -q --help -h" 
+    word_list=" --compress --format -m --multi-image-archive -o --output -q --quiet" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -477,7 +493,7 @@ _podman_save ()
 _podman_search ()
 {
     local cur word_list
-    word_list=" --authfile --filter -f --format --limit --list-tags --no-trunc --tls-verify --help -h" 
+    word_list=" --authfile -f --filter --format --limit --list-tags --no-trunc --tls-verify" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -485,7 +501,7 @@ _podman_search ()
 _podman_start ()
 {
     local cur word_list
-    word_list=" --attach -a --detach-keys --interactive -i --latest -l --sig-proxy --all --filter -f" 
+    word_list=" --all -a --attach --detach-keys -f --filter -i --interactive -l --latest --sig-proxy" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -493,7 +509,7 @@ _podman_start ()
 _podman_stats ()
 {
     local cur word_list
-    word_list=" --all -a --latest -l --no-reset --no-stream --format" 
+    word_list=" -a --all --format -l --latest --no-reset --no-stream" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -501,15 +517,7 @@ _podman_stats ()
 _podman_stop ()
 {
     local cur word_list
-    word_list=" --all -a --cidfile --ignore -i --latest -l --time -t" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
-}
-
-_podman_tag ()
-{
-    local cur word_list
-    word_list=" --help -h" 
+    word_list=" -a --all --cidfile -i --ignore -l --latest -t --time" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -517,7 +525,15 @@ _podman_tag ()
 _podman_top ()
 {
     local cur word_list
-    word_list=" --help -h --latest -l" 
+    word_list=" -l --latest" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_podman_unmount ()
+{
+    local cur word_list
+    word_list=" -a --all -f --force -l --latest" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -525,7 +541,7 @@ _podman_top ()
 _podman_unpause ()
 {
     local cur word_list
-    word_list=" --all -a" 
+    word_list=" -a --all" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -533,23 +549,7 @@ _podman_unpause ()
 _podman_unshare ()
 {
     local cur word_list
-    word_list=" --help -h --rootless-cni" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
-}
-
-_podman_untag ()
-{
-    local cur word_list
-    word_list=" --help -h" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
-}
-
-_podman_version ()
-{
-    local cur word_list
-    word_list=" --help -h --format -f" 
+    word_list=" --rootless-cni" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -557,7 +557,7 @@ _podman_version ()
 _podman_wait ()
 {
     local cur word_list
-    word_list=" --condition --help -h --interval -i --latest -l" 
+    word_list=" --condition -i --interval -l --latest" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }

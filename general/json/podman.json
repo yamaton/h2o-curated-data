@@ -36,7 +36,7 @@
         "--events-backend"
       ],
       "argument": "string",
-      "description": "Events backend to use (\"file\"|\"journald\"|\"none\") (default \"file\")"
+      "description": "Events backend to use (\"file\"|\"journald\"|\"none\") (default \"journald\")"
     },
     {
       "names": [
@@ -149,7 +149,7 @@
         "--url"
       ],
       "argument": "string",
-      "description": "URL to access Podman service (CONTAINER_HOST) (default \"unix:/tmp/podman-run-1000/podman/podman.sock\")"
+      "description": "URL to access Podman service (CONTAINER_HOST) (default \"unix:/run/user/1000/podman/podman.sock\")"
     },
     {
       "names": [
@@ -193,33 +193,6 @@
           ],
           "argument": "",
           "description": "Proxy received signals to the process (default true)"
-        }
-      ]
-    },
-    {
-      "name": "auto-update",
-      "description": "Auto update containers according to their auto-update policy",
-      "options": [
-        {
-          "names": [
-            "--authfile"
-          ],
-          "argument": "string",
-          "description": "Path to the authentication file. Use REGISTRY_AUTH_FILE environment variable to override"
-        },
-        {
-          "names": [
-            "--dry-run"
-          ],
-          "argument": "",
-          "description": "Check for pending updates"
-        },
-        {
-          "names": [
-            "--format"
-          ],
-          "argument": "string",
-          "description": "Change the output format to JSON or a Go template"
         }
       ]
     },
@@ -494,7 +467,7 @@
             "--manifest"
           ],
           "argument": "string",
-          "description": "add the image to the specified manifest list. Creates manifest if it does not exist"
+          "description": "add the image to the specified manifest list. Creates manifest list if it does not exist"
         },
         {
           "names": [
@@ -544,7 +517,7 @@
             "--platform"
           ],
           "argument": "linux/arm",
-          "description": "set the OS/ARCH to the provided value instead of the current operating system and architecture of the host (for example linux/arm) (default \"linux/amd64\")"
+          "description": "set the OS/ARCH/VARIANT of the image to the provided value instead of the current operating system and architecture of the host (for example linux/arm) (default [linux/amd64])"
         },
         {
           "names": [
@@ -626,6 +599,13 @@
         },
         {
           "names": [
+            "--ssh"
+          ],
+          "argument": "stringArray",
+          "description": "SSH agent socket or keys to expose to the build. (format: default|<id>[=<socket>|<key>[,<key>]])"
+        },
+        {
+          "names": [
             "--stdin"
           ],
           "argument": "",
@@ -665,7 +645,7 @@
             "--ulimit"
           ],
           "argument": "strings",
-          "description": "ulimit options (default [nproc=32768:32768])"
+          "description": "ulimit options"
         },
         {
           "names": [
@@ -797,7 +777,3004 @@
     {
       "name": "container",
       "description": "Manage containers",
-      "options": []
+      "options": [],
+      "subcommands": [
+        {
+          "name": "attach",
+          "description": "Attach to a running container",
+          "options": [
+            {
+              "names": [
+                "--detach-keys"
+              ],
+              "argument": "[a-Z]",
+              "description": "Select the key sequence for detaching a container. Format is a single character [a-Z] or a comma separated sequence of `ctrl-<value>`, where `<value>` is one of: `a-z`, `@`, `^`, `[`, `\\`, `]`, `^` or `_` (default \"ctrl-p,ctrl-q\")"
+            },
+            {
+              "names": [
+                "-l",
+                "--latest"
+              ],
+              "argument": "",
+              "description": "Act on the latest container podman is aware of Not supported with the \"--remote\" flag"
+            },
+            {
+              "names": [
+                "--no-stdin"
+              ],
+              "argument": "",
+              "description": "Do not attach STDIN. The default is false"
+            },
+            {
+              "names": [
+                "--sig-proxy"
+              ],
+              "argument": "",
+              "description": "Proxy received signals to the process (default true)"
+            }
+          ]
+        },
+        {
+          "name": "cleanup",
+          "description": "Cleanup network and mountpoints of one or more containers",
+          "options": [
+            {
+              "names": [
+                "-a",
+                "--all"
+              ],
+              "argument": "",
+              "description": "Cleans up all containers"
+            },
+            {
+              "names": [
+                "--exec"
+              ],
+              "argument": "string",
+              "description": "Clean up the given exec session instead of the container"
+            },
+            {
+              "names": [
+                "-l",
+                "--latest"
+              ],
+              "argument": "",
+              "description": "Act on the latest container podman is aware of Not supported with the \"--remote\" flag"
+            },
+            {
+              "names": [
+                "--rm"
+              ],
+              "argument": "",
+              "description": "After cleanup, remove the container entirely"
+            },
+            {
+              "names": [
+                "--rmi"
+              ],
+              "argument": "",
+              "description": "After cleanup, remove the image entirely"
+            }
+          ]
+        },
+        {
+          "name": "commit",
+          "description": "Create new image based on the changed container",
+          "options": [
+            {
+              "names": [
+                "-a",
+                "--author"
+              ],
+              "argument": "string",
+              "description": "Set the author for the image committed"
+            },
+            {
+              "names": [
+                "-c",
+                "--change"
+              ],
+              "argument": "stringArray",
+              "description": "Apply the following possible instructions to the created image (default []): CMD | ENTRYPOINT | ENV | EXPOSE | LABEL | ONBUILD | STOPSIGNAL | USER | VOLUME | WORKDIR"
+            },
+            {
+              "names": [
+                "-f",
+                "--format"
+              ],
+              "argument": "Format",
+              "description": "Format of the image manifest and metadata (default \"oci\")"
+            },
+            {
+              "names": [
+                "--iidfile"
+              ],
+              "argument": "file",
+              "description": "file to write the image ID to"
+            },
+            {
+              "names": [
+                "--include-volumes"
+              ],
+              "argument": "",
+              "description": "Include container volumes as image volumes"
+            },
+            {
+              "names": [
+                "-m",
+                "--message"
+              ],
+              "argument": "string",
+              "description": "Set commit message for imported image"
+            },
+            {
+              "names": [
+                "-p",
+                "--pause"
+              ],
+              "argument": "",
+              "description": "Pause container during commit"
+            },
+            {
+              "names": [
+                "-q",
+                "--quiet"
+              ],
+              "argument": "",
+              "description": "Suppress output"
+            }
+          ]
+        },
+        {
+          "name": "cp",
+          "description": "Copy files/folders between a container and the local filesystem",
+          "options": [
+            {
+              "names": [
+                "-a",
+                "--archive"
+              ],
+              "argument": "",
+              "description": "Chown copied files to the primary uid/gid of the destination container. (default true)"
+            }
+          ]
+        },
+        {
+          "name": "create",
+          "description": "Create but do not start a container",
+          "options": [
+            {
+              "names": [
+                "--add-host"
+              ],
+              "argument": "strings",
+              "description": "Add a custom host-to-IP mapping (host:ip) (default [])"
+            },
+            {
+              "names": [
+                "--annotation"
+              ],
+              "argument": "strings",
+              "description": "Add annotations to container (key:value)"
+            },
+            {
+              "names": [
+                "--arch"
+              ],
+              "argument": "ARCH",
+              "description": "use ARCH instead of the architecture of the machine for choosing images"
+            },
+            {
+              "names": [
+                "-a",
+                "--attach"
+              ],
+              "argument": "strings",
+              "description": "Attach to STDIN, STDOUT or STDERR"
+            },
+            {
+              "names": [
+                "--authfile"
+              ],
+              "argument": "string",
+              "description": "Path of the authentication file. Use REGISTRY_AUTH_FILE environment variable to override"
+            },
+            {
+              "names": [
+                "--blkio-weight"
+              ],
+              "argument": "string",
+              "description": "Block IO weight (relative weight) accepts a weight value between 10 and 1000."
+            },
+            {
+              "names": [
+                "--blkio-weight-device"
+              ],
+              "argument": "DEVICE_NAME:WEIGHT",
+              "description": "Block IO weight (relative device weight, format: DEVICE_NAME:WEIGHT)"
+            },
+            {
+              "names": [
+                "--cap-add"
+              ],
+              "argument": "strings",
+              "description": "Add capabilities to the container"
+            },
+            {
+              "names": [
+                "--cap-drop"
+              ],
+              "argument": "strings",
+              "description": "Drop capabilities from the container"
+            },
+            {
+              "names": [
+                "--cgroup-conf"
+              ],
+              "argument": "strings",
+              "description": "Configure cgroup v2 (key=value)"
+            },
+            {
+              "names": [
+                "--cgroup-parent"
+              ],
+              "argument": "string",
+              "description": "Optional parent cgroup for the container"
+            },
+            {
+              "names": [
+                "--cgroupns"
+              ],
+              "argument": "string",
+              "description": "cgroup namespace to use"
+            },
+            {
+              "names": [
+                "--cgroups"
+              ],
+              "argument": "string",
+              "description": "control container cgroup configuration (\"enabled\"|\"disabled\"|\"no-conmon\"|\"split\") (default \"enabled\")"
+            },
+            {
+              "names": [
+                "--cidfile"
+              ],
+              "argument": "string",
+              "description": "Write the container ID to the file"
+            },
+            {
+              "names": [
+                "--conmon-pidfile"
+              ],
+              "argument": "string",
+              "description": "Path to the file that will receive the PID of conmon"
+            },
+            {
+              "names": [
+                "--cpu-period"
+              ],
+              "argument": "uint",
+              "description": "Limit the CPU CFS (Completely Fair Scheduler) period"
+            },
+            {
+              "names": [
+                "--cpu-quota"
+              ],
+              "argument": "int",
+              "description": "Limit the CPU CFS (Completely Fair Scheduler) quota"
+            },
+            {
+              "names": [
+                "--cpu-rt-period"
+              ],
+              "argument": "uint",
+              "description": "Limit the CPU real-time period in microseconds"
+            },
+            {
+              "names": [
+                "--cpu-rt-runtime"
+              ],
+              "argument": "int",
+              "description": "Limit the CPU real-time runtime in microseconds"
+            },
+            {
+              "names": [
+                "--cpu-shares"
+              ],
+              "argument": "uint",
+              "description": "CPU shares (relative weight)"
+            },
+            {
+              "names": [
+                "--cpus"
+              ],
+              "argument": "float",
+              "description": "Number of CPUs. The default is 0.000 which means no limit"
+            },
+            {
+              "names": [
+                "--cpuset-cpus"
+              ],
+              "argument": "string",
+              "description": "CPUs in which to allow execution (0-3, 0,1)"
+            },
+            {
+              "names": [
+                "--cpuset-mems"
+              ],
+              "argument": "string",
+              "description": "Memory nodes (MEMs) in which to allow execution (0-3, 0,1). Only effective on NUMA systems."
+            },
+            {
+              "names": [
+                "--device"
+              ],
+              "argument": "strings",
+              "description": "Add a host device to the container"
+            },
+            {
+              "names": [
+                "--device-cgroup-rule"
+              ],
+              "argument": "strings",
+              "description": "Add a rule to the cgroup allowed devices list"
+            },
+            {
+              "names": [
+                "--device-read-bps"
+              ],
+              "argument": "strings",
+              "description": "Limit read rate (bytes per second) from a device (e.g. --device-read-bps=/dev/sda:1mb)"
+            },
+            {
+              "names": [
+                "--device-read-iops"
+              ],
+              "argument": "strings",
+              "description": "Limit read rate (IO per second) from a device (e.g. --device-read-iops=/dev/sda:1000)"
+            },
+            {
+              "names": [
+                "--device-write-bps"
+              ],
+              "argument": "strings",
+              "description": "Limit write rate (bytes per second) to a device (e.g. --device-write-bps=/dev/sda:1mb)"
+            },
+            {
+              "names": [
+                "--device-write-iops"
+              ],
+              "argument": "strings",
+              "description": "Limit write rate (IO per second) to a device (e.g. --device-write-iops=/dev/sda:1000)"
+            },
+            {
+              "names": [
+                "--disable-content-trust"
+              ],
+              "argument": "",
+              "description": "This is a Docker specific option and is a NOOP"
+            },
+            {
+              "names": [
+                "--dns"
+              ],
+              "argument": "strings",
+              "description": "Set custom DNS servers"
+            },
+            {
+              "names": [
+                "--dns-opt"
+              ],
+              "argument": "strings",
+              "description": "Set custom DNS options"
+            },
+            {
+              "names": [
+                "--dns-search"
+              ],
+              "argument": "strings",
+              "description": "Set custom DNS search domains"
+            },
+            {
+              "names": [
+                "--entrypoint"
+              ],
+              "argument": "string",
+              "description": "Overwrite the default ENTRYPOINT of the image"
+            },
+            {
+              "names": [
+                "-e",
+                "--env"
+              ],
+              "argument": "stringArray",
+              "description": "Set environment variables in container (default [PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin,TERM=xterm])"
+            },
+            {
+              "names": [
+                "--env-file"
+              ],
+              "argument": "strings",
+              "description": "Read in a file of environment variables"
+            },
+            {
+              "names": [
+                "--env-host"
+              ],
+              "argument": "",
+              "description": "Use all current host environment variables in container"
+            },
+            {
+              "names": [
+                "--expose"
+              ],
+              "argument": "strings",
+              "description": "Expose a port or a range of ports"
+            },
+            {
+              "names": [
+                "--gidmap"
+              ],
+              "argument": "strings",
+              "description": "GID map to use for the user namespace"
+            },
+            {
+              "names": [
+                "--group-add"
+              ],
+              "argument": "strings",
+              "description": "Add additional groups to the primary container process. 'keep-groups' allows container processes to use supplementary groups."
+            },
+            {
+              "names": [
+                "--health-cmd"
+              ],
+              "argument": "string",
+              "description": "set a healthcheck command for the container ('none' disables the existing healthcheck)"
+            },
+            {
+              "names": [
+                "--health-interval"
+              ],
+              "argument": "string",
+              "description": "set an interval for the healthchecks (a value of disable results in no automatic timer setup) (default \"30s\")"
+            },
+            {
+              "names": [
+                "--health-retries"
+              ],
+              "argument": "uint",
+              "description": "the number of retries allowed before a healthcheck is considered to be unhealthy (default 3)"
+            },
+            {
+              "names": [
+                "--health-start-period"
+              ],
+              "argument": "string",
+              "description": "the initialization time needed for a container to bootstrap (default \"0s\")"
+            },
+            {
+              "names": [
+                "--health-timeout"
+              ],
+              "argument": "string",
+              "description": "the maximum time allowed to complete the healthcheck before an interval is considered failed (default \"30s\")"
+            },
+            {
+              "names": [
+                "-h",
+                "--hostname"
+              ],
+              "argument": "string",
+              "description": "Set container hostname"
+            },
+            {
+              "names": [
+                "--http-proxy"
+              ],
+              "argument": "",
+              "description": "Set proxy environment variables in the container based on the host proxy vars (default true)"
+            },
+            {
+              "names": [
+                "--image-volume"
+              ],
+              "argument": "string",
+              "description": "Tells podman how to handle the builtin image volumes (\"bind\"|\"tmpfs\"|\"ignore\") (default \"bind\")"
+            },
+            {
+              "names": [
+                "--init"
+              ],
+              "argument": "",
+              "description": "Run an init binary inside the container that forwards signals and reaps processes"
+            },
+            {
+              "names": [
+                "--init-ctr"
+              ],
+              "argument": "string",
+              "description": "Make this a pod init container."
+            },
+            {
+              "names": [
+                "--init-path"
+              ],
+              "argument": "string",
+              "description": "Path to the container-init binary"
+            },
+            {
+              "names": [
+                "-i",
+                "--interactive"
+              ],
+              "argument": "",
+              "description": "Keep STDIN open even if not attached"
+            },
+            {
+              "names": [
+                "--ip"
+              ],
+              "argument": "string",
+              "description": "Specify a static IPv4 address for the container"
+            },
+            {
+              "names": [
+                "--ipc"
+              ],
+              "argument": "string",
+              "description": "IPC namespace to use"
+            },
+            {
+              "names": [
+                "--kernel-memory"
+              ],
+              "argument": "<number>[<unit>]",
+              "description": "Kernel memory limit (format: <number>[<unit>], where unit = b (bytes), k (kilobytes), m (megabytes), or g (gigabytes))"
+            },
+            {
+              "names": [
+                "-l",
+                "--label"
+              ],
+              "argument": "stringArray",
+              "description": "Set metadata on container"
+            },
+            {
+              "names": [
+                "--label-file"
+              ],
+              "argument": "strings",
+              "description": "Read in a line delimited file of labels"
+            },
+            {
+              "names": [
+                "--log-driver"
+              ],
+              "argument": "string",
+              "description": "Logging driver for the container (default \"journald\")"
+            },
+            {
+              "names": [
+                "--log-opt"
+              ],
+              "argument": "strings",
+              "description": "Logging driver options"
+            },
+            {
+              "names": [
+                "--mac-address"
+              ],
+              "argument": "string",
+              "description": "Container MAC address (e.g. 92:d0:c6:0a:29:33)"
+            },
+            {
+              "names": [
+                "-m",
+                "--memory"
+              ],
+              "argument": "<number>[<unit>]",
+              "description": "Memory limit (format: <number>[<unit>], where unit = b (bytes), k (kilobytes), m (megabytes), or g (gigabytes))"
+            },
+            {
+              "names": [
+                "--memory-reservation"
+              ],
+              "argument": "<number>[<unit>]",
+              "description": "Memory soft limit (format: <number>[<unit>], where unit = b (bytes), k (kilobytes), m (megabytes), or g (gigabytes))"
+            },
+            {
+              "names": [
+                "--memory-swap"
+              ],
+              "argument": "string",
+              "description": "Swap limit equal to memory plus swap: '-1' to enable unlimited swap"
+            },
+            {
+              "names": [
+                "--memory-swappiness"
+              ],
+              "argument": "int",
+              "description": "Tune container memory swappiness (0 to 100, or -1 for system default) (default -1)"
+            },
+            {
+              "names": [
+                "--mount"
+              ],
+              "argument": "stringArray",
+              "description": "Attach a filesystem mount to the container"
+            },
+            {
+              "names": [
+                "--name"
+              ],
+              "argument": "string",
+              "description": "Assign a name to the container"
+            },
+            {
+              "names": [
+                "--network"
+              ],
+              "argument": "string",
+              "description": "Connect a container to a network"
+            },
+            {
+              "names": [
+                "--network-alias"
+              ],
+              "argument": "strings",
+              "description": "Add network-scoped alias for the container"
+            },
+            {
+              "names": [
+                "--no-healthcheck"
+              ],
+              "argument": "",
+              "description": "Disable healthchecks on container"
+            },
+            {
+              "names": [
+                "--no-hosts"
+              ],
+              "argument": "",
+              "description": "Do not create /etc/hosts within the container, instead use the version from the image"
+            },
+            {
+              "names": [
+                "--oom-kill-disable"
+              ],
+              "argument": "",
+              "description": "Disable OOM Killer"
+            },
+            {
+              "names": [
+                "--oom-score-adj"
+              ],
+              "argument": "int",
+              "description": "Tune the host's OOM preferences (-1000 to 1000)"
+            },
+            {
+              "names": [
+                "--os"
+              ],
+              "argument": "OS",
+              "description": "use OS instead of the running OS for choosing images"
+            },
+            {
+              "names": [
+                "--personality"
+              ],
+              "argument": "string",
+              "description": "Configure execution domain using personality (e.g., LINUX/LINUX32)"
+            },
+            {
+              "names": [
+                "--pid"
+              ],
+              "argument": "string",
+              "description": "PID namespace to use"
+            },
+            {
+              "names": [
+                "--pidfile"
+              ],
+              "argument": "string",
+              "description": "Write the container process ID to the file"
+            },
+            {
+              "names": [
+                "--pids-limit"
+              ],
+              "argument": "int",
+              "description": "Tune container pids limit (set -1 for unlimited)"
+            },
+            {
+              "names": [
+                "--platform"
+              ],
+              "argument": "string",
+              "description": "Specify the platform for selecting the image. (Conflicts with --arch and --os)"
+            },
+            {
+              "names": [
+                "--pod"
+              ],
+              "argument": "string",
+              "description": "Run container in an existing pod"
+            },
+            {
+              "names": [
+                "--pod-id-file"
+              ],
+              "argument": "string",
+              "description": "Read the pod ID from the file"
+            },
+            {
+              "names": [
+                "--privileged"
+              ],
+              "argument": "",
+              "description": "Give extended privileges to container"
+            },
+            {
+              "names": [
+                "-p",
+                "--publish"
+              ],
+              "argument": "strings",
+              "description": "Publish a container's port, or a range of ports, to the host (default [])"
+            },
+            {
+              "names": [
+                "-P",
+                "--publish-all"
+              ],
+              "argument": "",
+              "description": "Publish all exposed ports to random ports on the host interface"
+            },
+            {
+              "names": [
+                "--pull"
+              ],
+              "argument": "string",
+              "description": "Pull image before creating (\"always\"|\"missing\"|\"never\") (default \"missing\")"
+            },
+            {
+              "names": [
+                "-q",
+                "--quiet"
+              ],
+              "argument": "",
+              "description": "Suppress output information when pulling images"
+            },
+            {
+              "names": [
+                "--read-only"
+              ],
+              "argument": "",
+              "description": "Make containers root filesystem read-only"
+            },
+            {
+              "names": [
+                "--read-only-tmpfs"
+              ],
+              "argument": "",
+              "description": "When running containers in read-only mode mount a read-write tmpfs on /run, /tmp and /var/tmp (default true)"
+            },
+            {
+              "names": [
+                "--replace"
+              ],
+              "argument": "",
+              "description": "If a container with the same name exists, replace it"
+            },
+            {
+              "names": [
+                "--requires"
+              ],
+              "argument": "strings",
+              "description": "Add one or more requirement containers that must be started before this container will start"
+            },
+            {
+              "names": [
+                "--restart"
+              ],
+              "argument": "string",
+              "description": "Restart policy to apply when a container exits (\"always\"|\"no\"|\"on-failure\"|\"unless-stopped\")"
+            },
+            {
+              "names": [
+                "--rm"
+              ],
+              "argument": "",
+              "description": "Remove container (and pod if created) after exit"
+            },
+            {
+              "names": [
+                "--rootfs"
+              ],
+              "argument": "",
+              "description": "The first argument is not an image but the rootfs to the exploded container"
+            },
+            {
+              "names": [
+                "--sdnotify"
+              ],
+              "argument": "string",
+              "description": "control sd-notify behavior (\"container\"|\"conmon\"|\"ignore\") (default \"container\")"
+            },
+            {
+              "names": [
+                "--seccomp-policy"
+              ],
+              "argument": "string",
+              "description": "Policy for selecting a seccomp profile (experimental) (default \"default\")"
+            },
+            {
+              "names": [
+                "--secret"
+              ],
+              "argument": "stringArray",
+              "description": "Add secret to container"
+            },
+            {
+              "names": [
+                "--security-opt"
+              ],
+              "argument": "stringArray",
+              "description": "Security Options"
+            },
+            {
+              "names": [
+                "--shm-size"
+              ],
+              "argument": "<number>[<unit>]",
+              "description": "Size of /dev/shm (format: <number>[<unit>], where unit = b (bytes), k (kilobytes), m (megabytes), or g (gigabytes)) (default \"65536k\")"
+            },
+            {
+              "names": [
+                "--stop-signal"
+              ],
+              "argument": "string",
+              "description": "Signal to stop a container. Default is SIGTERM"
+            },
+            {
+              "names": [
+                "--stop-timeout"
+              ],
+              "argument": "uint",
+              "description": "Timeout (in seconds) that containers stopped by user command have to exit. If exceeded, the container will be forcibly stopped via SIGKILL. (default 10)"
+            },
+            {
+              "names": [
+                "--subgidname"
+              ],
+              "argument": "string",
+              "description": "Name of range listed in /etc/subgid for use in user namespace"
+            },
+            {
+              "names": [
+                "--subuidname"
+              ],
+              "argument": "string",
+              "description": "Name of range listed in /etc/subuid for use in user namespace"
+            },
+            {
+              "names": [
+                "--sysctl"
+              ],
+              "argument": "strings",
+              "description": "Sysctl options"
+            },
+            {
+              "names": [
+                "--systemd"
+              ],
+              "argument": "string",
+              "description": "Run container in systemd mode (\"true\"|\"false\"|\"always\") (default \"true\")"
+            },
+            {
+              "names": [
+                "--timeout"
+              ],
+              "argument": "uint",
+              "description": "Maximum length of time a container is allowed to run. The container will be killed automatically after the time expires."
+            },
+            {
+              "names": [
+                "--tls-verify"
+              ],
+              "argument": "",
+              "description": "Require HTTPS and verify certificates when contacting registries for pulling images (default true)"
+            },
+            {
+              "names": [
+                "--tmpfs"
+              ],
+              "argument": "tmpfs",
+              "description": "Mount a temporary filesystem (tmpfs) into a container"
+            },
+            {
+              "names": [
+                "-t",
+                "--tty"
+              ],
+              "argument": "",
+              "description": "Allocate a pseudo-TTY for container"
+            },
+            {
+              "names": [
+                "--tz"
+              ],
+              "argument": "string",
+              "description": "Set timezone in container"
+            },
+            {
+              "names": [
+                "--uidmap"
+              ],
+              "argument": "strings",
+              "description": "UID map to use for the user namespace"
+            },
+            {
+              "names": [
+                "--ulimit"
+              ],
+              "argument": "strings",
+              "description": "Ulimit options"
+            },
+            {
+              "names": [
+                "--umask"
+              ],
+              "argument": "string",
+              "description": "Set umask in container (default \"0022\")"
+            },
+            {
+              "names": [
+                "-u",
+                "--user"
+              ],
+              "argument": "string",
+              "description": "Username or UID (format: <name|uid>[:<group|gid>])"
+            },
+            {
+              "names": [
+                "--userns"
+              ],
+              "argument": "string",
+              "description": "User namespace to use"
+            },
+            {
+              "names": [
+                "--uts"
+              ],
+              "argument": "string",
+              "description": "UTS namespace to use"
+            },
+            {
+              "names": [
+                "--variant"
+              ],
+              "argument": "VARIANT",
+              "description": "Use VARIANT instead of the running architecture variant for choosing images"
+            },
+            {
+              "names": [
+                "-v",
+                "--volume"
+              ],
+              "argument": "stringArray",
+              "description": "Bind mount a volume into the container"
+            },
+            {
+              "names": [
+                "--volumes-from"
+              ],
+              "argument": "stringArray",
+              "description": "Mount volumes from the specified container(s)"
+            },
+            {
+              "names": [
+                "-w",
+                "--workdir"
+              ],
+              "argument": "string",
+              "description": "Working directory inside the container"
+            }
+          ]
+        },
+        {
+          "name": "diff",
+          "description": "Inspect changes to the container's file systems",
+          "options": [
+            {
+              "names": [
+                "--format"
+              ],
+              "argument": "string",
+              "description": "Change the output format (json)"
+            },
+            {
+              "names": [
+                "-l",
+                "--latest"
+              ],
+              "argument": "",
+              "description": "Act on the latest container podman is aware of Not supported with the \"--remote\" flag"
+            }
+          ]
+        },
+        {
+          "name": "exec",
+          "description": "Run a process in a running container",
+          "options": [
+            {
+              "names": [
+                "-d",
+                "--detach"
+              ],
+              "argument": "",
+              "description": "Run the exec session in detached mode (backgrounded)"
+            },
+            {
+              "names": [
+                "--detach-keys"
+              ],
+              "argument": "string",
+              "description": "Select the key sequence for detaching a container. Format is a single character [a-Z] or ctrl-<value> where <value> is one of: a-z, @, ^, [, , or _ (default \"ctrl-p,ctrl-q\")"
+            },
+            {
+              "names": [
+                "-e",
+                "--env"
+              ],
+              "argument": "stringArray",
+              "description": "Set environment variables"
+            },
+            {
+              "names": [
+                "--env-file"
+              ],
+              "argument": "strings",
+              "description": "Read in a file of environment variables"
+            },
+            {
+              "names": [
+                "-i",
+                "--interactive"
+              ],
+              "argument": "",
+              "description": "Keep STDIN open even if not attached"
+            },
+            {
+              "names": [
+                "-l",
+                "--latest"
+              ],
+              "argument": "",
+              "description": "Act on the latest container podman is aware of Not supported with the \"--remote\" flag"
+            },
+            {
+              "names": [
+                "--preserve-fds"
+              ],
+              "argument": "uint",
+              "description": "Pass N additional file descriptors to the container"
+            },
+            {
+              "names": [
+                "--privileged"
+              ],
+              "argument": "",
+              "description": "Give the process extended Linux capabilities inside the container. The default is false"
+            },
+            {
+              "names": [
+                "-t",
+                "--tty"
+              ],
+              "argument": "",
+              "description": "Allocate a pseudo-TTY. The default is false"
+            },
+            {
+              "names": [
+                "-u",
+                "--user"
+              ],
+              "argument": "string",
+              "description": "Sets the username or UID used and optionally the groupname or GID for the specified command"
+            },
+            {
+              "names": [
+                "-w",
+                "--workdir"
+              ],
+              "argument": "string",
+              "description": "Working directory inside the container"
+            }
+          ]
+        },
+        {
+          "name": "exists",
+          "description": "Check if a container exists in local storage",
+          "options": [
+            {
+              "names": [
+                "--external"
+              ],
+              "argument": "",
+              "description": "Check external storage containers as well as Podman containers"
+            }
+          ]
+        },
+        {
+          "name": "export",
+          "description": "Export container's filesystem contents as a tar archive",
+          "options": [
+            {
+              "names": [
+                "-o",
+                "--output"
+              ],
+              "argument": "string",
+              "description": "Write to a specified file (default: stdout, which must be redirected)"
+            }
+          ]
+        },
+        {
+          "name": "init",
+          "description": "Initialize one or more containers",
+          "options": [
+            {
+              "names": [
+                "-a",
+                "--all"
+              ],
+              "argument": "",
+              "description": "Initialize all containers"
+            },
+            {
+              "names": [
+                "-l",
+                "--latest"
+              ],
+              "argument": "",
+              "description": "Act on the latest container podman is aware of Not supported with the \"--remote\" flag"
+            }
+          ]
+        },
+        {
+          "name": "inspect",
+          "description": "Display the configuration of a container",
+          "options": [
+            {
+              "names": [
+                "-f",
+                "--format"
+              ],
+              "argument": "string",
+              "description": "Format the output to a Go template or json (default \"json\")"
+            },
+            {
+              "names": [
+                "-l",
+                "--latest"
+              ],
+              "argument": "",
+              "description": "Act on the latest container podman is aware of Not supported with the \"--remote\" flag"
+            },
+            {
+              "names": [
+                "-s",
+                "--size"
+              ],
+              "argument": "",
+              "description": "Display total file size"
+            }
+          ]
+        },
+        {
+          "name": "kill",
+          "description": "Kill one or more running containers with a specific signal",
+          "options": [
+            {
+              "names": [
+                "-a",
+                "--all"
+              ],
+              "argument": "",
+              "description": "Signal all running containers"
+            },
+            {
+              "names": [
+                "--cidfile"
+              ],
+              "argument": "stringArray",
+              "description": "Read the container ID from the file"
+            },
+            {
+              "names": [
+                "-l",
+                "--latest"
+              ],
+              "argument": "",
+              "description": "Act on the latest container podman is aware of Not supported with the \"--remote\" flag"
+            },
+            {
+              "names": [
+                "-s",
+                "--signal"
+              ],
+              "argument": "string",
+              "description": "Signal to send to the container (default \"KILL\")"
+            }
+          ]
+        },
+        {
+          "name": "list",
+          "description": "List containers",
+          "options": [
+            {
+              "names": [
+                "-a",
+                "--all"
+              ],
+              "argument": "",
+              "description": "Show all the containers, default is only running containers"
+            },
+            {
+              "names": [
+                "--external"
+              ],
+              "argument": "",
+              "description": "Show containers in storage not controlled by Podman"
+            },
+            {
+              "names": [
+                "-f",
+                "--filter"
+              ],
+              "argument": "strings",
+              "description": "Filter output based on conditions given"
+            },
+            {
+              "names": [
+                "--format"
+              ],
+              "argument": "string",
+              "description": "Pretty-print containers to JSON or using a Go template"
+            },
+            {
+              "names": [
+                "-n",
+                "--last"
+              ],
+              "argument": "int",
+              "description": "Print the n last created containers (all states) (default -1)"
+            },
+            {
+              "names": [
+                "-l",
+                "--latest"
+              ],
+              "argument": "",
+              "description": "Act on the latest container podman is aware of Not supported with the \"--remote\" flag"
+            },
+            {
+              "names": [
+                "--no-trunc"
+              ],
+              "argument": "",
+              "description": "Display the extended information"
+            },
+            {
+              "names": [
+                "--noheading"
+              ],
+              "argument": "",
+              "description": "Do not print headers"
+            },
+            {
+              "names": [
+                "--ns"
+              ],
+              "argument": "",
+              "description": "Display namespace information"
+            },
+            {
+              "names": [
+                "-p",
+                "--pod"
+              ],
+              "argument": "",
+              "description": "Print the ID and name of the pod the containers are associated with"
+            },
+            {
+              "names": [
+                "-q",
+                "--quiet"
+              ],
+              "argument": "",
+              "description": "Print the numeric IDs of the containers only"
+            },
+            {
+              "names": [
+                "-s",
+                "--size"
+              ],
+              "argument": "",
+              "description": "Display the total file sizes"
+            },
+            {
+              "names": [
+                "--sort"
+              ],
+              "argument": "choice",
+              "description": "Sort output by: command, created, id, image, names, runningfor, size, status"
+            },
+            {
+              "names": [
+                "--sync"
+              ],
+              "argument": "",
+              "description": "Sync container state with OCI runtime"
+            },
+            {
+              "names": [
+                "-w",
+                "--watch"
+              ],
+              "argument": "uint",
+              "description": "Watch the ps output on an interval in seconds"
+            }
+          ]
+        },
+        {
+          "name": "logs",
+          "description": "Fetch the logs of one or more containers",
+          "options": [
+            {
+              "names": [
+                "-f",
+                "--follow"
+              ],
+              "argument": "",
+              "description": "Follow log output. The default is false"
+            },
+            {
+              "names": [
+                "-l",
+                "--latest"
+              ],
+              "argument": "",
+              "description": "Act on the latest container podman is aware of Not supported with the \"--remote\" flag"
+            },
+            {
+              "names": [
+                "-n",
+                "--names"
+              ],
+              "argument": "",
+              "description": "Output the container name in the log"
+            },
+            {
+              "names": [
+                "--since"
+              ],
+              "argument": "string",
+              "description": "Show logs since TIMESTAMP"
+            },
+            {
+              "names": [
+                "--tail"
+              ],
+              "argument": "int",
+              "description": "Output the specified number of LINES at the end of the logs. Defaults to -1, which prints all lines (default -1)"
+            },
+            {
+              "names": [
+                "-t",
+                "--timestamps"
+              ],
+              "argument": "",
+              "description": "Output the timestamps in the log"
+            },
+            {
+              "names": [
+                "--until"
+              ],
+              "argument": "string",
+              "description": "Show logs until TIMESTAMP"
+            }
+          ]
+        },
+        {
+          "name": "mount",
+          "description": "Mount a working container's root filesystem",
+          "options": [
+            {
+              "names": [
+                "-a",
+                "--all"
+              ],
+              "argument": "",
+              "description": "Mount all containers"
+            },
+            {
+              "names": [
+                "--format"
+              ],
+              "argument": "string",
+              "description": "Print the mounted containers in specified format (json)"
+            },
+            {
+              "names": [
+                "-l",
+                "--latest"
+              ],
+              "argument": "",
+              "description": "Act on the latest container podman is aware of Not supported with the \"--remote\" flag"
+            },
+            {
+              "names": [
+                "--notruncate"
+              ],
+              "argument": "",
+              "description": "Do not truncate output"
+            }
+          ]
+        },
+        {
+          "name": "pause",
+          "description": "Pause all the processes in one or more containers",
+          "options": [
+            {
+              "names": [
+                "-a",
+                "--all"
+              ],
+              "argument": "",
+              "description": "Pause all running containers"
+            }
+          ]
+        },
+        {
+          "name": "port",
+          "description": "List port mappings or a specific mapping for the container",
+          "options": [
+            {
+              "names": [
+                "-a",
+                "--all"
+              ],
+              "argument": "",
+              "description": "Display port information for all containers"
+            },
+            {
+              "names": [
+                "-l",
+                "--latest"
+              ],
+              "argument": "",
+              "description": "Act on the latest container podman is aware of Not supported with the \"--remote\" flag"
+            }
+          ]
+        },
+        {
+          "name": "prune",
+          "description": "Remove all non running containers",
+          "options": [
+            {
+              "names": [
+                "--filter"
+              ],
+              "argument": "stringArray",
+              "description": "Provide filter values (e.g. 'label=<key>=<value>')"
+            },
+            {
+              "names": [
+                "-f",
+                "--force"
+              ],
+              "argument": "",
+              "description": "Do not prompt for confirmation. The default is false"
+            }
+          ]
+        },
+        {
+          "name": "ps",
+          "description": "List containers",
+          "options": [
+            {
+              "names": [
+                "-a",
+                "--all"
+              ],
+              "argument": "",
+              "description": "Show all the containers, default is only running containers"
+            },
+            {
+              "names": [
+                "--external"
+              ],
+              "argument": "",
+              "description": "Show containers in storage not controlled by Podman"
+            },
+            {
+              "names": [
+                "-f",
+                "--filter"
+              ],
+              "argument": "strings",
+              "description": "Filter output based on conditions given"
+            },
+            {
+              "names": [
+                "--format"
+              ],
+              "argument": "string",
+              "description": "Pretty-print containers to JSON or using a Go template"
+            },
+            {
+              "names": [
+                "-n",
+                "--last"
+              ],
+              "argument": "int",
+              "description": "Print the n last created containers (all states) (default -1)"
+            },
+            {
+              "names": [
+                "-l",
+                "--latest"
+              ],
+              "argument": "",
+              "description": "Act on the latest container podman is aware of Not supported with the \"--remote\" flag"
+            },
+            {
+              "names": [
+                "--no-trunc"
+              ],
+              "argument": "",
+              "description": "Display the extended information"
+            },
+            {
+              "names": [
+                "--noheading"
+              ],
+              "argument": "",
+              "description": "Do not print headers"
+            },
+            {
+              "names": [
+                "--ns"
+              ],
+              "argument": "",
+              "description": "Display namespace information"
+            },
+            {
+              "names": [
+                "-p",
+                "--pod"
+              ],
+              "argument": "",
+              "description": "Print the ID and name of the pod the containers are associated with"
+            },
+            {
+              "names": [
+                "-q",
+                "--quiet"
+              ],
+              "argument": "",
+              "description": "Print the numeric IDs of the containers only"
+            },
+            {
+              "names": [
+                "-s",
+                "--size"
+              ],
+              "argument": "",
+              "description": "Display the total file sizes"
+            },
+            {
+              "names": [
+                "--sort"
+              ],
+              "argument": "choice",
+              "description": "Sort output by: command, created, id, image, names, runningfor, size, status"
+            },
+            {
+              "names": [
+                "--sync"
+              ],
+              "argument": "",
+              "description": "Sync container state with OCI runtime"
+            },
+            {
+              "names": [
+                "-w",
+                "--watch"
+              ],
+              "argument": "uint",
+              "description": "Watch the ps output on an interval in seconds"
+            }
+          ]
+        },
+        {
+          "name": "restart",
+          "description": "Restart one or more containers",
+          "options": [
+            {
+              "names": [
+                "-a",
+                "--all"
+              ],
+              "argument": "",
+              "description": "Restart all non-running containers"
+            },
+            {
+              "names": [
+                "-l",
+                "--latest"
+              ],
+              "argument": "",
+              "description": "Act on the latest container podman is aware of Not supported with the \"--remote\" flag"
+            },
+            {
+              "names": [
+                "--running"
+              ],
+              "argument": "",
+              "description": "Restart only running containers when --all is used"
+            },
+            {
+              "names": [
+                "-t",
+                "--time"
+              ],
+              "argument": "uint",
+              "description": "Seconds to wait for stop before killing the container (default 10)"
+            }
+          ]
+        },
+        {
+          "name": "restore",
+          "description": "Restores one or more containers from a checkpoint",
+          "options": [
+            {
+              "names": [
+                "-a",
+                "--all"
+              ],
+              "argument": "",
+              "description": "Restore all checkpointed containers"
+            },
+            {
+              "names": [
+                "--ignore-rootfs"
+              ],
+              "argument": "",
+              "description": "Do not apply root file-system changes when importing from exported checkpoint"
+            },
+            {
+              "names": [
+                "--ignore-static-ip"
+              ],
+              "argument": "",
+              "description": "Ignore IP address set via --static-ip"
+            },
+            {
+              "names": [
+                "--ignore-static-mac"
+              ],
+              "argument": "",
+              "description": "Ignore MAC address set via --mac-address"
+            },
+            {
+              "names": [
+                "--ignore-volumes"
+              ],
+              "argument": "",
+              "description": "Do not export volumes associated with container"
+            },
+            {
+              "names": [
+                "-i",
+                "--import"
+              ],
+              "argument": "string",
+              "description": "Restore from exported checkpoint archive (tar.gz)"
+            },
+            {
+              "names": [
+                "--import-previous"
+              ],
+              "argument": "string",
+              "description": "Restore from exported pre-checkpoint archive (tar.gz)"
+            },
+            {
+              "names": [
+                "-k",
+                "--keep"
+              ],
+              "argument": "",
+              "description": "Keep all temporary checkpoint files"
+            },
+            {
+              "names": [
+                "-l",
+                "--latest"
+              ],
+              "argument": "",
+              "description": "Act on the latest container podman is aware of Not supported with the \"--remote\" flag"
+            },
+            {
+              "names": [
+                "-n",
+                "--name"
+              ],
+              "argument": "string",
+              "description": "Specify new name for container restored from exported checkpoint (only works with --import)"
+            },
+            {
+              "names": [
+                "--pod"
+              ],
+              "argument": "string",
+              "description": "Restore container into existing Pod (only works with --import)"
+            },
+            {
+              "names": [
+                "-p",
+                "--publish"
+              ],
+              "argument": "strings",
+              "description": "Publish a container's port, or a range of ports, to the host (default [])"
+            },
+            {
+              "names": [
+                "--tcp-established"
+              ],
+              "argument": "",
+              "description": "Restore a container with established TCP connections"
+            }
+          ]
+        },
+        {
+          "name": "rm",
+          "description": "Remove one or more containers",
+          "options": [
+            {
+              "names": [
+                "-a",
+                "--all"
+              ],
+              "argument": "",
+              "description": "Remove all containers"
+            },
+            {
+              "names": [
+                "--cidfile"
+              ],
+              "argument": "stringArray",
+              "description": "Read the container ID from the file"
+            },
+            {
+              "names": [
+                "-f",
+                "--force"
+              ],
+              "argument": "",
+              "description": "Force removal of a running or unusable container. The default is false"
+            },
+            {
+              "names": [
+                "-i",
+                "--ignore"
+              ],
+              "argument": "",
+              "description": "Ignore errors when a specified container is missing"
+            },
+            {
+              "names": [
+                "-l",
+                "--latest"
+              ],
+              "argument": "",
+              "description": "Act on the latest container podman is aware of Not supported with the \"--remote\" flag"
+            },
+            {
+              "names": [
+                "-v",
+                "--volumes"
+              ],
+              "argument": "",
+              "description": "Remove anonymous volumes associated with the container"
+            }
+          ]
+        },
+        {
+          "name": "run",
+          "description": "Run a command in a new container",
+          "options": [
+            {
+              "names": [
+                "--add-host"
+              ],
+              "argument": "strings",
+              "description": "Add a custom host-to-IP mapping (host:ip) (default [])"
+            },
+            {
+              "names": [
+                "--annotation"
+              ],
+              "argument": "strings",
+              "description": "Add annotations to container (key:value)"
+            },
+            {
+              "names": [
+                "--arch"
+              ],
+              "argument": "ARCH",
+              "description": "use ARCH instead of the architecture of the machine for choosing images"
+            },
+            {
+              "names": [
+                "-a",
+                "--attach"
+              ],
+              "argument": "strings",
+              "description": "Attach to STDIN, STDOUT or STDERR"
+            },
+            {
+              "names": [
+                "--authfile"
+              ],
+              "argument": "string",
+              "description": "Path of the authentication file. Use REGISTRY_AUTH_FILE environment variable to override"
+            },
+            {
+              "names": [
+                "--blkio-weight"
+              ],
+              "argument": "string",
+              "description": "Block IO weight (relative weight) accepts a weight value between 10 and 1000."
+            },
+            {
+              "names": [
+                "--blkio-weight-device"
+              ],
+              "argument": "DEVICE_NAME:WEIGHT",
+              "description": "Block IO weight (relative device weight, format: DEVICE_NAME:WEIGHT)"
+            },
+            {
+              "names": [
+                "--cap-add"
+              ],
+              "argument": "strings",
+              "description": "Add capabilities to the container"
+            },
+            {
+              "names": [
+                "--cap-drop"
+              ],
+              "argument": "strings",
+              "description": "Drop capabilities from the container"
+            },
+            {
+              "names": [
+                "--cgroup-conf"
+              ],
+              "argument": "strings",
+              "description": "Configure cgroup v2 (key=value)"
+            },
+            {
+              "names": [
+                "--cgroup-parent"
+              ],
+              "argument": "string",
+              "description": "Optional parent cgroup for the container"
+            },
+            {
+              "names": [
+                "--cgroupns"
+              ],
+              "argument": "string",
+              "description": "cgroup namespace to use"
+            },
+            {
+              "names": [
+                "--cgroups"
+              ],
+              "argument": "string",
+              "description": "control container cgroup configuration (\"enabled\"|\"disabled\"|\"no-conmon\"|\"split\") (default \"enabled\")"
+            },
+            {
+              "names": [
+                "--cidfile"
+              ],
+              "argument": "string",
+              "description": "Write the container ID to the file"
+            },
+            {
+              "names": [
+                "--conmon-pidfile"
+              ],
+              "argument": "string",
+              "description": "Path to the file that will receive the PID of conmon"
+            },
+            {
+              "names": [
+                "--cpu-period"
+              ],
+              "argument": "uint",
+              "description": "Limit the CPU CFS (Completely Fair Scheduler) period"
+            },
+            {
+              "names": [
+                "--cpu-quota"
+              ],
+              "argument": "int",
+              "description": "Limit the CPU CFS (Completely Fair Scheduler) quota"
+            },
+            {
+              "names": [
+                "--cpu-rt-period"
+              ],
+              "argument": "uint",
+              "description": "Limit the CPU real-time period in microseconds"
+            },
+            {
+              "names": [
+                "--cpu-rt-runtime"
+              ],
+              "argument": "int",
+              "description": "Limit the CPU real-time runtime in microseconds"
+            },
+            {
+              "names": [
+                "--cpu-shares"
+              ],
+              "argument": "uint",
+              "description": "CPU shares (relative weight)"
+            },
+            {
+              "names": [
+                "--cpus"
+              ],
+              "argument": "float",
+              "description": "Number of CPUs. The default is 0.000 which means no limit"
+            },
+            {
+              "names": [
+                "--cpuset-cpus"
+              ],
+              "argument": "string",
+              "description": "CPUs in which to allow execution (0-3, 0,1)"
+            },
+            {
+              "names": [
+                "--cpuset-mems"
+              ],
+              "argument": "string",
+              "description": "Memory nodes (MEMs) in which to allow execution (0-3, 0,1). Only effective on NUMA systems."
+            },
+            {
+              "names": [
+                "-d",
+                "--detach"
+              ],
+              "argument": "",
+              "description": "Run container in background and print container ID"
+            },
+            {
+              "names": [
+                "--detach-keys"
+              ],
+              "argument": "[a-Z]",
+              "description": "Override the key sequence for detaching a container. Format is a single character [a-Z] or a comma separated sequence of `ctrl-<value>`, where `<value>` is one of: `a-cf`, `@`, `^`, `[`, `\\`, `]`, `^` or `_` (default \"ctrl-p,ctrl-q\")"
+            },
+            {
+              "names": [
+                "--device"
+              ],
+              "argument": "strings",
+              "description": "Add a host device to the container"
+            },
+            {
+              "names": [
+                "--device-cgroup-rule"
+              ],
+              "argument": "strings",
+              "description": "Add a rule to the cgroup allowed devices list"
+            },
+            {
+              "names": [
+                "--device-read-bps"
+              ],
+              "argument": "strings",
+              "description": "Limit read rate (bytes per second) from a device (e.g. --device-read-bps=/dev/sda:1mb)"
+            },
+            {
+              "names": [
+                "--device-read-iops"
+              ],
+              "argument": "strings",
+              "description": "Limit read rate (IO per second) from a device (e.g. --device-read-iops=/dev/sda:1000)"
+            },
+            {
+              "names": [
+                "--device-write-bps"
+              ],
+              "argument": "strings",
+              "description": "Limit write rate (bytes per second) to a device (e.g. --device-write-bps=/dev/sda:1mb)"
+            },
+            {
+              "names": [
+                "--device-write-iops"
+              ],
+              "argument": "strings",
+              "description": "Limit write rate (IO per second) to a device (e.g. --device-write-iops=/dev/sda:1000)"
+            },
+            {
+              "names": [
+                "--disable-content-trust"
+              ],
+              "argument": "",
+              "description": "This is a Docker specific option and is a NOOP"
+            },
+            {
+              "names": [
+                "--dns"
+              ],
+              "argument": "strings",
+              "description": "Set custom DNS servers"
+            },
+            {
+              "names": [
+                "--dns-opt"
+              ],
+              "argument": "strings",
+              "description": "Set custom DNS options"
+            },
+            {
+              "names": [
+                "--dns-search"
+              ],
+              "argument": "strings",
+              "description": "Set custom DNS search domains"
+            },
+            {
+              "names": [
+                "--entrypoint"
+              ],
+              "argument": "string",
+              "description": "Overwrite the default ENTRYPOINT of the image"
+            },
+            {
+              "names": [
+                "-e",
+                "--env"
+              ],
+              "argument": "stringArray",
+              "description": "Set environment variables in container (default [PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin,TERM=xterm])"
+            },
+            {
+              "names": [
+                "--env-file"
+              ],
+              "argument": "strings",
+              "description": "Read in a file of environment variables"
+            },
+            {
+              "names": [
+                "--env-host"
+              ],
+              "argument": "",
+              "description": "Use all current host environment variables in container"
+            },
+            {
+              "names": [
+                "--expose"
+              ],
+              "argument": "strings",
+              "description": "Expose a port or a range of ports"
+            },
+            {
+              "names": [
+                "--gidmap"
+              ],
+              "argument": "strings",
+              "description": "GID map to use for the user namespace"
+            },
+            {
+              "names": [
+                "--group-add"
+              ],
+              "argument": "strings",
+              "description": "Add additional groups to the primary container process. 'keep-groups' allows container processes to use supplementary groups."
+            },
+            {
+              "names": [
+                "--health-cmd"
+              ],
+              "argument": "string",
+              "description": "set a healthcheck command for the container ('none' disables the existing healthcheck)"
+            },
+            {
+              "names": [
+                "--health-interval"
+              ],
+              "argument": "string",
+              "description": "set an interval for the healthchecks (a value of disable results in no automatic timer setup) (default \"30s\")"
+            },
+            {
+              "names": [
+                "--health-retries"
+              ],
+              "argument": "uint",
+              "description": "the number of retries allowed before a healthcheck is considered to be unhealthy (default 3)"
+            },
+            {
+              "names": [
+                "--health-start-period"
+              ],
+              "argument": "string",
+              "description": "the initialization time needed for a container to bootstrap (default \"0s\")"
+            },
+            {
+              "names": [
+                "--health-timeout"
+              ],
+              "argument": "string",
+              "description": "the maximum time allowed to complete the healthcheck before an interval is considered failed (default \"30s\")"
+            },
+            {
+              "names": [
+                "-h",
+                "--hostname"
+              ],
+              "argument": "string",
+              "description": "Set container hostname"
+            },
+            {
+              "names": [
+                "--http-proxy"
+              ],
+              "argument": "",
+              "description": "Set proxy environment variables in the container based on the host proxy vars (default true)"
+            },
+            {
+              "names": [
+                "--image-volume"
+              ],
+              "argument": "string",
+              "description": "Tells podman how to handle the builtin image volumes (\"bind\"|\"tmpfs\"|\"ignore\") (default \"bind\")"
+            },
+            {
+              "names": [
+                "--init"
+              ],
+              "argument": "",
+              "description": "Run an init binary inside the container that forwards signals and reaps processes"
+            },
+            {
+              "names": [
+                "--init-path"
+              ],
+              "argument": "string",
+              "description": "Path to the container-init binary"
+            },
+            {
+              "names": [
+                "-i",
+                "--interactive"
+              ],
+              "argument": "",
+              "description": "Keep STDIN open even if not attached"
+            },
+            {
+              "names": [
+                "--ip"
+              ],
+              "argument": "string",
+              "description": "Specify a static IPv4 address for the container"
+            },
+            {
+              "names": [
+                "--ipc"
+              ],
+              "argument": "string",
+              "description": "IPC namespace to use"
+            },
+            {
+              "names": [
+                "--kernel-memory"
+              ],
+              "argument": "<number>[<unit>]",
+              "description": "Kernel memory limit (format: <number>[<unit>], where unit = b (bytes), k (kilobytes), m (megabytes), or g (gigabytes))"
+            },
+            {
+              "names": [
+                "-l",
+                "--label"
+              ],
+              "argument": "stringArray",
+              "description": "Set metadata on container"
+            },
+            {
+              "names": [
+                "--label-file"
+              ],
+              "argument": "strings",
+              "description": "Read in a line delimited file of labels"
+            },
+            {
+              "names": [
+                "--log-driver"
+              ],
+              "argument": "string",
+              "description": "Logging driver for the container (default \"journald\")"
+            },
+            {
+              "names": [
+                "--log-opt"
+              ],
+              "argument": "strings",
+              "description": "Logging driver options"
+            },
+            {
+              "names": [
+                "--mac-address"
+              ],
+              "argument": "string",
+              "description": "Container MAC address (e.g. 92:d0:c6:0a:29:33)"
+            },
+            {
+              "names": [
+                "-m",
+                "--memory"
+              ],
+              "argument": "<number>[<unit>]",
+              "description": "Memory limit (format: <number>[<unit>], where unit = b (bytes), k (kilobytes), m (megabytes), or g (gigabytes))"
+            },
+            {
+              "names": [
+                "--memory-reservation"
+              ],
+              "argument": "<number>[<unit>]",
+              "description": "Memory soft limit (format: <number>[<unit>], where unit = b (bytes), k (kilobytes), m (megabytes), or g (gigabytes))"
+            },
+            {
+              "names": [
+                "--memory-swap"
+              ],
+              "argument": "string",
+              "description": "Swap limit equal to memory plus swap: '-1' to enable unlimited swap"
+            },
+            {
+              "names": [
+                "--memory-swappiness"
+              ],
+              "argument": "int",
+              "description": "Tune container memory swappiness (0 to 100, or -1 for system default) (default -1)"
+            },
+            {
+              "names": [
+                "--mount"
+              ],
+              "argument": "stringArray",
+              "description": "Attach a filesystem mount to the container"
+            },
+            {
+              "names": [
+                "--name"
+              ],
+              "argument": "string",
+              "description": "Assign a name to the container"
+            },
+            {
+              "names": [
+                "--network"
+              ],
+              "argument": "string",
+              "description": "Connect a container to a network"
+            },
+            {
+              "names": [
+                "--network-alias"
+              ],
+              "argument": "strings",
+              "description": "Add network-scoped alias for the container"
+            },
+            {
+              "names": [
+                "--no-healthcheck"
+              ],
+              "argument": "",
+              "description": "Disable healthchecks on container"
+            },
+            {
+              "names": [
+                "--no-hosts"
+              ],
+              "argument": "",
+              "description": "Do not create /etc/hosts within the container, instead use the version from the image"
+            },
+            {
+              "names": [
+                "--oom-kill-disable"
+              ],
+              "argument": "",
+              "description": "Disable OOM Killer"
+            },
+            {
+              "names": [
+                "--oom-score-adj"
+              ],
+              "argument": "int",
+              "description": "Tune the host's OOM preferences (-1000 to 1000)"
+            },
+            {
+              "names": [
+                "--os"
+              ],
+              "argument": "OS",
+              "description": "use OS instead of the running OS for choosing images"
+            },
+            {
+              "names": [
+                "--personality"
+              ],
+              "argument": "string",
+              "description": "Configure execution domain using personality (e.g., LINUX/LINUX32)"
+            },
+            {
+              "names": [
+                "--pid"
+              ],
+              "argument": "string",
+              "description": "PID namespace to use"
+            },
+            {
+              "names": [
+                "--pidfile"
+              ],
+              "argument": "string",
+              "description": "Write the container process ID to the file"
+            },
+            {
+              "names": [
+                "--pids-limit"
+              ],
+              "argument": "int",
+              "description": "Tune container pids limit (set -1 for unlimited)"
+            },
+            {
+              "names": [
+                "--platform"
+              ],
+              "argument": "string",
+              "description": "Specify the platform for selecting the image. (Conflicts with --arch and --os)"
+            },
+            {
+              "names": [
+                "--pod"
+              ],
+              "argument": "string",
+              "description": "Run container in an existing pod"
+            },
+            {
+              "names": [
+                "--pod-id-file"
+              ],
+              "argument": "string",
+              "description": "Read the pod ID from the file"
+            },
+            {
+              "names": [
+                "--preserve-fds"
+              ],
+              "argument": "uint",
+              "description": "Pass a number of additional file descriptors into the container"
+            },
+            {
+              "names": [
+                "--privileged"
+              ],
+              "argument": "",
+              "description": "Give extended privileges to container"
+            },
+            {
+              "names": [
+                "-p",
+                "--publish"
+              ],
+              "argument": "strings",
+              "description": "Publish a container's port, or a range of ports, to the host (default [])"
+            },
+            {
+              "names": [
+                "-P",
+                "--publish-all"
+              ],
+              "argument": "",
+              "description": "Publish all exposed ports to random ports on the host interface"
+            },
+            {
+              "names": [
+                "--pull"
+              ],
+              "argument": "string",
+              "description": "Pull image before creating (\"always\"|\"missing\"|\"never\") (default \"missing\")"
+            },
+            {
+              "names": [
+                "-q",
+                "--quiet"
+              ],
+              "argument": "",
+              "description": "Suppress output information when pulling images"
+            },
+            {
+              "names": [
+                "--read-only"
+              ],
+              "argument": "",
+              "description": "Make containers root filesystem read-only"
+            },
+            {
+              "names": [
+                "--read-only-tmpfs"
+              ],
+              "argument": "",
+              "description": "When running containers in read-only mode mount a read-write tmpfs on /run, /tmp and /var/tmp (default true)"
+            },
+            {
+              "names": [
+                "--replace"
+              ],
+              "argument": "",
+              "description": "If a container with the same name exists, replace it"
+            },
+            {
+              "names": [
+                "--requires"
+              ],
+              "argument": "strings",
+              "description": "Add one or more requirement containers that must be started before this container will start"
+            },
+            {
+              "names": [
+                "--restart"
+              ],
+              "argument": "string",
+              "description": "Restart policy to apply when a container exits (\"always\"|\"no\"|\"on-failure\"|\"unless-stopped\")"
+            },
+            {
+              "names": [
+                "--rm"
+              ],
+              "argument": "",
+              "description": "Remove container (and pod if created) after exit"
+            },
+            {
+              "names": [
+                "--rmi"
+              ],
+              "argument": "",
+              "description": "Remove container image unless used by other containers"
+            },
+            {
+              "names": [
+                "--rootfs"
+              ],
+              "argument": "",
+              "description": "The first argument is not an image but the rootfs to the exploded container"
+            },
+            {
+              "names": [
+                "--sdnotify"
+              ],
+              "argument": "string",
+              "description": "control sd-notify behavior (\"container\"|\"conmon\"|\"ignore\") (default \"container\")"
+            },
+            {
+              "names": [
+                "--seccomp-policy"
+              ],
+              "argument": "string",
+              "description": "Policy for selecting a seccomp profile (experimental) (default \"default\")"
+            },
+            {
+              "names": [
+                "--secret"
+              ],
+              "argument": "stringArray",
+              "description": "Add secret to container"
+            },
+            {
+              "names": [
+                "--security-opt"
+              ],
+              "argument": "stringArray",
+              "description": "Security Options"
+            },
+            {
+              "names": [
+                "--shm-size"
+              ],
+              "argument": "<number>[<unit>]",
+              "description": "Size of /dev/shm (format: <number>[<unit>], where unit = b (bytes), k (kilobytes), m (megabytes), or g (gigabytes)) (default \"65536k\")"
+            },
+            {
+              "names": [
+                "--sig-proxy"
+              ],
+              "argument": "",
+              "description": "Proxy received signals to the process (default true)"
+            },
+            {
+              "names": [
+                "--stop-signal"
+              ],
+              "argument": "string",
+              "description": "Signal to stop a container. Default is SIGTERM"
+            },
+            {
+              "names": [
+                "--stop-timeout"
+              ],
+              "argument": "uint",
+              "description": "Timeout (in seconds) that containers stopped by user command have to exit. If exceeded, the container will be forcibly stopped via SIGKILL. (default 10)"
+            },
+            {
+              "names": [
+                "--subgidname"
+              ],
+              "argument": "string",
+              "description": "Name of range listed in /etc/subgid for use in user namespace"
+            },
+            {
+              "names": [
+                "--subuidname"
+              ],
+              "argument": "string",
+              "description": "Name of range listed in /etc/subuid for use in user namespace"
+            },
+            {
+              "names": [
+                "--sysctl"
+              ],
+              "argument": "strings",
+              "description": "Sysctl options"
+            },
+            {
+              "names": [
+                "--systemd"
+              ],
+              "argument": "string",
+              "description": "Run container in systemd mode (\"true\"|\"false\"|\"always\") (default \"true\")"
+            },
+            {
+              "names": [
+                "--timeout"
+              ],
+              "argument": "uint",
+              "description": "Maximum length of time a container is allowed to run. The container will be killed automatically after the time expires."
+            },
+            {
+              "names": [
+                "--tls-verify"
+              ],
+              "argument": "",
+              "description": "Require HTTPS and verify certificates when contacting registries for pulling images (default true)"
+            },
+            {
+              "names": [
+                "--tmpfs"
+              ],
+              "argument": "tmpfs",
+              "description": "Mount a temporary filesystem (tmpfs) into a container"
+            },
+            {
+              "names": [
+                "-t",
+                "--tty"
+              ],
+              "argument": "",
+              "description": "Allocate a pseudo-TTY for container"
+            },
+            {
+              "names": [
+                "--tz"
+              ],
+              "argument": "string",
+              "description": "Set timezone in container"
+            },
+            {
+              "names": [
+                "--uidmap"
+              ],
+              "argument": "strings",
+              "description": "UID map to use for the user namespace"
+            },
+            {
+              "names": [
+                "--ulimit"
+              ],
+              "argument": "strings",
+              "description": "Ulimit options"
+            },
+            {
+              "names": [
+                "--umask"
+              ],
+              "argument": "string",
+              "description": "Set umask in container (default \"0022\")"
+            },
+            {
+              "names": [
+                "-u",
+                "--user"
+              ],
+              "argument": "string",
+              "description": "Username or UID (format: <name|uid>[:<group|gid>])"
+            },
+            {
+              "names": [
+                "--userns"
+              ],
+              "argument": "string",
+              "description": "User namespace to use"
+            },
+            {
+              "names": [
+                "--uts"
+              ],
+              "argument": "string",
+              "description": "UTS namespace to use"
+            },
+            {
+              "names": [
+                "--variant"
+              ],
+              "argument": "VARIANT",
+              "description": "Use VARIANT instead of the running architecture variant for choosing images"
+            },
+            {
+              "names": [
+                "-v",
+                "--volume"
+              ],
+              "argument": "stringArray",
+              "description": "Bind mount a volume into the container"
+            },
+            {
+              "names": [
+                "--volumes-from"
+              ],
+              "argument": "stringArray",
+              "description": "Mount volumes from the specified container(s)"
+            },
+            {
+              "names": [
+                "-w",
+                "--workdir"
+              ],
+              "argument": "string",
+              "description": "Working directory inside the container"
+            }
+          ]
+        },
+        {
+          "name": "runlabel",
+          "description": "Execute the command described by an image label",
+          "options": [
+            {
+              "names": [
+                "--authfile"
+              ],
+              "argument": "string",
+              "description": "Path of the authentication file. Use REGISTRY_AUTH_FILE environment variable to override"
+            },
+            {
+              "names": [
+                "--cert-dir"
+              ],
+              "argument": "Pathname",
+              "description": "Pathname of a directory containing TLS certificates and keys"
+            },
+            {
+              "names": [
+                "--creds"
+              ],
+              "argument": "Credentials",
+              "description": "Credentials (USERNAME:PASSWORD) to use for authenticating to a registry"
+            },
+            {
+              "names": [
+                "--display"
+              ],
+              "argument": "",
+              "description": "Preview the command that the label would run"
+            },
+            {
+              "names": [
+                "-n",
+                "--name"
+              ],
+              "argument": "string",
+              "description": "Assign a name to the container"
+            },
+            {
+              "names": [
+                "-q",
+                "--quiet"
+              ],
+              "argument": "",
+              "description": "Suppress output information when installing images"
+            },
+            {
+              "names": [
+                "--replace"
+              ],
+              "argument": "",
+              "description": "Replace existing container with a new one from the image"
+            },
+            {
+              "names": [
+                "--tls-verify"
+              ],
+              "argument": "",
+              "description": "Require HTTPS and verify certificates when contacting registries (default true)"
+            }
+          ]
+        },
+        {
+          "name": "start",
+          "description": "Start one or more containers",
+          "options": [
+            {
+              "names": [
+                "--all"
+              ],
+              "argument": "",
+              "description": "Start all containers regardless of their state or configuration"
+            },
+            {
+              "names": [
+                "-a",
+                "--attach"
+              ],
+              "argument": "",
+              "description": "Attach container's STDOUT and STDERR"
+            },
+            {
+              "names": [
+                "--detach-keys"
+              ],
+              "argument": "[a-Z]",
+              "description": "Select the key sequence for detaching a container. Format is a single character [a-Z] or a comma separated sequence of `ctrl-<value>`, where `<value>` is one of: `a-z`, `@`, `^`, `[`, `\\`, `]`, `^` or `_` (default \"ctrl-p,ctrl-q\")"
+            },
+            {
+              "names": [
+                "-f",
+                "--filter"
+              ],
+              "argument": "strings",
+              "description": "Filter output based on conditions given"
+            },
+            {
+              "names": [
+                "-i",
+                "--interactive"
+              ],
+              "argument": "",
+              "description": "Keep STDIN open even if not attached"
+            },
+            {
+              "names": [
+                "-l",
+                "--latest"
+              ],
+              "argument": "",
+              "description": "Act on the latest container podman is aware of Not supported with the \"--remote\" flag"
+            },
+            {
+              "names": [
+                "--sig-proxy"
+              ],
+              "argument": "",
+              "description": "Proxy received signals to the process (default true if attaching, false otherwise)"
+            }
+          ]
+        },
+        {
+          "name": "stats",
+          "description": "Display a live stream of container resource usage statistics",
+          "options": [
+            {
+              "names": [
+                "-a",
+                "--all"
+              ],
+              "argument": "",
+              "description": "Show all containers. Only running containers are shown by default. The default is false"
+            },
+            {
+              "names": [
+                "--format"
+              ],
+              "argument": "string",
+              "description": "Pretty-print container statistics to JSON or using a Go template"
+            },
+            {
+              "names": [
+                "-i",
+                "--interval"
+              ],
+              "argument": "int",
+              "description": "Time in seconds between stats reports (default 5)"
+            },
+            {
+              "names": [
+                "-l",
+                "--latest"
+              ],
+              "argument": "",
+              "description": "Act on the latest container podman is aware of Not supported with the \"--remote\" flag"
+            },
+            {
+              "names": [
+                "--no-reset"
+              ],
+              "argument": "",
+              "description": "Disable resetting the screen between intervals"
+            },
+            {
+              "names": [
+                "--no-stream"
+              ],
+              "argument": "",
+              "description": "Disable streaming stats and only pull the first result, default setting is false"
+            }
+          ]
+        },
+        {
+          "name": "stop",
+          "description": "Stop one or more containers",
+          "options": [
+            {
+              "names": [
+                "-a",
+                "--all"
+              ],
+              "argument": "",
+              "description": "Stop all running containers"
+            },
+            {
+              "names": [
+                "--cidfile"
+              ],
+              "argument": "stringArray",
+              "description": "Read the container ID from the file"
+            },
+            {
+              "names": [
+                "-i",
+                "--ignore"
+              ],
+              "argument": "",
+              "description": "Ignore errors when a specified container is missing"
+            },
+            {
+              "names": [
+                "-l",
+                "--latest"
+              ],
+              "argument": "",
+              "description": "Act on the latest container podman is aware of Not supported with the \"--remote\" flag"
+            },
+            {
+              "names": [
+                "-t",
+                "--time"
+              ],
+              "argument": "uint",
+              "description": "Seconds to wait for stop before killing the container (default 10)"
+            }
+          ]
+        },
+        {
+          "name": "top",
+          "description": "Display the running processes of a container",
+          "options": [
+            {
+              "names": [
+                "-l",
+                "--latest"
+              ],
+              "argument": "",
+              "description": "Act on the latest container podman is aware of Not supported with the \"--remote\" flag"
+            }
+          ]
+        },
+        {
+          "name": "unmount",
+          "description": "Unmounts working container's root filesystem",
+          "options": [
+            {
+              "names": [
+                "-a",
+                "--all"
+              ],
+              "argument": "",
+              "description": "Unmount all of the currently mounted containers"
+            },
+            {
+              "names": [
+                "-f",
+                "--force"
+              ],
+              "argument": "",
+              "description": "Force the complete unmount of the specified mounted containers"
+            },
+            {
+              "names": [
+                "-l",
+                "--latest"
+              ],
+              "argument": "",
+              "description": "Act on the latest container podman is aware of Not supported with the \"--remote\" flag"
+            }
+          ]
+        },
+        {
+          "name": "unpause",
+          "description": "Unpause the processes in one or more containers",
+          "options": [
+            {
+              "names": [
+                "-a",
+                "--all"
+              ],
+              "argument": "",
+              "description": "Pause all running containers"
+            }
+          ]
+        },
+        {
+          "name": "wait",
+          "description": "Block on one or more containers",
+          "options": [
+            {
+              "names": [
+                "--condition"
+              ],
+              "argument": "string",
+              "description": "Condition to wait on (default \"stopped\")"
+            },
+            {
+              "names": [
+                "-i",
+                "--interval"
+              ],
+              "argument": "string",
+              "description": "Time Interval to wait before polling for completion (default \"250ms\")"
+            },
+            {
+              "names": [
+                "-l",
+                "--latest"
+              ],
+              "argument": "",
+              "description": "Act on the latest container podman is aware of Not supported with the \"--remote\" flag"
+            }
+          ]
+        }
+      ]
     },
     {
       "name": "cp",
@@ -1165,6 +4142,13 @@
         },
         {
           "names": [
+            "--init-ctr"
+          ],
+          "argument": "string",
+          "description": "Make this a pod init container."
+        },
+        {
+          "names": [
             "--init-path"
           ],
           "argument": "string",
@@ -1219,7 +4203,7 @@
             "--log-driver"
           ],
           "argument": "string",
-          "description": "Logging driver for the container (default \"k8s-file\")"
+          "description": "Logging driver for the container (default \"journald\")"
         },
         {
           "names": [
@@ -1329,6 +4313,13 @@
         },
         {
           "names": [
+            "--personality"
+          ],
+          "argument": "string",
+          "description": "Configure execution domain using personality (e.g., LINUX/LINUX32)"
+        },
+        {
+          "names": [
             "--pid"
           ],
           "argument": "string",
@@ -1346,7 +4337,7 @@
             "--pids-limit"
           ],
           "argument": "int",
-          "description": "Tune container pids limit (set 0 for unlimited, -1 for server defaults)"
+          "description": "Tune container pids limit (set -1 for unlimited)"
         },
         {
           "names": [
@@ -1542,6 +4533,13 @@
         },
         {
           "names": [
+            "--tls-verify"
+          ],
+          "argument": "",
+          "description": "Require HTTPS and verify certificates when contacting registries for pulling images (default true)"
+        },
+        {
+          "names": [
             "--tmpfs"
           ],
           "argument": "tmpfs",
@@ -1574,7 +4572,7 @@
             "--ulimit"
           ],
           "argument": "strings",
-          "description": "Ulimit options (default [nproc=32768:32768])"
+          "description": "Ulimit options"
         },
         {
           "names": [
@@ -1609,8 +4607,8 @@
           "names": [
             "--variant"
           ],
-          "argument": "string",
-          "description": "Use _VARIANT_ instead of the running architecture variant for choosing images"
+          "argument": "VARIANT",
+          "description": "Use VARIANT instead of the running architecture variant for choosing images"
         },
         {
           "names": [
@@ -1842,7 +4840,1128 @@
     {
       "name": "image",
       "description": "Manage images",
-      "options": []
+      "options": [],
+      "subcommands": [
+        {
+          "name": "build",
+          "description": "Build an image using instructions from Containerfiles",
+          "options": [
+            {
+              "names": [
+                "--add-host"
+              ],
+              "argument": "host:ip",
+              "description": "add a custom host-to-IP mapping (host:ip) (default [])"
+            },
+            {
+              "names": [
+                "--annotation"
+              ],
+              "argument": "stringArray",
+              "description": "Set metadata for an image (default [])"
+            },
+            {
+              "names": [
+                "--arch"
+              ],
+              "argument": "string",
+              "description": "set the ARCH of the image to the provided value instead of the architecture of the host (default \"amd64\")"
+            },
+            {
+              "names": [
+                "--authfile"
+              ],
+              "argument": "string",
+              "description": "path of the authentication file."
+            },
+            {
+              "names": [
+                "--build-arg"
+              ],
+              "argument": "argument=value",
+              "description": "argument=value to supply to the builder"
+            },
+            {
+              "names": [
+                "--cache-from"
+              ],
+              "argument": "string",
+              "description": "Images to utilise as potential cache sources. The build process does not currently support caching so this is a NOOP."
+            },
+            {
+              "names": [
+                "--cap-add"
+              ],
+              "argument": "strings",
+              "description": "add the specified capability when running (default [])"
+            },
+            {
+              "names": [
+                "--cap-drop"
+              ],
+              "argument": "strings",
+              "description": "drop the specified capability when running (default [])"
+            },
+            {
+              "names": [
+                "--cert-dir"
+              ],
+              "argument": "string",
+              "description": "use certificates at the specified path to access the registry"
+            },
+            {
+              "names": [
+                "--cgroup-parent"
+              ],
+              "argument": "string",
+              "description": "optional parent cgroup for the container"
+            },
+            {
+              "names": [
+                "--cni-plugin-path"
+              ],
+              "argument": "path",
+              "description": "path of CNI network plugins (default \"/usr/libexec/cni:/opt/cni/bin\")"
+            },
+            {
+              "names": [
+                "--compress"
+              ],
+              "argument": "",
+              "description": "This is legacy option, which has no effect on the image"
+            },
+            {
+              "names": [
+                "--cpu-period"
+              ],
+              "argument": "uint",
+              "description": "limit the CPU CFS (Completely Fair Scheduler) period"
+            },
+            {
+              "names": [
+                "--cpu-quota"
+              ],
+              "argument": "int",
+              "description": "limit the CPU CFS (Completely Fair Scheduler) quota"
+            },
+            {
+              "names": [
+                "-c",
+                "--cpu-shares"
+              ],
+              "argument": "uint",
+              "description": "CPU shares (relative weight)"
+            },
+            {
+              "names": [
+                "--cpuset-cpus"
+              ],
+              "argument": "string",
+              "description": "CPUs in which to allow execution (0-3, 0,1)"
+            },
+            {
+              "names": [
+                "--cpuset-mems"
+              ],
+              "argument": "string",
+              "description": "memory nodes (MEMs) in which to allow execution (0-3, 0,1). Only effective on NUMA systems."
+            },
+            {
+              "names": [
+                "--creds"
+              ],
+              "argument": "[username[:password]]",
+              "description": "use [username[:password]] for accessing the registry"
+            },
+            {
+              "names": [
+                "--decryption-key"
+              ],
+              "argument": "strings",
+              "description": "key needed to decrypt the image"
+            },
+            {
+              "names": [
+                "--device"
+              ],
+              "argument": "stringArray",
+              "description": "Additional devices to be used within containers (default [])"
+            },
+            {
+              "names": [
+                "-D",
+                "--disable-compression"
+              ],
+              "argument": "",
+              "description": "don't compress layers by default (default true)"
+            },
+            {
+              "names": [
+                "--disable-content-trust"
+              ],
+              "argument": "",
+              "description": "This is a Docker specific option and is a NOOP"
+            },
+            {
+              "names": [
+                "--dns-option"
+              ],
+              "argument": "strings",
+              "description": "Set custom DNS options"
+            },
+            {
+              "names": [
+                "--dns-search"
+              ],
+              "argument": "strings",
+              "description": "Set custom DNS search domains"
+            },
+            {
+              "names": [
+                "-f",
+                "--file"
+              ],
+              "argument": "pathname or URL",
+              "description": "pathname or URL of a Dockerfile"
+            },
+            {
+              "names": [
+                "--force-rm"
+              ],
+              "argument": "",
+              "description": "Always remove intermediate containers after a build, even if the build is unsuccessful. (default true)"
+            },
+            {
+              "names": [
+                "--format"
+              ],
+              "argument": "format",
+              "description": "format of the built image's manifest and metadata. Use BUILDAH_FORMAT environment variable to override. (default \"oci\")"
+            },
+            {
+              "names": [
+                "--from"
+              ],
+              "argument": "string",
+              "description": "image name used to replace the value in the first FROM instruction in the Containerfile"
+            },
+            {
+              "names": [
+                "--http-proxy"
+              ],
+              "argument": "",
+              "description": "pass through HTTP Proxy environment variables (default true)"
+            },
+            {
+              "names": [
+                "--ignorefile"
+              ],
+              "argument": "string",
+              "description": "path to an alternate .dockerignore file"
+            },
+            {
+              "names": [
+                "--iidfile"
+              ],
+              "argument": "file",
+              "description": "file to write the image ID to"
+            },
+            {
+              "names": [
+                "--ipc"
+              ],
+              "argument": "path",
+              "description": "'private', path of IPC namespace to join, or 'host'"
+            },
+            {
+              "names": [
+                "--isolation"
+              ],
+              "argument": "type",
+              "description": "type of process isolation to use. Use BUILDAH_ISOLATION environment variable to override. (default \"rootless\")"
+            },
+            {
+              "names": [
+                "--jobs"
+              ],
+              "argument": "int",
+              "description": "how many stages to run in parallel (default 1)"
+            },
+            {
+              "names": [
+                "--label"
+              ],
+              "argument": "stringArray",
+              "description": "Set metadata for an image (default [])"
+            },
+            {
+              "names": [
+                "--layers"
+              ],
+              "argument": "",
+              "description": "cache intermediate layers during build. Use BUILDAH_LAYERS environment variable to override. (default true)"
+            },
+            {
+              "names": [
+                "--logfile"
+              ],
+              "argument": "file",
+              "description": "log to file instead of stdout/stderr"
+            },
+            {
+              "names": [
+                "--manifest"
+              ],
+              "argument": "string",
+              "description": "add the image to the specified manifest list. Creates manifest list if it does not exist"
+            },
+            {
+              "names": [
+                "-m",
+                "--memory"
+              ],
+              "argument": "string",
+              "description": "memory limit (format: <number>[<unit>], where unit = b, k, m or g)"
+            },
+            {
+              "names": [
+                "--memory-swap"
+              ],
+              "argument": "string",
+              "description": "swap limit equal to memory plus swap: '-1' to enable unlimited swap"
+            },
+            {
+              "names": [
+                "--network"
+              ],
+              "argument": "string",
+              "description": "'private', 'none', 'ns:path' of network namespace to join, or 'host'"
+            },
+            {
+              "names": [
+                "--no-cache"
+              ],
+              "argument": "",
+              "description": "Do not use existing cached images for the container build. Build from the start with a new set of cached layers."
+            },
+            {
+              "names": [
+                "--os"
+              ],
+              "argument": "string",
+              "description": "set the OS to the provided value instead of the current operating system of the host (default \"linux\")"
+            },
+            {
+              "names": [
+                "--pid"
+              ],
+              "argument": "path",
+              "description": "private, path of PID namespace to join, or 'host'"
+            },
+            {
+              "names": [
+                "--platform"
+              ],
+              "argument": "linux/arm",
+              "description": "set the OS/ARCH/VARIANT of the image to the provided value instead of the current operating system and architecture of the host (for example linux/arm) (default [linux/amd64])"
+            },
+            {
+              "names": [
+                "--pull"
+              ],
+              "argument": "",
+              "description": "Always attempt to pull the image (errors are fatal) (default true)"
+            },
+            {
+              "names": [
+                "--pull-always"
+              ],
+              "argument": "",
+              "description": "pull the image even if the named image is present in store"
+            },
+            {
+              "names": [
+                "--pull-never"
+              ],
+              "argument": "",
+              "description": "do not pull the image, use the image present in store if available"
+            },
+            {
+              "names": [
+                "-q",
+                "--quiet"
+              ],
+              "argument": "",
+              "description": "refrain from announcing build instructions and image read/write progress"
+            },
+            {
+              "names": [
+                "--rm"
+              ],
+              "argument": "",
+              "description": "Remove intermediate containers after a successful build (default true)"
+            },
+            {
+              "names": [
+                "--secret"
+              ],
+              "argument": "stringArray",
+              "description": "secret file to expose to the build"
+            },
+            {
+              "names": [
+                "--security-opt"
+              ],
+              "argument": "stringArray",
+              "description": "security options (default [])"
+            },
+            {
+              "names": [
+                "--shm-size"
+              ],
+              "argument": "<number><unit>",
+              "description": "size of '/dev/shm'. The format is <number><unit>. (default \"65536k\")"
+            },
+            {
+              "names": [
+                "--sign-by"
+              ],
+              "argument": "FINGERPRINT",
+              "description": "sign the image using a GPG key with the specified FINGERPRINT"
+            },
+            {
+              "names": [
+                "--squash"
+              ],
+              "argument": "",
+              "description": "squash newly built layers into a single new layer"
+            },
+            {
+              "names": [
+                "--squash-all"
+              ],
+              "argument": "",
+              "description": "Squash all layers into a single layer"
+            },
+            {
+              "names": [
+                "--ssh"
+              ],
+              "argument": "stringArray",
+              "description": "SSH agent socket or keys to expose to the build. (format: default|<id>[=<socket>|<key>[,<key>]])"
+            },
+            {
+              "names": [
+                "--stdin"
+              ],
+              "argument": "",
+              "description": "pass stdin into containers"
+            },
+            {
+              "names": [
+                "-t",
+                "--tag"
+              ],
+              "argument": "name",
+              "description": "tagged name to apply to the built image"
+            },
+            {
+              "names": [
+                "--target"
+              ],
+              "argument": "string",
+              "description": "set the target build stage to build"
+            },
+            {
+              "names": [
+                "--timestamp"
+              ],
+              "argument": "int",
+              "description": "set created timestamp to the specified epoch seconds to allow for deterministic builds, defaults to current time"
+            },
+            {
+              "names": [
+                "--tls-verify"
+              ],
+              "argument": "",
+              "description": "require HTTPS and verify certificates when accessing the registry (default true)"
+            },
+            {
+              "names": [
+                "--ulimit"
+              ],
+              "argument": "strings",
+              "description": "ulimit options"
+            },
+            {
+              "names": [
+                "--userns"
+              ],
+              "argument": "path",
+              "description": "'container', path of user namespace to join, or 'host'"
+            },
+            {
+              "names": [
+                "--userns-gid-map"
+              ],
+              "argument": "containerGID:hostGID:length",
+              "description": "containerGID:hostGID:length GID mapping to use in user namespace"
+            },
+            {
+              "names": [
+                "--userns-gid-map-group"
+              ],
+              "argument": "name",
+              "description": "name of entries from /etc/subgid to use to set user namespace GID mapping"
+            },
+            {
+              "names": [
+                "--userns-uid-map"
+              ],
+              "argument": "containerUID:hostUID:length",
+              "description": "containerUID:hostUID:length UID mapping to use in user namespace"
+            },
+            {
+              "names": [
+                "--userns-uid-map-user"
+              ],
+              "argument": "name",
+              "description": "name of entries from /etc/subuid to use to set user namespace UID mapping"
+            },
+            {
+              "names": [
+                "--uts"
+              ],
+              "argument": "path",
+              "description": "private, :path of UTS namespace to join, or 'host'"
+            },
+            {
+              "names": [
+                "--variant"
+              ],
+              "argument": "variant",
+              "description": "override the variant of the specified image"
+            },
+            {
+              "names": [
+                "-v",
+                "--volume"
+              ],
+              "argument": "stringArray",
+              "description": "bind mount a volume into the container"
+            }
+          ]
+        },
+        {
+          "name": "diff",
+          "description": "Inspect changes to the image's file systems",
+          "options": [
+            {
+              "names": [
+                "--format"
+              ],
+              "argument": "string",
+              "description": "Change the output format (json)"
+            }
+          ]
+        },
+        {
+          "name": "history",
+          "description": "Show history of a specified image",
+          "options": [
+            {
+              "names": [
+                "--format"
+              ],
+              "argument": "string",
+              "description": "Change the output to JSON or a Go template"
+            },
+            {
+              "names": [
+                "-H",
+                "--human"
+              ],
+              "argument": "",
+              "description": "Display sizes and dates in human readable format (default true)"
+            },
+            {
+              "names": [
+                "--no-trunc"
+              ],
+              "argument": "",
+              "description": "Do not truncate the output"
+            },
+            {
+              "names": [
+                "--notruncate"
+              ],
+              "argument": "",
+              "description": "Do not truncate the output"
+            },
+            {
+              "names": [
+                "-q",
+                "--quiet"
+              ],
+              "argument": "",
+              "description": "Display the numeric IDs only"
+            }
+          ]
+        },
+        {
+          "name": "import",
+          "description": "Import a tarball to create a filesystem image",
+          "options": [
+            {
+              "names": [
+                "-c",
+                "--change"
+              ],
+              "argument": "stringArray",
+              "description": "Apply the following possible instructions to the created image (default []): CMD | ENTRYPOINT | ENV | EXPOSE | LABEL | ONBUILD | STOPSIGNAL | USER | VOLUME | WORKDIR"
+            },
+            {
+              "names": [
+                "-m",
+                "--message"
+              ],
+              "argument": "string",
+              "description": "Set commit message for imported image"
+            },
+            {
+              "names": [
+                "-q",
+                "--quiet"
+              ],
+              "argument": "",
+              "description": "Suppress output"
+            }
+          ]
+        },
+        {
+          "name": "inspect",
+          "description": "Display the configuration of an image",
+          "options": [
+            {
+              "names": [
+                "-f",
+                "--format"
+              ],
+              "argument": "string",
+              "description": "Format the output to a Go template or json (default \"json\")"
+            }
+          ]
+        },
+        {
+          "name": "list",
+          "description": "List images in local storage",
+          "options": [
+            {
+              "names": [
+                "-a",
+                "--all"
+              ],
+              "argument": "",
+              "description": "Show all images (default hides intermediate images)"
+            },
+            {
+              "names": [
+                "--digests"
+              ],
+              "argument": "",
+              "description": "Show digests"
+            },
+            {
+              "names": [
+                "-f",
+                "--filter"
+              ],
+              "argument": "strings",
+              "description": "Filter output based on conditions provided (default [])"
+            },
+            {
+              "names": [
+                "--format"
+              ],
+              "argument": "string",
+              "description": "Change the output format to JSON or a Go template"
+            },
+            {
+              "names": [
+                "--history"
+              ],
+              "argument": "",
+              "description": "Display the image name history"
+            },
+            {
+              "names": [
+                "--no-trunc"
+              ],
+              "argument": "",
+              "description": "Do not truncate output"
+            },
+            {
+              "names": [
+                "-n",
+                "--noheading"
+              ],
+              "argument": "",
+              "description": "Do not print column headings"
+            },
+            {
+              "names": [
+                "-q",
+                "--quiet"
+              ],
+              "argument": "",
+              "description": "Display only image IDs"
+            },
+            {
+              "names": [
+                "--sort"
+              ],
+              "argument": "string",
+              "description": "Sort by size, tag, created, id, repository (default \"created\")"
+            }
+          ]
+        },
+        {
+          "name": "load",
+          "description": "Load image(s) from a tar archive",
+          "options": [
+            {
+              "names": [
+                "-i",
+                "--input"
+              ],
+              "argument": "string",
+              "description": "Read from specified archive file (default: stdin)"
+            },
+            {
+              "names": [
+                "-q",
+                "--quiet"
+              ],
+              "argument": "",
+              "description": "Suppress the output"
+            }
+          ]
+        },
+        {
+          "name": "mount",
+          "description": "Mount an image's root filesystem",
+          "options": [
+            {
+              "names": [
+                "-a",
+                "--all"
+              ],
+              "argument": "",
+              "description": "Mount all images"
+            },
+            {
+              "names": [
+                "--format"
+              ],
+              "argument": "string",
+              "description": "Print the mounted images in specified format (json)"
+            }
+          ]
+        },
+        {
+          "name": "prune",
+          "description": "Remove unused images",
+          "options": [
+            {
+              "names": [
+                "-a",
+                "--all"
+              ],
+              "argument": "",
+              "description": "Remove all images not in use by containers, not just dangling ones"
+            },
+            {
+              "names": [
+                "--filter"
+              ],
+              "argument": "stringArray",
+              "description": "Provide filter values (e.g. 'label=<key>=<value>')"
+            },
+            {
+              "names": [
+                "-f",
+                "--force"
+              ],
+              "argument": "",
+              "description": "Do not prompt for confirmation"
+            }
+          ]
+        },
+        {
+          "name": "pull",
+          "description": "Pull an image from a registry",
+          "options": [
+            {
+              "names": [
+                "--all-tags"
+              ],
+              "argument": "",
+              "description": "All tagged images in the repository will be pulled"
+            },
+            {
+              "names": [
+                "--arch"
+              ],
+              "argument": "ARCH",
+              "description": "Use ARCH instead of the architecture of the machine for choosing images"
+            },
+            {
+              "names": [
+                "--authfile"
+              ],
+              "argument": "string",
+              "description": "Path of the authentication file. Use REGISTRY_AUTH_FILE environment variable to override"
+            },
+            {
+              "names": [
+                "--cert-dir"
+              ],
+              "argument": "Pathname",
+              "description": "Pathname of a directory containing TLS certificates and keys"
+            },
+            {
+              "names": [
+                "--creds"
+              ],
+              "argument": "Credentials",
+              "description": "Credentials (USERNAME:PASSWORD) to use for authenticating to a registry"
+            },
+            {
+              "names": [
+                "--disable-content-trust"
+              ],
+              "argument": "",
+              "description": "This is a Docker specific option and is a NOOP"
+            },
+            {
+              "names": [
+                "--os"
+              ],
+              "argument": "OS",
+              "description": "Use OS instead of the running OS for choosing images"
+            },
+            {
+              "names": [
+                "--platform"
+              ],
+              "argument": "string",
+              "description": "Specify the platform for selecting the image. (Conflicts with arch and os)"
+            },
+            {
+              "names": [
+                "-q",
+                "--quiet"
+              ],
+              "argument": "",
+              "description": "Suppress output information when pulling images"
+            },
+            {
+              "names": [
+                "--tls-verify"
+              ],
+              "argument": "",
+              "description": "Require HTTPS and verify certificates when contacting registries (default true)"
+            },
+            {
+              "names": [
+                "--variant"
+              ],
+              "argument": "string",
+              "description": "Use VARIANT instead of the running architecture variant for choosing images"
+            }
+          ]
+        },
+        {
+          "name": "push",
+          "description": "Push an image to a specified destination",
+          "options": [
+            {
+              "names": [
+                "--authfile"
+              ],
+              "argument": "string",
+              "description": "Path of the authentication file. Use REGISTRY_AUTH_FILE environment variable to override"
+            },
+            {
+              "names": [
+                "--cert-dir"
+              ],
+              "argument": "string",
+              "description": "Path to a directory containing TLS certificates and keys"
+            },
+            {
+              "names": [
+                "--compress"
+              ],
+              "argument": "",
+              "description": "Compress tarball image layers when pushing to a directory using the 'dir' transport. (default is same compression type as source)"
+            },
+            {
+              "names": [
+                "--creds"
+              ],
+              "argument": "Credentials",
+              "description": "Credentials (USERNAME:PASSWORD) to use for authenticating to a registry"
+            },
+            {
+              "names": [
+                "--digestfile"
+              ],
+              "argument": "string",
+              "description": "Write the digest of the pushed image to the specified file"
+            },
+            {
+              "names": [
+                "--disable-content-trust"
+              ],
+              "argument": "",
+              "description": "This is a Docker specific option and is a NOOP"
+            },
+            {
+              "names": [
+                "-f",
+                "--format"
+              ],
+              "argument": "string",
+              "description": "Manifest type (oci, v2s2, or v2s1) to use in the destination (default is manifest type of source, with fallbacks)"
+            },
+            {
+              "names": [
+                "-q",
+                "--quiet"
+              ],
+              "argument": "",
+              "description": "Suppress output information when pushing images"
+            },
+            {
+              "names": [
+                "--remove-signatures"
+              ],
+              "argument": "",
+              "description": "Discard any pre-existing signatures in the image"
+            },
+            {
+              "names": [
+                "--sign-by"
+              ],
+              "argument": "string",
+              "description": "Add a signature at the destination using the specified key"
+            },
+            {
+              "names": [
+                "--tls-verify"
+              ],
+              "argument": "",
+              "description": "Require HTTPS and verify certificates when contacting registries (default true)"
+            }
+          ]
+        },
+        {
+          "name": "rm",
+          "description": "Removes one or more images from local storage",
+          "options": [
+            {
+              "names": [
+                "-a",
+                "--all"
+              ],
+              "argument": "",
+              "description": "Remove all images"
+            },
+            {
+              "names": [
+                "-f",
+                "--force"
+              ],
+              "argument": "",
+              "description": "Force Removal of the image"
+            }
+          ]
+        },
+        {
+          "name": "save",
+          "description": "Save image(s) to an archive",
+          "options": [
+            {
+              "names": [
+                "--compress"
+              ],
+              "argument": "",
+              "description": "Compress tarball image layers when saving to a directory using the 'dir' transport. (default is same compression type as source)"
+            },
+            {
+              "names": [
+                "--format"
+              ],
+              "argument": "string",
+              "description": "Save image to oci-archive, oci-dir (directory with oci manifest type), docker-archive, docker-dir (directory with v2s2 manifest type) (default \"docker-archive\")"
+            },
+            {
+              "names": [
+                "-m",
+                "--multi-image-archive"
+              ],
+              "argument": "",
+              "description": "Interpret additional arguments as images not tags and create a multi-image-archive (only for docker-archive)"
+            },
+            {
+              "names": [
+                "-o",
+                "--output"
+              ],
+              "argument": "string",
+              "description": "Write to a specified file (default: stdout, which must be redirected)"
+            },
+            {
+              "names": [
+                "-q",
+                "--quiet"
+              ],
+              "argument": "",
+              "description": "Suppress the output"
+            }
+          ]
+        },
+        {
+          "name": "search",
+          "description": "Search registry for image",
+          "options": [
+            {
+              "names": [
+                "--authfile"
+              ],
+              "argument": "string",
+              "description": "Path of the authentication file. Use REGISTRY_AUTH_FILE environment variable to override"
+            },
+            {
+              "names": [
+                "-f",
+                "--filter"
+              ],
+              "argument": "strings",
+              "description": "Filter output based on conditions provided (default [])"
+            },
+            {
+              "names": [
+                "--format"
+              ],
+              "argument": "string",
+              "description": "Change the output format to JSON or a Go template"
+            },
+            {
+              "names": [
+                "--limit"
+              ],
+              "argument": "int",
+              "description": "Limit the number of results"
+            },
+            {
+              "names": [
+                "--list-tags"
+              ],
+              "argument": "",
+              "description": "List the tags of the input registry"
+            },
+            {
+              "names": [
+                "--no-trunc"
+              ],
+              "argument": "",
+              "description": "Do not truncate the output"
+            },
+            {
+              "names": [
+                "--tls-verify"
+              ],
+              "argument": "",
+              "description": "Require HTTPS and verify certificates when contacting registries (default true)"
+            }
+          ]
+        },
+        {
+          "name": "sign",
+          "description": "Sign an image",
+          "options": [
+            {
+              "names": [
+                "-a",
+                "--all"
+              ],
+              "argument": "",
+              "description": "Sign all the manifests of the multi-architecture image"
+            },
+            {
+              "names": [
+                "--cert-dir"
+              ],
+              "argument": "Pathname",
+              "description": "Pathname of a directory containing TLS certificates and keys"
+            },
+            {
+              "names": [
+                "-d",
+                "--directory"
+              ],
+              "argument": "string",
+              "description": "Define an alternate directory to store signatures"
+            },
+            {
+              "names": [
+                "--sign-by"
+              ],
+              "argument": "string",
+              "description": "Name of the signing key"
+            }
+          ]
+        },
+        {
+          "name": "tag",
+          "description": "Add an additional name to a local image",
+          "options": []
+        },
+        {
+          "name": "trust",
+          "description": "Manage container image trust policy",
+          "options": []
+        },
+        {
+          "name": "unmount",
+          "description": "Unmount an image's root filesystem",
+          "options": [
+            {
+              "names": [
+                "-a",
+                "--all"
+              ],
+              "argument": "",
+              "description": "Unmount all of the currently mounted images"
+            },
+            {
+              "names": [
+                "-f",
+                "--force"
+              ],
+              "argument": "",
+              "description": "Force the complete unmount of the specified mounted images"
+            }
+          ]
+        },
+        {
+          "name": "untag",
+          "description": "Remove a name from a local image",
+          "options": []
+        }
+      ]
     },
     {
       "name": "images",
@@ -1913,7 +6032,7 @@
             "--sort"
           ],
           "argument": "string",
-          "description": "Sort by created, id, repository, size, tag (default \"created\")"
+          "description": "Sort by size, tag, created, id, repository (default \"created\")"
         }
       ]
     },
@@ -2236,12 +6355,348 @@
     {
       "name": "machine",
       "description": "Manage a virtual machine",
-      "options": []
+      "options": [],
+      "subcommands": [
+        {
+          "name": "init",
+          "description": "Initialize a virtual machine",
+          "options": [
+            {
+              "names": [
+                "--cpus"
+              ],
+              "argument": "uint",
+              "description": "Number of CPUs (default 1)"
+            },
+            {
+              "names": [
+                "--disk-size"
+              ],
+              "argument": "uint",
+              "description": "Disk size in GB (default 10)"
+            },
+            {
+              "names": [
+                "--ignition-path"
+              ],
+              "argument": "string",
+              "description": "Path to ignition file"
+            },
+            {
+              "names": [
+                "--image-path"
+              ],
+              "argument": "string",
+              "description": "Path to qcow image (default \"testing\")"
+            },
+            {
+              "names": [
+                "-m",
+                "--memory"
+              ],
+              "argument": "uint",
+              "description": "Memory in MB (default 2048)"
+            }
+          ]
+        },
+        {
+          "name": "list",
+          "description": "List machines",
+          "options": [
+            {
+              "names": [
+                "--format"
+              ],
+              "argument": "string",
+              "description": "Format volume output using Go template (default \"{{.Name}}\\t{{.VMType}}\\t{{.Created}}\\t{{.LastUp}}\\t{{.CPUs}}\\t{{.Memory}}\\t{{.DiskSize}}\\n\")"
+            },
+            {
+              "names": [
+                "--noheading"
+              ],
+              "argument": "",
+              "description": "Do not print headers"
+            }
+          ]
+        },
+        {
+          "name": "rm",
+          "description": "Remove an existing machine",
+          "options": [
+            {
+              "names": [
+                "--force"
+              ],
+              "argument": "",
+              "description": "Do not prompt before rming"
+            },
+            {
+              "names": [
+                "--save-ignition"
+              ],
+              "argument": "",
+              "description": "Do not delete ignition file"
+            },
+            {
+              "names": [
+                "--save-image"
+              ],
+              "argument": "",
+              "description": "Do not delete the image file"
+            },
+            {
+              "names": [
+                "--save-keys"
+              ],
+              "argument": "",
+              "description": "Do not delete SSH keys"
+            }
+          ]
+        }
+      ]
     },
     {
       "name": "manifest",
       "description": "Manipulate manifest lists and image indexes",
-      "options": []
+      "options": [],
+      "subcommands": [
+        {
+          "name": "add",
+          "description": "Add images to a manifest list or image index",
+          "options": [
+            {
+              "names": [
+                "--all"
+              ],
+              "argument": "",
+              "description": "add all of the list's images if the image is a list"
+            },
+            {
+              "names": [
+                "--annotation"
+              ],
+              "argument": "annotation",
+              "description": "set an annotation for the specified image"
+            },
+            {
+              "names": [
+                "--arch"
+              ],
+              "argument": "architecture",
+              "description": "override the architecture of the specified image"
+            },
+            {
+              "names": [
+                "--authfile"
+              ],
+              "argument": "string",
+              "description": "path of the authentication file. Use REGISTRY_AUTH_FILE environment variable to override"
+            },
+            {
+              "names": [
+                "--cert-dir"
+              ],
+              "argument": "string",
+              "description": "use certificates at the specified path to access the registry"
+            },
+            {
+              "names": [
+                "--creds"
+              ],
+              "argument": "[username[:password]]",
+              "description": "use [username[:password]] for accessing the registry"
+            },
+            {
+              "names": [
+                "--features"
+              ],
+              "argument": "features",
+              "description": "override the features of the specified image"
+            },
+            {
+              "names": [
+                "--os"
+              ],
+              "argument": "OS",
+              "description": "override the OS of the specified image"
+            },
+            {
+              "names": [
+                "--os-version"
+              ],
+              "argument": "version",
+              "description": "override the OS version of the specified image"
+            },
+            {
+              "names": [
+                "--tls-verify"
+              ],
+              "argument": "",
+              "description": "require HTTPS and verify certificates when accessing the registry (default true)"
+            },
+            {
+              "names": [
+                "--variant"
+              ],
+              "argument": "Variant",
+              "description": "override the Variant of the specified image"
+            }
+          ]
+        },
+        {
+          "name": "annotate",
+          "description": "Add or update information about an entry in a manifest list or image index",
+          "options": [
+            {
+              "names": [
+                "--annotation"
+              ],
+              "argument": "annotation",
+              "description": "set an annotation for the specified image"
+            },
+            {
+              "names": [
+                "--arch"
+              ],
+              "argument": "architecture",
+              "description": "override the architecture of the specified image"
+            },
+            {
+              "names": [
+                "--features"
+              ],
+              "argument": "features",
+              "description": "override the features of the specified image"
+            },
+            {
+              "names": [
+                "--os"
+              ],
+              "argument": "OS",
+              "description": "override the OS of the specified image"
+            },
+            {
+              "names": [
+                "--os-features"
+              ],
+              "argument": "features",
+              "description": "override the OS features of the specified image"
+            },
+            {
+              "names": [
+                "--os-version"
+              ],
+              "argument": "version",
+              "description": "override the OS version of the specified image"
+            },
+            {
+              "names": [
+                "--variant"
+              ],
+              "argument": "Variant",
+              "description": "override the Variant of the specified image"
+            }
+          ]
+        },
+        {
+          "name": "create",
+          "description": "Create manifest list or image index",
+          "options": [
+            {
+              "names": [
+                "--all"
+              ],
+              "argument": "",
+              "description": "add all of the lists' images if the images to add are lists"
+            }
+          ]
+        },
+        {
+          "name": "push",
+          "description": "Push a manifest list or image index to a registry",
+          "options": [
+            {
+              "names": [
+                "--all"
+              ],
+              "argument": "",
+              "description": "also push the images in the list (default true)"
+            },
+            {
+              "names": [
+                "--authfile"
+              ],
+              "argument": "string",
+              "description": "path of the authentication file. Use REGISTRY_AUTH_FILE environment variable to override"
+            },
+            {
+              "names": [
+                "--cert-dir"
+              ],
+              "argument": "string",
+              "description": "use certificates at the specified path to access the registry"
+            },
+            {
+              "names": [
+                "--creds"
+              ],
+              "argument": "[username[:password]]",
+              "description": "use [username[:password]] for accessing the registry"
+            },
+            {
+              "names": [
+                "--digestfile"
+              ],
+              "argument": "string",
+              "description": "after copying the image, write the digest of the resulting digest to the file"
+            },
+            {
+              "names": [
+                "-f",
+                "--format"
+              ],
+              "argument": "string",
+              "description": "manifest type (oci or v2s2) to attempt to use when pushing the manifest list (default is manifest type of source)"
+            },
+            {
+              "names": [
+                "-q",
+                "--quiet"
+              ],
+              "argument": "",
+              "description": "don't output progress information when pushing lists"
+            },
+            {
+              "names": [
+                "--remove-signatures"
+              ],
+              "argument": "",
+              "description": "don't copy signatures when pushing images"
+            },
+            {
+              "names": [
+                "--rm"
+              ],
+              "argument": "",
+              "description": "remove the manifest list if push succeeds"
+            },
+            {
+              "names": [
+                "--sign-by"
+              ],
+              "argument": "FINGERPRINT",
+              "description": "sign the image using a GPG key with the specified FINGERPRINT"
+            },
+            {
+              "names": [
+                "--tls-verify"
+              ],
+              "argument": "",
+              "description": "require HTTPS and verify certificates when accessing the registry (default true)"
+            }
+          ]
+        }
+      ]
     },
     {
       "name": "mount",
@@ -2282,7 +6737,180 @@
     {
       "name": "network",
       "description": "Manage networks",
-      "options": []
+      "options": [],
+      "subcommands": [
+        {
+          "name": "create",
+          "description": "network create",
+          "options": [
+            {
+              "names": [
+                "--disable-dns"
+              ],
+              "argument": "",
+              "description": "disable dns plugin"
+            },
+            {
+              "names": [
+                "-d",
+                "--driver"
+              ],
+              "argument": "string",
+              "description": "driver to manage the network (default \"bridge\")"
+            },
+            {
+              "names": [
+                "--gateway"
+              ],
+              "argument": "ip",
+              "description": "IPv4 or IPv6 gateway for the subnet"
+            },
+            {
+              "names": [
+                "--internal"
+              ],
+              "argument": "",
+              "description": "restrict external access from this network"
+            },
+            {
+              "names": [
+                "--ip-range"
+              ],
+              "argument": "ipNet",
+              "description": "allocate container IP from range"
+            },
+            {
+              "names": [
+                "--ipv6"
+              ],
+              "argument": "",
+              "description": "enable IPv6 networking"
+            },
+            {
+              "names": [
+                "--label"
+              ],
+              "argument": "stringArray",
+              "description": "set metadata on a network"
+            },
+            {
+              "names": [
+                "-o",
+                "--opt"
+              ],
+              "argument": "stringArray",
+              "description": "Set driver specific options (default [])"
+            },
+            {
+              "names": [
+                "--subnet"
+              ],
+              "argument": "ipNet",
+              "description": "subnet in CIDR format"
+            }
+          ]
+        },
+        {
+          "name": "ls",
+          "description": "network list",
+          "options": [
+            {
+              "names": [
+                "-f",
+                "--filter"
+              ],
+              "argument": "stringArray",
+              "description": "Provide filter values (e.g. 'name=podman')"
+            },
+            {
+              "names": [
+                "--format"
+              ],
+              "argument": "string",
+              "description": "Pretty-print networks to JSON or using a Go template"
+            },
+            {
+              "names": [
+                "--no-trunc"
+              ],
+              "argument": "",
+              "description": "Do not truncate the network ID"
+            },
+            {
+              "names": [
+                "--noheading"
+              ],
+              "argument": "",
+              "description": "Do not print headers"
+            },
+            {
+              "names": [
+                "-q",
+                "--quiet"
+              ],
+              "argument": "",
+              "description": "display only names"
+            }
+          ]
+        },
+        {
+          "name": "prune",
+          "description": "network prune",
+          "options": [
+            {
+              "names": [
+                "--filter"
+              ],
+              "argument": "stringArray",
+              "description": "Provide filter values (e.g. 'label=<key>=<value>')"
+            },
+            {
+              "names": [
+                "-f",
+                "--force"
+              ],
+              "argument": "",
+              "description": "do not prompt for confirmation"
+            }
+          ]
+        },
+        {
+          "name": "reload",
+          "description": "Reload firewall rules for one or more containers",
+          "options": [
+            {
+              "names": [
+                "-a",
+                "--all"
+              ],
+              "argument": "",
+              "description": "Reload network configuration of all containers"
+            },
+            {
+              "names": [
+                "-l",
+                "--latest"
+              ],
+              "argument": "",
+              "description": "Act on the latest container podman is aware of Not supported with the \"--remote\" flag"
+            }
+          ]
+        },
+        {
+          "name": "rm",
+          "description": "network rm",
+          "options": [
+            {
+              "names": [
+                "-f",
+                "--force"
+              ],
+              "argument": "",
+              "description": "remove any containers using network"
+            }
+          ]
+        }
+      ]
     },
     {
       "name": "pause",
@@ -2301,7 +6929,661 @@
     {
       "name": "pod",
       "description": "Manage pods",
-      "options": []
+      "options": [],
+      "subcommands": [
+        {
+          "name": "create",
+          "description": "Create a new empty pod",
+          "options": [
+            {
+              "names": [
+                "--add-host"
+              ],
+              "argument": "strings",
+              "description": "Add a custom host-to-IP mapping (host:ip) (default [])"
+            },
+            {
+              "names": [
+                "--cgroup-parent"
+              ],
+              "argument": "string",
+              "description": "Optional parent cgroup for the container"
+            },
+            {
+              "names": [
+                "--dns"
+              ],
+              "argument": "strings",
+              "description": "Set custom DNS servers"
+            },
+            {
+              "names": [
+                "--dns-opt"
+              ],
+              "argument": "strings",
+              "description": "Set custom DNS options"
+            },
+            {
+              "names": [
+                "--dns-search"
+              ],
+              "argument": "strings",
+              "description": "Set custom DNS search domains"
+            },
+            {
+              "names": [
+                "--gidmap"
+              ],
+              "argument": "strings",
+              "description": "GID map to use for the user namespace"
+            },
+            {
+              "names": [
+                "-h",
+                "--hostname"
+              ],
+              "argument": "string",
+              "description": "Set container hostname"
+            },
+            {
+              "names": [
+                "--infra"
+              ],
+              "argument": "",
+              "description": "Create an infra container associated with the pod to share namespaces with (default true)"
+            },
+            {
+              "names": [
+                "--infra-command"
+              ],
+              "argument": "string",
+              "description": "Overwrite the default ENTRYPOINT of the image"
+            },
+            {
+              "names": [
+                "--infra-conmon-pidfile"
+              ],
+              "argument": "string",
+              "description": "Path to the file that will receive the PID of conmon"
+            },
+            {
+              "names": [
+                "--infra-image"
+              ],
+              "argument": "string",
+              "description": "The image of the infra container to associate with the pod (default \"k8s.gcr.io/pause:3.5\")"
+            },
+            {
+              "names": [
+                "--infra-name"
+              ],
+              "argument": "string",
+              "description": "Assign a name to the container"
+            },
+            {
+              "names": [
+                "--ip"
+              ],
+              "argument": "string",
+              "description": "Specify a static IPv4 address for the container"
+            },
+            {
+              "names": [
+                "-l",
+                "--label"
+              ],
+              "argument": "stringArray",
+              "description": "Set metadata on container"
+            },
+            {
+              "names": [
+                "--label-file"
+              ],
+              "argument": "strings",
+              "description": "Read in a line delimited file of labels"
+            },
+            {
+              "names": [
+                "--mac-address"
+              ],
+              "argument": "string",
+              "description": "Container MAC address (e.g. 92:d0:c6:0a:29:33)"
+            },
+            {
+              "names": [
+                "-n",
+                "--name"
+              ],
+              "argument": "string",
+              "description": "Assign a name to the pod"
+            },
+            {
+              "names": [
+                "--network"
+              ],
+              "argument": "string",
+              "description": "Connect a container to a network"
+            },
+            {
+              "names": [
+                "--network-alias"
+              ],
+              "argument": "strings",
+              "description": "Add network-scoped alias for the container"
+            },
+            {
+              "names": [
+                "--no-hosts"
+              ],
+              "argument": "",
+              "description": "Do not create /etc/hosts within the container, instead use the version from the image"
+            },
+            {
+              "names": [
+                "--pid"
+              ],
+              "argument": "string",
+              "description": "PID namespace to use"
+            },
+            {
+              "names": [
+                "--pod-id-file"
+              ],
+              "argument": "string",
+              "description": "Write the pod ID to the file"
+            },
+            {
+              "names": [
+                "-p",
+                "--publish"
+              ],
+              "argument": "strings",
+              "description": "Publish a container's port, or a range of ports, to the host (default [])"
+            },
+            {
+              "names": [
+                "--replace"
+              ],
+              "argument": "",
+              "description": "If a pod with the same name exists, replace it"
+            },
+            {
+              "names": [
+                "--share"
+              ],
+              "argument": "string",
+              "description": "A comma delimited list of kernel namespaces the pod will share (default \"cgroup,ipc,net,uts\")"
+            },
+            {
+              "names": [
+                "--subgidname"
+              ],
+              "argument": "string",
+              "description": "Name of range listed in /etc/subgid for use in user namespace"
+            },
+            {
+              "names": [
+                "--subuidname"
+              ],
+              "argument": "string",
+              "description": "Name of range listed in /etc/subuid for use in user namespace"
+            },
+            {
+              "names": [
+                "--uidmap"
+              ],
+              "argument": "strings",
+              "description": "UID map to use for the user namespace"
+            },
+            {
+              "names": [
+                "--userns"
+              ],
+              "argument": "string",
+              "description": "User namespace to use"
+            }
+          ]
+        },
+        {
+          "name": "inspect",
+          "description": "Displays a pod configuration",
+          "options": [
+            {
+              "names": [
+                "-f",
+                "--format"
+              ],
+              "argument": "string",
+              "description": "Format the output to a Go template or json (default \"json\")"
+            },
+            {
+              "names": [
+                "-l",
+                "--latest"
+              ],
+              "argument": "",
+              "description": "Act on the latest container podman is aware of Not supported with the \"--remote\" flag"
+            }
+          ]
+        },
+        {
+          "name": "kill",
+          "description": "Send the specified signal or SIGKILL to containers in pod",
+          "options": [
+            {
+              "names": [
+                "-a",
+                "--all"
+              ],
+              "argument": "",
+              "description": "Kill all containers in all pods"
+            },
+            {
+              "names": [
+                "-l",
+                "--latest"
+              ],
+              "argument": "",
+              "description": "Act on the latest container podman is aware of Not supported with the \"--remote\" flag"
+            },
+            {
+              "names": [
+                "-s",
+                "--signal"
+              ],
+              "argument": "string",
+              "description": "Signal to send to the containers in the pod (default \"KILL\")"
+            }
+          ]
+        },
+        {
+          "name": "logs",
+          "description": "Fetch logs for pod with one or more containers",
+          "options": [
+            {
+              "names": [
+                "-c",
+                "--container"
+              ],
+              "argument": "string",
+              "description": "Filter logs by container name or id which belongs to pod"
+            },
+            {
+              "names": [
+                "-f",
+                "--follow"
+              ],
+              "argument": "",
+              "description": "Follow log output."
+            },
+            {
+              "names": [
+                "-l",
+                "--latest"
+              ],
+              "argument": "",
+              "description": "Act on the latest container podman is aware of Not supported with the \"--remote\" flag"
+            },
+            {
+              "names": [
+                "--since"
+              ],
+              "argument": "string",
+              "description": "Show logs since TIMESTAMP"
+            },
+            {
+              "names": [
+                "--tail"
+              ],
+              "argument": "int",
+              "description": "Output the specified number of LINES at the end of the logs. (default -1)"
+            },
+            {
+              "names": [
+                "-t",
+                "--timestamps"
+              ],
+              "argument": "",
+              "description": "Output the timestamps in the log"
+            },
+            {
+              "names": [
+                "--until"
+              ],
+              "argument": "string",
+              "description": "Show logs until TIMESTAMP"
+            }
+          ]
+        },
+        {
+          "name": "pause",
+          "description": "Pause one or more pods",
+          "options": [
+            {
+              "names": [
+                "-a",
+                "--all"
+              ],
+              "argument": "",
+              "description": "Pause all running pods"
+            },
+            {
+              "names": [
+                "-l",
+                "--latest"
+              ],
+              "argument": "",
+              "description": "Act on the latest container podman is aware of Not supported with the \"--remote\" flag"
+            }
+          ]
+        },
+        {
+          "name": "ps",
+          "description": "List pods",
+          "options": [
+            {
+              "names": [
+                "--ctr-ids"
+              ],
+              "argument": "",
+              "description": "Display the container UUIDs. If no-trunc is not set they will be truncated"
+            },
+            {
+              "names": [
+                "--ctr-names"
+              ],
+              "argument": "",
+              "description": "Display the container names"
+            },
+            {
+              "names": [
+                "--ctr-status"
+              ],
+              "argument": "",
+              "description": "Display the container status"
+            },
+            {
+              "names": [
+                "-f",
+                "--filter"
+              ],
+              "argument": "strings",
+              "description": "Filter output based on conditions given"
+            },
+            {
+              "names": [
+                "--format"
+              ],
+              "argument": "string",
+              "description": "Pretty-print pods to JSON or using a Go template"
+            },
+            {
+              "names": [
+                "-l",
+                "--latest"
+              ],
+              "argument": "",
+              "description": "Act on the latest container podman is aware of Not supported with the \"--remote\" flag"
+            },
+            {
+              "names": [
+                "--no-trunc"
+              ],
+              "argument": "",
+              "description": "Do not truncate pod and container IDs"
+            },
+            {
+              "names": [
+                "--noheading"
+              ],
+              "argument": "",
+              "description": "Do not print headers"
+            },
+            {
+              "names": [
+                "--ns"
+              ],
+              "argument": "",
+              "description": "Display namespace information of the pod"
+            },
+            {
+              "names": [
+                "-q",
+                "--quiet"
+              ],
+              "argument": "",
+              "description": "Print the numeric IDs of the pods only"
+            },
+            {
+              "names": [
+                "--sort"
+              ],
+              "argument": "string",
+              "description": "Sort output by created, id, name, or number (default \"created\")"
+            }
+          ]
+        },
+        {
+          "name": "restart",
+          "description": "Restart one or more pods",
+          "options": [
+            {
+              "names": [
+                "-a",
+                "--all"
+              ],
+              "argument": "",
+              "description": "Restart all running pods"
+            },
+            {
+              "names": [
+                "-l",
+                "--latest"
+              ],
+              "argument": "",
+              "description": "Act on the latest container podman is aware of Not supported with the \"--remote\" flag"
+            }
+          ]
+        },
+        {
+          "name": "rm",
+          "description": "Remove one or more pods",
+          "options": [
+            {
+              "names": [
+                "-a",
+                "--all"
+              ],
+              "argument": "",
+              "description": "Remove all running pods"
+            },
+            {
+              "names": [
+                "-f",
+                "--force"
+              ],
+              "argument": "",
+              "description": "Force removal of a running pod by first stopping all containers, then removing all containers in the pod. The default is false"
+            },
+            {
+              "names": [
+                "-i",
+                "--ignore"
+              ],
+              "argument": "",
+              "description": "Ignore errors when a specified pod is missing"
+            },
+            {
+              "names": [
+                "-l",
+                "--latest"
+              ],
+              "argument": "",
+              "description": "Act on the latest container podman is aware of Not supported with the \"--remote\" flag"
+            },
+            {
+              "names": [
+                "--pod-id-file"
+              ],
+              "argument": "stringArray",
+              "description": "Read the pod ID from the file"
+            }
+          ]
+        },
+        {
+          "name": "start",
+          "description": "Start one or more pods",
+          "options": [
+            {
+              "names": [
+                "-a",
+                "--all"
+              ],
+              "argument": "",
+              "description": "Restart all running pods"
+            },
+            {
+              "names": [
+                "-l",
+                "--latest"
+              ],
+              "argument": "",
+              "description": "Act on the latest container podman is aware of Not supported with the \"--remote\" flag"
+            },
+            {
+              "names": [
+                "--pod-id-file"
+              ],
+              "argument": "stringArray",
+              "description": "Read the pod ID from the file"
+            }
+          ]
+        },
+        {
+          "name": "stats",
+          "description": "Display a live stream of resource usage statistics for the containers in one or more pods",
+          "options": [
+            {
+              "names": [
+                "-a",
+                "--all"
+              ],
+              "argument": "",
+              "description": "Provide stats for all pods"
+            },
+            {
+              "names": [
+                "--format"
+              ],
+              "argument": "string",
+              "description": "Pretty-print container statistics to JSON or using a Go template"
+            },
+            {
+              "names": [
+                "-l",
+                "--latest"
+              ],
+              "argument": "",
+              "description": "Act on the latest container podman is aware of Not supported with the \"--remote\" flag"
+            },
+            {
+              "names": [
+                "--no-reset"
+              ],
+              "argument": "",
+              "description": "Disable resetting the screen when streaming"
+            },
+            {
+              "names": [
+                "--no-stream"
+              ],
+              "argument": "",
+              "description": "Disable streaming stats and only pull the first result"
+            }
+          ]
+        },
+        {
+          "name": "stop",
+          "description": "Stop one or more pods",
+          "options": [
+            {
+              "names": [
+                "-a",
+                "--all"
+              ],
+              "argument": "",
+              "description": "Stop all running pods"
+            },
+            {
+              "names": [
+                "-i",
+                "--ignore"
+              ],
+              "argument": "",
+              "description": "Ignore errors when a specified pod is missing"
+            },
+            {
+              "names": [
+                "-l",
+                "--latest"
+              ],
+              "argument": "",
+              "description": "Act on the latest container podman is aware of Not supported with the \"--remote\" flag"
+            },
+            {
+              "names": [
+                "--pod-id-file"
+              ],
+              "argument": "stringArray",
+              "description": "Write the pod ID to the file"
+            },
+            {
+              "names": [
+                "-t",
+                "--time"
+              ],
+              "argument": "uint",
+              "description": "Seconds to wait for pod stop before killing the container (default 10)"
+            }
+          ]
+        },
+        {
+          "name": "top",
+          "description": "Display the running processes of containers in a pod",
+          "options": [
+            {
+              "names": [
+                "-l",
+                "--latest"
+              ],
+              "argument": "",
+              "description": "Act on the latest container podman is aware of Not supported with the \"--remote\" flag"
+            }
+          ]
+        },
+        {
+          "name": "unpause",
+          "description": "Unpause one or more pods",
+          "options": [
+            {
+              "names": [
+                "-a",
+                "--all"
+              ],
+              "argument": "",
+              "description": "Pause all running pods"
+            },
+            {
+              "names": [
+                "-l",
+                "--latest"
+              ],
+              "argument": "",
+              "description": "Act on the latest container podman is aware of Not supported with the \"--remote\" flag"
+            }
+          ]
+        }
+      ]
     },
     {
       "name": "port",
@@ -2524,7 +7806,7 @@
             "--variant"
           ],
           "argument": "string",
-          "description": "use VARIANT instead of the running architecture variant for choosing images"
+          "description": "Use VARIANT instead of the running architecture variant for choosing images"
         }
       ]
     },
@@ -3146,7 +8428,7 @@
             "--log-driver"
           ],
           "argument": "string",
-          "description": "Logging driver for the container (default \"k8s-file\")"
+          "description": "Logging driver for the container (default \"journald\")"
         },
         {
           "names": [
@@ -3256,6 +8538,13 @@
         },
         {
           "names": [
+            "--personality"
+          ],
+          "argument": "string",
+          "description": "Configure execution domain using personality (e.g., LINUX/LINUX32)"
+        },
+        {
+          "names": [
             "--pid"
           ],
           "argument": "string",
@@ -3273,7 +8562,7 @@
             "--pids-limit"
           ],
           "argument": "int",
-          "description": "Tune container pids limit (set 0 for unlimited, -1 for server defaults)"
+          "description": "Tune container pids limit (set -1 for unlimited)"
         },
         {
           "names": [
@@ -3490,6 +8779,13 @@
         },
         {
           "names": [
+            "--tls-verify"
+          ],
+          "argument": "",
+          "description": "Require HTTPS and verify certificates when contacting registries for pulling images (default true)"
+        },
+        {
+          "names": [
             "--tmpfs"
           ],
           "argument": "tmpfs",
@@ -3522,7 +8818,7 @@
             "--ulimit"
           ],
           "argument": "strings",
-          "description": "Ulimit options (default [nproc=32768:32768])"
+          "description": "Ulimit options"
         },
         {
           "names": [
@@ -3557,8 +8853,8 @@
           "names": [
             "--variant"
           ],
-          "argument": "string",
-          "description": "Use _VARIANT_ instead of the running architecture variant for choosing images"
+          "argument": "VARIANT",
+          "description": "Use VARIANT instead of the running architecture variant for choosing images"
         },
         {
           "names": [
@@ -3688,7 +8984,56 @@
     {
       "name": "secret",
       "description": "Manage secrets",
-      "options": []
+      "options": [],
+      "subcommands": [
+        {
+          "name": "create",
+          "description": "Create a new secret",
+          "options": [
+            {
+              "names": [
+                "--driver"
+              ],
+              "argument": "string",
+              "description": "Specify secret driver (default \"file\")"
+            },
+            {
+              "names": [
+                "--driver-opts"
+              ],
+              "argument": "stringToString",
+              "description": "Specify driver specific options (default [])"
+            },
+            {
+              "names": [
+                "--env"
+              ],
+              "argument": "",
+              "description": "Read secret data from environment variable"
+            }
+          ]
+        },
+        {
+          "name": "ls",
+          "description": "List secrets",
+          "options": [
+            {
+              "names": [
+                "--format"
+              ],
+              "argument": "string",
+              "description": "Format volume output using Go template (default \"{{.ID}}\\t{{.Name}}\\t{{.Driver}}\\t{{.CreatedAt}}\\t{{.UpdatedAt}}\\t\\n\")"
+            },
+            {
+              "names": [
+                "--noheading"
+              ],
+              "argument": "",
+              "description": "Do not print headers"
+            }
+          ]
+        }
+      ]
     },
     {
       "name": "start",
@@ -3770,6 +9115,14 @@
         },
         {
           "names": [
+            "-i",
+            "--interval"
+          ],
+          "argument": "int",
+          "description": "Time in seconds between stats reports (default 5)"
+        },
+        {
+          "names": [
             "-l",
             "--latest"
           ],
@@ -3840,7 +9193,109 @@
     {
       "name": "system",
       "description": "Manage podman",
-      "options": []
+      "options": [],
+      "subcommands": [
+        {
+          "name": "df",
+          "description": "Show podman disk usage",
+          "options": [
+            {
+              "names": [
+                "--format"
+              ],
+              "argument": "string",
+              "description": "Pretty-print images using a Go template"
+            },
+            {
+              "names": [
+                "-v",
+                "--verbose"
+              ],
+              "argument": "",
+              "description": "Show detailed information on disk usage"
+            }
+          ]
+        },
+        {
+          "name": "info",
+          "description": "Display podman system information",
+          "options": [
+            {
+              "names": [
+                "-D",
+                "--debug"
+              ],
+              "argument": "",
+              "description": "Display additional debug information"
+            },
+            {
+              "names": [
+                "-f",
+                "--format"
+              ],
+              "argument": "string",
+              "description": "Change the output format to JSON or a Go template"
+            }
+          ]
+        },
+        {
+          "name": "prune",
+          "description": "Remove unused data",
+          "options": [
+            {
+              "names": [
+                "-a",
+                "--all"
+              ],
+              "argument": "",
+              "description": "Remove all unused data"
+            },
+            {
+              "names": [
+                "--filter"
+              ],
+              "argument": "stringArray",
+              "description": "Provide filter values (e.g. 'label=<key>=<value>')"
+            },
+            {
+              "names": [
+                "-f",
+                "--force"
+              ],
+              "argument": "",
+              "description": "Do not prompt for confirmation. The default is false"
+            },
+            {
+              "names": [
+                "--volumes"
+              ],
+              "argument": "",
+              "description": "Prune volumes"
+            }
+          ]
+        },
+        {
+          "name": "service",
+          "description": "Run API service",
+          "options": [
+            {
+              "names": [
+                "--cors"
+              ],
+              "argument": "string",
+              "description": "Set CORS Headers"
+            },
+            {
+              "names": [
+                "-t",
+                "--time"
+              ],
+              "argument": "int",
+              "description": "Time until the service session expires in seconds. Use 0 to disable the timeout (default 5)"
+            }
+          ]
+        }
+      ]
     },
     {
       "name": "tag",
@@ -3926,7 +9381,139 @@
     {
       "name": "volume",
       "description": "Manage volumes",
-      "options": []
+      "options": [],
+      "subcommands": [
+        {
+          "name": "create",
+          "description": "Create a new volume",
+          "options": [
+            {
+              "names": [
+                "--driver"
+              ],
+              "argument": "string",
+              "description": "Specify volume driver name (default \"local\")"
+            },
+            {
+              "names": [
+                "-l",
+                "--label"
+              ],
+              "argument": "strings",
+              "description": "Set metadata for a volume (default [])"
+            },
+            {
+              "names": [
+                "-o",
+                "--opt"
+              ],
+              "argument": "stringArray",
+              "description": "Set driver specific options (default [])"
+            }
+          ]
+        },
+        {
+          "name": "inspect",
+          "description": "Display detailed information on one or more volumes",
+          "options": [
+            {
+              "names": [
+                "-a",
+                "--all"
+              ],
+              "argument": "",
+              "description": "Inspect all volumes"
+            },
+            {
+              "names": [
+                "-f",
+                "--format"
+              ],
+              "argument": "string",
+              "description": "Format volume output using Go template (default \"json\")"
+            }
+          ]
+        },
+        {
+          "name": "ls",
+          "description": "List volumes",
+          "options": [
+            {
+              "names": [
+                "-f",
+                "--filter"
+              ],
+              "argument": "strings",
+              "description": "Filter volume output"
+            },
+            {
+              "names": [
+                "--format"
+              ],
+              "argument": "string",
+              "description": "Format volume output using Go template (default \"{{.Driver}}\\t{{.Name}}\\n\")"
+            },
+            {
+              "names": [
+                "--noheading"
+              ],
+              "argument": "",
+              "description": "Do not print headers"
+            },
+            {
+              "names": [
+                "-q",
+                "--quiet"
+              ],
+              "argument": "",
+              "description": "Print volume output in quiet mode"
+            }
+          ]
+        },
+        {
+          "name": "prune",
+          "description": "Remove all unused volumes",
+          "options": [
+            {
+              "names": [
+                "--filter"
+              ],
+              "argument": "stringArray",
+              "description": "Provide filter values (e.g. 'label=<key>=<value>')"
+            },
+            {
+              "names": [
+                "-f",
+                "--force"
+              ],
+              "argument": "",
+              "description": "Do not prompt for confirmation"
+            }
+          ]
+        },
+        {
+          "name": "rm",
+          "description": "Remove one or more volumes",
+          "options": [
+            {
+              "names": [
+                "-a",
+                "--all"
+              ],
+              "argument": "",
+              "description": "Remove all volumes"
+            },
+            {
+              "names": [
+                "-f",
+                "--force"
+              ],
+              "argument": "",
+              "description": "Remove a volume by force, even if it is being used by a container"
+            }
+          ]
+        }
+      ]
     },
     {
       "name": "wait",

@@ -8,6 +8,7 @@
 basedir="$(dirname "$(readlink -f "$0")")"
 
 "$basedir"/make-list.py
+"$basedir"/validate-all.py
 
 ls "$basedir"/../general/json/*.json | parallel python "$basedir"/validate.py
 jq -s . "$basedir"/../general/json/*.json | gzip > "$basedir"/../general.json.gz

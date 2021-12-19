@@ -58,7 +58,7 @@ if __name__ == "__main__":
     parser.add_argument("file", help="JSON file to validate")
     args = parser.parse_args()
 
-    print(f"  ... validating {args.file}")
+    print(f"  ... validating {args.file}", end=" ")
     with open(args.file, "r") as f:
         d = json.load(f)
     validate(d)

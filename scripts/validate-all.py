@@ -18,6 +18,7 @@ for dir_ in dirs:
     files = p.glob("*.json")
     for q in files:
         with q.open("r") as f:
-            print(f"validating: ({q.parent.parent.name})   {q.name}")
+            print(f"validating: ({q.parent.parent.name})   {q.name}", end=" ")
             d = json.load(f)
             validate(d)
+            print(f"  ... done")

@@ -17,7 +17,7 @@ for dir_ in dirs:
     p = root / dir_ / "json"
     files = p.glob("*.json")
     names = sorted([q.stem for q in files])
-    print(names)
+    # print(names)
 
     with open(root / (dir_ + ".txt"), "w") as f:
         for name in names:

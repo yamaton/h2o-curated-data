@@ -82,35 +82,6 @@ subcommands:
         argument: strings
         description: Images to consider as cache sources
       - names:
-          - --cgroup-parent
-        argument: string
-        description: Optional parent cgroup for the container
-      - names:
-          - --compress
-        argument: ""
-        description: Compress the build context using gzip
-      - names:
-          - --cpu-period
-        argument: int
-        description: Limit the CPU CFS (Completely Fair Scheduler) period
-      - names:
-          - --cpu-quota
-        argument: int
-        description: Limit the CPU CFS (Completely Fair Scheduler) quota
-      - names:
-          - -c
-          - --cpu-shares
-        argument: int
-        description: CPU shares (relative weight)
-      - names:
-          - --cpuset-cpus
-        argument: string
-        description: CPUs in which to allow execution (0-3, 0,1)
-      - names:
-          - --cpuset-mems
-        argument: string
-        description: MEMs in which to allow execution (0-3, 0,1)
-      - names:
           - --disable-content-trust
         argument: ""
         description: Skip image verification (default true)
@@ -119,10 +90,6 @@ subcommands:
           - --file
         argument: string
         description: Name of the Dockerfile (Default is 'PATH/Dockerfile')
-      - names:
-          - --force-rm
-        argument: ""
-        description: Always remove intermediate containers
       - names:
           - --iidfile
         argument: string
@@ -136,15 +103,6 @@ subcommands:
         argument: list
         description: Set metadata for an image
       - names:
-          - -m
-          - --memory
-        argument: bytes
-        description: Memory limit
-      - names:
-          - --memory-swap
-        argument: bytes
-        description: 'Swap limit equal to memory plus swap: ''-1'' to enable unlimited swap'
-      - names:
           - --network
         argument: string
         description: Set the networking mode for the RUN instructions during build (default "default")
@@ -152,6 +110,19 @@ subcommands:
           - --no-cache
         argument: ""
         description: Do not use cache when building the image
+      - names:
+          - -o
+          - --output
+        argument: stringArray
+        description: 'Output destination (format: type=local,dest=path)'
+      - names:
+          - --platform
+        argument: string
+        description: Set platform if server is multi-platform capable
+      - names:
+          - --progress
+        argument: string
+        description: Set type of progress output (auto, plain, tty). Use plain to show container output (default "auto")
       - names:
           - --pull
         argument: ""
@@ -162,21 +133,13 @@ subcommands:
         argument: ""
         description: Suppress the build output and print image ID on success
       - names:
-          - --rm
-        argument: ""
-        description: Remove intermediate containers after a successful build (default true)
+          - --secret
+        argument: stringArray
+        description: 'Secret file to expose to the build (only if BuildKit enabled): id=mysecret,src=/local/secret'
       - names:
-          - --security-opt
-        argument: strings
-        description: Security options
-      - names:
-          - --shm-size
-        argument: bytes
-        description: Size of /dev/shm
-      - names:
-          - --squash
-        argument: ""
-        description: Squash newly built layers into a single new layer
+          - --ssh
+        argument: stringArray
+        description: 'SSH agent socket or keys to expose to the build (only if BuildKit enabled) (format: default|<id>[=<socket>|<key>[,<key>]])'
       - names:
           - -t
           - --tag
@@ -186,10 +149,6 @@ subcommands:
           - --target
         argument: string
         description: Set the target build stage to build.
-      - names:
-          - --ulimit
-        argument: ulimit
-        description: Ulimit options (default [])
   - name: commit
     description: Create a new image from a container's changes
     options:
@@ -790,7 +749,7 @@ subcommands:
           - -s
           - --signal
         argument: string
-        description: 'Signal to send to the container (default "KILL")'
+        description: Signal to send to the container (default "KILL")
   - name: load
     description: Load an image from a tar archive or STDIN
     options:
@@ -1538,7 +1497,7 @@ subcommands:
         argument: string
         description: Kubernetes config file
   - name: wait
-    description: Show the Docker version information
+    description: Block until one or more containers stop, then print their exit codes
     options: []
   - name: builder
     description: Manage builds
@@ -1560,35 +1519,6 @@ subcommands:
             argument: strings
             description: Images to consider as cache sources
           - names:
-              - --cgroup-parent
-            argument: string
-            description: Optional parent cgroup for the container
-          - names:
-              - --compress
-            argument: ""
-            description: Compress the build context using gzip
-          - names:
-              - --cpu-period
-            argument: int
-            description: Limit the CPU CFS (Completely Fair Scheduler) period
-          - names:
-              - --cpu-quota
-            argument: int
-            description: Limit the CPU CFS (Completely Fair Scheduler) quota
-          - names:
-              - -c
-              - --cpu-shares
-            argument: int
-            description: CPU shares (relative weight)
-          - names:
-              - --cpuset-cpus
-            argument: string
-            description: CPUs in which to allow execution (0-3, 0,1)
-          - names:
-              - --cpuset-mems
-            argument: string
-            description: MEMs in which to allow execution (0-3, 0,1)
-          - names:
               - --disable-content-trust
             argument: ""
             description: Skip image verification (default true)
@@ -1597,10 +1527,6 @@ subcommands:
               - --file
             argument: string
             description: Name of the Dockerfile (Default is 'PATH/Dockerfile')
-          - names:
-              - --force-rm
-            argument: ""
-            description: Always remove intermediate containers
           - names:
               - --iidfile
             argument: string
@@ -1614,15 +1540,6 @@ subcommands:
             argument: list
             description: Set metadata for an image
           - names:
-              - -m
-              - --memory
-            argument: bytes
-            description: Memory limit
-          - names:
-              - --memory-swap
-            argument: bytes
-            description: 'Swap limit equal to memory plus swap: ''-1'' to enable unlimited swap'
-          - names:
               - --network
             argument: string
             description: Set the networking mode for the RUN instructions during build (default "default")
@@ -1630,6 +1547,19 @@ subcommands:
               - --no-cache
             argument: ""
             description: Do not use cache when building the image
+          - names:
+              - -o
+              - --output
+            argument: stringArray
+            description: 'Output destination (format: type=local,dest=path)'
+          - names:
+              - --platform
+            argument: string
+            description: Set platform if server is multi-platform capable
+          - names:
+              - --progress
+            argument: string
+            description: Set type of progress output (auto, plain, tty). Use plain to show container output (default "auto")
           - names:
               - --pull
             argument: ""
@@ -1640,17 +1570,13 @@ subcommands:
             argument: ""
             description: Suppress the build output and print image ID on success
           - names:
-              - --rm
-            argument: ""
-            description: Remove intermediate containers after a successful build (default true)
+              - --secret
+            argument: stringArray
+            description: 'Secret file to expose to the build (only if BuildKit enabled): id=mysecret,src=/local/secret'
           - names:
-              - --security-opt
-            argument: strings
-            description: Security options
-          - names:
-              - --shm-size
-            argument: bytes
-            description: Size of /dev/shm
+              - --ssh
+            argument: stringArray
+            description: 'SSH agent socket or keys to expose to the build (only if BuildKit enabled) (format: default|<id>[=<socket>|<key>[,<key>]])'
           - names:
               - -t
               - --tag
@@ -1660,10 +1586,6 @@ subcommands:
               - --target
             argument: string
             description: Set the target build stage to build.
-          - names:
-              - --ulimit
-            argument: ulimit
-            description: Ulimit options (default [])
       - name: prune
         description: Remove build cache
         options:
@@ -1947,6 +1869,13 @@ subcommands:
               - --keep-state
             argument: ""
             description: Keep BuildKit state
+      - name: stop
+        description: Stop builder instance
+        options:
+          - names:
+              - --builder
+            argument: string
+            description: Override the configured builder instance
       - name: use
         description: Set the current builder instance
         options:
@@ -2130,6 +2059,13 @@ subcommands:
               - --volumes
             argument: volumes
             description: Remove named volumes declared in the volumes section of the Compose file and anonymous volumes attached to containers.
+      - name: events
+        description: Receive real time events from containers.
+        options:
+          - names:
+              - --json
+            argument: ""
+            description: Output events as a stream of json objects
       - name: exec
         description: Execute a command in a running container.
         options:
@@ -2166,6 +2102,22 @@ subcommands:
               - --workdir
             argument: string
             description: Path to workdir directory for this command.
+      - name: images
+        description: List images used by the created containers
+        options:
+          - names:
+              - -q
+              - --quiet
+            argument: ""
+            description: Only display IDs
+      - name: kill
+        description: Force stop service containers.
+        options:
+          - names:
+              - -s
+              - --signal
+            argument: string
+            description: SIGNAL to send to the container. (default "SIGKILL")
       - name: logs
         description: View output from containers
         options:
@@ -2272,6 +2224,21 @@ subcommands:
               - --quiet
             argument: ""
             description: Pull without printing progress information
+      - name: push
+        description: Push service images
+        options:
+          - names:
+              - --ignore-push-failures
+            argument: ""
+            description: Push what it can and ignores images with push failures
+      - name: restart
+        description: Restart containers
+        options:
+          - names:
+              - -t
+              - --timeout
+            argument: int
+            description: Specify a shutdown timeout in seconds (default 10)
       - name: rm
         description: Removes stopped service containers
         options:
@@ -2361,6 +2328,14 @@ subcommands:
               - --workdir
             argument: string
             description: Working directory inside the container
+      - name: stop
+        description: Stop services
+        options:
+          - names:
+              - -t
+              - --timeout
+            argument: int
+            description: Specify a shutdown timeout in seconds (default 10)
       - name: up
         description: Create and start containers
         options:
@@ -2504,6 +2479,9 @@ subcommands:
               - --quiet
             argument: ""
             description: Only display IDs
+      - name: rm
+        description: Remove one or more configs
+        options: []
   - name: container
     description: Manage containers
     options: []
@@ -3023,7 +3001,7 @@ subcommands:
               - -s
               - --signal
             argument: string
-            description: 'Signal to send to the container (default "KILL")'
+            description: Signal to send to the container (default "KILL")
       - name: logs
         description: Fetch the logs of a container
         options:
@@ -3689,6 +3667,21 @@ subcommands:
               - --kubernetes
             argument: stringToString
             description: set the kubernetes endpoint (default [])
+      - name: export
+        description: Export a context to a tar or kubeconfig file
+        options:
+          - names:
+              - --kubeconfig
+            argument: ""
+            description: Export as a kubeconfig file
+      - name: inspect
+        description: Display detailed information on one or more contexts
+        options:
+          - names:
+              - -f
+              - --format
+            argument: string
+            description: Format the output using the given Go template
       - name: ls
         description: List contexts
         options:
@@ -3701,6 +3694,14 @@ subcommands:
               - --quiet
             argument: ""
             description: Only show context names
+      - name: rm
+        description: Remove one or more contexts
+        options:
+          - names:
+              - -f
+              - --force
+            argument: ""
+            description: Force the removal of a context in use
       - name: update
         description: Update a context
         options:
@@ -3740,35 +3741,6 @@ subcommands:
             argument: strings
             description: Images to consider as cache sources
           - names:
-              - --cgroup-parent
-            argument: string
-            description: Optional parent cgroup for the container
-          - names:
-              - --compress
-            argument: ""
-            description: Compress the build context using gzip
-          - names:
-              - --cpu-period
-            argument: int
-            description: Limit the CPU CFS (Completely Fair Scheduler) period
-          - names:
-              - --cpu-quota
-            argument: int
-            description: Limit the CPU CFS (Completely Fair Scheduler) quota
-          - names:
-              - -c
-              - --cpu-shares
-            argument: int
-            description: CPU shares (relative weight)
-          - names:
-              - --cpuset-cpus
-            argument: string
-            description: CPUs in which to allow execution (0-3, 0,1)
-          - names:
-              - --cpuset-mems
-            argument: string
-            description: MEMs in which to allow execution (0-3, 0,1)
-          - names:
               - --disable-content-trust
             argument: ""
             description: Skip image verification (default true)
@@ -3777,10 +3749,6 @@ subcommands:
               - --file
             argument: string
             description: Name of the Dockerfile (Default is 'PATH/Dockerfile')
-          - names:
-              - --force-rm
-            argument: ""
-            description: Always remove intermediate containers
           - names:
               - --iidfile
             argument: string
@@ -3794,15 +3762,6 @@ subcommands:
             argument: list
             description: Set metadata for an image
           - names:
-              - -m
-              - --memory
-            argument: bytes
-            description: Memory limit
-          - names:
-              - --memory-swap
-            argument: bytes
-            description: 'Swap limit equal to memory plus swap: ''-1'' to enable unlimited swap'
-          - names:
               - --network
             argument: string
             description: Set the networking mode for the RUN instructions during build (default "default")
@@ -3810,6 +3769,19 @@ subcommands:
               - --no-cache
             argument: ""
             description: Do not use cache when building the image
+          - names:
+              - -o
+              - --output
+            argument: stringArray
+            description: 'Output destination (format: type=local,dest=path)'
+          - names:
+              - --platform
+            argument: string
+            description: Set platform if server is multi-platform capable
+          - names:
+              - --progress
+            argument: string
+            description: Set type of progress output (auto, plain, tty). Use plain to show container output (default "auto")
           - names:
               - --pull
             argument: ""
@@ -3820,21 +3792,13 @@ subcommands:
             argument: ""
             description: Suppress the build output and print image ID on success
           - names:
-              - --rm
-            argument: ""
-            description: Remove intermediate containers after a successful build (default true)
+              - --secret
+            argument: stringArray
+            description: 'Secret file to expose to the build (only if BuildKit enabled): id=mysecret,src=/local/secret'
           - names:
-              - --security-opt
-            argument: strings
-            description: Security options
-          - names:
-              - --shm-size
-            argument: bytes
-            description: Size of /dev/shm
-          - names:
-              - --squash
-            argument: ""
-            description: Squash newly built layers into a single new layer
+              - --ssh
+            argument: stringArray
+            description: 'SSH agent socket or keys to expose to the build (only if BuildKit enabled) (format: default|<id>[=<socket>|<key>[,<key>]])'
           - names:
               - -t
               - --tag
@@ -3844,10 +3808,6 @@ subcommands:
               - --target
             argument: string
             description: Set the target build stage to build.
-          - names:
-              - --ulimit
-            argument: ulimit
-            description: Ulimit options (default [])
       - name: history
         description: Show the history of an image
         options:
@@ -3887,7 +3847,7 @@ subcommands:
             argument: string
             description: Set platform if server is multi-platform capable
       - name: inspect
-        description: Return low-level information on Docker objects
+        description: Display detailed information on one or more images
         options:
           - names:
               - -f
@@ -4227,6 +4187,9 @@ subcommands:
               - --force
             argument: ""
             description: Do not prompt for confirmation
+      - name: rm
+        description: Remove one or more networks
+        options: []
   - name: node
     description: Manage Swarm nodes
     options: []
@@ -4285,6 +4248,14 @@ subcommands:
               - --quiet
             argument: ""
             description: Only display task IDs
+      - name: rm
+        description: Remove one or more nodes from the swarm
+        options:
+          - names:
+              - -f
+              - --force
+            argument: ""
+            description: Force remove a node from the swarm
       - name: update
         description: Update a node
         options:
@@ -4308,6 +4279,36 @@ subcommands:
     description: Manage plugins
     options: []
     subcommands:
+      - name: create
+        description: Create a plugin from a rootfs and configuration. Plugin data directory must contain config.json and rootfs directory.
+        options:
+          - names:
+              - --compress
+            argument: ""
+            description: Compress the context using gzip
+      - name: disable
+        description: Disable a plugin
+        options:
+          - names:
+              - -f
+              - --force
+            argument: ""
+            description: Force the disable of an active plugin
+      - name: enable
+        description: Enable a plugin
+        options:
+          - names:
+              - --timeout
+            argument: int
+            description: HTTP client timeout (in seconds) (default 30)
+      - name: inspect
+        description: Display detailed information on one or more plugins
+        options:
+          - names:
+              - -f
+              - --format
+            argument: string
+            description: Format the output using the given Go template
       - name: install
         description: Install a plugin
         options:
@@ -4348,6 +4349,21 @@ subcommands:
               - --quiet
             argument: ""
             description: Only display plugin IDs
+      - name: push
+        description: Push a plugin to a registry
+        options:
+          - names:
+              - --disable-content-trust
+            argument: ""
+            description: Skip image signing (default true)
+      - name: rm
+        description: Remove one or more plugins
+        options:
+          - names:
+              - -f
+              - --force
+            argument: ""
+            description: Force the removal of an active plugin
       - name: upgrade
         description: Upgrade an existing plugin
         options:
@@ -4461,6 +4477,9 @@ subcommands:
               - --quiet
             argument: ""
             description: Only display IDs
+      - name: rm
+        description: Remove one or more secrets
+        options: []
   - name: service
     description: Manage services
     options: []
@@ -4856,6 +4875,9 @@ subcommands:
               - --quiet
             argument: ""
             description: Only display task IDs
+      - name: rm
+        description: Remove one or more services
+        options: []
       - name: rollback
         description: Revert changes to a service's configuration
         options:
@@ -4869,6 +4891,14 @@ subcommands:
               - --quiet
             argument: ""
             description: Suppress progress output
+      - name: scale
+        description: Scale one or multiple replicated services
+        options:
+          - names:
+              - -d
+              - --detach
+            argument: ""
+            description: Exit immediately instead of waiting for the service to converge
       - name: update
         description: Update a service
         options:
@@ -5313,10 +5343,6 @@ subcommands:
         description: Remove one or more stacks
         options:
           - names:
-              - --kubeconfig
-            argument: string
-            description: Kubernetes config file
-          - names:
               - --orchestrator
             argument: string
             description: Orchestrator to use (swarm|kubernetes|all)
@@ -5464,6 +5490,14 @@ subcommands:
               - --token
             argument: string
             description: Token for entry into the swarm
+      - name: leave
+        description: Leave the swarm
+        options:
+          - names:
+              - -f
+              - --force
+            argument: ""
+            description: Force this node to leave the swarm, ignoring warnings
       - name: update
         description: Update the swarm
         options:
@@ -5531,6 +5565,14 @@ subcommands:
               - --until
             argument: string
             description: Stream events until this timestamp
+      - name: info
+        description: Display system-wide information
+        options:
+          - names:
+              - -f
+              - --format
+            argument: string
+            description: Format the output using the given Go template
       - name: prune
         description: Remove unused data
         options:
@@ -5555,6 +5597,66 @@ subcommands:
   - name: trust
     description: Manage trust on Docker images
     options: []
+    subcommands:
+      - name: key
+        description: Manage keys for signing Docker images
+        options: []
+        subcommands:
+          - name: generate
+            description: Generate and load a signing key-pair
+            options:
+              - names:
+                  - --dir
+                argument: string
+                description: Directory to generate key in, defaults to current directory
+          - name: load
+            description: Load a private key file for signing
+            options:
+              - names:
+                  - --name
+                argument: string
+                description: Name for the loaded key (default "signer")
+      - name: signer
+        description: Manage entities who can sign Docker images
+        options: []
+        subcommands:
+          - name: add
+            description: Add a signer
+            options:
+              - names:
+                  - --key
+                argument: list
+                description: Path to the signer's public key file
+          - name: remove
+            description: Remove a signer
+            options:
+              - names:
+                  - -f
+                  - --force
+                argument: ""
+                description: Do not prompt for confirmation before removing the most recent signer
+      - name: inspect
+        description: Return low-level information about keys and signatures
+        options:
+          - names:
+              - --pretty
+            argument: ""
+            description: Print the information in a human friendly format
+      - name: revoke
+        description: Remove trust for an image
+        options:
+          - names:
+              - -y
+              - --yes
+            argument: ""
+            description: Do not prompt for confirmation
+      - name: sign
+        description: Sign an image
+        options:
+          - names:
+              - --local
+            argument: ""
+            description: Sign a locally tagged image
   - name: volume
     description: Manage volumes
     options: []
@@ -5576,6 +5678,14 @@ subcommands:
               - --opt
             argument: map
             description: Set driver specific options (default map[])
+      - name: inspect
+        description: Display detailed information on one or more volumes
+        options:
+          - names:
+              - -f
+              - --format
+            argument: string
+            description: Format the output using the given Go template
       - name: ls
         description: List volumes
         options:
@@ -5605,3 +5715,11 @@ subcommands:
               - --force
             argument: ""
             description: Do not prompt for confirmation
+      - name: rm
+        description: Remove one or more volumes
+        options:
+          - names:
+              - -f
+              - --force
+            argument: ""
+            description: Force the removal of one or more volumes

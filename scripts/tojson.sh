@@ -9,19 +9,17 @@
 basedir="$(dirname "$(readlink -f "$0")")"
 name="$1"
 
-yaml="$basedir/../general/yaml/$name.yaml"
-if [[ -f "$yaml" ]]; then
-    json="$basedir/../general/json/$name.json"
-    echo "from: $yaml"
-    echo "to  : $json"
-    yq eval --output-format=json "$yaml" > "$json"
-fi
+function scan {
+    dir="$1"
+    yaml="$basedir/../$dir/yaml/$name.yaml"
+    if [[ -f "$yaml" ]]; then
+        json="$basedir/../$dir/json/$name.json"
+        echo "from: $yaml"
+        echo "to  : $json"
+        yq eval --output-format=json "$yaml" > "$json"
+    fi
+}
 
-
-yaml="$basedir/../bio/yaml/$name.yaml"
-if [[ -f "$yaml" ]]; then
-    json="$basedir/../bio/json/$name.json"
-    echo "from: $yaml"
-    echo "to  : $json"
-    yq eval --output-format=json "$yaml" > "$json"
-fi
+scan general
+scan bio
+scan experimental

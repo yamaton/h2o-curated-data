@@ -16,7 +16,7 @@ function scan {
         json="$basedir/../$dir/json/$name.json"
         echo "from: $yaml"
         echo "to  : $json"
-        yq eval --output-format=json "$yaml" > "$json"
+        yq eval --output-format=json "$yaml" | jq -c > "$json"
     fi
 }
 

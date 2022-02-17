@@ -1,5 +1,5 @@
 name: bcftools
-description: bcftools
+description: Tools for variant calling and manipulating VCFs and BCFs
 options: []
 subcommands:
   - name: index
@@ -50,107 +50,120 @@ subcommands:
       - names:
           - -a
           - --annotations
-        argument: <file>
-        description: 'VCF file or tabix-indexed file with annotations: CHR\tPOS[\tVALUE]+'
+        argument: FILE
+        description: 'VCF file or tabix-indexed FILE with annotations: CHR\tPOS[\tVALUE]+'
       - names:
           - --collapse
-        argument: <string>
-        description: matching records by <snps|indels|both|all|some|none>, see man page for details [some]
+        argument: STR
+        description: Matching records by <snps|indels|both|all|some|none>, see man page for details [some]
       - names:
           - -c
           - --columns
-        argument: <list>
-        description: list of columns in the annotation file, e.g. CHROM,POS,REF,ALT,-,INFO/TAG. See man page for details
+        argument: LIST
+        description: List of columns in the annotation file, e.g. CHROM,POS,REF,ALT,-,INFO/TAG. See man page for details
+      - names:
+          - -C
+          - --columns-file
+        argument: FILE
+        description: 'Read -c columns from FILE, one name per row, with optional --merge-logic TYPE: NAME[ TYPE]'
       - names:
           - -e
           - --exclude
-        argument: <expr>
-        description: exclude sites for which the expression is true (see man page for details)
+        argument: EXPR
+        description: Exclude sites for which the expression is true (see man page for details)
       - names:
           - --force
         argument: ""
-        description: continue despite parsing error (at your own risk!)
+        description: Continue despite parsing error (at your own risk!)
       - names:
           - -h
           - --header-lines
-        argument: <file>
-        description: lines which should be appended to the VCF header
+        argument: FILE
+        description: Lines which should be appended to the VCF header
       - names:
           - -I
           - --set-id
-        argument: '[+]<format>'
-        description: set ID column, see man page for details
+        argument: '[+]FORMAT'
+        description: Set ID column using a `bcftools query`-like expression, see man page for details
       - names:
           - -i
           - --include
-        argument: <expr>
-        description: select sites for which the expression is true (see man page for details)
+        argument: EXPR
+        description: Select sites for which the expression is true (see man page for details)
       - names:
           - -k
           - --keep-sites
         argument: ""
-        description: leave -i/-e sites unchanged instead of discarding them
+        description: Leave -i/-e sites unchanged instead of discarding them
       - names:
           - -l
           - --merge-logic
-        argument: <tag:type>
-        description: merge logic for multiple overlapping regions (see man page for details), EXPERIMENTAL
+        argument: TAG:TYPE
+        description: Merge logic for multiple overlapping regions (see man page for details), EXPERIMENTAL
       - names:
           - -m
           - --mark-sites
-        argument: '[+-]<tag>'
-        description: add INFO/tag flag to sites which are ("+") or are not ("-") listed in the -a file
+        argument: '[+-]TAG'
+        description: Add INFO/TAG flag to sites which are ("+") or are not ("-") listed in the -a file
       - names:
           - --no-version
         argument: ""
-        description: do not append version and command line to the header
+        description: Do not append version and command line to the header
       - names:
           - -o
           - --output
-        argument: <file>
-        description: write output to a file [standard output]
+        argument: FILE
+        description: Write output to a file [standard output]
       - names:
           - -O
           - --output-type
-        argument: <b|u|z|v>
-        description: 'b: compressed BCF, u: uncompressed BCF, z: compressed VCF, v: uncompressed VCF [v]'
+        argument: u|b|v|z[0-9]
+        description: 'u/b: un/compressed BCF, v/z: un/compressed VCF, 0-9: compression level [v]'
       - names:
           - -r
           - --regions
-        argument: <region>
-        description: restrict to comma-separated list of regions
+        argument: REGION
+        description: Restrict to comma-separated list of regions
       - names:
           - -R
           - --regions-file
-        argument: <file>
-        description: restrict to regions listed in a file
+        argument: FILE
+        description: Restrict to regions listed in FILE
+      - names:
+          - --regions-overlap
+        argument: 0|1|2
+        description: Include if POS in the region (0), record overlaps (1), variant overlaps (2) [1]
+      - names:
+          - --rename-annots
+        argument: FILE
+        description: 'Rename annotations: TYPE/old\tnew, where TYPE is one of FILTER,INFO,FORMAT'
       - names:
           - --rename-chrs
-        argument: <file>
-        description: 'rename sequences according to map file: from\tto'
+        argument: FILE
+        description: 'Rename sequences according to the mapping: old\tnew'
       - names:
           - -s
           - --samples
-        argument: '[^]<list>'
-        description: comma separated list of samples to annotate (or exclude with "^" prefix)
+        argument: '[^]LIST'
+        description: Comma separated list of samples to annotate (or exclude with "^" prefix)
       - names:
           - -S
           - --samples-file
-        argument: '[^]<file>'
-        description: file of samples to annotate (or exclude with "^" prefix)
+        argument: '[^]FILE'
+        description: File of samples to annotate (or exclude with "^" prefix)
       - names:
           - --single-overlaps
         argument: ""
-        description: keep memory low by avoiding complexities arising from handling multiple overlapping intervals
+        description: Keep memory low by avoiding complexities arising from handling multiple overlapping intervals
       - names:
           - -x
           - --remove
-        argument: <list>
-        description: list of annotations (e.g. ID,INFO/DP,FORMAT/DP,FILTER) to remove (or keep with "^" prefix). See man page for details
+        argument: LIST
+        description: List of annotations (e.g. ID,INFO/DP,FORMAT/DP,FILTER) to remove (or keep with "^" prefix). See man page for details
       - names:
           - --threads
-        argument: <int>
-        description: number of extra output compression threads [0]
+        argument: INT
+        description: Number of extra output compression threads [0]
   - name: concat
     description: concatenate VCF/BCF files from the same set of samples
     options:
@@ -167,23 +180,31 @@ subcommands:
       - names:
           - -d
           - --rm-dups
-        argument: <string>
-        description: 'Output duplicate records present in multiple files only once: <snps|indels|both|all|none>'
+        argument: STRING
+        description: 'Output duplicate records present in multiple files only once: <snps|indels|both|all|exact>'
       - names:
           - -D
           - --remove-duplicates
         argument: ""
-        description: Alias for -d none
+        description: Alias for -d exact
       - names:
           - -f
           - --file-list
-        argument: <file>
+        argument: FILE
         description: Read the list of files from a file.
       - names:
           - -l
           - --ligate
         argument: ""
         description: Ligate phased VCFs by matching phase at overlapping haplotypes
+      - names:
+          - --ligate-force
+        argument: ""
+        description: Ligate even non-overlapping chunks, keep all sites
+      - names:
+          - --ligate-warn
+        argument: ""
+        description: Drop sites in imperfect overlaps
       - names:
           - --no-version
         argument: ""
@@ -200,36 +221,40 @@ subcommands:
       - names:
           - -o
           - --output
-        argument: <file>
+        argument: FILE
         description: Write output to a file [standard output]
       - names:
           - -O
           - --output-type
-        argument: <b|u|z|v>
-        description: 'b: compressed BCF, u: uncompressed BCF, z: compressed VCF, v: uncompressed VCF [v]'
+        argument: u|b|v|z[0-9]
+        description: 'u/b: un/compressed BCF, v/z: un/compressed VCF, 0-9: compression level [v]'
       - names:
           - -q
           - --min-PQ
-        argument: <int>
+        argument: INT
         description: Break phase set if phasing quality is lower than <int> [30]
       - names:
           - -r
           - --regions
-        argument: <region>
+        argument: REGION
         description: Restrict to comma-separated list of regions
       - names:
           - -R
           - --regions-file
-        argument: <file>
+        argument: FILE
         description: Restrict to regions listed in a file
       - names:
+          - --regions-overlap
+        argument: 0|1|2
+        description: Include if POS in the region (0), record overlaps (1), variant overlaps (2) [1]
+      - names:
           - --threads
-        argument: <int>
+        argument: INT
         description: Use multithreading with <int> worker threads [0]
       - names:
           - -v
           - --verbose
-        argument: <0|1>
+        argument: 0|1
         description: Set verbosity level [1]
   - name: convert
     description: convert VCF/BCF files to different formats and back
@@ -237,564 +262,639 @@ subcommands:
       - names:
           - -e
           - --exclude
-        argument: <expr>
-        description: exclude sites for which the expression is true
+        argument: EXPR
+        description: Exclude sites for which the expression is true
       - names:
           - -i
           - --include
-        argument: <expr>
-        description: select sites for which the expression is true
+        argument: EXPR
+        description: Select sites for which the expression is true
       - names:
           - -r
           - --regions
-        argument: <region>
-        description: restrict to comma-separated list of regions
+        argument: REGION
+        description: Restrict to comma-separated list of regions
       - names:
           - -R
           - --regions-file
-        argument: <file>
-        description: restrict to regions listed in a file
+        argument: FILE
+        description: Restrict to regions listed in a file
+      - names:
+          - --regions-overlap
+        argument: 0|1|2
+        description: Include if POS in the region (0), record overlaps (1), variant overlaps (2) [1]
       - names:
           - -s
           - --samples
-        argument: <list>
-        description: list of samples to include
+        argument: LIST
+        description: List of samples to include
       - names:
           - -S
           - --samples-file
-        argument: <file>
-        description: file of samples to include
+        argument: FILE
+        description: File of samples to include
       - names:
           - -t
           - --targets
-        argument: <region>
-        description: similar to -r but streams rather than index-jumps
+        argument: REGION
+        description: Similar to -r but streams rather than index-jumps
       - names:
           - -T
           - --targets-file
-        argument: <file>
-        description: similar to -R but streams rather than index-jumps
+        argument: FILE
+        description: Similar to -R but streams rather than index-jumps
+      - names:
+          - --targets-overlap
+        argument: 0|1|2
+        description: Include if POS in the region (0), record overlaps (1), variant overlaps (2) [0]
       - names:
           - --no-version
         argument: ""
-        description: do not append version and command line to the header
+        description: Do not append version and command line to the header
       - names:
           - -o
           - --output
-        argument: <file>
-        description: output file name [stdout]
+        argument: FILE
+        description: Output file name [stdout]
       - names:
           - -O
           - --output-type
-        argument: <b|u|z|v>
-        description: 'b: compressed BCF, u: uncompressed BCF, z: compressed VCF, v: uncompressed VCF [v]'
+        argument: u|b|v|z[0-9]
+        description: 'u/b: un/compressed BCF, v/z: un/compressed VCF, 0-9: compression level [v]'
       - names:
           - --threads
-        argument: <int>
-        description: use multithreading with <int> worker threads [0]
+        argument: INT
+        description: Use multithreading with INT worker threads [0]
       - names:
           - -G
           - --gensample2vcf
-        argument: <...>
-        description: <prefix>|<gen-file>,<sample-file>
+        argument: '...'
+        description: <PREFIX>|<GEN-FILE>,<SAMPLE-FILE>
       - names:
           - -g
           - --gensample
-        argument: <...>
-        description: <prefix>|<gen-file>,<sample-file>
+        argument: '...'
+        description: <PREFIX>|<GEN-FILE>,<SAMPLE-FILE>
       - names:
           - --tag
-        argument: <string>
-        description: 'tag to take values for .gen file: GT,PL,GL,GP [GT]'
+        argument: STRING
+        description: 'Tag to take values for .gen file: GT,PL,GL,GP [GT]'
       - names:
           - --chrom
         argument: ""
-        description: output chromosome in first column instead of CHROM:POS_REF_ALT
+        description: Output chromosome in first column instead of CHROM:POS_REF_ALT
       - names:
           - --keep-duplicates
         argument: ""
-        description: keep duplicate positions
+        description: Keep duplicate positions
       - names:
           - --sex
-        argument: <file>
-        description: 'output sex column in the sample-file, input format is: Sample\t[MF]'
+        argument: FILE
+        description: 'Output sex column in the sample-file, input format is: Sample\t[MF]'
       - names:
           - --vcf-ids
         argument: ""
-        description: output VCF IDs in second column instead of CHROM:POS_REF_ALT
+        description: Output VCF IDs in second column instead of CHROM:POS_REF_ALT
       - names:
           - --gvcf2vcf
         argument: ""
-        description: expand gVCF reference blocks
+        description: Expand gVCF reference blocks
       - names:
           - -f
           - --fasta-ref
-        argument: <file>
-        description: reference sequence in fasta format
+        argument: FILE
+        description: Reference sequence in fasta format
       - names:
           - --hapsample2vcf
-        argument: <...>
-        description: <prefix>|<hap-file>,<sample-file>
+        argument: '...'
+        description: <PREFIX>|<HAP-FILE>,<SAMPLE-FILE>
       - names:
           - --hapsample
-        argument: <...>
-        description: <prefix>|<hap-file>,<sample-file>
+        argument: '...'
+        description: <PREFIX>|<HAP-FILE>,<SAMPLE-FILE>
       - names:
           - --haploid2diploid
         argument: ""
-        description: convert haploid genotypes to diploid homozygotes
+        description: Convert haploid genotypes to diploid homozygotes
       - names:
           - --vcf-ids
         argument: ""
-        description: output VCF IDs instead of CHROM:POS_REF_ALT
+        description: Output VCF IDs instead of CHROM:POS_REF_ALT
       - names:
           - -H
           - --haplegendsample2vcf
-        argument: <...>
-        description: <prefix>|<hap-file>,<legend-file>,<sample-file>
+        argument: '...'
+        description: <PREFIX>|<HAP-FILE>,<LEGEND-FILE>,<SAMPLE-FILE>
       - names:
           - -h
           - --haplegendsample
-        argument: <...>
-        description: <prefix>|<hap-file>,<legend-file>,<sample-file>
+        argument: '...'
+        description: <PREFIX>|<HAP-FILE>,<LEGEND-FILE>,<SAMPLE-FILE>
       - names:
           - --tsv2vcf
+        argument: FILE
+        description: Convert TSV to VCF.
+      - names:
           - -c
           - --columns
-        argument: <file>
-        description: columns of the input tsv file [ID,CHROM,POS,AA]
+        argument: STRING
+        description: Columns of the input tsv file [ID,CHROM,POS,AA]
       - names:
           - -s
           - --samples
-        argument: <list>
-        description: list of sample names
+        argument: LIST
+        description: List of sample names
       - names:
           - -S
           - --samples-file
-        argument: <file>
-        description: file of sample names
+        argument: FILE
+        description: File of sample names
   - name: isec
     description: intersections of VCF/BCF files
     options:
       - names:
           - -c
           - --collapse
-        argument: <string>
-        description: treat as identical records with <snps|indels|both|all|some|none>, see man page for details [none]
+        argument: STRING
+        description: Treat as identical records with <snps|indels|both|all|some|none>, see man page for details [none]
       - names:
           - -C
           - --complement
         argument: ""
-        description: output positions present only in the first file but missing in the others
+        description: Output positions present only in the first file but missing in the others
       - names:
           - -e
           - --exclude
-        argument: <expr>
-        description: exclude sites for which the expression is true
+        argument: EXPR
+        description: Exclude sites for which the expression is true
       - names:
           - -f
           - --apply-filters
-        argument: <list>
-        description: require at least one of the listed FILTER strings (e.g. "PASS,.")
+        argument: LIST
+        description: Require at least one of the listed FILTER strings (e.g. "PASS,.")
       - names:
           - -i
           - --include
-        argument: <expr>
-        description: include only sites for which the expression is true
+        argument: EXPR
+        description: Include only sites for which the expression is true
       - names:
           - --no-version
         argument: ""
-        description: do not append version and command line to the header,-n, --nfiles [+-=~]<int>   output positions present in this many (=), this many or more (+), this many or fewer (-), the exact (~) files
+        description: Do not append version and command line to the header
+      - names:
+          - -n
+          - --nfiles
+        argument: '[+-=~]INT'
+        description: Output positions present in this many (=), this many or more (+), this many or fewer (-), the exact (~) files
       - names:
           - -o
           - --output
-        argument: <file>
-        description: write output to a file [standard output]
+        argument: FILE
+        description: Write output to a file [standard output]
       - names:
           - -O
           - --output-type
-        argument: <b|u|z|v>
-        description: 'b: compressed BCF, u: uncompressed BCF, z: compressed VCF, v: uncompressed VCF [v]'
+        argument: u|b|v|z[0-9]
+        description: 'u/b: un/compressed BCF, v/z: un/compressed VCF, 0-9: compression level [v]'
       - names:
           - -p
           - --prefix
-        argument: <dir>
-        description: if given, subset each of the input files accordingly, see also -w
+        argument: DIR
+        description: If given, subset each of the input files accordingly, see also -w
       - names:
           - -r
           - --regions
-        argument: <region>
-        description: restrict to comma-separated list of regions
+        argument: REGION
+        description: Restrict to comma-separated list of regions
       - names:
           - -R
           - --regions-file
-        argument: <file>
-        description: restrict to regions listed in a file
+        argument: FILE
+        description: Restrict to regions listed in a file
+      - names:
+          - --regions-overlap
+        argument: 0|1|2
+        description: Include if POS in the region (0), record overlaps (1), variant overlaps (2) [1]
       - names:
           - -t
           - --targets
-        argument: <region>
-        description: similar to -r but streams rather than index-jumps
+        argument: REGION
+        description: Similar to -r but streams rather than index-jumps
       - names:
           - -T
           - --targets-file
-        argument: <file>
-        description: similar to -R but streams rather than index-jumps
+        argument: FILE
+        description: Similar to -R but streams rather than index-jumps
+      - names:
+          - --targets-overlap
+        argument: 0|1|2
+        description: Include if POS in the region (0), record overlaps (1), variant overlaps (2) [0]
       - names:
           - --threads
-        argument: <int>
-        description: use multithreading with <int> worker threads [0]
+        argument: INT
+        description: Use multithreading with <int> worker threads [0]
       - names:
           - -w
           - --write
-        argument: <list>
-        description: list of files to write with -p given as 1-based indexes. By default, all files are written
+        argument: LIST
+        description: List of files to write with -p given as 1-based indexes. By default, all files are written
   - name: merge
     description: merge VCF/BCF files files from non-overlapping sample sets
     options:
       - names:
           - --force-samples
         argument: ""
-        description: resolve duplicate sample names
+        description: Resolve duplicate sample names
       - names:
           - --print-header
         argument: ""
-        description: print only the merged header and exit
+        description: Print only the merged header and exit
       - names:
           - --use-header
-        argument: <file>
-        description: use the provided header
+        argument: FILE
+        description: Use the provided header
       - names:
           - "-0"
           - --missing-to-ref
         argument: ""
-        description: assume genotypes at missing sites are 0/0
+        description: Assume genotypes at missing sites are 0/0
       - names:
           - -f
           - --apply-filters
-        argument: <list>
-        description: require at least one of the listed FILTER strings (e.g. "PASS,.")
+        argument: LIST
+        description: Require at least one of the listed FILTER strings (e.g. "PASS,.")
       - names:
           - -F
           - --filter-logic
-        argument: <x|+>
-        description: remove filters if some input is PASS ("x"), or apply all filters ("+") [+]
+        argument: x|+
+        description: Remove filters if some input is PASS ("x"), or apply all filters ("+") [+]
       - names:
           - -g
           - --gvcf
-        argument: <-|ref.fa>
-        description: merge gVCF blocks, INFO/END tag is expected. Implies -i QS:sum,MinDP:min,I16:sum,IDV:max,IMF:max
+        argument: '-|ref.fa'
+        description: Merge gVCF blocks, INFO/END tag is expected. Implies -i QS:sum,MinDP:min,I16:sum,IDV:max,IMF:max
       - names:
           - -i
           - --info-rules
-        argument: <tag:method,..>
-        description: rules for merging INFO fields (method is one of sum,avg,min,max,join) or "-" to turn off the default [DP:sum,DP4:sum]
+        argument: TAG:METHOD,..
+        description: Rules for merging INFO fields (method is one of sum,avg,min,max,join) or "-" to turn off the default [DP:sum,DP4:sum]
       - names:
           - -l
           - --file-list
-        argument: <file>
-        description: read file names from the file
+        argument: FILE
+        description: Read file names from the file
       - names:
           - -L
           - --local-alleles
-        argument: <int>
+        argument: INT
         description: 'EXPERIMENTAL: if more than <int> ALT alleles are encountered, drop FMT/PL and output LAA+LPL instead; 0=unlimited [0]'
       - names:
           - -m
           - --merge
-        argument: <string>
-        description: allow multiallelic records for <snps|indels|both|all|none|id>, see man page for details [both]
+        argument: STRING
+        description: Allow multiallelic records for <snps|indels|both|all|none|id>, see man page for details [both]
       - names:
           - --no-index
         argument: ""
-        description: merge unindexed files, the same chromosomal order is required and -r/-R are not allowed
+        description: Merge unindexed files, the same chromosomal order is required and -r/-R are not allowed
       - names:
           - --no-version
         argument: ""
-        description: do not append version and command line to the header
+        description: Do not append version and command line to the header
       - names:
           - -o
           - --output
-        argument: <file>
-        description: write output to a file [standard output]
+        argument: FILE
+        description: Write output to a file [standard output]
       - names:
           - -O
           - --output-type
-        argument: <b|u|z|v>
-        description: '''b'' compressed BCF; ''u'' uncompressed BCF; ''z'' compressed VCF; ''v'' uncompressed VCF [v]'
+        argument: u|b|v|z[0-9]
+        description: 'u/b: un/compressed BCF, v/z: un/compressed VCF, 0-9: compression level [v]'
       - names:
           - -r
           - --regions
-        argument: <region>
-        description: restrict to comma-separated list of regions
+        argument: REGION
+        description: Restrict to comma-separated list of regions
       - names:
           - -R
           - --regions-file
-        argument: <file>
-        description: restrict to regions listed in a file
+        argument: FILE
+        description: Restrict to regions listed in a file
+      - names:
+          - --regions-overlap
+        argument: 0|1|2
+        description: Include if POS in the region (0), record overlaps (1), variant overlaps (2) [1]
       - names:
           - --threads
-        argument: <int>
-        description: use multithreading with <int> worker threads [0]
+        argument: INT
+        description: Use multithreading with <int> worker threads [0]
   - name: norm
     description: left-align and normalize indels
     options:
       - names:
+          - -a
+          - --atomize
+        argument: ""
+        description: Decompose complex variants (e.g. MNVs become consecutive SNVs)
+      - names:
+          - --atom-overlaps
+        argument: "'*'|."
+        description: Use the star allele (*) for overlapping alleles or set to missing (.) [*]
+      - names:
           - -c
           - --check-ref
-        argument: <e|w|x|s>
-        description: check REF alleles and exit (e), warn (w), exclude (x), or set (s) bad sites [e]
+        argument: e|w|x|s
+        description: Check REF alleles and exit (e), warn (w), exclude (x), or set (s) bad sites [e]
       - names:
           - -D
           - --remove-duplicates
         argument: ""
-        description: remove duplicate lines of the same type.
+        description: Remove duplicate lines of the same type.
       - names:
           - -d
           - --rm-dup
-        argument: <type>
-        description: remove duplicate snps|indels|both|all|exact
+        argument: TYPE
+        description: Remove duplicate snps|indels|both|all|exact
       - names:
           - -f
           - --fasta-ref
-        argument: <file>
-        description: reference sequence
+        argument: FILE
+        description: Reference sequence
       - names:
           - --force
         argument: ""
-        description: try to proceed even if malformed tags are encountered. Experimental, use at your own risk
+        description: Try to proceed even if malformed tags are encountered. Experimental, use at your own risk
       - names:
           - --keep-sum
-        argument: <tag,..>
-        description: 'keep vector sum constant when splitting multiallelics (see github issue #360)'
+        argument: TAG,..
+        description: 'Keep vector sum constant when splitting multiallelics (see github issue #360)'
       - names:
           - -m
           - --multiallelics
-        argument: <-|+>[type]
-        description: 'split multiallelics (-) or join biallelics (+), type: snps|indels|both|any [both]'
+        argument: '<-|+>[type]'
+        description: 'Split multiallelics (-) or join biallelics (+), type: snps|indels|both|any [both]'
       - names:
           - --no-version
         argument: ""
-        description: do not append version and command line to the header
+        description: Do not append version and command line to the header
       - names:
           - -N
           - --do-not-normalize
         argument: ""
-        description: do not normalize indels (with -m or -c s)
+        description: Do not normalize indels (with -m or -c s)
+      - names:
+          - --old-rec-tag
+        argument: STR
+        description: Annotate modified records with INFO/STR indicating the original variant
       - names:
           - -o
           - --output
-        argument: <file>
-        description: write output to a file [standard output]
+        argument: FILE
+        description: Write output to a file [standard output]
       - names:
           - -O
           - --output-type
-        argument: <type>
-        description: '''b'' compressed BCF; ''u'' uncompressed BCF; ''z'' compressed VCF; ''v'' uncompressed VCF [v]'
+        argument: u|b|v|z[0-9]
+        description: 'u/b: un/compressed BCF, v/z: un/compressed VCF, 0-9: compression level [v]'
       - names:
           - -r
           - --regions
-        argument: <region>
-        description: restrict to comma-separated list of regions
+        argument: REGION
+        description: Restrict to comma-separated list of regions
       - names:
           - -R
           - --regions-file
-        argument: <file>
-        description: restrict to regions listed in a file
+        argument: FILE
+        description: Restrict to regions listed in a file
+      - names:
+          - --regions-overlap
+        argument: 0|1|2
+        description: Include if POS in the region (0), record overlaps (1), variant overlaps (2) [1]
       - names:
           - -s
           - --strict-filter
         argument: ""
-        description: when merging (-m+), merged site is PASS only if all sites being merged PASS
+        description: When merging (-m+), merged site is PASS only if all sites being merged PASS
       - names:
           - -t
           - --targets
-        argument: <region>
-        description: similar to -r but streams rather than index-jumps
+        argument: REGION
+        description: Similar to -r but streams rather than index-jumps
       - names:
           - -T
           - --targets-file
-        argument: <file>
-        description: similar to -R but streams rather than index-jumps
+        argument: FILE
+        description: Similar to -R but streams rather than index-jumps
+      - names:
+          - --targets-overlap
+        argument: 0|1|2
+        description: Include if POS in the region (0), record overlaps (1), variant overlaps (2) [0]
       - names:
           - --threads
-        argument: <int>
-        description: use multithreading with <int> worker threads [0]
+        argument: INT
+        description: Use multithreading with <int> worker threads [0]
       - names:
           - -w
           - --site-win
-        argument: <int>
-        description: buffer for sorting lines which changed position during realignment [1000]
+        argument: INT
+        description: Buffer for sorting lines which changed position during realignment [1000]
   - name: plugin
     description: user-defined plugins
     options:
       - names:
           - -e
           - --exclude
-        argument: <expr>
-        description: exclude sites for which the expression is true
+        argument: EXPR
+        description: Exclude sites for which the expression is true
       - names:
           - -i
           - --include
-        argument: <expr>
-        description: select sites for which the expression is true
+        argument: EXPR
+        description: Select sites for which the expression is true
       - names:
           - -r
           - --regions
-        argument: <region>
-        description: restrict to comma-separated list of regions
+        argument: REGION
+        description: Restrict to comma-separated list of regions
       - names:
           - -R
           - --regions-file
-        argument: <file>
-        description: restrict to regions listed in a file
+        argument: FILE
+        description: Restrict to regions listed in a file
+      - names:
+          - --regions-overlap
+        argument: 0|1|2
+        description: Include if POS in the region (0), record overlaps (1), variant overlaps (2) [1]
       - names:
           - -t
           - --targets
-        argument: <region>
-        description: similar to -r but streams rather than index-jumps
+        argument: REGION
+        description: Similar to -r but streams rather than index-jumps
       - names:
           - -T
           - --targets-file
-        argument: <file>
-        description: similar to -R but streams rather than index-jumps
+        argument: FILE
+        description: Similar to -R but streams rather than index-jumps
+      - names:
+          - --targets-overlap
+        argument: 0|1|2
+        description: Include if POS in the region (0), record overlaps (1), variant overlaps (2) [0]
       - names:
           - --no-version
         argument: ""
-        description: do not append version and command line to the header
+        description: Do not append version and command line to the header
       - names:
           - -o
           - --output
-        argument: <file>
-        description: write output to a file [standard output]
+        argument: FILE
+        description: Write output to a file [standard output]
       - names:
           - -O
           - --output-type
-        argument: <type>
-        description: '''b'' compressed BCF; ''u'' uncompressed BCF; ''z'' compressed VCF; ''v'' uncompressed VCF [v]'
+        argument: u|b|v|z
+        description: 'u/b: un/compressed BCF, v/z: un/compressed VCF, 0-9: compression level [v]'
+      - names:
+          - -O
+          - --output-type
+        argument: u|b|v|z0-9
+        description: 'u/b: un/compressed BCF, v/z: un/compressed VCF, 0-9: compression level [v]'
       - names:
           - --threads
-        argument: <int>
-        description: use multithreading with <int> worker threads [0]
+        argument: INTT
+        description: Use multithreading with <int> worker threads [0]
       - names:
           - -h
           - --help
         argument: ""
-        description: list plugin's options
+        description: List plugin's options
       - names:
           - -l
           - --list-plugins
         argument: ""
-        description: list available plugins. See BCFTOOLS_PLUGINS environment variable and man page for details
+        description: List available plugins. See BCFTOOLS_PLUGINS environment variable and man page for details
       - names:
           - -v
           - --verbose
         argument: ""
-        description: print verbose information, -vv increases verbosity
+        description: Print verbose information, -vv increases verbosity
       - names:
           - -V
           - --version
         argument: ""
-        description: print version string and exit
+        description: Print version string and exit
   - name: query
     description: transform VCF/BCF into user-defined formats
     options:
       - names:
           - -e
           - --exclude
-        argument: <expr>
-        description: exclude sites for which the expression is true (see man page for details)
+        argument: EXPR
+        description: Exclude sites for which the expression is true (see man page for details)
       - names:
           - -f
           - --format
-        argument: <string>
-        description: see man page for details
+        argument: STRING
+        description: See man page for details
       - names:
           - -H
           - --print-header
         argument: ""
-        description: print header
+        description: Print header
       - names:
           - -i
           - --include
-        argument: <expr>
-        description: select sites for which the expression is true (see man page for details)
+        argument: EXPR
+        description: Select sites for which the expression is true (see man page for details)
       - names:
           - -l
           - --list-samples
         argument: ""
-        description: print the list of samples and exit
+        description: Print the list of samples and exit
       - names:
           - -o
           - --output
-        argument: <file>
-        description: output file name [stdout]
+        argument: FILE
+        description: Output file name [stdout]
       - names:
           - -r
           - --regions
-        argument: <region>
-        description: restrict to comma-separated list of regions
+        argument: REGION
+        description: Restrict to comma-separated list of regions
       - names:
           - -R
           - --regions-file
-        argument: <file>
-        description: restrict to regions listed in a file
+        argument: FILE
+        description: Restrict to regions listed in a file
+      - names:
+          - --regions-overlap
+        argument: 0|1|2
+        description: Include if POS in the region (0), record overlaps (1), variant overlaps (2) [1]
       - names:
           - -s
           - --samples
-        argument: <list>
-        description: list of samples to include
+        argument: LIST
+        description: List of samples to include
       - names:
           - -S
           - --samples-file
-        argument: <file>
-        description: file of samples to include
+        argument: FILE
+        description: File of samples to include
       - names:
           - -t
           - --targets
-        argument: <region>
-        description: similar to -r but streams rather than index-jumps
+        argument: REGION
+        description: Similar to -r but streams rather than index-jumps
       - names:
           - -T
           - --targets-file
-        argument: <file>
-        description: similar to -R but streams rather than index-jumps
+        argument: FILE
+        description: Similar to -R but streams rather than index-jumps
+      - names:
+          - --targets-overlap
+        argument: 0|1|2
+        description: Include if POS in the region (0), record overlaps (1), variant overlaps (2) [0]
       - names:
           - -u
           - --allow-undef-tags
         argument: ""
-        description: print "." for undefined tags
+        description: Print "." for undefined tags
       - names:
           - -v
           - --vcf-list
-        argument: <file>
-        description: process multiple VCFs listed in the file
+        argument: FILE
+        description: Process multiple VCFs listed in the file
   - name: reheader
     description: modify VCF/BCF header, change sample names
     options:
       - names:
           - -f
           - --fai
-        argument: <file>
+        argument: FILE
         description: update sequences and their lengths from the .fai file
       - names:
           - -h
           - --header
-        argument: <file>
+        argument: FILE
         description: new header
       - names:
           - -o
           - --output
-        argument: <file>
+        argument: FILE
         description: write output to a file [standard output]
       - names:
           - -s
           - --samples
-        argument: <file>
+        argument: FILE
         description: new sample names
       - names:
+          - -T
+          - --temp-prefix
+        argument: PATH
+        description: template for temporary file name [/tmp/bcftools.XXXXXX]
+      - names:
           - --threads
-        argument: <int>
+        argument: INT
         description: use multithreading with <int> worker threads (BCF only) [0]
   - name: sort
     description: sort VCF/BCF file
@@ -802,23 +902,28 @@ subcommands:
       - names:
           - -m
           - --max-mem
-        argument: <float>[kMG]
+        argument: FLOAT[kMG]
         description: maximum memory to use [768M]
       - names:
           - -o
           - --output
-        argument: <file>
+        argument: FILE
         description: output file name [stdout]
       - names:
           - -O
           - --output-type
-        argument: <b|u|z|v>
+        argument: b|u|z|v
         description: 'b: compressed BCF, u: uncompressed BCF, z: compressed VCF, v: uncompressed VCF [v]'
+      - names:
+          - -O
+          - --output-type
+        argument: u|b|v|z[0-9]
+        description: 'u/b: un/compressed BCF, v/z: un/compressed VCF, 0-9: compression level [v]'
       - names:
           - -T
           - --temp-dir
-        argument: <dir>
-        description: temporary files [/tmp/bcftools-sort.XXXXXX]
+        argument: DIR
+        description: temporary files [/tmp/bcftools.XXXXXX]
   - name: view
     description: VCF/BCF conversion, view, subset and filter VCF/BCF files
     options:
@@ -826,214 +931,253 @@ subcommands:
           - -G
           - --drop-genotypes
         argument: ""
-        description: drop individual genotype information (after subsetting if -s option set)
+        description: Drop individual genotype information (after subsetting if -s option set)
+      - names:
+          - -h
+          - --header-only
+        argument: ""
+        description: Print only the header in VCF output (equivalent to bcftools head)
+      - names:
+          - -H
+          - --no-header
+        argument: ""
+        description: Suppress the header in VCF output
+      - names:
+          - --with-header
+        argument: ""
+        description: Print both header and records in VCF output [default]
       - names:
           - -l
           - --compression-level
         argument: '[0-9]'
-        description: 'compression level: 0 uncompressed, 1 best speed, 9 best compression [-1]'
+        description: 'Compression level: 0 uncompressed, 1 best speed, 9 best compression [-1]'
       - names:
           - --no-version
         argument: ""
-        description: do not append version and command line to the header
+        description: Do not append version and command line to the header
       - names:
           - -o
           - --output
-        argument: <file>
-        description: output file name [stdout]
+        argument: FILE
+        description: Output file name [stdout]
       - names:
           - -O
           - --output-type
-        argument: <b|u|z|v>
-        description: 'b: compressed BCF, u: uncompressed BCF, z: compressed VCF, v: uncompressed VCF [v]'
+        argument: u|b|v|z[0-9]
+        description: 'u/b: un/compressed BCF, v/z: un/compressed VCF, 0-9: compression level [v]'
       - names:
           - -r
           - --regions
-        argument: <region>
-        description: restrict to comma-separated list of regions
+        argument: REGION
+        description: Restrict to comma-separated list of regions
       - names:
           - -R
           - --regions-file
-        argument: <file>
-        description: restrict to regions listed in a file
+        argument: FILE
+        description: Restrict to regions listed in FILE
+      - names:
+          - --regions-overlap
+        argument: 0|1|2
+        description: Include if POS in the region (0), record overlaps (1), variant overlaps (2) [1]
       - names:
           - -t
           - --targets
-        argument: '[^]<region>'
-        description: similar to -r but streams rather than index-jumps. Exclude regions with "^" prefix
+        argument: '[^]REGION'
+        description: Similar to -r but streams rather than index-jumps. Exclude regions with "^" prefix
       - names:
           - -T
           - --targets-file
-        argument: '[^]<file>'
-        description: similar to -R but streams rather than index-jumps. Exclude regions with "^" prefix
+        argument: '[^]FILE'
+        description: Similar to -R but streams rather than index-jumps. Exclude regions with "^" prefix
+      - names:
+          - --targets-overlap
+        argument: 0|1|2
+        description: Include if POS in the region (0), record overlaps (1), variant overlaps (2) [0]
+      - names:
+          - --threads
+        argument: INT
+        description: Use multithreading with INT worker threads [0]
       - names:
           - -a
           - --trim-alt-alleles
         argument: ""
-        description: trim ALT alleles not seen in the genotype fields (or their subset with -s/-S)
+        description: Trim ALT alleles not seen in the genotype fields (or their subset with -s/-S)
       - names:
           - -I
           - --no-update
         argument: ""
-        description: do not (re)calculate INFO fields for the subset (currently INFO/AC and INFO/AN)
+        description: Do not (re)calculate INFO fields for the subset (currently INFO/AC and INFO/AN)
       - names:
           - -s
           - --samples
-        argument: '[^]<list>'
-        description: comma separated list of samples to include (or exclude with "^" prefix)
+        argument: '[^]LIST'
+        description: Comma separated list of samples to include (or exclude with "^" prefix)
       - names:
           - -S
           - --samples-file
-        argument: '[^]<file>'
-        description: file of samples to include (or exclude with "^" prefix)
+        argument: '[^]FILE'
+        description: File of samples to include (or exclude with "^" prefix)
       - names:
           - --force-samples
         argument: ""
-        description: only warn about unknown subset samples
+        description: Only warn about unknown subset samples
       - names:
           - -f
           - --apply-filters
-        argument: <list>
-        description: require at least one of the listed FILTER strings (e.g. "PASS,.")
+        argument: LIST
+        description: Require at least one of the listed FILTER strings (e.g. "PASS,.")
       - names:
           - -g
           - --genotype
-        argument: '[^]<hom|het|miss>'
-        description: require one or more hom/het/missing genotype or, if prefixed with "^", exclude sites with hom/het/missing genotypes
+        argument: '[^]hom|het|miss'
+        description: Require one or more hom/het/missing genotype or, if prefixed with "^", exclude such sites
   - name: call
     description: SNP/indel calling
     options:
       - names:
           - --no-version
         argument: ""
-        description: do not append version and command line to the header
+        description: Do not append version and command line to the header
       - names:
           - -o
           - --output
-        argument: <file>
-        description: write output to a file [standard output]
+        argument: FILE
+        description: Write output to a file [standard output]
       - names:
           - -O
           - --output-type
-        argument: <b|u|z|v>
-        description: 'output type: ''b'' compressed BCF; ''u'' uncompressed BCF; ''z'' compressed VCF; ''v'' uncompressed VCF [v]'
+        argument: b|u|z|v
+        description: 'Output type: ''b'' compressed BCF; ''u'' uncompressed BCF; ''z'' compressed VCF; ''v'' uncompressed VCF [v]'
+      - names:
+          - -O
+          - --output-type
+        argument: u|b|v|z[0-9]
+        description: 'u/b: un/compressed BCF, v/z: un/compressed VCF, 0-9: compression level [v]'
       - names:
           - --ploidy
-        argument: <assembly>[?]
-        description: predefined ploidy, 'list' to print available settings, append '?' for details
+        argument: ASSEMBLY
+        description: Predefined ploidy, 'list' to print available settings, append '?' for details [2]
       - names:
           - --ploidy-file
-        argument: <file>
-        description: space/tab-delimited list of CHROM,FROM,TO,SEX,PLOIDY
+        argument: FILE
+        description: Space/tab-delimited list of CHROM,FROM,TO,SEX,PLOIDY
       - names:
           - -r
           - --regions
-        argument: <region>
-        description: restrict to comma-separated list of regions
+        argument: REGION
+        description: Restrict to comma-separated list of regions
       - names:
           - -R
           - --regions-file
-        argument: <file>
-        description: restrict to regions listed in a file
+        argument: FILE
+        description: Restrict to regions listed in a file
+      - names:
+          - --regions-overlap
+        argument: 0|1|2
+        description: Include if POS in the region (0), record overlaps (1), variant overlaps (2) [1]
       - names:
           - -s
           - --samples
-        argument: <list>
-        description: list of samples to include [all samples]
+        argument: LIST
+        description: List of samples to include [all samples]
       - names:
           - -S
           - --samples-file
-        argument: <file>
+        argument: FILE
         description: PED file or a file with an optional column with sex (see man page for details) [all samples]
       - names:
           - -t
           - --targets
-        argument: <region>
-        description: similar to -r but streams rather than index-jumps
+        argument: REGION
+        description: Similar to -r but streams rather than index-jumps
       - names:
           - -T
           - --targets-file
-        argument: <file>
-        description: similar to -R but streams rather than index-jumps
+        argument: FILE
+        description: Similar to -R but streams rather than index-jumps
       - names:
           - --threads
-        argument: <int>
-        description: use multithreading with <int> worker threads [0]
+        argument: INT
+        description: Use multithreading with INT worker threads [0]
       - names:
           - -A
           - --keep-alts
         argument: ""
-        description: keep all possible alternate alleles at variant sites
+        description: Keep all possible alternate alleles at variant sites
       - names:
-          - -f
-          - --format-fields
-        argument: <list>
-        description: 'output format fields: GQ,GP (lowercase allowed) []'
+          - -a
+          - --annotate
+        argument: LIST
+        description: Optional tags to output (lowercase allowed); '?' to list available tags
       - names:
           - -F
           - --prior-freqs
-        argument: <AN,AC>
-        description: use prior allele frequencies
+        argument: AN,AC
+        description: Use prior allele frequencies, determined from these pre-filled tags
       - names:
           - -G
           - --group-samples
-        argument: <file|->
-        description: group samples by population (file with "sample\tgroup") or "-" for single-sample calling
+        argument: FILE|-
+        description: Group samples by population (file with "sample\tgroup") or "-" for single-sample calling. This requires FORMAT/QS or other Number=R,Type=Integer tag such as FORMAT/AD
+      - names:
+          - --group-samples-tag
+        argument: TAG
+        description: The tag to use with -G, by default FORMAT/QS and FORMAT/AD are checked automatically
       - names:
           - -g
           - --gvcf
-        argument: <int>,[...]
-        description: group non-variant sites into gVCF blocks by minimum per-sample DP
+        argument: INT,[...]
+        description: Group non-variant sites into gVCF blocks by minimum per-sample DP
       - names:
           - -i
           - --insert-missed
         argument: ""
-        description: output also sites missed by mpileup but present in -T
+        description: Output also sites missed by mpileup but present in -T
       - names:
           - -M
           - --keep-masked-ref
         argument: ""
-        description: keep sites with masked reference allele (REF=N)
+        description: Keep sites with masked reference allele (REF=N)
       - names:
           - -V
           - --skip-variants
-        argument: <type>
-        description: skip indels/snps
+        argument: TYPE
+        description: Skip indels/snps
       - names:
           - -v
           - --variants-only
         argument: ""
-        description: output variant sites only
+        description: Output variant sites only
       - names:
           - -c
           - --consensus-caller
         argument: ""
-        description: the original calling method (conflicts with -m)
+        description: The original calling method (conflicts with -m)
       - names:
           - -C
           - --constrain
-        argument: <str>
-        description: 'one of: alleles, trio (see manual)'
+        argument: STR
+        description: 'One of: alleles, trio (see manual)'
       - names:
           - -m
           - --multiallelic-caller
         argument: ""
-        description: alternative model for multiallelic and rare-variant calling (conflicts with -c)
+        description: Alternative model for multiallelic and rare-variant calling (conflicts with -c)
       - names:
           - -n
           - --novel-rate
-        argument: <float>,[...]
-        description: likelihood of novel mutation for constrained trio calling, see man page for details [1e-8,1e-9,1e-9]
+        argument: FLOAT,[...]
+        description: Likelihood of novel mutation for constrained trio calling, see man page for details [1e-8,1e-9,1e-9]
       - names:
           - -p
           - --pval-threshold
-        argument: <float>
-        description: variant if P(ref|D)<FLOAT with -c [0.5]
+        argument: FLOAT
+        description: Variant if P(ref|D)<FLOAT with -c [0.5]
       - names:
           - -P
           - --prior
-        argument: <float>
-        description: mutation rate (use bigger for greater sensitivity), use with -m [1.1e-3]
+        argument: FLOAT
+        description: Mutation rate (use bigger for greater sensitivity), use with -m [1.1e-3]
   - name: consensus
     description: create consensus sequence by applying VCF variants
     options:
@@ -1048,32 +1192,32 @@ subcommands:
       - names:
           - -c
           - --chain
-        argument: <file>
+        argument: FILE
         description: write a chain file for liftover
       - names:
           - -a
           - --absent
-        argument: <char>
-        description: replace positions absent from VCF with <char>
+        argument: CHAR
+        description: replace positions absent from VCF with CHAR
       - names:
           - -e
           - --exclude
-        argument: <expr>
+        argument: EXPR
         description: exclude sites for which the expression is true (see man page for details)
       - names:
           - -f
           - --fasta-ref
-        argument: <file>
+        argument: FILE
         description: reference sequence in fasta format
       - names:
           - -H
           - --haplotype
-        argument: <which>
+        argument: WHICH
         description: 'choose which allele to use from the FORMAT/GT field, note the codes are case-insensitive:'
       - names:
           - -i
           - --include
-        argument: <expr>
+        argument: EXPR
         description: select sites for which the expression is true (see man page for details)
       - names:
           - -I
@@ -1081,29 +1225,45 @@ subcommands:
         argument: ""
         description: output variants in the form of IUPAC ambiguity codes
       - names:
+          - --mark-del
+        argument: CHAR
+        description: instead of removing sequence, insert CHAR for deletions
+      - names:
+          - --mark-ins
+        argument: uc|lc
+        description: highlight insertions in uppercase (uc) or lowercase (lc), leaving the rest as is
+      - names:
+          - --mark-snv
+        argument: uc|lc
+        description: highlight substitutions in uppercase (uc) or lowercase (lc), leaving the rest as is
+      - names:
           - -m
           - --mask
-        argument: <file>
-        description: replace regions with N
+        argument: FILE
+        description: replace regions according to the next --mask-with option. The default is --mask-with N
+      - names:
+          - --mask-with
+        argument: CHAR|uc|lc
+        description: replace with CHAR (skips overlapping variants); change to uppercase (uc) or lowercase (lc)
       - names:
           - -M
           - --missing
-        argument: <char>
-        description: output <char> instead of skipping a missing genotype "./."
+        argument: CHAR
+        description: output CHAR instead of skipping a missing genotype "./."
       - names:
           - -o
           - --output
-        argument: <file>
+        argument: FILE
         description: write output to a file [standard output]
       - names:
           - -p
           - --prefix
-        argument: <string>
+        argument: STRING
         description: prefix to add to output sequence names
       - names:
           - -s
           - --sample
-        argument: <name>
+        argument: NAME
         description: apply variants of the given sample
   - name: cnv
     description: HMM CNV calling
@@ -1111,94 +1271,102 @@ subcommands:
       - names:
           - -c
           - --control-sample
-        argument: <string>
-        description: optional control sample name to highlight differences
+        argument: STRING
+        description: Optional control sample name to highlight differences
       - names:
           - -f
           - --AF-file
-        argument: <file>
-        description: read allele frequencies from file (CHR\tPOS\tREF,ALT\tAF)
+        argument: FILE
+        description: Read allele frequencies from file (CHR\tPOS\tREF,ALT\tAF)
       - names:
           - -o
           - --output-dir
           - -p
           - --plot-threshold
-        argument: <path>
-        description: plot aberrant chromosomes with quality at least 'float'
+        argument: PATH
+        description: Plot aberrant chromosomes with quality at least FLOAT
       - names:
           - -r
           - --regions
-        argument: <region>
-        description: restrict to comma-separated list of regions
+        argument: REGION
+        description: Restrict to comma-separated list of regions
       - names:
           - -R
           - --regions-file
-        argument: <file>
-        description: restrict to regions listed in a file
+        argument: FILE
+        description: Restrict to regions listed in a file
+      - names:
+          - --regions-overlap
+        argument: 0|1|2
+        description: Include if POS in the region (0), record overlaps (1), variant overlaps (2) [1]
       - names:
           - -s
           - --query-sample
-        argument: <string>
-        description: query samply name
+        argument: STRING
+        description: Query samply name
       - names:
           - -t
           - --targets
-        argument: <region>
-        description: similar to -r but streams rather than index-jumps
+        argument: REGION
+        description: Similar to -r but streams rather than index-jumps
       - names:
           - -T
           - --targets-file
-        argument: <file>
-        description: similar to -R but streams rather than index-jumps
+        argument: FILE
+        description: Similar to -R but streams rather than index-jumps
+      - names:
+          - --targets-overlap
+        argument: 0|1|2
+        description: Include if POS in the region (0), record overlaps (1), variant overlaps (2) [0]
       - names:
           - -a
           - --aberrant
-        argument: <float[,float]>
-        description: fraction of aberrant cells in query and control [1.0,1.0]
+        argument: FLOAT[,FLOAT]
+        description: Fraction of aberrant cells in query and control [1.0,1.0]
       - names:
           - -b
           - --BAF-weight
-        argument: <float>
-        description: relative contribution from BAF [1]
+        argument: FLOAT
+        description: Relative contribution from BAF [1]
       - names:
           - -d
           - --BAF-dev
-        argument: <float[,float]>
-        description: expected BAF deviation in query and control [0.04,0.04]
+        argument: FLOAT[,FLOAT]
+        description: Expected BAF deviation in query and control [0.04,0.04]
       - names:
           - -e
           - --err-prob
-        argument: <float>
-        description: uniform error probability [1e-4]
+        argument: FLOAT
+        description: Uniform error probability [1e-4]
       - names:
           - -k
           - --LRR-dev
-        argument: <float[,float]>
-        description: expected LRR deviation [0.2,0.2]
+        argument: FLOAT[,FLOAT]
+        description: Expected LRR deviation [0.2,0.2]
       - names:
           - -l
           - --LRR-weight
-        argument: <float>
-        description: relative contribution from LRR [0.2]
+        argument: FLOAT
+        description: Relative contribution from LRR [0.2]
       - names:
           - -L
           - --LRR-smooth-win
-        argument: <int>
-        description: window of LRR moving average smoothing [10]
+        argument: INT
+        description: Window of LRR moving average smoothing [10]
       - names:
           - -O
           - --optimize
-        argument: <float>
-        description: estimate fraction of aberrant cells down to <float> [1.0]
+        argument: FLOAT
+        description: Estimate fraction of aberrant cells down to FLOAT [1.0]
       - names:
           - -P
           - --same-prob
-        argument: <float>
-        description: prior probability of -s/-c being the same [0.5]
+        argument: FLOA>
+        description: Prior probability of -s/-c being the same [0.5]
       - names:
           - -x
           - --xy-prob
-        argument: <float>
+        argument: FLOAT
         description: P(x|y) transition probability [1e-9]
   - name: csq
     description: call variation consequences
@@ -1206,128 +1374,136 @@ subcommands:
       - names:
           - -f
           - --fasta-ref
-        argument: <file>
-        description: reference file in fasta format
+        argument: FILE
+        description: Reference file in fasta format
       - names:
           - -g
           - --gff-annot
-        argument: <file>
-        description: gff3 annotation file
+        argument: FILE
+        description: GFF3 annotation file
       - names:
-          - -b
-          - --brief-predictions
-        argument: ""
-        description: annotate with abbreviated protein-changing predictions
+          - -B
+          - --trim-protein-seq
+        argument: INT
+        description: Abbreviate protein-changing predictions to max INT aminoacids
       - names:
           - -c
           - --custom-tag
-        argument: <string>
-        description: use this tag instead of the default BCSQ
+        argument: STRING
+        description: Use this tag instead of the default BCSQ
       - names:
           - -l
           - --local-csq
         argument: ""
-        description: localized predictions, consider only one VCF record at a time
+        description: Localized predictions, consider only one VCF record at a time
       - names:
           - -n
           - --ncsq
-        argument: <int>
-        description: maximum number of consequences to consider per site [16]
+        argument: INT
+        description: Maximum number of per-haplotype consequences to consider for each site [15]
       - names:
           - -p
           - --phase
-        argument: <a|m|r|R|s>
-        description: 'how to handle unphased heterozygous genotypes: [r]'
+        argument: a|m|r|R|s
+        description: 'How to handle unphased heterozygous genotypes: [r]'
       - names:
           - -e
           - --exclude
-        argument: <expr>
-        description: exclude sites for which the expression is true
+        argument: EXPR
+        description: Exclude sites for which the expression is true
       - names:
           - --force
         argument: ""
-        description: run even if some sanity checks fail
+        description: Run even if some sanity checks fail
       - names:
           - -i
           - --include
-        argument: <expr>
-        description: select sites for which the expression is true
+        argument: EXPR
+        description: Select sites for which the expression is true
       - names:
           - --no-version
         argument: ""
-        description: do not append version and command line to the header
+        description: Do not append version and command line to the header
       - names:
           - -o
           - --output
-        argument: <file>
-        description: write output to a file [standard output]
+        argument: FILE
+        description: Write output to a file [standard output]
       - names:
           - -O
           - --output-type
-        argument: <b|u|z|v|t>
-        description: 'b: compressed BCF, u: uncompressed BCF, z: compressed VCF v: uncompressed VCF, t: plain tab-delimited text output [v]'
+        argument: b|u|z|v|t
+        description: 'b: compressed BCF, u: uncompressed BCF, z: compressed VCF   v: uncompressed VCF, t: plain tab-delimited text output, 0-9: compression level [v]'
+      - names:
+          - -O
+          - --output-type
+        argument: b|u|z|v|t0-9
+        description: 'b: compressed BCF, u: uncompressed BCF, z: compressed VCF   v: uncompressed VCF, t: plain tab-delimited text output, 0-9: compression level [v]'
       - names:
           - -r
           - --regions
-        argument: <region>
-        description: restrict to comma-separated list of regions
+        argument: REGION
+        description: Restrict to comma-separated list of regions
       - names:
           - -R
           - --regions-file
-        argument: <file>
-        description: restrict to regions listed in a file
+        argument: FILE
+        description: Restrict to regions listed in a file
       - names:
-          - -s
-          - --samples
-        argument: <-|list>
-        description: samples to include or "-" to apply all variants and ignore samples
+          - --regions-overlap
+        argument: 0|1|2
+        description: Include if POS in the region (0), record overlaps (1), variant overlaps (2) [1]
       - names:
           - -S
           - --samples-file
-        argument: <file>
-        description: samples to include
+        argument: FILE
+        description: Samples to include
       - names:
           - -t
           - --targets
-        argument: <region>
-        description: similar to -r but streams rather than index-jumps
+        argument: REGION
+        description: Similar to -r but streams rather than index-jumps
       - names:
           - -T
           - --targets-file
-        argument: <file>
-        description: similar to -R but streams rather than index-jumps
+        argument: FILE
+        description: Similar to -R but streams rather than index-jumps
+      - names:
+          - --targets-overlap
+        argument: 0|1|2
+        description: Include if POS in the region (0), record overlaps (1), variant overlaps (2) [0]
       - names:
           - --threads
-        argument: <int>
-        description: use multithreading with <int> worker threads [0]
+        argument: INT
+        description: Use multithreading with <int> worker threads [0]
       - names:
           - -v
           - --verbose
-        argument: <int>
-        description: verbosity level 0-2 [1]
+        argument: INT
+        description: Verbosity level 0-2 [1]
   - name: filter
     description: filter VCF/BCF files using fixed thresholds
     options:
       - names:
           - -e
           - --exclude
-        argument: <expr>
-        description: exclude sites for which the expression is true (see man page for details)
+        argument: EXPR
+        description: Exclude sites for which the expression is true (see man page for details)
       - names:
           - -g
           - --SnpGap
-        argument: <int>[:type]
-        description: filter SNPs within <int> base pairs of an indel (the default) or any combination of indel,mnp,bnd,other,overlap
+        argument: INT[:TYPE]
+        description: Filter SNPs within <int> base pairs of an indel (the default) or any combination of indel,mnp,bnd,other,overlap
       - names:
           - -G
           - --IndelGap
-        argument: <int>
-        description: filter clusters of indels separated by <int> or fewer base pairs allowing only one to pass
+        argument: INT
+        description: Filter clusters of indels separated by <int> or fewer base pairs allowing only one to pass
       - names:
           - -i
           - --include
-        argument: <expr>
-        description: include only sites for which the expression is true (see man page for details
+        argument: EXPR
+        description: Include only sites for which the expression is true (see man page for details
       - names:
           - -m
           - --mode
@@ -1336,51 +1512,59 @@ subcommands:
       - names:
           - --no-version
         argument: ""
-        description: do not append version and command line to the header
+        description: Do not append version and command line to the header
       - names:
           - -o
           - --output
-        argument: <file>
-        description: write output to a file [standard output]
+        argument: FILE
+        description: Write output to a file [standard output]
       - names:
           - -O
           - --output-type
-        argument: <b|u|z|v>
-        description: 'b: compressed BCF, u: uncompressed BCF, z: compressed VCF, v: uncompressed VCF [v]'
+        argument: u|b|v|z[0-9]
+        description: 'u/b: un/compressed BCF, v/z: un/compressed VCF, 0-9: compression level [v]'
       - names:
           - -r
           - --regions
-        argument: <region>
-        description: restrict to comma-separated list of regions
+        argument: REGION
+        description: Restrict to comma-separated list of regions
       - names:
           - -R
           - --regions-file
-        argument: <file>
-        description: restrict to regions listed in a file
+        argument: FILE
+        description: Restrict to regions listed in a file
+      - names:
+          - --regions-overlap
+        argument: 0|1|2
+        description: Include if POS in the region (0), record overlaps (1), variant overlaps (2) [1]
       - names:
           - -s
           - --soft-filter
-        argument: <string>
-        description: annotate FILTER column with <string> or unique filter name ("Filter%d") made up by the program ("+")
+        argument: STRING
+        description: Annotate FILTER column with <string> or unique filter name ("Filter%d") made up by the program ("+")
       - names:
           - -S
           - --set-GTs
-        argument: <.|0>
-        description: set genotypes of failed samples to missing (.) or ref (0)
+        argument: .|0
+        description: Set genotypes of failed samples to missing (.) or ref (0)
       - names:
           - -t
           - --targets
-        argument: <region>
-        description: similar to -r but streams rather than index-jumps
+        argument: REGION
+        description: Similar to -r but streams rather than index-jumps
       - names:
           - -T
           - --targets-file
-        argument: <file>
-        description: similar to -R but streams rather than index-jumps
+        argument: FILE
+        description: Similar to -R but streams rather than index-jumps
+      - names:
+          - --targets-overlap
+        argument: 0|1|2
+        description: Include if POS in the region (0), record overlaps (1), variant overlaps (2) [0]
       - names:
           - --threads
-        argument: <int>
-        description: use multithreading with <int> worker threads [0]
+        argument: INT
+        description: Use multithreading with <int> worker threads [0]
   - name: gtcheck
     description: check sample concordance, detect sample swaps and contamination
     options:
@@ -1410,7 +1594,7 @@ subcommands:
       - names:
           - --n-matches
         argument: INT
-        description: Print only top INT matches for each sample, 0 for unlimited. Use negative value
+        description: Print only top INT matches for each sample (sorted by average score), 0 for unlimited.
       - names:
           - --no-HWE-prob
         argument: ""
@@ -1436,10 +1620,14 @@ subcommands:
         argument: FILE
         description: Restrict to regions listed in a file
       - names:
+          - --regions-overlap
+        argument: 0|1|2
+        description: Include if POS in the region (0), record overlaps (1), variant overlaps (2) [1]
+      - names:
           - -s
           - --samples
         argument: '[qry|gt]:LIST'
-        description: List of query or -g samples (by default all samples are compared)
+        description: List of query or -g samples, "-" to select all samples (by default all samples are compared)
       - names:
           - -S
           - --samples-file
@@ -1456,6 +1644,10 @@ subcommands:
         argument: FILE
         description: Similar to -R but streams rather than index-jumps
       - names:
+          - --targets-overlap
+        argument: 0|1|2
+        description: Include if POS in the region (0), record overlaps (1), variant overlaps (2) [0]
+      - names:
           - -u
           - --use
         argument: TAG1[,TAG2]
@@ -1467,75 +1659,98 @@ subcommands:
           - "-6"
           - --illumina1.3+
         argument: ""
-        description: quality is in the Illumina-1.3+ encoding
+        description: Quality is in the Illumina-1.3+ encoding
       - names:
           - -A
           - --count-orphans
         argument: ""
-        description: do not discard anomalous read pairs
+        description: Do not discard anomalous read pairs
       - names:
           - -b
           - --bam-list
         argument: FILE
-        description: list of input BAM filenames, one per line
+        description: List of input BAM filenames, one per line
       - names:
           - -B
           - --no-BAQ
         argument: ""
-        description: disable BAQ (per-Base Alignment Quality)
+        description: Disable BAQ (per-Base Alignment Quality)
       - names:
           - -C
           - --adjust-MQ
         argument: INT
-        description: adjust mapping quality; recommended:50, disable:0 [0]
+        description: Adjust mapping quality [0]
+      - names:
+          - -D
+          - --full-BAQ
+        argument: ""
+        description: Apply BAQ everywhere, not just in problematic regions
       - names:
           - -d
           - --max-depth
         argument: INT
-        description: max raw per-file depth; avoids excessive memory usage [250]
+        description: Max raw per-file depth; avoids excessive memory usage [250]
       - names:
           - -E
           - --redo-BAQ
         argument: ""
-        description: recalculate BAQ on the fly, ignore existing BQs
+        description: Recalculate BAQ on the fly, ignore existing BQs
       - names:
           - -f
           - --fasta-ref
         argument: FILE
-        description: faidx indexed reference sequence file
+        description: Faidx indexed reference sequence file
       - names:
           - --no-reference
         argument: ""
-        description: do not require fasta reference file
+        description: Do not require fasta reference file
       - names:
           - -G
           - --read-groups
         argument: FILE
-        description: select or exclude read groups listed in the file
+        description: Select or exclude read groups listed in the file
       - names:
           - -q
           - --min-MQ
         argument: INT
-        description: skip alignments with mapQ smaller than INT [0]
+        description: Skip alignments with mapQ smaller than INT [0]
       - names:
           - -Q
           - --min-BQ
         argument: INT
-        description: skip bases with baseQ/BAQ smaller than INT [13]
+        description: Skip bases with baseQ/BAQ smaller than INT [1]
+      - names:
+          - --max-BQ
+        argument: INT
+        description: Limit baseQ/BAQ to no more than INT [60]
+      - names:
+          - --delta-BQ
+        argument: INT
+        description: Use neighbour_qual + INT if less than qual [30]
       - names:
           - -r
           - --regions
         argument: REG[,...]
-        description: comma separated list of regions in which pileup is generated
+        description: Comma separated list of regions in which pileup is generated
       - names:
           - -R
           - --regions-file
         argument: FILE
-        description: restrict to regions listed in a file
+        description: Restrict to regions listed in a file
       - names:
           - --ignore-RG
         argument: ""
-        description: ignore RG tags (one BAM = one sample)
+        description: Ignore RG tags (one BAM = one sample)
+      - names:
+          - --rf
+          - --incl-flags
+        argument: "STR|INT"
+        description: 'Required flags: skip reads with mask bits unset []'
+      - names:
+          - --ff
+          - --excl-flags
+        argument: "STR|INT"
+        description: 'Filter flags: skip reads with mask bits set [UNMAP,SECONDARY,QCFAIL,DUP]'
       - names:
           - -s
           - --samples
@@ -1545,60 +1760,64 @@ subcommands:
           - -S
           - --samples-file
         argument: FILE
-        description: file of samples to include
+        description: File of samples to include
       - names:
           - -t
           - --targets
         argument: REG[,...]
-        description: similar to -r but streams rather than index-jumps
+        description: Similar to -r but streams rather than index-jumps
       - names:
           - -T
           - --targets-file
         argument: FILE
-        description: similar to -R but streams rather than index-jumps
+        description: Similar to -R but streams rather than index-jumps
       - names:
           - -x
           - --ignore-overlaps
         argument: ""
-        description: disable read-pair overlap detection
+        description: Disable read-pair overlap detection
       - names:
-          - --rf
-          - --incl-flags
-        argument: STR|INT
-        description: 'required flags: skip reads with mask bits unset []'
-      - names:
-          - --ff
-          - --excl-flags
-        argument: STR|INT
-        description: 'filter flags: skip reads with mask bits set'
+          - --seed
+        argument: INT
+        description: Random number seed used for sampling deep regions [0]
       - names:
           - -a
           - --annotate
         argument: LIST
-        description: optional tags to output; '?' to list []
+        description: Optional tags to output; '?' to list available tags []
       - names:
           - -g
           - --gvcf
         argument: INT[,...]
-        description: group non-variant sites into gVCF blocks according to minimum per-sample DP
+        description: Group non-variant sites into gVCF blocks according To minimum per-sample DP
       - names:
           - --no-version
         argument: ""
-        description: do not append version and command line to the header
+        description: Do not append version and command line to the header
       - names:
           - -o
           - --output
         argument: FILE
-        description: write output to FILE [standard output]
+        description: Write output to FILE [standard output]
       - names:
           - -O
           - --output-type
         argument: TYPE
-        description: '''b'' compressed BCF; ''u'' uncompressed BCF; ''z'' compressed VCF; ''v'' uncompressed VCF [v]'
+        description: '''b'' compressed BCF; ''u'' uncompressed BCF; ''z'' compressed VCF; ''v'' uncompressed VCF; 0-9 compression level [v]'
+      - names:
+          - -U
+          - --mwu-u
+        argument: ""
+        description: Use older probability scale for Mann-Whitney U test
       - names:
           - --threads
         argument: INT
-        description: use multithreading with INT worker threads [0]
+        description: Use multithreading with INT worker threads [0]
+      - names:
+          - -X
+          - --config
+        argument: STR
+        description: Specify platform specific profiles (see below)
       - names:
           - -e
           - --ext-prob
@@ -1608,27 +1827,32 @@ subcommands:
           - -F
           - --gap-frac
         argument: FLOAT
-        description: minimum fraction of gapped reads [0.002]
+        description: Minimum fraction of gapped reads [0.05]
       - names:
           - -h
           - --tandem-qual
         argument: INT
-        description: coefficient for homopolymer errors [100]
+        description: Coefficient for homopolymer errors [500]
       - names:
           - -I
           - --skip-indels
         argument: ""
-        description: do not perform indel calling
+        description: Do not perform indel calling
       - names:
           - -L
           - --max-idepth
         argument: INT
-        description: maximum per-file depth for INDEL calling [250]
+        description: Maximum per-file depth for INDEL calling [250]
       - names:
           - -m
           - --min-ireads
         argument: INT
-        description: minimum number gapped reads for indel candidates [1]
+        description: Minimum number gapped reads for indel candidates [2]
+      - names:
+          - -M
+          - --max-read-len
+        argument: INT
+        description: Maximum length of read to pass to BAQ algorithm [500]
       - names:
           - -o
           - --open-prob
@@ -1638,72 +1862,91 @@ subcommands:
           - -p
           - --per-sample-mF
         argument: ""
-        description: apply -m and -F per-sample for increased sensitivity
+        description: Apply -m and -F per-sample for increased sensitivity
       - names:
           - -P
           - --platforms
         argument: STR
-        description: comma separated list of platforms for indels [all]
+        description: Comma separated list of platforms for indels [all]
+      - names:
+          - --ar
+          - --ambig-reads
+        argument: STR
+        description: 'What to do with ambiguous indel reads: drop,incAD,incAD0 [drop]'
+      - names:
+          - --indel-bias
+        argument: FLOAT
+        description: Raise to favour recall over precision [1.00]
+      - names:
+          - --indel-size
+        argument: INT
+        description: Approximate maximum indel size considered [110]
   - name: polysomy
     description: detect number of chromosomal copies
     options:
       - names:
           - -o
           - --output-dir
-          - -r
-          - --regions
-        argument: <path>
-        description: restrict to comma-separated list of regions
+        argument: PATH
+        description: -r, --regions REGION Restrict to comma-separated list of regions
       - names:
           - -R
           - --regions-file
-        argument: <file>
-        description: restrict to regions listed in a file
+        argument: FILE
+        description: Restrict to regions listed in a file
+      - names:
+          - --regions-overlap
+        argument: 0|1|2
+        description: Include if POS in the region (0), record overlaps (1), variant overlaps (2) [1]
       - names:
           - -s
           - --sample
-        argument: <name>
-        description: sample to analyze
+        argument: NAME
+        description: Sample to analyze
       - names:
           - -t
           - --targets
-        argument: <region>
-        description: similar to -r but streams rather than index-jumps
+        argument: REGION
+        description: Similar to -r but streams rather than index-jumps
       - names:
           - -T
           - --targets-file
-        argument: <file>
-        description: similar to -R but streams rather than index-jumps
+        argument: FILE
+        description: Similar to -R but streams rather than index-jumps
+      - names:
+          - --targets-overlap
+        argument: 0|1|2
+        description: Include if POS in the region (0), record overlaps (1), variant overlaps (2) [0]
       - names:
           - -b
           - --peak-size
-        argument: <float>
-        description: minimum peak size (0-1, larger is stricter) [0.1]
+        argument: FLOAT
+        description: Minimum peak size (0-1, larger is stricter) [0.1]
       - names:
           - -c
           - --cn-penalty
-        argument: <float>
-        description: penalty for increasing CN (0-1, larger is stricter) [0.7]
+        argument: FLOA>
+        description: Penalty for increasing CN (0-1, larger is stricter) [0.7]
       - names:
           - -f
           - --fit-th
-        argument: <float>
-        description: goodness of fit threshold (>0, smaller is stricter) [3.3]
+        argument: FLOAT
+        description: Goodness of fit threshold (>0, smaller is stricter) [3.3]
       - names:
           - -i
           - --include-aa
         argument: ""
-        description: include the AA peak in CN2 and CN3 evaluation
+        description: Include the AA peak in CN2 and CN3 evaluation
       - names:
           - -m
           - --min-fraction
-        argument: <float>
-        description: minimum distinguishable fraction of aberrant cells [0.1]
+        argument: FLOAT
+        description: Minimum distinguishable fraction of aberrant cells [0.1]
       - names:
           - -p
           - --peak-symmetry
-        argument: <float>
-        description: peak symmetry threshold (0-1, larger is stricter) [0.5]
+        argument: FLOAT
+        description: Peak symmetry threshold (0-1, larger is stricter) [0.5]
   - name: roh
     description: identify runs of autozygosity (HMM)
     options:
@@ -1787,6 +2030,10 @@ subcommands:
         argument: <file>
         description: restrict to regions listed in a file
       - names:
+          - --regions-overlap
+        argument: 0|1|2
+        description: Include if POS in the region (0), record overlaps (1), variant overlaps (2) [1]
+      - names:
           - -s
           - --samples
         argument: <list>
@@ -1806,6 +2053,10 @@ subcommands:
           - --targets-file
         argument: <file>
         description: similar to -R but streams rather than index-jumps
+      - names:
+          - --targets-overlap
+        argument: 0|1|2
+        description: Include if POS in the region (0), record overlaps (1), variant overlaps (2) [0]
       - names:
           - --threads
         argument: <int>
@@ -1830,98 +2081,106 @@ subcommands:
     options:
       - names:
           - --af-bins
-        argument: <list>
-        description: allele frequency bins, a list (0.1,0.5,1) or a file (0.1\n0.5\n1)
+        argument: LIST
+        description: Allele frequency bins, a list (0.1,0.5,1) or a file (0.1\n0.5\n1)
       - names:
           - --af-tag
-        argument: <string>
-        description: allele frequency tag to use, by default estimated from AN,AC or GT
+        argument: STRING
+        description: Allele frequency tag to use, by default estimated from AN,AC or GT
       - names:
           - "-1"
           - --1st-allele-only
         argument: ""
-        description: include only 1st allele at multiallelic sites
+        description: Include only 1st allele at multiallelic sites
       - names:
           - -c
           - --collapse
-        argument: <string>
-        description: treat as identical records with <snps|indels|both|all|some|none>, see man page for details [none]
+        argument: STRING
+        description: Treat as identical records with <snps|indels|both|all|some|none>, see man page for details [none]
       - names:
           - -d
           - --depth
-        argument: <int,int,int>
-        description: 'depth distribution: min,max,bin size [0,500,1]'
+        argument: INT,INT,INT
+        description: 'Depth distribution: min,max,bin size [0,500,1]'
       - names:
           - -e
           - --exclude
-        argument: <expr>
-        description: exclude sites for which the expression is true (see man page for details)
+        argument: EXPR
+        description: Exclude sites for which the expression is true (see man page for details)
       - names:
           - -E
           - --exons
-        argument: <file.gz>
-        description: tab-delimited file with exons for indel frameshifts (chr,from,to; 1-based, inclusive, bgzip compressed)
+        argument: FILE.gz
+        description: Tab-delimited file with exons for indel frameshifts (chr,beg,end; 1-based, inclusive, bgzip compressed)
       - names:
           - -f
           - --apply-filters
-        argument: <list>
-        description: require at least one of the listed FILTER strings (e.g. "PASS,.")
+        argument: LIST
+        description: Require at least one of the listed FILTER strings (e.g. "PASS,.")
       - names:
           - -F
           - --fasta-ref
-        argument: <file>
-        description: faidx indexed reference sequence file to determine INDEL context
+        argument: FILE
+        description: Faidx indexed reference sequence file to determine INDEL context
       - names:
           - -i
           - --include
-        argument: <expr>
-        description: select sites for which the expression is true (see man page for details)
+        argument: EXPR
+        description: Select sites for which the expression is true (see man page for details)
       - names:
           - -I
           - --split-by-ID
         argument: ""
-        description: collect stats for sites with ID separately (known vs novel)
+        description: Collect stats for sites with ID separately (known vs novel)
       - names:
           - -r
           - --regions
-        argument: <region>
-        description: restrict to comma-separated list of regions
+        argument: REGION
+        description: Restrict to comma-separated list of regions
       - names:
           - -R
           - --regions-file
-        argument: <file>
-        description: restrict to regions listed in a file
+        argument: FILE
+        description: Restrict to regions listed in a file
+      - names:
+          - --regions-overlap
+        argument: 0|1|2
+        description: Include if POS in the region (0), record overlaps (1), variant overlaps (2) [1]
       - names:
           - -s
           - --samples
-        argument: <list>
-        description: list of samples for sample stats, "-" to include all samples
+        argument: LIST
+        description: List of samples for sample stats, "-" to include all samples
       - names:
           - -S
           - --samples-file
-        argument: <file>
-        description: file of samples to include
+        argument: FILE
+        description: File of samples to include
       - names:
           - -t
           - --targets
-        argument: <region>
-        description: similar to -r but streams rather than index-jumps
+        argument: REGION
+        description: Similar to -r but streams rather than index-jumps
       - names:
           - -T
           - --targets-file
-        argument: <file>
-        description: similar to -R but streams rather than index-jumps
+        argument: FILE
+        description: Similar to -R but streams rather than index-jumps
+      - names:
+          - --targets-overlap
+        argument: 0|1|2
+        description: Include if POS in the region (0), record overlaps (1), variant overlaps (2) [0]
       - names:
           - -u
           - --user-tstv
-        argument: <TAG[:min:max:n]>
-        description: collect Ts/Tv stats for any tag using the given binning [0:1:100]
+        argument: TAG[:min:max:n]
+        description: Collect Ts/Tv stats for any tag using the given binning [0:1:100]
       - names:
           - --threads
-        argument: <int>
-        description: use multithreading with <int> worker threads [0]
+        argument: INT
+        description: Use multithreading with <int> worker threads [0]
       - names:
           - -v
           - --verbose
         argument: ""
-        description: produce verbose per-site and per-sample output
+        description: Produce verbose per-site and per-sample output

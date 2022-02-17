@@ -6,7 +6,11 @@
 #
 # Usage:
 #
-#     $ ./gen-shellcomp-batch.sh {bash|zsh|fish} {general|bio}
+#     Basic:
+#     $ ./gen-shellcomp-batch.sh fish general
+#
+#     For parallel processing:
+#     $ parallel ./gen-shellcomp-batch.sh {1} {2} ::: bash zsh fish ::: general bio
 #
 
 basedir="$(dirname "$(readlink -f "$0")")"

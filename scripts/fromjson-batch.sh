@@ -6,7 +6,7 @@
 #
 # Usage:
 #
-#   $ ./fromjson-batch.sh <dir>
+#   $ ./fromjson-batch.sh {general|bio}
 #
 #  <dir> can be either general or bioinformatics
 #

@@ -2,11 +2,14 @@
 #
 # Create Fish completion script from JSON file
 #
-# Usage: to-shellcomp.sh {bash|zsh|fish} <command>
+# Usage: gen-shellcomp.sh {bash|zsh|fish} <command>
 #
 #   Create fish completion script for conda.
 #
-#   $ ./to-shellcomp.sh fish conda
+#   $ ./gen-shellcomp.sh fish conda
+#
+#   Or for parallel processing
+#   $ parallel ./gen-shellcomp.sh {} bcftools ::: bash zsh fish
 #
 #   Then fish/conda.fish is created.
 #   The first argument must be either "bash", "zsh", or "fish"

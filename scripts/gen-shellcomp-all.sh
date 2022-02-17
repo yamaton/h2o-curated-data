@@ -8,12 +8,5 @@
 #
 #     $ ./gen-shellcomp-all.sh
 #
-
 basedir="$(dirname "$(readlink -f "$0")")"
-
-"$basedir"/gen-shellcomp-batch.sh bash general
-"$basedir"/gen-shellcomp-batch.sh bash bio
-"$basedir"/gen-shellcomp-batch.sh zsh general
-"$basedir"/gen-shellcomp-batch.sh zsh bio
-"$basedir"/gen-shellcomp-batch.sh fish general
-"$basedir"/gen-shellcomp-batch.sh fish bio
+parallel "$basedir"/gen-shellcomp-batch.sh {1} {2} ::: bash zsh fish ::: general bio

@@ -6,9 +6,8 @@
 #
 # Usage:
 #
-#     $ ./tojson-helper.sh general
+#     $ ./tojson-batch.sh general
 #
-
 
 basedir="$(dirname "$(readlink -f "$0")")"
 dir="$1"

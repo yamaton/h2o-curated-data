@@ -51,6 +51,11 @@ subcommands:
         argument: TEMPFILES [TEMPFILES ...]
         description: Remove temporary files that could not be deleted earlier due to being in-use. Argument is path(s) to prefix(es) where files should be found and removed.
       - names:
+          - -l
+          - --locks
+        argument: ""
+        description: Remove lock files.
+      - names:
           - -d
           - --dry-run
         argument: ""
@@ -141,6 +146,10 @@ subcommands:
         argument: FILE
         description: Write to the given file.
       - names:
+          - --show
+        argument: '[SHOW ...]'
+        description: Display configuration values as calculated and compiled. If no arguments given, show information for all configuration values.
+      - names:
           - --show-sources
         argument: ""
         description: Display all identified configuration sources.
@@ -149,9 +158,17 @@ subcommands:
         argument: ""
         description: Validate all configuration sources.
       - names:
+          - --describe
+        argument: '[DESCRIBE ...]'
+        description: Describe given configuration parameters. If no arguments given, show information for all configuration parameters.
+      - names:
           - --write-default
         argument: ""
         description: Write the default configuration to a file. Equivalent to `conda config --describe > ~/.condarc`.
+      - names:
+          - --get
+        argument: '[KEY ...]'
+        description: Get a configuration value.
       - names:
           - --append
         argument: KEY VALUE
@@ -883,6 +900,10 @@ subcommands:
           - --prefix
         argument: PATH
         description: Full path to environment location (i.e. prefix).
+    subcommands:
+      - name: executable_call
+        description: Executable name, with additional arguments to be
+        options: []
   - name: search
     description: Search for packages and display associated information. The
     options:
@@ -1238,3 +1259,190 @@ subcommands:
           - --help
         argument: ""
         description: Show this help message and exit.
+    subcommands:
+      - name: whoneeds
+        description: shows packages that depends on this package
+        options:
+          - names:
+              - -p
+              - --platform
+            argument: PLATFORM
+            description: --no-installed
+          - names:
+              - --pretty
+            argument: ""
+            description: -a, --all-channels Look at all channels (for depends / whoneeds)
+          - names:
+              - -t
+              - --tree
+            argument: ""
+            description: -h, --help Show this help message and exit.
+          - names:
+              - -c
+              - --channel
+            argument: CHANNEL
+            description: Additional channel to search for packages. These are URLs searched in the order they are given (including local directories using the 'file://' syntax or simply a path like '/home/conda/mychan' or '../mychan'). Then, the defaults or channels from .condarc are searched (unless --override-channels is given). You can use 'defaults' to get the default packages for conda. You can also use any name and the .condarc channel_alias value will be prepended. The default channel_alias is http://conda.anaconda.org/.
+          - names:
+              - --use-local
+            argument: ""
+            description: Use locally built packages. Identical to '-c local'.
+          - names:
+              - --override-channels
+            argument: ""
+            description: Do not search default or .condarc channels. Requires --channel.
+          - names:
+              - --repodata-fn
+            argument: REPODATA_FNS
+            description: Specify name of repodata on remote server. Conda will try whatever you specify, but will ultimately fall back to repodata.json if your specs are not satisfiable with what you specify here. This is used to employ repodata that is reduced in time scope. You may pass this flag more than once. Leftmost entries are tried first, and the fallback to repodata.json is added for you automatically.
+          - names:
+              - -C
+              - --use-index-cache
+            argument: ""
+            description: Use cache of channel index files, even if it has expired.
+          - names:
+              - -k
+              - --insecure
+            argument: ""
+            description: Allow conda to perform "insecure" SSL connections and transfers. Equivalent to setting 'ssl_verify' to 'false'.
+          - names:
+              - --offline
+            argument: ""
+            description: Offline mode. Don't connect to the Internet.
+          - names:
+              - --json
+            argument: ""
+            description: Report all output as json. Suitable for using conda programmatically.
+          - names:
+              - -v
+              - --verbose
+            argument: ""
+            description: Use once for info, twice for debug, three times for trace.
+          - names:
+              - -q
+              - --quiet
+            argument: ""
+            description: Do not display progress bar.
+      - name: depends
+        description: shows packages that depends on this package
+        options:
+          - names:
+              - -p
+              - --platform
+            argument: PLATFORM
+            description: --no-installed
+          - names:
+              - --pretty
+            argument: ""
+            description: -a, --all-channels Look at all channels (for depends / whoneeds)
+          - names:
+              - -t
+              - --tree
+            argument: ""
+            description: -h, --help Show this help message and exit.
+          - names:
+              - -c
+              - --channel
+            argument: CHANNEL
+            description: Additional channel to search for packages. These are URLs searched in the order they are given (including local directories using the 'file://' syntax or simply a path like '/home/conda/mychan' or '../mychan'). Then, the defaults or channels from .condarc are searched (unless --override-channels is given). You can use 'defaults' to get the default packages for conda. You can also use any name and the .condarc channel_alias value will be prepended. The default channel_alias is http://conda.anaconda.org/.
+          - names:
+              - --use-local
+            argument: ""
+            description: Use locally built packages. Identical to '-c local'.
+          - names:
+              - --override-channels
+            argument: ""
+            description: Do not search default or .condarc channels. Requires --channel.
+          - names:
+              - --repodata-fn
+            argument: REPODATA_FNS
+            description: Specify name of repodata on remote server. Conda will try whatever you specify, but will ultimately fall back to repodata.json if your specs are not satisfiable with what you specify here. This is used to employ repodata that is reduced in time scope. You may pass this flag more than once. Leftmost entries are tried first, and the fallback to repodata.json is added for you automatically.
+          - names:
+              - -C
+              - --use-index-cache
+            argument: ""
+            description: Use cache of channel index files, even if it has expired.
+          - names:
+              - -k
+              - --insecure
+            argument: ""
+            description: Allow conda to perform "insecure" SSL connections and transfers. Equivalent to setting 'ssl_verify' to 'false'.
+          - names:
+              - --offline
+            argument: ""
+            description: Offline mode. Don't connect to the Internet.
+          - names:
+              - --json
+            argument: ""
+            description: Report all output as json. Suitable for using conda programmatically.
+          - names:
+              - -v
+              - --verbose
+            argument: ""
+            description: Use once for info, twice for debug, three times for trace.
+          - names:
+              - -q
+              - --quiet
+            argument: ""
+            description: Do not display progress bar.
+      - name: search
+        description: shows packages that depends on this package
+        options:
+          - names:
+              - -p
+              - --platform
+            argument: PLATFORM
+            description: --no-installed
+          - names:
+              - --pretty
+            argument: ""
+            description: -a, --all-channels Look at all channels (for depends / whoneeds)
+          - names:
+              - -h
+              - --help
+            argument: ""
+            description: Show this help message and exit.
+          - names:
+              - -c
+              - --channel
+            argument: CHANNEL
+            description: Additional channel to search for packages. These are URLs searched in the order they are given (including local directories using the 'file://' syntax or simply a path like '/home/conda/mychan' or '../mychan'). Then, the defaults or channels from .condarc are searched (unless --override-channels is given). You can use 'defaults' to get the default packages for conda. You can also use any name and the .condarc channel_alias value will be prepended. The default channel_alias is http://conda.anaconda.org/.
+          - names:
+              - --use-local
+            argument: ""
+            description: Use locally built packages. Identical to '-c local'.
+          - names:
+              - --override-channels
+            argument: ""
+            description: Do not search default or .condarc channels. Requires --channel.
+          - names:
+              - --repodata-fn
+            argument: REPODATA_FNS
+            description: Specify name of repodata on remote server. Conda will try whatever you specify, but will ultimately fall back to repodata.json if your specs are not satisfiable with what you specify here. This is used to employ repodata that is reduced in time scope. You may pass this flag more than once. Leftmost entries are tried first, and the fallback to repodata.json is added for you automatically.
+          - names:
+              - -C
+              - --use-index-cache
+            argument: ""
+            description: Use cache of channel index files, even if it has expired.
+          - names:
+              - -k
+              - --insecure
+            argument: ""
+            description: Allow conda to perform "insecure" SSL connections and transfers. Equivalent to setting 'ssl_verify' to 'false'.
+          - names:
+              - --offline
+            argument: ""
+            description: Offline mode. Don't connect to the Internet.
+          - names:
+              - --json
+            argument: ""
+            description: Report all output as json. Suitable for using conda programmatically.
+          - names:
+              - -v
+              - --verbose
+            argument: ""
+            description: Use once for info, twice for debug, three times for trace.
+          - names:
+              - -q
+              - --quiet
+            argument: ""
+            description: Do not display progress bar.

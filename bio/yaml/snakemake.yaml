@@ -1,0 +1,1245 @@
+name: snakemake
+description: snakemake
+options:
+  - names:
+      - -h
+      - --help
+    argument: ""
+    description: show this help message and exit
+  - names:
+      - --dry-run
+      - --dryrun
+      - -n
+    argument: ""
+    description: 'Do not execute anything, and display what would be done. If you have a very large workflow, use --dry-run --quiet to just print a summary of the DAG of jobs. (default: False)'
+  - names:
+      - --profile
+    argument: PROFILE
+    description: 'Name of profile to use for configuring Snakemake. Snakemake will search for a corresponding folder in /etc/xdg/xdg-pop/snakemake and /home/vierbein/.config/snakemake. Alternatively, this can be an absolute or relative path. The profile folder has to contain a file ''config.yaml''. This file can be used to set default values for command line options in YAML format. For example, ''--cluster qsub'' becomes ''cluster: qsub'' in the YAML file. Profiles can be obtained from https://github.com/snakemakeprofiles. The profile can also be set via the environment variable $SNAKEMAKE_PROFILE. [env var: SNAKEMAKE_PROFILE] (default: None)'
+  - names:
+      - --cache
+    argument: '[RULE [RULE ...]]'
+    description: 'Store output files of given rules in a central cache given by the environment variable $SNAKEMAKE_OUTPUT_CACHE. Likewise, retrieve output files of the given rules from this cache if they have been created before (by anybody writing to the same cache), instead of actually executing the rules. Output files are identified by hashing all steps, parameters and software stack (conda envs or containers) needed to create them. (default: None)'
+  - names:
+      - --snakefile
+      - -s
+    argument: FILE
+    description: 'The workflow definition in form of a snakefile.Usually, you should not need to specify this. By default, Snakemake will search for ''Snakefile'', ''snakefile'', ''workflow/Snakefile'', ''workflow/snakefile'' beneath the current working directory, in this order. Only if you definitely want a different layout, you need to use this parameter. (default: None)'
+  - names:
+      - --cores
+      - -c
+    argument: '[N]'
+    description: 'Use at most N CPU cores/jobs in parallel. If N is omitted or ''all'', the limit is set to the number of available CPU cores. In case of cluster/cloud execution, this argument sets the number of total cores used over all jobs (made available to rules via workflow.cores). (default: None)'
+  - names:
+      - --jobs
+      - -j
+    argument: '[N]'
+    description: 'Use at most N CPU cluster/cloud jobs in parallel. For local execution this is an alias for --cores. (default: None)'
+  - names:
+      - --local-cores
+    argument: "N"
+    description: 'In cluster/cloud mode, use at most N cores of the host machine in parallel (default: number of CPU cores of the host). The cores are used to execute local rules. This option is ignored when not in cluster/cloud mode. (default: 4)'
+  - names:
+      - --resources
+    argument: '[NAME=INT'
+    description: '[NAME=INT ...]], --res [NAME=INT [NAME=INT ...]] Define additional resources that shall constrain the scheduling analogously to threads (see above). A resource is defined as a name and an integer value. E.g. --resources mem_mb=1000. Rules can use resources by defining the resource keyword, e.g. resources: mem_mb=600. If now two rules require 600 of the resource ''mem_mb'' they won''t be run in parallel by the scheduler. (default: None)'
+  - names:
+      - --set-threads
+    argument: RULE=THREADS [RULE=THREADS ...]
+    description: 'Overwrite thread usage of rules. This allows to finetune workflow parallelization. In particular, this is helpful to target certain cluster nodes by e.g. shifting a rule to use more, or less threads than defined in the workflow. Thereby, THREADS has to be a positive integer, and RULE has to be the name of the rule. (default: None)'
+  - names:
+      - --max-threads
+    argument: MAX_THREADS
+    description: 'Define a global maximum number of threads for any job. This can be helpful in a cluster/cloud setting, when you want to restrict the maximum number of requested threads without modifying the workflow definition or overwriting them invidiually with --set-threads. (default: None)'
+  - names:
+      - --set-resources
+    argument: RULE:RESOURCE=VALUE [RULE:RESOURCE=VALUE ...]
+    description: 'Overwrite resource usage of rules. This allows to fine-tune workflow resources. In particular, this is helpful to target certain cluster nodes by e.g. defining a certain partition for a rule, or overriding a temporary directory. Thereby, VALUE has to be a positive integer or a string, RULE has to be the name of the rule, and RESOURCE has to be the name of the resource. (default: None)'
+  - names:
+      - --set-scatter
+    argument: NAME=SCATTERITEMS [NAME=SCATTERITEMS ...]
+    description: 'Overwrite number of scatter items of scattergather processes. This allows to fine-tune workflow parallelization. Thereby, SCATTERITEMS has to be a positive integer, and NAME has to be the name of the scattergather process defined via a scattergather directive in the workflow. (default: None)'
+  - names:
+      - --default-resources
+    argument: '[N'
+    description: 'AME=INT [NAME=INT ...]], --default-res [NAME=INT [NAME=INT ...]] Define default values of resources for rules that do not define their own values. In addition to plain integers, python expressions over inputsize are allowed (e.g. ''2*input.size_mb'').When specifying this without any arguments (--default-resources), it defines ''mem_mb=max(2*input.size_mb, 1000)'' ''disk_mb=max(2*input.size_mb, 1000)'' i.e., default disk and mem usage is twice the input file size but at least 1GB.In addition, the system temporary directory (as given by $TMPDIR, $TEMP, or $TMP) is used for the tmpdir resource. The tmpdir resource is automatically used by shell commands, scripts and wrappers to store temporary data (as it is mirrored into $TMPDIR, $TEMP, and $TMP for the executed subprocesses). If this argument is not specified at all, Snakemake just uses the tmpdir resource as outlined above. (default: None)'
+  - names:
+      - --preemption-default
+    argument: PREEMPTION_DEFAULT
+    description: 'A preemptible instance can be requested when using the Google Life Sciences API. If you set a --preemptiondefault,all rules will be subject to the default. Specifically, this integer is the number of restart attempts that will be made given that the instance is killed unexpectedly. Note that preemptible instances have a maximum running time of 24 hours. If you want to set preemptible instances for only a subset of rules, use --preemptible-rules instead. (default: None)'
+  - names:
+      - --preemptible-rules
+    argument: PREEMPTIBLE_RULES [PREEMPTIBLE_RULES ...]
+    description: 'A preemptible instance can be requested when using the Google Life Sciences API. If you want to use these instances for a subset of your rules, you can use --preemptible-rules and then specify a list of rule and integer pairs, where each integer indicates the number of restarts to use for the rule''s instance in the case that the instance is terminated unexpectedly. --preemptible-rules can be used in combination with --preemption-default, and will take priority. Note that preemptible instances have a maximum running time of 24. If you want to apply a consistent number of retries across all your rules, use --premption-default instead. Example: snakemake --preemption-default 10 --preemptible-rules map_reads=3 call_variants=0 (default: None)'
+  - names:
+      - --config
+      - -C
+    argument: '[KEY=VALUE [KEY=VALUE ...]]'
+    description: 'Set or overwrite values in the workflow config object. The workflow config object is accessible as variable config inside the workflow. Default values can be set by providing a JSON file (see Documentation). (default: None)'
+  - names:
+      - --configfile
+      - --configfiles
+    argument: FILE [FILE ...]
+    description: 'Specify or overwrite the config file of the workflow (see the docs). Values specified in JSON or YAML format are available in the global config dictionary inside the workflow. Multiple files overwrite each other in the given order. Thereby missing keys in previous config files are extended by following configfiles. Note that this order also includes a config file defined in the workflow definition itself (which will come first). (default: None)'
+  - names:
+      - --envvars
+    argument: VARNAME [VARNAME ...]
+    description: 'Environment variables to pass to cloud jobs. (default: None)'
+  - names:
+      - --directory
+      - -d
+    argument: DIR
+    description: 'Specify working directory (relative paths in the snakefile will use this as their origin). (default: None)'
+  - names:
+      - --touch
+      - -t
+    argument: ""
+    description: 'Touch output files (mark them up to date without really changing them) instead of running their commands. This is used to pretend that the rules were executed, in order to fool future invocations of snakemake. Fails if a file does not yet exist. Note that this will only touch files that would otherwise be recreated by Snakemake (e.g. because their input files are newer). For enforcing a touch, combine this with --force, --forceall, or --forcerun. Note however that you loose the provenance information when the files have been created in realitiy. Hence, this should be used only as a last resort. (default: False)'
+  - names:
+      - --keep-going
+      - -k
+    argument: ""
+    description: 'Go on with independent jobs if a job fails. (default: False)'
+  - names:
+      - --force
+      - -f
+    argument: ""
+    description: 'Force the execution of the selected target or the first rule regardless of already created output. (default: False)'
+  - names:
+      - --forceall
+      - -F
+    argument: ""
+    description: 'Force the execution of the selected (or the first) rule and all rules it is dependent on regardless of already created output. (default: False)'
+  - names:
+      - --forcerun
+      - -R
+    argument: '[TARGET [TARGET ...]]'
+    description: 'Force the re-execution or creation of the given rules or files. Use this option if you changed a rule and want to have all its output in your workflow updated. (default: None)'
+  - names:
+      - --prioritize
+      - -P
+    argument: TARGET [TARGET ...]
+    description: 'Tell the scheduler to assign creation of given targets (and all their dependencies) highest priority. (EXPERIMENTAL) (default: None)'
+  - names:
+      - --batch
+    argument: RULE=BATCH/BATCHES
+    description: 'Only create the given BATCH of the input files of the given RULE. This can be used to iteratively run parts of very large workflows. Only the execution plan of the relevant part of the workflow has to be calculated, thereby speeding up DAG computation. It is recommended to provide the most suitable rule for batching when documenting a workflow. It should be some aggregating rule that would be executed only once, and has a large number of input files. For example, it can be a rule that aggregates over samples. (default: None)'
+  - names:
+      - --until
+      - -U
+    argument: TARGET [TARGET ...]
+    description: 'Runs the pipeline until it reaches the specified rules or files. Only runs jobs that are dependencies of the specified rule or files, does not run sibling DAGs. (default: None)'
+  - names:
+      - --omit-from
+      - -O
+    argument: TARGET [TARGET ...]
+    description: 'Prevent the execution or creation of the given rules or files as well as any rules or files that are downstream of these targets in the DAG. Also runs jobs in sibling DAGs that are independent of the rules or files specified here. (default: None)'
+  - names:
+      - --rerun-incomplete
+      - --ri
+    argument: ""
+    description: 'Re-run all jobs the output of which is recognized as incomplete. (default: False)'
+  - names:
+      - --shadow-prefix
+    argument: DIR
+    description: 'Specify a directory in which the ''shadow'' directory is created. If not supplied, the value is set to the ''.snakemake'' directory relative to the working directory. (default: None)'
+  - names:
+      - --scheduler
+    argument: '[{ilp,greedy}]'
+    description: 'Specifies if jobs are selected by a greedy algorithm or by solving an ilp. The ilp scheduler aims to reduce runtime and hdd usage by best possible use of resources. (default: ilp)'
+  - names:
+      - --wms-monitor
+    argument: '[WMS_MONITOR]'
+    description: 'IP and port of workflow management system to monitor the execution of snakemake (e.g. http://127.0.0.1:5000) Note that if your service requires an authorization token, you must export WMS_MONITOR_TOKEN in the environment. (default: None)'
+  - names:
+      - --wms-monitor-arg
+    argument: '[NAME=VALUE [NAME=VALUE ...]]'
+    description: 'If the workflow management service accepts extra arguments, provide. them in key value pairs with --wms-monitor-arg. For example, to run an existing workflow using a wms monitor, you can provide the pair id=12345 and the arguments will be provided to the endpoint to first interact with the workflow (default: None)'
+  - names:
+      - --scheduler-ilp-solver
+    argument: '{COIN_CMD}'
+    description: 'Specifies solver to be utilized when selecting ilpscheduler. (default: COIN_CMD)'
+  - names:
+      - --scheduler-solver-path
+    argument: SCHEDULER_SOLVER_PATH
+    description: 'Set the PATH to search for scheduler solver binaries (internal use only). (default: None)'
+  - names:
+      - --conda-base-path
+    argument: CONDA_BASE_PATH
+    description: 'Path of conda base installation (home of conda, mamba, activate) (internal use only). (default: None)'
+  - names:
+      - --no-subworkflows
+      - --nosw
+    argument: ""
+    description: 'Do not evaluate or execute subworkflows. (default: False)'
+  - names:
+      - --groups
+    argument: GROUPS [GROUPS ...]
+    description: 'Assign rules to groups (this overwrites any group definitions from the workflow). (default: None)'
+  - names:
+      - --group-components
+    argument: GROUP_COMPONENTS [GROUP_COMPONENTS ...]
+    description: 'Set the number of connected components a group is allowed to span. By default, this is 1, but this flag allows to extend this. This can be used to run e.g. 3 jobs of the same rule in the same group, although they are not connected. It can be helpful for putting together many small jobs or benefitting of shared memory setups. (default: None)'
+  - names:
+      - --report
+    argument: '[FILE]'
+    description: 'Create an HTML report with results and statistics. This can be either a .html file or a .zip file. In the former case, all results are embedded into the .html (this only works for small data). In the latter case, results are stored along with a file report.html in the zip archive. If no filename is given, an embedded report.html is the default. (default: None)'
+  - names:
+      - --report-stylesheet
+    argument: CSSFILE
+    description: 'Custom stylesheet to use for report. In particular, this can be used for branding the report with e.g. a custom logo, see docs. (default: None)'
+  - names:
+      - --draft-notebook
+    argument: TARGET
+    description: 'Draft a skeleton notebook for the rule used to generate the given target file. This notebook can then be opened in a jupyter server, exeucted and implemented until ready. After saving, it will automatically be reused in non-interactive mode by Snakemake for subsequent jobs. (default: None)'
+  - names:
+      - --edit-notebook
+    argument: TARGET
+    description: 'Interactively edit the notebook associated with the rule used to generate the given target file. This will start a local jupyter notebook server. Any changes to the notebook should be saved, and the server has to be stopped by closing the notebook and hitting the ''Quit'' button on the jupyter dashboard. Afterwards, the updated notebook will be automatically stored in the path defined in the rule. If the notebook is not yet present, this will create an empty draft. (default: None)'
+  - names:
+      - --notebook-listen
+    argument: IP:PORT
+    description: 'The IP address and PORT the notebook server used for editing the notebook (--edit-notebook) will listen on. (default: localhost:8888)'
+  - names:
+      - --lint
+    argument: '[{text,json}]'
+    description: 'Perform linting on the given workflow. This will print snakemake specific suggestions to improve code quality (work in progress, more lints to be added in the future). If no argument is provided, plain text output is used. (default: None)'
+  - names:
+      - --generate-unit-tests
+    argument: '[TESTPATH]'
+    description: 'Automatically generate unit tests for each workflow rule. This assumes that all input files of each job are already present. Rules without a job with present input files will be skipped (a warning will be issued). For each rule, one test case will be created in the specified test folder (.tests/unit by default). After successfull execution, tests can be run with ''pytest TESTPATH''. (default: None)'
+  - names:
+      - --containerize
+    argument: ""
+    description: 'Print a Dockerfile that provides an execution environment for the workflow, including all conda environments. (default: False)'
+  - names:
+      - --export-cwl
+    argument: FILE
+    description: 'Compile workflow to CWL and store it in given FILE. (default: None)'
+  - names:
+      - --list
+      - -l
+    argument: ""
+    description: 'Show available rules in given Snakefile. (default: False)'
+  - names:
+      - --list-target-rules
+      - --lt
+    argument: ""
+    description: 'Show available target rules in given Snakefile. (default: False)'
+  - names:
+      - --dag
+    argument: ""
+    description: 'Do not execute anything and print the directed acyclic graph of jobs in the dot language. Recommended use on Unix systems: snakemake --dag | dot | displayNote print statements in your Snakefile may interfere with visualization. (default: False)'
+  - names:
+      - --rulegraph
+    argument: ""
+    description: 'Do not execute anything and print the dependency graph of rules in the dot language. This will be less crowded than above DAG of jobs, but also show less information. Note that each rule is displayed once, hence the displayed graph will be cyclic if a rule appears in several steps of the workflow. Use this if above option leads to a DAG that is too large. Recommended use on Unix systems: snakemake --rulegraph | dot | displayNote print statements in your Snakefile may interfere with visualization. (default: False)'
+  - names:
+      - --filegraph
+    argument: ""
+    description: 'Do not execute anything and print the dependency graph of rules with their input and output files in the dot language. This is an intermediate solution between above DAG of jobs and the rule graph. Note that each rule is displayed once, hence the displayed graph will be cyclic if a rule appears in several steps of the workflow. Use this if above option leads to a DAG that is too large. Recommended use on Unix systems: snakemake --filegraph | dot | displayNote print statements in your Snakefile may interfere with visualization. (default: False)'
+  - names:
+      - --d3dag
+    argument: ""
+    description: 'Print the DAG in D3.js compatible JSON format. (default: False)'
+  - names:
+      - --summary
+      - -S
+    argument: ""
+    description: 'Print a summary of all files created by the workflow. The has the following columns: filename, modification time, rule version, status, plan. Thereby rule version contains the versionthe file was created with (see the version keyword of rules), and status denotes whether the file is missing, its input files are newer or if version or implementation of the rule changed since file creation. Finally the last column denotes whether the file will be updated or created during the next workflow execution. (default: False)'
+  - names:
+      - --detailed-summary
+      - -D
+    argument: ""
+    description: 'Print a summary of all files created by the workflow. The has the following columns: filename, modification time, rule version, input file(s), shell command, status, plan. Thereby rule version contains the version the file was created with (see the version keyword of rules), and status denotes whether the file is missing, its input files are newer or if version or implementation of the rule changed since file creation. The input file and shell command columns are self explanatory. Finally the last column denotes whether the file will be updated or created during the next workflow execution. (default: False)'
+  - names:
+      - --archive
+    argument: FILE
+    description: 'Archive the workflow into the given tar archive FILE. The archive will be created such that the workflow can be re-executed on a vanilla system. The function needs conda and git to be installed. It will archive every file that is under git version control. Note that it is best practice to have the Snakefile, config files, and scripts under version control. Hence, they will be included in the archive. Further, it will add input files that are not generated by by the workflow itself and conda environments. Note that symlinks are dereferenced. Supported formats are .tar, .tar.gz, .tar.bz2 and .tar.xz. (default: None)'
+  - names:
+      - --cleanup-metadata
+      - --cm
+    argument: FILE [FILE ...]
+    description: 'Cleanup the metadata of given files. That means that snakemake removes any tracked version info, and any marks that files are incomplete. (default: None)'
+  - names:
+      - --cleanup-shadow
+    argument: ""
+    description: 'Cleanup old shadow directories which have not been deleted due to failures or power loss. (default: False)'
+  - names:
+      - --skip-script-cleanup
+    argument: ""
+    description: 'Don''t delete wrapper scripts used for execution (default: False)'
+  - names:
+      - --unlock
+    argument: ""
+    description: 'Remove a lock on the working directory. (default: False)'
+  - names:
+      - --list-version-changes
+      - --lv
+    argument: ""
+    description: 'List all output files that have been created with a different version (as determined by the version keyword). (default: False)'
+  - names:
+      - --list-code-changes
+      - --lc
+    argument: ""
+    description: 'List all output files for which the rule body (run or shell) have changed in the Snakefile. (default: False)'
+  - names:
+      - --list-input-changes
+      - --li
+    argument: ""
+    description: 'List all output files for which the defined input files have changed in the Snakefile (e.g. new input files were added in the rule definition or files were renamed). For listing input file modification in the filesystem, use --summary. (default: False)'
+  - names:
+      - --list-params-changes
+      - --lp
+    argument: ""
+    description: 'List all output files for which the defined params have changed in the Snakefile. (default: False)'
+  - names:
+      - --list-untracked
+      - --lu
+    argument: ""
+    description: 'List all files in the working directory that are not used in the workflow. This can be used e.g. for identifying leftover files. Hidden files and directories are ignored. (default: False)'
+  - names:
+      - --delete-all-output
+    argument: ""
+    description: 'Remove all files generated by the workflow. Use together with --dry-run to list files without actually deleting anything. Note that this will not recurse into subworkflows. Write-protected files are not removed. Nevertheless, use with care! (default: False)'
+  - names:
+      - --delete-temp-output
+    argument: ""
+    description: 'Remove all temporary files generated by the workflow. Use together with --dry-run to list files without actually deleting anything. Note that this will not recurse into subworkflows. (default: False)'
+  - names:
+      - --bash-completion
+    argument: ""
+    description: 'Output code to register bash completion for snakemake. Put the following in your .bashrc (including the accents): `snakemake --bash-completion` or issue it in an open terminal session. (default: False)'
+  - names:
+      - --keep-incomplete
+    argument: ""
+    description: 'Do not remove incomplete output files by failed jobs. (default: False)'
+  - names:
+      - --drop-metadata
+    argument: ""
+    description: 'Drop metadata file tracking information after job finishes. Provenance-information based reports (e.g. --report and the --list_x_changes functions) will be empty or incomplete. (default: False)'
+  - names:
+      - --version
+      - -v
+    argument: ""
+    description: show program's version number and exit
+  - names:
+      - --reason
+      - -r
+    argument: ""
+    description: 'Print the reason for each executed rule. (default: False)'
+  - names:
+      - --gui
+    argument: '[PORT]'
+    description: 'Serve an HTML based user interface to the given network and port e.g. 168.129.10.15:8000. By default Snakemake is only available in the local network (default port: 8000). To make Snakemake listen to all ip addresses add the special host address 0.0.0.0 to the url (0.0.0.0:8000). This is important if Snakemake is used in a virtualised environment like Docker. If possible, a browser window is opened. (default: None)'
+  - names:
+      - --printshellcmds
+      - -p
+    argument: ""
+    description: 'Print out the shell commands that will be executed. (default: False)'
+  - names:
+      - --debug-dag
+    argument: ""
+    description: 'Print candidate and selected jobs (including their wildcards) while inferring DAG. This can help to debug unexpected DAG topology or errors. (default: False)'
+  - names:
+      - --stats
+    argument: FILE
+    description: 'Write stats about Snakefile execution in JSON format to the given file. (default: None)'
+  - names:
+      - --nocolor
+    argument: ""
+    description: 'Do not use a colored output. (default: False)'
+  - names:
+      - --quiet
+      - -q
+    argument: ""
+    description: 'Do not output any progress or rule information. (default: False)'
+  - names:
+      - --print-compilation
+    argument: ""
+    description: 'Print the python representation of the workflow. (default: False)'
+  - names:
+      - --verbose
+    argument: ""
+    description: 'Print debugging output. (default: False)'
+  - names:
+      - --force-use-threads
+    argument: ""
+    description: 'Force threads rather than processes. Helpful if shared memory (/dev/shm) is full or unavailable. (default: False)'
+  - names:
+      - --allow-ambiguity
+      - -a
+    argument: ""
+    description: 'Don''t check for ambiguous rules and simply use the first if several can produce the same file. This allows the user to prioritize rules by their order in the snakefile. (default: False)'
+  - names:
+      - --nolock
+    argument: ""
+    description: 'Do not lock the working directory (default: False)'
+  - names:
+      - --ignore-incomplete
+      - --ii
+    argument: ""
+    description: 'Do not check for incomplete output files. (default: False)'
+  - names:
+      - --max-inventory-time
+    argument: SECONDS
+    description: 'Spend at most SECONDS seconds to create a file inventory for the working directory. The inventory vastly speeds up file modification and existence checks when computing which jobs need to be executed. However, creating the inventory itself can be slow, e.g. on network file systems. Hence, we do not spend more than a given amount of time and fall back to individual checks for the rest. (default: 20)'
+  - names:
+      - --latency-wait
+      - --output-wait
+      - -w
+    argument: SECONDS
+    description: 'Wait given seconds if an output file of a job is not present after the job finished. This helps if your filesystem suffers from latency (default 5). (default: 5)'
+  - names:
+      - --wait-for-files
+    argument: '[FILE [FILE ...]]'
+    description: 'Wait --latency-wait seconds for these files to be present before executing the workflow. This option is used internally to handle filesystem latency in cluster environments. (default: None)'
+  - names:
+      - --wait-for-files-file
+    argument: FILE
+    description: 'Same behaviour as --wait-for-files, but file list is stored in file instead of being passed on the commandline. This is useful when the list of files is too long to be passed on the commandline. (default: None)'
+  - names:
+      - --notemp
+      - --nt
+    argument: ""
+    description: 'Ignore temp() declarations. This is useful when running only a part of the workflow, since temp() would lead to deletion of probably needed files by other parts of the workflow. (default: False)'
+  - names:
+      - --all-temp
+    argument: ""
+    description: 'Mark all output files as temp files. This can be useful for CI testing, in order to save space. (default: False)'
+  - names:
+      - --keep-remote
+    argument: ""
+    description: 'Keep local copies of remote input files. (default: False)'
+  - names:
+      - --keep-target-files
+    argument: ""
+    description: 'Do not adjust the paths of given target files relative to the working directory. (default: False)'
+  - names:
+      - --allowed-rules
+    argument: ALLOWED_RULES [ALLOWED_RULES ...]
+    description: 'Only consider given rules. If omitted, all rules in Snakefile are used. Note that this is intended primarily for internal use and may lead to unexpected results otherwise. (default: None)'
+  - names:
+      - --max-jobs-per-second
+    argument: MAX_JOBS_PER_SECOND
+    description: 'Maximal number of cluster/drmaa jobs per second, default is 10, fractions allowed. (default: 10)'
+  - names:
+      - --max-status-checks-per-second
+    argument: MAX_STATUS_CHECKS_PER_SECOND
+    description: 'Maximal number of job status checks per second, default is 10, fractions allowed. (default: 10)'
+  - names:
+      - -T
+      - --restart-times
+    argument: RESTART_TIMES
+    description: 'Number of times to restart failing jobs (defaults to 0). (default: 0)'
+  - names:
+      - --attempt
+    argument: ATTEMPT
+    description: 'Internal use only: define the initial value of the attempt parameter (default: 1). (default: 1)'
+  - names:
+      - --wrapper-prefix
+    argument: WRAPPER_PREFIX
+    description: 'Prefix for URL created from wrapper directive (default: https://github.com/snakemake/snakemakewrappers/raw/). Set this to a different URL to use your fork or a local clone of the repository, e.g., use a git URL like ''git+file://path/to/your/local/clone@''. (default: https://github.com/snakemake/snakemake-wrappers/raw/)'
+  - names:
+      - --default-remote-provider
+    argument: '{S3,GS,FTP,SFTP,S3Mocked,gfal,gridftp,iRODS,AzBlob,XRootD}'
+    description: 'Specify default remote provider to be used for all input and output files that don''t yet specify one. (default: None)'
+  - names:
+      - --default-remote-prefix
+    argument: DEFAULT_REMOTE_PREFIX
+    description: 'Specify prefix for default remote provider. E.g. a bucket name. (default: )'
+  - names:
+      - --no-shared-fs
+    argument: ""
+    description: 'Do not assume that jobs share a common file system. When this flag is activated, Snakemake will assume that the filesystem on a cluster node is not shared with other nodes. For example, this will lead to downloading remote files on each cluster node separately. Further, it won''t take special measures to deal with filesystem latency issues. This option will in most cases only make sense in combination with --default-remote-provider. Further, when using --cluster you will have to also provide --clusterstatus. Only activate this if you know what you are doing. (default: False)'
+  - names:
+      - --greediness
+    argument: GREEDINESS
+    description: 'Set the greediness of scheduling. This value between 0 and 1 determines how careful jobs are selected for execution. The default value (1.0) provides the best speed and still acceptable scheduling quality. (default: None)'
+  - names:
+      - --no-hooks
+    argument: ""
+    description: 'Do not invoke onstart, onsuccess or onerror hooks after execution. (default: False)'
+  - names:
+      - --overwrite-shellcmd
+    argument: OVERWRITE_SHELLCMD
+    description: 'Provide a shell command that shall be executed instead of those given in the workflow. This is for debugging purposes only. (default: None)'
+  - names:
+      - --debug
+    argument: ""
+    description: 'Allow to debug rules with e.g. PDB. This flag allows to set breakpoints in run blocks. (default: False)'
+  - names:
+      - --runtime-profile
+    argument: FILE
+    description: 'Profile Snakemake and write the output to FILE. This requires yappi to be installed. (default: None)'
+  - names:
+      - --mode
+    argument: '{0,1,2}'
+    description: 'Set execution mode of Snakemake (internal use only). (default: 0)'
+  - names:
+      - --show-failed-logs
+    argument: ""
+    description: 'Automatically display logs of failed jobs. (default: False)'
+  - names:
+      - --log-handler-script
+    argument: FILE
+    description: 'Provide a custom script containing a function ''def log_handler(msg):''. Snakemake will call this function for every logging output (given as a dictionary msg)allowing to e.g. send notifications in the form of e.g. slack messages or emails. (default: None)'
+  - names:
+      - --log-service
+    argument: '{none,slack,wms}'
+    description: 'Set a specific messaging service for logging output.Snakemake will notify the service on errors and completed execution.Currently slack and workflow management system (wms) are supported. (default: None)'
+  - names:
+      - --cluster
+    argument: CMD
+    description: 'Execute snakemake rules with the given submit command, e.g. qsub. Snakemake compiles jobs into scripts that are submitted to the cluster with the given command, once all input files for a particular job are present. The submit command can be decorated to make it aware of certain job properties (name, rulename, input, output, params, wildcards, log, threads and dependencies (see the argument below)), e.g.: $ snakemake --cluster ''qsub -pe threaded {threads}''. (default: None)'
+  - names:
+      - --cluster-sync
+    argument: CMD
+    description: 'cluster submission command will block, returning the remote exitstatus upon remote termination (for example, this should be usedif the cluster command is ''qsub -sync y'' (SGE) (default: None)'
+  - names:
+      - --drmaa
+    argument: '[ARGS]'
+    description: 'Execute snakemake on a cluster accessed via DRMAA, Snakemake compiles jobs into scripts that are submitted to the cluster with the given command, once all input files for a particular job are present. ARGS can be used to specify options of the underlying cluster system, thereby using the job properties name, rulename, input, output, params, wildcards, log, threads and dependencies, e.g.: --drmaa '' -pe threaded {threads}''. Note that ARGS must be given in quotes and with a leading whitespace. (default: None)'
+  - names:
+      - --cluster-config
+      - -u
+    argument: FILE
+    description: 'A JSON or YAML file that defines the wildcards used in ''cluster''for specific rules, instead of having them specified in the Snakefile. For example, for rule ''job'' you may define: { ''job'' : { ''time'' : ''24:00:00'' } } to specify the time for rule ''job''. You can specify more than one file. The configuration files are merged with later values overriding earlier ones. This option is deprecated in favor of using --profile, see docs. (default: [])'
+  - names:
+      - --immediate-submit
+      - --is
+    argument: ""
+    description: 'Immediately submit all jobs to the cluster instead of waiting for present input files. This will fail, unless you make the cluster aware of job dependencies, e.g. via: $ snakemake --cluster ''sbatch --dependency {dependencies}. Assuming that your submit script (here sbatch) outputs the generated job id to the first stdout line, {dependencies} will be filled with space separated job ids this job depends on. (default: False)'
+  - names:
+      - --jobscript
+      - --js
+    argument: SCRIPT
+    description: 'Provide a custom job script for submission to the cluster. The default script resides as ''jobscript.sh'' in the installation directory. (default: None)'
+  - names:
+      - --jobname
+      - --jn
+    argument: NAME
+    description: 'Provide a custom name for the jobscript that is submitted to the cluster (see --cluster). NAME is "snakejob.{name}.{jobid}.sh" per default. The wildcard {jobid} has to be present in the name. (default: snakejob.{name}.{jobid}.sh)'
+  - names:
+      - --cluster-status
+    argument: CLUSTER_STATUS
+    description: 'Status command for cluster execution. This is only considered in combination with the --cluster flag. If provided, Snakemake will use the status command to determine if a job has finished successfully or failed. For this it is necessary that the submit command provided to --cluster returns the cluster job id. Then, the status command will be invoked with the job id. Snakemake expects it to return ''success'' if the job was successfull, ''failed'' if the job failed and ''running'' if the job still runs. (default: None)'
+  - names:
+      - --drmaa-log-dir
+    argument: DIR
+    description: 'Specify a directory in which stdout and stderr files of DRMAA jobs will be written. The value may be given as a relative path, in which case Snakemake will use the current invocation directory as the origin. If given, this will override any given ''-o'' and/or ''-e'' native specification. If not given, all DRMAA stdout and stderr files are written to the current working directory. (default: None)'
+  - names:
+      - --kubernetes
+    argument: '[NAMESPACE]'
+    description: 'Execute workflow in a kubernetes cluster (in the cloud). NAMESPACE is the namespace you want to use for your job (if nothing specified: ''default''). Usually, this requires --default-remote-provider and --defaultremote-prefix to be set to a S3 or GS bucket where your . data shall be stored. It is further advisable to activate conda integration via --use-conda. (default: None)'
+  - names:
+      - --container-image
+    argument: IMAGE
+    description: 'Docker image to use, e.g., when submitting jobs to kubernetes Defaults to ''https://hub.docker.com/r/snakemake/snakemake'', tagged with the same version as the currently running Snakemake instance. Note that overwriting this value is up to your responsibility. Any used image has to contain a working snakemake installation that is compatible with (or ideally the same as) the currently running version. (default: None)'
+  - names:
+      - --tibanna
+    argument: ""
+    description: 'Execute workflow on AWS cloud using Tibanna. This requires --default-remote-prefix to be set to S3 bucket name and prefix (e.g. ''bucketname/subdirectory'') where input is already stored and output will be sent to. Using --tibanna implies --default-resources is set as default. Optionally, use --precommand to specify any preparation command to run before snakemake command on the cloud (inside snakemake container on Tibanna VM). Also, --use-conda, --use-singularity, --config, --configfile are supported and will be carried over. (default: False)'
+  - names:
+      - --tibanna-sfn
+    argument: TIBANNA_SFN
+    description: 'Name of Tibanna Unicorn step function (e.g. tibanna_unicorn_monty).This works as serverless scheduler/resource allocator and must be deployed first using tibanna cli. (e.g. tibanna deploy_unicorn --usergroup=monty --buckets=bucketname) (default: None)'
+  - names:
+      - --precommand
+    argument: PRECOMMAND
+    description: 'Any command to execute before snakemake command on AWS cloud such as wget, git clone, unzip, etc. This is used with --tibanna.Do not include input/output download/upload commands - file transfer between S3 bucket and the run environment (container) is automatically handled by Tibanna. (default: None)'
+  - names:
+      - --tibanna-config
+    argument: TIBANNA_CONFIG [TIBANNA_CONFIG ...]
+    description: 'Additional tibanna config e.g. --tibanna-config spot_instance=true subnet=<subnet_id> security group=<security_group_id> (default: None)'
+  - names:
+      - --google-lifesciences
+    argument: ""
+    description: 'Execute workflow on Google Cloud cloud using the Google Life. Science API. This requires default application credentials (json) to be created and export to the environment to use Google Cloud Storage, Compute Engine, and Life Sciences. The credential file should be exported as GOOGLE_APPLICATION_CREDENTIALS for snakemake to discover. Also, --use-conda, --usesingularity, --config, --configfile are supported and will be carried over. (default: False)'
+  - names:
+      - --google-lifesciences-regions
+    argument: GOOGLE_LIFESCIENCES_REGIONS [GOOGLE_LIFESCIENCES_REGIONS ...]
+    description: 'Specify one or more valid instance regions (defaults to US) (default: [''us-east1'', ''us-west1'', ''uscentral1''])'
+  - names:
+      - --google-lifesciences-location
+    argument: GOOGLE_LIFESCIENCES_LOCATION
+    description: 'The Life Sciences API service used to schedule the jobs. E.g., us-centra1 (Iowa) and europe-west2 (London) Watch the terminal output to see all options found to be available. If not specified, defaults to the first found with a matching prefix from regions specified with --google-lifesciences-regions. (default: None)'
+  - names:
+      - --google-lifesciences-keep-cache
+    argument: ""
+    description: 'Cache workflows in your Google Cloud Storage Bucket specified by --default-remote-prefix/{source}/{cache}. Each workflow working directory is compressed to a .tar.gz, named by the hash of the contents, and kept in Google Cloud Storage. By default, the caches are deleted at the shutdown step of the workflow. (default: False)'
+  - names:
+      - --tes
+    argument: URL
+    description: 'Send workflow tasks to GA4GH TES server specified by url. (default: None)'
+  - names:
+      - --use-conda
+    argument: ""
+    description: 'If defined in the rule, run job in a conda environment. If this flag is not set, the conda directive is ignored. (default: False)'
+  - names:
+      - --conda-not-block-search-path-envvars
+    argument: ""
+    description: 'Do not block environment variables that modify the search path (R_LIBS, PYTHONPATH, PERL5LIB, PERLLIB) when using conda environments. (default: False)'
+  - names:
+      - --list-conda-envs
+    argument: ""
+    description: 'List all conda environments and their location on disk. (default: False)'
+  - names:
+      - --conda-prefix
+    argument: DIR
+    description: 'Specify a directory in which the ''conda'' and ''condaarchive'' directories are created. These are used to store conda environments and their archives, respectively. If not supplied, the value is set to the ''.snakemake'' directory relative to the invocation directory. If supplied, the `--use-conda` flag must also be set. The value may be given as a relative path, which will be extrapolated to the invocation directory, or as an absolute path. The value can also be provided via the environment variable $SNAKEMAKE_CONDA_PREFIX. (default: None)'
+  - names:
+      - --conda-cleanup-envs
+    argument: ""
+    description: 'Cleanup unused conda environments. (default: False)'
+  - names:
+      - --conda-cleanup-pkgs
+    argument: '[{tarballs,cache}]'
+    description: 'Cleanup conda packages after creating environments. In case of ''tarballs'' mode, will clean up all downloaded package tarballs. In case of ''cache'' mode, will additionally clean up unused package caches. If mode is omitted, will default to only cleaning up the tarballs. (default: None)'
+  - names:
+      - --conda-create-envs-only
+    argument: ""
+    description: 'If specified, only creates the job-specific conda environments then exits. The `--use-conda` flag must also be set. (default: False)'
+  - names:
+      - --conda-frontend
+    argument: '{conda,mamba}'
+    description: 'Choose the conda frontend for installing environments. Mamba is much faster and highly recommended. (default: mamba)'
+  - names:
+      - --use-singularity
+    argument: ""
+    description: 'If defined in the rule, run job within a singularity container. If this flag is not set, the singularity directive is ignored. (default: False)'
+  - names:
+      - --singularity-prefix
+    argument: DIR
+    description: 'Specify a directory in which singularity images will be stored.If not supplied, the value is set to the ''.snakemake'' directory relative to the invocation directory. If supplied, the `--use-singularity` flag must also be set. The value may be given as a relative path, which will be extrapolated to the invocation directory, or as an absolute path. (default: None)'
+  - names:
+      - --singularity-args
+    argument: ARGS
+    description: 'Pass additional args to singularity. (default: )'
+  - names:
+      - --use-envmodules
+    argument: ""
+    description: 'If defined in the rule, run job within the given environment modules, loaded in the given order. This can be combined with --use-conda and --usesingularity, which will then be only used as a fallback for rules which don''t define environment modules. (default: False)'
+subcommands:
+  - name: target
+    description: 'Targets to build. May be rules or files. (default:'
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --dry-run
+          - --dryrun
+          - -n
+        argument: ""
+        description: 'Do not execute anything, and display what would be done. If you have a very large workflow, use --dry-run --quiet to just print a summary of the DAG of jobs. (default: False)'
+      - names:
+          - --profile
+        argument: PROFILE
+        description: 'Name of profile to use for configuring Snakemake. Snakemake will search for a corresponding folder in /etc/xdg/xdg-pop/snakemake and /home/vierbein/.config/snakemake. Alternatively, this can be an absolute or relative path. The profile folder has to contain a file ''config.yaml''. This file can be used to set default values for command line options in YAML format. For example, ''--cluster qsub'' becomes ''cluster: qsub'' in the YAML file. Profiles can be obtained from https://github.com/snakemakeprofiles. The profile can also be set via the environment variable $SNAKEMAKE_PROFILE. [env var: SNAKEMAKE_PROFILE] (default: None)'
+      - names:
+          - --cache
+        argument: '[RULE [RULE ...]]'
+        description: 'Store output files of given rules in a central cache given by the environment variable $SNAKEMAKE_OUTPUT_CACHE. Likewise, retrieve output files of the given rules from this cache if they have been created before (by anybody writing to the same cache), instead of actually executing the rules. Output files are identified by hashing all steps, parameters and software stack (conda envs or containers) needed to create them. (default: None)'
+      - names:
+          - --snakefile
+          - -s
+        argument: FILE
+        description: 'The workflow definition in form of a snakefile.Usually, you should not need to specify this. By default, Snakemake will search for ''Snakefile'', ''snakefile'', ''workflow/Snakefile'', ''workflow/snakefile'' beneath the current working directory, in this order. Only if you definitely want a different layout, you need to use this parameter. (default: None)'
+      - names:
+          - --cores
+          - -c
+        argument: '[N]'
+        description: 'Use at most N CPU cores/jobs in parallel. If N is omitted or ''all'', the limit is set to the number of available CPU cores. In case of cluster/cloud execution, this argument sets the number of total cores used over all jobs (made available to rules via workflow.cores). (default: None)'
+      - names:
+          - --jobs
+          - -j
+        argument: '[N]'
+        description: 'Use at most N CPU cluster/cloud jobs in parallel. For local execution this is an alias for --cores. (default: None)'
+      - names:
+          - --local-cores
+        argument: "N"
+        description: 'In cluster/cloud mode, use at most N cores of the host machine in parallel (default: number of CPU cores of the host). The cores are used to execute local rules. This option is ignored when not in cluster/cloud mode. (default: 4)'
+      - names:
+          - --resources
+        argument: '[NAME=INT'
+        description: '[NAME=INT ...]], --res [NAME=INT [NAME=INT ...]] Define additional resources that shall constrain the scheduling analogously to threads (see above). A resource is defined as a name and an integer value. E.g. --resources mem_mb=1000. Rules can use resources by defining the resource keyword, e.g. resources: mem_mb=600. If now two rules require 600 of the resource ''mem_mb'' they won''t be run in parallel by the scheduler. (default: None)'
+      - names:
+          - --set-threads
+        argument: RULE=THREADS [RULE=THREADS ...]
+        description: 'Overwrite thread usage of rules. This allows to finetune workflow parallelization. In particular, this is helpful to target certain cluster nodes by e.g. shifting a rule to use more, or less threads than defined in the workflow. Thereby, THREADS has to be a positive integer, and RULE has to be the name of the rule. (default: None)'
+      - names:
+          - --max-threads
+        argument: MAX_THREADS
+        description: 'Define a global maximum number of threads for any job. This can be helpful in a cluster/cloud setting, when you want to restrict the maximum number of requested threads without modifying the workflow definition or overwriting them invidiually with --set-threads. (default: None)'
+      - names:
+          - --set-resources
+        argument: RULE:RESOURCE=VALUE [RULE:RESOURCE=VALUE ...]
+        description: 'Overwrite resource usage of rules. This allows to fine-tune workflow resources. In particular, this is helpful to target certain cluster nodes by e.g. defining a certain partition for a rule, or overriding a temporary directory. Thereby, VALUE has to be a positive integer or a string, RULE has to be the name of the rule, and RESOURCE has to be the name of the resource. (default: None)'
+      - names:
+          - --set-scatter
+        argument: NAME=SCATTERITEMS [NAME=SCATTERITEMS ...]
+        description: 'Overwrite number of scatter items of scattergather processes. This allows to fine-tune workflow parallelization. Thereby, SCATTERITEMS has to be a positive integer, and NAME has to be the name of the scattergather process defined via a scattergather directive in the workflow. (default: None)'
+      - names:
+          - --default-resources
+        argument: '[N'
+        description: 'AME=INT [NAME=INT ...]], --default-res [NAME=INT [NAME=INT ...]] Define default values of resources for rules that do not define their own values. In addition to plain integers, python expressions over inputsize are allowed (e.g. ''2*input.size_mb'').When specifying this without any arguments (--default-resources), it defines ''mem_mb=max(2*input.size_mb, 1000)'' ''disk_mb=max(2*input.size_mb, 1000)'' i.e., default disk and mem usage is twice the input file size but at least 1GB.In addition, the system temporary directory (as given by $TMPDIR, $TEMP, or $TMP) is used for the tmpdir resource. The tmpdir resource is automatically used by shell commands, scripts and wrappers to store temporary data (as it is mirrored into $TMPDIR, $TEMP, and $TMP for the executed subprocesses). If this argument is not specified at all, Snakemake just uses the tmpdir resource as outlined above. (default: None)'
+      - names:
+          - --preemption-default
+        argument: PREEMPTION_DEFAULT
+        description: 'A preemptible instance can be requested when using the Google Life Sciences API. If you set a --preemptiondefault,all rules will be subject to the default. Specifically, this integer is the number of restart attempts that will be made given that the instance is killed unexpectedly. Note that preemptible instances have a maximum running time of 24 hours. If you want to set preemptible instances for only a subset of rules, use --preemptible-rules instead. (default: None)'
+      - names:
+          - --preemptible-rules
+        argument: PREEMPTIBLE_RULES [PREEMPTIBLE_RULES ...]
+        description: 'A preemptible instance can be requested when using the Google Life Sciences API. If you want to use these instances for a subset of your rules, you can use --preemptible-rules and then specify a list of rule and integer pairs, where each integer indicates the number of restarts to use for the rule''s instance in the case that the instance is terminated unexpectedly. --preemptible-rules can be used in combination with --preemption-default, and will take priority. Note that preemptible instances have a maximum running time of 24. If you want to apply a consistent number of retries across all your rules, use --premption-default instead. Example: snakemake --preemption-default 10 --preemptible-rules map_reads=3 call_variants=0 (default: None)'
+      - names:
+          - --config
+          - -C
+        argument: '[KEY=VALUE [KEY=VALUE ...]]'
+        description: 'Set or overwrite values in the workflow config object. The workflow config object is accessible as variable config inside the workflow. Default values can be set by providing a JSON file (see Documentation). (default: None)'
+      - names:
+          - --configfile
+          - --configfiles
+        argument: FILE [FILE ...]
+        description: 'Specify or overwrite the config file of the workflow (see the docs). Values specified in JSON or YAML format are available in the global config dictionary inside the workflow. Multiple files overwrite each other in the given order. Thereby missing keys in previous config files are extended by following configfiles. Note that this order also includes a config file defined in the workflow definition itself (which will come first). (default: None)'
+      - names:
+          - --envvars
+        argument: VARNAME [VARNAME ...]
+        description: 'Environment variables to pass to cloud jobs. (default: None)'
+      - names:
+          - --directory
+          - -d
+        argument: DIR
+        description: 'Specify working directory (relative paths in the snakefile will use this as their origin). (default: None)'
+      - names:
+          - --touch
+          - -t
+        argument: ""
+        description: 'Touch output files (mark them up to date without really changing them) instead of running their commands. This is used to pretend that the rules were executed, in order to fool future invocations of snakemake. Fails if a file does not yet exist. Note that this will only touch files that would otherwise be recreated by Snakemake (e.g. because their input files are newer). For enforcing a touch, combine this with --force, --forceall, or --forcerun. Note however that you loose the provenance information when the files have been created in realitiy. Hence, this should be used only as a last resort. (default: False)'
+      - names:
+          - --keep-going
+          - -k
+        argument: ""
+        description: 'Go on with independent jobs if a job fails. (default: False)'
+      - names:
+          - --force
+          - -f
+        argument: ""
+        description: 'Force the execution of the selected target or the first rule regardless of already created output. (default: False)'
+      - names:
+          - --forceall
+          - -F
+        argument: ""
+        description: 'Force the execution of the selected (or the first) rule and all rules it is dependent on regardless of already created output. (default: False)'
+      - names:
+          - --forcerun
+          - -R
+        argument: '[TARGET [TARGET ...]]'
+        description: 'Force the re-execution or creation of the given rules or files. Use this option if you changed a rule and want to have all its output in your workflow updated. (default: None)'
+      - names:
+          - --prioritize
+          - -P
+        argument: TARGET [TARGET ...]
+        description: 'Tell the scheduler to assign creation of given targets (and all their dependencies) highest priority. (EXPERIMENTAL) (default: None)'
+      - names:
+          - --batch
+        argument: RULE=BATCH/BATCHES
+        description: 'Only create the given BATCH of the input files of the given RULE. This can be used to iteratively run parts of very large workflows. Only the execution plan of the relevant part of the workflow has to be calculated, thereby speeding up DAG computation. It is recommended to provide the most suitable rule for batching when documenting a workflow. It should be some aggregating rule that would be executed only once, and has a large number of input files. For example, it can be a rule that aggregates over samples. (default: None)'
+      - names:
+          - --until
+          - -U
+        argument: TARGET [TARGET ...]
+        description: 'Runs the pipeline until it reaches the specified rules or files. Only runs jobs that are dependencies of the specified rule or files, does not run sibling DAGs. (default: None)'
+      - names:
+          - --omit-from
+          - -O
+        argument: TARGET [TARGET ...]
+        description: 'Prevent the execution or creation of the given rules or files as well as any rules or files that are downstream of these targets in the DAG. Also runs jobs in sibling DAGs that are independent of the rules or files specified here. (default: None)'
+      - names:
+          - --rerun-incomplete
+          - --ri
+        argument: ""
+        description: 'Re-run all jobs the output of which is recognized as incomplete. (default: False)'
+      - names:
+          - --shadow-prefix
+        argument: DIR
+        description: 'Specify a directory in which the ''shadow'' directory is created. If not supplied, the value is set to the ''.snakemake'' directory relative to the working directory. (default: None)'
+      - names:
+          - --scheduler
+        argument: '[{ilp,greedy}]'
+        description: 'Specifies if jobs are selected by a greedy algorithm or by solving an ilp. The ilp scheduler aims to reduce runtime and hdd usage by best possible use of resources. (default: ilp)'
+      - names:
+          - --wms-monitor
+        argument: '[WMS_MONITOR]'
+        description: 'IP and port of workflow management system to monitor the execution of snakemake (e.g. http://127.0.0.1:5000) Note that if your service requires an authorization token, you must export WMS_MONITOR_TOKEN in the environment. (default: None)'
+      - names:
+          - --wms-monitor-arg
+        argument: '[NAME=VALUE [NAME=VALUE ...]]'
+        description: 'If the workflow management service accepts extra arguments, provide. them in key value pairs with --wms-monitor-arg. For example, to run an existing workflow using a wms monitor, you can provide the pair id=12345 and the arguments will be provided to the endpoint to first interact with the workflow (default: None)'
+      - names:
+          - --scheduler-ilp-solver
+        argument: '{COIN_CMD}'
+        description: 'Specifies solver to be utilized when selecting ilpscheduler. (default: COIN_CMD)'
+      - names:
+          - --scheduler-solver-path
+        argument: SCHEDULER_SOLVER_PATH
+        description: 'Set the PATH to search for scheduler solver binaries (internal use only). (default: None)'
+      - names:
+          - --conda-base-path
+        argument: CONDA_BASE_PATH
+        description: 'Path of conda base installation (home of conda, mamba, activate) (internal use only). (default: None)'
+      - names:
+          - --no-subworkflows
+          - --nosw
+        argument: ""
+        description: 'Do not evaluate or execute subworkflows. (default: False)'
+      - names:
+          - --groups
+        argument: GROUPS [GROUPS ...]
+        description: 'Assign rules to groups (this overwrites any group definitions from the workflow). (default: None)'
+      - names:
+          - --group-components
+        argument: GROUP_COMPONENTS [GROUP_COMPONENTS ...]
+        description: 'Set the number of connected components a group is allowed to span. By default, this is 1, but this flag allows to extend this. This can be used to run e.g. 3 jobs of the same rule in the same group, although they are not connected. It can be helpful for putting together many small jobs or benefitting of shared memory setups. (default: None)'
+      - names:
+          - --report
+        argument: '[FILE]'
+        description: 'Create an HTML report with results and statistics. This can be either a .html file or a .zip file. In the former case, all results are embedded into the .html (this only works for small data). In the latter case, results are stored along with a file report.html in the zip archive. If no filename is given, an embedded report.html is the default. (default: None)'
+      - names:
+          - --report-stylesheet
+        argument: CSSFILE
+        description: 'Custom stylesheet to use for report. In particular, this can be used for branding the report with e.g. a custom logo, see docs. (default: None)'
+      - names:
+          - --draft-notebook
+        argument: TARGET
+        description: 'Draft a skeleton notebook for the rule used to generate the given target file. This notebook can then be opened in a jupyter server, exeucted and implemented until ready. After saving, it will automatically be reused in non-interactive mode by Snakemake for subsequent jobs. (default: None)'
+      - names:
+          - --edit-notebook
+        argument: TARGET
+        description: 'Interactively edit the notebook associated with the rule used to generate the given target file. This will start a local jupyter notebook server. Any changes to the notebook should be saved, and the server has to be stopped by closing the notebook and hitting the ''Quit'' button on the jupyter dashboard. Afterwards, the updated notebook will be automatically stored in the path defined in the rule. If the notebook is not yet present, this will create an empty draft. (default: None)'
+      - names:
+          - --notebook-listen
+        argument: IP:PORT
+        description: 'The IP address and PORT the notebook server used for editing the notebook (--edit-notebook) will listen on. (default: localhost:8888)'
+      - names:
+          - --lint
+        argument: '[{text,json}]'
+        description: 'Perform linting on the given workflow. This will print snakemake specific suggestions to improve code quality (work in progress, more lints to be added in the future). If no argument is provided, plain text output is used. (default: None)'
+      - names:
+          - --generate-unit-tests
+        argument: '[TESTPATH]'
+        description: 'Automatically generate unit tests for each workflow rule. This assumes that all input files of each job are already present. Rules without a job with present input files will be skipped (a warning will be issued). For each rule, one test case will be created in the specified test folder (.tests/unit by default). After successfull execution, tests can be run with ''pytest TESTPATH''. (default: None)'
+      - names:
+          - --containerize
+        argument: ""
+        description: 'Print a Dockerfile that provides an execution environment for the workflow, including all conda environments. (default: False)'
+      - names:
+          - --export-cwl
+        argument: FILE
+        description: 'Compile workflow to CWL and store it in given FILE. (default: None)'
+      - names:
+          - --list
+          - -l
+        argument: ""
+        description: 'Show available rules in given Snakefile. (default: False)'
+      - names:
+          - --list-target-rules
+          - --lt
+        argument: ""
+        description: 'Show available target rules in given Snakefile. (default: False)'
+      - names:
+          - --dag
+        argument: ""
+        description: 'Do not execute anything and print the directed acyclic graph of jobs in the dot language. Recommended use on Unix systems: snakemake --dag | dot | displayNote print statements in your Snakefile may interfere with visualization. (default: False)'
+      - names:
+          - --rulegraph
+        argument: ""
+        description: 'Do not execute anything and print the dependency graph of rules in the dot language. This will be less crowded than above DAG of jobs, but also show less information. Note that each rule is displayed once, hence the displayed graph will be cyclic if a rule appears in several steps of the workflow. Use this if above option leads to a DAG that is too large. Recommended use on Unix systems: snakemake --rulegraph | dot | displayNote print statements in your Snakefile may interfere with visualization. (default: False)'
+      - names:
+          - --filegraph
+        argument: ""
+        description: 'Do not execute anything and print the dependency graph of rules with their input and output files in the dot language. This is an intermediate solution between above DAG of jobs and the rule graph. Note that each rule is displayed once, hence the displayed graph will be cyclic if a rule appears in several steps of the workflow. Use this if above option leads to a DAG that is too large. Recommended use on Unix systems: snakemake --filegraph | dot | displayNote print statements in your Snakefile may interfere with visualization. (default: False)'
+      - names:
+          - --d3dag
+        argument: ""
+        description: 'Print the DAG in D3.js compatible JSON format. (default: False)'
+      - names:
+          - --summary
+          - -S
+        argument: ""
+        description: 'Print a summary of all files created by the workflow. The has the following columns: filename, modification time, rule version, status, plan. Thereby rule version contains the versionthe file was created with (see the version keyword of rules), and status denotes whether the file is missing, its input files are newer or if version or implementation of the rule changed since file creation. Finally the last column denotes whether the file will be updated or created during the next workflow execution. (default: False)'
+      - names:
+          - --detailed-summary
+          - -D
+        argument: ""
+        description: 'Print a summary of all files created by the workflow. The has the following columns: filename, modification time, rule version, input file(s), shell command, status, plan. Thereby rule version contains the version the file was created with (see the version keyword of rules), and status denotes whether the file is missing, its input files are newer or if version or implementation of the rule changed since file creation. The input file and shell command columns are self explanatory. Finally the last column denotes whether the file will be updated or created during the next workflow execution. (default: False)'
+      - names:
+          - --archive
+        argument: FILE
+        description: 'Archive the workflow into the given tar archive FILE. The archive will be created such that the workflow can be re-executed on a vanilla system. The function needs conda and git to be installed. It will archive every file that is under git version control. Note that it is best practice to have the Snakefile, config files, and scripts under version control. Hence, they will be included in the archive. Further, it will add input files that are not generated by by the workflow itself and conda environments. Note that symlinks are dereferenced. Supported formats are .tar, .tar.gz, .tar.bz2 and .tar.xz. (default: None)'
+      - names:
+          - --cleanup-metadata
+          - --cm
+        argument: FILE [FILE ...]
+        description: 'Cleanup the metadata of given files. That means that snakemake removes any tracked version info, and any marks that files are incomplete. (default: None)'
+      - names:
+          - --cleanup-shadow
+        argument: ""
+        description: 'Cleanup old shadow directories which have not been deleted due to failures or power loss. (default: False)'
+      - names:
+          - --skip-script-cleanup
+        argument: ""
+        description: 'Don''t delete wrapper scripts used for execution (default: False)'
+      - names:
+          - --unlock
+        argument: ""
+        description: 'Remove a lock on the working directory. (default: False)'
+      - names:
+          - --list-version-changes
+          - --lv
+        argument: ""
+        description: 'List all output files that have been created with a different version (as determined by the version keyword). (default: False)'
+      - names:
+          - --list-code-changes
+          - --lc
+        argument: ""
+        description: 'List all output files for which the rule body (run or shell) have changed in the Snakefile. (default: False)'
+      - names:
+          - --list-input-changes
+          - --li
+        argument: ""
+        description: 'List all output files for which the defined input files have changed in the Snakefile (e.g. new input files were added in the rule definition or files were renamed). For listing input file modification in the filesystem, use --summary. (default: False)'
+      - names:
+          - --list-params-changes
+          - --lp
+        argument: ""
+        description: 'List all output files for which the defined params have changed in the Snakefile. (default: False)'
+      - names:
+          - --list-untracked
+          - --lu
+        argument: ""
+        description: 'List all files in the working directory that are not used in the workflow. This can be used e.g. for identifying leftover files. Hidden files and directories are ignored. (default: False)'
+      - names:
+          - --delete-all-output
+        argument: ""
+        description: 'Remove all files generated by the workflow. Use together with --dry-run to list files without actually deleting anything. Note that this will not recurse into subworkflows. Write-protected files are not removed. Nevertheless, use with care! (default: False)'
+      - names:
+          - --delete-temp-output
+        argument: ""
+        description: 'Remove all temporary files generated by the workflow. Use together with --dry-run to list files without actually deleting anything. Note that this will not recurse into subworkflows. (default: False)'
+      - names:
+          - --bash-completion
+        argument: ""
+        description: 'Output code to register bash completion for snakemake. Put the following in your .bashrc (including the accents): `snakemake --bash-completion` or issue it in an open terminal session. (default: False)'
+      - names:
+          - --keep-incomplete
+        argument: ""
+        description: 'Do not remove incomplete output files by failed jobs. (default: False)'
+      - names:
+          - --drop-metadata
+        argument: ""
+        description: 'Drop metadata file tracking information after job finishes. Provenance-information based reports (e.g. --report and the --list_x_changes functions) will be empty or incomplete. (default: False)'
+      - names:
+          - --version
+          - -v
+        argument: ""
+        description: show program's version number and exit
+      - names:
+          - --reason
+          - -r
+        argument: ""
+        description: 'Print the reason for each executed rule. (default: False)'
+      - names:
+          - --gui
+        argument: '[PORT]'
+        description: 'Serve an HTML based user interface to the given network and port e.g. 168.129.10.15:8000. By default Snakemake is only available in the local network (default port: 8000). To make Snakemake listen to all ip addresses add the special host address 0.0.0.0 to the url (0.0.0.0:8000). This is important if Snakemake is used in a virtualised environment like Docker. If possible, a browser window is opened. (default: None)'
+      - names:
+          - --printshellcmds
+          - -p
+        argument: ""
+        description: 'Print out the shell commands that will be executed. (default: False)'
+      - names:
+          - --debug-dag
+        argument: ""
+        description: 'Print candidate and selected jobs (including their wildcards) while inferring DAG. This can help to debug unexpected DAG topology or errors. (default: False)'
+      - names:
+          - --stats
+        argument: FILE
+        description: 'Write stats about Snakefile execution in JSON format to the given file. (default: None)'
+      - names:
+          - --nocolor
+        argument: ""
+        description: 'Do not use a colored output. (default: False)'
+      - names:
+          - --quiet
+          - -q
+        argument: ""
+        description: 'Do not output any progress or rule information. (default: False)'
+      - names:
+          - --print-compilation
+        argument: ""
+        description: 'Print the python representation of the workflow. (default: False)'
+      - names:
+          - --verbose
+        argument: ""
+        description: 'Print debugging output. (default: False)'
+      - names:
+          - --force-use-threads
+        argument: ""
+        description: 'Force threads rather than processes. Helpful if shared memory (/dev/shm) is full or unavailable. (default: False)'
+      - names:
+          - --allow-ambiguity
+          - -a
+        argument: ""
+        description: 'Don''t check for ambiguous rules and simply use the first if several can produce the same file. This allows the user to prioritize rules by their order in the snakefile. (default: False)'
+      - names:
+          - --nolock
+        argument: ""
+        description: 'Do not lock the working directory (default: False)'
+      - names:
+          - --ignore-incomplete
+          - --ii
+        argument: ""
+        description: 'Do not check for incomplete output files. (default: False)'
+      - names:
+          - --max-inventory-time
+        argument: SECONDS
+        description: 'Spend at most SECONDS seconds to create a file inventory for the working directory. The inventory vastly speeds up file modification and existence checks when computing which jobs need to be executed. However, creating the inventory itself can be slow, e.g. on network file systems. Hence, we do not spend more than a given amount of time and fall back to individual checks for the rest. (default: 20)'
+      - names:
+          - --latency-wait
+          - --output-wait
+          - -w
+        argument: SECONDS
+        description: 'Wait given seconds if an output file of a job is not present after the job finished. This helps if your filesystem suffers from latency (default 5). (default: 5)'
+      - names:
+          - --wait-for-files
+        argument: '[FILE [FILE ...]]'
+        description: 'Wait --latency-wait seconds for these files to be present before executing the workflow. This option is used internally to handle filesystem latency in cluster environments. (default: None)'
+      - names:
+          - --wait-for-files-file
+        argument: FILE
+        description: 'Same behaviour as --wait-for-files, but file list is stored in file instead of being passed on the commandline. This is useful when the list of files is too long to be passed on the commandline. (default: None)'
+      - names:
+          - --notemp
+          - --nt
+        argument: ""
+        description: 'Ignore temp() declarations. This is useful when running only a part of the workflow, since temp() would lead to deletion of probably needed files by other parts of the workflow. (default: False)'
+      - names:
+          - --all-temp
+        argument: ""
+        description: 'Mark all output files as temp files. This can be useful for CI testing, in order to save space. (default: False)'
+      - names:
+          - --keep-remote
+        argument: ""
+        description: 'Keep local copies of remote input files. (default: False)'
+      - names:
+          - --keep-target-files
+        argument: ""
+        description: 'Do not adjust the paths of given target files relative to the working directory. (default: False)'
+      - names:
+          - --allowed-rules
+        argument: ALLOWED_RULES [ALLOWED_RULES ...]
+        description: 'Only consider given rules. If omitted, all rules in Snakefile are used. Note that this is intended primarily for internal use and may lead to unexpected results otherwise. (default: None)'
+      - names:
+          - --max-jobs-per-second
+        argument: MAX_JOBS_PER_SECOND
+        description: 'Maximal number of cluster/drmaa jobs per second, default is 10, fractions allowed. (default: 10)'
+      - names:
+          - --max-status-checks-per-second
+        argument: MAX_STATUS_CHECKS_PER_SECOND
+        description: 'Maximal number of job status checks per second, default is 10, fractions allowed. (default: 10)'
+      - names:
+          - -T
+          - --restart-times
+        argument: RESTART_TIMES
+        description: 'Number of times to restart failing jobs (defaults to 0). (default: 0)'
+      - names:
+          - --attempt
+        argument: ATTEMPT
+        description: 'Internal use only: define the initial value of the attempt parameter (default: 1). (default: 1)'
+      - names:
+          - --wrapper-prefix
+        argument: WRAPPER_PREFIX
+        description: 'Prefix for URL created from wrapper directive (default: https://github.com/snakemake/snakemakewrappers/raw/). Set this to a different URL to use your fork or a local clone of the repository, e.g., use a git URL like ''git+file://path/to/your/local/clone@''. (default: https://github.com/snakemake/snakemake-wrappers/raw/)'
+      - names:
+          - --default-remote-provider
+        argument: '{S3,GS,FTP,SFTP,S3Mocked,gfal,gridftp,iRODS,AzBlob,XRootD}'
+        description: 'Specify default remote provider to be used for all input and output files that don''t yet specify one. (default: None)'
+      - names:
+          - --default-remote-prefix
+        argument: DEFAULT_REMOTE_PREFIX
+        description: 'Specify prefix for default remote provider. E.g. a bucket name. (default: )'
+      - names:
+          - --no-shared-fs
+        argument: ""
+        description: 'Do not assume that jobs share a common file system. When this flag is activated, Snakemake will assume that the filesystem on a cluster node is not shared with other nodes. For example, this will lead to downloading remote files on each cluster node separately. Further, it won''t take special measures to deal with filesystem latency issues. This option will in most cases only make sense in combination with --default-remote-provider. Further, when using --cluster you will have to also provide --clusterstatus. Only activate this if you know what you are doing. (default: False)'
+      - names:
+          - --greediness
+        argument: GREEDINESS
+        description: 'Set the greediness of scheduling. This value between 0 and 1 determines how careful jobs are selected for execution. The default value (1.0) provides the best speed and still acceptable scheduling quality. (default: None)'
+      - names:
+          - --no-hooks
+        argument: ""
+        description: 'Do not invoke onstart, onsuccess or onerror hooks after execution. (default: False)'
+      - names:
+          - --overwrite-shellcmd
+        argument: OVERWRITE_SHELLCMD
+        description: 'Provide a shell command that shall be executed instead of those given in the workflow. This is for debugging purposes only. (default: None)'
+      - names:
+          - --debug
+        argument: ""
+        description: 'Allow to debug rules with e.g. PDB. This flag allows to set breakpoints in run blocks. (default: False)'
+      - names:
+          - --runtime-profile
+        argument: FILE
+        description: 'Profile Snakemake and write the output to FILE. This requires yappi to be installed. (default: None)'
+      - names:
+          - --mode
+        argument: '{0,1,2}'
+        description: 'Set execution mode of Snakemake (internal use only). (default: 0)'
+      - names:
+          - --show-failed-logs
+        argument: ""
+        description: 'Automatically display logs of failed jobs. (default: False)'
+      - names:
+          - --log-handler-script
+        argument: FILE
+        description: 'Provide a custom script containing a function ''def log_handler(msg):''. Snakemake will call this function for every logging output (given as a dictionary msg)allowing to e.g. send notifications in the form of e.g. slack messages or emails. (default: None)'
+      - names:
+          - --log-service
+        argument: '{none,slack,wms}'
+        description: 'Set a specific messaging service for logging output.Snakemake will notify the service on errors and completed execution.Currently slack and workflow management system (wms) are supported. (default: None)'
+      - names:
+          - --cluster
+        argument: CMD
+        description: 'Execute snakemake rules with the given submit command, e.g. qsub. Snakemake compiles jobs into scripts that are submitted to the cluster with the given command, once all input files for a particular job are present. The submit command can be decorated to make it aware of certain job properties (name, rulename, input, output, params, wildcards, log, threads and dependencies (see the argument below)), e.g.: $ snakemake --cluster ''qsub -pe threaded {threads}''. (default: None)'
+      - names:
+          - --cluster-sync
+        argument: CMD
+        description: 'cluster submission command will block, returning the remote exitstatus upon remote termination (for example, this should be usedif the cluster command is ''qsub -sync y'' (SGE) (default: None)'
+      - names:
+          - --drmaa
+        argument: '[ARGS]'
+        description: 'Execute snakemake on a cluster accessed via DRMAA, Snakemake compiles jobs into scripts that are submitted to the cluster with the given command, once all input files for a particular job are present. ARGS can be used to specify options of the underlying cluster system, thereby using the job properties name, rulename, input, output, params, wildcards, log, threads and dependencies, e.g.: --drmaa '' -pe threaded {threads}''. Note that ARGS must be given in quotes and with a leading whitespace. (default: None)'
+      - names:
+          - --cluster-config
+          - -u
+        argument: FILE
+        description: 'A JSON or YAML file that defines the wildcards used in ''cluster''for specific rules, instead of having them specified in the Snakefile. For example, for rule ''job'' you may define: { ''job'' : { ''time'' : ''24:00:00'' } } to specify the time for rule ''job''. You can specify more than one file. The configuration files are merged with later values overriding earlier ones. This option is deprecated in favor of using --profile, see docs. (default: [])'
+      - names:
+          - --immediate-submit
+          - --is
+        argument: ""
+        description: 'Immediately submit all jobs to the cluster instead of waiting for present input files. This will fail, unless you make the cluster aware of job dependencies, e.g. via: $ snakemake --cluster ''sbatch --dependency {dependencies}. Assuming that your submit script (here sbatch) outputs the generated job id to the first stdout line, {dependencies} will be filled with space separated job ids this job depends on. (default: False)'
+      - names:
+          - --jobscript
+          - --js
+        argument: SCRIPT
+        description: 'Provide a custom job script for submission to the cluster. The default script resides as ''jobscript.sh'' in the installation directory. (default: None)'
+      - names:
+          - --jobname
+          - --jn
+        argument: NAME
+        description: 'Provide a custom name for the jobscript that is submitted to the cluster (see --cluster). NAME is "snakejob.{name}.{jobid}.sh" per default. The wildcard {jobid} has to be present in the name. (default: snakejob.{name}.{jobid}.sh)'
+      - names:
+          - --cluster-status
+        argument: CLUSTER_STATUS
+        description: 'Status command for cluster execution. This is only considered in combination with the --cluster flag. If provided, Snakemake will use the status command to determine if a job has finished successfully or failed. For this it is necessary that the submit command provided to --cluster returns the cluster job id. Then, the status command will be invoked with the job id. Snakemake expects it to return ''success'' if the job was successfull, ''failed'' if the job failed and ''running'' if the job still runs. (default: None)'
+      - names:
+          - --drmaa-log-dir
+        argument: DIR
+        description: 'Specify a directory in which stdout and stderr files of DRMAA jobs will be written. The value may be given as a relative path, in which case Snakemake will use the current invocation directory as the origin. If given, this will override any given ''-o'' and/or ''-e'' native specification. If not given, all DRMAA stdout and stderr files are written to the current working directory. (default: None)'
+      - names:
+          - --kubernetes
+        argument: '[NAMESPACE]'
+        description: 'Execute workflow in a kubernetes cluster (in the cloud). NAMESPACE is the namespace you want to use for your job (if nothing specified: ''default''). Usually, this requires --default-remote-provider and --defaultremote-prefix to be set to a S3 or GS bucket where your . data shall be stored. It is further advisable to activate conda integration via --use-conda. (default: None)'
+      - names:
+          - --container-image
+        argument: IMAGE
+        description: 'Docker image to use, e.g., when submitting jobs to kubernetes Defaults to ''https://hub.docker.com/r/snakemake/snakemake'', tagged with the same version as the currently running Snakemake instance. Note that overwriting this value is up to your responsibility. Any used image has to contain a working snakemake installation that is compatible with (or ideally the same as) the currently running version. (default: None)'
+      - names:
+          - --tibanna
+        argument: ""
+        description: 'Execute workflow on AWS cloud using Tibanna. This requires --default-remote-prefix to be set to S3 bucket name and prefix (e.g. ''bucketname/subdirectory'') where input is already stored and output will be sent to. Using --tibanna implies --default-resources is set as default. Optionally, use --precommand to specify any preparation command to run before snakemake command on the cloud (inside snakemake container on Tibanna VM). Also, --use-conda, --use-singularity, --config, --configfile are supported and will be carried over. (default: False)'
+      - names:
+          - --tibanna-sfn
+        argument: TIBANNA_SFN
+        description: 'Name of Tibanna Unicorn step function (e.g. tibanna_unicorn_monty).This works as serverless scheduler/resource allocator and must be deployed first using tibanna cli. (e.g. tibanna deploy_unicorn --usergroup=monty --buckets=bucketname) (default: None)'
+      - names:
+          - --precommand
+        argument: PRECOMMAND
+        description: 'Any command to execute before snakemake command on AWS cloud such as wget, git clone, unzip, etc. This is used with --tibanna.Do not include input/output download/upload commands - file transfer between S3 bucket and the run environment (container) is automatically handled by Tibanna. (default: None)'
+      - names:
+          - --tibanna-config
+        argument: TIBANNA_CONFIG [TIBANNA_CONFIG ...]
+        description: 'Additional tibanna config e.g. --tibanna-config spot_instance=true subnet=<subnet_id> security group=<security_group_id> (default: None)'
+      - names:
+          - --google-lifesciences
+        argument: ""
+        description: 'Execute workflow on Google Cloud cloud using the Google Life. Science API. This requires default application credentials (json) to be created and export to the environment to use Google Cloud Storage, Compute Engine, and Life Sciences. The credential file should be exported as GOOGLE_APPLICATION_CREDENTIALS for snakemake to discover. Also, --use-conda, --usesingularity, --config, --configfile are supported and will be carried over. (default: False)'
+      - names:
+          - --google-lifesciences-regions
+        argument: GOOGLE_LIFESCIENCES_REGIONS [GOOGLE_LIFESCIENCES_REGIONS ...]
+        description: 'Specify one or more valid instance regions (defaults to US) (default: [''us-east1'', ''us-west1'', ''uscentral1''])'
+      - names:
+          - --google-lifesciences-location
+        argument: GOOGLE_LIFESCIENCES_LOCATION
+        description: 'The Life Sciences API service used to schedule the jobs. E.g., us-centra1 (Iowa) and europe-west2 (London) Watch the terminal output to see all options found to be available. If not specified, defaults to the first found with a matching prefix from regions specified with --google-lifesciences-regions. (default: None)'
+      - names:
+          - --google-lifesciences-keep-cache
+        argument: ""
+        description: 'Cache workflows in your Google Cloud Storage Bucket specified by --default-remote-prefix/{source}/{cache}. Each workflow working directory is compressed to a .tar.gz, named by the hash of the contents, and kept in Google Cloud Storage. By default, the caches are deleted at the shutdown step of the workflow. (default: False)'
+      - names:
+          - --tes
+        argument: URL
+        description: 'Send workflow tasks to GA4GH TES server specified by url. (default: None)'
+      - names:
+          - --use-conda
+        argument: ""
+        description: 'If defined in the rule, run job in a conda environment. If this flag is not set, the conda directive is ignored. (default: False)'
+      - names:
+          - --conda-not-block-search-path-envvars
+        argument: ""
+        description: 'Do not block environment variables that modify the search path (R_LIBS, PYTHONPATH, PERL5LIB, PERLLIB) when using conda environments. (default: False)'
+      - names:
+          - --list-conda-envs
+        argument: ""
+        description: 'List all conda environments and their location on disk. (default: False)'
+      - names:
+          - --conda-prefix
+        argument: DIR
+        description: 'Specify a directory in which the ''conda'' and ''condaarchive'' directories are created. These are used to store conda environments and their archives, respectively. If not supplied, the value is set to the ''.snakemake'' directory relative to the invocation directory. If supplied, the `--use-conda` flag must also be set. The value may be given as a relative path, which will be extrapolated to the invocation directory, or as an absolute path. The value can also be provided via the environment variable $SNAKEMAKE_CONDA_PREFIX. (default: None)'
+      - names:
+          - --conda-cleanup-envs
+        argument: ""
+        description: 'Cleanup unused conda environments. (default: False)'
+      - names:
+          - --conda-cleanup-pkgs
+        argument: '[{tarballs,cache}]'
+        description: 'Cleanup conda packages after creating environments. In case of ''tarballs'' mode, will clean up all downloaded package tarballs. In case of ''cache'' mode, will additionally clean up unused package caches. If mode is omitted, will default to only cleaning up the tarballs. (default: None)'
+      - names:
+          - --conda-create-envs-only
+        argument: ""
+        description: 'If specified, only creates the job-specific conda environments then exits. The `--use-conda` flag must also be set. (default: False)'
+      - names:
+          - --conda-frontend
+        argument: '{conda,mamba}'
+        description: 'Choose the conda frontend for installing environments. Mamba is much faster and highly recommended. (default: mamba)'
+      - names:
+          - --use-singularity
+        argument: ""
+        description: 'If defined in the rule, run job within a singularity container. If this flag is not set, the singularity directive is ignored. (default: False)'
+      - names:
+          - --singularity-prefix
+        argument: DIR
+        description: 'Specify a directory in which singularity images will be stored.If not supplied, the value is set to the ''.snakemake'' directory relative to the invocation directory. If supplied, the `--use-singularity` flag must also be set. The value may be given as a relative path, which will be extrapolated to the invocation directory, or as an absolute path. (default: None)'
+      - names:
+          - --singularity-args
+        argument: ARGS
+        description: 'Pass additional args to singularity. (default: )'
+      - names:
+          - --use-envmodules
+        argument: ""
+        description: 'If defined in the rule, run job within the given environment modules, loaded in the given order. This can be combined with --use-conda and --usesingularity, which will then be only used as a fallback for rules which don''t define environment modules. (default: False)'

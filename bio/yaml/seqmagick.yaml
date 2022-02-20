@@ -1,0 +1,553 @@
+name: seqmagick
+description: seqmagick
+options:
+  - names:
+      - -h
+      - --help
+    argument: ""
+    description: show this help message and exit
+  - names:
+      - -V
+      - --version
+    argument: ""
+    description: Print the version number and exit
+  - names:
+      - -v
+      - --verbose
+    argument: ""
+    description: Be more verbose. Specify -vv or -vvv for even more
+  - names:
+      - -q
+      - --quiet
+    argument: ""
+    description: Suppress output
+subcommands:
+  - name: convert
+    description: Convert between sequence formats
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --alphabet
+        argument: '{dna,dna-ambiguous,rna,rna-ambiguous,protein}'
+        description: Input alphabet. Required for writing NEXUS.
+      - names:
+          - --line-wrap
+        argument: "N"
+        description: Adjust line wrap for sequence strings. When N is 0, all line breaks are removed. Only fasta files are supported for the output format.
+      - names:
+          - --sort
+        argument: '{length-asc,length-desc,name-asc,name-desc}'
+        description: Perform sorting by length or name, ascending or descending. ASCII sorting is performed for names
+      - names:
+          - --cut
+        argument: start:end[,start2:end2]
+        description: 'Keep only the residues within the 1-indexed start and end positions specified, : separated. Includes last item. Start or end can be left unspecified to indicate start/end of sequence. A negative start may be provided to indicate an offset from the end of the sequence. Note that to prevent negative numbers being interpreted as flags, this should be written with an equals sign between `--cut` and the argument, e.g.: `--cut=-10:`'
+      - names:
+          - --relative-to
+        argument: ID
+        description: Apply --cut relative to the indexes of non-gap residues in sequence identified by ID
+      - names:
+          - --drop
+        argument: start:end[,start2:end2]
+        description: Remove the residues at the specified indices. Same format as `--cut`.
+      - names:
+          - --dash-gap
+        argument: ""
+        description: Replace any of the characters "?.:~" with a "-" for all sequences
+      - names:
+          - --lower
+        argument: ""
+        description: Translate the sequences to lower case
+      - names:
+          - --mask
+        argument: start1:end1[,start2:end2]
+        description: Replace residues in 1-indexed slice with gapcharacters. If --relative-to is also specified, coordinates are relative to the sequence ID provided.
+      - names:
+          - --reverse
+        argument: ""
+        description: Reverse the order of sites in sequences
+      - names:
+          - --reverse-complement
+        argument: ""
+        description: Convert sequences into reverse complements
+      - names:
+          - --squeeze
+        argument: ""
+        description: Remove any gaps that are present in the same position across all sequences in an alignment (equivalent to --squeeze-threshold=1.0)
+      - names:
+          - --squeeze-threshold
+        argument: PROP
+        description: Trim columns from an alignment which have gaps in least the specified proportion of sequences.
+      - names:
+          - --transcribe
+        argument: '{dna2rna,rna2dna}'
+        description: Transcription and back transcription for generic DNA and RNA. Source sequences must be the correct alphabet or this action will likely produce incorrect results.
+      - names:
+          - --translate
+        argument: '{dna2protein,rna2protein,dna2proteinstop,rna2proteinstop}'
+        description: Translate from generic DNA/RNA to proteins. Options with "stop" suffix will NOT translate through stop codons . Source sequences must be the correct alphabet or this action will likely produce incorrect results.
+      - names:
+          - --ungap
+        argument: ""
+        description: Remove gaps in the sequence alignment
+      - names:
+          - --upper
+        argument: ""
+        description: Translate the sequences to upper case
+      - names:
+          - --deduplicate-sequences
+        argument: ""
+        description: Remove any duplicate sequences by sequence content, keep the first instance seen
+      - names:
+          - --deduplicated-sequences-file
+        argument: FILE
+        description: Write all of the deduplicated sequences to a file
+      - names:
+          - --deduplicate-taxa
+        argument: ""
+        description: Remove any duplicate sequences by ID, keep the first instance seen
+      - names:
+          - --exclude-from-file
+        argument: FILE
+        description: Filter sequences, removing those sequence IDs in the specified file
+      - names:
+          - --include-from-file
+        argument: FILE
+        description: Filter sequences, keeping only those sequence IDs in the specified file
+      - names:
+          - --head
+        argument: "N"
+        description: Trim down to top N sequences. With the leading `-', print all but the last N sequences.
+      - names:
+          - --max-length
+        argument: "N"
+        description: Discard any sequences beyond the specified maximum length. This operation occurs *before* all lengthchanging options such as cut and squeeze.
+      - names:
+          - --min-length
+        argument: "N"
+        description: Discard any sequences less than the specified minimum length. This operation occurs *before* cut and squeeze.
+      - names:
+          - --min-ungapped-length
+        argument: "N"
+        description: Discard any sequences less than the specified minimum length, excluding gaps. This operation occurs *before* cut and squeeze.
+      - names:
+          - --pattern-include
+        argument: REGEX
+        description: Filter the sequences by regular expression in ID or description
+      - names:
+          - --pattern-exclude
+        argument: REGEX
+        description: Filter the sequences by regular expression in ID or description
+      - names:
+          - --prune-empty
+        argument: ""
+        description: Prune sequences containing only gaps ('-')
+      - names:
+          - --sample
+        argument: "N"
+        description: Select a random sampling of sequences
+      - names:
+          - --sample-seed
+        argument: "N"
+        description: Set random seed for sampling of sequences
+      - names:
+          - --seq-pattern-include
+        argument: REGEX
+        description: Filter the sequences by regular expression in sequence
+      - names:
+          - --seq-pattern-exclude
+        argument: REGEX
+        description: Filter the sequences by regular expression in sequence
+      - names:
+          - --tail
+        argument: "N"
+        description: Trim down to bottom N sequences. Use +N to output sequences starting with the Nth.
+      - names:
+          - --first-name
+        argument: ""
+        description: Take only the first whitespace-delimited word as the name of the sequence
+      - names:
+          - --name-suffix
+        argument: SUFFIX
+        description: Append a suffix to all IDs.
+      - names:
+          - --name-prefix
+        argument: PREFIX
+        description: Insert a prefix for all IDs.
+      - names:
+          - --pattern-replace
+        argument: search_pattern replace_pattern
+        description: Replace regex pattern "search_pattern" with "replace_pattern" in sequence ID and description
+      - names:
+          - --strip-range
+        argument: ""
+        description: Strip ranges from sequences IDs, matching </x-y>
+      - names:
+          - --input-format
+        argument: FORMAT
+        description: 'Input file format (default: determine from extension)'
+      - names:
+          - --output-format
+        argument: FORMAT
+        description: 'Output file format (default: determine from extension)'
+  - name: info
+    description: Info action
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --input-format
+        argument: INPUT_FORMAT
+        description: Input format. Overrides extension for all input files
+      - names:
+          - --out-file
+        argument: destination_file
+        description: 'Output destination. Default: STDOUT'
+      - names:
+          - --format
+        argument: '{tab,csv,align}'
+        description: Specify output format as tab-delimited, CSV or aligned in a borderless table. Default is tab-delimited if the output is directed to a file, aligned if output to the console.
+      - names:
+          - --threads
+        argument: THREADS
+        description: Number of threads (CPUs). [1]
+  - name: mogrify
+    description: Modify sequence file(s) in place.
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --alphabet
+        argument: '{dna,dna-ambiguous,rna,rna-ambiguous,protein}'
+        description: Input alphabet. Required for writing NEXUS.
+      - names:
+          - --line-wrap
+        argument: "N"
+        description: Adjust line wrap for sequence strings. When N is 0, all line breaks are removed. Only fasta files are supported for the output format.
+      - names:
+          - --sort
+        argument: '{length-asc,length-desc,name-asc,name-desc}'
+        description: Perform sorting by length or name, ascending or descending. ASCII sorting is performed for names
+      - names:
+          - --cut
+        argument: start:end[,start2:end2]
+        description: 'Keep only the residues within the 1-indexed start and end positions specified, : separated. Includes last item. Start or end can be left unspecified to indicate start/end of sequence. A negative start may be provided to indicate an offset from the end of the sequence. Note that to prevent negative numbers being interpreted as flags, this should be written with an equals sign between `--cut` and the argument, e.g.: `--cut=-10:`'
+      - names:
+          - --relative-to
+        argument: ID
+        description: Apply --cut relative to the indexes of non-gap residues in sequence identified by ID
+      - names:
+          - --drop
+        argument: start:end[,start2:end2]
+        description: Remove the residues at the specified indices. Same format as `--cut`.
+      - names:
+          - --dash-gap
+        argument: ""
+        description: Replace any of the characters "?.:~" with a "-" for all sequences
+      - names:
+          - --lower
+        argument: ""
+        description: Translate the sequences to lower case
+      - names:
+          - --mask
+        argument: start1:end1[,start2:end2]
+        description: Replace residues in 1-indexed slice with gapcharacters. If --relative-to is also specified, coordinates are relative to the sequence ID provided.
+      - names:
+          - --reverse
+        argument: ""
+        description: Reverse the order of sites in sequences
+      - names:
+          - --reverse-complement
+        argument: ""
+        description: Convert sequences into reverse complements
+      - names:
+          - --squeeze
+        argument: ""
+        description: Remove any gaps that are present in the same position across all sequences in an alignment (equivalent to --squeeze-threshold=1.0)
+      - names:
+          - --squeeze-threshold
+        argument: PROP
+        description: Trim columns from an alignment which have gaps in least the specified proportion of sequences.
+      - names:
+          - --transcribe
+        argument: '{dna2rna,rna2dna}'
+        description: Transcription and back transcription for generic DNA and RNA. Source sequences must be the correct alphabet or this action will likely produce incorrect results.
+      - names:
+          - --translate
+        argument: '{dna2protein,rna2protein,dna2proteinstop,rna2proteinstop}'
+        description: Translate from generic DNA/RNA to proteins. Options with "stop" suffix will NOT translate through stop codons . Source sequences must be the correct alphabet or this action will likely produce incorrect results.
+      - names:
+          - --ungap
+        argument: ""
+        description: Remove gaps in the sequence alignment
+      - names:
+          - --upper
+        argument: ""
+        description: Translate the sequences to upper case
+      - names:
+          - --deduplicate-sequences
+        argument: ""
+        description: Remove any duplicate sequences by sequence content, keep the first instance seen
+      - names:
+          - --deduplicated-sequences-file
+        argument: FILE
+        description: Write all of the deduplicated sequences to a file
+      - names:
+          - --deduplicate-taxa
+        argument: ""
+        description: Remove any duplicate sequences by ID, keep the first instance seen
+      - names:
+          - --exclude-from-file
+        argument: FILE
+        description: Filter sequences, removing those sequence IDs in the specified file
+      - names:
+          - --include-from-file
+        argument: FILE
+        description: Filter sequences, keeping only those sequence IDs in the specified file
+      - names:
+          - --head
+        argument: "N"
+        description: Trim down to top N sequences. With the leading `-', print all but the last N sequences.
+      - names:
+          - --max-length
+        argument: "N"
+        description: Discard any sequences beyond the specified maximum length. This operation occurs *before* all lengthchanging options such as cut and squeeze.
+      - names:
+          - --min-length
+        argument: "N"
+        description: Discard any sequences less than the specified minimum length. This operation occurs *before* cut and squeeze.
+      - names:
+          - --min-ungapped-length
+        argument: "N"
+        description: Discard any sequences less than the specified minimum length, excluding gaps. This operation occurs *before* cut and squeeze.
+      - names:
+          - --pattern-include
+        argument: REGEX
+        description: Filter the sequences by regular expression in ID or description
+      - names:
+          - --pattern-exclude
+        argument: REGEX
+        description: Filter the sequences by regular expression in ID or description
+      - names:
+          - --prune-empty
+        argument: ""
+        description: Prune sequences containing only gaps ('-')
+      - names:
+          - --sample
+        argument: "N"
+        description: Select a random sampling of sequences
+      - names:
+          - --sample-seed
+        argument: "N"
+        description: Set random seed for sampling of sequences
+      - names:
+          - --seq-pattern-include
+        argument: REGEX
+        description: Filter the sequences by regular expression in sequence
+      - names:
+          - --seq-pattern-exclude
+        argument: REGEX
+        description: Filter the sequences by regular expression in sequence
+      - names:
+          - --tail
+        argument: "N"
+        description: Trim down to bottom N sequences. Use +N to output sequences starting with the Nth.
+      - names:
+          - --first-name
+        argument: ""
+        description: Take only the first whitespace-delimited word as the name of the sequence
+      - names:
+          - --name-suffix
+        argument: SUFFIX
+        description: Append a suffix to all IDs.
+      - names:
+          - --name-prefix
+        argument: PREFIX
+        description: Insert a prefix for all IDs.
+      - names:
+          - --pattern-replace
+        argument: search_pattern replace_pattern
+        description: Replace regex pattern "search_pattern" with "replace_pattern" in sequence ID and description
+      - names:
+          - --strip-range
+        argument: ""
+        description: Strip ranges from sequences IDs, matching </x-y>
+      - names:
+          - --input-format
+        argument: FORMAT
+        description: 'Input file format (default: determine from extension)'
+      - names:
+          - --output-format
+        argument: FORMAT
+        description: 'Output file format (default: determine from extension)'
+  - name: primer-trim
+    description: Find a primer sequence in a gapped alignment, trim to
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --reverse-is-revcomp
+        argument: ""
+        description: 'Reverse primer is written as the reverse complement of the top strand (default: False)'
+      - names:
+          - --source-format
+        argument: SOURCE_FORMAT
+        description: 'Alignment format (default: detect from extension'
+      - names:
+          - --output-format
+        argument: OUTPUT_FORMAT
+        description: 'Alignment format (default: detect from extension'
+      - names:
+          - --include-primers
+        argument: ""
+        description: 'Include the primers in the output (default: False)'
+      - names:
+          - --max-hamming-distance
+        argument: MAX_HAMMING_DISTANCE
+        description: 'Maximum Hamming distance between primer and alignment site (default: 1). IUPAC ambiguous bases in the primer matching unambiguous bases in the alignment are not penalized'
+      - names:
+          - --prune-action
+        argument: '{trim,isolate}'
+        description: 'Action to take. Options are trim (trim to the region defined by the two primers, decreasing the width of the alignment), or isolate (convert all characters outside the primer-defined area to gaps). default: trim'
+  - name: quality-filter
+    description: Filter reads based on quality scores
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --input-qual
+        argument: INPUT_QUAL
+        description: The quality scores associated with the input file. Only used if input file is fasta.
+      - names:
+          - --min-mean-quality
+        argument: QUALITY
+        description: 'Minimum mean quality score for each read [default: 25.0]'
+      - names:
+          - --min-length
+        argument: LENGTH
+        description: 'Minimum length to keep sequence [default: 200]'
+      - names:
+          - --max-length
+        argument: LENGTH
+        description: 'Maximum length to keep before truncating [default: 1000]. This operation occurs before --max-ambiguous'
+      - names:
+          - --ambiguous-action
+        argument: '{truncate,drop}'
+        description: 'Action to take on ambiguous base in sequence (N''s). [default: no action]'
+      - names:
+          - --max-ambiguous
+        argument: MAX_AMBIGUOUS
+        description: Maximum number of ambiguous bases in a sequence. Sequences exceeding this count will be removed.
+      - names:
+          - --pct-ambiguous
+        argument: PCT_AMBIGUOUS
+        description: Maximun percent of ambiguous bases in a sequence. Sequences exceeding this percent will be removed.
+      - names:
+          - --report-out
+        argument: REPORT_OUT
+        description: 'Output file for report [default: stdout]'
+      - names:
+          - --details-out
+        argument: DETAILS_OUT
+        description: Output file to report fate of each sequence
+      - names:
+          - --no-details-comment
+        argument: ""
+        description: Do not write comment lines with version and call to start --details-out
+      - names:
+          - --quality-window-mean-qual
+        argument: QUALITY_WINDOW_MEAN_QUAL
+        description: 'Minimum quality score within the window defined by --quality-window. [default: same as --min-meanquality]'
+      - names:
+          - --quality-window-prop
+        argument: QUALITY_WINDOW_PROP
+        description: 'Proportion of reads within quality window to that must pass filter. Floats are [default: 1.0]'
+      - names:
+          - --quality-window
+        argument: WINDOW_SIZE
+        description: 'Window size for truncating sequences. When set to a non-zero value, sequences are truncated where the mean mean quality within the window drops below --min-meanquality. [default: 0]'
+      - names:
+          - --primer
+        argument: PRIMER
+        description: IUPAC ambiguous primer to require
+      - names:
+          - --no-primer
+        argument: ""
+        description: Do not use a primer.
+      - names:
+          - --barcode-file
+        argument: BARCODE_FILE
+        description: CSV file containing sample_id,barcode[,primer] in the rows. A single primer for all sequences may be specified with `--primer`, or `--no-primer` may be used to indicate barcodes should be used without a primer check.
+      - names:
+          - --barcode-header
+        argument: ""
+        description: 'Barcodes have a header row [default: False]'
+      - names:
+          - --map-out
+        argument: SAMPLE_MAP
+        description: Path to write sequence_id,sample_id pairs
+      - names:
+          - --quoting
+        argument: '{QUOTE_ALL,QUOTE_MINIMAL,QUOTE_NONE,QUOTE_NONNUMERIC}'
+        description: 'A string naming an attribute of the csv module defining the quoting behavior for `SAMPLE_MAP`. [default: QUOTE_MINIMAL]'
+  - name: extract-ids
+    description: Extract the sequence IDs from a file
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - -o
+          - --output-file
+        argument: OUTPUT_FILE
+        description: Destination file
+      - names:
+          - --input-format
+        argument: INPUT_FORMAT
+        description: Input format for sequence file
+      - names:
+          - -d
+          - --include-description
+        argument: ""
+        description: 'Include the sequence description in output [default: False]'
+  - name: backtrans-align
+    description: Given a protein alignment and unaligned nucleotides,
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - -o
+          - --out-file
+        argument: destination_file
+        description: 'Output destination. Default: STDOUT'
+      - names:
+          - -t
+          - --translation-table
+        argument: '{standard,standard-ambiguous,vertebrate-mito}'
+        description: 'Translation table to use. [Default: standardambiguous]'
+      - names:
+          - -a
+          - --fail-action
+        argument: '{fail,warn,none}'
+        description: 'Action to take on an ambiguous codon [default: fail]'

@@ -65,7 +65,7 @@ subcommands:
       - names:
           - --sparse
         argument: ""
-        description: Initialize the sparse-checkout file so the working directory starts with only the files in the root of the repository. The sparse-checkout file can be modified to grow the working directory as needed.
+        description: Employ a sparse-checkout, with only files in the toplevel directory initially being present. The git-sparse-checkout(1) command can be used to grow the working directory as needed.
       - names:
           - --filter
         argument: <filter-spec>
@@ -91,8 +91,8 @@ subcommands:
         description: When given, and the repository to clone from is accessed via ssh, this specifies a non-default path for the command run on the other end.
       - names:
           - --template
-        argument: <template_directory>
-        description: Specify the directory from which templates will be used; (See the "TEMPLATE DIRECTORY" section of gitinit(1).)
+        argument: <template-directory>
+        description: Specify the directory from which templates will be used; (See the "TEMPLATE DIRECTORY" section of git-init(1).)
       - names:
           - -c
           - --config
@@ -144,7 +144,7 @@ subcommands:
         description: All submodules which are cloned will use the status of the submodule’s remote-tracking branch to update the submodule, rather than the superproject’s recorded SHA-1. Equivalent to passing --remote to git submodule update.
       - names:
           - --separate-git-dir
-        argument: <git dir>
+        argument: <git-dir>
         description: Instead of placing the cloned repository where it is supposed to be, place the cloned repository at the specified directory, then make a filesystem-agnostic Git symbolic link to there. The result is Git repository can be separated from working tree.
       - names:
           - -j
@@ -169,11 +169,11 @@ subcommands:
         description: Specify the given object format (hash algorithm) for the repository. The valid values are sha1 and (if enabled) sha256. sha1 is the default.
       - names:
           - --template
-        argument: <template_directory>
+        argument: <template-directory>
         description: Specify the directory from which templates will be used. (See the "TEMPLATE DIRECTORY" section below.)
       - names:
           - --separate-git-dir
-        argument: <git dir>
+        argument: <git-dir>
         description: Instead of initializing the repository as a directory to either $GIT_DIR or ./.git/, create a text file there containing the path to the actual repository. This file acts as filesystem-agnostic Git symbolic link to the repository.
       - names:
           - -b
@@ -182,7 +182,7 @@ subcommands:
         description: Use the specified name for the initial branch in the newly created repository. If not specified, fall back to the default name (currently master, but this is subject to change in the future; the name can be customized via the init.defaultBranch configuration variable).
       - names:
           - --shared
-        argument: '[=(false|true|umask|group|all|world|everybody|0xxx)]'
+        argument: '[=(false|true|umask|group|all|world|everybody|<perm>)]'
         description: Specify that the Git repository is to be shared amongst several users. This allows users belonging to the same group to push into that repository. When specified, the config variable "core.sharedRepository" is set so that files and directories under $GIT_DIR are created with the requested permissions. When not specified, Git will use permissions reported by umask(2).
   - name: add
     description: Add file contents to the index
@@ -202,6 +202,10 @@ subcommands:
           - --force
         argument: ""
         description: Allow adding otherwise ignored files.
+      - names:
+          - --sparse
+        argument: ""
+        description: Allow updating index entries outside of the sparse-checkout cone. Normally, git add refuses to update index entries whose paths do not fit within the sparse-checkout cone, since those files might be removed from the working tree without warning. See git-sparse-checkout(1) for more details.
       - names:
           - -i
           - --interactive
@@ -339,7 +343,7 @@ subcommands:
       - names:
           - --conflict
         argument: <style>
-        description: The same as --merge option above, but changes the way the conflicting hunks are presented, overriding the merge.conflictStyle configuration variable. Possible values are "merge" (default) and "diff3" (in addition to what is shown by "merge" style, shows the original contents).
+        description: The same as --merge option above, but changes the way the conflicting hunks are presented, overriding the merge.conflictStyle configuration variable. Possible values are "merge" (default), "diff3", and "zdiff3".
       - names:
           - --ignore-unmerged
         argument: ""
@@ -400,6 +404,10 @@ subcommands:
         argument: ""
         description: Exit with a zero status even if no files matched.
       - names:
+          - --sparse
+        argument: ""
+        description: Allow updating index entries outside of the sparse-checkout cone. Normally, git rm refuses to update index entries whose paths do not fit within the sparse-checkout cone. See git-sparse-checkout(1) for more.
+      - names:
           - -q
           - --quiet
         argument: ""
@@ -412,9 +420,6 @@ subcommands:
           - --pathspec-file-nul
         argument: ""
         description: Only meaningful with --pathspec-from-file. Pathspec elements are separated with NUL character and all other characters are taken literally (including newlines and quotes).
-  - name: sparse-checkout
-    description: Initialize and modify the sparse-checkout
-    options: []
   - name: bisect
     description: Use binary search to find the commit that introduced a bug
     options:
@@ -491,6 +496,10 @@ subcommands:
           - --diff-algorithm
         argument: '{patience|minimal|histogram|myers}'
         description: 'Choose a diff algorithm. The variants are as follows:'
+      - names:
+          - --stat
+        argument: '[=<width>[,<name-width>[,<count>]]]'
+        description: Generate a diffstat. By default, as much space as necessary will be used for the filename part, and the rest for the graph part. Maximum width defaults to terminal width, or 80 columns if not connected to a terminal, and can be overridden by <width>. The width of the filename part can be limited by giving another width <name-width> after a comma. The width of the graph part can be limited by using --stat-graph-width=<width> (affects all commands generating a stat graph) or by setting diff.statGraphWidth=<width> (does not affect git format-patch). By giving a third parameter <count>, you can limit the output to the first <count> lines, followed by ... if there are more.
       - names:
           - --compact-summary
         argument: ""
@@ -609,6 +618,11 @@ subcommands:
         argument: '[=<n>]'
         description: Instead of showing the full 40-byte hexadecimal object name in diff-raw format output and diff-tree header lines, show the shortest prefix that is at least <n> hexdigits long that uniquely refers the object. In diff-patch output format, --full-index takes higher precedence, i.e. if --full-index is specified, full blob names will be shown regardless of --abbrev. Non default number of digits can be specified with --abbrev=<n>.
       - names:
+          - -B
+          - --break-rewrites
+        argument: '[<n>][/<m>]'
+        description: 'Break complete rewrite changes into pairs of delete and create. This serves two purposes:'
+      - names:
           - -M
           - --find-renames
         argument: '[<n>]'
@@ -630,7 +644,11 @@ subcommands:
       - names:
           - -l
         argument: <num>
-        description: The -M and -C options require O(n^2) processing time where n is the number of potential rename/copy targets. This option prevents rename/copy detection from running if the number of rename/copy targets exceeds the specified number.
+        description: The -M and -C options involve some preliminary steps that can detect subsets of renames/copies cheaply, followed by an exhaustive fallback portion that compares all remaining unpaired destinations to all relevant sources. (For renames, only remaining unpaired sources are relevant; for copies, all original sources are relevant.) For N sources and destinations, this exhaustive check is O(N^2). This option prevents the exhaustive portion of rename/copy detection from running if the number of source/destination files involved exceeds the specified number. Defaults to diff.renameLimit. Note that a value of 0 is treated as unlimited.
+      - names:
+          - --diff-filter
+        argument: '[(A|C|D|M|R|T|U|X|B)...[*]]'
+        description: Select only files that are Added (A), Copied (C), Deleted (D), Modified (M), Renamed (R), have their type (i.e. regular file, symlink, submodule, ...) changed (T), are Unmerged (U), are Unknown (X), or have had their pairing Broken (B). Any combination of the filter characters (including none) can be used. When * (All-or-none) is added to the combination, all paths are selected if there is any file that matches other criteria in the comparison; if there is no file that matches other criteria, nothing is selected.
       - names:
           - -S
         argument: <string>
@@ -925,7 +943,6 @@ subcommands:
         argument: ""
         description: Show the preceding line that contains the function name of the match, unless the matching line is a function name itself. The name is determined in the same way as git diff works out patch hunk headers (see Defining a custom hunk-header in gitattributes(5)).
       - names:
-          - '-'
           - -C
           - --context
         argument: <num>
@@ -981,7 +998,7 @@ subcommands:
           - --no-decorate
           - --decorate
         argument: '[=short|full|auto|no]'
-        description: Print out the ref names of any commits that are shown. If short is specified, the ref name prefixes refs/heads/, refs/tags/ and refs/remotes/ will not be printed. If full is specified, the full ref name (including prefix) will be printed. If auto is specified, then if the output is going to a terminal, the ref names are shown as if short were given, otherwise no ref names are shown. The default option is short.
+        description: Print out the ref names of any commits that are shown. If short is specified, the ref name prefixes refs/heads/, refs/tags/ and refs/remotes/ will not be printed. If full is specified, the full ref name (including prefix) will be printed. If auto is specified, then if the output is going to a terminal, the ref names are shown as if short were given, otherwise no ref names are shown. The option --decorate is short-hand for --decorate=short. Default to configuration value of log.decorate if configured, otherwise, auto.
       - names:
           - --decorate-refs
           - --decorate-refs-exclude
@@ -1000,7 +1017,6 @@ subcommands:
         argument: ""
         description: Include a line “log size <number>” in the output for each commit, where <number> is the length of that commit’s message in bytes. Intended to speed up tools that read log messages from git log output by allowing them to allocate space in advance.
       - names:
-          - '-'
           - -n
           - --max-count
         argument: <number>
@@ -1138,7 +1154,7 @@ subcommands:
       - names:
           - --stdin
         argument: ""
-        description: In addition to the <commit> listed on the command line, read them from the standard input. If a -separator is seen, stop reading commits and start reading paths to limit the result.
+        description: In addition to the <commit> listed on the command line, read them from the standard input. If a -- separator is seen, stop reading commits and start reading paths to limit the result.
       - names:
           - --cherry-mark
         argument: ""
@@ -1261,7 +1277,7 @@ subcommands:
       - names:
           - --encoding
         argument: <encoding>
-        description: The commit objects record the encoding used for the log message in their encoding header; this option can be used to tell the command to re-code the commit log message in the encoding preferred by the user. For non plumbing commands this defaults to UTF-8. Note that if an object claims to be encoded in X and we are outputting in X, we will output the object verbatim; this means that invalid sequences in the original commit may be copied to the output.
+        description: Commit objects record the character encoding used for the log message in their encoding header; this option can be used to tell the command to re-code the commit log message in the encoding preferred by the user. For non plumbing commands this defaults to UTF-8. Note that if an object claims to be encoded in X and we are outputting in X, we will output the object verbatim; this means that invalid sequences in the original commit may be copied to the output. Likewise, if iconv(3) fails to convert the commit, we will quietly output the original object verbatim.
       - names:
           - --expand-tabs
           - --no-expand-tabs
@@ -1383,6 +1399,10 @@ subcommands:
         argument: '{patience|minimal|histogram|myers}'
         description: 'Choose a diff algorithm. The variants are as follows:'
       - names:
+          - --stat
+        argument: '[=<width>[,<name-width>[,<count>]]]'
+        description: Generate a diffstat. By default, as much space as necessary will be used for the filename part, and the rest for the graph part. Maximum width defaults to terminal width, or 80 columns if not connected to a terminal, and can be overridden by <width>. The width of the filename part can be limited by giving another width <name-width> after a comma. The width of the graph part can be limited by using --stat-graph-width=<width> (affects all commands generating a stat graph) or by setting diff.statGraphWidth=<width> (does not affect git format-patch). By giving a third parameter <count>, you can limit the output to the first <count> lines, followed by ... if there are more.
+      - names:
           - --compact-summary
         argument: ""
         description: Output a condensed summary of extended header information such as file creations or deletions ("new" or "gone", optionally "+l" if it’s a symlink) and mode changes ("+x" or "-x" for adding or removing executable bit respectively) in diffstat. The information is put between the filename part and the graph part. Implies --stat.
@@ -1500,6 +1520,11 @@ subcommands:
         argument: '[=<n>]'
         description: Instead of showing the full 40-byte hexadecimal object name in diff-raw format output and diff-tree header lines, show the shortest prefix that is at least <n> hexdigits long that uniquely refers the object. In diff-patch output format, --full-index takes higher precedence, i.e. if --full-index is specified, full blob names will be shown regardless of --abbrev. Non default number of digits can be specified with --abbrev=<n>.
       - names:
+          - -B
+          - --break-rewrites
+        argument: '[<n>][/<m>]'
+        description: 'Break complete rewrite changes into pairs of delete and create. This serves two purposes:'
+      - names:
           - -M
           - --find-renames
         argument: '[<n>]'
@@ -1521,7 +1546,11 @@ subcommands:
       - names:
           - -l
         argument: <num>
-        description: The -M and -C options require O(n^2) processing time where n is the number of potential rename/copy targets. This option prevents rename/copy detection from running if the number of rename/copy targets exceeds the specified number.
+        description: The -M and -C options involve some preliminary steps that can detect subsets of renames/copies cheaply, followed by an exhaustive fallback portion that compares all remaining unpaired destinations to all relevant sources. (For renames, only remaining unpaired sources are relevant; for copies, all original sources are relevant.) For N sources and destinations, this exhaustive check is O(N^2). This option prevents the exhaustive portion of rename/copy detection from running if the number of source/destination files involved exceeds the specified number. Defaults to diff.renameLimit. Note that a value of 0 is treated as unlimited.
+      - names:
+          - --diff-filter
+        argument: '[(A|C|D|M|R|T|U|X|B)...[*]]'
+        description: Select only files that are Added (A), Copied (C), Deleted (D), Modified (M), Renamed (R), have their type (i.e. regular file, symlink, submodule, ...) changed (T), are Unmerged (U), are Unknown (X), or have had their pairing Broken (B). Any combination of the filter characters (including none) can be used. When * (All-or-none) is added to the combination, all paths are selected if there is any file that matches other criteria in the comparison; if there is no file that matches other criteria, nothing is selected.
       - names:
           - -S
         argument: <string>
@@ -1638,10 +1667,6 @@ subcommands:
           - --ita-invisible-in-index
         argument: ""
         description: By default entries added by "git add -N" appear as an existing empty file in "git diff" and a new file in "git diff --cached". This option makes the entry appear as a new file in "git diff" and non-existent in "git diff --cached". This option could be reverted with --ita-visible-in-index. Both options are experimental and could be removed in future.
-      - names:
-          - --grep
-        argument: <pattern>
-        description: further limits to commits whose log message has a line that matches <pattern>), unless otherwise noted.
   - name: show
     description: Show various types of objects
     options:
@@ -1665,7 +1690,7 @@ subcommands:
       - names:
           - --encoding
         argument: <encoding>
-        description: The commit objects record the encoding used for the log message in their encoding header; this option can be used to tell the command to re-code the commit log message in the encoding preferred by the user. For non plumbing commands this defaults to UTF-8. Note that if an object claims to be encoded in X and we are outputting in X, we will output the object verbatim; this means that invalid sequences in the original commit may be copied to the output.
+        description: Commit objects record the character encoding used for the log message in their encoding header; this option can be used to tell the command to re-code the commit log message in the encoding preferred by the user. For non plumbing commands this defaults to UTF-8. Note that if an object claims to be encoded in X and we are outputting in X, we will output the object verbatim; this means that invalid sequences in the original commit may be copied to the output. Likewise, if iconv(3) fails to convert the commit, we will quietly output the original object verbatim.
       - names:
           - --expand-tabs
           - --no-expand-tabs
@@ -1758,6 +1783,10 @@ subcommands:
           - --diff-algorithm
         argument: '{patience|minimal|histogram|myers}'
         description: 'Choose a diff algorithm. The variants are as follows:'
+      - names:
+          - --stat
+        argument: '[=<width>[,<name-width>[,<count>]]]'
+        description: Generate a diffstat. By default, as much space as necessary will be used for the filename part, and the rest for the graph part. Maximum width defaults to terminal width, or 80 columns if not connected to a terminal, and can be overridden by <width>. The width of the filename part can be limited by giving another width <name-width> after a comma. The width of the graph part can be limited by using --stat-graph-width=<width> (affects all commands generating a stat graph) or by setting diff.statGraphWidth=<width> (does not affect git format-patch). By giving a third parameter <count>, you can limit the output to the first <count> lines, followed by ... if there are more.
       - names:
           - --compact-summary
         argument: ""
@@ -1876,6 +1905,11 @@ subcommands:
         argument: '[=<n>]'
         description: Instead of showing the full 40-byte hexadecimal object name in diff-raw format output and diff-tree header lines, show the shortest prefix that is at least <n> hexdigits long that uniquely refers the object. In diff-patch output format, --full-index takes higher precedence, i.e. if --full-index is specified, full blob names will be shown regardless of --abbrev. Non default number of digits can be specified with --abbrev=<n>.
       - names:
+          - -B
+          - --break-rewrites
+        argument: '[<n>][/<m>]'
+        description: 'Break complete rewrite changes into pairs of delete and create. This serves two purposes:'
+      - names:
           - -M
           - --find-renames
         argument: '[<n>]'
@@ -1897,7 +1931,11 @@ subcommands:
       - names:
           - -l
         argument: <num>
-        description: The -M and -C options require O(n^2) processing time where n is the number of potential rename/copy targets. This option prevents rename/copy detection from running if the number of rename/copy targets exceeds the specified number.
+        description: The -M and -C options involve some preliminary steps that can detect subsets of renames/copies cheaply, followed by an exhaustive fallback portion that compares all remaining unpaired destinations to all relevant sources. (For renames, only remaining unpaired sources are relevant; for copies, all original sources are relevant.) For N sources and destinations, this exhaustive check is O(N^2). This option prevents the exhaustive portion of rename/copy detection from running if the number of source/destination files involved exceeds the specified number. Defaults to diff.renameLimit. Note that a value of 0 is treated as unlimited.
+      - names:
+          - --diff-filter
+        argument: '[(A|C|D|M|R|T|U|X|B)...[*]]'
+        description: Select only files that are Added (A), Copied (C), Deleted (D), Modified (M), Renamed (R), have their type (i.e. regular file, symlink, submodule, ...) changed (T), are Unmerged (U), are Unknown (X), or have had their pairing Broken (B). Any combination of the filter characters (including none) can be used. When * (All-or-none) is added to the combination, all paths are selected if there is any file that matches other criteria in the comparison; if there is no file that matches other criteria, nothing is selected.
       - names:
           - -S
         argument: <string>
@@ -2100,12 +2138,12 @@ subcommands:
           - -f
           - --force
         argument: ""
-        description: Reset <branchname> to <startpoint>, even if <branchname> exists already. Without -f, git branch refuses to change an existing branch. In combination with -d (or --delete), allow deleting the branch irrespective of its merged status. In combination with -m (or --move), allow renaming the branch even if the new branch name already exists, the same applies for -c (or --copy).
+        description: Reset <branchname> to <startpoint>, even if <branchname> exists already. Without -f, git branch refuses to change an existing branch. In combination with -d (or --delete), allow deleting the branch irrespective of its merged status, or whether it even points to a valid commit. In combination with -m (or --move), allow renaming the branch even if the new branch name already exists, the same applies for -c (or --copy).
       - names:
           - -m
           - --move
         argument: ""
-        description: Move/rename a branch and the corresponding reflog.
+        description: Move/rename a branch, together with its config and reflog.
       - names:
           - -M
         argument: ""
@@ -2114,7 +2152,7 @@ subcommands:
           - -c
           - --copy
         argument: ""
-        description: Copy a branch and the corresponding reflog.
+        description: Copy a branch, together with its config and reflog.
       - names:
           - -C
         argument: ""
@@ -2178,12 +2216,12 @@ subcommands:
       - names:
           - -t
           - --track
-        argument: ""
-        description: When creating a new branch, set up branch.<name>.remote and branch.<name>.merge configuration entries to mark the start-point branch as "upstream" from the new branch. This configuration will tell git to show the relationship between the two branches in git status and git branch -v. Furthermore, it directs git pull without arguments to pull from the upstream when the new branch is checked out.
+        argument: '[=(direct|inherit)]'
+        description: When creating a new branch, set up branch.<name>.remote and branch.<name>.merge configuration entries to set "upstream" tracking configuration for the new branch. This configuration will tell git to show the relationship between the two branches in git status and git branch -v. Furthermore, it directs git pull without arguments to pull from the upstream when the new branch is checked out.
       - names:
           - --no-track
         argument: ""
-        description: Do not set up "upstream" configuration, even if the branch.autoSetupMerge configuration variable is true.
+        description: Do not set up "upstream" configuration, even if the branch.autoSetupMerge configuration variable is set.
       - names:
           - --set-upstream
         argument: ""
@@ -2220,7 +2258,7 @@ subcommands:
       - names:
           - --sort
         argument: <key>
-        description: Sort based on the key given. Prefix - to sort in descending order of the value. You may use the --sort=<key> option multiple times, in which case the last key becomes the primary key. The keys supported are the same as those in git for-each-ref. Sort order defaults to the value configured for the branch.sort variable if exists, or to sorting based on the full refname (including refs/... prefix). This lists detached HEAD (if present) first, then local branches and finally remote-tracking branches. See gitconfig(1).
+        description: Sort based on the key given. Prefix - to sort in descending order of the value. You may use the --sort=<key> option multiple times, in which case the last key becomes the primary key. The keys supported are the same as those in git for-each-ref. Sort order defaults to the value configured for the branch.sort variable if exists, or to sorting based on the full refname (including refs/... prefix). This lists detached HEAD (if present) first, then local branches and finally remote-tracking branches. See git-config(1).
       - names:
           - --points-at
         argument: <object>
@@ -2241,7 +2279,7 @@ subcommands:
           - -p
           - --patch
         argument: ""
-        description: Use the interactive patch selection interface to chose which changes to commit. See git-add(1) for details.
+        description: Use the interactive patch selection interface to choose which changes to commit. See git-add(1) for details.
       - names:
           - -C
           - --reuse-message
@@ -2316,17 +2354,18 @@ subcommands:
         description: Add a Signed-off-by trailer by the committer at the end of the commit log message. The meaning of a signoff depends on the project to which you’re committing. For example, it may certify that the committer has the rights to submit the work under the project’s license or agrees to some contributor representation, such as a Developer Certificate of Origin. (See http://developercertificate.org for the one used by the Linux kernel and Git projects.) Consult the documentation or leadership of the project to which you’re contributing to understand how the signoffs are used in that project.
       - names:
           - --trailer
-        argument: <token>
+        argument: <token>[(=|:)<value>]
         description: Specify a (<token>, <value>) pair that should be applied as a trailer. (e.g. git commit --trailer "Signed-off-by:C O Mitter \ <committer@example.com>" --trailer "Helped-by:C O Mitter \ <committer@example.com>" will add the "Signed-off-by" trailer and the "Helped-by" trailer to the commit message.) The trailer.* configuration variables (git-interpret-trailers(1)) can be used to define if a duplicated trailer is omitted, where in the run of trailers each trailer would appear, and other details.
       - names:
-          - --trailer
-        argument: <token>(=|:)<value>
-        description: Specify a (<token>, <value>) pair that should be applied as a trailer. (e.g. git commit --trailer "Signed-off-by:C O Mitter \ <committer@example.com>" --trailer "Helped-by:C O Mitter \ <committer@example.com>" will add the "Signed-off-by" trailer and the "Helped-by" trailer to the commit message.) The trailer.* configuration variables (git-interpret-trailers(1)) can be used to define if a duplicated trailer is omitted, where in the run of trailers each trailer would appear, and other details.
+          - -n
+          - --verify
+        argument: ""
+        description: By default, the pre-commit and commit-msg hooks are run. When any of --no-verify or -n is given, these are bypassed. See also githooks(5).
       - names:
           - -n
           - --no-verify
         argument: ""
-        description: This option bypasses the pre-commit and commit-msg hooks. See also githooks(5).
+        description: By default, the pre-commit and commit-msg hooks are run. When any of --no-verify or -n is given, these are bypassed. See also githooks(5).
       - names:
           - --allow-empty
         argument: ""
@@ -2463,14 +2502,18 @@ subcommands:
         argument: ""
         description: Produce the working tree and index state as if a real merge happened (except for the merge information), but do not actually make a commit, move the HEAD, or record $GIT_DIR/MERGE_HEAD (to cause the next git commit command to create a merge commit). This allows you to create a single commit on top of the current branch whose effect is the same as merging another branch (or more in case of an octopus).
       - names:
+          - --verify
+        argument: ""
+        description: By default, the pre-merge and commit-msg hooks are run. When --no-verify is given, these are bypassed. See also githooks(5).
+      - names:
           - --no-verify
         argument: ""
-        description: This option bypasses the pre-merge and commit-msg hooks. See also githooks(5).
+        description: By default, the pre-merge and commit-msg hooks are run. When --no-verify is given, these are bypassed. See also githooks(5).
       - names:
           - -s
           - --strategy
         argument: <strategy>
-        description: Use the given merge strategy; can be supplied more than once to specify them in the order they should be tried. If there is no -s option, a built-in list of strategies is used instead (git merge-recursive when merging a single head, git merge-octopus otherwise).
+        description: Use the given merge strategy; can be supplied more than once to specify them in the order they should be tried. If there is no -s option, a built-in list of strategies is used instead (ort when merging a single head, octopus otherwise).
       - names:
           - -X
           - --strategy-option
@@ -2505,7 +2548,7 @@ subcommands:
           - --autostash
           - --no-autostash
         argument: ""
-        description: 'Automatically create a temporary stash entry before the operation begins, and apply it after the operation ends. This means that you can run the operation on a dirty worktree. However, use with care: the final stash application after a successful merge might result in non-trivial conflicts.'
+        description: 'Automatically create a temporary stash entry before the operation begins, record it in the special ref MERGE_AUTOSTASH and apply it after the operation ends. This means that you can run the operation on a dirty worktree. However, use with care: the final stash application after a successful merge might result in non-trivial conflicts.'
       - names:
           - --allow-unrelated-histories
         argument: ""
@@ -2514,6 +2557,10 @@ subcommands:
           - -m
         argument: <msg>
         description: Set the commit message to be used for the merge commit (in case one is created).
+      - names:
+          - --into-name
+        argument: <branch>
+        description: Prepare the default merge message as if merging to the branch <branch>, instead of the name of the real branch to which the merge is made.
       - names:
           - -F
           - --file
@@ -2602,17 +2649,17 @@ subcommands:
           - -m
           - --merge
         argument: ""
-        description: Use merging strategies to rebase. When the recursive (default) merge strategy is used, this allows rebase to be aware of renames on the upstream side. This is the default.
+        description: Using merging strategies to rebase (default).
       - names:
           - -s
           - --strategy
         argument: <strategy>
-        description: Use the given merge strategy. If there is no -s option git merge-recursive is used instead. This implies --merge.
+        description: Use the given merge strategy, instead of the default ort. This implies --merge.
       - names:
           - -X
           - --strategy-option
         argument: <strategy-option>
-        description: Pass the <strategy-option> through to the merge strategy. This implies --merge and, if no strategy has been specified, -s recursive. Note the reversal of ours and theirs as noted above for the -m option.
+        description: Pass the <strategy-option> through to the merge strategy. This implies --merge and, if no strategy has been specified, -s ort. Note the reversal of ours and theirs as noted above for the -m option.
       - names:
           - --rerere-autoupdate
           - --no-rerere-autoupdate
@@ -2698,11 +2745,6 @@ subcommands:
         argument: '[=(rebase-cousins|no-rebase-cousins)]'
         description: By default, a rebase will simply drop merge commits from the todo list, and put the rebased commits into a single, linear branch. With --rebase-merges, the rebase will instead try to preserve the branching structure within the commits that are to be rebased, by recreating the merge commits. Any resolved merge conflicts or manual amendments in these merge commits will have to be resolved/re-applied manually.
       - names:
-          - -p
-          - --preserve-merges
-        argument: ""
-        description: '[DEPRECATED: use --rebase-merges instead] Recreate merge commits instead of flattening the history by replaying commits a merge commit introduces. Merge conflict resolutions or manual amendments to merge commits are not preserved.'
-      - names:
           - -x
           - --exec
         argument: <cmd>
@@ -2710,7 +2752,7 @@ subcommands:
       - names:
           - --root
         argument: ""
-        description: Rebase all commits reachable from <branch>, instead of limiting them with an <upstream>. This allows you to rebase the root commit(s) on a branch. When used with --onto, it will skip changes already contained in <newbase> (instead of <upstream>) whereas without --onto it will operate on every change. When used together with both --onto and --preserve-merges, all root commits will be rewritten to have <newbase> as parent instead.
+        description: Rebase all commits reachable from <branch>, instead of limiting them with an <upstream>. This allows you to rebase the root commit(s) on a branch. When used with --onto, it will skip changes already contained in <newbase> (instead of <upstream>) whereas without --onto it will operate on every change.
       - names:
           - --autosquash
           - --no-autosquash
@@ -2732,23 +2774,23 @@ subcommands:
       - names:
           - --soft
         argument: ""
-        description: Does not touch the index file or the working tree at all (but resets the head to <commit>, just like
+        description: Does not touch the index file or the working tree at all (but resets the head to <commit>, just like all modes do). This leaves all your changed files "Changes to be committed", as git status would put it.
       - names:
           - --mixed
         argument: ""
-        description: Resets the index but not the working tree (i.e., the changed files are preserved but not marked for
+        description: Resets the index but not the working tree (i.e., the changed files are preserved but not marked for commit) and reports what has not been updated. This is the default action.
       - names:
           - --hard
         argument: ""
-        description: Resets the index and working tree. Any changes to tracked files in the working tree since <commit> are
+        description: Resets the index and working tree. Any changes to tracked files in the working tree since <commit> are discarded. Any untracked files or directories in the way of writing any tracked files are simply deleted.
       - names:
           - --merge
         argument: ""
-        description: Resets the index and updates the files in the working tree that are different between <commit> and
+        description: Resets the index and updates the files in the working tree that are different between <commit> and HEAD, but keeps those which are different between the index and working tree (i.e. which have changes which have not been added). If a file that is different between <commit> and the index has unstaged changes, reset is aborted.
       - names:
           - --keep
         argument: ""
-        description: Resets index entries and updates files in the working tree that are different between <commit> and
+        description: Resets index entries and updates files in the working tree that are different between <commit> and HEAD. If a file that is different between <commit> and HEAD has local changes, reset is aborted.
       - names:
           - --recurse-submodules
         argument: ""
@@ -2772,7 +2814,7 @@ subcommands:
         argument: ""
         description: Only meaningful with --pathspec-from-file. Pathspec elements are separated with NUL character and all other characters are taken literally (including newlines and quotes).
       - names:
-          - '--'
+          - --
         argument: ""
         description: Do not interpret any more arguments as options.
   - name: switch
@@ -2792,7 +2834,7 @@ subcommands:
           - -d
           - --detach
         argument: ""
-        description: Switch to a commit for inspection and discardable experiments. See the "DETACHED HEAD" section in gitcheckout(1) for details.
+        description: Switch to a commit for inspection and discardable experiments. See the "DETACHED HEAD" section in git-checkout(1) for details.
       - names:
           - --guess
           - --no-guess
@@ -2815,7 +2857,7 @@ subcommands:
       - names:
           - --conflict
         argument: <style>
-        description: The same as --merge option above, but changes the way the conflicting hunks are presented, overriding the merge.conflictStyle configuration variable. Possible values are "merge" (default) and "diff3" (in addition to what is shown by "merge" style, shows the original contents).
+        description: The same as --merge option above, but changes the way the conflicting hunks are presented, overriding the merge.conflictStyle configuration variable. Possible values are "merge" (default), "diff3", and "zdiff3".
       - names:
           - -q
           - --quiet
@@ -2829,7 +2871,7 @@ subcommands:
       - names:
           - -t
           - --track
-        argument: ""
+        argument: '[direct|inherit]'
         description: When creating a new branch, set up "upstream" configuration. -c is implied. See --track in git-branch(1) for details.
       - names:
           - --no-track
@@ -2954,7 +2996,7 @@ subcommands:
       - names:
           - --create-reflog
         argument: ""
-        description: Create a reflog for the tag. To globally enable reflogs for tags, see core.logAllRefUpdates in gitconfig(1). The negated form --no-create-reflog only overrides an earlier --create-reflog, but currently does not negate the setting of core.logAllRefUpdates.
+        description: Create a reflog for the tag. To globally enable reflogs for tags, see core.logAllRefUpdates in git-config(1). The negated form --no-create-reflog only overrides an earlier --create-reflog, but currently does not negate the setting of core.logAllRefUpdates.
       - names:
           - --format
         argument: <format>
@@ -3003,6 +3045,10 @@ subcommands:
           - --negotiation-tip
         argument: <commit|glob>
         description: By default, Git will report, to the server, commits reachable from all local refs to find common commits in an attempt to reduce the size of the to-be-received packfile. If specified, Git will only report commits reachable from the given tips. This is useful to speed up fetches when the user knows which local ref is likely to have commits in common with the upstream ref being fetched.
+      - names:
+          - --negotiate-only
+        argument: ""
+        description: Do not fetch anything from the server, and instead print the ancestors of the provided --negotiation-tip=* arguments, which we have in common with the server.
       - names:
           - --dry-run
         argument: ""
@@ -3068,7 +3114,7 @@ subcommands:
       - names:
           - --recurse-submodules
         argument: '[=yes|on-demand|no]'
-        description: This option controls if and under what conditions new commits of populated submodules should be fetched too. It can be used as a boolean option to completely disable recursion when set to no or to unconditionally recurse into all populated submodules when set to yes, which is the default when this option is used without any value. Use on-demand to only recurse into a populated submodule when the superproject retrieves a commit that updates the submodule’s reference to a commit that isn’t already in the local submodule clone. By default, on-demand is used, unless fetch.recurseSubmodules is set (see gitconfig(1)).
+        description: This option controls if and under what conditions new commits of populated submodules should be fetched too. It can be used as a boolean option to completely disable recursion when set to no or to unconditionally recurse into all populated submodules when set to yes, which is the default when this option is used without any value. Use on-demand to only recurse into a populated submodule when the superproject retrieves a commit that updates the submodule’s reference to a commit that isn’t already in the local submodule clone. By default, on-demand is used, unless fetch.recurseSubmodules is set (see git-config(1)).
       - names:
           - -j
           - --jobs
@@ -3081,7 +3127,7 @@ subcommands:
       - names:
           - --set-upstream
         argument: ""
-        description: If the remote is fetched successfully, add upstream (tracking) reference, used by argument-less gitpull(1) and other commands. For more information, see branch.<name>.merge and branch.<name>.remote in gitconfig(1).
+        description: If the remote is fetched successfully, add upstream (tracking) reference, used by argument-less git-pull(1) and other commands. For more information, see branch.<name>.merge and branch.<name>.remote in git-config(1).
       - names:
           - --submodule-prefix
         argument: <path>
@@ -3121,11 +3167,11 @@ subcommands:
       - names:
           - --show-forced-updates
         argument: ""
-        description: By default, git checks if a branch is force-updated during fetch. This can be disabled through fetch.showForcedUpdates, but the --show-forced-updates option guarantees this check occurs. See gitconfig(1).
+        description: By default, git checks if a branch is force-updated during fetch. This can be disabled through fetch.showForcedUpdates, but the --show-forced-updates option guarantees this check occurs. See git-config(1).
       - names:
           - --no-show-forced-updates
         argument: ""
-        description: By default, git checks if a branch is force-updated during fetch. Pass --no-show-forced-updates or set fetch.showForcedUpdates to false to skip this check for performance reasons. If used during git-pull the --ff-only option will still check for forced updates before attempting a fast-forward update. See gitconfig(1).
+        description: By default, git checks if a branch is force-updated during fetch. Pass --no-show-forced-updates or set fetch.showForcedUpdates to false to skip this check for performance reasons. If used during git-pull the --ff-only option will still check for forced updates before attempting a fast-forward update. See git-config(1).
       - names:
           - "-4"
           - --ipv4
@@ -3157,7 +3203,7 @@ subcommands:
           - --commit
           - --no-commit
         argument: ""
-        description: Perform the merge and commit the result. This option can be used to override --no-commit.
+        description: Perform the merge and commit the result. This option can be used to override --no-commit. Only useful when merging.
       - names:
           - --edit
           - -e
@@ -3169,11 +3215,14 @@ subcommands:
         argument: <mode>
         description: This option determines how the merge message will be cleaned up before committing. See git-commit(1) for more details. In addition, if the <mode> is given a value of scissors, scissors will be appended to MERGE_MSG before being passed on to the commit machinery in the case of a merge conflict.
       - names:
-          - --ff
-          - --no-ff
           - --ff-only
         argument: ""
-        description: Specifies how a merge is handled when the merged-in history is already a descendant of the current history. --ff is the default unless merging an annotated (and possibly signed) tag that is not stored in its natural place in the refs/tags/ hierarchy, in which case --no-ff is assumed.
+        description: Only update to the new history if there is no divergent local history. This is the default when no method for reconciling divergent histories is provided (via the --rebase=* flags).
+      - names:
+          - --ff
+          - --no-ff
+        argument: ""
+        description: When merging rather than rebasing, specifies how a merge is handled when the merged-in history is already a descendant of the current history. If merging is requested, --ff is the default unless merging an annotated (and possibly signed) tag that is not stored in its natural place in the refs/tags/ hierarchy, in which case --no-ff is assumed.
       - names:
           - -S
           - --gpg-sign
@@ -3184,7 +3233,7 @@ subcommands:
           - --log
           - --no-log
         argument: '[=<n>]'
-        description: In addition to branch names, populate the log message with one-line descriptions from at most <n> actual commits that are being merged. See also git-fmt-merge-msg(1).
+        description: In addition to branch names, populate the log message with one-line descriptions from at most <n> actual commits that are being merged. See also git-fmt-merge-msg(1). Only useful when merging.
       - names:
           - --signoff
           - --no-signoff
@@ -3202,14 +3251,18 @@ subcommands:
         argument: ""
         description: Produce the working tree and index state as if a real merge happened (except for the merge information), but do not actually make a commit, move the HEAD, or record $GIT_DIR/MERGE_HEAD (to cause the next git commit command to create a merge commit). This allows you to create a single commit on top of the current branch whose effect is the same as merging another branch (or more in case of an octopus).
       - names:
+          - --verify
+        argument: ""
+        description: By default, the pre-merge and commit-msg hooks are run. When --no-verify is given, these are bypassed. See also githooks(5). Only useful when merging.
+      - names:
           - --no-verify
         argument: ""
-        description: This option bypasses the pre-merge and commit-msg hooks. See also githooks(5).
+        description: By default, the pre-merge and commit-msg hooks are run. When --no-verify is given, these are bypassed. See also githooks(5). Only useful when merging.
       - names:
           - -s
           - --strategy
         argument: <strategy>
-        description: Use the given merge strategy; can be supplied more than once to specify them in the order they should be tried. If there is no -s option, a built-in list of strategies is used instead (git merge-recursive when merging a single head, git merge-octopus otherwise).
+        description: Use the given merge strategy; can be supplied more than once to specify them in the order they should be tried. If there is no -s option, a built-in list of strategies is used instead (ort when merging a single head, octopus otherwise).
       - names:
           - -X
           - --strategy-option
@@ -3229,7 +3282,7 @@ subcommands:
           - --autostash
           - --no-autostash
         argument: ""
-        description: 'Automatically create a temporary stash entry before the operation begins, and apply it after the operation ends. This means that you can run the operation on a dirty worktree. However, use with care: the final stash application after a successful merge might result in non-trivial conflicts.'
+        description: 'Automatically create a temporary stash entry before the operation begins, record it in the special ref MERGE_AUTOSTASH and apply it after the operation ends. This means that you can run the operation on a dirty worktree. However, use with care: the final stash application after a successful merge might result in non-trivial conflicts.'
       - names:
           - --allow-unrelated-histories
         argument: ""
@@ -3237,12 +3290,12 @@ subcommands:
       - names:
           - -r
           - --rebase
-        argument: '[=false|true|merges|preserve|interactive]'
+        argument: '[=false|true|merges|interactive]'
         description: When true, rebase the current branch on top of the upstream branch after fetching. If there is a remote-tracking branch corresponding to the upstream branch and the upstream branch was rebased since last fetched, the rebase uses that information to avoid rebasing non-local changes.
       - names:
           - --no-rebase
         argument: ""
-        description: Override earlier --rebase.
+        description: This is shorthand for --rebase=false.
       - names:
           - --all
         argument: ""
@@ -3284,6 +3337,10 @@ subcommands:
           - --negotiation-tip
         argument: <commit|glob>
         description: By default, Git will report, to the server, commits reachable from all local refs to find common commits in an attempt to reduce the size of the to-be-received packfile. If specified, Git will only report commits reachable from the given tips. This is useful to speed up fetches when the user knows which local ref is likely to have commits in common with the upstream ref being fetched.
+      - names:
+          - --negotiate-only
+        argument: ""
+        description: Do not fetch anything from the server, and instead print the ancestors of the provided --negotiation-tip=* arguments, which we have in common with the server.
       - names:
           - --dry-run
         argument: ""
@@ -3328,7 +3385,7 @@ subcommands:
       - names:
           - --set-upstream
         argument: ""
-        description: If the remote is fetched successfully, add upstream (tracking) reference, used by argument-less gitpull(1) and other commands. For more information, see branch.<name>.merge and branch.<name>.remote in gitconfig(1).
+        description: If the remote is fetched successfully, add upstream (tracking) reference, used by argument-less git-pull(1) and other commands. For more information, see branch.<name>.merge and branch.<name>.remote in git-config(1).
       - names:
           - --upload-pack
         argument: <upload-pack>
@@ -3345,11 +3402,11 @@ subcommands:
       - names:
           - --show-forced-updates
         argument: ""
-        description: By default, git checks if a branch is force-updated during fetch. This can be disabled through fetch.showForcedUpdates, but the --show-forced-updates option guarantees this check occurs. See gitconfig(1).
+        description: By default, git checks if a branch is force-updated during fetch. This can be disabled through fetch.showForcedUpdates, but the --show-forced-updates option guarantees this check occurs. See git-config(1).
       - names:
           - --no-show-forced-updates
         argument: ""
-        description: By default, git checks if a branch is force-updated during fetch. Pass --no-show-forced-updates or set fetch.showForcedUpdates to false to skip this check for performance reasons. If used during git-pull the --ff-only option will still check for forced updates before attempting a fast-forward update. See gitconfig(1).
+        description: By default, git checks if a branch is force-updated during fetch. Pass --no-show-forced-updates or set fetch.showForcedUpdates to false to skip this check for performance reasons. If used during git-pull the --ff-only option will still check for forced updates before attempting a fast-forward update. See git-config(1).
       - names:
           - "-4"
           - --ipv4
@@ -3400,12 +3457,12 @@ subcommands:
       - names:
           - --signed
         argument: (true|false|if-asked)
-        description: GPG-sign the push request to update refs on the receiving side, to allow it to be checked by the hooks and/or be logged. If false or --no-signed, no signing will be attempted. If true or --signed, the push will fail if the server does not support signed pushes. If set to if-asked, sign if and only if the server supports signed pushes. The push will also fail if the actual call to gpg --sign fails. See git-receivepack(1) for the details on the receiving end.
+        description: GPG-sign the push request to update refs on the receiving side, to allow it to be checked by the hooks and/or be logged. If false or --no-signed, no signing will be attempted. If true or --signed, the push will fail if the server does not support signed pushes. If set to if-asked, sign if and only if the server supports signed pushes. The push will also fail if the actual call to gpg --sign fails. See git-receive-pack(1) for the details on the receiving end.
       - names:
           - --no-signed
           - --signed
         argument: (true|false|if-asked)
-        description: GPG-sign the push request to update refs on the receiving side, to allow it to be checked by the hooks and/or be logged. If false or --no-signed, no signing will be attempted. If true or --signed, the push will fail if the server does not support signed pushes. If set to if-asked, sign if and only if the server supports signed pushes. The push will also fail if the actual call to gpg --sign fails. See git-receivepack(1) for the details on the receiving end.
+        description: GPG-sign the push request to update refs on the receiving side, to allow it to be checked by the hooks and/or be logged. If false or --no-signed, no signing will be attempted. If true or --signed, the push will fail if the server does not support signed pushes. If set to if-asked, sign if and only if the server supports signed pushes. The push will also fail if the actual call to gpg --sign fails. See git-receive-pack(1) for the details on the receiving end.
       - names:
           - --atomic
         argument: ""
@@ -3454,7 +3511,7 @@ subcommands:
           - -u
           - --set-upstream
         argument: ""
-        description: For every branch that is up to date or successfully pushed, add upstream (tracking) reference, used by argument-less git-pull(1) and other commands. For more information, see branch.<name>.merge in gitconfig(1).
+        description: For every branch that is up to date or successfully pushed, add upstream (tracking) reference, used by argument-less git-pull(1) and other commands. For more information, see branch.<name>.merge in git-config(1).
       - names:
           - --thin
         argument: ""

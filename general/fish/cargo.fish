@@ -1,4 +1,4 @@
-# Generated with h2o 0.1.18
+# Auto-generated with h2o
 
 complete -c cargo -n "not __fish_seen_subcommand_from build check clean doc new init run test bench update search publish install uninstall" -s V -l version -d 'Print version info and exit'
 complete -c cargo -n "not __fish_seen_subcommand_from build check clean doc new init run test bench update search publish install uninstall" -l list -d 'List installed commands'
@@ -15,20 +15,20 @@ complete -c cargo -n "not __fish_seen_subcommand_from build check clean doc new 
 
 
 
-complete -c cargo -n __fish_use_subcommand -x -a build -d 'Compile the current package'
-complete -c cargo -n __fish_use_subcommand -x -a check -d 'Analyze the current package and report errors, but don\'t build object files'
-complete -c cargo -n __fish_use_subcommand -x -a clean -d 'Remove the target directory'
-complete -c cargo -n __fish_use_subcommand -x -a doc -d 'Build this package\'s and its dependencies\' documentation'
-complete -c cargo -n __fish_use_subcommand -x -a new -d 'Create a new cargo package'
-complete -c cargo -n __fish_use_subcommand -x -a init -d 'Create a new cargo package in an existing directory'
-complete -c cargo -n __fish_use_subcommand -x -a run -d 'Run a binary or example of the local package'
-complete -c cargo -n __fish_use_subcommand -x -a test -d 'Run the tests'
-complete -c cargo -n __fish_use_subcommand -x -a bench -d 'Run the benchmarks'
-complete -c cargo -n __fish_use_subcommand -x -a update -d 'Update dependencies listed in Cargo.lock'
-complete -c cargo -n __fish_use_subcommand -x -a search -d 'Search registry for crates'
-complete -c cargo -n __fish_use_subcommand -x -a publish -d 'Package and upload this package to the registry'
-complete -c cargo -n __fish_use_subcommand -x -a install -d 'Install a Rust binary. Default location is $HOME/.cargo/bin'
-complete -c cargo -n __fish_use_subcommand -x -a uninstall -d 'Uninstall a Rust binary'
+complete -k -c cargo -n __fish_use_subcommand -x -a uninstall -d 'Uninstall a Rust binary'
+complete -k -c cargo -n __fish_use_subcommand -x -a install -d 'Install a Rust binary. Default location is $HOME/.cargo/bin'
+complete -k -c cargo -n __fish_use_subcommand -x -a publish -d 'Package and upload this package to the registry'
+complete -k -c cargo -n __fish_use_subcommand -x -a search -d 'Search registry for crates'
+complete -k -c cargo -n __fish_use_subcommand -x -a update -d 'Update dependencies listed in Cargo.lock'
+complete -k -c cargo -n __fish_use_subcommand -x -a bench -d 'Run the benchmarks'
+complete -k -c cargo -n __fish_use_subcommand -x -a test -d 'Run the tests'
+complete -k -c cargo -n __fish_use_subcommand -x -a run -d 'Run a binary or example of the local package'
+complete -k -c cargo -n __fish_use_subcommand -x -a init -d 'Create a new cargo package in an existing directory'
+complete -k -c cargo -n __fish_use_subcommand -x -a new -d 'Create a new cargo package'
+complete -k -c cargo -n __fish_use_subcommand -x -a doc -d 'Build this package\'s and its dependencies\' documentation'
+complete -k -c cargo -n __fish_use_subcommand -x -a clean -d 'Remove the target directory'
+complete -k -c cargo -n __fish_use_subcommand -x -a check -d 'Analyze the current package and report errors, but don\'t build object files'
+complete -k -c cargo -n __fish_use_subcommand -x -a build -d 'Compile the current package'
 
 
 
@@ -55,8 +55,8 @@ complete -c cargo -n "__fish_seen_subcommand_from build" -l all-features -d 'Act
 complete -c cargo -n "__fish_seen_subcommand_from build" -l no-default-features -d 'Do not activate the `default` feature'
 complete -c cargo -n "__fish_seen_subcommand_from build" -l target -d 'Build for the target triple' -x
 complete -c cargo -n "__fish_seen_subcommand_from build" -l target-dir -d 'Directory for all generated artifacts' -r
-complete -c cargo -n "__fish_seen_subcommand_from build" -l out-dir -d 'Copy final artifacts to this directory (unstable)' -x
-complete -c cargo -n "__fish_seen_subcommand_from build" -l manifest-path -d 'Path to Cargo.toml' -x
+complete -c cargo -n "__fish_seen_subcommand_from build" -l out-dir -d 'Copy final artifacts to this directory (unstable)' -r
+complete -c cargo -n "__fish_seen_subcommand_from build" -l manifest-path -d 'Path to Cargo.toml' -r
 complete -c cargo -n "__fish_seen_subcommand_from build" -l ignore-rust-version -d 'Ignore `rust-version` specification in packages (unstable)'
 complete -c cargo -n "__fish_seen_subcommand_from build" -l message-format -d 'Error format' -x
 complete -c cargo -n "__fish_seen_subcommand_from build" -l build-plan -d 'Output the build plan in JSON (unstable)'
@@ -96,7 +96,7 @@ complete -c cargo -n "__fish_seen_subcommand_from check" -l all-features -d 'Act
 complete -c cargo -n "__fish_seen_subcommand_from check" -l no-default-features -d 'Do not activate the `default` feature'
 complete -c cargo -n "__fish_seen_subcommand_from check" -l target -d 'Check for the target triple' -x
 complete -c cargo -n "__fish_seen_subcommand_from check" -l target-dir -d 'Directory for all generated artifacts' -r
-complete -c cargo -n "__fish_seen_subcommand_from check" -l manifest-path -d 'Path to Cargo.toml' -x
+complete -c cargo -n "__fish_seen_subcommand_from check" -l manifest-path -d 'Path to Cargo.toml' -r
 complete -c cargo -n "__fish_seen_subcommand_from check" -l ignore-rust-version -d 'Ignore `rust-version` specification in packages (unstable)'
 complete -c cargo -n "__fish_seen_subcommand_from check" -l message-format -d 'Error format' -x
 complete -c cargo -n "__fish_seen_subcommand_from check" -l unit-graph -d 'Output build graph in JSON (unstable)'
@@ -114,7 +114,7 @@ complete -c cargo -n "__fish_seen_subcommand_from check" -s h -l help -d 'Prints
 
 complete -c cargo -n "__fish_seen_subcommand_from clean" -s q -l quiet -d 'No output printed to stdout'
 complete -c cargo -n "__fish_seen_subcommand_from clean" -s p -l package -d 'Package to clean artifacts for' -x
-complete -c cargo -n "__fish_seen_subcommand_from clean" -l manifest-path -d 'Path to Cargo.toml' -x
+complete -c cargo -n "__fish_seen_subcommand_from clean" -l manifest-path -d 'Path to Cargo.toml' -r
 complete -c cargo -n "__fish_seen_subcommand_from clean" -l target -d 'Target triple to clean output for' -x
 complete -c cargo -n "__fish_seen_subcommand_from clean" -l target-dir -d 'Directory for all generated artifacts' -r
 complete -c cargo -n "__fish_seen_subcommand_from clean" -l release -d 'Whether or not to clean release artifacts'
@@ -150,7 +150,7 @@ complete -c cargo -n "__fish_seen_subcommand_from doc" -l all-features -d 'Activ
 complete -c cargo -n "__fish_seen_subcommand_from doc" -l no-default-features -d 'Do not activate the `default` feature'
 complete -c cargo -n "__fish_seen_subcommand_from doc" -l target -d 'Build for the target triple' -x
 complete -c cargo -n "__fish_seen_subcommand_from doc" -l target-dir -d 'Directory for all generated artifacts' -r
-complete -c cargo -n "__fish_seen_subcommand_from doc" -l manifest-path -d 'Path to Cargo.toml' -x
+complete -c cargo -n "__fish_seen_subcommand_from doc" -l manifest-path -d 'Path to Cargo.toml' -r
 complete -c cargo -n "__fish_seen_subcommand_from doc" -l message-format -d 'Error format' -x
 complete -c cargo -n "__fish_seen_subcommand_from doc" -l ignore-rust-version -d 'Ignore `rust-version` specification in packages (unstable)'
 complete -c cargo -n "__fish_seen_subcommand_from doc" -l unit-graph -d 'Output build graph in JSON (unstable)'
@@ -213,7 +213,7 @@ complete -c cargo -n "__fish_seen_subcommand_from run" -l all-features -d 'Activ
 complete -c cargo -n "__fish_seen_subcommand_from run" -l no-default-features -d 'Do not activate the `default` feature'
 complete -c cargo -n "__fish_seen_subcommand_from run" -l target -d 'Build for the target triple' -x
 complete -c cargo -n "__fish_seen_subcommand_from run" -l target-dir -d 'Directory for all generated artifacts' -r
-complete -c cargo -n "__fish_seen_subcommand_from run" -l manifest-path -d 'Path to Cargo.toml' -x
+complete -c cargo -n "__fish_seen_subcommand_from run" -l manifest-path -d 'Path to Cargo.toml' -r
 complete -c cargo -n "__fish_seen_subcommand_from run" -l message-format -d 'Error format' -x
 complete -c cargo -n "__fish_seen_subcommand_from run" -l unit-graph -d 'Output build graph in JSON (unstable)'
 complete -c cargo -n "__fish_seen_subcommand_from run" -l ignore-rust-version -d 'Ignore `rust-version` specification in packages (unstable)'
@@ -254,7 +254,7 @@ complete -c cargo -n "__fish_seen_subcommand_from test" -l all-features -d 'Acti
 complete -c cargo -n "__fish_seen_subcommand_from test" -l no-default-features -d 'Do not activate the `default` feature'
 complete -c cargo -n "__fish_seen_subcommand_from test" -l target -d 'Build for the target triple' -x
 complete -c cargo -n "__fish_seen_subcommand_from test" -l target-dir -d 'Directory for all generated artifacts' -r
-complete -c cargo -n "__fish_seen_subcommand_from test" -l manifest-path -d 'Path to Cargo.toml' -x
+complete -c cargo -n "__fish_seen_subcommand_from test" -l manifest-path -d 'Path to Cargo.toml' -r
 complete -c cargo -n "__fish_seen_subcommand_from test" -l ignore-rust-version -d 'Ignore `rust-version` specification in packages (unstable)'
 complete -c cargo -n "__fish_seen_subcommand_from test" -l message-format -d 'Error format' -x
 complete -c cargo -n "__fish_seen_subcommand_from test" -l unit-graph -d 'Output build graph in JSON (unstable)'
@@ -292,7 +292,7 @@ complete -c cargo -n "__fish_seen_subcommand_from bench" -l all-features -d 'Act
 complete -c cargo -n "__fish_seen_subcommand_from bench" -l no-default-features -d 'Do not activate the `default` feature'
 complete -c cargo -n "__fish_seen_subcommand_from bench" -l target -d 'Build for the target triple' -x
 complete -c cargo -n "__fish_seen_subcommand_from bench" -l target-dir -d 'Directory for all generated artifacts' -r
-complete -c cargo -n "__fish_seen_subcommand_from bench" -l manifest-path -d 'Path to Cargo.toml' -x
+complete -c cargo -n "__fish_seen_subcommand_from bench" -l manifest-path -d 'Path to Cargo.toml' -r
 complete -c cargo -n "__fish_seen_subcommand_from bench" -l ignore-rust-version -d 'Ignore `rust-version` specification in packages (unstable)'
 complete -c cargo -n "__fish_seen_subcommand_from bench" -l message-format -d 'Error format' -x
 complete -c cargo -n "__fish_seen_subcommand_from bench" -l no-fail-fast -d 'Run all benchmarks regardless of failure'
@@ -314,7 +314,7 @@ complete -c cargo -n "__fish_seen_subcommand_from update" -s p -l package -d 'Pa
 complete -c cargo -n "__fish_seen_subcommand_from update" -l aggressive -d 'Force updating all dependencies of SPEC as well when used with -p'
 complete -c cargo -n "__fish_seen_subcommand_from update" -l dry-run -d 'Don\'t actually write the lockfile'
 complete -c cargo -n "__fish_seen_subcommand_from update" -l precise -d 'Update a single dependency to exactly PRECISE when used with -p' -x
-complete -c cargo -n "__fish_seen_subcommand_from update" -l manifest-path -d 'Path to Cargo.toml' -x
+complete -c cargo -n "__fish_seen_subcommand_from update" -l manifest-path -d 'Path to Cargo.toml' -r
 complete -c cargo -n "__fish_seen_subcommand_from update" -s v -l verbose -d 'Use verbose output (-vv very verbose/build.rs output)'
 complete -c cargo -n "__fish_seen_subcommand_from update" -l color -d 'Coloring: auto, always, never' -x
 complete -c cargo -n "__fish_seen_subcommand_from update" -l frozen -d 'Require Cargo.lock and cache are up to date'
@@ -348,7 +348,7 @@ complete -c cargo -n "__fish_seen_subcommand_from publish" -l no-verify -d 'Don\
 complete -c cargo -n "__fish_seen_subcommand_from publish" -l allow-dirty -d 'Allow dirty working directories to be packaged'
 complete -c cargo -n "__fish_seen_subcommand_from publish" -l target -d 'Build for the target triple' -x
 complete -c cargo -n "__fish_seen_subcommand_from publish" -l target-dir -d 'Directory for all generated artifacts' -r
-complete -c cargo -n "__fish_seen_subcommand_from publish" -l manifest-path -d 'Path to Cargo.toml' -x
+complete -c cargo -n "__fish_seen_subcommand_from publish" -l manifest-path -d 'Path to Cargo.toml' -r
 complete -c cargo -n "__fish_seen_subcommand_from publish" -l features -d 'Space or comma separated list of features to activate' -x
 complete -c cargo -n "__fish_seen_subcommand_from publish" -l all-features -d 'Activate all available features'
 complete -c cargo -n "__fish_seen_subcommand_from publish" -l no-default-features -d 'Do not activate the `default` feature'
@@ -372,7 +372,7 @@ complete -c cargo -n "__fish_seen_subcommand_from install" -l git -d 'Git URL to
 complete -c cargo -n "__fish_seen_subcommand_from install" -l branch -d 'Branch to use when installing from git' -x
 complete -c cargo -n "__fish_seen_subcommand_from install" -l tag -d 'Tag to use when installing from git' -x
 complete -c cargo -n "__fish_seen_subcommand_from install" -l rev -d 'Specific commit to use when installing from git' -x
-complete -c cargo -n "__fish_seen_subcommand_from install" -l path -d 'Filesystem path to local crate to install' -x
+complete -c cargo -n "__fish_seen_subcommand_from install" -l path -d 'Filesystem path to local crate to install' -r
 complete -c cargo -n "__fish_seen_subcommand_from install" -l list -d 'list all installed packages and their versions'
 complete -c cargo -n "__fish_seen_subcommand_from install" -s j -l jobs -d 'Number of parallel jobs, defaults to # of CPUs' -x
 complete -c cargo -n "__fish_seen_subcommand_from install" -s f -l force -d 'Force overwriting existing crates or binaries'

@@ -1,4 +1,4 @@
-# Generated with h2o 0.1.18
+# Auto-generated with h2o
 
 complete -c clang -s \# -d 'Print (but do not run) the commands to run for this compilation' -x
 complete -c clang -l analyzer-output -d 'Static analyzer report output format (html|plist|plist-multi-file|plist-html|sarif|text).' -x
@@ -300,12 +300,12 @@ complete -c clang -o foptimization-record-passes -d 'Only include passes which m
 complete -c clang -o forder-file-instrumentation -d 'Generate instrumented code to collect order file into default.profraw file (overridden by \'=\' form of option or LLVM_PROFILE_FILE env var)'
 complete -c clang -o fpack-struct -d 'Specify the default maximum struct packing alignment' -x
 complete -c clang -o fpascal-strings -d 'Recognize and construct Pascal-style string literals'
-complete -c clang -o fpass-plugin -d 'Load pass plugin from a dynamic shared object file (only with new pass manager).' -x
+complete -c clang -o fpass-plugin -d 'Load pass plugin from a dynamic shared object file (only with new pass manager).' -r
 complete -c clang -o fpatchable-function-entry -d 'Generate M NOPs before function entry and N-M NOPs after function entry' -x
 complete -c clang -o fpcc-struct-return -d 'Override the default ABI to return all structs on the stack'
 complete -c clang -o fpch-validate-input-files-content -d 'Validate PCH input files based on content if mtime differs'
 complete -c clang -o fplt -d 'Use the PLT to make function calls'
-complete -c clang -o fplugin -d 'Load the named plugin (dynamic shared object)' -x
+complete -c clang -o fplugin -d 'Load the named plugin (dynamic shared object)' -r
 complete -c clang -o fprebuilt-module-path -d 'Specify the prebuilt module path' -r
 complete -c clang -o fprofile-exclude-files -d 'Instrument only functions from files where names don\'t match all the regexes separated by a semi-colon' -x
 complete -c clang -o fprofile-filter-files -d 'Instrument only functions from files where names match any regex separated by a semi-colon' -x
@@ -317,7 +317,7 @@ complete -c clang -o fprofile-instr-use -d 'Use instrumentation data for profile
 complete -c clang -o fprofile-remapping-file -d 'Use the remappings described in <file> to match the profile data against names in the program' -r
 complete -c clang -o fprofile-sample-accurate -d 'Specifies that the sample profile is accurate'
 complete -c clang -o fprofile-sample-use -d 'Enable sample-based profile guided optimizations' -x
-complete -c clang -o fprofile-use -d 'Use instrumentation data for profile-guided optimization.' -x
+complete -c clang -o fprofile-use -d 'Use instrumentation data for profile-guided optimization.' -r
 complete -c clang -o freciprocal-math -d 'Allow division operations to be reassociated'
 complete -c clang -o freg-struct-return -d 'Override the default ABI to return small structs in registers'
 complete -c clang -o fregister-global-dtors-with-atexit -d 'Use atexit or __cxa_atexit to register global destructors'

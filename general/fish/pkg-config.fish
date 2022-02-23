@@ -1,4 +1,4 @@
-# Generated with h2o 0.1.18
+# Auto-generated with h2o
 
 complete -c pkg-config -l modversion -d 'Requests that the version information of the libraries specified on the command line be displayed.'
 complete -c pkg-config -l version -d 'Displays the version of pkg-config and terminates.'

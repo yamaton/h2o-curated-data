@@ -1,4 +1,4 @@
-# Generated with h2o 0.1.18
+# Auto-generated with h2o
 
 complete -c du -s 0 -l null -d 'end each output line with NUL, not newline'
 complete -c du -s a -l all -d 'write counts for all files, not just directories'

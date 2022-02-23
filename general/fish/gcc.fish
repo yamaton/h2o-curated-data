@@ -1,4 +1,4 @@
-# Generated with h2o 0.1.18
+# Auto-generated with h2o
 
 complete -c gcc -l completion -d 'Provide bash completion for options starting with provided string.' -x
 complete -c gcc -l debug -d 'Same as -g.'

@@ -1,4 +1,4 @@
-# Generated with h2o 0.1.18
+# Auto-generated with h2o
 
 complete -c bat -s A -l show-all -d 'Show non-printable characters like space, tab or newline.'
 complete -c bat -s p -l plain -d 'Only show plain style, no decorations.'

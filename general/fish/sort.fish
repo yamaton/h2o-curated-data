@@ -1,4 +1,4 @@
-# Generated with h2o 0.1.18
+# Auto-generated with h2o
 
 complete -c sort -s b -l ignore-leading-blanks -d 'ignore leading blanks'
 complete -c sort -s d -l dictionary-order -d 'consider only blanks and alphanumeric characters'

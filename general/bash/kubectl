@@ -165,7 +165,279 @@ _kubectl()
 _kubectl_create ()
 {
     local cur word_list
-    word_list=" --allow-missing-template-keys --dry-run --edit --field-manager -k --kustomize -o --output --raw -R --recursive --save-config -l --selector --show-managed-fields --template --validate --windows-line-endings --add-dir-header --alsologtostderr --as --cache-dir --certificate-authority --client-certificate --client-key --cluster --context --insecure-skip-tls-verify --kubeconfig --log-backtrace-at --log-dir --log-file --log-file-max-size --log-flush-frequency --logtostderr --match-server-version -n --namespace --one-output --password --profile --profile-output --request-timeout -s --server --skip-headers --skip-log-headers --stderrthreshold --tls-server-name --token --user --username -v --v --vmodule --warnings-as-errors" 
+    local i=1 subcommand_index
+
+    # take the last word that's NOT starting with -
+    while [[ ( $i < $COMP_CWORD ) ]]; do
+        local s="${COMP_WORDS[i]}"
+        case "$s" in
+          create)
+            subcommand_index=$i
+            break
+            ;;
+        esac
+        (( i++ ))
+    done
+
+    while [[ ( $subcommand_index < $COMP_CWORD ) ]]; do
+        local s="${COMP_WORDS[subcommand_index}"
+        case "$s" in
+          clusterrole) _kubectl_clusterrole
+            return
+            ;;
+
+          configmap) _kubectl_configmap
+            return
+            ;;
+
+          cronjob) _kubectl_cronjob
+            return
+            ;;
+
+          deployment) _kubectl_deployment
+            return
+            ;;
+
+          ingress) _kubectl_ingress
+            return
+            ;;
+
+          job) _kubectl_job
+            return
+            ;;
+
+          namespace) _kubectl_namespace
+            return
+            ;;
+
+          poddisruptionbudget) _kubectl_poddisruptionbudget
+            return
+            ;;
+
+          pdb) _kubectl_pdb
+            return
+            ;;
+
+          priorityclass) _kubectl_priorityclass
+            return
+            ;;
+
+          quota) _kubectl_quota
+            return
+            ;;
+
+          role) _kubectl_role
+            return
+            ;;
+
+          rolebinding) _kubectl_rolebinding
+            return
+            ;;
+
+          secret) _kubectl_secret
+            return
+            ;;
+
+          service) _kubectl_service
+            return
+            ;;
+
+          serviceaccount) _kubectl_serviceaccount
+            return
+            ;;
+
+          *)  ;; 
+        esac
+        (( subcommand_index++ ))
+    done
+
+    word_list=" clusterrole configmap cronjob deployment ingress job namespace poddisruptionbudget pdb priorityclass quota role rolebinding secret service serviceaccount --allow-missing-template-keys --dry-run --edit --field-manager -k --kustomize -o --output --raw -R --recursive --save-config -l --selector --show-managed-fields --template --validate --windows-line-endings --add-dir-header --alsologtostderr --as --cache-dir --certificate-authority --client-certificate --client-key --cluster --context --insecure-skip-tls-verify --kubeconfig --log-backtrace-at --log-dir --log-file --log-file-max-size --log-flush-frequency --logtostderr --match-server-version -n --namespace --one-output --password --profile --profile-output --request-timeout -s --server --skip-headers --skip-log-headers --stderrthreshold --tls-server-name --token --user --username -v --v --vmodule --warnings-as-errors" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_create_clusterrole ()
+{
+    local cur word_list
+    word_list=" --aggregation-rule --allow-missing-template-keys --dry-run --field-manager -o --output --save-config --show-managed-fields --template --validate --add-dir-header --alsologtostderr --as --cache-dir --certificate-authority --client-certificate --client-key --cluster --context --insecure-skip-tls-verify --kubeconfig --log-backtrace-at --log-dir --log-file --log-file-max-size --log-flush-frequency --logtostderr --match-server-version -n --namespace --one-output --password --profile --profile-output --request-timeout -s --server --skip-headers --skip-log-headers --stderrthreshold --tls-server-name --token --user --username -v --v --vmodule --warnings-as-errors" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_create_configmap ()
+{
+    local cur word_list
+    word_list=" --allow-missing-template-keys --append-hash --dry-run --field-manager --from-env-file -o --output --save-config --show-managed-fields --template --validate --add-dir-header --alsologtostderr --as --cache-dir --certificate-authority --client-certificate --client-key --cluster --context --insecure-skip-tls-verify --kubeconfig --log-backtrace-at --log-dir --log-file --log-file-max-size --log-flush-frequency --logtostderr --match-server-version -n --namespace --one-output --password --profile --profile-output --request-timeout -s --server --skip-headers --skip-log-headers --stderrthreshold --tls-server-name --token --user --username -v --v --vmodule --warnings-as-errors" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_create_cronjob ()
+{
+    local cur word_list
+    word_list=" --allow-missing-template-keys --dry-run --field-manager --image -o --output --restart --save-config --schedule --show-managed-fields --template --validate --add-dir-header --alsologtostderr --as --cache-dir --certificate-authority --client-certificate --client-key --cluster --context --insecure-skip-tls-verify --kubeconfig --log-backtrace-at --log-dir --log-file --log-file-max-size --log-flush-frequency --logtostderr --match-server-version -n --namespace --one-output --password --profile --profile-output --request-timeout -s --server --skip-headers --skip-log-headers --stderrthreshold --tls-server-name --token --user --username -v --v --vmodule --warnings-as-errors" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_create_deployment ()
+{
+    local cur word_list
+    word_list=" --allow-missing-template-keys --dry-run --field-manager -o --output --port -r --replicas --save-config --show-managed-fields --template --validate --add-dir-header --alsologtostderr --as --cache-dir --certificate-authority --client-certificate --client-key --cluster --context --insecure-skip-tls-verify --kubeconfig --log-backtrace-at --log-dir --log-file --log-file-max-size --log-flush-frequency --logtostderr --match-server-version -n --namespace --one-output --password --profile --profile-output --request-timeout -s --server --skip-headers --skip-log-headers --stderrthreshold --tls-server-name --token --user --username -v --v --vmodule --warnings-as-errors" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_create_ingress ()
+{
+    local cur word_list
+    word_list=" --rule --allow-missing-template-keys --class --default-backend --dry-run --field-manager -o --output --save-config --show-managed-fields --template --validate --add-dir-header --alsologtostderr --as --cache-dir --certificate-authority --client-certificate --client-key --cluster --context --insecure-skip-tls-verify --kubeconfig --log-backtrace-at --log-dir --log-file --log-file-max-size --log-flush-frequency --logtostderr --match-server-version -n --namespace --one-output --password --profile --profile-output --request-timeout -s --server --skip-headers --skip-log-headers --stderrthreshold --tls-server-name --token --user --username -v --v --vmodule --warnings-as-errors" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_create_job ()
+{
+    local cur word_list
+    word_list=" --allow-missing-template-keys --dry-run --field-manager --from --image -o --output --save-config --show-managed-fields --template --validate --add-dir-header --alsologtostderr --as --cache-dir --certificate-authority --client-certificate --client-key --cluster --context --insecure-skip-tls-verify --kubeconfig --log-backtrace-at --log-dir --log-file --log-file-max-size --log-flush-frequency --logtostderr --match-server-version -n --namespace --one-output --password --profile --profile-output --request-timeout -s --server --skip-headers --skip-log-headers --stderrthreshold --tls-server-name --token --user --username -v --v --vmodule --warnings-as-errors" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_create_namespace ()
+{
+    local cur word_list
+    word_list=" --allow-missing-template-keys --dry-run --field-manager -o --output --save-config --show-managed-fields --template --validate --add-dir-header --alsologtostderr --as --cache-dir --certificate-authority --client-certificate --client-key --cluster --context --insecure-skip-tls-verify --kubeconfig --log-backtrace-at --log-dir --log-file --log-file-max-size --log-flush-frequency --logtostderr --match-server-version -n --namespace --one-output --password --profile --profile-output --request-timeout -s --server --skip-headers --skip-log-headers --stderrthreshold --tls-server-name --token --user --username -v --v --vmodule --warnings-as-errors" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_create_poddisruptionbudget ()
+{
+    local cur word_list
+    word_list=" --allow-missing-template-keys --dry-run --field-manager --max-unavailable --min-available -o --output --save-config --selector --show-managed-fields --template --validate" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_create_pdb ()
+{
+    local cur word_list
+    word_list=" --allow-missing-template-keys --dry-run --field-manager --max-unavailable --min-available -o --output --save-config --selector --show-managed-fields --template --validate" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_create_priorityclass ()
+{
+    local cur word_list
+    word_list=" --allow-missing-template-keys --description --dry-run --field-manager --global-default -o --output --preemption-policy --save-config --show-managed-fields --template --validate --value --add-dir-header --alsologtostderr --as --cache-dir --certificate-authority --client-certificate --client-key --cluster --context --insecure-skip-tls-verify --kubeconfig --log-backtrace-at --log-dir --log-file --log-file-max-size --log-flush-frequency --logtostderr --match-server-version -n --namespace --one-output --password --profile --profile-output --request-timeout -s --server --skip-headers --skip-log-headers --stderrthreshold --tls-server-name --token --user --username -v --v --vmodule --warnings-as-errors" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_create_quota ()
+{
+    local cur word_list
+    word_list=" --allow-missing-template-keys --dry-run --field-manager --hard -o --output --save-config --scopes --show-managed-fields --template --validate --add-dir-header --alsologtostderr --as --cache-dir --certificate-authority --client-certificate --client-key --cluster --context --insecure-skip-tls-verify --kubeconfig --log-backtrace-at --log-dir --log-file --log-file-max-size --log-flush-frequency --logtostderr --match-server-version -n --namespace --one-output --password --profile --profile-output --request-timeout -s --server --skip-headers --skip-log-headers --stderrthreshold --tls-server-name --token --user --username -v --v --vmodule --warnings-as-errors" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_create_role ()
+{
+    local cur word_list
+    word_list=" --allow-missing-template-keys --dry-run --field-manager -o --output --save-config --show-managed-fields --template --validate --add-dir-header --alsologtostderr --as --cache-dir --certificate-authority --client-certificate --client-key --cluster --context --insecure-skip-tls-verify --kubeconfig --log-backtrace-at --log-dir --log-file --log-file-max-size --log-flush-frequency --logtostderr --match-server-version -n --namespace --one-output --password --profile --profile-output --request-timeout -s --server --skip-headers --skip-log-headers --stderrthreshold --tls-server-name --token --user --username -v --v --vmodule --warnings-as-errors" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_create_rolebinding ()
+{
+    local cur word_list
+    word_list=" --allow-missing-template-keys --clusterrole --dry-run --field-manager -o --output --role --save-config --show-managed-fields --template --validate --add-dir-header --alsologtostderr --as --cache-dir --certificate-authority --client-certificate --client-key --cluster --context --insecure-skip-tls-verify --kubeconfig --log-backtrace-at --log-dir --log-file --log-file-max-size --log-flush-frequency --logtostderr --match-server-version -n --namespace --one-output --password --profile --profile-output --request-timeout -s --server --skip-headers --skip-log-headers --stderrthreshold --tls-server-name --token --user --username -v --v --vmodule --warnings-as-errors" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_create_secret ()
+{
+    local cur word_list
+    local i=1 subcommand_index
+
+    # take the last word that's NOT starting with -
+    while [[ ( $i < $COMP_CWORD ) ]]; do
+        local s="${COMP_WORDS[i]}"
+        case "$s" in
+          secret)
+            subcommand_index=$i
+            break
+            ;;
+        esac
+        (( i++ ))
+    done
+
+    while [[ ( $subcommand_index < $COMP_CWORD ) ]]; do
+        local s="${COMP_WORDS[subcommand_index}"
+        case "$s" in
+          docker-registry) _create_docker-registry
+            return
+            ;;
+
+          generic) _create_generic
+            return
+            ;;
+
+          tls) _create_tls
+            return
+            ;;
+
+          *)  ;; 
+        esac
+        (( subcommand_index++ ))
+    done
+
+    word_list=" docker-registry generic tls" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_secret_docker-registry ()
+{
+    local cur word_list
+    word_list=" --allow-missing-template-keys --append-hash --docker-email --docker-password --docker-server --docker-username --dry-run --field-manager -o --output --save-config --show-managed-fields --template --validate" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_secret_generic ()
+{
+    local cur word_list
+    word_list=" --allow-missing-template-keys --append-hash --dry-run --field-manager --from-env-file -o --output --save-config --show-managed-fields --template --type --validate" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_secret_tls ()
+{
+    local cur word_list
+    word_list=" --allow-missing-template-keys --append-hash --cert --dry-run --field-manager --key -o --output --save-config --show-managed-fields --template --validate" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_create_service ()
+{
+    local cur word_list
+    word_list=" --add-dir-header --alsologtostderr --as --cache-dir --certificate-authority --client-certificate --client-key --cluster --context --insecure-skip-tls-verify --kubeconfig --log-backtrace-at --log-dir --log-file --log-file-max-size --log-flush-frequency --logtostderr --match-server-version -n --namespace --one-output --password --profile --profile-output --request-timeout -s --server --skip-headers --skip-log-headers --stderrthreshold --tls-server-name --token --user --username -v --v --vmodule --warnings-as-errors" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_create_serviceaccount ()
+{
+    local cur word_list
+    word_list=" --allow-missing-template-keys --dry-run --field-manager -o --output --save-config --show-managed-fields --template --validate --add-dir-header --alsologtostderr --as --cache-dir --certificate-authority --client-certificate --client-key --cluster --context --insecure-skip-tls-verify --kubeconfig --log-backtrace-at --log-dir --log-file --log-file-max-size --log-flush-frequency --logtostderr --match-server-version -n --namespace --one-output --password --profile --profile-output --request-timeout -s --server --skip-headers --skip-log-headers --stderrthreshold --tls-server-name --token --user --username -v --v --vmodule --warnings-as-errors" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -189,7 +461,89 @@ _kubectl_run ()
 _kubectl_set ()
 {
     local cur word_list
-    word_list=" --add-dir-header --alsologtostderr --as --cache-dir --certificate-authority --client-certificate --client-key --cluster --context --insecure-skip-tls-verify --kubeconfig --log-backtrace-at --log-dir --log-file --log-file-max-size --log-flush-frequency --logtostderr --match-server-version -n --namespace --one-output --password --profile --profile-output --request-timeout -s --server --skip-headers --skip-log-headers --stderrthreshold --tls-server-name --token --user --username -v --v --vmodule --warnings-as-errors" 
+    local i=1 subcommand_index
+
+    # take the last word that's NOT starting with -
+    while [[ ( $i < $COMP_CWORD ) ]]; do
+        local s="${COMP_WORDS[i]}"
+        case "$s" in
+          set)
+            subcommand_index=$i
+            break
+            ;;
+        esac
+        (( i++ ))
+    done
+
+    while [[ ( $subcommand_index < $COMP_CWORD ) ]]; do
+        local s="${COMP_WORDS[subcommand_index}"
+        case "$s" in
+          env) _kubectl_env
+            return
+            ;;
+
+          image) _kubectl_image
+            return
+            ;;
+
+          resources) _kubectl_resources
+            return
+            ;;
+
+          selector) _kubectl_selector
+            return
+            ;;
+
+          subject) _kubectl_subject
+            return
+            ;;
+
+          *)  ;; 
+        esac
+        (( subcommand_index++ ))
+    done
+
+    word_list=" env image resources selector subject --add-dir-header --alsologtostderr --as --cache-dir --certificate-authority --client-certificate --client-key --cluster --context --insecure-skip-tls-verify --kubeconfig --log-backtrace-at --log-dir --log-file --log-file-max-size --log-flush-frequency --logtostderr --match-server-version -n --namespace --one-output --password --profile --profile-output --request-timeout -s --server --skip-headers --skip-log-headers --stderrthreshold --tls-server-name --token --user --username -v --v --vmodule --warnings-as-errors" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_set_env ()
+{
+    local cur word_list
+    word_list=" --all --allow-missing-template-keys -c --containers --dry-run --field-manager --from -k --kustomize --list --local -o --output --overwrite --prefix -R --recursive --resolve -l --selector --show-managed-fields --template --add-dir-header --alsologtostderr --as --cache-dir --certificate-authority --client-certificate --client-key --cluster --context --insecure-skip-tls-verify --kubeconfig --log-backtrace-at --log-dir --log-file --log-file-max-size --log-flush-frequency --logtostderr --match-server-version -n --namespace --one-output --password --profile --profile-output --request-timeout -s --server --skip-headers --skip-log-headers --stderrthreshold --tls-server-name --token --user --username -v --v --vmodule --warnings-as-errors" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_set_image ()
+{
+    local cur word_list
+    word_list=" --all --allow-missing-template-keys --dry-run --field-manager -k --kustomize --local -o --output -R --recursive -l --selector --show-managed-fields --template --add-dir-header --alsologtostderr --as --cache-dir --certificate-authority --client-certificate --client-key --cluster --context --insecure-skip-tls-verify --kubeconfig --log-backtrace-at --log-dir --log-file --log-file-max-size --log-flush-frequency --logtostderr --match-server-version -n --namespace --one-output --password --profile --profile-output --request-timeout -s --server --skip-headers --skip-log-headers --stderrthreshold --tls-server-name --token --user --username -v --v --vmodule --warnings-as-errors" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_set_resources ()
+{
+    local cur word_list
+    word_list=" --all --allow-missing-template-keys -c --containers --dry-run --field-manager -k --kustomize --limits --local -o --output -R --recursive --requests -l --selector --show-managed-fields --template --add-dir-header --alsologtostderr --as --cache-dir --certificate-authority --client-certificate --client-key --cluster --context --insecure-skip-tls-verify --kubeconfig --log-backtrace-at --log-dir --log-file --log-file-max-size --log-flush-frequency --logtostderr --match-server-version -n --namespace --one-output --password --profile --profile-output --request-timeout -s --server --skip-headers --skip-log-headers --stderrthreshold --tls-server-name --token --user --username -v --v --vmodule --warnings-as-errors" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_set_selector ()
+{
+    local cur word_list
+    word_list=" --all --allow-missing-template-keys --dry-run --field-manager --local -o --output -R --recursive --resource-version --show-managed-fields --template --add-dir-header --alsologtostderr --as --cache-dir --certificate-authority --client-certificate --client-key --cluster --context --insecure-skip-tls-verify --kubeconfig --log-backtrace-at --log-dir --log-file --log-file-max-size --log-flush-frequency --logtostderr --match-server-version -n --namespace --one-output --password --profile --profile-output --request-timeout -s --server --skip-headers --skip-log-headers --stderrthreshold --tls-server-name --token --user --username -v --v --vmodule --warnings-as-errors" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_set_subject ()
+{
+    local cur word_list
+    word_list=" --all --allow-missing-template-keys --dry-run --field-manager -k --kustomize --local -o --output -R --recursive -l --selector --show-managed-fields --template --add-dir-header --alsologtostderr --as --cache-dir --certificate-authority --client-certificate --client-key --cluster --context --insecure-skip-tls-verify --kubeconfig --log-backtrace-at --log-dir --log-file --log-file-max-size --log-flush-frequency --logtostderr --match-server-version -n --namespace --one-output --password --profile --profile-output --request-timeout -s --server --skip-headers --skip-log-headers --stderrthreshold --tls-server-name --token --user --username -v --v --vmodule --warnings-as-errors" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -229,7 +583,101 @@ _kubectl_delete ()
 _kubectl_rollout ()
 {
     local cur word_list
-    word_list=" --add-dir-header --alsologtostderr --as --cache-dir --certificate-authority --client-certificate --client-key --cluster --context --insecure-skip-tls-verify --kubeconfig --log-backtrace-at --log-dir --log-file --log-file-max-size --log-flush-frequency --logtostderr --match-server-version -n --namespace --one-output --password --profile --profile-output --request-timeout -s --server --skip-headers --skip-log-headers --stderrthreshold --tls-server-name --token --user --username -v --v --vmodule --warnings-as-errors" 
+    local i=1 subcommand_index
+
+    # take the last word that's NOT starting with -
+    while [[ ( $i < $COMP_CWORD ) ]]; do
+        local s="${COMP_WORDS[i]}"
+        case "$s" in
+          rollout)
+            subcommand_index=$i
+            break
+            ;;
+        esac
+        (( i++ ))
+    done
+
+    while [[ ( $subcommand_index < $COMP_CWORD ) ]]; do
+        local s="${COMP_WORDS[subcommand_index}"
+        case "$s" in
+          history) _kubectl_history
+            return
+            ;;
+
+          pause) _kubectl_pause
+            return
+            ;;
+
+          restart) _kubectl_restart
+            return
+            ;;
+
+          resume) _kubectl_resume
+            return
+            ;;
+
+          status) _kubectl_status
+            return
+            ;;
+
+          undo) _kubectl_undo
+            return
+            ;;
+
+          *)  ;; 
+        esac
+        (( subcommand_index++ ))
+    done
+
+    word_list=" history pause restart resume status undo --add-dir-header --alsologtostderr --as --cache-dir --certificate-authority --client-certificate --client-key --cluster --context --insecure-skip-tls-verify --kubeconfig --log-backtrace-at --log-dir --log-file --log-file-max-size --log-flush-frequency --logtostderr --match-server-version -n --namespace --one-output --password --profile --profile-output --request-timeout -s --server --skip-headers --skip-log-headers --stderrthreshold --tls-server-name --token --user --username -v --v --vmodule --warnings-as-errors" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_rollout_history ()
+{
+    local cur word_list
+    word_list=" --allow-missing-template-keys -k --kustomize -o --output -R --recursive --revision --show-managed-fields --template --add-dir-header --alsologtostderr --as --cache-dir --certificate-authority --client-certificate --client-key --cluster --context --insecure-skip-tls-verify --kubeconfig --log-backtrace-at --log-dir --log-file --log-file-max-size --log-flush-frequency --logtostderr --match-server-version -n --namespace --one-output --password --profile --profile-output --request-timeout -s --server --skip-headers --skip-log-headers --stderrthreshold --tls-server-name --token --user --username -v --v --vmodule --warnings-as-errors" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_rollout_pause ()
+{
+    local cur word_list
+    word_list=" --allow-missing-template-keys --field-manager -k --kustomize -o --output -R --recursive --show-managed-fields --template --add-dir-header --alsologtostderr --as --cache-dir --certificate-authority --client-certificate --client-key --cluster --context --insecure-skip-tls-verify --kubeconfig --log-backtrace-at --log-dir --log-file --log-file-max-size --log-flush-frequency --logtostderr --match-server-version -n --namespace --one-output --password --profile --profile-output --request-timeout -s --server --skip-headers --skip-log-headers --stderrthreshold --tls-server-name --token --user --username -v --v --vmodule --warnings-as-errors" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_rollout_restart ()
+{
+    local cur word_list
+    word_list=" --allow-missing-template-keys --field-manager -k --kustomize -o --output -R --recursive --show-managed-fields --template --add-dir-header --alsologtostderr --as --cache-dir --certificate-authority --client-certificate --client-key --cluster --context --insecure-skip-tls-verify --kubeconfig --log-backtrace-at --log-dir --log-file --log-file-max-size --log-flush-frequency --logtostderr --match-server-version -n --namespace --one-output --password --profile --profile-output --request-timeout -s --server --skip-headers --skip-log-headers --stderrthreshold --tls-server-name --token --user --username -v --v --vmodule --warnings-as-errors" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_rollout_resume ()
+{
+    local cur word_list
+    word_list=" --allow-missing-template-keys --field-manager -k --kustomize -o --output -R --recursive --show-managed-fields --template --add-dir-header --alsologtostderr --as --cache-dir --certificate-authority --client-certificate --client-key --cluster --context --insecure-skip-tls-verify --kubeconfig --log-backtrace-at --log-dir --log-file --log-file-max-size --log-flush-frequency --logtostderr --match-server-version -n --namespace --one-output --password --profile --profile-output --request-timeout -s --server --skip-headers --skip-log-headers --stderrthreshold --tls-server-name --token --user --username -v --v --vmodule --warnings-as-errors" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_rollout_status ()
+{
+    local cur word_list
+    word_list=" -k --kustomize -R --recursive --revision --timeout -w --watch --add-dir-header --alsologtostderr --as --cache-dir --certificate-authority --client-certificate --client-key --cluster --context --insecure-skip-tls-verify --kubeconfig --log-backtrace-at --log-dir --log-file --log-file-max-size --log-flush-frequency --logtostderr --match-server-version -n --namespace --one-output --password --profile --profile-output --request-timeout -s --server --skip-headers --skip-log-headers --stderrthreshold --tls-server-name --token --user --username -v --v --vmodule --warnings-as-errors" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_rollout_undo ()
+{
+    local cur word_list
+    word_list=" --allow-missing-template-keys --dry-run -k --kustomize -o --output -R --recursive --show-managed-fields --template --to-revision --add-dir-header --alsologtostderr --as --cache-dir --certificate-authority --client-certificate --client-key --cluster --context --insecure-skip-tls-verify --kubeconfig --log-backtrace-at --log-dir --log-file --log-file-max-size --log-flush-frequency --logtostderr --match-server-version -n --namespace --one-output --password --profile --profile-output --request-timeout -s --server --skip-headers --skip-log-headers --stderrthreshold --tls-server-name --token --user --username -v --v --vmodule --warnings-as-errors" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -253,7 +701,53 @@ _kubectl_autoscale ()
 _kubectl_top ()
 {
     local cur word_list
-    word_list=" --add-dir-header --alsologtostderr --as --cache-dir --certificate-authority --client-certificate --client-key --cluster --context --insecure-skip-tls-verify --kubeconfig --log-backtrace-at --log-dir --log-file --log-file-max-size --log-flush-frequency --logtostderr --match-server-version -n --namespace --one-output --password --profile --profile-output --request-timeout -s --server --skip-headers --skip-log-headers --stderrthreshold --tls-server-name --token --user --username -v --v --vmodule --warnings-as-errors" 
+    local i=1 subcommand_index
+
+    # take the last word that's NOT starting with -
+    while [[ ( $i < $COMP_CWORD ) ]]; do
+        local s="${COMP_WORDS[i]}"
+        case "$s" in
+          top)
+            subcommand_index=$i
+            break
+            ;;
+        esac
+        (( i++ ))
+    done
+
+    while [[ ( $subcommand_index < $COMP_CWORD ) ]]; do
+        local s="${COMP_WORDS[subcommand_index}"
+        case "$s" in
+          node) _kubectl_node
+            return
+            ;;
+
+          pod) _kubectl_pod
+            return
+            ;;
+
+          *)  ;; 
+        esac
+        (( subcommand_index++ ))
+    done
+
+    word_list=" node pod --add-dir-header --alsologtostderr --as --cache-dir --certificate-authority --client-certificate --client-key --cluster --context --insecure-skip-tls-verify --kubeconfig --log-backtrace-at --log-dir --log-file --log-file-max-size --log-flush-frequency --logtostderr --match-server-version -n --namespace --one-output --password --profile --profile-output --request-timeout -s --server --skip-headers --skip-log-headers --stderrthreshold --tls-server-name --token --user --username -v --v --vmodule --warnings-as-errors" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_top_node ()
+{
+    local cur word_list
+    word_list=" --no-headers -l --selector --sort-by --use-protocol-buffers --add-dir-header --alsologtostderr --as --cache-dir --certificate-authority --client-certificate --client-key --cluster --context --insecure-skip-tls-verify --kubeconfig --log-backtrace-at --log-dir --log-file --log-file-max-size --log-flush-frequency --logtostderr --match-server-version -n --namespace --one-output --password --profile --profile-output --request-timeout -s --server --skip-headers --skip-log-headers --stderrthreshold --tls-server-name --token --user --username -v --v --vmodule --warnings-as-errors" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_top_pod ()
+{
+    local cur word_list
+    word_list=" -A --all-namespaces --containers --field-selector --no-headers -l --selector --sort-by --use-protocol-buffers --add-dir-header --alsologtostderr --as --cache-dir --certificate-authority --client-certificate --client-key --cluster --context --insecure-skip-tls-verify --kubeconfig --log-backtrace-at --log-dir --log-file --log-file-max-size --log-flush-frequency --logtostderr --match-server-version -n --namespace --one-output --password --profile --profile-output --request-timeout -s --server --skip-headers --skip-log-headers --stderrthreshold --tls-server-name --token --user --username -v --v --vmodule --warnings-as-errors" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -421,7 +915,101 @@ _kubectl_completion ()
 _kubectl_config ()
 {
     local cur word_list
+    local i=1 subcommand_index
+
+    # take the last word that's NOT starting with -
+    while [[ ( $i < $COMP_CWORD ) ]]; do
+        local s="${COMP_WORDS[i]}"
+        case "$s" in
+          config)
+            subcommand_index=$i
+            break
+            ;;
+        esac
+        (( i++ ))
+    done
+
+    while [[ ( $subcommand_index < $COMP_CWORD ) ]]; do
+        local s="${COMP_WORDS[subcommand_index}"
+        case "$s" in
+          get-contexts) _kubectl_get-contexts
+            return
+            ;;
+
+          set) _kubectl_set
+            return
+            ;;
+
+          set-cluster) _kubectl_set-cluster
+            return
+            ;;
+
+          set-context) _kubectl_set-context
+            return
+            ;;
+
+          unset) _kubectl_unset
+            return
+            ;;
+
+          view) _kubectl_view
+            return
+            ;;
+
+          *)  ;; 
+        esac
+        (( subcommand_index++ ))
+    done
+
+    word_list=" get-contexts set set-cluster set-context unset view --add-dir-header --alsologtostderr --as --cache-dir --certificate-authority --client-certificate --client-key --cluster --context --insecure-skip-tls-verify --kubeconfig --log-backtrace-at --log-dir --log-file --log-file-max-size --log-flush-frequency --logtostderr --match-server-version -n --namespace --one-output --password --profile --profile-output --request-timeout -s --server --skip-headers --skip-log-headers --stderrthreshold --tls-server-name --token --user --username -v --v --vmodule --warnings-as-errors" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_config_get-contexts ()
+{
+    local cur word_list
+    word_list=" --no-headers -o --output --add-dir-header --alsologtostderr --as --cache-dir --certificate-authority --client-certificate --client-key --cluster --context --insecure-skip-tls-verify --kubeconfig --log-backtrace-at --log-dir --log-file --log-file-max-size --log-flush-frequency --logtostderr --match-server-version -n --namespace --one-output --password --profile --profile-output --request-timeout -s --server --skip-headers --skip-log-headers --stderrthreshold --tls-server-name --token --user --username -v --v --vmodule --warnings-as-errors" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_config_set ()
+{
+    local cur word_list
+    word_list=" --set-raw-bytes --add-dir-header --alsologtostderr --as --cache-dir --certificate-authority --client-certificate --client-key --cluster --context --insecure-skip-tls-verify --kubeconfig --log-backtrace-at --log-dir --log-file --log-file-max-size --log-flush-frequency --logtostderr --match-server-version -n --namespace --one-output --password --profile --profile-output --request-timeout -s --server --skip-headers --skip-log-headers --stderrthreshold --tls-server-name --token --user --username -v --v --vmodule --warnings-as-errors" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_config_set-cluster ()
+{
+    local cur word_list
+    word_list=" --embed-certs --add-dir-header --alsologtostderr --as --cache-dir --certificate-authority --client-certificate --client-key --cluster --context --insecure-skip-tls-verify --kubeconfig --log-backtrace-at --log-dir --log-file --log-file-max-size --log-flush-frequency --logtostderr --match-server-version -n --namespace --one-output --password --profile --profile-output --request-timeout -s --server --skip-headers --skip-log-headers --stderrthreshold --tls-server-name --token --user --username -v --v --vmodule --warnings-as-errors" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_config_set-context ()
+{
+    local cur word_list
+    word_list=" --current --add-dir-header --alsologtostderr --as --cache-dir --certificate-authority --client-certificate --client-key --cluster --context --insecure-skip-tls-verify --kubeconfig --log-backtrace-at --log-dir --log-file --log-file-max-size --log-flush-frequency --logtostderr --match-server-version -n --namespace --one-output --password --profile --profile-output --request-timeout -s --server --skip-headers --skip-log-headers --stderrthreshold --tls-server-name --token --user --username -v --v --vmodule --warnings-as-errors" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_config_unset ()
+{
+    local cur word_list
     word_list=" --add-dir-header --alsologtostderr --as --cache-dir --certificate-authority --client-certificate --client-key --cluster --context --insecure-skip-tls-verify --kubeconfig --log-backtrace-at --log-dir --log-file --log-file-max-size --log-flush-frequency --logtostderr --match-server-version -n --namespace --one-output --password --profile --profile-output --request-timeout -s --server --skip-headers --skip-log-headers --stderrthreshold --tls-server-name --token --user --username -v --v --vmodule --warnings-as-errors" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_config_view ()
+{
+    local cur word_list
+    word_list=" --allow-missing-template-keys --flatten --merge --minify -o --output --raw --show-managed-fields --template --add-dir-header --alsologtostderr --as --cache-dir --certificate-authority --client-certificate --client-key --cluster --context --insecure-skip-tls-verify --kubeconfig --log-backtrace-at --log-dir --log-file --log-file-max-size --log-flush-frequency --logtostderr --match-server-version -n --namespace --one-output --password --profile --profile-output --request-timeout -s --server --skip-headers --skip-log-headers --stderrthreshold --tls-server-name --token --user --username -v --v --vmodule --warnings-as-errors" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }

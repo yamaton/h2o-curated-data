@@ -1,4 +1,4 @@
-# Generated with h2o 0.1.18
+# Auto-generated with h2o
 
 complete -c youtube-dl -s h -l help -d 'Print this help text and exit'
 complete -c youtube-dl -l version -d 'Print program version and exit'
@@ -11,7 +11,7 @@ complete -c youtube-dl -l extractor-descriptions -d 'Output descriptions of all 
 complete -c youtube-dl -l force-generic-extractor -d 'Force extraction to use the generic extractor'
 complete -c youtube-dl -l default-search -d 'Use this prefix for unqualified URLs.' -x
 complete -c youtube-dl -l ignore-config -d 'Do not read configuration files.'
-complete -c youtube-dl -l config-location -d 'Location of the configuration file; either the path to the config or its containing directory.' -x
+complete -c youtube-dl -l config-location -d 'Location of the configuration file; either the path to the config or its containing directory.' -r
 complete -c youtube-dl -l flat-playlist -d 'Do not extract the videos of a playlist, only list them.'
 complete -c youtube-dl -l mark-watched -d 'Mark videos watched (YouTube only)'
 complete -c youtube-dl -l no-mark-watched -d 'Do not mark videos watched (YouTube only)'
@@ -153,6 +153,6 @@ complete -c youtube-dl -l xattrs -d 'Write metadata to the video file\'s xattrs 
 complete -c youtube-dl -l fixup -d 'Automatically correct known faults of the file.' -x
 complete -c youtube-dl -l prefer-avconv -d 'Prefer avconv over ffmpeg for running the postprocessors'
 complete -c youtube-dl -l prefer-ffmpeg -d 'Prefer ffmpeg over avconv for running the postprocessors (default)'
-complete -c youtube-dl -l ffmpeg-location -d 'Location of the ffmpeg/avconv binary; either the path to the binary or its containing directory.' -x
+complete -c youtube-dl -l ffmpeg-location -d 'Location of the ffmpeg/avconv binary; either the path to the binary or its containing directory.' -r
 complete -c youtube-dl -l exec -d 'Execute a command on the file after downloading and post-processing, similar to find\'s -exec syntax.' -x
 complete -c youtube-dl -l convert-subs -d 'Convert the subtitles to other format (currently supported: srt|ass|vtt|lrc)' -x

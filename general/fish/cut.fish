@@ -1,4 +1,4 @@
-# Generated with h2o 0.1.18
+# Auto-generated with h2o
 
 complete -c cut -s b -l bytes -d 'select only these bytes' -x
 complete -c cut -s c -l characters -d 'select only these characters' -x

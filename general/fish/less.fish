@@ -1,4 +1,4 @@
-# Generated with h2o 0.1.18
+# Auto-generated with h2o
 
 complete -c less -s \? -l help -d 'This option displays a summary of the commands accepted by less (the same as the h command).'
 complete -c less -s a -l search-skip-screen -d 'By default, forward searches start at the top of the displayed screen and backwards searches start at the bottom of the displayed screen (except for repeated searches invoked by the n or N commands, which start after or before the "target" line respectively; see the -j option for more about the target line).'

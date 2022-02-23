@@ -1,4 +1,4 @@
-# Generated with h2o 0.1.18
+# Auto-generated with h2o
 
 complete -c mogrify -o adjoin -d 'join images into a single multi-image file'
 complete -c mogrify -o affine -d 'affine transform matrix' -x
@@ -59,7 +59,7 @@ complete -c mogrify -o monitor -d 'monitor progress'
 complete -c mogrify -o morphology -d 'apply a morphology method to the image' -x
 complete -c mogrify -o orient -d 'image orientation' -x
 complete -c mogrify -o page -d 'size and location of an image canvas (setting)' -x
-complete -c mogrify -o path -d 'write images to this path on disk' -x
+complete -c mogrify -o path -d 'write images to this path on disk' -r
 complete -c mogrify -o ping -d 'efficiently determine image attributes'
 complete -c mogrify -o pointsize -d 'font point size' -x
 complete -c mogrify -o precision -d 'maximum number of significant digits to print' -x

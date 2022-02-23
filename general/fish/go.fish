@@ -1,40 +1,24 @@
-# Generated with h2o 0.1.18
+# Auto-generated with h2o
 
-complete -c go -n __fish_use_subcommand -x -a bug -d 'start a bug report'
-complete -c go -n __fish_use_subcommand -x -a build -d 'compile packages and dependencies'
-complete -c go -n __fish_use_subcommand -x -a clean -d 'remove object files and cached files'
-complete -c go -n __fish_use_subcommand -x -a doc -d 'show documentation for package or symbol'
-complete -c go -n __fish_use_subcommand -x -a env -d 'print Go environment information'
-complete -c go -n __fish_use_subcommand -x -a fix -d 'update packages to use new APIs'
-complete -c go -n __fish_use_subcommand -x -a fmt -d 'gofmt (reformat) package sources'
-complete -c go -n __fish_use_subcommand -x -a generate -d 'generate Go files by processing source'
-complete -c go -n __fish_use_subcommand -x -a get -d 'add dependencies to current module and install them'
-complete -c go -n __fish_use_subcommand -x -a install -d 'compile and install packages and dependencies'
-complete -c go -n __fish_use_subcommand -x -a list -d 'list packages or modules'
-complete -c go -n __fish_use_subcommand -x -a mod -d 'module maintenance'
-complete -c go -n __fish_use_subcommand -x -a run -d 'compile and run Go program'
-complete -c go -n __fish_use_subcommand -x -a test -d 'test packages'
-complete -c go -n __fish_use_subcommand -x -a tool -d 'run specified go tool'
-complete -c go -n __fish_use_subcommand -x -a version -d 'print Go version'
-complete -c go -n __fish_use_subcommand -x -a vet -d 'report likely mistakes in packages'
-complete -c go -n __fish_use_subcommand -x -a buildconstraint -d 'build constraints'
-complete -c go -n __fish_use_subcommand -x -a buildmode -d 'build modes'
-complete -c go -n __fish_use_subcommand -x -a c -d 'calling between Go and C'
-complete -c go -n __fish_use_subcommand -x -a cache -d 'build and test caching'
-complete -c go -n __fish_use_subcommand -x -a environment -d 'environment variables'
-complete -c go -n __fish_use_subcommand -x -a filetype -d 'file types'
-complete -c go -n __fish_use_subcommand -x -a gopath -d 'GOPATH environment variable'
-complete -c go -n __fish_use_subcommand -x -a gopath-get -d 'legacy GOPATH go get'
-complete -c go -n __fish_use_subcommand -x -a goproxy -d 'module proxy protocol'
-complete -c go -n __fish_use_subcommand -x -a importpath -d 'import path syntax'
-complete -c go -n __fish_use_subcommand -x -a modules -d 'modules, module versions, and more'
-complete -c go -n __fish_use_subcommand -x -a module-get -d 'module-aware go get'
-complete -c go -n __fish_use_subcommand -x -a module-auth -d 'module authentication using go.sum'
-complete -c go -n __fish_use_subcommand -x -a packages -d 'package lists and patterns'
-complete -c go -n __fish_use_subcommand -x -a private -d 'configuration for downloading non-public code'
-complete -c go -n __fish_use_subcommand -x -a testflag -d 'testing flags'
-complete -c go -n __fish_use_subcommand -x -a testfunc -d 'testing functions'
-complete -c go -n __fish_use_subcommand -x -a vcs -d 'controlling version control with GOVCS'
+complete -k -c go -n __fish_use_subcommand -x -a testfunc -d 'testing functions'
+complete -k -c go -n __fish_use_subcommand -x -a testflag -d 'testing flags'
+complete -k -c go -n __fish_use_subcommand -x -a packages -d 'package lists and patterns'
+complete -k -c go -n __fish_use_subcommand -x -a module-get -d 'module-aware go get'
+complete -k -c go -n __fish_use_subcommand -x -a importpath -d 'import path syntax'
+complete -k -c go -n __fish_use_subcommand -x -a gopath -d 'GOPATH environment variable'
+complete -k -c go -n __fish_use_subcommand -x -a filetype -d 'file types'
+complete -k -c go -n __fish_use_subcommand -x -a environment -d 'environment variables'
+complete -k -c go -n __fish_use_subcommand -x -a buildmode -d 'build modes'
+complete -k -c go -n __fish_use_subcommand -x -a buildconstraint -d 'build constraints'
+complete -k -c go -n __fish_use_subcommand -x -a test -d 'test packages'
+complete -k -c go -n __fish_use_subcommand -x -a mod -d 'module maintenance'
+complete -k -c go -n __fish_use_subcommand -x -a list -d 'list packages or modules'
+complete -k -c go -n __fish_use_subcommand -x -a install -d 'compile and install packages and dependencies'
+complete -k -c go -n __fish_use_subcommand -x -a get -d 'add dependencies to current module and install them'
+complete -k -c go -n __fish_use_subcommand -x -a generate -d 'generate Go files by processing source'
+complete -k -c go -n __fish_use_subcommand -x -a doc -d 'show documentation for package or symbol'
+complete -k -c go -n __fish_use_subcommand -x -a clean -d 'remove object files and cached files'
+complete -k -c go -n __fish_use_subcommand -x -a build -d 'compile packages and dependencies'
 
 
 
@@ -65,16 +49,16 @@ complete -c go -n "__fish_seen_subcommand_from build" -o toolexec -d 'a program 
 
 
 
-complete -c go -n "__fish_seen_subcommand_from doc" -o all -d 'Show all the documentation for the package.'
-complete -c go -n "__fish_seen_subcommand_from doc" -s c -d 'Respect case when matching symbols.'
-complete -c go -n "__fish_seen_subcommand_from doc" -o cmd -d 'Treat a command (package main) like a regular package.'
-complete -c go -n "__fish_seen_subcommand_from doc" -o short -d 'One-line representation for each symbol.'
-complete -c go -n "__fish_seen_subcommand_from doc" -o src -d 'Show the full source code for the symbol.'
-complete -c go -n "__fish_seen_subcommand_from doc" -s u -d 'Show documentation for unexported as well as exported symbols, methods, and fields.'
+complete -c go -n "__fish_seen_subcommand_from doc" -o all -d 'show all documentation for package'
+complete -c go -n "__fish_seen_subcommand_from doc" -s c -d 'symbol matching honors case (paths not affected)'
+complete -c go -n "__fish_seen_subcommand_from doc" -o cmd -d 'show symbols with package docs even if package is a command'
+complete -c go -n "__fish_seen_subcommand_from doc" -o short -d 'one-line representation for each symbol'
+complete -c go -n "__fish_seen_subcommand_from doc" -o src -d 'show source code for symbol'
+complete -c go -n "__fish_seen_subcommand_from doc" -s u -d 'show unexported symbols as well as exported'
 
 
 
-complete -c go -n "__fish_seen_subcommand_from generate" -o run -d 'if non-empty, specifies a regular expression to select' -x
+complete -c go -n "__fish_seen_subcommand_from generate" -o run -d 'if non-empty, specifies a regular expression to select directives whose full original source text (excluding any trailing spaces and final newline) matches the expression.' -x
 
 
 
@@ -89,7 +73,21 @@ complete -c go -n "__fish_seen_subcommand_from test" -s o -d 'Compile the test b
 
 complete -c go -n "__fish_seen_subcommand_from buildconstraint"  -d 'the target operating system, as spelled by runtime.GOOS, set with the GOOS environment variable.'
 complete -c go -n "__fish_seen_subcommand_from buildconstraint"  -d 'the target architecture, as spelled by runtime.GOARCH, set with the GOARCH environment variable.'
+complete -c go -n "__fish_seen_subcommand_from buildconstraint"  -d 'the compiler being used, either "gc" or "gccgo"'
+complete -c go -n "__fish_seen_subcommand_from buildconstraint"  -d '"cgo", if the cgo command is supported (see CGO_ENABLED in \'go help environment\').'
+complete -c go -n "__fish_seen_subcommand_from buildconstraint"  -d 'a term for each Go major release, through the current version: "go1.1" from Go version 1.1 onward, "go1.12" from Go 1.12, and so on.'
 complete -c go -n "__fish_seen_subcommand_from buildconstraint"  -d 'any additional tags given by the -tags flag (see \'go help build\').'
+
+
+
+complete -c go -n "__fish_seen_subcommand_from buildmode" -o buildmode -d 'Build the listed non-main packages into .a files.' -x
+complete -c go -n "__fish_seen_subcommand_from buildmode" -o buildmode -d 'Build the listed main package, plus all packages it imports, into a C archive file.' -x
+complete -c go -n "__fish_seen_subcommand_from buildmode" -o buildmode -d 'Build the listed main package, plus all packages it imports, into a C shared library.' -x
+complete -c go -n "__fish_seen_subcommand_from buildmode" -o buildmode -d 'Listed main packages are built into executables and listed non-main packages are built into .a files (the default behavior).' -x
+complete -c go -n "__fish_seen_subcommand_from buildmode" -o buildmode -d 'Combine all the listed non-main packages into a single shared library that will be used when building with the -linkshared option.' -x
+complete -c go -n "__fish_seen_subcommand_from buildmode" -o buildmode -d 'Build the listed main packages and everything they import into executables.' -x
+complete -c go -n "__fish_seen_subcommand_from buildmode" -o buildmode -d 'Build the listed main packages and everything they import into position independent executables (PIE).' -x
+complete -c go -n "__fish_seen_subcommand_from buildmode" -o buildmode -d 'Build the listed main packages, plus all packages that they import, into a Go plugin.' -x
 
 
 

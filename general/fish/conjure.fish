@@ -1,4 +1,4 @@
-# Generated with h2o 0.1.18
+# Auto-generated with h2o
 
 complete -c conjure -n "not __fish_seen_subcommand_from conjure" -o monitor -d 'monitor progress'
 complete -c conjure -n "not __fish_seen_subcommand_from conjure" -o quiet -d 'suppress all warning messages'
@@ -13,4 +13,4 @@ complete -c conjure -n "not __fish_seen_subcommand_from conjure" -o version -d '
 
 
 
-complete -c conjure -n __fish_use_subcommand -x -a conjure -d '-size 100x100 -color blue -foo bar script.msl'
+complete -k -c conjure -n __fish_use_subcommand -x -a conjure -d '-size 100x100 -color blue -foo bar script.msl'

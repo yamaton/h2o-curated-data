@@ -1,4 +1,4 @@
-# Generated with h2o 0.1.18
+# Auto-generated with h2o
 
 complete -c sudo -s A -l askpass -d 'use a helper program for password prompting'
 complete -c sudo -s b -l background -d 'run command in the background'

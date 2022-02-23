@@ -1,4 +1,4 @@
-# Generated with h2o 0.1.18
+# Auto-generated with h2o
 
 complete -c unzip -s p -d 'extract files to pipe, no messages'
 complete -c unzip -s l -d 'list files (short format)'

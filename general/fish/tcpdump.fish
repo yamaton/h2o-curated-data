@@ -1,4 +1,4 @@
-# Generated with h2o 0.1.18
+# Auto-generated with h2o
 
 complete -c tcpdump -s A -d 'Print each packet (minus its link level header) in ASCII.'
 complete -c tcpdump -s b -d 'Print the AS number in BGP packets in ASDOT notation rather than ASPLAIN notation.'

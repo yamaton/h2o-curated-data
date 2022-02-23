@@ -1,6 +1,6 @@
-# Generated with h2o 0.1.18
+# Auto-generated with h2o
 
-complete -c curl -l abstract-unix-socket -d 'Connect via abstract Unix domain socket' -x
+complete -c curl -l abstract-unix-socket -d 'Connect via abstract Unix domain socket' -r
 complete -c curl -l alt-svc -d 'Enable alt-svc with this cache file' -r
 complete -c curl -l anyauth -d 'Pick any authentication method'
 complete -c curl -s a -l append -d 'Append to target file when uploading'
@@ -219,7 +219,7 @@ complete -c curl -l tr-encoding -d 'Request compressed transfer encoding'
 complete -c curl -l trace -d 'Write a debug trace to FILE' -r
 complete -c curl -l trace-ascii -d 'Like --trace, but without hex output' -r
 complete -c curl -l trace-time -d 'Add time stamps to trace/verbose output'
-complete -c curl -l unix-socket -d 'Connect through this Unix domain socket' -x
+complete -c curl -l unix-socket -d 'Connect through this Unix domain socket' -r
 complete -c curl -s T -l upload-file -d 'Transfer local FILE to destination' -r
 complete -c curl -l url -d 'URL to work with' -x
 complete -c curl -s B -l use-ascii -d 'Use ASCII/text transfer'

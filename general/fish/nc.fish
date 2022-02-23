@@ -1,4 +1,4 @@
-# Generated with h2o 0.1.18
+# Auto-generated with h2o
 
 complete -c nc -s 4 -d 'Use IPv4 addresses only.'
 complete -c nc -s 6 -d 'Use IPv6 addresses only.'

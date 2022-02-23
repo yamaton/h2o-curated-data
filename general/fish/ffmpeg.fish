@@ -1,4 +1,4 @@
-# Generated with h2o 0.1.18
+# Auto-generated with h2o
 
 complete -c ffmpeg -s L -d 'Show license.'
 complete -c ffmpeg -s h -s \? -o help -l help -d 'Show help.' -x

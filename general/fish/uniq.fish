@@ -1,4 +1,4 @@
-# Generated with h2o 0.1.18
+# Auto-generated with h2o
 
 complete -c uniq -s c -l count -d 'prefix lines by the number of occurrences'
 complete -c uniq -s d -l repeated -d 'only print duplicate lines, one for each group'

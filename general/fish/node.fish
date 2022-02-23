@@ -1,4 +1,4 @@
-# Generated with h2o 0.1.18
+# Auto-generated with h2o
 
 complete -c node  -d 'script read from stdin (default if no file name is provided, interactive mode if a tty)'
 complete -c node  -d 'indicate the end of node options'

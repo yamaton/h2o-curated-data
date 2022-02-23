@@ -1,4 +1,4 @@
-# Generated with h2o 0.1.18
+# Auto-generated with h2o
 
 complete -c read -s a -d 'assign the words read to sequential indices of the array variable ARRAY, starting at zero' -x
 complete -c read -s d -d 'continue until the first character of DELIM is read, rather than newline' -x

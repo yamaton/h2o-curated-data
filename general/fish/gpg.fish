@@ -1,4 +1,4 @@
-# Generated with h2o 0.1.18
+# Auto-generated with h2o
 
 complete -c gpg -l version -d 'Print the program version and licensing information.'
 complete -c gpg -s h -d 'Print a usage message summarizing the most useful command-line options.'

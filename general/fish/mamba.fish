@@ -1,27 +1,27 @@
-# Generated with h2o 0.1.18
+# Auto-generated with h2o
 
 complete -c mamba -n "not __fish_seen_subcommand_from clean compare config create help info init install list package remove uninstall run search update upgrade repoquery" -s h -l help -d 'Show this help message and exit.'
 complete -c mamba -n "not __fish_seen_subcommand_from clean compare config create help info init install list package remove uninstall run search update upgrade repoquery" -s V -l version -d 'Show the conda version number and exit.'
 
 
 
-complete -c mamba -n __fish_use_subcommand -x -a clean -d 'Remove unused packages and caches.'
-complete -c mamba -n __fish_use_subcommand -x -a compare -d 'Compare packages between conda environments.'
-complete -c mamba -n __fish_use_subcommand -x -a config -d 'Modify configuration values in .condarc. This is modeled'
-complete -c mamba -n __fish_use_subcommand -x -a create -d 'Create a new conda environment from a list of specified'
-complete -c mamba -n __fish_use_subcommand -x -a help -d 'Displays a list of available conda commands and their help'
-complete -c mamba -n __fish_use_subcommand -x -a info -d 'Display information about current conda install.'
-complete -c mamba -n __fish_use_subcommand -x -a init -d 'Initialize conda for shell interaction. [Experimental]'
-complete -c mamba -n __fish_use_subcommand -x -a install -d 'Installs a list of packages into a specified conda'
-complete -c mamba -n __fish_use_subcommand -x -a list -d 'List linked packages in a conda environment.'
-complete -c mamba -n __fish_use_subcommand -x -a package -d 'Low-level conda package utility. (EXPERIMENTAL)'
-complete -c mamba -n __fish_use_subcommand -x -a remove -d 'Remove a list of packages from a specified conda environment.'
-complete -c mamba -n __fish_use_subcommand -x -a uninstall -d 'Alias for conda remove.'
-complete -c mamba -n __fish_use_subcommand -x -a run -d 'Run an executable in a conda environment. [Experimental]'
-complete -c mamba -n __fish_use_subcommand -x -a search -d 'Search for packages and display associated information. The'
-complete -c mamba -n __fish_use_subcommand -x -a update -d 'Updates conda packages to the latest compatible version.'
-complete -c mamba -n __fish_use_subcommand -x -a upgrade -d 'Alias for conda update.'
-complete -c mamba -n __fish_use_subcommand -x -a repoquery -d 'Query repositories using mamba.'
+complete -k -c mamba -n __fish_use_subcommand -x -a repoquery -d 'Query repositories using mamba.'
+complete -k -c mamba -n __fish_use_subcommand -x -a upgrade -d 'Alias for conda update.'
+complete -k -c mamba -n __fish_use_subcommand -x -a update -d 'Updates conda packages to the latest compatible version.'
+complete -k -c mamba -n __fish_use_subcommand -x -a search -d 'Search for packages and display associated information. The'
+complete -k -c mamba -n __fish_use_subcommand -x -a run -d 'Run an executable in a conda environment. [Experimental]'
+complete -k -c mamba -n __fish_use_subcommand -x -a uninstall -d 'Alias for conda remove.'
+complete -k -c mamba -n __fish_use_subcommand -x -a remove -d 'Remove a list of packages from a specified conda environment.'
+complete -k -c mamba -n __fish_use_subcommand -x -a package -d 'Low-level conda package utility. (EXPERIMENTAL)'
+complete -k -c mamba -n __fish_use_subcommand -x -a list -d 'List linked packages in a conda environment.'
+complete -k -c mamba -n __fish_use_subcommand -x -a install -d 'Installs a list of packages into a specified conda'
+complete -k -c mamba -n __fish_use_subcommand -x -a init -d 'Initialize conda for shell interaction. [Experimental]'
+complete -k -c mamba -n __fish_use_subcommand -x -a info -d 'Display information about current conda install.'
+complete -k -c mamba -n __fish_use_subcommand -x -a help -d 'Displays a list of available conda commands and their help'
+complete -k -c mamba -n __fish_use_subcommand -x -a create -d 'Create a new conda environment from a list of specified'
+complete -k -c mamba -n __fish_use_subcommand -x -a config -d 'Modify configuration values in .condarc. This is modeled'
+complete -k -c mamba -n __fish_use_subcommand -x -a compare -d 'Compare packages between conda environments.'
+complete -k -c mamba -n __fish_use_subcommand -x -a clean -d 'Remove unused packages and caches.'
 
 
 
@@ -32,6 +32,7 @@ complete -c mamba -n "__fish_seen_subcommand_from clean" -s p -l packages -d 'Re
 complete -c mamba -n "__fish_seen_subcommand_from clean" -s t -l tarballs -d 'Remove cached package tarballs.'
 complete -c mamba -n "__fish_seen_subcommand_from clean" -s f -l force-pkgs-dirs -d 'Remove *all* writable package caches.'
 complete -c mamba -n "__fish_seen_subcommand_from clean" -s c -l tempfiles -d 'Remove temporary files that could not be deleted earlier due to being in-use.' -r
+complete -c mamba -n "__fish_seen_subcommand_from clean" -s l -l locks -d 'Remove lock files.'
 complete -c mamba -n "__fish_seen_subcommand_from clean" -s d -l dry-run -d 'Only display what would have been done.'
 complete -c mamba -n "__fish_seen_subcommand_from clean" -l json -d 'Report all output as json.'
 complete -c mamba -n "__fish_seen_subcommand_from clean" -s q -l quiet -d 'Do not display progress bar.'
@@ -45,7 +46,7 @@ complete -c mamba -n "__fish_seen_subcommand_from compare" -l json -d 'Report al
 complete -c mamba -n "__fish_seen_subcommand_from compare" -s v -l verbose -d 'Use once for info, twice for debug, three times for trace.'
 complete -c mamba -n "__fish_seen_subcommand_from compare" -s q -l quiet -d 'Do not display progress bar.'
 complete -c mamba -n "__fish_seen_subcommand_from compare" -s n -l name -d 'Name of environment.' -x
-complete -c mamba -n "__fish_seen_subcommand_from compare" -s p -l prefix -d 'Full path to environment location (i.e. prefix).' -x
+complete -c mamba -n "__fish_seen_subcommand_from compare" -s p -l prefix -d 'Full path to environment location (i.e. prefix).' -r
 
 
 
@@ -56,9 +57,12 @@ complete -c mamba -n "__fish_seen_subcommand_from config" -s q -l quiet -d 'Do n
 complete -c mamba -n "__fish_seen_subcommand_from config" -l system -d 'Write to the system .condarc file at \'/home/vierbein/miniconda3/.condarc\'.'
 complete -c mamba -n "__fish_seen_subcommand_from config" -l env -d 'Write to the active conda environment .condarc file (/home/vierbein/miniconda3).'
 complete -c mamba -n "__fish_seen_subcommand_from config" -l file -d 'Write to the given file.' -r
+complete -c mamba -n "__fish_seen_subcommand_from config" -l show -d 'Display configuration values as calculated and compiled.' -x
 complete -c mamba -n "__fish_seen_subcommand_from config" -l show-sources -d 'Display all identified configuration sources.'
 complete -c mamba -n "__fish_seen_subcommand_from config" -l validate -d 'Validate all configuration sources.'
+complete -c mamba -n "__fish_seen_subcommand_from config" -l describe -d 'Describe given configuration parameters.' -x
 complete -c mamba -n "__fish_seen_subcommand_from config" -l write-default -d 'Write the default configuration to a file.'
+complete -c mamba -n "__fish_seen_subcommand_from config" -l get -d 'Get a configuration value.' -x
 complete -c mamba -n "__fish_seen_subcommand_from config" -l append -d 'Add one configuration value to the end of a list key.' -x
 complete -c mamba -n "__fish_seen_subcommand_from config" -l prepend -l add -d 'Add one configuration value to the beginning of a list key.' -x
 complete -c mamba -n "__fish_seen_subcommand_from config" -l set -d 'Set a boolean or string key' -x
@@ -73,7 +77,7 @@ complete -c mamba -n "__fish_seen_subcommand_from create" -l clone -d 'Path to (
 complete -c mamba -n "__fish_seen_subcommand_from create" -l file -d 'Read package versions from the given file.' -r
 complete -c mamba -n "__fish_seen_subcommand_from create" -l dev -d 'Use `sys.executable -m conda` in wrapper scripts instead of CONDA_EXE.'
 complete -c mamba -n "__fish_seen_subcommand_from create" -s n -l name -d 'Name of environment.' -x
-complete -c mamba -n "__fish_seen_subcommand_from create" -s p -l prefix -d 'Full path to environment location (i.e. prefix).' -x
+complete -c mamba -n "__fish_seen_subcommand_from create" -s p -l prefix -d 'Full path to environment location (i.e. prefix).' -r
 complete -c mamba -n "__fish_seen_subcommand_from create" -s c -l channel -d 'Additional channel to search for packages.' -x
 complete -c mamba -n "__fish_seen_subcommand_from create" -l use-local -d 'Use locally built packages.'
 complete -c mamba -n "__fish_seen_subcommand_from create" -l override-channels -d 'Do not search default or .condarc channels.'
@@ -129,7 +133,7 @@ complete -c mamba -n "__fish_seen_subcommand_from install" -l revision -d 'Rever
 complete -c mamba -n "__fish_seen_subcommand_from install" -l file -d 'Read package versions from the given file.' -r
 complete -c mamba -n "__fish_seen_subcommand_from install" -l dev -d 'Use `sys.executable -m conda` in wrapper scripts instead of CONDA_EXE.'
 complete -c mamba -n "__fish_seen_subcommand_from install" -s n -l name -d 'Name of environment.' -x
-complete -c mamba -n "__fish_seen_subcommand_from install" -s p -l prefix -d 'Full path to environment location (i.e. prefix).' -x
+complete -c mamba -n "__fish_seen_subcommand_from install" -s p -l prefix -d 'Full path to environment location (i.e. prefix).' -r
 complete -c mamba -n "__fish_seen_subcommand_from install" -s c -l channel -d 'Additional channel to search for packages.' -x
 complete -c mamba -n "__fish_seen_subcommand_from install" -l use-local -d 'Use locally built packages.'
 complete -c mamba -n "__fish_seen_subcommand_from install" -l override-channels -d 'Do not search default or .condarc channels.'
@@ -171,7 +175,7 @@ complete -c mamba -n "__fish_seen_subcommand_from list" -s e -l export -d 'Outpu
 complete -c mamba -n "__fish_seen_subcommand_from list" -s r -l revisions -d 'List the revision history and exit.'
 complete -c mamba -n "__fish_seen_subcommand_from list" -l no-pip -d 'Do not include pip-only installed packages.'
 complete -c mamba -n "__fish_seen_subcommand_from list" -s n -l name -d 'Name of environment.' -x
-complete -c mamba -n "__fish_seen_subcommand_from list" -s p -l prefix -d 'Full path to environment location (i.e. prefix).' -x
+complete -c mamba -n "__fish_seen_subcommand_from list" -s p -l prefix -d 'Full path to environment location (i.e. prefix).' -r
 complete -c mamba -n "__fish_seen_subcommand_from list" -l json -d 'Report all output as json.'
 complete -c mamba -n "__fish_seen_subcommand_from list" -s v -l verbose -d 'Use once for info, twice for debug, three times for trace.'
 complete -c mamba -n "__fish_seen_subcommand_from list" -s q -l quiet -d 'Do not display progress bar.'
@@ -179,21 +183,21 @@ complete -c mamba -n "__fish_seen_subcommand_from list" -s q -l quiet -d 'Do not
 
 
 complete -c mamba -n "__fish_seen_subcommand_from package" -s h -l help -d 'Show this help message and exit.'
-complete -c mamba -n "__fish_seen_subcommand_from package" -s w -l which -d 'Given some PATH print which conda package the file came from.' -x
+complete -c mamba -n "__fish_seen_subcommand_from package" -s w -l which -d 'Given some PATH print which conda package the file came from.' -r
 complete -c mamba -n "__fish_seen_subcommand_from package" -s r -l reset -d 'Remove all untracked files and exit.'
 complete -c mamba -n "__fish_seen_subcommand_from package" -s u -l untracked -d 'Display all untracked files and exit.'
 complete -c mamba -n "__fish_seen_subcommand_from package" -l pkg-name -d 'Package name of the created package.' -x
 complete -c mamba -n "__fish_seen_subcommand_from package" -l pkg-version -d 'Package version of the created package.' -x
 complete -c mamba -n "__fish_seen_subcommand_from package" -l pkg-build -d 'Package build number of the created package.' -x
 complete -c mamba -n "__fish_seen_subcommand_from package" -s n -l name -d 'Name of environment.' -x
-complete -c mamba -n "__fish_seen_subcommand_from package" -s p -l prefix -d 'Full path to environment location (i.e. prefix).' -x
+complete -c mamba -n "__fish_seen_subcommand_from package" -s p -l prefix -d 'Full path to environment location (i.e. prefix).' -r
 
 
 
 complete -c mamba -n "__fish_seen_subcommand_from remove" -s h -l help -d 'Show this help message and exit.'
 complete -c mamba -n "__fish_seen_subcommand_from remove" -l dev -d 'Use `sys.executable -m conda` in wrapper scripts instead of CONDA_EXE.'
 complete -c mamba -n "__fish_seen_subcommand_from remove" -s n -l name -d 'Name of environment.' -x
-complete -c mamba -n "__fish_seen_subcommand_from remove" -s p -l prefix -d 'Full path to environment location (i.e. prefix).' -x
+complete -c mamba -n "__fish_seen_subcommand_from remove" -s p -l prefix -d 'Full path to environment location (i.e. prefix).' -r
 complete -c mamba -n "__fish_seen_subcommand_from remove" -s c -l channel -d 'Additional channel to search for packages.' -x
 complete -c mamba -n "__fish_seen_subcommand_from remove" -l use-local -d 'Use locally built packages.'
 complete -c mamba -n "__fish_seen_subcommand_from remove" -l override-channels -d 'Do not search default or .condarc channels.'
@@ -216,7 +220,7 @@ complete -c mamba -n "__fish_seen_subcommand_from remove" -s y -l yes -d 'Do not
 complete -c mamba -n "__fish_seen_subcommand_from uninstall" -s h -l help -d 'Show this help message and exit.'
 complete -c mamba -n "__fish_seen_subcommand_from uninstall" -l dev -d 'Use `sys.executable -m conda` in wrapper scripts instead of CONDA_EXE.'
 complete -c mamba -n "__fish_seen_subcommand_from uninstall" -s n -l name -d 'Name of environment.' -x
-complete -c mamba -n "__fish_seen_subcommand_from uninstall" -s p -l prefix -d 'Full path to environment location (i.e. prefix).' -x
+complete -c mamba -n "__fish_seen_subcommand_from uninstall" -s p -l prefix -d 'Full path to environment location (i.e. prefix).' -r
 complete -c mamba -n "__fish_seen_subcommand_from uninstall" -s c -l channel -d 'Additional channel to search for packages.' -x
 complete -c mamba -n "__fish_seen_subcommand_from uninstall" -l use-local -d 'Use locally built packages.'
 complete -c mamba -n "__fish_seen_subcommand_from uninstall" -l override-channels -d 'Do not search default or .condarc channels.'
@@ -244,7 +248,7 @@ complete -c mamba -n "__fish_seen_subcommand_from run" -l cwd -d 'Current workin
 complete -c mamba -n "__fish_seen_subcommand_from run" -l no-capture-output -d 'Don\'t capture stdout/stderr'
 complete -c mamba -n "__fish_seen_subcommand_from run" -l live-stream -d 'Display the output for the subprocess stdout and stderr on real time.'
 complete -c mamba -n "__fish_seen_subcommand_from run" -s n -l name -d 'Name of environment.' -x
-complete -c mamba -n "__fish_seen_subcommand_from run" -s p -l prefix -d 'Full path to environment location (i.e. prefix).' -x
+complete -c mamba -n "__fish_seen_subcommand_from run" -s p -l prefix -d 'Full path to environment location (i.e. prefix).' -r
 
 
 
@@ -268,7 +272,7 @@ complete -c mamba -n "__fish_seen_subcommand_from search" -s q -l quiet -d 'Do n
 complete -c mamba -n "__fish_seen_subcommand_from update" -s h -l help -d 'Show this help message and exit.'
 complete -c mamba -n "__fish_seen_subcommand_from update" -l file -d 'Read package versions from the given file.' -r
 complete -c mamba -n "__fish_seen_subcommand_from update" -s n -l name -d 'Name of environment.' -x
-complete -c mamba -n "__fish_seen_subcommand_from update" -s p -l prefix -d 'Full path to environment location (i.e. prefix).' -x
+complete -c mamba -n "__fish_seen_subcommand_from update" -s p -l prefix -d 'Full path to environment location (i.e. prefix).' -r
 complete -c mamba -n "__fish_seen_subcommand_from update" -s c -l channel -d 'Additional channel to search for packages.' -x
 complete -c mamba -n "__fish_seen_subcommand_from update" -l use-local -d 'Use locally built packages.'
 complete -c mamba -n "__fish_seen_subcommand_from update" -l override-channels -d 'Do not search default or .condarc channels.'
@@ -302,7 +306,7 @@ complete -c mamba -n "__fish_seen_subcommand_from update" -l show-channel-urls -
 complete -c mamba -n "__fish_seen_subcommand_from upgrade" -s h -l help -d 'Show this help message and exit.'
 complete -c mamba -n "__fish_seen_subcommand_from upgrade" -l file -d 'Read package versions from the given file.' -r
 complete -c mamba -n "__fish_seen_subcommand_from upgrade" -s n -l name -d 'Name of environment.' -x
-complete -c mamba -n "__fish_seen_subcommand_from upgrade" -s p -l prefix -d 'Full path to environment location (i.e. prefix).' -x
+complete -c mamba -n "__fish_seen_subcommand_from upgrade" -s p -l prefix -d 'Full path to environment location (i.e. prefix).' -r
 complete -c mamba -n "__fish_seen_subcommand_from upgrade" -s c -l channel -d 'Additional channel to search for packages.' -x
 complete -c mamba -n "__fish_seen_subcommand_from upgrade" -l use-local -d 'Use locally built packages.'
 complete -c mamba -n "__fish_seen_subcommand_from upgrade" -l override-channels -d 'Do not search default or .condarc channels.'

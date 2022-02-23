@@ -1,4 +1,4 @@
-# Generated with h2o 0.1.18
+# Auto-generated with h2o
 
 complete -c montage -o adjoin -d 'join images into a single multi-image file'
 complete -c montage -o affine -d 'affine transform matrix' -x

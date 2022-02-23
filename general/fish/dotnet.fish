@@ -1,7 +1,7 @@
-# Generated with h2o 0.1.18
+# Auto-generated with h2o
 
-complete -c dotnet -n "not __fish_seen_subcommand_from add build build-server clean help list msbuild new nuget pack publish remove restore run sln store test tool vstest dev-certs fsi sql-cache user-secrets watch" -l additionalprobingpath -d 'Path containing probing policy and assemblies to probe for.' -x
-complete -c dotnet -n "not __fish_seen_subcommand_from add build build-server clean help list msbuild new nuget pack publish remove restore run sln store test tool vstest dev-certs fsi sql-cache user-secrets watch" -l additional-deps -d 'Path to additional deps.json file.' -x
+complete -c dotnet -n "not __fish_seen_subcommand_from add build build-server clean help list msbuild new nuget pack publish remove restore run sln store test tool vstest dev-certs fsi sql-cache user-secrets watch" -l additionalprobingpath -d 'Path containing probing policy and assemblies to probe for.' -r
+complete -c dotnet -n "not __fish_seen_subcommand_from add build build-server clean help list msbuild new nuget pack publish remove restore run sln store test tool vstest dev-certs fsi sql-cache user-secrets watch" -l additional-deps -d 'Path to additional deps.json file.' -r
 complete -c dotnet -n "not __fish_seen_subcommand_from add build build-server clean help list msbuild new nuget pack publish remove restore run sln store test tool vstest dev-certs fsi sql-cache user-secrets watch" -l depsfile -d 'Path to <application>.deps.json file.'
 complete -c dotnet -n "not __fish_seen_subcommand_from add build build-server clean help list msbuild new nuget pack publish remove restore run sln store test tool vstest dev-certs fsi sql-cache user-secrets watch" -l fx-version -d 'Version of the installed Shared Framework to use to run the application.' -x
 complete -c dotnet -n "not __fish_seen_subcommand_from add build build-server clean help list msbuild new nuget pack publish remove restore run sln store test tool vstest dev-certs fsi sql-cache user-secrets watch" -l roll-forward -d 'Roll forward to framework version  (LatestPatch, Minor, LatestMinor, Major, LatestMajor, Disable).' -x
@@ -12,30 +12,30 @@ complete -c dotnet -n "not __fish_seen_subcommand_from add build build-server cl
 
 
 
-complete -c dotnet -n __fish_use_subcommand -x -a add -d 'Add a package or reference to a .NET project.'
-complete -c dotnet -n __fish_use_subcommand -x -a build -d 'Build a .NET project.'
-complete -c dotnet -n __fish_use_subcommand -x -a build-server -d 'Interact with servers started by a build.'
-complete -c dotnet -n __fish_use_subcommand -x -a clean -d 'Clean build outputs of a .NET project.'
-complete -c dotnet -n __fish_use_subcommand -x -a help -d 'Show command line help.'
-complete -c dotnet -n __fish_use_subcommand -x -a list -d 'List project references of a .NET project.'
-complete -c dotnet -n __fish_use_subcommand -x -a msbuild -d 'Run Microsoft Build Engine (MSBuild) commands.'
-complete -c dotnet -n __fish_use_subcommand -x -a new -d 'Create a new .NET project or file.'
-complete -c dotnet -n __fish_use_subcommand -x -a nuget -d 'Provides additional NuGet commands.'
-complete -c dotnet -n __fish_use_subcommand -x -a pack -d 'Create a NuGet package.'
-complete -c dotnet -n __fish_use_subcommand -x -a publish -d 'Publish a .NET project for deployment.'
-complete -c dotnet -n __fish_use_subcommand -x -a remove -d 'Remove a package or reference from a .NET project.'
-complete -c dotnet -n __fish_use_subcommand -x -a restore -d 'Restore dependencies specified in a .NET project.'
-complete -c dotnet -n __fish_use_subcommand -x -a run -d 'Build and run a .NET project output.'
-complete -c dotnet -n __fish_use_subcommand -x -a sln -d 'Modify Visual Studio solution files.'
-complete -c dotnet -n __fish_use_subcommand -x -a store -d 'Store the specified assemblies in the runtime package store.'
-complete -c dotnet -n __fish_use_subcommand -x -a test -d 'Run unit tests using the test runner specified in a .NET project.'
-complete -c dotnet -n __fish_use_subcommand -x -a tool -d 'Install or manage tools that extend the .NET experience.'
-complete -c dotnet -n __fish_use_subcommand -x -a vstest -d 'Run Microsoft Test Engine (VSTest) commands.'
-complete -c dotnet -n __fish_use_subcommand -x -a dev-certs -d 'Create and manage development certificates.'
-complete -c dotnet -n __fish_use_subcommand -x -a fsi -d 'Start F# Interactive / execute F# scripts.'
-complete -c dotnet -n __fish_use_subcommand -x -a sql-cache -d 'SQL Server cache command-line tools.'
-complete -c dotnet -n __fish_use_subcommand -x -a user-secrets -d 'Manage development user secrets.'
-complete -c dotnet -n __fish_use_subcommand -x -a watch -d 'Start a file watcher that runs a command when files change.'
+complete -k -c dotnet -n __fish_use_subcommand -x -a watch -d 'Start a file watcher that runs a command when files change.'
+complete -k -c dotnet -n __fish_use_subcommand -x -a user-secrets -d 'Manage development user secrets.'
+complete -k -c dotnet -n __fish_use_subcommand -x -a sql-cache -d 'SQL Server cache command-line tools.'
+complete -k -c dotnet -n __fish_use_subcommand -x -a fsi -d 'Start F# Interactive / execute F# scripts.'
+complete -k -c dotnet -n __fish_use_subcommand -x -a dev-certs -d 'Create and manage development certificates.'
+complete -k -c dotnet -n __fish_use_subcommand -x -a vstest -d 'Run Microsoft Test Engine (VSTest) commands.'
+complete -k -c dotnet -n __fish_use_subcommand -x -a tool -d 'Install or manage tools that extend the .NET experience.'
+complete -k -c dotnet -n __fish_use_subcommand -x -a test -d 'Run unit tests using the test runner specified in a .NET project.'
+complete -k -c dotnet -n __fish_use_subcommand -x -a store -d 'Store the specified assemblies in the runtime package store.'
+complete -k -c dotnet -n __fish_use_subcommand -x -a sln -d 'Modify Visual Studio solution files.'
+complete -k -c dotnet -n __fish_use_subcommand -x -a run -d 'Build and run a .NET project output.'
+complete -k -c dotnet -n __fish_use_subcommand -x -a restore -d 'Restore dependencies specified in a .NET project.'
+complete -k -c dotnet -n __fish_use_subcommand -x -a remove -d 'Remove a package or reference from a .NET project.'
+complete -k -c dotnet -n __fish_use_subcommand -x -a publish -d 'Publish a .NET project for deployment.'
+complete -k -c dotnet -n __fish_use_subcommand -x -a pack -d 'Create a NuGet package.'
+complete -k -c dotnet -n __fish_use_subcommand -x -a nuget -d 'Provides additional NuGet commands.'
+complete -k -c dotnet -n __fish_use_subcommand -x -a new -d 'Create a new .NET project or file.'
+complete -k -c dotnet -n __fish_use_subcommand -x -a msbuild -d 'Run Microsoft Build Engine (MSBuild) commands.'
+complete -k -c dotnet -n __fish_use_subcommand -x -a list -d 'List project references of a .NET project.'
+complete -k -c dotnet -n __fish_use_subcommand -x -a help -d 'Show command line help.'
+complete -k -c dotnet -n __fish_use_subcommand -x -a clean -d 'Clean build outputs of a .NET project.'
+complete -k -c dotnet -n __fish_use_subcommand -x -a build-server -d 'Interact with servers started by a build.'
+complete -k -c dotnet -n __fish_use_subcommand -x -a build -d 'Build a .NET project.'
+complete -k -c dotnet -n __fish_use_subcommand -x -a add -d 'Add a package or reference to a .NET project.'
 
 
 
@@ -179,7 +179,7 @@ complete -c dotnet -n "__fish_seen_subcommand_from test" -s h -l help -d 'Show c
 complete -c dotnet -n "__fish_seen_subcommand_from test" -s s -l settings -d 'The settings file to use when running tests.' -r
 complete -c dotnet -n "__fish_seen_subcommand_from test" -s t -l list-tests -d 'List the discovered tests instead of running the tests.'
 complete -c dotnet -n "__fish_seen_subcommand_from test" -l filter -d 'Run tests that match the given expression.' -x
-complete -c dotnet -n "__fish_seen_subcommand_from test" -s a -l test-adapter-path -d 'The path to the custom adapters to use for the test run.' -x
+complete -c dotnet -n "__fish_seen_subcommand_from test" -s a -l test-adapter-path -d 'The path to the custom adapters to use for the test run.' -r
 complete -c dotnet -n "__fish_seen_subcommand_from test" -s l -l logger -d 'The logger to use for test results.' -x
 complete -c dotnet -n "__fish_seen_subcommand_from test" -s c -l configuration -d 'The configuration to use for running tests.' -x
 complete -c dotnet -n "__fish_seen_subcommand_from test" -s f -l framework -d 'The target framework to run tests for.' -x

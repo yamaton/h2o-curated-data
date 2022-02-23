@@ -1,4 +1,4 @@
-# Generated with h2o 0.1.18
+# Auto-generated with h2o
 
 complete -c code -s d -l diff -d 'Compare two files with each other.' -r
 complete -c code -s a -l add -d 'Add folder(s) to the last active window.' -x
@@ -11,7 +11,7 @@ complete -c code -s h -l help -d 'Print usage.'
 complete -c code -l list-extensions -d 'List the installed extensions.'
 complete -c code -l show-versions -d 'Show versions of installed extensions, when using --list-extensions.'
 complete -c code -l category -d 'Filters installed extensions by provided category, when using --list-extensions.' -x
-complete -c code -l install-extension -d 'Installs or updates the extension.' -x
+complete -c code -l install-extension -d 'Installs or updates the extension.' -r
 complete -c code -l uninstall-extension -d 'Uninstalls an extension.' -x
 complete -c code -l enable-proposed-api -d 'Enables proposed API features for extensions.' -x
 complete -c code -s v -l version -d 'Print version.'

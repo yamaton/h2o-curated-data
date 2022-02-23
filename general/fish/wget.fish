@@ -1,4 +1,4 @@
-# Generated with h2o 0.1.18
+# Auto-generated with h2o
 
 complete -c wget -s V -l version -d 'display the version of Wget and exit'
 complete -c wget -s h -l help -d 'print this help'

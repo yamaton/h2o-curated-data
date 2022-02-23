@@ -1,7 +1,7 @@
-# Generated with h2o 0.1.18
+# Auto-generated with h2o
 
-complete -c cmake -s S -d 'Path to root directory of the CMake project to build.' -x
-complete -c cmake -s B -d 'Path to directory which CMake will use as the root of build directory.' -x
+complete -c cmake -s S -d 'Path to root directory of the CMake project to build.' -r
+complete -c cmake -s B -d 'Path to directory which CMake will use as the root of build directory.' -r
 complete -c cmake -s C -d 'Pre-load a script to populate the cache.' -x
 complete -c cmake -s D -s D -d 'Create or update a CMake CACHE entry.' -x
 complete -c cmake -s U -d 'Remove matching entries from CMake CACHE.' -x

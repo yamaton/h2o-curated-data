@@ -1,4 +1,4 @@
-# Generated with h2o 0.1.18
+# Auto-generated with h2o
 
 complete -c terraform -n "not __fish_seen_subcommand_from init validate plan apply destroy console fmt force-unlock get graph import login logout output providers refresh show state taint test untaint version workspace" -o chdir -d 'Switch to a different working directory before executing the given subcommand.' -r
 complete -c terraform -n "not __fish_seen_subcommand_from init validate plan apply destroy console fmt force-unlock get graph import login logout output providers refresh show state taint test untaint version workspace" -o help -d 'Show this help output, or the help for a specified subcommand.'
@@ -6,34 +6,34 @@ complete -c terraform -n "not __fish_seen_subcommand_from init validate plan app
 
 
 
-complete -c terraform -n __fish_use_subcommand -x -a init -d 'Prepare your working directory for other commands'
-complete -c terraform -n __fish_use_subcommand -x -a validate -d 'Check whether the configuration is valid'
-complete -c terraform -n __fish_use_subcommand -x -a plan -d 'Show changes required by the current configuration'
-complete -c terraform -n __fish_use_subcommand -x -a apply -d 'Create or update infrastructure'
-complete -c terraform -n __fish_use_subcommand -x -a destroy -d 'Destroy previously-created infrastructure'
-complete -c terraform -n __fish_use_subcommand -x -a console -d 'Try Terraform expressions at an interactive command prompt'
-complete -c terraform -n __fish_use_subcommand -x -a fmt -d 'Reformat your configuration in the standard style'
-complete -c terraform -n __fish_use_subcommand -x -a force-unlock -d 'Release a stuck lock on the current workspace'
-complete -c terraform -n __fish_use_subcommand -x -a get -d 'Install or upgrade remote Terraform modules'
-complete -c terraform -n __fish_use_subcommand -x -a graph -d 'Generate a Graphviz graph of the steps in an operation'
-complete -c terraform -n __fish_use_subcommand -x -a import -d 'Associate existing infrastructure with a Terraform resource'
-complete -c terraform -n __fish_use_subcommand -x -a login -d 'Obtain and save credentials for a remote host'
-complete -c terraform -n __fish_use_subcommand -x -a logout -d 'Remove locally-stored credentials for a remote host'
-complete -c terraform -n __fish_use_subcommand -x -a output -d 'Show output values from your root module'
-complete -c terraform -n __fish_use_subcommand -x -a providers -d 'Show the providers required for this configuration'
-complete -c terraform -n __fish_use_subcommand -x -a refresh -d 'Update the state to match remote systems'
-complete -c terraform -n __fish_use_subcommand -x -a show -d 'Show the current state or a saved plan'
-complete -c terraform -n __fish_use_subcommand -x -a state -d 'Advanced state management'
-complete -c terraform -n __fish_use_subcommand -x -a taint -d 'Mark a resource instance as not fully functional'
-complete -c terraform -n __fish_use_subcommand -x -a test -d 'Experimental support for module integration testing'
-complete -c terraform -n __fish_use_subcommand -x -a untaint -d 'Remove the \'tainted\' state from a resource instance'
-complete -c terraform -n __fish_use_subcommand -x -a version -d 'Show the current Terraform version'
-complete -c terraform -n __fish_use_subcommand -x -a workspace -d 'Workspace management'
+complete -k -c terraform -n __fish_use_subcommand -x -a workspace -d 'Workspace management'
+complete -k -c terraform -n __fish_use_subcommand -x -a version -d 'Show the current Terraform version'
+complete -k -c terraform -n __fish_use_subcommand -x -a untaint -d 'Remove the \'tainted\' state from a resource instance'
+complete -k -c terraform -n __fish_use_subcommand -x -a test -d 'Experimental support for module integration testing'
+complete -k -c terraform -n __fish_use_subcommand -x -a taint -d 'Mark a resource instance as not fully functional'
+complete -k -c terraform -n __fish_use_subcommand -x -a state -d 'Advanced state management'
+complete -k -c terraform -n __fish_use_subcommand -x -a show -d 'Show the current state or a saved plan'
+complete -k -c terraform -n __fish_use_subcommand -x -a refresh -d 'Update the state to match remote systems'
+complete -k -c terraform -n __fish_use_subcommand -x -a providers -d 'Show the providers required for this configuration'
+complete -k -c terraform -n __fish_use_subcommand -x -a output -d 'Show output values from your root module'
+complete -k -c terraform -n __fish_use_subcommand -x -a logout -d 'Remove locally-stored credentials for a remote host'
+complete -k -c terraform -n __fish_use_subcommand -x -a login -d 'Obtain and save credentials for a remote host'
+complete -k -c terraform -n __fish_use_subcommand -x -a import -d 'Associate existing infrastructure with a Terraform resource'
+complete -k -c terraform -n __fish_use_subcommand -x -a graph -d 'Generate a Graphviz graph of the steps in an operation'
+complete -k -c terraform -n __fish_use_subcommand -x -a get -d 'Install or upgrade remote Terraform modules'
+complete -k -c terraform -n __fish_use_subcommand -x -a force-unlock -d 'Release a stuck lock on the current workspace'
+complete -k -c terraform -n __fish_use_subcommand -x -a fmt -d 'Reformat your configuration in the standard style'
+complete -k -c terraform -n __fish_use_subcommand -x -a console -d 'Try Terraform expressions at an interactive command prompt'
+complete -k -c terraform -n __fish_use_subcommand -x -a destroy -d 'Destroy previously-created infrastructure'
+complete -k -c terraform -n __fish_use_subcommand -x -a apply -d 'Create or update infrastructure'
+complete -k -c terraform -n __fish_use_subcommand -x -a plan -d 'Show changes required by the current configuration'
+complete -k -c terraform -n __fish_use_subcommand -x -a validate -d 'Check whether the configuration is valid'
+complete -k -c terraform -n __fish_use_subcommand -x -a init -d 'Prepare your working directory for other commands'
 
 
 
 complete -c terraform -n "__fish_seen_subcommand_from init" -o backend -d 'Configure the backend for this configuration.' -x
-complete -c terraform -n "__fish_seen_subcommand_from init" -o backend-config -d 'This can be either a path to an HCL file with key/value assignments (same format as terraform.tfvars) or a \'key=value\' format.' -x
+complete -c terraform -n "__fish_seen_subcommand_from init" -o backend-config -d 'This can be either a path to an HCL file with key/value assignments (same format as terraform.tfvars) or a \'key=value\' format.' -r
 complete -c terraform -n "__fish_seen_subcommand_from init" -o force-copy -d 'Suppress prompts about copying state data.'
 complete -c terraform -n "__fish_seen_subcommand_from init" -o from-module -d 'Copy the contents of the given module into the target directory before initialization.' -x
 complete -c terraform -n "__fish_seen_subcommand_from init" -o get -d 'Download any modules for this configuration.' -x
@@ -66,26 +66,26 @@ complete -c terraform -n "__fish_seen_subcommand_from plan" -o input -d 'Ask for
 complete -c terraform -n "__fish_seen_subcommand_from plan" -o lock -d 'Don\'t hold a state lock during the operation.' -x
 complete -c terraform -n "__fish_seen_subcommand_from plan" -o lock-timeout -d 'Duration to retry a state lock.' -x
 complete -c terraform -n "__fish_seen_subcommand_from plan" -o no-color -d 'If specified, output won\'t contain any color.'
-complete -c terraform -n "__fish_seen_subcommand_from plan" -o out -d 'Write a plan file to the given path.' -x
+complete -c terraform -n "__fish_seen_subcommand_from plan" -o out -d 'Write a plan file to the given path.' -r
 complete -c terraform -n "__fish_seen_subcommand_from plan" -o parallelism -d 'Limit the number of concurrent operations.' -x
 complete -c terraform -n "__fish_seen_subcommand_from plan" -o state -d 'A legacy option used for the local backend only.' -r
 
 
 
 complete -c terraform -n "__fish_seen_subcommand_from apply" -o auto-approve -d 'Skip interactive approval of plan before applying.'
-complete -c terraform -n "__fish_seen_subcommand_from apply" -o backup -d 'Path to backup the existing state file before modifying.' -x
+complete -c terraform -n "__fish_seen_subcommand_from apply" -o backup -d 'Path to backup the existing state file before modifying.' -r
 complete -c terraform -n "__fish_seen_subcommand_from apply" -o compact-warnings -d 'If Terraform produces any warnings that are not accompanied by errors, show them in a more compact form that includes only the summary messages.'
 complete -c terraform -n "__fish_seen_subcommand_from apply" -o lock -d 'Don\'t hold a state lock during the operation.' -x
 complete -c terraform -n "__fish_seen_subcommand_from apply" -o lock-timeout -d 'Duration to retry a state lock.' -x
 complete -c terraform -n "__fish_seen_subcommand_from apply" -o input -d 'Ask for input for variables if not directly set.' -x
 complete -c terraform -n "__fish_seen_subcommand_from apply" -o no-color -d 'If specified, output won\'t contain any color.'
 complete -c terraform -n "__fish_seen_subcommand_from apply" -o parallelism -d 'Limit the number of parallel resource operations.' -x
-complete -c terraform -n "__fish_seen_subcommand_from apply" -o state -d 'Path to read and save state (unless state-out is specified).' -x
-complete -c terraform -n "__fish_seen_subcommand_from apply" -o state-out -d 'Path to write state to that is different than "-state".' -x
+complete -c terraform -n "__fish_seen_subcommand_from apply" -o state -d 'Path to read and save state (unless state-out is specified).' -r
+complete -c terraform -n "__fish_seen_subcommand_from apply" -o state-out -d 'Path to write state to that is different than "-state".' -r
 
 
 
-complete -c terraform -n "__fish_seen_subcommand_from console" -o state -d 'Legacy option for the local backend only.' -x
+complete -c terraform -n "__fish_seen_subcommand_from console" -o state -d 'Legacy option for the local backend only.' -r
 complete -c terraform -n "__fish_seen_subcommand_from console" -o var -d 'Set a variable in the Terraform configuration.' -x
 complete -c terraform -n "__fish_seen_subcommand_from console" -o var-file -d 'Set variables in the Terraform configuration from a file.' -x
 
@@ -116,7 +116,7 @@ complete -c terraform -n "__fish_seen_subcommand_from graph" -o module-depth -d 
 
 
 
-complete -c terraform -n "__fish_seen_subcommand_from import" -o config -d 'Path to a directory of Terraform configuration files to use to configure the provider.' -x
+complete -c terraform -n "__fish_seen_subcommand_from import" -o config -d 'Path to a directory of Terraform configuration files to use to configure the provider.' -r
 complete -c terraform -n "__fish_seen_subcommand_from import" -o allow-missing-config -d 'Allow import when no resource configuration block exists.'
 complete -c terraform -n "__fish_seen_subcommand_from import" -o input -d 'Disable interactive input prompts.' -x
 complete -c terraform -n "__fish_seen_subcommand_from import" -o lock -d 'Don\'t hold a state lock during the operation.' -x
@@ -128,7 +128,7 @@ complete -c terraform -n "__fish_seen_subcommand_from import" -o ignore-remote-v
 
 
 
-complete -c terraform -n "__fish_seen_subcommand_from output" -o state -d 'Path to the state file to read.' -x
+complete -c terraform -n "__fish_seen_subcommand_from output" -o state -d 'Path to the state file to read.' -r
 complete -c terraform -n "__fish_seen_subcommand_from output" -o no-color -d 'If specified, output won\'t contain any color.'
 complete -c terraform -n "__fish_seen_subcommand_from output" -o json -d 'If specified, machine readable output will be printed in JSON format.'
 complete -c terraform -n "__fish_seen_subcommand_from output" -o raw -d 'For value types that can be automatically converted to a string, will print the raw string directly, rather than a human-oriented representation of the value.'

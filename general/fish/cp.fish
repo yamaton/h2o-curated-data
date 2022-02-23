@@ -1,4 +1,4 @@
-# Generated with h2o 0.1.18
+# Auto-generated with h2o
 
 complete -c cp -s a -l archive -d 'same as -dR --preserve=all'
 complete -c cp -l attributes-only -d 'don\'t copy the file data, just the attributes'

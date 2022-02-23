@@ -1,4 +1,4 @@
-# Generated with h2o 0.1.18
+# Auto-generated with h2o
 
 complete -c ps -s C -d 'command name' -x
 complete -c ps -s G -l Group -d 'real group id or name' -x

@@ -1,28 +1,28 @@
-# Generated with h2o 0.1.18
+# Auto-generated with h2o
 
 complete -c conda -n "not __fish_seen_subcommand_from activate deactivate clean compare config create help info init install list package remove uninstall run search update upgrade" -s h -l help -d 'Show this help message and exit.'
 complete -c conda -n "not __fish_seen_subcommand_from activate deactivate clean compare config create help info init install list package remove uninstall run search update upgrade" -s V -l version -d 'Show the conda version number and exit.'
 
 
 
-complete -c conda -n __fish_use_subcommand -x -a activate -d 'Activate a conda environment'
-complete -c conda -n __fish_use_subcommand -x -a deactivate -d 'Dectivate a conda environment'
-complete -c conda -n __fish_use_subcommand -x -a clean -d 'Remove unused packages and caches.'
-complete -c conda -n __fish_use_subcommand -x -a compare -d 'Compare packages between conda environments.'
-complete -c conda -n __fish_use_subcommand -x -a config -d 'Modify configuration values in .condarc. This is modeled'
-complete -c conda -n __fish_use_subcommand -x -a create -d 'Create a new conda environment from a list of specified'
-complete -c conda -n __fish_use_subcommand -x -a help -d 'Displays a list of available conda commands and their help'
-complete -c conda -n __fish_use_subcommand -x -a info -d 'Display information about current conda install.'
-complete -c conda -n __fish_use_subcommand -x -a init -d 'Initialize conda for shell interaction. [Experimental]'
-complete -c conda -n __fish_use_subcommand -x -a install -d 'Installs a list of packages into a specified conda'
-complete -c conda -n __fish_use_subcommand -x -a list -d 'List linked packages in a conda environment.'
-complete -c conda -n __fish_use_subcommand -x -a package -d 'Low-level conda package utility. (EXPERIMENTAL)'
-complete -c conda -n __fish_use_subcommand -x -a remove -d 'Remove a list of packages from a specified conda environment.'
-complete -c conda -n __fish_use_subcommand -x -a uninstall -d 'Alias for conda remove.'
-complete -c conda -n __fish_use_subcommand -x -a run -d 'Run an executable in a conda environment. [Experimental]'
-complete -c conda -n __fish_use_subcommand -x -a search -d 'Search for packages and display associated information. The'
-complete -c conda -n __fish_use_subcommand -x -a update -d 'Updates conda packages to the latest compatible version.'
-complete -c conda -n __fish_use_subcommand -x -a upgrade -d 'Alias for conda update.'
+complete -k -c conda -n __fish_use_subcommand -x -a upgrade -d 'Alias for conda update.'
+complete -k -c conda -n __fish_use_subcommand -x -a update -d 'Updates conda packages to the latest compatible version.'
+complete -k -c conda -n __fish_use_subcommand -x -a search -d 'Search for packages and display associated information. The'
+complete -k -c conda -n __fish_use_subcommand -x -a run -d 'Run an executable in a conda environment. [Experimental]'
+complete -k -c conda -n __fish_use_subcommand -x -a uninstall -d 'Alias for conda remove.'
+complete -k -c conda -n __fish_use_subcommand -x -a remove -d 'Remove a list of packages from a specified conda environment.'
+complete -k -c conda -n __fish_use_subcommand -x -a package -d 'Low-level conda package utility. (EXPERIMENTAL)'
+complete -k -c conda -n __fish_use_subcommand -x -a list -d 'List linked packages in a conda environment.'
+complete -k -c conda -n __fish_use_subcommand -x -a install -d 'Installs a list of packages into a specified conda'
+complete -k -c conda -n __fish_use_subcommand -x -a init -d 'Initialize conda for shell interaction. [Experimental]'
+complete -k -c conda -n __fish_use_subcommand -x -a info -d 'Display information about current conda install.'
+complete -k -c conda -n __fish_use_subcommand -x -a help -d 'Displays a list of available conda commands and their help'
+complete -k -c conda -n __fish_use_subcommand -x -a create -d 'Create a new conda environment from a list of specified'
+complete -k -c conda -n __fish_use_subcommand -x -a config -d 'Modify configuration values in .condarc. This is modeled'
+complete -k -c conda -n __fish_use_subcommand -x -a compare -d 'Compare packages between conda environments.'
+complete -k -c conda -n __fish_use_subcommand -x -a clean -d 'Remove unused packages and caches.'
+complete -k -c conda -n __fish_use_subcommand -x -a deactivate -d 'Dectivate a conda environment'
+complete -k -c conda -n __fish_use_subcommand -x -a activate -d 'Activate a conda environment'
 
 
 
@@ -46,7 +46,7 @@ complete -c conda -n "__fish_seen_subcommand_from compare" -l json -d 'Report al
 complete -c conda -n "__fish_seen_subcommand_from compare" -s v -l verbose -d 'Use once for info, twice for debug, three times for trace.'
 complete -c conda -n "__fish_seen_subcommand_from compare" -s q -l quiet -d 'Do not display progress bar.'
 complete -c conda -n "__fish_seen_subcommand_from compare" -s n -l name -d 'Name of environment.' -x
-complete -c conda -n "__fish_seen_subcommand_from compare" -s p -l prefix -d 'Full path to environment location (i.e. prefix).' -x
+complete -c conda -n "__fish_seen_subcommand_from compare" -s p -l prefix -d 'Full path to environment location (i.e. prefix).' -r
 
 
 
@@ -77,7 +77,7 @@ complete -c conda -n "__fish_seen_subcommand_from create" -l clone -d 'Path to (
 complete -c conda -n "__fish_seen_subcommand_from create" -l file -d 'Read package versions from the given file.' -r
 complete -c conda -n "__fish_seen_subcommand_from create" -l dev -d 'Use `sys.executable -m conda` in wrapper scripts instead of CONDA_EXE.'
 complete -c conda -n "__fish_seen_subcommand_from create" -s n -l name -d 'Name of environment.' -x
-complete -c conda -n "__fish_seen_subcommand_from create" -s p -l prefix -d 'Full path to environment location (i.e. prefix).' -x
+complete -c conda -n "__fish_seen_subcommand_from create" -s p -l prefix -d 'Full path to environment location (i.e. prefix).' -r
 complete -c conda -n "__fish_seen_subcommand_from create" -s c -l channel -d 'Additional channel to search for packages.' -x
 complete -c conda -n "__fish_seen_subcommand_from create" -l use-local -d 'Use locally built packages.'
 complete -c conda -n "__fish_seen_subcommand_from create" -l override-channels -d 'Do not search default or .condarc channels.'
@@ -133,7 +133,7 @@ complete -c conda -n "__fish_seen_subcommand_from install" -l revision -d 'Rever
 complete -c conda -n "__fish_seen_subcommand_from install" -l file -d 'Read package versions from the given file.' -r
 complete -c conda -n "__fish_seen_subcommand_from install" -l dev -d 'Use `sys.executable -m conda` in wrapper scripts instead of CONDA_EXE.'
 complete -c conda -n "__fish_seen_subcommand_from install" -s n -l name -d 'Name of environment.' -x
-complete -c conda -n "__fish_seen_subcommand_from install" -s p -l prefix -d 'Full path to environment location (i.e. prefix).' -x
+complete -c conda -n "__fish_seen_subcommand_from install" -s p -l prefix -d 'Full path to environment location (i.e. prefix).' -r
 complete -c conda -n "__fish_seen_subcommand_from install" -s c -l channel -d 'Additional channel to search for packages.' -x
 complete -c conda -n "__fish_seen_subcommand_from install" -l use-local -d 'Use locally built packages.'
 complete -c conda -n "__fish_seen_subcommand_from install" -l override-channels -d 'Do not search default or .condarc channels.'
@@ -175,7 +175,7 @@ complete -c conda -n "__fish_seen_subcommand_from list" -s e -l export -d 'Outpu
 complete -c conda -n "__fish_seen_subcommand_from list" -s r -l revisions -d 'List the revision history and exit.'
 complete -c conda -n "__fish_seen_subcommand_from list" -l no-pip -d 'Do not include pip-only installed packages.'
 complete -c conda -n "__fish_seen_subcommand_from list" -s n -l name -d 'Name of environment.' -x
-complete -c conda -n "__fish_seen_subcommand_from list" -s p -l prefix -d 'Full path to environment location (i.e. prefix).' -x
+complete -c conda -n "__fish_seen_subcommand_from list" -s p -l prefix -d 'Full path to environment location (i.e. prefix).' -r
 complete -c conda -n "__fish_seen_subcommand_from list" -l json -d 'Report all output as json.'
 complete -c conda -n "__fish_seen_subcommand_from list" -s v -l verbose -d 'Use once for info, twice for debug, three times for trace.'
 complete -c conda -n "__fish_seen_subcommand_from list" -s q -l quiet -d 'Do not display progress bar.'
@@ -183,21 +183,21 @@ complete -c conda -n "__fish_seen_subcommand_from list" -s q -l quiet -d 'Do not
 
 
 complete -c conda -n "__fish_seen_subcommand_from package" -s h -l help -d 'Show this help message and exit.'
-complete -c conda -n "__fish_seen_subcommand_from package" -s w -l which -d 'Given some PATH print which conda package the file came from.' -x
+complete -c conda -n "__fish_seen_subcommand_from package" -s w -l which -d 'Given some PATH print which conda package the file came from.' -r
 complete -c conda -n "__fish_seen_subcommand_from package" -s r -l reset -d 'Remove all untracked files and exit.'
 complete -c conda -n "__fish_seen_subcommand_from package" -s u -l untracked -d 'Display all untracked files and exit.'
 complete -c conda -n "__fish_seen_subcommand_from package" -l pkg-name -d 'Package name of the created package.' -x
 complete -c conda -n "__fish_seen_subcommand_from package" -l pkg-version -d 'Package version of the created package.' -x
 complete -c conda -n "__fish_seen_subcommand_from package" -l pkg-build -d 'Package build number of the created package.' -x
 complete -c conda -n "__fish_seen_subcommand_from package" -s n -l name -d 'Name of environment.' -x
-complete -c conda -n "__fish_seen_subcommand_from package" -s p -l prefix -d 'Full path to environment location (i.e. prefix).' -x
+complete -c conda -n "__fish_seen_subcommand_from package" -s p -l prefix -d 'Full path to environment location (i.e. prefix).' -r
 
 
 
 complete -c conda -n "__fish_seen_subcommand_from remove" -s h -l help -d 'Show this help message and exit.'
 complete -c conda -n "__fish_seen_subcommand_from remove" -l dev -d 'Use `sys.executable -m conda` in wrapper scripts instead of CONDA_EXE.'
 complete -c conda -n "__fish_seen_subcommand_from remove" -s n -l name -d 'Name of environment.' -x
-complete -c conda -n "__fish_seen_subcommand_from remove" -s p -l prefix -d 'Full path to environment location (i.e. prefix).' -x
+complete -c conda -n "__fish_seen_subcommand_from remove" -s p -l prefix -d 'Full path to environment location (i.e. prefix).' -r
 complete -c conda -n "__fish_seen_subcommand_from remove" -s c -l channel -d 'Additional channel to search for packages.' -x
 complete -c conda -n "__fish_seen_subcommand_from remove" -l use-local -d 'Use locally built packages.'
 complete -c conda -n "__fish_seen_subcommand_from remove" -l override-channels -d 'Do not search default or .condarc channels.'
@@ -220,7 +220,7 @@ complete -c conda -n "__fish_seen_subcommand_from remove" -s y -l yes -d 'Do not
 complete -c conda -n "__fish_seen_subcommand_from uninstall" -s h -l help -d 'Show this help message and exit.'
 complete -c conda -n "__fish_seen_subcommand_from uninstall" -l dev -d 'Use `sys.executable -m conda` in wrapper scripts instead of CONDA_EXE.'
 complete -c conda -n "__fish_seen_subcommand_from uninstall" -s n -l name -d 'Name of environment.' -x
-complete -c conda -n "__fish_seen_subcommand_from uninstall" -s p -l prefix -d 'Full path to environment location (i.e. prefix).' -x
+complete -c conda -n "__fish_seen_subcommand_from uninstall" -s p -l prefix -d 'Full path to environment location (i.e. prefix).' -r
 complete -c conda -n "__fish_seen_subcommand_from uninstall" -s c -l channel -d 'Additional channel to search for packages.' -x
 complete -c conda -n "__fish_seen_subcommand_from uninstall" -l use-local -d 'Use locally built packages.'
 complete -c conda -n "__fish_seen_subcommand_from uninstall" -l override-channels -d 'Do not search default or .condarc channels.'
@@ -248,7 +248,7 @@ complete -c conda -n "__fish_seen_subcommand_from run" -l cwd -d 'Current workin
 complete -c conda -n "__fish_seen_subcommand_from run" -l no-capture-output -d 'Don\'t capture stdout/stderr'
 complete -c conda -n "__fish_seen_subcommand_from run" -l live-stream -d 'Display the output for the subprocess stdout and stderr on real time.'
 complete -c conda -n "__fish_seen_subcommand_from run" -s n -l name -d 'Name of environment.' -x
-complete -c conda -n "__fish_seen_subcommand_from run" -s p -l prefix -d 'Full path to environment location (i.e. prefix).' -x
+complete -c conda -n "__fish_seen_subcommand_from run" -s p -l prefix -d 'Full path to environment location (i.e. prefix).' -r
 
 
 
@@ -272,7 +272,7 @@ complete -c conda -n "__fish_seen_subcommand_from search" -s q -l quiet -d 'Do n
 complete -c conda -n "__fish_seen_subcommand_from update" -s h -l help -d 'Show this help message and exit.'
 complete -c conda -n "__fish_seen_subcommand_from update" -l file -d 'Read package versions from the given file.' -r
 complete -c conda -n "__fish_seen_subcommand_from update" -s n -l name -d 'Name of environment.' -x
-complete -c conda -n "__fish_seen_subcommand_from update" -s p -l prefix -d 'Full path to environment location (i.e. prefix).' -x
+complete -c conda -n "__fish_seen_subcommand_from update" -s p -l prefix -d 'Full path to environment location (i.e. prefix).' -r
 complete -c conda -n "__fish_seen_subcommand_from update" -s c -l channel -d 'Additional channel to search for packages.' -x
 complete -c conda -n "__fish_seen_subcommand_from update" -l use-local -d 'Use locally built packages.'
 complete -c conda -n "__fish_seen_subcommand_from update" -l override-channels -d 'Do not search default or .condarc channels.'
@@ -306,7 +306,7 @@ complete -c conda -n "__fish_seen_subcommand_from update" -l show-channel-urls -
 complete -c conda -n "__fish_seen_subcommand_from upgrade" -s h -l help -d 'Show this help message and exit.'
 complete -c conda -n "__fish_seen_subcommand_from upgrade" -l file -d 'Read package versions from the given file.' -r
 complete -c conda -n "__fish_seen_subcommand_from upgrade" -s n -l name -d 'Name of environment.' -x
-complete -c conda -n "__fish_seen_subcommand_from upgrade" -s p -l prefix -d 'Full path to environment location (i.e. prefix).' -x
+complete -c conda -n "__fish_seen_subcommand_from upgrade" -s p -l prefix -d 'Full path to environment location (i.e. prefix).' -r
 complete -c conda -n "__fish_seen_subcommand_from upgrade" -s c -l channel -d 'Additional channel to search for packages.' -x
 complete -c conda -n "__fish_seen_subcommand_from upgrade" -l use-local -d 'Use locally built packages.'
 complete -c conda -n "__fish_seen_subcommand_from upgrade" -l override-channels -d 'Do not search default or .condarc channels.'

@@ -1,6 +1,6 @@
-# Generated with h2o 0.1.18
+# Auto-generated with h2o
 
-complete -c yarn -n "not __fish_seen_subcommand_from access add audit autoclean bin cache check config create exec generate-lock-entry global help import info init install licenses link list login logout node outdated owner pack policies publish remove run tag team unlink unplug upgrade upgrade-interactive version versions why workspace workspaces" -l cache-folder -d 'specify a custom folder that must be used to store the yarn cache' -x
+complete -c yarn -n "not __fish_seen_subcommand_from access add audit autoclean bin cache check config create exec generate-lock-entry global help import info init install licenses link list login logout node outdated owner pack policies publish remove run tag team unlink unplug upgrade upgrade-interactive version versions why workspace workspaces" -l cache-folder -d 'specify a custom folder that must be used to store the yarn cache' -r
 complete -c yarn -n "not __fish_seen_subcommand_from access add audit autoclean bin cache check config create exec generate-lock-entry global help import info init install licenses link list login logout node outdated owner pack policies publish remove run tag team unlink unplug upgrade upgrade-interactive version versions why workspace workspaces" -l check-files -d 'install will verify file tree of packages for consistency'
 complete -c yarn -n "not __fish_seen_subcommand_from access add audit autoclean bin cache check config create exec generate-lock-entry global help import info init install licenses link list login logout node outdated owner pack policies publish remove run tag team unlink unplug upgrade upgrade-interactive version versions why workspace workspaces" -l cwd -d 'working directory to use (default: /home/vierbein/repos/h2o-curated-data)' -x
 complete -c yarn -n "not __fish_seen_subcommand_from access add audit autoclean bin cache check config create exec generate-lock-entry global help import info init install licenses link list login logout node outdated owner pack policies publish remove run tag team unlink unplug upgrade upgrade-interactive version versions why workspace workspaces" -l disable-pnp -d 'disable the Plug\'n\'Play installation'
@@ -10,7 +10,7 @@ complete -c yarn -n "not __fish_seen_subcommand_from access add audit autoclean 
 complete -c yarn -n "not __fish_seen_subcommand_from access add audit autoclean bin cache check config create exec generate-lock-entry global help import info init install licenses link list login logout node outdated owner pack policies publish remove run tag team unlink unplug upgrade upgrade-interactive version versions why workspace workspaces" -l focus -d 'Focus on a single workspace by installing remote copies of its sibling workspaces.'
 complete -c yarn -n "not __fish_seen_subcommand_from access add audit autoclean bin cache check config create exec generate-lock-entry global help import info init install licenses link list login logout node outdated owner pack policies publish remove run tag team unlink unplug upgrade upgrade-interactive version versions why workspace workspaces" -l force -d 'install and build packages even if they were built before, overwrite lockfile'
 complete -c yarn -n "not __fish_seen_subcommand_from access add audit autoclean bin cache check config create exec generate-lock-entry global help import info init install licenses link list login logout node outdated owner pack policies publish remove run tag team unlink unplug upgrade upgrade-interactive version versions why workspace workspaces" -l frozen-lockfile -d 'don\'t generate a lockfile and fail if an update is needed'
-complete -c yarn -n "not __fish_seen_subcommand_from access add audit autoclean bin cache check config create exec generate-lock-entry global help import info init install licenses link list login logout node outdated owner pack policies publish remove run tag team unlink unplug upgrade upgrade-interactive version versions why workspace workspaces" -l global-folder -d 'specify a custom folder to store global packages' -x
+complete -c yarn -n "not __fish_seen_subcommand_from access add audit autoclean bin cache check config create exec generate-lock-entry global help import info init install licenses link list login logout node outdated owner pack policies publish remove run tag team unlink unplug upgrade upgrade-interactive version versions why workspace workspaces" -l global-folder -d 'specify a custom folder to store global packages' -r
 complete -c yarn -n "not __fish_seen_subcommand_from access add audit autoclean bin cache check config create exec generate-lock-entry global help import info init install licenses link list login logout node outdated owner pack policies publish remove run tag team unlink unplug upgrade upgrade-interactive version versions why workspace workspaces" -l har -d 'save HAR output of network traffic'
 complete -c yarn -n "not __fish_seen_subcommand_from access add audit autoclean bin cache check config create exec generate-lock-entry global help import info init install licenses link list login logout node outdated owner pack policies publish remove run tag team unlink unplug upgrade upgrade-interactive version versions why workspace workspaces" -l https-proxy -d 'https proxy' -x
 complete -c yarn -n "not __fish_seen_subcommand_from access add audit autoclean bin cache check config create exec generate-lock-entry global help import info init install licenses link list login logout node outdated owner pack policies publish remove run tag team unlink unplug upgrade upgrade-interactive version versions why workspace workspaces" -l ignore-engines -d 'ignore engines check'
@@ -19,8 +19,8 @@ complete -c yarn -n "not __fish_seen_subcommand_from access add audit autoclean 
 complete -c yarn -n "not __fish_seen_subcommand_from access add audit autoclean bin cache check config create exec generate-lock-entry global help import info init install licenses link list login logout node outdated owner pack policies publish remove run tag team unlink unplug upgrade upgrade-interactive version versions why workspace workspaces" -l ignore-scripts -d 'don\'t run lifecycle scripts'
 complete -c yarn -n "not __fish_seen_subcommand_from access add audit autoclean bin cache check config create exec generate-lock-entry global help import info init install licenses link list login logout node outdated owner pack policies publish remove run tag team unlink unplug upgrade upgrade-interactive version versions why workspace workspaces" -l json -d 'format Yarn log messages as lines of JSON (see jsonlines.org)'
 complete -c yarn -n "not __fish_seen_subcommand_from access add audit autoclean bin cache check config create exec generate-lock-entry global help import info init install licenses link list login logout node outdated owner pack policies publish remove run tag team unlink unplug upgrade upgrade-interactive version versions why workspace workspaces" -l link-duplicates -d 'create hardlinks to the repeated modules in node_modules'
-complete -c yarn -n "not __fish_seen_subcommand_from access add audit autoclean bin cache check config create exec generate-lock-entry global help import info init install licenses link list login logout node outdated owner pack policies publish remove run tag team unlink unplug upgrade upgrade-interactive version versions why workspace workspaces" -l link-folder -d 'specify a custom folder to store global links' -x
-complete -c yarn -n "not __fish_seen_subcommand_from access add audit autoclean bin cache check config create exec generate-lock-entry global help import info init install licenses link list login logout node outdated owner pack policies publish remove run tag team unlink unplug upgrade upgrade-interactive version versions why workspace workspaces" -l modules-folder -d 'rather than installing modules into the node_modules folder relative to the cwd, output them here' -x
+complete -c yarn -n "not __fish_seen_subcommand_from access add audit autoclean bin cache check config create exec generate-lock-entry global help import info init install licenses link list login logout node outdated owner pack policies publish remove run tag team unlink unplug upgrade upgrade-interactive version versions why workspace workspaces" -l link-folder -d 'specify a custom folder to store global links' -r
+complete -c yarn -n "not __fish_seen_subcommand_from access add audit autoclean bin cache check config create exec generate-lock-entry global help import info init install licenses link list login logout node outdated owner pack policies publish remove run tag team unlink unplug upgrade upgrade-interactive version versions why workspace workspaces" -l modules-folder -d 'rather than installing modules into the node_modules folder relative to the cwd, output them here' -r
 complete -c yarn -n "not __fish_seen_subcommand_from access add audit autoclean bin cache check config create exec generate-lock-entry global help import info init install licenses link list login logout node outdated owner pack policies publish remove run tag team unlink unplug upgrade upgrade-interactive version versions why workspace workspaces" -l mutex -d 'use a mutex to ensure only one yarn instance is executing' -x
 complete -c yarn -n "not __fish_seen_subcommand_from access add audit autoclean bin cache check config create exec generate-lock-entry global help import info init install licenses link list login logout node outdated owner pack policies publish remove run tag team unlink unplug upgrade upgrade-interactive version versions why workspace workspaces" -l network-concurrency -d 'maximum number of concurrent network requests' -x
 complete -c yarn -n "not __fish_seen_subcommand_from access add audit autoclean bin cache check config create exec generate-lock-entry global help import info init install licenses link list login logout node outdated owner pack policies publish remove run tag team unlink unplug upgrade upgrade-interactive version versions why workspace workspaces" -l network-timeout -d 'TCP timeout for network requests' -x
@@ -33,7 +33,7 @@ complete -c yarn -n "not __fish_seen_subcommand_from access add audit autoclean 
 complete -c yarn -n "not __fish_seen_subcommand_from access add audit autoclean bin cache check config create exec generate-lock-entry global help import info init install licenses link list login logout node outdated owner pack policies publish remove run tag team unlink unplug upgrade upgrade-interactive version versions why workspace workspaces" -l offline -d 'trigger an error if any required dependencies are not available in local cache'
 complete -c yarn -n "not __fish_seen_subcommand_from access add audit autoclean bin cache check config create exec generate-lock-entry global help import info init install licenses link list login logout node outdated owner pack policies publish remove run tag team unlink unplug upgrade upgrade-interactive version versions why workspace workspaces" -l otp -d 'one-time password for two factor authentication' -x
 complete -c yarn -n "not __fish_seen_subcommand_from access add audit autoclean bin cache check config create exec generate-lock-entry global help import info init install licenses link list login logout node outdated owner pack policies publish remove run tag team unlink unplug upgrade upgrade-interactive version versions why workspace workspaces" -l prefer-offline -d 'use network only if dependencies are not available in local cache'
-complete -c yarn -n "not __fish_seen_subcommand_from access add audit autoclean bin cache check config create exec generate-lock-entry global help import info init install licenses link list login logout node outdated owner pack policies publish remove run tag team unlink unplug upgrade upgrade-interactive version versions why workspace workspaces" -l preferred-cache-folder -d 'specify a custom folder to store the yarn cache if possible' -x
+complete -c yarn -n "not __fish_seen_subcommand_from access add audit autoclean bin cache check config create exec generate-lock-entry global help import info init install licenses link list login logout node outdated owner pack policies publish remove run tag team unlink unplug upgrade upgrade-interactive version versions why workspace workspaces" -l preferred-cache-folder -d 'specify a custom folder to store the yarn cache if possible' -r
 complete -c yarn -n "not __fish_seen_subcommand_from access add audit autoclean bin cache check config create exec generate-lock-entry global help import info init install licenses link list login logout node outdated owner pack policies publish remove run tag team unlink unplug upgrade upgrade-interactive version versions why workspace workspaces" -l prod -l production -d 'set production' -x
 complete -c yarn -n "not __fish_seen_subcommand_from access add audit autoclean bin cache check config create exec generate-lock-entry global help import info init install licenses link list login logout node outdated owner pack policies publish remove run tag team unlink unplug upgrade upgrade-interactive version versions why workspace workspaces" -l proxy -d 'proxy' -x
 complete -c yarn -n "not __fish_seen_subcommand_from access add audit autoclean bin cache check config create exec generate-lock-entry global help import info init install licenses link list login logout node outdated owner pack policies publish remove run tag team unlink unplug upgrade upgrade-interactive version versions why workspace workspaces" -l pure-lockfile -d 'don\'t generate a lockfile'
@@ -43,60 +43,60 @@ complete -c yarn -n "not __fish_seen_subcommand_from access add audit autoclean 
 complete -c yarn -n "not __fish_seen_subcommand_from access add audit autoclean bin cache check config create exec generate-lock-entry global help import info init install licenses link list login logout node outdated owner pack policies publish remove run tag team unlink unplug upgrade upgrade-interactive version versions why workspace workspaces" -l skip-integrity-check -d 'run install without checking if node_modules is installed'
 complete -c yarn -n "not __fish_seen_subcommand_from access add audit autoclean bin cache check config create exec generate-lock-entry global help import info init install licenses link list login logout node outdated owner pack policies publish remove run tag team unlink unplug upgrade upgrade-interactive version versions why workspace workspaces" -l strict-semver -d 'strict semver'
 complete -c yarn -n "not __fish_seen_subcommand_from access add audit autoclean bin cache check config create exec generate-lock-entry global help import info init install licenses link list login logout node outdated owner pack policies publish remove run tag team unlink unplug upgrade upgrade-interactive version versions why workspace workspaces" -l update-checksums -d 'update package checksums from current repository'
-complete -c yarn -n "not __fish_seen_subcommand_from access add audit autoclean bin cache check config create exec generate-lock-entry global help import info init install licenses link list login logout node outdated owner pack policies publish remove run tag team unlink unplug upgrade upgrade-interactive version versions why workspace workspaces" -l use-yarnrc -d 'specifies a yarnrc file that Yarn should use (.yarnrc only, not .npmrc) (default: )' -x
+complete -c yarn -n "not __fish_seen_subcommand_from access add audit autoclean bin cache check config create exec generate-lock-entry global help import info init install licenses link list login logout node outdated owner pack policies publish remove run tag team unlink unplug upgrade upgrade-interactive version versions why workspace workspaces" -l use-yarnrc -d 'specifies a yarnrc file that Yarn should use (.yarnrc only, not .npmrc) (default: )' -r
 complete -c yarn -n "not __fish_seen_subcommand_from access add audit autoclean bin cache check config create exec generate-lock-entry global help import info init install licenses link list login logout node outdated owner pack policies publish remove run tag team unlink unplug upgrade upgrade-interactive version versions why workspace workspaces" -s v -l version -d 'output the version number'
 complete -c yarn -n "not __fish_seen_subcommand_from access add audit autoclean bin cache check config create exec generate-lock-entry global help import info init install licenses link list login logout node outdated owner pack policies publish remove run tag team unlink unplug upgrade upgrade-interactive version versions why workspace workspaces" -l verbose -d 'output verbose messages on internal operations'
 complete -c yarn -n "not __fish_seen_subcommand_from access add audit autoclean bin cache check config create exec generate-lock-entry global help import info init install licenses link list login logout node outdated owner pack policies publish remove run tag team unlink unplug upgrade upgrade-interactive version versions why workspace workspaces" -s h -l help -d 'output usage information'
 
 
 
-complete -c yarn -n __fish_use_subcommand -x -a access -d 'Lists licenses for installed packages.'
-complete -c yarn -n __fish_use_subcommand -x -a add -d 'Installs a package and any packages that it depends on.'
-complete -c yarn -n __fish_use_subcommand -x -a audit -d 'Checks for known security issues with the installed packages.'
-complete -c yarn -n __fish_use_subcommand -x -a autoclean -d 'Cleans and removes unnecessary files from package dependencies.'
-complete -c yarn -n __fish_use_subcommand -x -a bin -d 'Displays the location of the yarn bin folder.'
-complete -c yarn -n __fish_use_subcommand -x -a cache -d 'Yarn cache list will print out every cached package.'
-complete -c yarn -n __fish_use_subcommand -x -a check -d 'Verifies if versions in the current project’s package.json match that of yarn’s lock file.'
-complete -c yarn -n __fish_use_subcommand -x -a config -d 'Manages the yarn configuration files.'
-complete -c yarn -n __fish_use_subcommand -x -a create -d 'Creates new projects from any create-* starter kits.'
-complete -c yarn -n __fish_use_subcommand -x -a exec -d 'exec'
-complete -c yarn -n __fish_use_subcommand -x -a generate-lock-entry -d 'Generates a lock file entry.'
-complete -c yarn -n __fish_use_subcommand -x -a global -d 'Installs packages globally on your operating system.'
-complete -c yarn -n __fish_use_subcommand -x -a help -d 'Displays help information.'
-complete -c yarn -n __fish_use_subcommand -x -a import -d 'Generates yarn.lock from an npm package-lock.json file or an existing npm-installed node_modules folder.'
-complete -c yarn -n __fish_use_subcommand -x -a info -d 'Shows information about a package.'
-complete -c yarn -n __fish_use_subcommand -x -a init -d 'Interactively creates or updates a package.json file.'
-complete -c yarn -n __fish_use_subcommand -x -a install -d 'Yarn install is used to install all dependencies for a project.'
-complete -c yarn -n __fish_use_subcommand -x -a licenses -d 'Lists licenses for installed packages.'
-complete -c yarn -n __fish_use_subcommand -x -a link -d 'Symlink a package folder during development.'
-complete -c yarn -n __fish_use_subcommand -x -a list -d 'Lists installed packages.'
-complete -c yarn -n __fish_use_subcommand -x -a login -d 'Stores registry username and email.'
-complete -c yarn -n __fish_use_subcommand -x -a logout -d 'Clears registry username and email.'
-complete -c yarn -n __fish_use_subcommand -x -a node -d 'Runs Node with the same version that the one used by Yarn itself, and by default from the project root'
-complete -c yarn -n __fish_use_subcommand -x -a outdated -d 'Checks for outdated package dependencies.'
-complete -c yarn -n __fish_use_subcommand -x -a owner -d 'Manages package owners.'
-complete -c yarn -n __fish_use_subcommand -x -a pack -d 'Creates a compressed gzip archive of package dependencies.'
-complete -c yarn -n __fish_use_subcommand -x -a policies -d 'policies'
-complete -c yarn -n __fish_use_subcommand -x -a publish -d 'Publishes a package to the npm registry.'
-complete -c yarn -n __fish_use_subcommand -x -a remove -d 'Removes a package from your direct dependencies updating your package.json and yarn.lock.'
-complete -c yarn -n __fish_use_subcommand -x -a run -d 'Runs a defined package script.'
-complete -c yarn -n __fish_use_subcommand -x -a tag -d 'Add, remove, or list tags on a package.'
-complete -c yarn -n __fish_use_subcommand -x -a team -d 'Maintain team memberships'
-complete -c yarn -n __fish_use_subcommand -x -a unlink -d 'Unlink a previously created symlink for a package.'
-complete -c yarn -n __fish_use_subcommand -x -a unplug -d 'Temporarily copies a package (with an optional @range suffix) outside of the global cache for debugging purposes'
-complete -c yarn -n __fish_use_subcommand -x -a upgrade -d 'Upgrades packages to their latest version based on the specified range.'
-complete -c yarn -n __fish_use_subcommand -x -a upgrade-interactive -d 'Provides an easy way to update outdated packages.'
-complete -c yarn -n __fish_use_subcommand -x -a version -d 'Update the version of your package via the command line.'
-complete -c yarn -n __fish_use_subcommand -x -a versions -d 'Displays version information of currently installed Yarn, Node.js, and its dependencies.'
-complete -c yarn -n __fish_use_subcommand -x -a why -d 'Identifies why a package has been installed, detailing which other packages depend on it.'
-complete -c yarn -n __fish_use_subcommand -x -a workspace -d 'workspace'
-complete -c yarn -n __fish_use_subcommand -x -a workspaces -d 'workspaces'
+complete -k -c yarn -n __fish_use_subcommand -x -a workspaces -d 'workspaces'
+complete -k -c yarn -n __fish_use_subcommand -x -a workspace -d 'workspace'
+complete -k -c yarn -n __fish_use_subcommand -x -a why -d 'Identifies why a package has been installed, detailing which other packages depend on it.'
+complete -k -c yarn -n __fish_use_subcommand -x -a versions -d 'Displays version information of currently installed Yarn, Node.js, and its dependencies.'
+complete -k -c yarn -n __fish_use_subcommand -x -a version -d 'Update the version of your package via the command line.'
+complete -k -c yarn -n __fish_use_subcommand -x -a upgrade-interactive -d 'Provides an easy way to update outdated packages.'
+complete -k -c yarn -n __fish_use_subcommand -x -a upgrade -d 'Upgrades packages to their latest version based on the specified range.'
+complete -k -c yarn -n __fish_use_subcommand -x -a unplug -d 'Temporarily copies a package (with an optional @range suffix) outside of the global cache for debugging purposes'
+complete -k -c yarn -n __fish_use_subcommand -x -a unlink -d 'Unlink a previously created symlink for a package.'
+complete -k -c yarn -n __fish_use_subcommand -x -a team -d 'Maintain team memberships'
+complete -k -c yarn -n __fish_use_subcommand -x -a tag -d 'Add, remove, or list tags on a package.'
+complete -k -c yarn -n __fish_use_subcommand -x -a run -d 'Runs a defined package script.'
+complete -k -c yarn -n __fish_use_subcommand -x -a remove -d 'Removes a package from your direct dependencies updating your package.json and yarn.lock.'
+complete -k -c yarn -n __fish_use_subcommand -x -a publish -d 'Publishes a package to the npm registry.'
+complete -k -c yarn -n __fish_use_subcommand -x -a policies -d 'policies'
+complete -k -c yarn -n __fish_use_subcommand -x -a pack -d 'Creates a compressed gzip archive of package dependencies.'
+complete -k -c yarn -n __fish_use_subcommand -x -a owner -d 'Manages package owners.'
+complete -k -c yarn -n __fish_use_subcommand -x -a outdated -d 'Checks for outdated package dependencies.'
+complete -k -c yarn -n __fish_use_subcommand -x -a node -d 'Runs Node with the same version that the one used by Yarn itself, and by default from the project root'
+complete -k -c yarn -n __fish_use_subcommand -x -a logout -d 'Clears registry username and email.'
+complete -k -c yarn -n __fish_use_subcommand -x -a login -d 'Stores registry username and email.'
+complete -k -c yarn -n __fish_use_subcommand -x -a list -d 'Lists installed packages.'
+complete -k -c yarn -n __fish_use_subcommand -x -a link -d 'Symlink a package folder during development.'
+complete -k -c yarn -n __fish_use_subcommand -x -a licenses -d 'Lists licenses for installed packages.'
+complete -k -c yarn -n __fish_use_subcommand -x -a install -d 'Yarn install is used to install all dependencies for a project.'
+complete -k -c yarn -n __fish_use_subcommand -x -a init -d 'Interactively creates or updates a package.json file.'
+complete -k -c yarn -n __fish_use_subcommand -x -a info -d 'Shows information about a package.'
+complete -k -c yarn -n __fish_use_subcommand -x -a import -d 'Generates yarn.lock from an npm package-lock.json file or an existing npm-installed node_modules folder.'
+complete -k -c yarn -n __fish_use_subcommand -x -a help -d 'Displays help information.'
+complete -k -c yarn -n __fish_use_subcommand -x -a global -d 'Installs packages globally on your operating system.'
+complete -k -c yarn -n __fish_use_subcommand -x -a generate-lock-entry -d 'Generates a lock file entry.'
+complete -k -c yarn -n __fish_use_subcommand -x -a exec -d 'exec'
+complete -k -c yarn -n __fish_use_subcommand -x -a create -d 'Creates new projects from any create-* starter kits.'
+complete -k -c yarn -n __fish_use_subcommand -x -a config -d 'Manages the yarn configuration files.'
+complete -k -c yarn -n __fish_use_subcommand -x -a check -d 'Verifies if versions in the current project’s package.json match that of yarn’s lock file.'
+complete -k -c yarn -n __fish_use_subcommand -x -a cache -d 'Yarn cache list will print out every cached package.'
+complete -k -c yarn -n __fish_use_subcommand -x -a bin -d 'Displays the location of the yarn bin folder.'
+complete -k -c yarn -n __fish_use_subcommand -x -a autoclean -d 'Cleans and removes unnecessary files from package dependencies.'
+complete -k -c yarn -n __fish_use_subcommand -x -a audit -d 'Checks for known security issues with the installed packages.'
+complete -k -c yarn -n __fish_use_subcommand -x -a add -d 'Installs a package and any packages that it depends on.'
+complete -k -c yarn -n __fish_use_subcommand -x -a access -d 'Lists licenses for installed packages.'
 
 
 
 complete -c yarn -n "__fish_seen_subcommand_from add" -s v -l version -d 'output the version number'
 complete -c yarn -n "__fish_seen_subcommand_from add" -l no-default-rc -d 'prevent Yarn from automatically detecting yarnrc and npmrc files'
-complete -c yarn -n "__fish_seen_subcommand_from add" -l use-yarnrc -d 'specifies a yarnrc file that Yarn should use (.yarnrc only, not .npmrc) (default: )' -x
+complete -c yarn -n "__fish_seen_subcommand_from add" -l use-yarnrc -d 'specifies a yarnrc file that Yarn should use (.yarnrc only, not .npmrc) (default: )' -r
 complete -c yarn -n "__fish_seen_subcommand_from add" -l verbose -d 'output verbose messages on internal operations'
 complete -c yarn -n "__fish_seen_subcommand_from add" -l offline -d 'trigger an error if any required dependencies are not available in local cache'
 complete -c yarn -n "__fish_seen_subcommand_from add" -l prefer-offline -d 'use network only if dependencies are not available in local cache'
@@ -120,11 +120,11 @@ complete -c yarn -n "__fish_seen_subcommand_from add" -l pure-lockfile -d 'don\'
 complete -c yarn -n "__fish_seen_subcommand_from add" -l frozen-lockfile -d 'don\'t generate a lockfile and fail if an update is needed'
 complete -c yarn -n "__fish_seen_subcommand_from add" -l update-checksums -d 'update package checksums from current repository'
 complete -c yarn -n "__fish_seen_subcommand_from add" -l link-duplicates -d 'create hardlinks to the repeated modules in node_modules'
-complete -c yarn -n "__fish_seen_subcommand_from add" -l link-folder -d 'specify a custom folder to store global links' -x
-complete -c yarn -n "__fish_seen_subcommand_from add" -l global-folder -d 'specify a custom folder to store global packages' -x
-complete -c yarn -n "__fish_seen_subcommand_from add" -l modules-folder -d 'rather than installing modules into the node_modules folder relative to the cwd, output them here' -x
-complete -c yarn -n "__fish_seen_subcommand_from add" -l preferred-cache-folder -d 'specify a custom folder to store the yarn cache if possible' -x
-complete -c yarn -n "__fish_seen_subcommand_from add" -l cache-folder -d 'specify a custom folder that must be used to store the yarn cache' -x
+complete -c yarn -n "__fish_seen_subcommand_from add" -l link-folder -d 'specify a custom folder to store global links' -r
+complete -c yarn -n "__fish_seen_subcommand_from add" -l global-folder -d 'specify a custom folder to store global packages' -r
+complete -c yarn -n "__fish_seen_subcommand_from add" -l modules-folder -d 'rather than installing modules into the node_modules folder relative to the cwd, output them here' -r
+complete -c yarn -n "__fish_seen_subcommand_from add" -l preferred-cache-folder -d 'specify a custom folder to store the yarn cache if possible' -r
+complete -c yarn -n "__fish_seen_subcommand_from add" -l cache-folder -d 'specify a custom folder that must be used to store the yarn cache' -r
 complete -c yarn -n "__fish_seen_subcommand_from add" -l mutex -d 'use a mutex to ensure only one yarn instance is executing' -x
 complete -c yarn -n "__fish_seen_subcommand_from add" -l emoji -d 'enable emoji in output (default: false)' -x
 complete -c yarn -n "__fish_seen_subcommand_from add" -s s -l silent -d 'skip Yarn console logs, other types of logs (script output) will be printed'
@@ -152,7 +152,7 @@ complete -c yarn -n "__fish_seen_subcommand_from add" -s h -l help -d 'output us
 
 complete -c yarn -n "__fish_seen_subcommand_from audit" -s v -l version -d 'output the version number'
 complete -c yarn -n "__fish_seen_subcommand_from audit" -l no-default-rc -d 'prevent Yarn from automatically detecting yarnrc and npmrc files'
-complete -c yarn -n "__fish_seen_subcommand_from audit" -l use-yarnrc -d 'specifies a yarnrc file that Yarn should use (.yarnrc only, not .npmrc) (default: )' -x
+complete -c yarn -n "__fish_seen_subcommand_from audit" -l use-yarnrc -d 'specifies a yarnrc file that Yarn should use (.yarnrc only, not .npmrc) (default: )' -r
 complete -c yarn -n "__fish_seen_subcommand_from audit" -l verbose -d 'output verbose messages on internal operations'
 complete -c yarn -n "__fish_seen_subcommand_from audit" -l offline -d 'trigger an error if any required dependencies are not available in local cache'
 complete -c yarn -n "__fish_seen_subcommand_from audit" -l prefer-offline -d 'use network only if dependencies are not available in local cache'
@@ -176,11 +176,11 @@ complete -c yarn -n "__fish_seen_subcommand_from audit" -l pure-lockfile -d 'don
 complete -c yarn -n "__fish_seen_subcommand_from audit" -l frozen-lockfile -d 'don\'t generate a lockfile and fail if an update is needed'
 complete -c yarn -n "__fish_seen_subcommand_from audit" -l update-checksums -d 'update package checksums from current repository'
 complete -c yarn -n "__fish_seen_subcommand_from audit" -l link-duplicates -d 'create hardlinks to the repeated modules in node_modules'
-complete -c yarn -n "__fish_seen_subcommand_from audit" -l link-folder -d 'specify a custom folder to store global links' -x
-complete -c yarn -n "__fish_seen_subcommand_from audit" -l global-folder -d 'specify a custom folder to store global packages' -x
-complete -c yarn -n "__fish_seen_subcommand_from audit" -l modules-folder -d 'rather than installing modules into the node_modules folder relative to the cwd, output them here' -x
-complete -c yarn -n "__fish_seen_subcommand_from audit" -l preferred-cache-folder -d 'specify a custom folder to store the yarn cache if possible' -x
-complete -c yarn -n "__fish_seen_subcommand_from audit" -l cache-folder -d 'specify a custom folder that must be used to store the yarn cache' -x
+complete -c yarn -n "__fish_seen_subcommand_from audit" -l link-folder -d 'specify a custom folder to store global links' -r
+complete -c yarn -n "__fish_seen_subcommand_from audit" -l global-folder -d 'specify a custom folder to store global packages' -r
+complete -c yarn -n "__fish_seen_subcommand_from audit" -l modules-folder -d 'rather than installing modules into the node_modules folder relative to the cwd, output them here' -r
+complete -c yarn -n "__fish_seen_subcommand_from audit" -l preferred-cache-folder -d 'specify a custom folder to store the yarn cache if possible' -r
+complete -c yarn -n "__fish_seen_subcommand_from audit" -l cache-folder -d 'specify a custom folder that must be used to store the yarn cache' -r
 complete -c yarn -n "__fish_seen_subcommand_from audit" -l mutex -d 'use a mutex to ensure only one yarn instance is executing' -x
 complete -c yarn -n "__fish_seen_subcommand_from audit" -l emoji -d 'enable emoji in output (default: false)' -x
 complete -c yarn -n "__fish_seen_subcommand_from audit" -s s -l silent -d 'skip Yarn console logs, other types of logs (script output) will be printed'
@@ -204,7 +204,7 @@ complete -c yarn -n "__fish_seen_subcommand_from audit" -s h -l help -d 'output 
 
 complete -c yarn -n "__fish_seen_subcommand_from autoclean" -s v -l version -d 'output the version number'
 complete -c yarn -n "__fish_seen_subcommand_from autoclean" -l no-default-rc -d 'prevent Yarn from automatically detecting yarnrc and npmrc files'
-complete -c yarn -n "__fish_seen_subcommand_from autoclean" -l use-yarnrc -d 'specifies a yarnrc file that Yarn should use (.yarnrc only, not .npmrc) (default: )' -x
+complete -c yarn -n "__fish_seen_subcommand_from autoclean" -l use-yarnrc -d 'specifies a yarnrc file that Yarn should use (.yarnrc only, not .npmrc) (default: )' -r
 complete -c yarn -n "__fish_seen_subcommand_from autoclean" -l verbose -d 'output verbose messages on internal operations'
 complete -c yarn -n "__fish_seen_subcommand_from autoclean" -l offline -d 'trigger an error if any required dependencies are not available in local cache'
 complete -c yarn -n "__fish_seen_subcommand_from autoclean" -l prefer-offline -d 'use network only if dependencies are not available in local cache'
@@ -228,11 +228,11 @@ complete -c yarn -n "__fish_seen_subcommand_from autoclean" -l pure-lockfile -d 
 complete -c yarn -n "__fish_seen_subcommand_from autoclean" -l frozen-lockfile -d 'don\'t generate a lockfile and fail if an update is needed'
 complete -c yarn -n "__fish_seen_subcommand_from autoclean" -l update-checksums -d 'update package checksums from current repository'
 complete -c yarn -n "__fish_seen_subcommand_from autoclean" -l link-duplicates -d 'create hardlinks to the repeated modules in node_modules'
-complete -c yarn -n "__fish_seen_subcommand_from autoclean" -l link-folder -d 'specify a custom folder to store global links' -x
-complete -c yarn -n "__fish_seen_subcommand_from autoclean" -l global-folder -d 'specify a custom folder to store global packages' -x
-complete -c yarn -n "__fish_seen_subcommand_from autoclean" -l modules-folder -d 'rather than installing modules into the node_modules folder relative to the cwd, output them here' -x
-complete -c yarn -n "__fish_seen_subcommand_from autoclean" -l preferred-cache-folder -d 'specify a custom folder to store the yarn cache if possible' -x
-complete -c yarn -n "__fish_seen_subcommand_from autoclean" -l cache-folder -d 'specify a custom folder that must be used to store the yarn cache' -x
+complete -c yarn -n "__fish_seen_subcommand_from autoclean" -l link-folder -d 'specify a custom folder to store global links' -r
+complete -c yarn -n "__fish_seen_subcommand_from autoclean" -l global-folder -d 'specify a custom folder to store global packages' -r
+complete -c yarn -n "__fish_seen_subcommand_from autoclean" -l modules-folder -d 'rather than installing modules into the node_modules folder relative to the cwd, output them here' -r
+complete -c yarn -n "__fish_seen_subcommand_from autoclean" -l preferred-cache-folder -d 'specify a custom folder to store the yarn cache if possible' -r
+complete -c yarn -n "__fish_seen_subcommand_from autoclean" -l cache-folder -d 'specify a custom folder that must be used to store the yarn cache' -r
 complete -c yarn -n "__fish_seen_subcommand_from autoclean" -l mutex -d 'use a mutex to ensure only one yarn instance is executing' -x
 complete -c yarn -n "__fish_seen_subcommand_from autoclean" -l emoji -d 'enable emoji in output (default: false)' -x
 complete -c yarn -n "__fish_seen_subcommand_from autoclean" -s s -l silent -d 'skip Yarn console logs, other types of logs (script output) will be printed'
@@ -255,7 +255,7 @@ complete -c yarn -n "__fish_seen_subcommand_from autoclean" -s h -l help -d 'out
 
 complete -c yarn -n "__fish_seen_subcommand_from bin" -s v -l version -d 'output the version number'
 complete -c yarn -n "__fish_seen_subcommand_from bin" -l no-default-rc -d 'prevent Yarn from automatically detecting yarnrc and npmrc files'
-complete -c yarn -n "__fish_seen_subcommand_from bin" -l use-yarnrc -d 'specifies a yarnrc file that Yarn should use (.yarnrc only, not .npmrc) (default: )' -x
+complete -c yarn -n "__fish_seen_subcommand_from bin" -l use-yarnrc -d 'specifies a yarnrc file that Yarn should use (.yarnrc only, not .npmrc) (default: )' -r
 complete -c yarn -n "__fish_seen_subcommand_from bin" -l verbose -d 'output verbose messages on internal operations'
 complete -c yarn -n "__fish_seen_subcommand_from bin" -l offline -d 'trigger an error if any required dependencies are not available in local cache'
 complete -c yarn -n "__fish_seen_subcommand_from bin" -l prefer-offline -d 'use network only if dependencies are not available in local cache'
@@ -279,11 +279,11 @@ complete -c yarn -n "__fish_seen_subcommand_from bin" -l pure-lockfile -d 'don\'
 complete -c yarn -n "__fish_seen_subcommand_from bin" -l frozen-lockfile -d 'don\'t generate a lockfile and fail if an update is needed'
 complete -c yarn -n "__fish_seen_subcommand_from bin" -l update-checksums -d 'update package checksums from current repository'
 complete -c yarn -n "__fish_seen_subcommand_from bin" -l link-duplicates -d 'create hardlinks to the repeated modules in node_modules'
-complete -c yarn -n "__fish_seen_subcommand_from bin" -l link-folder -d 'specify a custom folder to store global links' -x
-complete -c yarn -n "__fish_seen_subcommand_from bin" -l global-folder -d 'specify a custom folder to store global packages' -x
-complete -c yarn -n "__fish_seen_subcommand_from bin" -l modules-folder -d 'rather than installing modules into the node_modules folder relative to the cwd, output them here' -x
-complete -c yarn -n "__fish_seen_subcommand_from bin" -l preferred-cache-folder -d 'specify a custom folder to store the yarn cache if possible' -x
-complete -c yarn -n "__fish_seen_subcommand_from bin" -l cache-folder -d 'specify a custom folder that must be used to store the yarn cache' -x
+complete -c yarn -n "__fish_seen_subcommand_from bin" -l link-folder -d 'specify a custom folder to store global links' -r
+complete -c yarn -n "__fish_seen_subcommand_from bin" -l global-folder -d 'specify a custom folder to store global packages' -r
+complete -c yarn -n "__fish_seen_subcommand_from bin" -l modules-folder -d 'rather than installing modules into the node_modules folder relative to the cwd, output them here' -r
+complete -c yarn -n "__fish_seen_subcommand_from bin" -l preferred-cache-folder -d 'specify a custom folder to store the yarn cache if possible' -r
+complete -c yarn -n "__fish_seen_subcommand_from bin" -l cache-folder -d 'specify a custom folder that must be used to store the yarn cache' -r
 complete -c yarn -n "__fish_seen_subcommand_from bin" -l mutex -d 'use a mutex to ensure only one yarn instance is executing' -x
 complete -c yarn -n "__fish_seen_subcommand_from bin" -l emoji -d 'enable emoji in output (default: false)' -x
 complete -c yarn -n "__fish_seen_subcommand_from bin" -s s -l silent -d 'skip Yarn console logs, other types of logs (script output) will be printed'
@@ -304,7 +304,7 @@ complete -c yarn -n "__fish_seen_subcommand_from bin" -s h -l help -d 'output us
 
 complete -c yarn -n "__fish_seen_subcommand_from cache" -s v -l version -d 'output the version number'
 complete -c yarn -n "__fish_seen_subcommand_from cache" -l no-default-rc -d 'prevent Yarn from automatically detecting yarnrc and npmrc files'
-complete -c yarn -n "__fish_seen_subcommand_from cache" -l use-yarnrc -d 'specifies a yarnrc file that Yarn should use (.yarnrc only, not .npmrc) (default: )' -x
+complete -c yarn -n "__fish_seen_subcommand_from cache" -l use-yarnrc -d 'specifies a yarnrc file that Yarn should use (.yarnrc only, not .npmrc) (default: )' -r
 complete -c yarn -n "__fish_seen_subcommand_from cache" -l verbose -d 'output verbose messages on internal operations'
 complete -c yarn -n "__fish_seen_subcommand_from cache" -l offline -d 'trigger an error if any required dependencies are not available in local cache'
 complete -c yarn -n "__fish_seen_subcommand_from cache" -l prefer-offline -d 'use network only if dependencies are not available in local cache'
@@ -328,11 +328,11 @@ complete -c yarn -n "__fish_seen_subcommand_from cache" -l pure-lockfile -d 'don
 complete -c yarn -n "__fish_seen_subcommand_from cache" -l frozen-lockfile -d 'don\'t generate a lockfile and fail if an update is needed'
 complete -c yarn -n "__fish_seen_subcommand_from cache" -l update-checksums -d 'update package checksums from current repository'
 complete -c yarn -n "__fish_seen_subcommand_from cache" -l link-duplicates -d 'create hardlinks to the repeated modules in node_modules'
-complete -c yarn -n "__fish_seen_subcommand_from cache" -l link-folder -d 'specify a custom folder to store global links' -x
-complete -c yarn -n "__fish_seen_subcommand_from cache" -l global-folder -d 'specify a custom folder to store global packages' -x
-complete -c yarn -n "__fish_seen_subcommand_from cache" -l modules-folder -d 'rather than installing modules into the node_modules folder relative to the cwd, output them here' -x
-complete -c yarn -n "__fish_seen_subcommand_from cache" -l preferred-cache-folder -d 'specify a custom folder to store the yarn cache if possible' -x
-complete -c yarn -n "__fish_seen_subcommand_from cache" -l cache-folder -d 'specify a custom folder that must be used to store the yarn cache' -x
+complete -c yarn -n "__fish_seen_subcommand_from cache" -l link-folder -d 'specify a custom folder to store global links' -r
+complete -c yarn -n "__fish_seen_subcommand_from cache" -l global-folder -d 'specify a custom folder to store global packages' -r
+complete -c yarn -n "__fish_seen_subcommand_from cache" -l modules-folder -d 'rather than installing modules into the node_modules folder relative to the cwd, output them here' -r
+complete -c yarn -n "__fish_seen_subcommand_from cache" -l preferred-cache-folder -d 'specify a custom folder to store the yarn cache if possible' -r
+complete -c yarn -n "__fish_seen_subcommand_from cache" -l cache-folder -d 'specify a custom folder that must be used to store the yarn cache' -r
 complete -c yarn -n "__fish_seen_subcommand_from cache" -l mutex -d 'use a mutex to ensure only one yarn instance is executing' -x
 complete -c yarn -n "__fish_seen_subcommand_from cache" -l emoji -d 'enable emoji in output (default: false)' -x
 complete -c yarn -n "__fish_seen_subcommand_from cache" -s s -l silent -d 'skip Yarn console logs, other types of logs (script output) will be printed'
@@ -354,7 +354,7 @@ complete -c yarn -n "__fish_seen_subcommand_from cache" -s h -l help -d 'output 
 
 complete -c yarn -n "__fish_seen_subcommand_from check" -s v -l version -d 'output the version number'
 complete -c yarn -n "__fish_seen_subcommand_from check" -l no-default-rc -d 'prevent Yarn from automatically detecting yarnrc and npmrc files'
-complete -c yarn -n "__fish_seen_subcommand_from check" -l use-yarnrc -d 'specifies a yarnrc file that Yarn should use (.yarnrc only, not .npmrc) (default: )' -x
+complete -c yarn -n "__fish_seen_subcommand_from check" -l use-yarnrc -d 'specifies a yarnrc file that Yarn should use (.yarnrc only, not .npmrc) (default: )' -r
 complete -c yarn -n "__fish_seen_subcommand_from check" -l verbose -d 'output verbose messages on internal operations'
 complete -c yarn -n "__fish_seen_subcommand_from check" -l offline -d 'trigger an error if any required dependencies are not available in local cache'
 complete -c yarn -n "__fish_seen_subcommand_from check" -l prefer-offline -d 'use network only if dependencies are not available in local cache'
@@ -378,11 +378,11 @@ complete -c yarn -n "__fish_seen_subcommand_from check" -l pure-lockfile -d 'don
 complete -c yarn -n "__fish_seen_subcommand_from check" -l frozen-lockfile -d 'don\'t generate a lockfile and fail if an update is needed'
 complete -c yarn -n "__fish_seen_subcommand_from check" -l update-checksums -d 'update package checksums from current repository'
 complete -c yarn -n "__fish_seen_subcommand_from check" -l link-duplicates -d 'create hardlinks to the repeated modules in node_modules'
-complete -c yarn -n "__fish_seen_subcommand_from check" -l link-folder -d 'specify a custom folder to store global links' -x
-complete -c yarn -n "__fish_seen_subcommand_from check" -l global-folder -d 'specify a custom folder to store global packages' -x
-complete -c yarn -n "__fish_seen_subcommand_from check" -l modules-folder -d 'rather than installing modules into the node_modules folder relative to the cwd, output them here' -x
-complete -c yarn -n "__fish_seen_subcommand_from check" -l preferred-cache-folder -d 'specify a custom folder to store the yarn cache if possible' -x
-complete -c yarn -n "__fish_seen_subcommand_from check" -l cache-folder -d 'specify a custom folder that must be used to store the yarn cache' -x
+complete -c yarn -n "__fish_seen_subcommand_from check" -l link-folder -d 'specify a custom folder to store global links' -r
+complete -c yarn -n "__fish_seen_subcommand_from check" -l global-folder -d 'specify a custom folder to store global packages' -r
+complete -c yarn -n "__fish_seen_subcommand_from check" -l modules-folder -d 'rather than installing modules into the node_modules folder relative to the cwd, output them here' -r
+complete -c yarn -n "__fish_seen_subcommand_from check" -l preferred-cache-folder -d 'specify a custom folder to store the yarn cache if possible' -r
+complete -c yarn -n "__fish_seen_subcommand_from check" -l cache-folder -d 'specify a custom folder that must be used to store the yarn cache' -r
 complete -c yarn -n "__fish_seen_subcommand_from check" -l mutex -d 'use a mutex to ensure only one yarn instance is executing' -x
 complete -c yarn -n "__fish_seen_subcommand_from check" -l emoji -d 'enable emoji in output (default: false)' -x
 complete -c yarn -n "__fish_seen_subcommand_from check" -s s -l silent -d 'skip Yarn console logs, other types of logs (script output) will be printed'
@@ -403,7 +403,7 @@ complete -c yarn -n "__fish_seen_subcommand_from check" -l integrity -l verify-t
 
 complete -c yarn -n "__fish_seen_subcommand_from config" -s v -l version -d 'output the version number'
 complete -c yarn -n "__fish_seen_subcommand_from config" -l no-default-rc -d 'prevent Yarn from automatically detecting yarnrc and npmrc files'
-complete -c yarn -n "__fish_seen_subcommand_from config" -l use-yarnrc -d 'specifies a yarnrc file that Yarn should use (.yarnrc only, not .npmrc) (default: )' -x
+complete -c yarn -n "__fish_seen_subcommand_from config" -l use-yarnrc -d 'specifies a yarnrc file that Yarn should use (.yarnrc only, not .npmrc) (default: )' -r
 complete -c yarn -n "__fish_seen_subcommand_from config" -l verbose -d 'output verbose messages on internal operations'
 complete -c yarn -n "__fish_seen_subcommand_from config" -l offline -d 'trigger an error if any required dependencies are not available in local cache'
 complete -c yarn -n "__fish_seen_subcommand_from config" -l prefer-offline -d 'use network only if dependencies are not available in local cache'
@@ -427,11 +427,11 @@ complete -c yarn -n "__fish_seen_subcommand_from config" -l pure-lockfile -d 'do
 complete -c yarn -n "__fish_seen_subcommand_from config" -l frozen-lockfile -d 'don\'t generate a lockfile and fail if an update is needed'
 complete -c yarn -n "__fish_seen_subcommand_from config" -l update-checksums -d 'update package checksums from current repository'
 complete -c yarn -n "__fish_seen_subcommand_from config" -l link-duplicates -d 'create hardlinks to the repeated modules in node_modules'
-complete -c yarn -n "__fish_seen_subcommand_from config" -l link-folder -d 'specify a custom folder to store global links' -x
-complete -c yarn -n "__fish_seen_subcommand_from config" -l global-folder -d 'specify a custom folder to store global packages' -x
-complete -c yarn -n "__fish_seen_subcommand_from config" -l modules-folder -d 'rather than installing modules into the node_modules folder relative to the cwd, output them here' -x
-complete -c yarn -n "__fish_seen_subcommand_from config" -l preferred-cache-folder -d 'specify a custom folder to store the yarn cache if possible' -x
-complete -c yarn -n "__fish_seen_subcommand_from config" -l cache-folder -d 'specify a custom folder that must be used to store the yarn cache' -x
+complete -c yarn -n "__fish_seen_subcommand_from config" -l link-folder -d 'specify a custom folder to store global links' -r
+complete -c yarn -n "__fish_seen_subcommand_from config" -l global-folder -d 'specify a custom folder to store global packages' -r
+complete -c yarn -n "__fish_seen_subcommand_from config" -l modules-folder -d 'rather than installing modules into the node_modules folder relative to the cwd, output them here' -r
+complete -c yarn -n "__fish_seen_subcommand_from config" -l preferred-cache-folder -d 'specify a custom folder to store the yarn cache if possible' -r
+complete -c yarn -n "__fish_seen_subcommand_from config" -l cache-folder -d 'specify a custom folder that must be used to store the yarn cache' -r
 complete -c yarn -n "__fish_seen_subcommand_from config" -l mutex -d 'use a mutex to ensure only one yarn instance is executing' -x
 complete -c yarn -n "__fish_seen_subcommand_from config" -l emoji -d 'enable emoji in output (default: false)' -x
 complete -c yarn -n "__fish_seen_subcommand_from config" -s s -l silent -d 'skip Yarn console logs, other types of logs (script output) will be printed'
@@ -452,7 +452,7 @@ complete -c yarn -n "__fish_seen_subcommand_from config" -s h -l help -d 'output
 
 complete -c yarn -n "__fish_seen_subcommand_from create" -s v -l version -d 'output the version number'
 complete -c yarn -n "__fish_seen_subcommand_from create" -l no-default-rc -d 'prevent Yarn from automatically detecting yarnrc and npmrc files'
-complete -c yarn -n "__fish_seen_subcommand_from create" -l use-yarnrc -d 'specifies a yarnrc file that Yarn should use (.yarnrc only, not .npmrc) (default: )' -x
+complete -c yarn -n "__fish_seen_subcommand_from create" -l use-yarnrc -d 'specifies a yarnrc file that Yarn should use (.yarnrc only, not .npmrc) (default: )' -r
 complete -c yarn -n "__fish_seen_subcommand_from create" -l verbose -d 'output verbose messages on internal operations'
 complete -c yarn -n "__fish_seen_subcommand_from create" -l offline -d 'trigger an error if any required dependencies are not available in local cache'
 complete -c yarn -n "__fish_seen_subcommand_from create" -l prefer-offline -d 'use network only if dependencies are not available in local cache'
@@ -476,11 +476,11 @@ complete -c yarn -n "__fish_seen_subcommand_from create" -l pure-lockfile -d 'do
 complete -c yarn -n "__fish_seen_subcommand_from create" -l frozen-lockfile -d 'don\'t generate a lockfile and fail if an update is needed'
 complete -c yarn -n "__fish_seen_subcommand_from create" -l update-checksums -d 'update package checksums from current repository'
 complete -c yarn -n "__fish_seen_subcommand_from create" -l link-duplicates -d 'create hardlinks to the repeated modules in node_modules'
-complete -c yarn -n "__fish_seen_subcommand_from create" -l link-folder -d 'specify a custom folder to store global links' -x
-complete -c yarn -n "__fish_seen_subcommand_from create" -l global-folder -d 'specify a custom folder to store global packages' -x
-complete -c yarn -n "__fish_seen_subcommand_from create" -l modules-folder -d 'rather than installing modules into the node_modules folder relative to the cwd, output them here' -x
-complete -c yarn -n "__fish_seen_subcommand_from create" -l preferred-cache-folder -d 'specify a custom folder to store the yarn cache if possible' -x
-complete -c yarn -n "__fish_seen_subcommand_from create" -l cache-folder -d 'specify a custom folder that must be used to store the yarn cache' -x
+complete -c yarn -n "__fish_seen_subcommand_from create" -l link-folder -d 'specify a custom folder to store global links' -r
+complete -c yarn -n "__fish_seen_subcommand_from create" -l global-folder -d 'specify a custom folder to store global packages' -r
+complete -c yarn -n "__fish_seen_subcommand_from create" -l modules-folder -d 'rather than installing modules into the node_modules folder relative to the cwd, output them here' -r
+complete -c yarn -n "__fish_seen_subcommand_from create" -l preferred-cache-folder -d 'specify a custom folder to store the yarn cache if possible' -r
+complete -c yarn -n "__fish_seen_subcommand_from create" -l cache-folder -d 'specify a custom folder that must be used to store the yarn cache' -r
 complete -c yarn -n "__fish_seen_subcommand_from create" -l mutex -d 'use a mutex to ensure only one yarn instance is executing' -x
 complete -c yarn -n "__fish_seen_subcommand_from create" -l emoji -d 'enable emoji in output (default: false)' -x
 complete -c yarn -n "__fish_seen_subcommand_from create" -s s -l silent -d 'skip Yarn console logs, other types of logs (script output) will be printed'
@@ -501,7 +501,7 @@ complete -c yarn -n "__fish_seen_subcommand_from create" -s h -l help -d 'output
 
 complete -c yarn -n "__fish_seen_subcommand_from exec" -s v -l version -d 'output the version number'
 complete -c yarn -n "__fish_seen_subcommand_from exec" -l no-default-rc -d 'prevent Yarn from automatically detecting yarnrc and npmrc files'
-complete -c yarn -n "__fish_seen_subcommand_from exec" -l use-yarnrc -d 'specifies a yarnrc file that Yarn should use (.yarnrc only, not .npmrc) (default: )' -x
+complete -c yarn -n "__fish_seen_subcommand_from exec" -l use-yarnrc -d 'specifies a yarnrc file that Yarn should use (.yarnrc only, not .npmrc) (default: )' -r
 complete -c yarn -n "__fish_seen_subcommand_from exec" -l verbose -d 'output verbose messages on internal operations'
 complete -c yarn -n "__fish_seen_subcommand_from exec" -l offline -d 'trigger an error if any required dependencies are not available in local cache'
 complete -c yarn -n "__fish_seen_subcommand_from exec" -l prefer-offline -d 'use network only if dependencies are not available in local cache'
@@ -525,11 +525,11 @@ complete -c yarn -n "__fish_seen_subcommand_from exec" -l pure-lockfile -d 'don\
 complete -c yarn -n "__fish_seen_subcommand_from exec" -l frozen-lockfile -d 'don\'t generate a lockfile and fail if an update is needed'
 complete -c yarn -n "__fish_seen_subcommand_from exec" -l update-checksums -d 'update package checksums from current repository'
 complete -c yarn -n "__fish_seen_subcommand_from exec" -l link-duplicates -d 'create hardlinks to the repeated modules in node_modules'
-complete -c yarn -n "__fish_seen_subcommand_from exec" -l link-folder -d 'specify a custom folder to store global links' -x
-complete -c yarn -n "__fish_seen_subcommand_from exec" -l global-folder -d 'specify a custom folder to store global packages' -x
-complete -c yarn -n "__fish_seen_subcommand_from exec" -l modules-folder -d 'rather than installing modules into the node_modules folder relative to the cwd, output them here' -x
-complete -c yarn -n "__fish_seen_subcommand_from exec" -l preferred-cache-folder -d 'specify a custom folder to store the yarn cache if possible' -x
-complete -c yarn -n "__fish_seen_subcommand_from exec" -l cache-folder -d 'specify a custom folder that must be used to store the yarn cache' -x
+complete -c yarn -n "__fish_seen_subcommand_from exec" -l link-folder -d 'specify a custom folder to store global links' -r
+complete -c yarn -n "__fish_seen_subcommand_from exec" -l global-folder -d 'specify a custom folder to store global packages' -r
+complete -c yarn -n "__fish_seen_subcommand_from exec" -l modules-folder -d 'rather than installing modules into the node_modules folder relative to the cwd, output them here' -r
+complete -c yarn -n "__fish_seen_subcommand_from exec" -l preferred-cache-folder -d 'specify a custom folder to store the yarn cache if possible' -r
+complete -c yarn -n "__fish_seen_subcommand_from exec" -l cache-folder -d 'specify a custom folder that must be used to store the yarn cache' -r
 complete -c yarn -n "__fish_seen_subcommand_from exec" -l mutex -d 'use a mutex to ensure only one yarn instance is executing' -x
 complete -c yarn -n "__fish_seen_subcommand_from exec" -l emoji -d 'enable emoji in output (default: false)' -x
 complete -c yarn -n "__fish_seen_subcommand_from exec" -s s -l silent -d 'skip Yarn console logs, other types of logs (script output) will be printed'
@@ -550,7 +550,7 @@ complete -c yarn -n "__fish_seen_subcommand_from exec" -s h -l help -d 'output u
 
 complete -c yarn -n "__fish_seen_subcommand_from generate-lock-entry" -s v -l version -d 'output the version number'
 complete -c yarn -n "__fish_seen_subcommand_from generate-lock-entry" -l no-default-rc -d 'prevent Yarn from automatically detecting yarnrc and npmrc files'
-complete -c yarn -n "__fish_seen_subcommand_from generate-lock-entry" -l use-yarnrc -d 'specifies a yarnrc file that Yarn should use (.yarnrc only, not .npmrc) (default: )' -x
+complete -c yarn -n "__fish_seen_subcommand_from generate-lock-entry" -l use-yarnrc -d 'specifies a yarnrc file that Yarn should use (.yarnrc only, not .npmrc) (default: )' -r
 complete -c yarn -n "__fish_seen_subcommand_from generate-lock-entry" -l verbose -d 'output verbose messages on internal operations'
 complete -c yarn -n "__fish_seen_subcommand_from generate-lock-entry" -l offline -d 'trigger an error if any required dependencies are not available in local cache'
 complete -c yarn -n "__fish_seen_subcommand_from generate-lock-entry" -l prefer-offline -d 'use network only if dependencies are not available in local cache'
@@ -574,11 +574,11 @@ complete -c yarn -n "__fish_seen_subcommand_from generate-lock-entry" -l pure-lo
 complete -c yarn -n "__fish_seen_subcommand_from generate-lock-entry" -l frozen-lockfile -d 'don\'t generate a lockfile and fail if an update is needed'
 complete -c yarn -n "__fish_seen_subcommand_from generate-lock-entry" -l update-checksums -d 'update package checksums from current repository'
 complete -c yarn -n "__fish_seen_subcommand_from generate-lock-entry" -l link-duplicates -d 'create hardlinks to the repeated modules in node_modules'
-complete -c yarn -n "__fish_seen_subcommand_from generate-lock-entry" -l link-folder -d 'specify a custom folder to store global links' -x
-complete -c yarn -n "__fish_seen_subcommand_from generate-lock-entry" -l global-folder -d 'specify a custom folder to store global packages' -x
-complete -c yarn -n "__fish_seen_subcommand_from generate-lock-entry" -l modules-folder -d 'rather than installing modules into the node_modules folder relative to the cwd, output them here' -x
-complete -c yarn -n "__fish_seen_subcommand_from generate-lock-entry" -l preferred-cache-folder -d 'specify a custom folder to store the yarn cache if possible' -x
-complete -c yarn -n "__fish_seen_subcommand_from generate-lock-entry" -l cache-folder -d 'specify a custom folder that must be used to store the yarn cache' -x
+complete -c yarn -n "__fish_seen_subcommand_from generate-lock-entry" -l link-folder -d 'specify a custom folder to store global links' -r
+complete -c yarn -n "__fish_seen_subcommand_from generate-lock-entry" -l global-folder -d 'specify a custom folder to store global packages' -r
+complete -c yarn -n "__fish_seen_subcommand_from generate-lock-entry" -l modules-folder -d 'rather than installing modules into the node_modules folder relative to the cwd, output them here' -r
+complete -c yarn -n "__fish_seen_subcommand_from generate-lock-entry" -l preferred-cache-folder -d 'specify a custom folder to store the yarn cache if possible' -r
+complete -c yarn -n "__fish_seen_subcommand_from generate-lock-entry" -l cache-folder -d 'specify a custom folder that must be used to store the yarn cache' -r
 complete -c yarn -n "__fish_seen_subcommand_from generate-lock-entry" -l mutex -d 'use a mutex to ensure only one yarn instance is executing' -x
 complete -c yarn -n "__fish_seen_subcommand_from generate-lock-entry" -l emoji -d 'enable emoji in output (default: false)' -x
 complete -c yarn -n "__fish_seen_subcommand_from generate-lock-entry" -s s -l silent -d 'skip Yarn console logs, other types of logs (script output) will be printed'
@@ -602,7 +602,7 @@ complete -c yarn -n "__fish_seen_subcommand_from generate-lock-entry" -s h -l he
 
 complete -c yarn -n "__fish_seen_subcommand_from global" -s v -l version -d 'output the version number'
 complete -c yarn -n "__fish_seen_subcommand_from global" -l no-default-rc -d 'prevent Yarn from automatically detecting yarnrc and npmrc files'
-complete -c yarn -n "__fish_seen_subcommand_from global" -l use-yarnrc -d 'specifies a yarnrc file that Yarn should use (.yarnrc only, not .npmrc) (default: )' -x
+complete -c yarn -n "__fish_seen_subcommand_from global" -l use-yarnrc -d 'specifies a yarnrc file that Yarn should use (.yarnrc only, not .npmrc) (default: )' -r
 complete -c yarn -n "__fish_seen_subcommand_from global" -l verbose -d 'output verbose messages on internal operations'
 complete -c yarn -n "__fish_seen_subcommand_from global" -l offline -d 'trigger an error if any required dependencies are not available in local cache'
 complete -c yarn -n "__fish_seen_subcommand_from global" -l prefer-offline -d 'use network only if dependencies are not available in local cache'
@@ -626,11 +626,11 @@ complete -c yarn -n "__fish_seen_subcommand_from global" -l pure-lockfile -d 'do
 complete -c yarn -n "__fish_seen_subcommand_from global" -l frozen-lockfile -d 'don\'t generate a lockfile and fail if an update is needed'
 complete -c yarn -n "__fish_seen_subcommand_from global" -l update-checksums -d 'update package checksums from current repository'
 complete -c yarn -n "__fish_seen_subcommand_from global" -l link-duplicates -d 'create hardlinks to the repeated modules in node_modules'
-complete -c yarn -n "__fish_seen_subcommand_from global" -l link-folder -d 'specify a custom folder to store global links' -x
-complete -c yarn -n "__fish_seen_subcommand_from global" -l global-folder -d 'specify a custom folder to store global packages' -x
-complete -c yarn -n "__fish_seen_subcommand_from global" -l modules-folder -d 'rather than installing modules into the node_modules folder relative to the cwd, output them here' -x
-complete -c yarn -n "__fish_seen_subcommand_from global" -l preferred-cache-folder -d 'specify a custom folder to store the yarn cache if possible' -x
-complete -c yarn -n "__fish_seen_subcommand_from global" -l cache-folder -d 'specify a custom folder that must be used to store the yarn cache' -x
+complete -c yarn -n "__fish_seen_subcommand_from global" -l link-folder -d 'specify a custom folder to store global links' -r
+complete -c yarn -n "__fish_seen_subcommand_from global" -l global-folder -d 'specify a custom folder to store global packages' -r
+complete -c yarn -n "__fish_seen_subcommand_from global" -l modules-folder -d 'rather than installing modules into the node_modules folder relative to the cwd, output them here' -r
+complete -c yarn -n "__fish_seen_subcommand_from global" -l preferred-cache-folder -d 'specify a custom folder to store the yarn cache if possible' -r
+complete -c yarn -n "__fish_seen_subcommand_from global" -l cache-folder -d 'specify a custom folder that must be used to store the yarn cache' -r
 complete -c yarn -n "__fish_seen_subcommand_from global" -l mutex -d 'use a mutex to ensure only one yarn instance is executing' -x
 complete -c yarn -n "__fish_seen_subcommand_from global" -l emoji -d 'enable emoji in output (default: false)' -x
 complete -c yarn -n "__fish_seen_subcommand_from global" -s s -l silent -d 'skip Yarn console logs, other types of logs (script output) will be printed'
@@ -653,7 +653,7 @@ complete -c yarn -n "__fish_seen_subcommand_from global" -s h -l help -d 'output
 
 complete -c yarn -n "__fish_seen_subcommand_from help" -s v -l version -d 'output the version number'
 complete -c yarn -n "__fish_seen_subcommand_from help" -l no-default-rc -d 'prevent Yarn from automatically detecting yarnrc and npmrc files'
-complete -c yarn -n "__fish_seen_subcommand_from help" -l use-yarnrc -d 'specifies a yarnrc file that Yarn should use (.yarnrc only, not .npmrc) (default: )' -x
+complete -c yarn -n "__fish_seen_subcommand_from help" -l use-yarnrc -d 'specifies a yarnrc file that Yarn should use (.yarnrc only, not .npmrc) (default: )' -r
 complete -c yarn -n "__fish_seen_subcommand_from help" -l verbose -d 'output verbose messages on internal operations'
 complete -c yarn -n "__fish_seen_subcommand_from help" -l offline -d 'trigger an error if any required dependencies are not available in local cache'
 complete -c yarn -n "__fish_seen_subcommand_from help" -l prefer-offline -d 'use network only if dependencies are not available in local cache'
@@ -677,11 +677,11 @@ complete -c yarn -n "__fish_seen_subcommand_from help" -l pure-lockfile -d 'don\
 complete -c yarn -n "__fish_seen_subcommand_from help" -l frozen-lockfile -d 'don\'t generate a lockfile and fail if an update is needed'
 complete -c yarn -n "__fish_seen_subcommand_from help" -l update-checksums -d 'update package checksums from current repository'
 complete -c yarn -n "__fish_seen_subcommand_from help" -l link-duplicates -d 'create hardlinks to the repeated modules in node_modules'
-complete -c yarn -n "__fish_seen_subcommand_from help" -l link-folder -d 'specify a custom folder to store global links' -x
-complete -c yarn -n "__fish_seen_subcommand_from help" -l global-folder -d 'specify a custom folder to store global packages' -x
-complete -c yarn -n "__fish_seen_subcommand_from help" -l modules-folder -d 'rather than installing modules into the node_modules folder relative to the cwd, output them here' -x
-complete -c yarn -n "__fish_seen_subcommand_from help" -l preferred-cache-folder -d 'specify a custom folder to store the yarn cache if possible' -x
-complete -c yarn -n "__fish_seen_subcommand_from help" -l cache-folder -d 'specify a custom folder that must be used to store the yarn cache' -x
+complete -c yarn -n "__fish_seen_subcommand_from help" -l link-folder -d 'specify a custom folder to store global links' -r
+complete -c yarn -n "__fish_seen_subcommand_from help" -l global-folder -d 'specify a custom folder to store global packages' -r
+complete -c yarn -n "__fish_seen_subcommand_from help" -l modules-folder -d 'rather than installing modules into the node_modules folder relative to the cwd, output them here' -r
+complete -c yarn -n "__fish_seen_subcommand_from help" -l preferred-cache-folder -d 'specify a custom folder to store the yarn cache if possible' -r
+complete -c yarn -n "__fish_seen_subcommand_from help" -l cache-folder -d 'specify a custom folder that must be used to store the yarn cache' -r
 complete -c yarn -n "__fish_seen_subcommand_from help" -l mutex -d 'use a mutex to ensure only one yarn instance is executing' -x
 complete -c yarn -n "__fish_seen_subcommand_from help" -l emoji -d 'enable emoji in output (default: false)' -x
 complete -c yarn -n "__fish_seen_subcommand_from help" -s s -l silent -d 'skip Yarn console logs, other types of logs (script output) will be printed'
@@ -702,7 +702,7 @@ complete -c yarn -n "__fish_seen_subcommand_from help" -s h -l help -d 'output u
 
 complete -c yarn -n "__fish_seen_subcommand_from import" -s v -l version -d 'output the version number'
 complete -c yarn -n "__fish_seen_subcommand_from import" -l no-default-rc -d 'prevent Yarn from automatically detecting yarnrc and npmrc files'
-complete -c yarn -n "__fish_seen_subcommand_from import" -l use-yarnrc -d 'specifies a yarnrc file that Yarn should use (.yarnrc only, not .npmrc) (default: )' -x
+complete -c yarn -n "__fish_seen_subcommand_from import" -l use-yarnrc -d 'specifies a yarnrc file that Yarn should use (.yarnrc only, not .npmrc) (default: )' -r
 complete -c yarn -n "__fish_seen_subcommand_from import" -l verbose -d 'output verbose messages on internal operations'
 complete -c yarn -n "__fish_seen_subcommand_from import" -l offline -d 'trigger an error if any required dependencies are not available in local cache'
 complete -c yarn -n "__fish_seen_subcommand_from import" -l prefer-offline -d 'use network only if dependencies are not available in local cache'
@@ -726,11 +726,11 @@ complete -c yarn -n "__fish_seen_subcommand_from import" -l pure-lockfile -d 'do
 complete -c yarn -n "__fish_seen_subcommand_from import" -l frozen-lockfile -d 'don\'t generate a lockfile and fail if an update is needed'
 complete -c yarn -n "__fish_seen_subcommand_from import" -l update-checksums -d 'update package checksums from current repository'
 complete -c yarn -n "__fish_seen_subcommand_from import" -l link-duplicates -d 'create hardlinks to the repeated modules in node_modules'
-complete -c yarn -n "__fish_seen_subcommand_from import" -l link-folder -d 'specify a custom folder to store global links' -x
-complete -c yarn -n "__fish_seen_subcommand_from import" -l global-folder -d 'specify a custom folder to store global packages' -x
-complete -c yarn -n "__fish_seen_subcommand_from import" -l modules-folder -d 'rather than installing modules into the node_modules folder relative to the cwd, output them here' -x
-complete -c yarn -n "__fish_seen_subcommand_from import" -l preferred-cache-folder -d 'specify a custom folder to store the yarn cache if possible' -x
-complete -c yarn -n "__fish_seen_subcommand_from import" -l cache-folder -d 'specify a custom folder that must be used to store the yarn cache' -x
+complete -c yarn -n "__fish_seen_subcommand_from import" -l link-folder -d 'specify a custom folder to store global links' -r
+complete -c yarn -n "__fish_seen_subcommand_from import" -l global-folder -d 'specify a custom folder to store global packages' -r
+complete -c yarn -n "__fish_seen_subcommand_from import" -l modules-folder -d 'rather than installing modules into the node_modules folder relative to the cwd, output them here' -r
+complete -c yarn -n "__fish_seen_subcommand_from import" -l preferred-cache-folder -d 'specify a custom folder to store the yarn cache if possible' -r
+complete -c yarn -n "__fish_seen_subcommand_from import" -l cache-folder -d 'specify a custom folder that must be used to store the yarn cache' -r
 complete -c yarn -n "__fish_seen_subcommand_from import" -l mutex -d 'use a mutex to ensure only one yarn instance is executing' -x
 complete -c yarn -n "__fish_seen_subcommand_from import" -l emoji -d 'enable emoji in output (default: false)' -x
 complete -c yarn -n "__fish_seen_subcommand_from import" -s s -l silent -d 'skip Yarn console logs, other types of logs (script output) will be printed'
@@ -751,7 +751,7 @@ complete -c yarn -n "__fish_seen_subcommand_from import" -s h -l help -d 'output
 
 complete -c yarn -n "__fish_seen_subcommand_from info" -s v -l version -d 'output the version number'
 complete -c yarn -n "__fish_seen_subcommand_from info" -l no-default-rc -d 'prevent Yarn from automatically detecting yarnrc and npmrc files'
-complete -c yarn -n "__fish_seen_subcommand_from info" -l use-yarnrc -d 'specifies a yarnrc file that Yarn should use (.yarnrc only, not .npmrc) (default: )' -x
+complete -c yarn -n "__fish_seen_subcommand_from info" -l use-yarnrc -d 'specifies a yarnrc file that Yarn should use (.yarnrc only, not .npmrc) (default: )' -r
 complete -c yarn -n "__fish_seen_subcommand_from info" -l verbose -d 'output verbose messages on internal operations'
 complete -c yarn -n "__fish_seen_subcommand_from info" -l offline -d 'trigger an error if any required dependencies are not available in local cache'
 complete -c yarn -n "__fish_seen_subcommand_from info" -l prefer-offline -d 'use network only if dependencies are not available in local cache'
@@ -775,11 +775,11 @@ complete -c yarn -n "__fish_seen_subcommand_from info" -l pure-lockfile -d 'don\
 complete -c yarn -n "__fish_seen_subcommand_from info" -l frozen-lockfile -d 'don\'t generate a lockfile and fail if an update is needed'
 complete -c yarn -n "__fish_seen_subcommand_from info" -l update-checksums -d 'update package checksums from current repository'
 complete -c yarn -n "__fish_seen_subcommand_from info" -l link-duplicates -d 'create hardlinks to the repeated modules in node_modules'
-complete -c yarn -n "__fish_seen_subcommand_from info" -l link-folder -d 'specify a custom folder to store global links' -x
-complete -c yarn -n "__fish_seen_subcommand_from info" -l global-folder -d 'specify a custom folder to store global packages' -x
-complete -c yarn -n "__fish_seen_subcommand_from info" -l modules-folder -d 'rather than installing modules into the node_modules folder relative to the cwd, output them here' -x
-complete -c yarn -n "__fish_seen_subcommand_from info" -l preferred-cache-folder -d 'specify a custom folder to store the yarn cache if possible' -x
-complete -c yarn -n "__fish_seen_subcommand_from info" -l cache-folder -d 'specify a custom folder that must be used to store the yarn cache' -x
+complete -c yarn -n "__fish_seen_subcommand_from info" -l link-folder -d 'specify a custom folder to store global links' -r
+complete -c yarn -n "__fish_seen_subcommand_from info" -l global-folder -d 'specify a custom folder to store global packages' -r
+complete -c yarn -n "__fish_seen_subcommand_from info" -l modules-folder -d 'rather than installing modules into the node_modules folder relative to the cwd, output them here' -r
+complete -c yarn -n "__fish_seen_subcommand_from info" -l preferred-cache-folder -d 'specify a custom folder to store the yarn cache if possible' -r
+complete -c yarn -n "__fish_seen_subcommand_from info" -l cache-folder -d 'specify a custom folder that must be used to store the yarn cache' -r
 complete -c yarn -n "__fish_seen_subcommand_from info" -l mutex -d 'use a mutex to ensure only one yarn instance is executing' -x
 complete -c yarn -n "__fish_seen_subcommand_from info" -l emoji -d 'enable emoji in output (default: false)' -x
 complete -c yarn -n "__fish_seen_subcommand_from info" -s s -l silent -d 'skip Yarn console logs, other types of logs (script output) will be printed'
@@ -800,7 +800,7 @@ complete -c yarn -n "__fish_seen_subcommand_from info" -s h -l help -d 'output u
 
 complete -c yarn -n "__fish_seen_subcommand_from init" -s v -l version -d 'output the version number'
 complete -c yarn -n "__fish_seen_subcommand_from init" -l no-default-rc -d 'prevent Yarn from automatically detecting yarnrc and npmrc files'
-complete -c yarn -n "__fish_seen_subcommand_from init" -l use-yarnrc -d 'specifies a yarnrc file that Yarn should use (.yarnrc only, not .npmrc) (default: )' -x
+complete -c yarn -n "__fish_seen_subcommand_from init" -l use-yarnrc -d 'specifies a yarnrc file that Yarn should use (.yarnrc only, not .npmrc) (default: )' -r
 complete -c yarn -n "__fish_seen_subcommand_from init" -l verbose -d 'output verbose messages on internal operations'
 complete -c yarn -n "__fish_seen_subcommand_from init" -l offline -d 'trigger an error if any required dependencies are not available in local cache'
 complete -c yarn -n "__fish_seen_subcommand_from init" -l prefer-offline -d 'use network only if dependencies are not available in local cache'
@@ -824,11 +824,11 @@ complete -c yarn -n "__fish_seen_subcommand_from init" -l pure-lockfile -d 'don\
 complete -c yarn -n "__fish_seen_subcommand_from init" -l frozen-lockfile -d 'don\'t generate a lockfile and fail if an update is needed'
 complete -c yarn -n "__fish_seen_subcommand_from init" -l update-checksums -d 'update package checksums from current repository'
 complete -c yarn -n "__fish_seen_subcommand_from init" -l link-duplicates -d 'create hardlinks to the repeated modules in node_modules'
-complete -c yarn -n "__fish_seen_subcommand_from init" -l link-folder -d 'specify a custom folder to store global links' -x
-complete -c yarn -n "__fish_seen_subcommand_from init" -l global-folder -d 'specify a custom folder to store global packages' -x
-complete -c yarn -n "__fish_seen_subcommand_from init" -l modules-folder -d 'rather than installing modules into the node_modules folder relative to the cwd, output them here' -x
-complete -c yarn -n "__fish_seen_subcommand_from init" -l preferred-cache-folder -d 'specify a custom folder to store the yarn cache if possible' -x
-complete -c yarn -n "__fish_seen_subcommand_from init" -l cache-folder -d 'specify a custom folder that must be used to store the yarn cache' -x
+complete -c yarn -n "__fish_seen_subcommand_from init" -l link-folder -d 'specify a custom folder to store global links' -r
+complete -c yarn -n "__fish_seen_subcommand_from init" -l global-folder -d 'specify a custom folder to store global packages' -r
+complete -c yarn -n "__fish_seen_subcommand_from init" -l modules-folder -d 'rather than installing modules into the node_modules folder relative to the cwd, output them here' -r
+complete -c yarn -n "__fish_seen_subcommand_from init" -l preferred-cache-folder -d 'specify a custom folder to store the yarn cache if possible' -r
+complete -c yarn -n "__fish_seen_subcommand_from init" -l cache-folder -d 'specify a custom folder that must be used to store the yarn cache' -r
 complete -c yarn -n "__fish_seen_subcommand_from init" -l mutex -d 'use a mutex to ensure only one yarn instance is executing' -x
 complete -c yarn -n "__fish_seen_subcommand_from init" -l emoji -d 'enable emoji in output (default: false)' -x
 complete -c yarn -n "__fish_seen_subcommand_from init" -s s -l silent -d 'skip Yarn console logs, other types of logs (script output) will be printed'
@@ -853,7 +853,7 @@ complete -c yarn -n "__fish_seen_subcommand_from init" -s h -l help -d 'output u
 
 complete -c yarn -n "__fish_seen_subcommand_from install" -s v -l version -d 'output the version number'
 complete -c yarn -n "__fish_seen_subcommand_from install" -l no-default-rc -d 'prevent Yarn from automatically detecting yarnrc and npmrc files'
-complete -c yarn -n "__fish_seen_subcommand_from install" -l use-yarnrc -d 'specifies a yarnrc file that Yarn should use (.yarnrc only, not .npmrc) (default: )' -x
+complete -c yarn -n "__fish_seen_subcommand_from install" -l use-yarnrc -d 'specifies a yarnrc file that Yarn should use (.yarnrc only, not .npmrc) (default: )' -r
 complete -c yarn -n "__fish_seen_subcommand_from install" -l verbose -d 'output verbose messages on internal operations'
 complete -c yarn -n "__fish_seen_subcommand_from install" -l offline -d 'trigger an error if any required dependencies are not available in local cache'
 complete -c yarn -n "__fish_seen_subcommand_from install" -l prefer-offline -d 'use network only if dependencies are not available in local cache'
@@ -877,11 +877,11 @@ complete -c yarn -n "__fish_seen_subcommand_from install" -l pure-lockfile -d 'd
 complete -c yarn -n "__fish_seen_subcommand_from install" -l frozen-lockfile -d 'don\'t generate a lockfile and fail if an update is needed'
 complete -c yarn -n "__fish_seen_subcommand_from install" -l update-checksums -d 'update package checksums from current repository'
 complete -c yarn -n "__fish_seen_subcommand_from install" -l link-duplicates -d 'create hardlinks to the repeated modules in node_modules'
-complete -c yarn -n "__fish_seen_subcommand_from install" -l link-folder -d 'specify a custom folder to store global links' -x
-complete -c yarn -n "__fish_seen_subcommand_from install" -l global-folder -d 'specify a custom folder to store global packages' -x
-complete -c yarn -n "__fish_seen_subcommand_from install" -l modules-folder -d 'rather than installing modules into the node_modules folder relative to the cwd, output them here' -x
-complete -c yarn -n "__fish_seen_subcommand_from install" -l preferred-cache-folder -d 'specify a custom folder to store the yarn cache if possible' -x
-complete -c yarn -n "__fish_seen_subcommand_from install" -l cache-folder -d 'specify a custom folder that must be used to store the yarn cache' -x
+complete -c yarn -n "__fish_seen_subcommand_from install" -l link-folder -d 'specify a custom folder to store global links' -r
+complete -c yarn -n "__fish_seen_subcommand_from install" -l global-folder -d 'specify a custom folder to store global packages' -r
+complete -c yarn -n "__fish_seen_subcommand_from install" -l modules-folder -d 'rather than installing modules into the node_modules folder relative to the cwd, output them here' -r
+complete -c yarn -n "__fish_seen_subcommand_from install" -l preferred-cache-folder -d 'specify a custom folder to store the yarn cache if possible' -r
+complete -c yarn -n "__fish_seen_subcommand_from install" -l cache-folder -d 'specify a custom folder that must be used to store the yarn cache' -r
 complete -c yarn -n "__fish_seen_subcommand_from install" -l mutex -d 'use a mutex to ensure only one yarn instance is executing' -x
 complete -c yarn -n "__fish_seen_subcommand_from install" -l emoji -d 'enable emoji in output (default: false)' -x
 complete -c yarn -n "__fish_seen_subcommand_from install" -s s -l silent -d 'skip Yarn console logs, other types of logs (script output) will be printed'
@@ -910,7 +910,7 @@ complete -c yarn -n "__fish_seen_subcommand_from install" -s h -l help -d 'outpu
 
 complete -c yarn -n "__fish_seen_subcommand_from licenses" -s v -l version -d 'output the version number'
 complete -c yarn -n "__fish_seen_subcommand_from licenses" -l no-default-rc -d 'prevent Yarn from automatically detecting yarnrc and npmrc files'
-complete -c yarn -n "__fish_seen_subcommand_from licenses" -l use-yarnrc -d 'specifies a yarnrc file that Yarn should use (.yarnrc only, not .npmrc) (default: )' -x
+complete -c yarn -n "__fish_seen_subcommand_from licenses" -l use-yarnrc -d 'specifies a yarnrc file that Yarn should use (.yarnrc only, not .npmrc) (default: )' -r
 complete -c yarn -n "__fish_seen_subcommand_from licenses" -l verbose -d 'output verbose messages on internal operations'
 complete -c yarn -n "__fish_seen_subcommand_from licenses" -l offline -d 'trigger an error if any required dependencies are not available in local cache'
 complete -c yarn -n "__fish_seen_subcommand_from licenses" -l prefer-offline -d 'use network only if dependencies are not available in local cache'
@@ -934,11 +934,11 @@ complete -c yarn -n "__fish_seen_subcommand_from licenses" -l pure-lockfile -d '
 complete -c yarn -n "__fish_seen_subcommand_from licenses" -l frozen-lockfile -d 'don\'t generate a lockfile and fail if an update is needed'
 complete -c yarn -n "__fish_seen_subcommand_from licenses" -l update-checksums -d 'update package checksums from current repository'
 complete -c yarn -n "__fish_seen_subcommand_from licenses" -l link-duplicates -d 'create hardlinks to the repeated modules in node_modules'
-complete -c yarn -n "__fish_seen_subcommand_from licenses" -l link-folder -d 'specify a custom folder to store global links' -x
-complete -c yarn -n "__fish_seen_subcommand_from licenses" -l global-folder -d 'specify a custom folder to store global packages' -x
-complete -c yarn -n "__fish_seen_subcommand_from licenses" -l modules-folder -d 'rather than installing modules into the node_modules folder relative to the cwd, output them here' -x
-complete -c yarn -n "__fish_seen_subcommand_from licenses" -l preferred-cache-folder -d 'specify a custom folder to store the yarn cache if possible' -x
-complete -c yarn -n "__fish_seen_subcommand_from licenses" -l cache-folder -d 'specify a custom folder that must be used to store the yarn cache' -x
+complete -c yarn -n "__fish_seen_subcommand_from licenses" -l link-folder -d 'specify a custom folder to store global links' -r
+complete -c yarn -n "__fish_seen_subcommand_from licenses" -l global-folder -d 'specify a custom folder to store global packages' -r
+complete -c yarn -n "__fish_seen_subcommand_from licenses" -l modules-folder -d 'rather than installing modules into the node_modules folder relative to the cwd, output them here' -r
+complete -c yarn -n "__fish_seen_subcommand_from licenses" -l preferred-cache-folder -d 'specify a custom folder to store the yarn cache if possible' -r
+complete -c yarn -n "__fish_seen_subcommand_from licenses" -l cache-folder -d 'specify a custom folder that must be used to store the yarn cache' -r
 complete -c yarn -n "__fish_seen_subcommand_from licenses" -l mutex -d 'use a mutex to ensure only one yarn instance is executing' -x
 complete -c yarn -n "__fish_seen_subcommand_from licenses" -l emoji -d 'enable emoji in output (default: false)' -x
 complete -c yarn -n "__fish_seen_subcommand_from licenses" -s s -l silent -d 'skip Yarn console logs, other types of logs (script output) will be printed'
@@ -959,7 +959,7 @@ complete -c yarn -n "__fish_seen_subcommand_from licenses" -s h -l help -d 'outp
 
 complete -c yarn -n "__fish_seen_subcommand_from link" -s v -l version -d 'output the version number'
 complete -c yarn -n "__fish_seen_subcommand_from link" -l no-default-rc -d 'prevent Yarn from automatically detecting yarnrc and npmrc files'
-complete -c yarn -n "__fish_seen_subcommand_from link" -l use-yarnrc -d 'specifies a yarnrc file that Yarn should use (.yarnrc only, not .npmrc) (default: )' -x
+complete -c yarn -n "__fish_seen_subcommand_from link" -l use-yarnrc -d 'specifies a yarnrc file that Yarn should use (.yarnrc only, not .npmrc) (default: )' -r
 complete -c yarn -n "__fish_seen_subcommand_from link" -l verbose -d 'output verbose messages on internal operations'
 complete -c yarn -n "__fish_seen_subcommand_from link" -l offline -d 'trigger an error if any required dependencies are not available in local cache'
 complete -c yarn -n "__fish_seen_subcommand_from link" -l prefer-offline -d 'use network only if dependencies are not available in local cache'
@@ -983,11 +983,11 @@ complete -c yarn -n "__fish_seen_subcommand_from link" -l pure-lockfile -d 'don\
 complete -c yarn -n "__fish_seen_subcommand_from link" -l frozen-lockfile -d 'don\'t generate a lockfile and fail if an update is needed'
 complete -c yarn -n "__fish_seen_subcommand_from link" -l update-checksums -d 'update package checksums from current repository'
 complete -c yarn -n "__fish_seen_subcommand_from link" -l link-duplicates -d 'create hardlinks to the repeated modules in node_modules'
-complete -c yarn -n "__fish_seen_subcommand_from link" -l link-folder -d 'specify a custom folder to store global links' -x
-complete -c yarn -n "__fish_seen_subcommand_from link" -l global-folder -d 'specify a custom folder to store global packages' -x
-complete -c yarn -n "__fish_seen_subcommand_from link" -l modules-folder -d 'rather than installing modules into the node_modules folder relative to the cwd, output them here' -x
-complete -c yarn -n "__fish_seen_subcommand_from link" -l preferred-cache-folder -d 'specify a custom folder to store the yarn cache if possible' -x
-complete -c yarn -n "__fish_seen_subcommand_from link" -l cache-folder -d 'specify a custom folder that must be used to store the yarn cache' -x
+complete -c yarn -n "__fish_seen_subcommand_from link" -l link-folder -d 'specify a custom folder to store global links' -r
+complete -c yarn -n "__fish_seen_subcommand_from link" -l global-folder -d 'specify a custom folder to store global packages' -r
+complete -c yarn -n "__fish_seen_subcommand_from link" -l modules-folder -d 'rather than installing modules into the node_modules folder relative to the cwd, output them here' -r
+complete -c yarn -n "__fish_seen_subcommand_from link" -l preferred-cache-folder -d 'specify a custom folder to store the yarn cache if possible' -r
+complete -c yarn -n "__fish_seen_subcommand_from link" -l cache-folder -d 'specify a custom folder that must be used to store the yarn cache' -r
 complete -c yarn -n "__fish_seen_subcommand_from link" -l mutex -d 'use a mutex to ensure only one yarn instance is executing' -x
 complete -c yarn -n "__fish_seen_subcommand_from link" -l emoji -d 'enable emoji in output (default: false)' -x
 complete -c yarn -n "__fish_seen_subcommand_from link" -s s -l silent -d 'skip Yarn console logs, other types of logs (script output) will be printed'
@@ -1008,7 +1008,7 @@ complete -c yarn -n "__fish_seen_subcommand_from link" -s h -l help -d 'output u
 
 complete -c yarn -n "__fish_seen_subcommand_from list" -s v -l version -d 'output the version number'
 complete -c yarn -n "__fish_seen_subcommand_from list" -l no-default-rc -d 'prevent Yarn from automatically detecting yarnrc and npmrc files'
-complete -c yarn -n "__fish_seen_subcommand_from list" -l use-yarnrc -d 'specifies a yarnrc file that Yarn should use (.yarnrc only, not .npmrc) (default: )' -x
+complete -c yarn -n "__fish_seen_subcommand_from list" -l use-yarnrc -d 'specifies a yarnrc file that Yarn should use (.yarnrc only, not .npmrc) (default: )' -r
 complete -c yarn -n "__fish_seen_subcommand_from list" -l verbose -d 'output verbose messages on internal operations'
 complete -c yarn -n "__fish_seen_subcommand_from list" -l offline -d 'trigger an error if any required dependencies are not available in local cache'
 complete -c yarn -n "__fish_seen_subcommand_from list" -l prefer-offline -d 'use network only if dependencies are not available in local cache'
@@ -1032,11 +1032,11 @@ complete -c yarn -n "__fish_seen_subcommand_from list" -l pure-lockfile -d 'don\
 complete -c yarn -n "__fish_seen_subcommand_from list" -l frozen-lockfile -d 'don\'t generate a lockfile and fail if an update is needed'
 complete -c yarn -n "__fish_seen_subcommand_from list" -l update-checksums -d 'update package checksums from current repository'
 complete -c yarn -n "__fish_seen_subcommand_from list" -l link-duplicates -d 'create hardlinks to the repeated modules in node_modules'
-complete -c yarn -n "__fish_seen_subcommand_from list" -l link-folder -d 'specify a custom folder to store global links' -x
-complete -c yarn -n "__fish_seen_subcommand_from list" -l global-folder -d 'specify a custom folder to store global packages' -x
-complete -c yarn -n "__fish_seen_subcommand_from list" -l modules-folder -d 'rather than installing modules into the node_modules folder relative to the cwd, output them here' -x
-complete -c yarn -n "__fish_seen_subcommand_from list" -l preferred-cache-folder -d 'specify a custom folder to store the yarn cache if possible' -x
-complete -c yarn -n "__fish_seen_subcommand_from list" -l cache-folder -d 'specify a custom folder that must be used to store the yarn cache' -x
+complete -c yarn -n "__fish_seen_subcommand_from list" -l link-folder -d 'specify a custom folder to store global links' -r
+complete -c yarn -n "__fish_seen_subcommand_from list" -l global-folder -d 'specify a custom folder to store global packages' -r
+complete -c yarn -n "__fish_seen_subcommand_from list" -l modules-folder -d 'rather than installing modules into the node_modules folder relative to the cwd, output them here' -r
+complete -c yarn -n "__fish_seen_subcommand_from list" -l preferred-cache-folder -d 'specify a custom folder to store the yarn cache if possible' -r
+complete -c yarn -n "__fish_seen_subcommand_from list" -l cache-folder -d 'specify a custom folder that must be used to store the yarn cache' -r
 complete -c yarn -n "__fish_seen_subcommand_from list" -l mutex -d 'use a mutex to ensure only one yarn instance is executing' -x
 complete -c yarn -n "__fish_seen_subcommand_from list" -l emoji -d 'enable emoji in output (default: false)' -x
 complete -c yarn -n "__fish_seen_subcommand_from list" -s s -l silent -d 'skip Yarn console logs, other types of logs (script output) will be printed'
@@ -1059,7 +1059,7 @@ complete -c yarn -n "__fish_seen_subcommand_from list" -s h -l help -d 'output u
 
 complete -c yarn -n "__fish_seen_subcommand_from login" -s v -l version -d 'output the version number'
 complete -c yarn -n "__fish_seen_subcommand_from login" -l no-default-rc -d 'prevent Yarn from automatically detecting yarnrc and npmrc files'
-complete -c yarn -n "__fish_seen_subcommand_from login" -l use-yarnrc -d 'specifies a yarnrc file that Yarn should use (.yarnrc only, not .npmrc) (default: )' -x
+complete -c yarn -n "__fish_seen_subcommand_from login" -l use-yarnrc -d 'specifies a yarnrc file that Yarn should use (.yarnrc only, not .npmrc) (default: )' -r
 complete -c yarn -n "__fish_seen_subcommand_from login" -l verbose -d 'output verbose messages on internal operations'
 complete -c yarn -n "__fish_seen_subcommand_from login" -l offline -d 'trigger an error if any required dependencies are not available in local cache'
 complete -c yarn -n "__fish_seen_subcommand_from login" -l prefer-offline -d 'use network only if dependencies are not available in local cache'
@@ -1083,11 +1083,11 @@ complete -c yarn -n "__fish_seen_subcommand_from login" -l pure-lockfile -d 'don
 complete -c yarn -n "__fish_seen_subcommand_from login" -l frozen-lockfile -d 'don\'t generate a lockfile and fail if an update is needed'
 complete -c yarn -n "__fish_seen_subcommand_from login" -l update-checksums -d 'update package checksums from current repository'
 complete -c yarn -n "__fish_seen_subcommand_from login" -l link-duplicates -d 'create hardlinks to the repeated modules in node_modules'
-complete -c yarn -n "__fish_seen_subcommand_from login" -l link-folder -d 'specify a custom folder to store global links' -x
-complete -c yarn -n "__fish_seen_subcommand_from login" -l global-folder -d 'specify a custom folder to store global packages' -x
-complete -c yarn -n "__fish_seen_subcommand_from login" -l modules-folder -d 'rather than installing modules into the node_modules folder relative to the cwd, output them here' -x
-complete -c yarn -n "__fish_seen_subcommand_from login" -l preferred-cache-folder -d 'specify a custom folder to store the yarn cache if possible' -x
-complete -c yarn -n "__fish_seen_subcommand_from login" -l cache-folder -d 'specify a custom folder that must be used to store the yarn cache' -x
+complete -c yarn -n "__fish_seen_subcommand_from login" -l link-folder -d 'specify a custom folder to store global links' -r
+complete -c yarn -n "__fish_seen_subcommand_from login" -l global-folder -d 'specify a custom folder to store global packages' -r
+complete -c yarn -n "__fish_seen_subcommand_from login" -l modules-folder -d 'rather than installing modules into the node_modules folder relative to the cwd, output them here' -r
+complete -c yarn -n "__fish_seen_subcommand_from login" -l preferred-cache-folder -d 'specify a custom folder to store the yarn cache if possible' -r
+complete -c yarn -n "__fish_seen_subcommand_from login" -l cache-folder -d 'specify a custom folder that must be used to store the yarn cache' -r
 complete -c yarn -n "__fish_seen_subcommand_from login" -l mutex -d 'use a mutex to ensure only one yarn instance is executing' -x
 complete -c yarn -n "__fish_seen_subcommand_from login" -l emoji -d 'enable emoji in output (default: false)' -x
 complete -c yarn -n "__fish_seen_subcommand_from login" -s s -l silent -d 'skip Yarn console logs, other types of logs (script output) will be printed'
@@ -1108,7 +1108,7 @@ complete -c yarn -n "__fish_seen_subcommand_from login" -s h -l help -d 'output 
 
 complete -c yarn -n "__fish_seen_subcommand_from logout" -s v -l version -d 'output the version number'
 complete -c yarn -n "__fish_seen_subcommand_from logout" -l no-default-rc -d 'prevent Yarn from automatically detecting yarnrc and npmrc files'
-complete -c yarn -n "__fish_seen_subcommand_from logout" -l use-yarnrc -d 'specifies a yarnrc file that Yarn should use (.yarnrc only, not .npmrc) (default: )' -x
+complete -c yarn -n "__fish_seen_subcommand_from logout" -l use-yarnrc -d 'specifies a yarnrc file that Yarn should use (.yarnrc only, not .npmrc) (default: )' -r
 complete -c yarn -n "__fish_seen_subcommand_from logout" -l verbose -d 'output verbose messages on internal operations'
 complete -c yarn -n "__fish_seen_subcommand_from logout" -l offline -d 'trigger an error if any required dependencies are not available in local cache'
 complete -c yarn -n "__fish_seen_subcommand_from logout" -l prefer-offline -d 'use network only if dependencies are not available in local cache'
@@ -1132,11 +1132,11 @@ complete -c yarn -n "__fish_seen_subcommand_from logout" -l pure-lockfile -d 'do
 complete -c yarn -n "__fish_seen_subcommand_from logout" -l frozen-lockfile -d 'don\'t generate a lockfile and fail if an update is needed'
 complete -c yarn -n "__fish_seen_subcommand_from logout" -l update-checksums -d 'update package checksums from current repository'
 complete -c yarn -n "__fish_seen_subcommand_from logout" -l link-duplicates -d 'create hardlinks to the repeated modules in node_modules'
-complete -c yarn -n "__fish_seen_subcommand_from logout" -l link-folder -d 'specify a custom folder to store global links' -x
-complete -c yarn -n "__fish_seen_subcommand_from logout" -l global-folder -d 'specify a custom folder to store global packages' -x
-complete -c yarn -n "__fish_seen_subcommand_from logout" -l modules-folder -d 'rather than installing modules into the node_modules folder relative to the cwd, output them here' -x
-complete -c yarn -n "__fish_seen_subcommand_from logout" -l preferred-cache-folder -d 'specify a custom folder to store the yarn cache if possible' -x
-complete -c yarn -n "__fish_seen_subcommand_from logout" -l cache-folder -d 'specify a custom folder that must be used to store the yarn cache' -x
+complete -c yarn -n "__fish_seen_subcommand_from logout" -l link-folder -d 'specify a custom folder to store global links' -r
+complete -c yarn -n "__fish_seen_subcommand_from logout" -l global-folder -d 'specify a custom folder to store global packages' -r
+complete -c yarn -n "__fish_seen_subcommand_from logout" -l modules-folder -d 'rather than installing modules into the node_modules folder relative to the cwd, output them here' -r
+complete -c yarn -n "__fish_seen_subcommand_from logout" -l preferred-cache-folder -d 'specify a custom folder to store the yarn cache if possible' -r
+complete -c yarn -n "__fish_seen_subcommand_from logout" -l cache-folder -d 'specify a custom folder that must be used to store the yarn cache' -r
 complete -c yarn -n "__fish_seen_subcommand_from logout" -l mutex -d 'use a mutex to ensure only one yarn instance is executing' -x
 complete -c yarn -n "__fish_seen_subcommand_from logout" -l emoji -d 'enable emoji in output (default: false)' -x
 complete -c yarn -n "__fish_seen_subcommand_from logout" -s s -l silent -d 'skip Yarn console logs, other types of logs (script output) will be printed'
@@ -1157,7 +1157,7 @@ complete -c yarn -n "__fish_seen_subcommand_from logout" -s h -l help -d 'output
 
 complete -c yarn -n "__fish_seen_subcommand_from node" -s v -l version -d 'output the version number'
 complete -c yarn -n "__fish_seen_subcommand_from node" -l no-default-rc -d 'prevent Yarn from automatically detecting yarnrc and npmrc files'
-complete -c yarn -n "__fish_seen_subcommand_from node" -l use-yarnrc -d 'specifies a yarnrc file that Yarn should use (.yarnrc only, not .npmrc) (default: )' -x
+complete -c yarn -n "__fish_seen_subcommand_from node" -l use-yarnrc -d 'specifies a yarnrc file that Yarn should use (.yarnrc only, not .npmrc) (default: )' -r
 complete -c yarn -n "__fish_seen_subcommand_from node" -l verbose -d 'output verbose messages on internal operations'
 complete -c yarn -n "__fish_seen_subcommand_from node" -l offline -d 'trigger an error if any required dependencies are not available in local cache'
 complete -c yarn -n "__fish_seen_subcommand_from node" -l prefer-offline -d 'use network only if dependencies are not available in local cache'
@@ -1181,11 +1181,11 @@ complete -c yarn -n "__fish_seen_subcommand_from node" -l pure-lockfile -d 'don\
 complete -c yarn -n "__fish_seen_subcommand_from node" -l frozen-lockfile -d 'don\'t generate a lockfile and fail if an update is needed'
 complete -c yarn -n "__fish_seen_subcommand_from node" -l update-checksums -d 'update package checksums from current repository'
 complete -c yarn -n "__fish_seen_subcommand_from node" -l link-duplicates -d 'create hardlinks to the repeated modules in node_modules'
-complete -c yarn -n "__fish_seen_subcommand_from node" -l link-folder -d 'specify a custom folder to store global links' -x
-complete -c yarn -n "__fish_seen_subcommand_from node" -l global-folder -d 'specify a custom folder to store global packages' -x
-complete -c yarn -n "__fish_seen_subcommand_from node" -l modules-folder -d 'rather than installing modules into the node_modules folder relative to the cwd, output them here' -x
-complete -c yarn -n "__fish_seen_subcommand_from node" -l preferred-cache-folder -d 'specify a custom folder to store the yarn cache if possible' -x
-complete -c yarn -n "__fish_seen_subcommand_from node" -l cache-folder -d 'specify a custom folder that must be used to store the yarn cache' -x
+complete -c yarn -n "__fish_seen_subcommand_from node" -l link-folder -d 'specify a custom folder to store global links' -r
+complete -c yarn -n "__fish_seen_subcommand_from node" -l global-folder -d 'specify a custom folder to store global packages' -r
+complete -c yarn -n "__fish_seen_subcommand_from node" -l modules-folder -d 'rather than installing modules into the node_modules folder relative to the cwd, output them here' -r
+complete -c yarn -n "__fish_seen_subcommand_from node" -l preferred-cache-folder -d 'specify a custom folder to store the yarn cache if possible' -r
+complete -c yarn -n "__fish_seen_subcommand_from node" -l cache-folder -d 'specify a custom folder that must be used to store the yarn cache' -r
 complete -c yarn -n "__fish_seen_subcommand_from node" -l mutex -d 'use a mutex to ensure only one yarn instance is executing' -x
 complete -c yarn -n "__fish_seen_subcommand_from node" -l emoji -d 'enable emoji in output (default: false)' -x
 complete -c yarn -n "__fish_seen_subcommand_from node" -s s -l silent -d 'skip Yarn console logs, other types of logs (script output) will be printed'
@@ -1200,14 +1200,14 @@ complete -c yarn -n "__fish_seen_subcommand_from node" -l scripts-prepend-node-p
 complete -c yarn -n "__fish_seen_subcommand_from node" -l no-node-version-check -d 'do not warn when using a potentially unsupported Node version'
 complete -c yarn -n "__fish_seen_subcommand_from node" -l focus -d 'Focus on a single workspace by installing remote copies of its sibling workspaces.'
 complete -c yarn -n "__fish_seen_subcommand_from node" -l otp -d 'one-time password for two factor authentication' -x
-complete -c yarn -n "__fish_seen_subcommand_from node" -l into -d 'Sets the cwd to the specified location' -x
+complete -c yarn -n "__fish_seen_subcommand_from node" -l into -d 'Sets the cwd to the specified location' -r
 complete -c yarn -n "__fish_seen_subcommand_from node" -s h -l help -d 'output usage information'
 
 
 
 complete -c yarn -n "__fish_seen_subcommand_from outdated" -s v -l version -d 'output the version number'
 complete -c yarn -n "__fish_seen_subcommand_from outdated" -l no-default-rc -d 'prevent Yarn from automatically detecting yarnrc and npmrc files'
-complete -c yarn -n "__fish_seen_subcommand_from outdated" -l use-yarnrc -d 'specifies a yarnrc file that Yarn should use (.yarnrc only, not .npmrc) (default: )' -x
+complete -c yarn -n "__fish_seen_subcommand_from outdated" -l use-yarnrc -d 'specifies a yarnrc file that Yarn should use (.yarnrc only, not .npmrc) (default: )' -r
 complete -c yarn -n "__fish_seen_subcommand_from outdated" -l verbose -d 'output verbose messages on internal operations'
 complete -c yarn -n "__fish_seen_subcommand_from outdated" -l offline -d 'trigger an error if any required dependencies are not available in local cache'
 complete -c yarn -n "__fish_seen_subcommand_from outdated" -l prefer-offline -d 'use network only if dependencies are not available in local cache'
@@ -1231,11 +1231,11 @@ complete -c yarn -n "__fish_seen_subcommand_from outdated" -l pure-lockfile -d '
 complete -c yarn -n "__fish_seen_subcommand_from outdated" -l frozen-lockfile -d 'don\'t generate a lockfile and fail if an update is needed'
 complete -c yarn -n "__fish_seen_subcommand_from outdated" -l update-checksums -d 'update package checksums from current repository'
 complete -c yarn -n "__fish_seen_subcommand_from outdated" -l link-duplicates -d 'create hardlinks to the repeated modules in node_modules'
-complete -c yarn -n "__fish_seen_subcommand_from outdated" -l link-folder -d 'specify a custom folder to store global links' -x
-complete -c yarn -n "__fish_seen_subcommand_from outdated" -l global-folder -d 'specify a custom folder to store global packages' -x
-complete -c yarn -n "__fish_seen_subcommand_from outdated" -l modules-folder -d 'rather than installing modules into the node_modules folder relative to the cwd, output them here' -x
-complete -c yarn -n "__fish_seen_subcommand_from outdated" -l preferred-cache-folder -d 'specify a custom folder to store the yarn cache if possible' -x
-complete -c yarn -n "__fish_seen_subcommand_from outdated" -l cache-folder -d 'specify a custom folder that must be used to store the yarn cache' -x
+complete -c yarn -n "__fish_seen_subcommand_from outdated" -l link-folder -d 'specify a custom folder to store global links' -r
+complete -c yarn -n "__fish_seen_subcommand_from outdated" -l global-folder -d 'specify a custom folder to store global packages' -r
+complete -c yarn -n "__fish_seen_subcommand_from outdated" -l modules-folder -d 'rather than installing modules into the node_modules folder relative to the cwd, output them here' -r
+complete -c yarn -n "__fish_seen_subcommand_from outdated" -l preferred-cache-folder -d 'specify a custom folder to store the yarn cache if possible' -r
+complete -c yarn -n "__fish_seen_subcommand_from outdated" -l cache-folder -d 'specify a custom folder that must be used to store the yarn cache' -r
 complete -c yarn -n "__fish_seen_subcommand_from outdated" -l mutex -d 'use a mutex to ensure only one yarn instance is executing' -x
 complete -c yarn -n "__fish_seen_subcommand_from outdated" -l emoji -d 'enable emoji in output (default: false)' -x
 complete -c yarn -n "__fish_seen_subcommand_from outdated" -s s -l silent -d 'skip Yarn console logs, other types of logs (script output) will be printed'
@@ -1256,7 +1256,7 @@ complete -c yarn -n "__fish_seen_subcommand_from outdated" -s h -l help -d 'outp
 
 complete -c yarn -n "__fish_seen_subcommand_from owner" -s v -l version -d 'output the version number'
 complete -c yarn -n "__fish_seen_subcommand_from owner" -l no-default-rc -d 'prevent Yarn from automatically detecting yarnrc and npmrc files'
-complete -c yarn -n "__fish_seen_subcommand_from owner" -l use-yarnrc -d 'specifies a yarnrc file that Yarn should use (.yarnrc only, not .npmrc) (default: )' -x
+complete -c yarn -n "__fish_seen_subcommand_from owner" -l use-yarnrc -d 'specifies a yarnrc file that Yarn should use (.yarnrc only, not .npmrc) (default: )' -r
 complete -c yarn -n "__fish_seen_subcommand_from owner" -l verbose -d 'output verbose messages on internal operations'
 complete -c yarn -n "__fish_seen_subcommand_from owner" -l offline -d 'trigger an error if any required dependencies are not available in local cache'
 complete -c yarn -n "__fish_seen_subcommand_from owner" -l prefer-offline -d 'use network only if dependencies are not available in local cache'
@@ -1280,11 +1280,11 @@ complete -c yarn -n "__fish_seen_subcommand_from owner" -l pure-lockfile -d 'don
 complete -c yarn -n "__fish_seen_subcommand_from owner" -l frozen-lockfile -d 'don\'t generate a lockfile and fail if an update is needed'
 complete -c yarn -n "__fish_seen_subcommand_from owner" -l update-checksums -d 'update package checksums from current repository'
 complete -c yarn -n "__fish_seen_subcommand_from owner" -l link-duplicates -d 'create hardlinks to the repeated modules in node_modules'
-complete -c yarn -n "__fish_seen_subcommand_from owner" -l link-folder -d 'specify a custom folder to store global links' -x
-complete -c yarn -n "__fish_seen_subcommand_from owner" -l global-folder -d 'specify a custom folder to store global packages' -x
-complete -c yarn -n "__fish_seen_subcommand_from owner" -l modules-folder -d 'rather than installing modules into the node_modules folder relative to the cwd, output them here' -x
-complete -c yarn -n "__fish_seen_subcommand_from owner" -l preferred-cache-folder -d 'specify a custom folder to store the yarn cache if possible' -x
-complete -c yarn -n "__fish_seen_subcommand_from owner" -l cache-folder -d 'specify a custom folder that must be used to store the yarn cache' -x
+complete -c yarn -n "__fish_seen_subcommand_from owner" -l link-folder -d 'specify a custom folder to store global links' -r
+complete -c yarn -n "__fish_seen_subcommand_from owner" -l global-folder -d 'specify a custom folder to store global packages' -r
+complete -c yarn -n "__fish_seen_subcommand_from owner" -l modules-folder -d 'rather than installing modules into the node_modules folder relative to the cwd, output them here' -r
+complete -c yarn -n "__fish_seen_subcommand_from owner" -l preferred-cache-folder -d 'specify a custom folder to store the yarn cache if possible' -r
+complete -c yarn -n "__fish_seen_subcommand_from owner" -l cache-folder -d 'specify a custom folder that must be used to store the yarn cache' -r
 complete -c yarn -n "__fish_seen_subcommand_from owner" -l mutex -d 'use a mutex to ensure only one yarn instance is executing' -x
 complete -c yarn -n "__fish_seen_subcommand_from owner" -l emoji -d 'enable emoji in output (default: false)' -x
 complete -c yarn -n "__fish_seen_subcommand_from owner" -s s -l silent -d 'skip Yarn console logs, other types of logs (script output) will be printed'
@@ -1305,7 +1305,7 @@ complete -c yarn -n "__fish_seen_subcommand_from owner" -s h -l help -d 'output 
 
 complete -c yarn -n "__fish_seen_subcommand_from pack" -s v -l version -d 'output the version number'
 complete -c yarn -n "__fish_seen_subcommand_from pack" -l no-default-rc -d 'prevent Yarn from automatically detecting yarnrc and npmrc files'
-complete -c yarn -n "__fish_seen_subcommand_from pack" -l use-yarnrc -d 'specifies a yarnrc file that Yarn should use (.yarnrc only, not .npmrc) (default: )' -x
+complete -c yarn -n "__fish_seen_subcommand_from pack" -l use-yarnrc -d 'specifies a yarnrc file that Yarn should use (.yarnrc only, not .npmrc) (default: )' -r
 complete -c yarn -n "__fish_seen_subcommand_from pack" -l verbose -d 'output verbose messages on internal operations'
 complete -c yarn -n "__fish_seen_subcommand_from pack" -l offline -d 'trigger an error if any required dependencies are not available in local cache'
 complete -c yarn -n "__fish_seen_subcommand_from pack" -l prefer-offline -d 'use network only if dependencies are not available in local cache'
@@ -1329,11 +1329,11 @@ complete -c yarn -n "__fish_seen_subcommand_from pack" -l pure-lockfile -d 'don\
 complete -c yarn -n "__fish_seen_subcommand_from pack" -l frozen-lockfile -d 'don\'t generate a lockfile and fail if an update is needed'
 complete -c yarn -n "__fish_seen_subcommand_from pack" -l update-checksums -d 'update package checksums from current repository'
 complete -c yarn -n "__fish_seen_subcommand_from pack" -l link-duplicates -d 'create hardlinks to the repeated modules in node_modules'
-complete -c yarn -n "__fish_seen_subcommand_from pack" -l link-folder -d 'specify a custom folder to store global links' -x
-complete -c yarn -n "__fish_seen_subcommand_from pack" -l global-folder -d 'specify a custom folder to store global packages' -x
-complete -c yarn -n "__fish_seen_subcommand_from pack" -l modules-folder -d 'rather than installing modules into the node_modules folder relative to the cwd, output them here' -x
-complete -c yarn -n "__fish_seen_subcommand_from pack" -l preferred-cache-folder -d 'specify a custom folder to store the yarn cache if possible' -x
-complete -c yarn -n "__fish_seen_subcommand_from pack" -l cache-folder -d 'specify a custom folder that must be used to store the yarn cache' -x
+complete -c yarn -n "__fish_seen_subcommand_from pack" -l link-folder -d 'specify a custom folder to store global links' -r
+complete -c yarn -n "__fish_seen_subcommand_from pack" -l global-folder -d 'specify a custom folder to store global packages' -r
+complete -c yarn -n "__fish_seen_subcommand_from pack" -l modules-folder -d 'rather than installing modules into the node_modules folder relative to the cwd, output them here' -r
+complete -c yarn -n "__fish_seen_subcommand_from pack" -l preferred-cache-folder -d 'specify a custom folder to store the yarn cache if possible' -r
+complete -c yarn -n "__fish_seen_subcommand_from pack" -l cache-folder -d 'specify a custom folder that must be used to store the yarn cache' -r
 complete -c yarn -n "__fish_seen_subcommand_from pack" -l mutex -d 'use a mutex to ensure only one yarn instance is executing' -x
 complete -c yarn -n "__fish_seen_subcommand_from pack" -l emoji -d 'enable emoji in output (default: false)' -x
 complete -c yarn -n "__fish_seen_subcommand_from pack" -s s -l silent -d 'skip Yarn console logs, other types of logs (script output) will be printed'
@@ -1355,7 +1355,7 @@ complete -c yarn -n "__fish_seen_subcommand_from pack" -s h -l help -d 'output u
 
 complete -c yarn -n "__fish_seen_subcommand_from policies" -s v -l version -d 'output the version number'
 complete -c yarn -n "__fish_seen_subcommand_from policies" -l no-default-rc -d 'prevent Yarn from automatically detecting yarnrc and npmrc files'
-complete -c yarn -n "__fish_seen_subcommand_from policies" -l use-yarnrc -d 'specifies a yarnrc file that Yarn should use (.yarnrc only, not .npmrc) (default: )' -x
+complete -c yarn -n "__fish_seen_subcommand_from policies" -l use-yarnrc -d 'specifies a yarnrc file that Yarn should use (.yarnrc only, not .npmrc) (default: )' -r
 complete -c yarn -n "__fish_seen_subcommand_from policies" -l verbose -d 'output verbose messages on internal operations'
 complete -c yarn -n "__fish_seen_subcommand_from policies" -l offline -d 'trigger an error if any required dependencies are not available in local cache'
 complete -c yarn -n "__fish_seen_subcommand_from policies" -l prefer-offline -d 'use network only if dependencies are not available in local cache'
@@ -1379,11 +1379,11 @@ complete -c yarn -n "__fish_seen_subcommand_from policies" -l pure-lockfile -d '
 complete -c yarn -n "__fish_seen_subcommand_from policies" -l frozen-lockfile -d 'don\'t generate a lockfile and fail if an update is needed'
 complete -c yarn -n "__fish_seen_subcommand_from policies" -l update-checksums -d 'update package checksums from current repository'
 complete -c yarn -n "__fish_seen_subcommand_from policies" -l link-duplicates -d 'create hardlinks to the repeated modules in node_modules'
-complete -c yarn -n "__fish_seen_subcommand_from policies" -l link-folder -d 'specify a custom folder to store global links' -x
-complete -c yarn -n "__fish_seen_subcommand_from policies" -l global-folder -d 'specify a custom folder to store global packages' -x
-complete -c yarn -n "__fish_seen_subcommand_from policies" -l modules-folder -d 'rather than installing modules into the node_modules folder relative to the cwd, output them here' -x
-complete -c yarn -n "__fish_seen_subcommand_from policies" -l preferred-cache-folder -d 'specify a custom folder to store the yarn cache if possible' -x
-complete -c yarn -n "__fish_seen_subcommand_from policies" -l cache-folder -d 'specify a custom folder that must be used to store the yarn cache' -x
+complete -c yarn -n "__fish_seen_subcommand_from policies" -l link-folder -d 'specify a custom folder to store global links' -r
+complete -c yarn -n "__fish_seen_subcommand_from policies" -l global-folder -d 'specify a custom folder to store global packages' -r
+complete -c yarn -n "__fish_seen_subcommand_from policies" -l modules-folder -d 'rather than installing modules into the node_modules folder relative to the cwd, output them here' -r
+complete -c yarn -n "__fish_seen_subcommand_from policies" -l preferred-cache-folder -d 'specify a custom folder to store the yarn cache if possible' -r
+complete -c yarn -n "__fish_seen_subcommand_from policies" -l cache-folder -d 'specify a custom folder that must be used to store the yarn cache' -r
 complete -c yarn -n "__fish_seen_subcommand_from policies" -l mutex -d 'use a mutex to ensure only one yarn instance is executing' -x
 complete -c yarn -n "__fish_seen_subcommand_from policies" -l emoji -d 'enable emoji in output (default: false)' -x
 complete -c yarn -n "__fish_seen_subcommand_from policies" -s s -l silent -d 'skip Yarn console logs, other types of logs (script output) will be printed'
@@ -1404,7 +1404,7 @@ complete -c yarn -n "__fish_seen_subcommand_from policies" -s h -l help -d 'outp
 
 complete -c yarn -n "__fish_seen_subcommand_from publish" -s v -l version -d 'output the version number'
 complete -c yarn -n "__fish_seen_subcommand_from publish" -l no-default-rc -d 'prevent Yarn from automatically detecting yarnrc and npmrc files'
-complete -c yarn -n "__fish_seen_subcommand_from publish" -l use-yarnrc -d 'specifies a yarnrc file that Yarn should use (.yarnrc only, not .npmrc) (default: )' -x
+complete -c yarn -n "__fish_seen_subcommand_from publish" -l use-yarnrc -d 'specifies a yarnrc file that Yarn should use (.yarnrc only, not .npmrc) (default: )' -r
 complete -c yarn -n "__fish_seen_subcommand_from publish" -l verbose -d 'output verbose messages on internal operations'
 complete -c yarn -n "__fish_seen_subcommand_from publish" -l offline -d 'trigger an error if any required dependencies are not available in local cache'
 complete -c yarn -n "__fish_seen_subcommand_from publish" -l prefer-offline -d 'use network only if dependencies are not available in local cache'
@@ -1428,11 +1428,11 @@ complete -c yarn -n "__fish_seen_subcommand_from publish" -l pure-lockfile -d 'd
 complete -c yarn -n "__fish_seen_subcommand_from publish" -l frozen-lockfile -d 'don\'t generate a lockfile and fail if an update is needed'
 complete -c yarn -n "__fish_seen_subcommand_from publish" -l update-checksums -d 'update package checksums from current repository'
 complete -c yarn -n "__fish_seen_subcommand_from publish" -l link-duplicates -d 'create hardlinks to the repeated modules in node_modules'
-complete -c yarn -n "__fish_seen_subcommand_from publish" -l link-folder -d 'specify a custom folder to store global links' -x
-complete -c yarn -n "__fish_seen_subcommand_from publish" -l global-folder -d 'specify a custom folder to store global packages' -x
-complete -c yarn -n "__fish_seen_subcommand_from publish" -l modules-folder -d 'rather than installing modules into the node_modules folder relative to the cwd, output them here' -x
-complete -c yarn -n "__fish_seen_subcommand_from publish" -l preferred-cache-folder -d 'specify a custom folder to store the yarn cache if possible' -x
-complete -c yarn -n "__fish_seen_subcommand_from publish" -l cache-folder -d 'specify a custom folder that must be used to store the yarn cache' -x
+complete -c yarn -n "__fish_seen_subcommand_from publish" -l link-folder -d 'specify a custom folder to store global links' -r
+complete -c yarn -n "__fish_seen_subcommand_from publish" -l global-folder -d 'specify a custom folder to store global packages' -r
+complete -c yarn -n "__fish_seen_subcommand_from publish" -l modules-folder -d 'rather than installing modules into the node_modules folder relative to the cwd, output them here' -r
+complete -c yarn -n "__fish_seen_subcommand_from publish" -l preferred-cache-folder -d 'specify a custom folder to store the yarn cache if possible' -r
+complete -c yarn -n "__fish_seen_subcommand_from publish" -l cache-folder -d 'specify a custom folder that must be used to store the yarn cache' -r
 complete -c yarn -n "__fish_seen_subcommand_from publish" -l mutex -d 'use a mutex to ensure only one yarn instance is executing' -x
 complete -c yarn -n "__fish_seen_subcommand_from publish" -l emoji -d 'enable emoji in output (default: false)' -x
 complete -c yarn -n "__fish_seen_subcommand_from publish" -s s -l silent -d 'skip Yarn console logs, other types of logs (script output) will be printed'
@@ -1467,7 +1467,7 @@ complete -c yarn -n "__fish_seen_subcommand_from publish" -s h -l help -d 'outpu
 
 complete -c yarn -n "__fish_seen_subcommand_from remove" -s v -l version -d 'output the version number'
 complete -c yarn -n "__fish_seen_subcommand_from remove" -l no-default-rc -d 'prevent Yarn from automatically detecting yarnrc and npmrc files'
-complete -c yarn -n "__fish_seen_subcommand_from remove" -l use-yarnrc -d 'specifies a yarnrc file that Yarn should use (.yarnrc only, not .npmrc) (default: )' -x
+complete -c yarn -n "__fish_seen_subcommand_from remove" -l use-yarnrc -d 'specifies a yarnrc file that Yarn should use (.yarnrc only, not .npmrc) (default: )' -r
 complete -c yarn -n "__fish_seen_subcommand_from remove" -l verbose -d 'output verbose messages on internal operations'
 complete -c yarn -n "__fish_seen_subcommand_from remove" -l offline -d 'trigger an error if any required dependencies are not available in local cache'
 complete -c yarn -n "__fish_seen_subcommand_from remove" -l prefer-offline -d 'use network only if dependencies are not available in local cache'
@@ -1491,11 +1491,11 @@ complete -c yarn -n "__fish_seen_subcommand_from remove" -l pure-lockfile -d 'do
 complete -c yarn -n "__fish_seen_subcommand_from remove" -l frozen-lockfile -d 'don\'t generate a lockfile and fail if an update is needed'
 complete -c yarn -n "__fish_seen_subcommand_from remove" -l update-checksums -d 'update package checksums from current repository'
 complete -c yarn -n "__fish_seen_subcommand_from remove" -l link-duplicates -d 'create hardlinks to the repeated modules in node_modules'
-complete -c yarn -n "__fish_seen_subcommand_from remove" -l link-folder -d 'specify a custom folder to store global links' -x
-complete -c yarn -n "__fish_seen_subcommand_from remove" -l global-folder -d 'specify a custom folder to store global packages' -x
-complete -c yarn -n "__fish_seen_subcommand_from remove" -l modules-folder -d 'rather than installing modules into the node_modules folder relative to the cwd, output them here' -x
-complete -c yarn -n "__fish_seen_subcommand_from remove" -l preferred-cache-folder -d 'specify a custom folder to store the yarn cache if possible' -x
-complete -c yarn -n "__fish_seen_subcommand_from remove" -l cache-folder -d 'specify a custom folder that must be used to store the yarn cache' -x
+complete -c yarn -n "__fish_seen_subcommand_from remove" -l link-folder -d 'specify a custom folder to store global links' -r
+complete -c yarn -n "__fish_seen_subcommand_from remove" -l global-folder -d 'specify a custom folder to store global packages' -r
+complete -c yarn -n "__fish_seen_subcommand_from remove" -l modules-folder -d 'rather than installing modules into the node_modules folder relative to the cwd, output them here' -r
+complete -c yarn -n "__fish_seen_subcommand_from remove" -l preferred-cache-folder -d 'specify a custom folder to store the yarn cache if possible' -r
+complete -c yarn -n "__fish_seen_subcommand_from remove" -l cache-folder -d 'specify a custom folder that must be used to store the yarn cache' -r
 complete -c yarn -n "__fish_seen_subcommand_from remove" -l mutex -d 'use a mutex to ensure only one yarn instance is executing' -x
 complete -c yarn -n "__fish_seen_subcommand_from remove" -l emoji -d 'enable emoji in output (default: false)' -x
 complete -c yarn -n "__fish_seen_subcommand_from remove" -s s -l silent -d 'skip Yarn console logs, other types of logs (script output) will be printed'
@@ -1517,7 +1517,7 @@ complete -c yarn -n "__fish_seen_subcommand_from remove" -s h -l help -d 'output
 
 complete -c yarn -n "__fish_seen_subcommand_from run" -s v -l version -d 'output the version number'
 complete -c yarn -n "__fish_seen_subcommand_from run" -l no-default-rc -d 'prevent Yarn from automatically detecting yarnrc and npmrc files'
-complete -c yarn -n "__fish_seen_subcommand_from run" -l use-yarnrc -d 'specifies a yarnrc file that Yarn should use (.yarnrc only, not .npmrc) (default: )' -x
+complete -c yarn -n "__fish_seen_subcommand_from run" -l use-yarnrc -d 'specifies a yarnrc file that Yarn should use (.yarnrc only, not .npmrc) (default: )' -r
 complete -c yarn -n "__fish_seen_subcommand_from run" -l verbose -d 'output verbose messages on internal operations'
 complete -c yarn -n "__fish_seen_subcommand_from run" -l offline -d 'trigger an error if any required dependencies are not available in local cache'
 complete -c yarn -n "__fish_seen_subcommand_from run" -l prefer-offline -d 'use network only if dependencies are not available in local cache'
@@ -1541,11 +1541,11 @@ complete -c yarn -n "__fish_seen_subcommand_from run" -l pure-lockfile -d 'don\'
 complete -c yarn -n "__fish_seen_subcommand_from run" -l frozen-lockfile -d 'don\'t generate a lockfile and fail if an update is needed'
 complete -c yarn -n "__fish_seen_subcommand_from run" -l update-checksums -d 'update package checksums from current repository'
 complete -c yarn -n "__fish_seen_subcommand_from run" -l link-duplicates -d 'create hardlinks to the repeated modules in node_modules'
-complete -c yarn -n "__fish_seen_subcommand_from run" -l link-folder -d 'specify a custom folder to store global links' -x
-complete -c yarn -n "__fish_seen_subcommand_from run" -l global-folder -d 'specify a custom folder to store global packages' -x
-complete -c yarn -n "__fish_seen_subcommand_from run" -l modules-folder -d 'rather than installing modules into the node_modules folder relative to the cwd, output them here' -x
-complete -c yarn -n "__fish_seen_subcommand_from run" -l preferred-cache-folder -d 'specify a custom folder to store the yarn cache if possible' -x
-complete -c yarn -n "__fish_seen_subcommand_from run" -l cache-folder -d 'specify a custom folder that must be used to store the yarn cache' -x
+complete -c yarn -n "__fish_seen_subcommand_from run" -l link-folder -d 'specify a custom folder to store global links' -r
+complete -c yarn -n "__fish_seen_subcommand_from run" -l global-folder -d 'specify a custom folder to store global packages' -r
+complete -c yarn -n "__fish_seen_subcommand_from run" -l modules-folder -d 'rather than installing modules into the node_modules folder relative to the cwd, output them here' -r
+complete -c yarn -n "__fish_seen_subcommand_from run" -l preferred-cache-folder -d 'specify a custom folder to store the yarn cache if possible' -r
+complete -c yarn -n "__fish_seen_subcommand_from run" -l cache-folder -d 'specify a custom folder that must be used to store the yarn cache' -r
 complete -c yarn -n "__fish_seen_subcommand_from run" -l mutex -d 'use a mutex to ensure only one yarn instance is executing' -x
 complete -c yarn -n "__fish_seen_subcommand_from run" -l emoji -d 'enable emoji in output (default: false)' -x
 complete -c yarn -n "__fish_seen_subcommand_from run" -s s -l silent -d 'skip Yarn console logs, other types of logs (script output) will be printed'
@@ -1566,7 +1566,7 @@ complete -c yarn -n "__fish_seen_subcommand_from run" -s h -l help -d 'output us
 
 complete -c yarn -n "__fish_seen_subcommand_from tag" -s v -l version -d 'output the version number'
 complete -c yarn -n "__fish_seen_subcommand_from tag" -l no-default-rc -d 'prevent Yarn from automatically detecting yarnrc and npmrc files'
-complete -c yarn -n "__fish_seen_subcommand_from tag" -l use-yarnrc -d 'specifies a yarnrc file that Yarn should use (.yarnrc only, not .npmrc) (default: )' -x
+complete -c yarn -n "__fish_seen_subcommand_from tag" -l use-yarnrc -d 'specifies a yarnrc file that Yarn should use (.yarnrc only, not .npmrc) (default: )' -r
 complete -c yarn -n "__fish_seen_subcommand_from tag" -l verbose -d 'output verbose messages on internal operations'
 complete -c yarn -n "__fish_seen_subcommand_from tag" -l offline -d 'trigger an error if any required dependencies are not available in local cache'
 complete -c yarn -n "__fish_seen_subcommand_from tag" -l prefer-offline -d 'use network only if dependencies are not available in local cache'
@@ -1590,11 +1590,11 @@ complete -c yarn -n "__fish_seen_subcommand_from tag" -l pure-lockfile -d 'don\'
 complete -c yarn -n "__fish_seen_subcommand_from tag" -l frozen-lockfile -d 'don\'t generate a lockfile and fail if an update is needed'
 complete -c yarn -n "__fish_seen_subcommand_from tag" -l update-checksums -d 'update package checksums from current repository'
 complete -c yarn -n "__fish_seen_subcommand_from tag" -l link-duplicates -d 'create hardlinks to the repeated modules in node_modules'
-complete -c yarn -n "__fish_seen_subcommand_from tag" -l link-folder -d 'specify a custom folder to store global links' -x
-complete -c yarn -n "__fish_seen_subcommand_from tag" -l global-folder -d 'specify a custom folder to store global packages' -x
-complete -c yarn -n "__fish_seen_subcommand_from tag" -l modules-folder -d 'rather than installing modules into the node_modules folder relative to the cwd, output them here' -x
-complete -c yarn -n "__fish_seen_subcommand_from tag" -l preferred-cache-folder -d 'specify a custom folder to store the yarn cache if possible' -x
-complete -c yarn -n "__fish_seen_subcommand_from tag" -l cache-folder -d 'specify a custom folder that must be used to store the yarn cache' -x
+complete -c yarn -n "__fish_seen_subcommand_from tag" -l link-folder -d 'specify a custom folder to store global links' -r
+complete -c yarn -n "__fish_seen_subcommand_from tag" -l global-folder -d 'specify a custom folder to store global packages' -r
+complete -c yarn -n "__fish_seen_subcommand_from tag" -l modules-folder -d 'rather than installing modules into the node_modules folder relative to the cwd, output them here' -r
+complete -c yarn -n "__fish_seen_subcommand_from tag" -l preferred-cache-folder -d 'specify a custom folder to store the yarn cache if possible' -r
+complete -c yarn -n "__fish_seen_subcommand_from tag" -l cache-folder -d 'specify a custom folder that must be used to store the yarn cache' -r
 complete -c yarn -n "__fish_seen_subcommand_from tag" -l mutex -d 'use a mutex to ensure only one yarn instance is executing' -x
 complete -c yarn -n "__fish_seen_subcommand_from tag" -l emoji -d 'enable emoji in output (default: false)' -x
 complete -c yarn -n "__fish_seen_subcommand_from tag" -s s -l silent -d 'skip Yarn console logs, other types of logs (script output) will be printed'
@@ -1615,7 +1615,7 @@ complete -c yarn -n "__fish_seen_subcommand_from tag" -s h -l help -d 'output us
 
 complete -c yarn -n "__fish_seen_subcommand_from team" -s v -l version -d 'output the version number'
 complete -c yarn -n "__fish_seen_subcommand_from team" -l no-default-rc -d 'prevent Yarn from automatically detecting yarnrc and npmrc files'
-complete -c yarn -n "__fish_seen_subcommand_from team" -l use-yarnrc -d 'specifies a yarnrc file that Yarn should use (.yarnrc only, not .npmrc) (default: )' -x
+complete -c yarn -n "__fish_seen_subcommand_from team" -l use-yarnrc -d 'specifies a yarnrc file that Yarn should use (.yarnrc only, not .npmrc) (default: )' -r
 complete -c yarn -n "__fish_seen_subcommand_from team" -l verbose -d 'output verbose messages on internal operations'
 complete -c yarn -n "__fish_seen_subcommand_from team" -l offline -d 'trigger an error if any required dependencies are not available in local cache'
 complete -c yarn -n "__fish_seen_subcommand_from team" -l prefer-offline -d 'use network only if dependencies are not available in local cache'
@@ -1639,11 +1639,11 @@ complete -c yarn -n "__fish_seen_subcommand_from team" -l pure-lockfile -d 'don\
 complete -c yarn -n "__fish_seen_subcommand_from team" -l frozen-lockfile -d 'don\'t generate a lockfile and fail if an update is needed'
 complete -c yarn -n "__fish_seen_subcommand_from team" -l update-checksums -d 'update package checksums from current repository'
 complete -c yarn -n "__fish_seen_subcommand_from team" -l link-duplicates -d 'create hardlinks to the repeated modules in node_modules'
-complete -c yarn -n "__fish_seen_subcommand_from team" -l link-folder -d 'specify a custom folder to store global links' -x
-complete -c yarn -n "__fish_seen_subcommand_from team" -l global-folder -d 'specify a custom folder to store global packages' -x
-complete -c yarn -n "__fish_seen_subcommand_from team" -l modules-folder -d 'rather than installing modules into the node_modules folder relative to the cwd, output them here' -x
-complete -c yarn -n "__fish_seen_subcommand_from team" -l preferred-cache-folder -d 'specify a custom folder to store the yarn cache if possible' -x
-complete -c yarn -n "__fish_seen_subcommand_from team" -l cache-folder -d 'specify a custom folder that must be used to store the yarn cache' -x
+complete -c yarn -n "__fish_seen_subcommand_from team" -l link-folder -d 'specify a custom folder to store global links' -r
+complete -c yarn -n "__fish_seen_subcommand_from team" -l global-folder -d 'specify a custom folder to store global packages' -r
+complete -c yarn -n "__fish_seen_subcommand_from team" -l modules-folder -d 'rather than installing modules into the node_modules folder relative to the cwd, output them here' -r
+complete -c yarn -n "__fish_seen_subcommand_from team" -l preferred-cache-folder -d 'specify a custom folder to store the yarn cache if possible' -r
+complete -c yarn -n "__fish_seen_subcommand_from team" -l cache-folder -d 'specify a custom folder that must be used to store the yarn cache' -r
 complete -c yarn -n "__fish_seen_subcommand_from team" -l mutex -d 'use a mutex to ensure only one yarn instance is executing' -x
 complete -c yarn -n "__fish_seen_subcommand_from team" -l emoji -d 'enable emoji in output (default: false)' -x
 complete -c yarn -n "__fish_seen_subcommand_from team" -s s -l silent -d 'skip Yarn console logs, other types of logs (script output) will be printed'
@@ -1664,7 +1664,7 @@ complete -c yarn -n "__fish_seen_subcommand_from team" -s h -l help -d 'output u
 
 complete -c yarn -n "__fish_seen_subcommand_from unlink" -s v -l version -d 'output the version number'
 complete -c yarn -n "__fish_seen_subcommand_from unlink" -l no-default-rc -d 'prevent Yarn from automatically detecting yarnrc and npmrc files'
-complete -c yarn -n "__fish_seen_subcommand_from unlink" -l use-yarnrc -d 'specifies a yarnrc file that Yarn should use (.yarnrc only, not .npmrc) (default: )' -x
+complete -c yarn -n "__fish_seen_subcommand_from unlink" -l use-yarnrc -d 'specifies a yarnrc file that Yarn should use (.yarnrc only, not .npmrc) (default: )' -r
 complete -c yarn -n "__fish_seen_subcommand_from unlink" -l verbose -d 'output verbose messages on internal operations'
 complete -c yarn -n "__fish_seen_subcommand_from unlink" -l offline -d 'trigger an error if any required dependencies are not available in local cache'
 complete -c yarn -n "__fish_seen_subcommand_from unlink" -l prefer-offline -d 'use network only if dependencies are not available in local cache'
@@ -1688,11 +1688,11 @@ complete -c yarn -n "__fish_seen_subcommand_from unlink" -l pure-lockfile -d 'do
 complete -c yarn -n "__fish_seen_subcommand_from unlink" -l frozen-lockfile -d 'don\'t generate a lockfile and fail if an update is needed'
 complete -c yarn -n "__fish_seen_subcommand_from unlink" -l update-checksums -d 'update package checksums from current repository'
 complete -c yarn -n "__fish_seen_subcommand_from unlink" -l link-duplicates -d 'create hardlinks to the repeated modules in node_modules'
-complete -c yarn -n "__fish_seen_subcommand_from unlink" -l link-folder -d 'specify a custom folder to store global links' -x
-complete -c yarn -n "__fish_seen_subcommand_from unlink" -l global-folder -d 'specify a custom folder to store global packages' -x
-complete -c yarn -n "__fish_seen_subcommand_from unlink" -l modules-folder -d 'rather than installing modules into the node_modules folder relative to the cwd, output them here' -x
-complete -c yarn -n "__fish_seen_subcommand_from unlink" -l preferred-cache-folder -d 'specify a custom folder to store the yarn cache if possible' -x
-complete -c yarn -n "__fish_seen_subcommand_from unlink" -l cache-folder -d 'specify a custom folder that must be used to store the yarn cache' -x
+complete -c yarn -n "__fish_seen_subcommand_from unlink" -l link-folder -d 'specify a custom folder to store global links' -r
+complete -c yarn -n "__fish_seen_subcommand_from unlink" -l global-folder -d 'specify a custom folder to store global packages' -r
+complete -c yarn -n "__fish_seen_subcommand_from unlink" -l modules-folder -d 'rather than installing modules into the node_modules folder relative to the cwd, output them here' -r
+complete -c yarn -n "__fish_seen_subcommand_from unlink" -l preferred-cache-folder -d 'specify a custom folder to store the yarn cache if possible' -r
+complete -c yarn -n "__fish_seen_subcommand_from unlink" -l cache-folder -d 'specify a custom folder that must be used to store the yarn cache' -r
 complete -c yarn -n "__fish_seen_subcommand_from unlink" -l mutex -d 'use a mutex to ensure only one yarn instance is executing' -x
 complete -c yarn -n "__fish_seen_subcommand_from unlink" -l emoji -d 'enable emoji in output (default: false)' -x
 complete -c yarn -n "__fish_seen_subcommand_from unlink" -s s -l silent -d 'skip Yarn console logs, other types of logs (script output) will be printed'
@@ -1713,7 +1713,7 @@ complete -c yarn -n "__fish_seen_subcommand_from unlink" -s h -l help -d 'output
 
 complete -c yarn -n "__fish_seen_subcommand_from unplug" -s v -l version -d 'output the version number'
 complete -c yarn -n "__fish_seen_subcommand_from unplug" -l no-default-rc -d 'prevent Yarn from automatically detecting yarnrc and npmrc files'
-complete -c yarn -n "__fish_seen_subcommand_from unplug" -l use-yarnrc -d 'specifies a yarnrc file that Yarn should use (.yarnrc only, not .npmrc) (default: )' -x
+complete -c yarn -n "__fish_seen_subcommand_from unplug" -l use-yarnrc -d 'specifies a yarnrc file that Yarn should use (.yarnrc only, not .npmrc) (default: )' -r
 complete -c yarn -n "__fish_seen_subcommand_from unplug" -l verbose -d 'output verbose messages on internal operations'
 complete -c yarn -n "__fish_seen_subcommand_from unplug" -l offline -d 'trigger an error if any required dependencies are not available in local cache'
 complete -c yarn -n "__fish_seen_subcommand_from unplug" -l prefer-offline -d 'use network only if dependencies are not available in local cache'
@@ -1737,11 +1737,11 @@ complete -c yarn -n "__fish_seen_subcommand_from unplug" -l pure-lockfile -d 'do
 complete -c yarn -n "__fish_seen_subcommand_from unplug" -l frozen-lockfile -d 'don\'t generate a lockfile and fail if an update is needed'
 complete -c yarn -n "__fish_seen_subcommand_from unplug" -l update-checksums -d 'update package checksums from current repository'
 complete -c yarn -n "__fish_seen_subcommand_from unplug" -l link-duplicates -d 'create hardlinks to the repeated modules in node_modules'
-complete -c yarn -n "__fish_seen_subcommand_from unplug" -l link-folder -d 'specify a custom folder to store global links' -x
-complete -c yarn -n "__fish_seen_subcommand_from unplug" -l global-folder -d 'specify a custom folder to store global packages' -x
-complete -c yarn -n "__fish_seen_subcommand_from unplug" -l modules-folder -d 'rather than installing modules into the node_modules folder relative to the cwd, output them here' -x
-complete -c yarn -n "__fish_seen_subcommand_from unplug" -l preferred-cache-folder -d 'specify a custom folder to store the yarn cache if possible' -x
-complete -c yarn -n "__fish_seen_subcommand_from unplug" -l cache-folder -d 'specify a custom folder that must be used to store the yarn cache' -x
+complete -c yarn -n "__fish_seen_subcommand_from unplug" -l link-folder -d 'specify a custom folder to store global links' -r
+complete -c yarn -n "__fish_seen_subcommand_from unplug" -l global-folder -d 'specify a custom folder to store global packages' -r
+complete -c yarn -n "__fish_seen_subcommand_from unplug" -l modules-folder -d 'rather than installing modules into the node_modules folder relative to the cwd, output them here' -r
+complete -c yarn -n "__fish_seen_subcommand_from unplug" -l preferred-cache-folder -d 'specify a custom folder to store the yarn cache if possible' -r
+complete -c yarn -n "__fish_seen_subcommand_from unplug" -l cache-folder -d 'specify a custom folder that must be used to store the yarn cache' -r
 complete -c yarn -n "__fish_seen_subcommand_from unplug" -l mutex -d 'use a mutex to ensure only one yarn instance is executing' -x
 complete -c yarn -n "__fish_seen_subcommand_from unplug" -l emoji -d 'enable emoji in output (default: false)' -x
 complete -c yarn -n "__fish_seen_subcommand_from unplug" -s s -l silent -d 'skip Yarn console logs, other types of logs (script output) will be printed'
@@ -1764,7 +1764,7 @@ complete -c yarn -n "__fish_seen_subcommand_from unplug" -s h -l help -d 'output
 
 complete -c yarn -n "__fish_seen_subcommand_from upgrade" -s v -l version -d 'output the version number'
 complete -c yarn -n "__fish_seen_subcommand_from upgrade" -l no-default-rc -d 'prevent Yarn from automatically detecting yarnrc and npmrc files'
-complete -c yarn -n "__fish_seen_subcommand_from upgrade" -l use-yarnrc -d 'specifies a yarnrc file that Yarn should use (.yarnrc only, not .npmrc) (default: )' -x
+complete -c yarn -n "__fish_seen_subcommand_from upgrade" -l use-yarnrc -d 'specifies a yarnrc file that Yarn should use (.yarnrc only, not .npmrc) (default: )' -r
 complete -c yarn -n "__fish_seen_subcommand_from upgrade" -l verbose -d 'output verbose messages on internal operations'
 complete -c yarn -n "__fish_seen_subcommand_from upgrade" -l offline -d 'trigger an error if any required dependencies are not available in local cache'
 complete -c yarn -n "__fish_seen_subcommand_from upgrade" -l prefer-offline -d 'use network only if dependencies are not available in local cache'
@@ -1788,11 +1788,11 @@ complete -c yarn -n "__fish_seen_subcommand_from upgrade" -l pure-lockfile -d 'd
 complete -c yarn -n "__fish_seen_subcommand_from upgrade" -l frozen-lockfile -d 'don\'t generate a lockfile and fail if an update is needed'
 complete -c yarn -n "__fish_seen_subcommand_from upgrade" -l update-checksums -d 'update package checksums from current repository'
 complete -c yarn -n "__fish_seen_subcommand_from upgrade" -l link-duplicates -d 'create hardlinks to the repeated modules in node_modules'
-complete -c yarn -n "__fish_seen_subcommand_from upgrade" -l link-folder -d 'specify a custom folder to store global links' -x
-complete -c yarn -n "__fish_seen_subcommand_from upgrade" -l global-folder -d 'specify a custom folder to store global packages' -x
-complete -c yarn -n "__fish_seen_subcommand_from upgrade" -l modules-folder -d 'rather than installing modules into the node_modules folder relative to the cwd, output them here' -x
-complete -c yarn -n "__fish_seen_subcommand_from upgrade" -l preferred-cache-folder -d 'specify a custom folder to store the yarn cache if possible' -x
-complete -c yarn -n "__fish_seen_subcommand_from upgrade" -l cache-folder -d 'specify a custom folder that must be used to store the yarn cache' -x
+complete -c yarn -n "__fish_seen_subcommand_from upgrade" -l link-folder -d 'specify a custom folder to store global links' -r
+complete -c yarn -n "__fish_seen_subcommand_from upgrade" -l global-folder -d 'specify a custom folder to store global packages' -r
+complete -c yarn -n "__fish_seen_subcommand_from upgrade" -l modules-folder -d 'rather than installing modules into the node_modules folder relative to the cwd, output them here' -r
+complete -c yarn -n "__fish_seen_subcommand_from upgrade" -l preferred-cache-folder -d 'specify a custom folder to store the yarn cache if possible' -r
+complete -c yarn -n "__fish_seen_subcommand_from upgrade" -l cache-folder -d 'specify a custom folder that must be used to store the yarn cache' -r
 complete -c yarn -n "__fish_seen_subcommand_from upgrade" -l mutex -d 'use a mutex to ensure only one yarn instance is executing' -x
 complete -c yarn -n "__fish_seen_subcommand_from upgrade" -l emoji -d 'enable emoji in output (default: false)' -x
 complete -c yarn -n "__fish_seen_subcommand_from upgrade" -s s -l silent -d 'skip Yarn console logs, other types of logs (script output) will be printed'
@@ -1820,7 +1820,7 @@ complete -c yarn -n "__fish_seen_subcommand_from upgrade" -s h -l help -d 'outpu
 
 complete -c yarn -n "__fish_seen_subcommand_from upgrade-interactive" -s v -l version -d 'output the version number'
 complete -c yarn -n "__fish_seen_subcommand_from upgrade-interactive" -l no-default-rc -d 'prevent Yarn from automatically detecting yarnrc and npmrc files'
-complete -c yarn -n "__fish_seen_subcommand_from upgrade-interactive" -l use-yarnrc -d 'specifies a yarnrc file that Yarn should use (.yarnrc only, not .npmrc) (default: )' -x
+complete -c yarn -n "__fish_seen_subcommand_from upgrade-interactive" -l use-yarnrc -d 'specifies a yarnrc file that Yarn should use (.yarnrc only, not .npmrc) (default: )' -r
 complete -c yarn -n "__fish_seen_subcommand_from upgrade-interactive" -l verbose -d 'output verbose messages on internal operations'
 complete -c yarn -n "__fish_seen_subcommand_from upgrade-interactive" -l offline -d 'trigger an error if any required dependencies are not available in local cache'
 complete -c yarn -n "__fish_seen_subcommand_from upgrade-interactive" -l prefer-offline -d 'use network only if dependencies are not available in local cache'
@@ -1844,11 +1844,11 @@ complete -c yarn -n "__fish_seen_subcommand_from upgrade-interactive" -l pure-lo
 complete -c yarn -n "__fish_seen_subcommand_from upgrade-interactive" -l frozen-lockfile -d 'don\'t generate a lockfile and fail if an update is needed'
 complete -c yarn -n "__fish_seen_subcommand_from upgrade-interactive" -l update-checksums -d 'update package checksums from current repository'
 complete -c yarn -n "__fish_seen_subcommand_from upgrade-interactive" -l link-duplicates -d 'create hardlinks to the repeated modules in node_modules'
-complete -c yarn -n "__fish_seen_subcommand_from upgrade-interactive" -l link-folder -d 'specify a custom folder to store global links' -x
-complete -c yarn -n "__fish_seen_subcommand_from upgrade-interactive" -l global-folder -d 'specify a custom folder to store global packages' -x
-complete -c yarn -n "__fish_seen_subcommand_from upgrade-interactive" -l modules-folder -d 'rather than installing modules into the node_modules folder relative to the cwd, output them here' -x
-complete -c yarn -n "__fish_seen_subcommand_from upgrade-interactive" -l preferred-cache-folder -d 'specify a custom folder to store the yarn cache if possible' -x
-complete -c yarn -n "__fish_seen_subcommand_from upgrade-interactive" -l cache-folder -d 'specify a custom folder that must be used to store the yarn cache' -x
+complete -c yarn -n "__fish_seen_subcommand_from upgrade-interactive" -l link-folder -d 'specify a custom folder to store global links' -r
+complete -c yarn -n "__fish_seen_subcommand_from upgrade-interactive" -l global-folder -d 'specify a custom folder to store global packages' -r
+complete -c yarn -n "__fish_seen_subcommand_from upgrade-interactive" -l modules-folder -d 'rather than installing modules into the node_modules folder relative to the cwd, output them here' -r
+complete -c yarn -n "__fish_seen_subcommand_from upgrade-interactive" -l preferred-cache-folder -d 'specify a custom folder to store the yarn cache if possible' -r
+complete -c yarn -n "__fish_seen_subcommand_from upgrade-interactive" -l cache-folder -d 'specify a custom folder that must be used to store the yarn cache' -r
 complete -c yarn -n "__fish_seen_subcommand_from upgrade-interactive" -l mutex -d 'use a mutex to ensure only one yarn instance is executing' -x
 complete -c yarn -n "__fish_seen_subcommand_from upgrade-interactive" -l emoji -d 'enable emoji in output (default: false)' -x
 complete -c yarn -n "__fish_seen_subcommand_from upgrade-interactive" -s s -l silent -d 'skip Yarn console logs, other types of logs (script output) will be printed'
@@ -1874,7 +1874,7 @@ complete -c yarn -n "__fish_seen_subcommand_from upgrade-interactive" -s h -l he
 
 complete -c yarn -n "__fish_seen_subcommand_from version" -s v -l version -d 'output the version number'
 complete -c yarn -n "__fish_seen_subcommand_from version" -l no-default-rc -d 'prevent Yarn from automatically detecting yarnrc and npmrc files'
-complete -c yarn -n "__fish_seen_subcommand_from version" -l use-yarnrc -d 'specifies a yarnrc file that Yarn should use (.yarnrc only, not .npmrc) (default: )' -x
+complete -c yarn -n "__fish_seen_subcommand_from version" -l use-yarnrc -d 'specifies a yarnrc file that Yarn should use (.yarnrc only, not .npmrc) (default: )' -r
 complete -c yarn -n "__fish_seen_subcommand_from version" -l verbose -d 'output verbose messages on internal operations'
 complete -c yarn -n "__fish_seen_subcommand_from version" -l offline -d 'trigger an error if any required dependencies are not available in local cache'
 complete -c yarn -n "__fish_seen_subcommand_from version" -l prefer-offline -d 'use network only if dependencies are not available in local cache'
@@ -1898,11 +1898,11 @@ complete -c yarn -n "__fish_seen_subcommand_from version" -l pure-lockfile -d 'd
 complete -c yarn -n "__fish_seen_subcommand_from version" -l frozen-lockfile -d 'don\'t generate a lockfile and fail if an update is needed'
 complete -c yarn -n "__fish_seen_subcommand_from version" -l update-checksums -d 'update package checksums from current repository'
 complete -c yarn -n "__fish_seen_subcommand_from version" -l link-duplicates -d 'create hardlinks to the repeated modules in node_modules'
-complete -c yarn -n "__fish_seen_subcommand_from version" -l link-folder -d 'specify a custom folder to store global links' -x
-complete -c yarn -n "__fish_seen_subcommand_from version" -l global-folder -d 'specify a custom folder to store global packages' -x
-complete -c yarn -n "__fish_seen_subcommand_from version" -l modules-folder -d 'rather than installing modules into the node_modules folder relative to the cwd, output them here' -x
-complete -c yarn -n "__fish_seen_subcommand_from version" -l preferred-cache-folder -d 'specify a custom folder to store the yarn cache if possible' -x
-complete -c yarn -n "__fish_seen_subcommand_from version" -l cache-folder -d 'specify a custom folder that must be used to store the yarn cache' -x
+complete -c yarn -n "__fish_seen_subcommand_from version" -l link-folder -d 'specify a custom folder to store global links' -r
+complete -c yarn -n "__fish_seen_subcommand_from version" -l global-folder -d 'specify a custom folder to store global packages' -r
+complete -c yarn -n "__fish_seen_subcommand_from version" -l modules-folder -d 'rather than installing modules into the node_modules folder relative to the cwd, output them here' -r
+complete -c yarn -n "__fish_seen_subcommand_from version" -l preferred-cache-folder -d 'specify a custom folder to store the yarn cache if possible' -r
+complete -c yarn -n "__fish_seen_subcommand_from version" -l cache-folder -d 'specify a custom folder that must be used to store the yarn cache' -r
 complete -c yarn -n "__fish_seen_subcommand_from version" -l mutex -d 'use a mutex to ensure only one yarn instance is executing' -x
 complete -c yarn -n "__fish_seen_subcommand_from version" -l emoji -d 'enable emoji in output (default: false)' -x
 complete -c yarn -n "__fish_seen_subcommand_from version" -s s -l silent -d 'skip Yarn console logs, other types of logs (script output) will be printed'
@@ -1935,7 +1935,7 @@ complete -c yarn -n "__fish_seen_subcommand_from version" -s h -l help -d 'outpu
 
 complete -c yarn -n "__fish_seen_subcommand_from versions" -s v -l version -d 'output the version number'
 complete -c yarn -n "__fish_seen_subcommand_from versions" -l no-default-rc -d 'prevent Yarn from automatically detecting yarnrc and npmrc files'
-complete -c yarn -n "__fish_seen_subcommand_from versions" -l use-yarnrc -d 'specifies a yarnrc file that Yarn should use (.yarnrc only, not .npmrc) (default: )' -x
+complete -c yarn -n "__fish_seen_subcommand_from versions" -l use-yarnrc -d 'specifies a yarnrc file that Yarn should use (.yarnrc only, not .npmrc) (default: )' -r
 complete -c yarn -n "__fish_seen_subcommand_from versions" -l verbose -d 'output verbose messages on internal operations'
 complete -c yarn -n "__fish_seen_subcommand_from versions" -l offline -d 'trigger an error if any required dependencies are not available in local cache'
 complete -c yarn -n "__fish_seen_subcommand_from versions" -l prefer-offline -d 'use network only if dependencies are not available in local cache'
@@ -1959,11 +1959,11 @@ complete -c yarn -n "__fish_seen_subcommand_from versions" -l pure-lockfile -d '
 complete -c yarn -n "__fish_seen_subcommand_from versions" -l frozen-lockfile -d 'don\'t generate a lockfile and fail if an update is needed'
 complete -c yarn -n "__fish_seen_subcommand_from versions" -l update-checksums -d 'update package checksums from current repository'
 complete -c yarn -n "__fish_seen_subcommand_from versions" -l link-duplicates -d 'create hardlinks to the repeated modules in node_modules'
-complete -c yarn -n "__fish_seen_subcommand_from versions" -l link-folder -d 'specify a custom folder to store global links' -x
-complete -c yarn -n "__fish_seen_subcommand_from versions" -l global-folder -d 'specify a custom folder to store global packages' -x
-complete -c yarn -n "__fish_seen_subcommand_from versions" -l modules-folder -d 'rather than installing modules into the node_modules folder relative to the cwd, output them here' -x
-complete -c yarn -n "__fish_seen_subcommand_from versions" -l preferred-cache-folder -d 'specify a custom folder to store the yarn cache if possible' -x
-complete -c yarn -n "__fish_seen_subcommand_from versions" -l cache-folder -d 'specify a custom folder that must be used to store the yarn cache' -x
+complete -c yarn -n "__fish_seen_subcommand_from versions" -l link-folder -d 'specify a custom folder to store global links' -r
+complete -c yarn -n "__fish_seen_subcommand_from versions" -l global-folder -d 'specify a custom folder to store global packages' -r
+complete -c yarn -n "__fish_seen_subcommand_from versions" -l modules-folder -d 'rather than installing modules into the node_modules folder relative to the cwd, output them here' -r
+complete -c yarn -n "__fish_seen_subcommand_from versions" -l preferred-cache-folder -d 'specify a custom folder to store the yarn cache if possible' -r
+complete -c yarn -n "__fish_seen_subcommand_from versions" -l cache-folder -d 'specify a custom folder that must be used to store the yarn cache' -r
 complete -c yarn -n "__fish_seen_subcommand_from versions" -l mutex -d 'use a mutex to ensure only one yarn instance is executing' -x
 complete -c yarn -n "__fish_seen_subcommand_from versions" -l emoji -d 'enable emoji in output (default: false)' -x
 complete -c yarn -n "__fish_seen_subcommand_from versions" -s s -l silent -d 'skip Yarn console logs, other types of logs (script output) will be printed'
@@ -1984,7 +1984,7 @@ complete -c yarn -n "__fish_seen_subcommand_from versions" -s h -l help -d 'outp
 
 complete -c yarn -n "__fish_seen_subcommand_from why" -s v -l version -d 'output the version number'
 complete -c yarn -n "__fish_seen_subcommand_from why" -l no-default-rc -d 'prevent Yarn from automatically detecting yarnrc and npmrc files'
-complete -c yarn -n "__fish_seen_subcommand_from why" -l use-yarnrc -d 'specifies a yarnrc file that Yarn should use (.yarnrc only, not .npmrc) (default: )' -x
+complete -c yarn -n "__fish_seen_subcommand_from why" -l use-yarnrc -d 'specifies a yarnrc file that Yarn should use (.yarnrc only, not .npmrc) (default: )' -r
 complete -c yarn -n "__fish_seen_subcommand_from why" -l verbose -d 'output verbose messages on internal operations'
 complete -c yarn -n "__fish_seen_subcommand_from why" -l offline -d 'trigger an error if any required dependencies are not available in local cache'
 complete -c yarn -n "__fish_seen_subcommand_from why" -l prefer-offline -d 'use network only if dependencies are not available in local cache'
@@ -2008,11 +2008,11 @@ complete -c yarn -n "__fish_seen_subcommand_from why" -l pure-lockfile -d 'don\'
 complete -c yarn -n "__fish_seen_subcommand_from why" -l frozen-lockfile -d 'don\'t generate a lockfile and fail if an update is needed'
 complete -c yarn -n "__fish_seen_subcommand_from why" -l update-checksums -d 'update package checksums from current repository'
 complete -c yarn -n "__fish_seen_subcommand_from why" -l link-duplicates -d 'create hardlinks to the repeated modules in node_modules'
-complete -c yarn -n "__fish_seen_subcommand_from why" -l link-folder -d 'specify a custom folder to store global links' -x
-complete -c yarn -n "__fish_seen_subcommand_from why" -l global-folder -d 'specify a custom folder to store global packages' -x
-complete -c yarn -n "__fish_seen_subcommand_from why" -l modules-folder -d 'rather than installing modules into the node_modules folder relative to the cwd, output them here' -x
-complete -c yarn -n "__fish_seen_subcommand_from why" -l preferred-cache-folder -d 'specify a custom folder to store the yarn cache if possible' -x
-complete -c yarn -n "__fish_seen_subcommand_from why" -l cache-folder -d 'specify a custom folder that must be used to store the yarn cache' -x
+complete -c yarn -n "__fish_seen_subcommand_from why" -l link-folder -d 'specify a custom folder to store global links' -r
+complete -c yarn -n "__fish_seen_subcommand_from why" -l global-folder -d 'specify a custom folder to store global packages' -r
+complete -c yarn -n "__fish_seen_subcommand_from why" -l modules-folder -d 'rather than installing modules into the node_modules folder relative to the cwd, output them here' -r
+complete -c yarn -n "__fish_seen_subcommand_from why" -l preferred-cache-folder -d 'specify a custom folder to store the yarn cache if possible' -r
+complete -c yarn -n "__fish_seen_subcommand_from why" -l cache-folder -d 'specify a custom folder that must be used to store the yarn cache' -r
 complete -c yarn -n "__fish_seen_subcommand_from why" -l mutex -d 'use a mutex to ensure only one yarn instance is executing' -x
 complete -c yarn -n "__fish_seen_subcommand_from why" -l emoji -d 'enable emoji in output (default: false)' -x
 complete -c yarn -n "__fish_seen_subcommand_from why" -s s -l silent -d 'skip Yarn console logs, other types of logs (script output) will be printed'
@@ -2033,7 +2033,7 @@ complete -c yarn -n "__fish_seen_subcommand_from why" -s h -l help -d 'output us
 
 complete -c yarn -n "__fish_seen_subcommand_from workspace" -s v -l version -d 'output the version number'
 complete -c yarn -n "__fish_seen_subcommand_from workspace" -l no-default-rc -d 'prevent Yarn from automatically detecting yarnrc and npmrc files'
-complete -c yarn -n "__fish_seen_subcommand_from workspace" -l use-yarnrc -d 'specifies a yarnrc file that Yarn should use (.yarnrc only, not .npmrc) (default: )' -x
+complete -c yarn -n "__fish_seen_subcommand_from workspace" -l use-yarnrc -d 'specifies a yarnrc file that Yarn should use (.yarnrc only, not .npmrc) (default: )' -r
 complete -c yarn -n "__fish_seen_subcommand_from workspace" -l verbose -d 'output verbose messages on internal operations'
 complete -c yarn -n "__fish_seen_subcommand_from workspace" -l offline -d 'trigger an error if any required dependencies are not available in local cache'
 complete -c yarn -n "__fish_seen_subcommand_from workspace" -l prefer-offline -d 'use network only if dependencies are not available in local cache'
@@ -2057,11 +2057,11 @@ complete -c yarn -n "__fish_seen_subcommand_from workspace" -l pure-lockfile -d 
 complete -c yarn -n "__fish_seen_subcommand_from workspace" -l frozen-lockfile -d 'don\'t generate a lockfile and fail if an update is needed'
 complete -c yarn -n "__fish_seen_subcommand_from workspace" -l update-checksums -d 'update package checksums from current repository'
 complete -c yarn -n "__fish_seen_subcommand_from workspace" -l link-duplicates -d 'create hardlinks to the repeated modules in node_modules'
-complete -c yarn -n "__fish_seen_subcommand_from workspace" -l link-folder -d 'specify a custom folder to store global links' -x
-complete -c yarn -n "__fish_seen_subcommand_from workspace" -l global-folder -d 'specify a custom folder to store global packages' -x
-complete -c yarn -n "__fish_seen_subcommand_from workspace" -l modules-folder -d 'rather than installing modules into the node_modules folder relative to the cwd, output them here' -x
-complete -c yarn -n "__fish_seen_subcommand_from workspace" -l preferred-cache-folder -d 'specify a custom folder to store the yarn cache if possible' -x
-complete -c yarn -n "__fish_seen_subcommand_from workspace" -l cache-folder -d 'specify a custom folder that must be used to store the yarn cache' -x
+complete -c yarn -n "__fish_seen_subcommand_from workspace" -l link-folder -d 'specify a custom folder to store global links' -r
+complete -c yarn -n "__fish_seen_subcommand_from workspace" -l global-folder -d 'specify a custom folder to store global packages' -r
+complete -c yarn -n "__fish_seen_subcommand_from workspace" -l modules-folder -d 'rather than installing modules into the node_modules folder relative to the cwd, output them here' -r
+complete -c yarn -n "__fish_seen_subcommand_from workspace" -l preferred-cache-folder -d 'specify a custom folder to store the yarn cache if possible' -r
+complete -c yarn -n "__fish_seen_subcommand_from workspace" -l cache-folder -d 'specify a custom folder that must be used to store the yarn cache' -r
 complete -c yarn -n "__fish_seen_subcommand_from workspace" -l mutex -d 'use a mutex to ensure only one yarn instance is executing' -x
 complete -c yarn -n "__fish_seen_subcommand_from workspace" -l emoji -d 'enable emoji in output (default: false)' -x
 complete -c yarn -n "__fish_seen_subcommand_from workspace" -s s -l silent -d 'skip Yarn console logs, other types of logs (script output) will be printed'
@@ -2082,7 +2082,7 @@ complete -c yarn -n "__fish_seen_subcommand_from workspace" -s h -l help -d 'out
 
 complete -c yarn -n "__fish_seen_subcommand_from workspaces" -s v -l version -d 'output the version number'
 complete -c yarn -n "__fish_seen_subcommand_from workspaces" -l no-default-rc -d 'prevent Yarn from automatically detecting yarnrc and npmrc files'
-complete -c yarn -n "__fish_seen_subcommand_from workspaces" -l use-yarnrc -d 'specifies a yarnrc file that Yarn should use (.yarnrc only, not .npmrc) (default: )' -x
+complete -c yarn -n "__fish_seen_subcommand_from workspaces" -l use-yarnrc -d 'specifies a yarnrc file that Yarn should use (.yarnrc only, not .npmrc) (default: )' -r
 complete -c yarn -n "__fish_seen_subcommand_from workspaces" -l verbose -d 'output verbose messages on internal operations'
 complete -c yarn -n "__fish_seen_subcommand_from workspaces" -l offline -d 'trigger an error if any required dependencies are not available in local cache'
 complete -c yarn -n "__fish_seen_subcommand_from workspaces" -l prefer-offline -d 'use network only if dependencies are not available in local cache'
@@ -2106,11 +2106,11 @@ complete -c yarn -n "__fish_seen_subcommand_from workspaces" -l pure-lockfile -d
 complete -c yarn -n "__fish_seen_subcommand_from workspaces" -l frozen-lockfile -d 'don\'t generate a lockfile and fail if an update is needed'
 complete -c yarn -n "__fish_seen_subcommand_from workspaces" -l update-checksums -d 'update package checksums from current repository'
 complete -c yarn -n "__fish_seen_subcommand_from workspaces" -l link-duplicates -d 'create hardlinks to the repeated modules in node_modules'
-complete -c yarn -n "__fish_seen_subcommand_from workspaces" -l link-folder -d 'specify a custom folder to store global links' -x
-complete -c yarn -n "__fish_seen_subcommand_from workspaces" -l global-folder -d 'specify a custom folder to store global packages' -x
-complete -c yarn -n "__fish_seen_subcommand_from workspaces" -l modules-folder -d 'rather than installing modules into the node_modules folder relative to the cwd, output them here' -x
-complete -c yarn -n "__fish_seen_subcommand_from workspaces" -l preferred-cache-folder -d 'specify a custom folder to store the yarn cache if possible' -x
-complete -c yarn -n "__fish_seen_subcommand_from workspaces" -l cache-folder -d 'specify a custom folder that must be used to store the yarn cache' -x
+complete -c yarn -n "__fish_seen_subcommand_from workspaces" -l link-folder -d 'specify a custom folder to store global links' -r
+complete -c yarn -n "__fish_seen_subcommand_from workspaces" -l global-folder -d 'specify a custom folder to store global packages' -r
+complete -c yarn -n "__fish_seen_subcommand_from workspaces" -l modules-folder -d 'rather than installing modules into the node_modules folder relative to the cwd, output them here' -r
+complete -c yarn -n "__fish_seen_subcommand_from workspaces" -l preferred-cache-folder -d 'specify a custom folder to store the yarn cache if possible' -r
+complete -c yarn -n "__fish_seen_subcommand_from workspaces" -l cache-folder -d 'specify a custom folder that must be used to store the yarn cache' -r
 complete -c yarn -n "__fish_seen_subcommand_from workspaces" -l mutex -d 'use a mutex to ensure only one yarn instance is executing' -x
 complete -c yarn -n "__fish_seen_subcommand_from workspaces" -l emoji -d 'enable emoji in output (default: false)' -x
 complete -c yarn -n "__fish_seen_subcommand_from workspaces" -s s -l silent -d 'skip Yarn console logs, other types of logs (script output) will be printed'

@@ -1,59 +1,59 @@
 # Auto-generated with h2o
 
-complete -c oc -n __fish_use_subcommand -x -a login -d 'Log in to a server'
-complete -c oc -n __fish_use_subcommand -x -a new-project -d 'Request a new project'
-complete -c oc -n __fish_use_subcommand -x -a new-app -d 'Create a new application'
-complete -c oc -n __fish_use_subcommand -x -a status -d 'Show an overview of the current project'
-complete -c oc -n __fish_use_subcommand -x -a project -d 'Switch to another project'
-complete -c oc -n __fish_use_subcommand -x -a projects -d 'Display existing projects'
-complete -c oc -n __fish_use_subcommand -x -a explain -d 'Documentation of resources'
-complete -c oc -n __fish_use_subcommand -x -a rollout -d 'Manage a Kubernetes deployment or OpenShift deployment config'
-complete -c oc -n __fish_use_subcommand -x -a rollback -d 'Revert part of an application back to a previous deployment'
-complete -c oc -n __fish_use_subcommand -x -a new-build -d 'Create a new build configuration'
-complete -c oc -n __fish_use_subcommand -x -a start-build -d 'Start a new build'
-complete -c oc -n __fish_use_subcommand -x -a cancel-build -d 'Cancel running, pending, or new builds'
-complete -c oc -n __fish_use_subcommand -x -a import-image -d 'Import images from a container image registry'
-complete -c oc -n __fish_use_subcommand -x -a tag -d 'Tag existing images into image streams'
-complete -c oc -n __fish_use_subcommand -x -a create -d 'Create a resource from a file or from stdin.'
-complete -c oc -n __fish_use_subcommand -x -a apply -d 'Apply a configuration to a resource by filename or stdin'
-complete -c oc -n __fish_use_subcommand -x -a get -d 'Display one or many resources'
-complete -c oc -n __fish_use_subcommand -x -a describe -d 'Show details of a specific resource or group of resources'
-complete -c oc -n __fish_use_subcommand -x -a edit -d 'Edit a resource on the server'
-complete -c oc -n __fish_use_subcommand -x -a set -d 'Commands that help set specific features on objects'
-complete -c oc -n __fish_use_subcommand -x -a label -d 'Update the labels on a resource'
-complete -c oc -n __fish_use_subcommand -x -a annotate -d 'Update the annotations on a resource'
-complete -c oc -n __fish_use_subcommand -x -a expose -d 'Expose a replicated application as a service or route'
-complete -c oc -n __fish_use_subcommand -x -a delete -d 'Delete resources by filenames, stdin, resources and names, or by resources and label selector'
-complete -c oc -n __fish_use_subcommand -x -a scale -d 'Set a new size for a Deployment, ReplicaSet or Replication Controller'
-complete -c oc -n __fish_use_subcommand -x -a autoscale -d 'Autoscale a deployment config, deployment, replica set, stateful set, or replication controller'
-complete -c oc -n __fish_use_subcommand -x -a logs -d 'Print the logs for a container in a pod'
-complete -c oc -n __fish_use_subcommand -x -a rsh -d 'Start a shell session in a container'
-complete -c oc -n __fish_use_subcommand -x -a rsync -d 'Copy files between a local file system and a pod'
-complete -c oc -n __fish_use_subcommand -x -a port-forward -d 'Forward one or more local ports to a pod'
-complete -c oc -n __fish_use_subcommand -x -a debug -d 'Launch a new instance of a pod for debugging'
-complete -c oc -n __fish_use_subcommand -x -a exec -d 'Execute a command in a container'
-complete -c oc -n __fish_use_subcommand -x -a proxy -d 'Run a proxy to the Kubernetes API server'
-complete -c oc -n __fish_use_subcommand -x -a attach -d 'Attach to a running container'
-complete -c oc -n __fish_use_subcommand -x -a run -d 'Run a particular image on the cluster'
-complete -c oc -n __fish_use_subcommand -x -a cp -d 'Copy files and directories to and from containers.'
-complete -c oc -n __fish_use_subcommand -x -a wait -d 'Experimental: Wait for a specific condition on one or many resources.'
-complete -c oc -n __fish_use_subcommand -x -a adm -d 'Tools for managing a cluster'
-complete -c oc -n __fish_use_subcommand -x -a replace -d 'Replace a resource by filename or stdin'
-complete -c oc -n __fish_use_subcommand -x -a patch -d 'Update field(s) of a resource'
-complete -c oc -n __fish_use_subcommand -x -a process -d 'Process a template into list of resources'
-complete -c oc -n __fish_use_subcommand -x -a extract -d 'Extract secrets or config maps to disk'
-complete -c oc -n __fish_use_subcommand -x -a observe -d 'Observe changes to resources and react to them (experimental)'
-complete -c oc -n __fish_use_subcommand -x -a policy -d 'Manage authorization policy'
-complete -c oc -n __fish_use_subcommand -x -a image -d 'Useful commands for managing images'
-complete -c oc -n __fish_use_subcommand -x -a idle -d 'Idle scalable resources'
-complete -c oc -n __fish_use_subcommand -x -a api-resources -d 'Print the supported API resources on the server'
-complete -c oc -n __fish_use_subcommand -x -a diff -d 'Diff live version against would-be applied version'
-complete -c oc -n __fish_use_subcommand -x -a kustomize -d 'Build a kustomization target from a directory or URL.'
-complete -c oc -n __fish_use_subcommand -x -a logout -d 'End the current server session'
-complete -c oc -n __fish_use_subcommand -x -a config -d 'Modify kubeconfig files'
-complete -c oc -n __fish_use_subcommand -x -a whoami -d 'Return information about the current session'
-complete -c oc -n __fish_use_subcommand -x -a completion -d 'Output shell completion code for the specified shell (bash or zsh)'
-complete -c oc -n __fish_use_subcommand -x -a version -d 'Print the client and server version information'
+complete -k -c oc -n __fish_use_subcommand -x -a version -d 'Print the client and server version information'
+complete -k -c oc -n __fish_use_subcommand -x -a completion -d 'Output shell completion code for the specified shell (bash or zsh)'
+complete -k -c oc -n __fish_use_subcommand -x -a whoami -d 'Return information about the current session'
+complete -k -c oc -n __fish_use_subcommand -x -a config -d 'Modify kubeconfig files'
+complete -k -c oc -n __fish_use_subcommand -x -a logout -d 'End the current server session'
+complete -k -c oc -n __fish_use_subcommand -x -a kustomize -d 'Build a kustomization target from a directory or URL.'
+complete -k -c oc -n __fish_use_subcommand -x -a diff -d 'Diff live version against would-be applied version'
+complete -k -c oc -n __fish_use_subcommand -x -a api-resources -d 'Print the supported API resources on the server'
+complete -k -c oc -n __fish_use_subcommand -x -a idle -d 'Idle scalable resources'
+complete -k -c oc -n __fish_use_subcommand -x -a image -d 'Useful commands for managing images'
+complete -k -c oc -n __fish_use_subcommand -x -a policy -d 'Manage authorization policy'
+complete -k -c oc -n __fish_use_subcommand -x -a observe -d 'Observe changes to resources and react to them (experimental)'
+complete -k -c oc -n __fish_use_subcommand -x -a extract -d 'Extract secrets or config maps to disk'
+complete -k -c oc -n __fish_use_subcommand -x -a process -d 'Process a template into list of resources'
+complete -k -c oc -n __fish_use_subcommand -x -a patch -d 'Update field(s) of a resource'
+complete -k -c oc -n __fish_use_subcommand -x -a replace -d 'Replace a resource by filename or stdin'
+complete -k -c oc -n __fish_use_subcommand -x -a adm -d 'Tools for managing a cluster'
+complete -k -c oc -n __fish_use_subcommand -x -a wait -d 'Experimental: Wait for a specific condition on one or many resources.'
+complete -k -c oc -n __fish_use_subcommand -x -a cp -d 'Copy files and directories to and from containers.'
+complete -k -c oc -n __fish_use_subcommand -x -a run -d 'Run a particular image on the cluster'
+complete -k -c oc -n __fish_use_subcommand -x -a attach -d 'Attach to a running container'
+complete -k -c oc -n __fish_use_subcommand -x -a proxy -d 'Run a proxy to the Kubernetes API server'
+complete -k -c oc -n __fish_use_subcommand -x -a exec -d 'Execute a command in a container'
+complete -k -c oc -n __fish_use_subcommand -x -a debug -d 'Launch a new instance of a pod for debugging'
+complete -k -c oc -n __fish_use_subcommand -x -a port-forward -d 'Forward one or more local ports to a pod'
+complete -k -c oc -n __fish_use_subcommand -x -a rsync -d 'Copy files between a local file system and a pod'
+complete -k -c oc -n __fish_use_subcommand -x -a rsh -d 'Start a shell session in a container'
+complete -k -c oc -n __fish_use_subcommand -x -a logs -d 'Print the logs for a container in a pod'
+complete -k -c oc -n __fish_use_subcommand -x -a autoscale -d 'Autoscale a deployment config, deployment, replica set, stateful set, or replication controller'
+complete -k -c oc -n __fish_use_subcommand -x -a scale -d 'Set a new size for a Deployment, ReplicaSet or Replication Controller'
+complete -k -c oc -n __fish_use_subcommand -x -a delete -d 'Delete resources by filenames, stdin, resources and names, or by resources and label selector'
+complete -k -c oc -n __fish_use_subcommand -x -a expose -d 'Expose a replicated application as a service or route'
+complete -k -c oc -n __fish_use_subcommand -x -a annotate -d 'Update the annotations on a resource'
+complete -k -c oc -n __fish_use_subcommand -x -a label -d 'Update the labels on a resource'
+complete -k -c oc -n __fish_use_subcommand -x -a set -d 'Commands that help set specific features on objects'
+complete -k -c oc -n __fish_use_subcommand -x -a edit -d 'Edit a resource on the server'
+complete -k -c oc -n __fish_use_subcommand -x -a describe -d 'Show details of a specific resource or group of resources'
+complete -k -c oc -n __fish_use_subcommand -x -a get -d 'Display one or many resources'
+complete -k -c oc -n __fish_use_subcommand -x -a apply -d 'Apply a configuration to a resource by filename or stdin'
+complete -k -c oc -n __fish_use_subcommand -x -a create -d 'Create a resource from a file or from stdin.'
+complete -k -c oc -n __fish_use_subcommand -x -a tag -d 'Tag existing images into image streams'
+complete -k -c oc -n __fish_use_subcommand -x -a import-image -d 'Import images from a container image registry'
+complete -k -c oc -n __fish_use_subcommand -x -a cancel-build -d 'Cancel running, pending, or new builds'
+complete -k -c oc -n __fish_use_subcommand -x -a start-build -d 'Start a new build'
+complete -k -c oc -n __fish_use_subcommand -x -a new-build -d 'Create a new build configuration'
+complete -k -c oc -n __fish_use_subcommand -x -a rollback -d 'Revert part of an application back to a previous deployment'
+complete -k -c oc -n __fish_use_subcommand -x -a rollout -d 'Manage a Kubernetes deployment or OpenShift deployment config'
+complete -k -c oc -n __fish_use_subcommand -x -a explain -d 'Documentation of resources'
+complete -k -c oc -n __fish_use_subcommand -x -a projects -d 'Display existing projects'
+complete -k -c oc -n __fish_use_subcommand -x -a project -d 'Switch to another project'
+complete -k -c oc -n __fish_use_subcommand -x -a status -d 'Show an overview of the current project'
+complete -k -c oc -n __fish_use_subcommand -x -a new-app -d 'Create a new application'
+complete -k -c oc -n __fish_use_subcommand -x -a new-project -d 'Request a new project'
+complete -k -c oc -n __fish_use_subcommand -x -a login -d 'Log in to a server'
 
 
 
@@ -63,6 +63,7 @@ complete -c oc -n "__fish_seen_subcommand_from login" -l certificate-authority -
 complete -c oc -n "__fish_seen_subcommand_from login" -l insecure-skip-tls-verify -d 'If true, the server\'s certificate will not be checked for validity.' -x
 complete -c oc -n "__fish_seen_subcommand_from login" -l token -d 'Bearer token for authentication to the API server' -x
 complete -c oc -n "__fish_seen_subcommand_from login" -l add-dir-header -d 'If true, adds the file directory to the header of the log messages' -x
+complete -c oc -n "__fish_seen_subcommand_from login" -l add_dir_header -d 'If true, adds the file directory to the header of the log messages' -x
 complete -c oc -n "__fish_seen_subcommand_from login" -l alsologtostderr -d 'log to standard error as well as files' -x
 complete -c oc -n "__fish_seen_subcommand_from login" -l as -d 'Username to impersonate for the operation' -x
 complete -c oc -n "__fish_seen_subcommand_from login" -l cache-dir -d 'Default cache directory' -x
@@ -104,6 +105,7 @@ complete -c oc -n "__fish_seen_subcommand_from new-project" -l description -d 'P
 complete -c oc -n "__fish_seen_subcommand_from new-project" -l display-name -d 'Project display name' -x
 complete -c oc -n "__fish_seen_subcommand_from new-project" -l skip-config-write -d 'If true, the project will not be set as a cluster entry in kubeconfig after being created' -x
 complete -c oc -n "__fish_seen_subcommand_from new-project" -l add-dir-header -d 'If true, adds the file directory to the header of the log messages' -x
+complete -c oc -n "__fish_seen_subcommand_from new-project" -l add_dir_header -d 'If true, adds the file directory to the header of the log messages' -x
 complete -c oc -n "__fish_seen_subcommand_from new-project" -l alsologtostderr -d 'log to standard error as well as files' -x
 complete -c oc -n "__fish_seen_subcommand_from new-project" -l as -d 'Username to impersonate for the operation' -x
 complete -c oc -n "__fish_seen_subcommand_from new-project" -l cache-dir -d 'Default cache directory' -x
@@ -169,6 +171,7 @@ complete -c oc -n "__fish_seen_subcommand_from new-app" -l sort-by -d 'If non-em
 complete -c oc -n "__fish_seen_subcommand_from new-app" -l source-secret -d 'The name of an existing secret that should be used for cloning a private git repository.' -x
 complete -c oc -n "__fish_seen_subcommand_from new-app" -l strategy -d 'Specify the build strategy to use if you don\'t want to detect (docker|pipeline|source).'
 complete -c oc -n "__fish_seen_subcommand_from new-app" -l add-dir-header -d 'If true, adds the file directory to the header of the log messages' -x
+complete -c oc -n "__fish_seen_subcommand_from new-app" -l add_dir_header -d 'If true, adds the file directory to the header of the log messages' -x
 complete -c oc -n "__fish_seen_subcommand_from new-app" -l alsologtostderr -d 'log to standard error as well as files' -x
 complete -c oc -n "__fish_seen_subcommand_from new-app" -l as -d 'Username to impersonate for the operation' -x
 complete -c oc -n "__fish_seen_subcommand_from new-app" -l cache-dir -d 'Default cache directory' -x
@@ -213,6 +216,7 @@ complete -c oc -n "__fish_seen_subcommand_from status" -s A -l all-namespaces -d
 complete -c oc -n "__fish_seen_subcommand_from status" -s o -l output -d 'Output format.' -x
 complete -c oc -n "__fish_seen_subcommand_from status" -l suggest -d 'See details for resolving issues.' -x
 complete -c oc -n "__fish_seen_subcommand_from status" -l add-dir-header -d 'If true, adds the file directory to the header of the log messages' -x
+complete -c oc -n "__fish_seen_subcommand_from status" -l add_dir_header -d 'If true, adds the file directory to the header of the log messages' -x
 complete -c oc -n "__fish_seen_subcommand_from status" -l alsologtostderr -d 'log to standard error as well as files' -x
 complete -c oc -n "__fish_seen_subcommand_from status" -l as -d 'Username to impersonate for the operation' -x
 complete -c oc -n "__fish_seen_subcommand_from status" -l cache-dir -d 'Default cache directory' -x
@@ -255,6 +259,7 @@ complete -c oc -n "__fish_seen_subcommand_from status" -l vmodule -d 'comma-sepa
 
 complete -c oc -n "__fish_seen_subcommand_from project" -s q -l short -d 'If true, display only the project name' -x
 complete -c oc -n "__fish_seen_subcommand_from project" -l add-dir-header -d 'If true, adds the file directory to the header of the log messages' -x
+complete -c oc -n "__fish_seen_subcommand_from project" -l add_dir_header -d 'If true, adds the file directory to the header of the log messages' -x
 complete -c oc -n "__fish_seen_subcommand_from project" -l alsologtostderr -d 'log to standard error as well as files' -x
 complete -c oc -n "__fish_seen_subcommand_from project" -l as -d 'Username to impersonate for the operation' -x
 complete -c oc -n "__fish_seen_subcommand_from project" -l cache-dir -d 'Default cache directory' -x
@@ -297,6 +302,7 @@ complete -c oc -n "__fish_seen_subcommand_from project" -l vmodule -d 'comma-sep
 
 complete -c oc -n "__fish_seen_subcommand_from projects" -s q -l short -d 'If true, display only the project names' -x
 complete -c oc -n "__fish_seen_subcommand_from projects" -l add-dir-header -d 'If true, adds the file directory to the header of the log messages' -x
+complete -c oc -n "__fish_seen_subcommand_from projects" -l add_dir_header -d 'If true, adds the file directory to the header of the log messages' -x
 complete -c oc -n "__fish_seen_subcommand_from projects" -l alsologtostderr -d 'log to standard error as well as files' -x
 complete -c oc -n "__fish_seen_subcommand_from projects" -l as -d 'Username to impersonate for the operation' -x
 complete -c oc -n "__fish_seen_subcommand_from projects" -l cache-dir -d 'Default cache directory' -x
@@ -340,6 +346,7 @@ complete -c oc -n "__fish_seen_subcommand_from projects" -l vmodule -d 'comma-se
 complete -c oc -n "__fish_seen_subcommand_from explain" -l api-version -d 'Get different explanations for particular API version (API group/version)' -x
 complete -c oc -n "__fish_seen_subcommand_from explain" -l recursive -d 'Print the fields of fields (Currently only 1 level deep)' -x
 complete -c oc -n "__fish_seen_subcommand_from explain" -l add-dir-header -d 'If true, adds the file directory to the header of the log messages' -x
+complete -c oc -n "__fish_seen_subcommand_from explain" -l add_dir_header -d 'If true, adds the file directory to the header of the log messages' -x
 complete -c oc -n "__fish_seen_subcommand_from explain" -l alsologtostderr -d 'log to standard error as well as files' -x
 complete -c oc -n "__fish_seen_subcommand_from explain" -l as -d 'Username to impersonate for the operation' -x
 complete -c oc -n "__fish_seen_subcommand_from explain" -l cache-dir -d 'Default cache directory' -x
@@ -381,6 +388,7 @@ complete -c oc -n "__fish_seen_subcommand_from explain" -l vmodule -d 'comma-sep
 
 
 complete -c oc -n "__fish_seen_subcommand_from rollout" -l add-dir-header -d 'If true, adds the file directory to the header of the log messages' -x
+complete -c oc -n "__fish_seen_subcommand_from rollout" -l add_dir_header -d 'If true, adds the file directory to the header of the log messages' -x
 complete -c oc -n "__fish_seen_subcommand_from rollout" -l alsologtostderr -d 'log to standard error as well as files' -x
 complete -c oc -n "__fish_seen_subcommand_from rollout" -l as -d 'Username to impersonate for the operation' -x
 complete -c oc -n "__fish_seen_subcommand_from rollout" -l cache-dir -d 'Default cache directory' -x
@@ -431,6 +439,7 @@ complete -c oc -n "__fish_seen_subcommand_from rollback" -l show-managed-fields 
 complete -c oc -n "__fish_seen_subcommand_from rollback" -l template -d 'Template string or path to template file to use when -o=go-template, -o=go-template-file.' -x
 complete -c oc -n "__fish_seen_subcommand_from rollback" -l to-version -d 'A config version to rollback to.' -x
 complete -c oc -n "__fish_seen_subcommand_from rollback" -l add-dir-header -d 'If true, adds the file directory to the header of the log messages' -x
+complete -c oc -n "__fish_seen_subcommand_from rollback" -l add_dir_header -d 'If true, adds the file directory to the header of the log messages' -x
 complete -c oc -n "__fish_seen_subcommand_from rollback" -l alsologtostderr -d 'log to standard error as well as files' -x
 complete -c oc -n "__fish_seen_subcommand_from rollback" -l as -d 'Username to impersonate for the operation' -x
 complete -c oc -n "__fish_seen_subcommand_from rollback" -l cache-dir -d 'Default cache directory' -x
@@ -496,6 +505,7 @@ complete -c oc -n "__fish_seen_subcommand_from new-build" -l template -d 'Templa
 complete -c oc -n "__fish_seen_subcommand_from new-build" -l to -d 'Push built images to this image stream tag (or Docker image repository if --to-docker is set).' -x
 complete -c oc -n "__fish_seen_subcommand_from new-build" -l to-docker -d 'If true, have the build output push to a Docker repository.' -x
 complete -c oc -n "__fish_seen_subcommand_from new-build" -l add-dir-header -d 'If true, adds the file directory to the header of the log messages' -x
+complete -c oc -n "__fish_seen_subcommand_from new-build" -l add_dir_header -d 'If true, adds the file directory to the header of the log messages' -x
 complete -c oc -n "__fish_seen_subcommand_from new-build" -l alsologtostderr -d 'log to standard error as well as files' -x
 complete -c oc -n "__fish_seen_subcommand_from new-build" -l as -d 'Username to impersonate for the operation' -x
 complete -c oc -n "__fish_seen_subcommand_from new-build" -l cache-dir -d 'Default cache directory' -x
@@ -557,6 +567,7 @@ complete -c oc -n "__fish_seen_subcommand_from start-build" -l show-managed-fiel
 complete -c oc -n "__fish_seen_subcommand_from start-build" -l template -d 'Template string or path to template file to use when -o=go-template, -o=go-template-file.' -x
 complete -c oc -n "__fish_seen_subcommand_from start-build" -s w -l wait -d 'Wait for a build to complete and exit with a non-zero return code if the build fails' -x
 complete -c oc -n "__fish_seen_subcommand_from start-build" -l add-dir-header -d 'If true, adds the file directory to the header of the log messages' -x
+complete -c oc -n "__fish_seen_subcommand_from start-build" -l add_dir_header -d 'If true, adds the file directory to the header of the log messages' -x
 complete -c oc -n "__fish_seen_subcommand_from start-build" -l alsologtostderr -d 'log to standard error as well as files' -x
 complete -c oc -n "__fish_seen_subcommand_from start-build" -l as -d 'Username to impersonate for the operation' -x
 complete -c oc -n "__fish_seen_subcommand_from start-build" -l cache-dir -d 'Default cache directory' -x
@@ -602,6 +613,7 @@ complete -c oc -n "__fish_seen_subcommand_from cancel-build" -l restart -d 'Spec
 complete -c oc -n "__fish_seen_subcommand_from cancel-build" -l state -d 'Only cancel builds in this state'
 complete -c oc -n "__fish_seen_subcommand_from cancel-build" -l state -d 'Only cancel builds in this state' -x
 complete -c oc -n "__fish_seen_subcommand_from cancel-build" -l add-dir-header -d 'If true, adds the file directory to the header of the log messages' -x
+complete -c oc -n "__fish_seen_subcommand_from cancel-build" -l add_dir_header -d 'If true, adds the file directory to the header of the log messages' -x
 complete -c oc -n "__fish_seen_subcommand_from cancel-build" -l alsologtostderr -d 'log to standard error as well as files' -x
 complete -c oc -n "__fish_seen_subcommand_from cancel-build" -l as -d 'Username to impersonate for the operation' -x
 complete -c oc -n "__fish_seen_subcommand_from cancel-build" -l cache-dir -d 'Default cache directory' -x
@@ -654,6 +666,7 @@ complete -c oc -n "__fish_seen_subcommand_from import-image" -l scheduled -d 'Se
 complete -c oc -n "__fish_seen_subcommand_from import-image" -l show-managed-fields -d 'If true, keep the managedFields when printing objects in JSON or YAML format.' -x
 complete -c oc -n "__fish_seen_subcommand_from import-image" -l template -d 'Template string or path to template file to use when -o=go-template, -o=go-template-file.' -x
 complete -c oc -n "__fish_seen_subcommand_from import-image" -l add-dir-header -d 'If true, adds the file directory to the header of the log messages' -x
+complete -c oc -n "__fish_seen_subcommand_from import-image" -l add_dir_header -d 'If true, adds the file directory to the header of the log messages' -x
 complete -c oc -n "__fish_seen_subcommand_from import-image" -l alsologtostderr -d 'log to standard error as well as files' -x
 complete -c oc -n "__fish_seen_subcommand_from import-image" -l as -d 'Username to impersonate for the operation' -x
 complete -c oc -n "__fish_seen_subcommand_from import-image" -l cache-dir -d 'Default cache directory' -x
@@ -702,6 +715,7 @@ complete -c oc -n "__fish_seen_subcommand_from tag" -l reference-policy -d 'Allo
 complete -c oc -n "__fish_seen_subcommand_from tag" -l scheduled -d 'Set a container image to be periodically imported from a remote repository.' -x
 complete -c oc -n "__fish_seen_subcommand_from tag" -l source -d 'Optional hint for the source type; valid values are \'imagestreamtag\', \'istag\', \'imagestreamimage\', \'isimage\', and \'docker\'.' -x
 complete -c oc -n "__fish_seen_subcommand_from tag" -l add-dir-header -d 'If true, adds the file directory to the header of the log messages' -x
+complete -c oc -n "__fish_seen_subcommand_from tag" -l add_dir_header -d 'If true, adds the file directory to the header of the log messages' -x
 complete -c oc -n "__fish_seen_subcommand_from tag" -l alsologtostderr -d 'log to standard error as well as files' -x
 complete -c oc -n "__fish_seen_subcommand_from tag" -l as -d 'Username to impersonate for the operation' -x
 complete -c oc -n "__fish_seen_subcommand_from tag" -l cache-dir -d 'Default cache directory' -x
@@ -758,6 +772,7 @@ complete -c oc -n "__fish_seen_subcommand_from create" -l template -d 'Template 
 complete -c oc -n "__fish_seen_subcommand_from create" -l validate -d 'If true, use a schema to validate the input before sending it' -x
 complete -c oc -n "__fish_seen_subcommand_from create" -l windows-line-endings -d 'Only relevant if --edit=true.' -x
 complete -c oc -n "__fish_seen_subcommand_from create" -l add-dir-header -d 'If true, adds the file directory to the header of the log messages' -x
+complete -c oc -n "__fish_seen_subcommand_from create" -l add_dir_header -d 'If true, adds the file directory to the header of the log messages' -x
 complete -c oc -n "__fish_seen_subcommand_from create" -l alsologtostderr -d 'log to standard error as well as files' -x
 complete -c oc -n "__fish_seen_subcommand_from create" -l as -d 'Username to impersonate for the operation' -x
 complete -c oc -n "__fish_seen_subcommand_from create" -l cache-dir -d 'Default cache directory' -x
@@ -821,6 +836,7 @@ complete -c oc -n "__fish_seen_subcommand_from apply" -l timeout -d 'The length 
 complete -c oc -n "__fish_seen_subcommand_from apply" -l validate -d 'If true, use a schema to validate the input before sending it' -x
 complete -c oc -n "__fish_seen_subcommand_from apply" -l wait -d 'If true, wait for resources to be gone before returning.' -x
 complete -c oc -n "__fish_seen_subcommand_from apply" -l add-dir-header -d 'If true, adds the file directory to the header of the log messages' -x
+complete -c oc -n "__fish_seen_subcommand_from apply" -l add_dir_header -d 'If true, adds the file directory to the header of the log messages' -x
 complete -c oc -n "__fish_seen_subcommand_from apply" -l alsologtostderr -d 'log to standard error as well as files' -x
 complete -c oc -n "__fish_seen_subcommand_from apply" -l as -d 'Username to impersonate for the operation' -x
 complete -c oc -n "__fish_seen_subcommand_from apply" -l cache-dir -d 'Default cache directory' -x
@@ -882,6 +898,7 @@ complete -c oc -n "__fish_seen_subcommand_from get" -l template -d 'Template str
 complete -c oc -n "__fish_seen_subcommand_from get" -s w -l watch -d 'After listing/getting the requested object, watch for changes.' -x
 complete -c oc -n "__fish_seen_subcommand_from get" -l watch-only -d 'Watch for changes to the requested object(s), without listing/getting first.' -x
 complete -c oc -n "__fish_seen_subcommand_from get" -l add-dir-header -d 'If true, adds the file directory to the header of the log messages' -x
+complete -c oc -n "__fish_seen_subcommand_from get" -l add_dir_header -d 'If true, adds the file directory to the header of the log messages' -x
 complete -c oc -n "__fish_seen_subcommand_from get" -l alsologtostderr -d 'log to standard error as well as files' -x
 complete -c oc -n "__fish_seen_subcommand_from get" -l as -d 'Username to impersonate for the operation' -x
 complete -c oc -n "__fish_seen_subcommand_from get" -l cache-dir -d 'Default cache directory' -x
@@ -928,6 +945,7 @@ complete -c oc -n "__fish_seen_subcommand_from describe" -s R -l recursive -d 'P
 complete -c oc -n "__fish_seen_subcommand_from describe" -s l -l selector -d 'Selector (label query) to filter on, supports \'=\', \'==\', and \'!=\'.(e.g. -l key1=value1,key2=value2)' -x
 complete -c oc -n "__fish_seen_subcommand_from describe" -l show-events -d 'If true, display events related to the described object.' -x
 complete -c oc -n "__fish_seen_subcommand_from describe" -l add-dir-header -d 'If true, adds the file directory to the header of the log messages' -x
+complete -c oc -n "__fish_seen_subcommand_from describe" -l add_dir_header -d 'If true, adds the file directory to the header of the log messages' -x
 complete -c oc -n "__fish_seen_subcommand_from describe" -l alsologtostderr -d 'log to standard error as well as files' -x
 complete -c oc -n "__fish_seen_subcommand_from describe" -l as -d 'Username to impersonate for the operation' -x
 complete -c oc -n "__fish_seen_subcommand_from describe" -l cache-dir -d 'Default cache directory' -x
@@ -981,6 +999,7 @@ complete -c oc -n "__fish_seen_subcommand_from edit" -l template -d 'Template st
 complete -c oc -n "__fish_seen_subcommand_from edit" -l validate -d 'If true, use a schema to validate the input before sending it' -x
 complete -c oc -n "__fish_seen_subcommand_from edit" -l windows-line-endings -d 'Defaults to the line ending native to your platform.' -x
 complete -c oc -n "__fish_seen_subcommand_from edit" -l add-dir-header -d 'If true, adds the file directory to the header of the log messages' -x
+complete -c oc -n "__fish_seen_subcommand_from edit" -l add_dir_header -d 'If true, adds the file directory to the header of the log messages' -x
 complete -c oc -n "__fish_seen_subcommand_from edit" -l alsologtostderr -d 'log to standard error as well as files' -x
 complete -c oc -n "__fish_seen_subcommand_from edit" -l as -d 'Username to impersonate for the operation' -x
 complete -c oc -n "__fish_seen_subcommand_from edit" -l cache-dir -d 'Default cache directory' -x
@@ -1022,6 +1041,7 @@ complete -c oc -n "__fish_seen_subcommand_from edit" -l vmodule -d 'comma-separa
 
 
 complete -c oc -n "__fish_seen_subcommand_from set" -l add-dir-header -d 'If true, adds the file directory to the header of the log messages' -x
+complete -c oc -n "__fish_seen_subcommand_from set" -l add_dir_header -d 'If true, adds the file directory to the header of the log messages' -x
 complete -c oc -n "__fish_seen_subcommand_from set" -l alsologtostderr -d 'log to standard error as well as files' -x
 complete -c oc -n "__fish_seen_subcommand_from set" -l as -d 'Username to impersonate for the operation' -x
 complete -c oc -n "__fish_seen_subcommand_from set" -l cache-dir -d 'Default cache directory' -x
@@ -1079,6 +1099,7 @@ complete -c oc -n "__fish_seen_subcommand_from label" -s l -l selector -d 'Selec
 complete -c oc -n "__fish_seen_subcommand_from label" -l show-managed-fields -d 'If true, keep the managedFields when printing objects in JSON or YAML format.' -x
 complete -c oc -n "__fish_seen_subcommand_from label" -l template -d 'Template string or path to template file to use when -o=go-template, -o=go-template-file.' -x
 complete -c oc -n "__fish_seen_subcommand_from label" -l add-dir-header -d 'If true, adds the file directory to the header of the log messages' -x
+complete -c oc -n "__fish_seen_subcommand_from label" -l add_dir_header -d 'If true, adds the file directory to the header of the log messages' -x
 complete -c oc -n "__fish_seen_subcommand_from label" -l alsologtostderr -d 'log to standard error as well as files' -x
 complete -c oc -n "__fish_seen_subcommand_from label" -l as -d 'Username to impersonate for the operation' -x
 complete -c oc -n "__fish_seen_subcommand_from label" -l cache-dir -d 'Default cache directory' -x
@@ -1136,6 +1157,7 @@ complete -c oc -n "__fish_seen_subcommand_from annotate" -s l -l selector -d 'Se
 complete -c oc -n "__fish_seen_subcommand_from annotate" -l show-managed-fields -d 'If true, keep the managedFields when printing objects in JSON or YAML format.' -x
 complete -c oc -n "__fish_seen_subcommand_from annotate" -l template -d 'Template string or path to template file to use when -o=go-template, -o=go-template-file.' -x
 complete -c oc -n "__fish_seen_subcommand_from annotate" -l add-dir-header -d 'If true, adds the file directory to the header of the log messages' -x
+complete -c oc -n "__fish_seen_subcommand_from annotate" -l add_dir_header -d 'If true, adds the file directory to the header of the log messages' -x
 complete -c oc -n "__fish_seen_subcommand_from annotate" -l alsologtostderr -d 'log to standard error as well as files' -x
 complete -c oc -n "__fish_seen_subcommand_from annotate" -l as -d 'Username to impersonate for the operation' -x
 complete -c oc -n "__fish_seen_subcommand_from annotate" -l cache-dir -d 'Default cache directory' -x
@@ -1203,6 +1225,7 @@ complete -c oc -n "__fish_seen_subcommand_from expose" -l template -d 'Template 
 complete -c oc -n "__fish_seen_subcommand_from expose" -l type -d 'Type for this service: ClusterIP, NodePort, LoadBalancer, or ExternalName.' -x
 complete -c oc -n "__fish_seen_subcommand_from expose" -l wildcard-policy -d 'Sets the WildcardPolicy for the hostname, the default is "None".' -x
 complete -c oc -n "__fish_seen_subcommand_from expose" -l add-dir-header -d 'If true, adds the file directory to the header of the log messages' -x
+complete -c oc -n "__fish_seen_subcommand_from expose" -l add_dir_header -d 'If true, adds the file directory to the header of the log messages' -x
 complete -c oc -n "__fish_seen_subcommand_from expose" -l alsologtostderr -d 'log to standard error as well as files' -x
 complete -c oc -n "__fish_seen_subcommand_from expose" -l as -d 'Username to impersonate for the operation' -x
 complete -c oc -n "__fish_seen_subcommand_from expose" -l cache-dir -d 'Default cache directory' -x
@@ -1260,6 +1283,7 @@ complete -c oc -n "__fish_seen_subcommand_from delete" -s l -l selector -d 'Sele
 complete -c oc -n "__fish_seen_subcommand_from delete" -l timeout -d 'The length of time to wait before giving up on a delete, zero means determine a timeout from the size of the object' -x
 complete -c oc -n "__fish_seen_subcommand_from delete" -l wait -d 'If true, wait for resources to be gone before returning.' -x
 complete -c oc -n "__fish_seen_subcommand_from delete" -l add-dir-header -d 'If true, adds the file directory to the header of the log messages' -x
+complete -c oc -n "__fish_seen_subcommand_from delete" -l add_dir_header -d 'If true, adds the file directory to the header of the log messages' -x
 complete -c oc -n "__fish_seen_subcommand_from delete" -l alsologtostderr -d 'log to standard error as well as files' -x
 complete -c oc -n "__fish_seen_subcommand_from delete" -l as -d 'Username to impersonate for the operation' -x
 complete -c oc -n "__fish_seen_subcommand_from delete" -l cache-dir -d 'Default cache directory' -x
@@ -1315,6 +1339,7 @@ complete -c oc -n "__fish_seen_subcommand_from scale" -l show-managed-fields -d 
 complete -c oc -n "__fish_seen_subcommand_from scale" -l template -d 'Template string or path to template file to use when -o=go-template, -o=go-template-file.' -x
 complete -c oc -n "__fish_seen_subcommand_from scale" -l timeout -d 'The length of time to wait before giving up on a scale operation, zero means don\'t wait.' -x
 complete -c oc -n "__fish_seen_subcommand_from scale" -l add-dir-header -d 'If true, adds the file directory to the header of the log messages' -x
+complete -c oc -n "__fish_seen_subcommand_from scale" -l add_dir_header -d 'If true, adds the file directory to the header of the log messages' -x
 complete -c oc -n "__fish_seen_subcommand_from scale" -l alsologtostderr -d 'log to standard error as well as files' -x
 complete -c oc -n "__fish_seen_subcommand_from scale" -l as -d 'Username to impersonate for the operation' -x
 complete -c oc -n "__fish_seen_subcommand_from scale" -l cache-dir -d 'Default cache directory' -x
@@ -1370,6 +1395,7 @@ complete -c oc -n "__fish_seen_subcommand_from autoscale" -l save-config -d 'If 
 complete -c oc -n "__fish_seen_subcommand_from autoscale" -l show-managed-fields -d 'If true, keep the managedFields when printing objects in JSON or YAML format.' -x
 complete -c oc -n "__fish_seen_subcommand_from autoscale" -l template -d 'Template string or path to template file to use when -o=go-template, -o=go-template-file.' -x
 complete -c oc -n "__fish_seen_subcommand_from autoscale" -l add-dir-header -d 'If true, adds the file directory to the header of the log messages' -x
+complete -c oc -n "__fish_seen_subcommand_from autoscale" -l add_dir_header -d 'If true, adds the file directory to the header of the log messages' -x
 complete -c oc -n "__fish_seen_subcommand_from autoscale" -l alsologtostderr -d 'log to standard error as well as files' -x
 complete -c oc -n "__fish_seen_subcommand_from autoscale" -l as -d 'Username to impersonate for the operation' -x
 complete -c oc -n "__fish_seen_subcommand_from autoscale" -l cache-dir -d 'Default cache directory' -x
@@ -1427,6 +1453,7 @@ complete -c oc -n "__fish_seen_subcommand_from logs" -l tail -d 'Lines of recent
 complete -c oc -n "__fish_seen_subcommand_from logs" -l timestamps -d 'Include timestamps on each line in the log output' -x
 complete -c oc -n "__fish_seen_subcommand_from logs" -l version -d 'View the logs of a particular build or deployment by version if greater than zero' -x
 complete -c oc -n "__fish_seen_subcommand_from logs" -l add-dir-header -d 'If true, adds the file directory to the header of the log messages' -x
+complete -c oc -n "__fish_seen_subcommand_from logs" -l add_dir_header -d 'If true, adds the file directory to the header of the log messages' -x
 complete -c oc -n "__fish_seen_subcommand_from logs" -l alsologtostderr -d 'log to standard error as well as files' -x
 complete -c oc -n "__fish_seen_subcommand_from logs" -l as -d 'Username to impersonate for the operation' -x
 complete -c oc -n "__fish_seen_subcommand_from logs" -l cache-dir -d 'Default cache directory' -x
@@ -1473,6 +1500,7 @@ complete -c oc -n "__fish_seen_subcommand_from rsh" -l pod-running-timeout -d 'T
 complete -c oc -n "__fish_seen_subcommand_from rsh" -l shell -d 'Path to the shell command' -x
 complete -c oc -n "__fish_seen_subcommand_from rsh" -s t -l tty -d 'Force a pseudo-terminal to be allocated' -x
 complete -c oc -n "__fish_seen_subcommand_from rsh" -l add-dir-header -d 'If true, adds the file directory to the header of the log messages' -x
+complete -c oc -n "__fish_seen_subcommand_from rsh" -l add_dir_header -d 'If true, adds the file directory to the header of the log messages' -x
 complete -c oc -n "__fish_seen_subcommand_from rsh" -l alsologtostderr -d 'log to standard error as well as files' -x
 complete -c oc -n "__fish_seen_subcommand_from rsh" -l as -d 'Username to impersonate for the operation' -x
 complete -c oc -n "__fish_seen_subcommand_from rsh" -l cache-dir -d 'Default cache directory' -x
@@ -1522,6 +1550,7 @@ complete -c oc -n "__fish_seen_subcommand_from rsync" -s q -l quiet -d 'Suppress
 complete -c oc -n "__fish_seen_subcommand_from rsync" -l strategy -d 'Specify which strategy to use for copy: rsync, rsync-daemon, or tar' -x
 complete -c oc -n "__fish_seen_subcommand_from rsync" -s w -l watch -d 'Watch directory for changes and resync automatically' -x
 complete -c oc -n "__fish_seen_subcommand_from rsync" -l add-dir-header -d 'If true, adds the file directory to the header of the log messages' -x
+complete -c oc -n "__fish_seen_subcommand_from rsync" -l add_dir_header -d 'If true, adds the file directory to the header of the log messages' -x
 complete -c oc -n "__fish_seen_subcommand_from rsync" -l alsologtostderr -d 'log to standard error as well as files' -x
 complete -c oc -n "__fish_seen_subcommand_from rsync" -l as -d 'Username to impersonate for the operation' -x
 complete -c oc -n "__fish_seen_subcommand_from rsync" -l cache-dir -d 'Default cache directory' -x
@@ -1566,6 +1595,7 @@ complete -c oc -n "__fish_seen_subcommand_from port-forward" -l address -d 'Addr
 complete -c oc -n "__fish_seen_subcommand_from port-forward" -l address -d 'Addresses to listen on (comma separated).' -x
 complete -c oc -n "__fish_seen_subcommand_from port-forward" -l pod-running-timeout -d 'The length of time (like 5s, 2m, or 3h, higher than zero) to wait until at least one pod is running' -x
 complete -c oc -n "__fish_seen_subcommand_from port-forward" -l add-dir-header -d 'If true, adds the file directory to the header of the log messages' -x
+complete -c oc -n "__fish_seen_subcommand_from port-forward" -l add_dir_header -d 'If true, adds the file directory to the header of the log messages' -x
 complete -c oc -n "__fish_seen_subcommand_from port-forward" -l alsologtostderr -d 'log to standard error as well as files' -x
 complete -c oc -n "__fish_seen_subcommand_from port-forward" -l as -d 'Username to impersonate for the operation' -x
 complete -c oc -n "__fish_seen_subcommand_from port-forward" -l cache-dir -d 'Default cache directory' -x
@@ -1633,6 +1663,7 @@ complete -c oc -n "__fish_seen_subcommand_from debug" -l template -d 'Template s
 complete -c oc -n "__fish_seen_subcommand_from debug" -l to-namespace -d 'Override the namespace to create the pod into (instead of using --namespace).' -x
 complete -c oc -n "__fish_seen_subcommand_from debug" -s t -l tty -d 'Force a pseudo-terminal to be allocated' -x
 complete -c oc -n "__fish_seen_subcommand_from debug" -l add-dir-header -d 'If true, adds the file directory to the header of the log messages' -x
+complete -c oc -n "__fish_seen_subcommand_from debug" -l add_dir_header -d 'If true, adds the file directory to the header of the log messages' -x
 complete -c oc -n "__fish_seen_subcommand_from debug" -l alsologtostderr -d 'log to standard error as well as files' -x
 complete -c oc -n "__fish_seen_subcommand_from debug" -l as -d 'Username to impersonate for the operation' -x
 complete -c oc -n "__fish_seen_subcommand_from debug" -l cache-dir -d 'Default cache directory' -x
@@ -1679,6 +1710,7 @@ complete -c oc -n "__fish_seen_subcommand_from exec" -s q -l quiet -d 'Only prin
 complete -c oc -n "__fish_seen_subcommand_from exec" -s i -l stdin -d 'Pass stdin to the container' -x
 complete -c oc -n "__fish_seen_subcommand_from exec" -s t -l tty -d 'Stdin is a TTY' -x
 complete -c oc -n "__fish_seen_subcommand_from exec" -l add-dir-header -d 'If true, adds the file directory to the header of the log messages' -x
+complete -c oc -n "__fish_seen_subcommand_from exec" -l add_dir_header -d 'If true, adds the file directory to the header of the log messages' -x
 complete -c oc -n "__fish_seen_subcommand_from exec" -l alsologtostderr -d 'log to standard error as well as files' -x
 complete -c oc -n "__fish_seen_subcommand_from exec" -l as -d 'Username to impersonate for the operation' -x
 complete -c oc -n "__fish_seen_subcommand_from exec" -l cache-dir -d 'Default cache directory' -x
@@ -1732,6 +1764,7 @@ complete -c oc -n "__fish_seen_subcommand_from proxy" -s u -l unix-socket -d 'Un
 complete -c oc -n "__fish_seen_subcommand_from proxy" -s w -l www -d 'Also serve static files from the given directory under the specified prefix.' -x
 complete -c oc -n "__fish_seen_subcommand_from proxy" -s P -l www-prefix -d 'Prefix to serve static files under, if static file directory is specified.' -x
 complete -c oc -n "__fish_seen_subcommand_from proxy" -l add-dir-header -d 'If true, adds the file directory to the header of the log messages' -x
+complete -c oc -n "__fish_seen_subcommand_from proxy" -l add_dir_header -d 'If true, adds the file directory to the header of the log messages' -x
 complete -c oc -n "__fish_seen_subcommand_from proxy" -l alsologtostderr -d 'log to standard error as well as files' -x
 complete -c oc -n "__fish_seen_subcommand_from proxy" -l as -d 'Username to impersonate for the operation' -x
 complete -c oc -n "__fish_seen_subcommand_from proxy" -l cache-dir -d 'Default cache directory' -x
@@ -1778,6 +1811,7 @@ complete -c oc -n "__fish_seen_subcommand_from attach" -s q -l quiet -d 'Only pr
 complete -c oc -n "__fish_seen_subcommand_from attach" -s i -l stdin -d 'Pass stdin to the container' -x
 complete -c oc -n "__fish_seen_subcommand_from attach" -s t -l tty -d 'Stdin is a TTY' -x
 complete -c oc -n "__fish_seen_subcommand_from attach" -l add-dir-header -d 'If true, adds the file directory to the header of the log messages' -x
+complete -c oc -n "__fish_seen_subcommand_from attach" -l add_dir_header -d 'If true, adds the file directory to the header of the log messages' -x
 complete -c oc -n "__fish_seen_subcommand_from attach" -l alsologtostderr -d 'log to standard error as well as files' -x
 complete -c oc -n "__fish_seen_subcommand_from attach" -l as -d 'Username to impersonate for the operation' -x
 complete -c oc -n "__fish_seen_subcommand_from attach" -l cache-dir -d 'Default cache directory' -x
@@ -1850,6 +1884,7 @@ complete -c oc -n "__fish_seen_subcommand_from run" -l timeout -d 'The length of
 complete -c oc -n "__fish_seen_subcommand_from run" -s t -l tty -d 'Allocated a TTY for each container in the pod.' -x
 complete -c oc -n "__fish_seen_subcommand_from run" -l wait -d 'If true, wait for resources to be gone before returning.' -x
 complete -c oc -n "__fish_seen_subcommand_from run" -l add-dir-header -d 'If true, adds the file directory to the header of the log messages' -x
+complete -c oc -n "__fish_seen_subcommand_from run" -l add_dir_header -d 'If true, adds the file directory to the header of the log messages' -x
 complete -c oc -n "__fish_seen_subcommand_from run" -l alsologtostderr -d 'log to standard error as well as files' -x
 complete -c oc -n "__fish_seen_subcommand_from run" -l as -d 'Username to impersonate for the operation' -x
 complete -c oc -n "__fish_seen_subcommand_from run" -l cache-dir -d 'Default cache directory' -x
@@ -1893,6 +1928,7 @@ complete -c oc -n "__fish_seen_subcommand_from run" -l vmodule -d 'comma-separat
 complete -c oc -n "__fish_seen_subcommand_from cp" -s c -l container -d 'Container name.' -x
 complete -c oc -n "__fish_seen_subcommand_from cp" -l no-preserve -d 'The copied file/directory\'s ownership and permissions will not be preserved in the container' -x
 complete -c oc -n "__fish_seen_subcommand_from cp" -l add-dir-header -d 'If true, adds the file directory to the header of the log messages' -x
+complete -c oc -n "__fish_seen_subcommand_from cp" -l add_dir_header -d 'If true, adds the file directory to the header of the log messages' -x
 complete -c oc -n "__fish_seen_subcommand_from cp" -l alsologtostderr -d 'log to standard error as well as files' -x
 complete -c oc -n "__fish_seen_subcommand_from cp" -l as -d 'Username to impersonate for the operation' -x
 complete -c oc -n "__fish_seen_subcommand_from cp" -l cache-dir -d 'Default cache directory' -x
@@ -1946,6 +1982,7 @@ complete -c oc -n "__fish_seen_subcommand_from wait" -l show-managed-fields -d '
 complete -c oc -n "__fish_seen_subcommand_from wait" -l template -d 'Template string or path to template file to use when -o=go-template, -o=go-template-file.' -x
 complete -c oc -n "__fish_seen_subcommand_from wait" -l timeout -d 'The length of time to wait before giving up.' -x
 complete -c oc -n "__fish_seen_subcommand_from wait" -l add-dir-header -d 'If true, adds the file directory to the header of the log messages' -x
+complete -c oc -n "__fish_seen_subcommand_from wait" -l add_dir_header -d 'If true, adds the file directory to the header of the log messages' -x
 complete -c oc -n "__fish_seen_subcommand_from wait" -l alsologtostderr -d 'log to standard error as well as files' -x
 complete -c oc -n "__fish_seen_subcommand_from wait" -l as -d 'Username to impersonate for the operation' -x
 complete -c oc -n "__fish_seen_subcommand_from wait" -l cache-dir -d 'Default cache directory' -x
@@ -1987,6 +2024,7 @@ complete -c oc -n "__fish_seen_subcommand_from wait" -l vmodule -d 'comma-separa
 
 
 complete -c oc -n "__fish_seen_subcommand_from adm" -l add-dir-header -d 'If true, adds the file directory to the header of the log messages' -x
+complete -c oc -n "__fish_seen_subcommand_from adm" -l add_dir_header -d 'If true, adds the file directory to the header of the log messages' -x
 complete -c oc -n "__fish_seen_subcommand_from adm" -l alsologtostderr -d 'log to standard error as well as files' -x
 complete -c oc -n "__fish_seen_subcommand_from adm" -l as -d 'Username to impersonate for the operation' -x
 complete -c oc -n "__fish_seen_subcommand_from adm" -l cache-dir -d 'Default cache directory' -x
@@ -2044,6 +2082,7 @@ complete -c oc -n "__fish_seen_subcommand_from replace" -l timeout -d 'The lengt
 complete -c oc -n "__fish_seen_subcommand_from replace" -l validate -d 'If true, use a schema to validate the input before sending it' -x
 complete -c oc -n "__fish_seen_subcommand_from replace" -l wait -d 'If true, wait for resources to be gone before returning.' -x
 complete -c oc -n "__fish_seen_subcommand_from replace" -l add-dir-header -d 'If true, adds the file directory to the header of the log messages' -x
+complete -c oc -n "__fish_seen_subcommand_from replace" -l add_dir_header -d 'If true, adds the file directory to the header of the log messages' -x
 complete -c oc -n "__fish_seen_subcommand_from replace" -l alsologtostderr -d 'log to standard error as well as files' -x
 complete -c oc -n "__fish_seen_subcommand_from replace" -l as -d 'Username to impersonate for the operation' -x
 complete -c oc -n "__fish_seen_subcommand_from replace" -l cache-dir -d 'Default cache directory' -x
@@ -2098,6 +2137,7 @@ complete -c oc -n "__fish_seen_subcommand_from patch" -l show-managed-fields -d 
 complete -c oc -n "__fish_seen_subcommand_from patch" -l template -d 'Template string or path to template file to use when -o=go-template, -o=go-template-file.' -x
 complete -c oc -n "__fish_seen_subcommand_from patch" -l type -d 'The type of patch being provided; one of [json merge strategic]' -x
 complete -c oc -n "__fish_seen_subcommand_from patch" -l add-dir-header -d 'If true, adds the file directory to the header of the log messages' -x
+complete -c oc -n "__fish_seen_subcommand_from patch" -l add_dir_header -d 'If true, adds the file directory to the header of the log messages' -x
 complete -c oc -n "__fish_seen_subcommand_from patch" -l alsologtostderr -d 'log to standard error as well as files' -x
 complete -c oc -n "__fish_seen_subcommand_from patch" -l as -d 'Username to impersonate for the operation' -x
 complete -c oc -n "__fish_seen_subcommand_from patch" -l cache-dir -d 'Default cache directory' -x
@@ -2149,6 +2189,7 @@ complete -c oc -n "__fish_seen_subcommand_from process" -l raw -d 'If true, outp
 complete -c oc -n "__fish_seen_subcommand_from process" -l show-managed-fields -d 'If true, keep the managedFields when printing objects in JSON or YAML format.' -x
 complete -c oc -n "__fish_seen_subcommand_from process" -l template -d 'Template string or path to template file to use when -o=go-template, -o=go-template-file.' -x
 complete -c oc -n "__fish_seen_subcommand_from process" -l add-dir-header -d 'If true, adds the file directory to the header of the log messages' -x
+complete -c oc -n "__fish_seen_subcommand_from process" -l add_dir_header -d 'If true, adds the file directory to the header of the log messages' -x
 complete -c oc -n "__fish_seen_subcommand_from process" -l alsologtostderr -d 'log to standard error as well as files' -x
 complete -c oc -n "__fish_seen_subcommand_from process" -l as -d 'Username to impersonate for the operation' -x
 complete -c oc -n "__fish_seen_subcommand_from process" -l cache-dir -d 'Default cache directory' -x
@@ -2192,6 +2233,7 @@ complete -c oc -n "__fish_seen_subcommand_from process" -l vmodule -d 'comma-sep
 complete -c oc -n "__fish_seen_subcommand_from extract" -l confirm -d 'If true, overwrite files that already exist.' -x
 complete -c oc -n "__fish_seen_subcommand_from extract" -l to -d 'Directory to extract files to.' -x
 complete -c oc -n "__fish_seen_subcommand_from extract" -l add-dir-header -d 'If true, adds the file directory to the header of the log messages' -x
+complete -c oc -n "__fish_seen_subcommand_from extract" -l add_dir_header -d 'If true, adds the file directory to the header of the log messages' -x
 complete -c oc -n "__fish_seen_subcommand_from extract" -l alsologtostderr -d 'log to standard error as well as files' -x
 complete -c oc -n "__fish_seen_subcommand_from extract" -l as -d 'Username to impersonate for the operation' -x
 complete -c oc -n "__fish_seen_subcommand_from extract" -l cache-dir -d 'Default cache directory' -x
@@ -2252,6 +2294,7 @@ complete -c oc -n "__fish_seen_subcommand_from observe" -s l -l selector -d 'Sel
 complete -c oc -n "__fish_seen_subcommand_from observe" -l template -d 'Template string or path to template file to use when -o=go-template, -o=go-template-file.' -x
 complete -c oc -n "__fish_seen_subcommand_from observe" -l type-env-var -d 'The name of an env var to set with the type of event received (\'Sync\', \'Updated\', \'Deleted\', \'Added\') to the reaction command or --delete.' -x
 complete -c oc -n "__fish_seen_subcommand_from observe" -l add-dir-header -d 'If true, adds the file directory to the header of the log messages' -x
+complete -c oc -n "__fish_seen_subcommand_from observe" -l add_dir_header -d 'If true, adds the file directory to the header of the log messages' -x
 complete -c oc -n "__fish_seen_subcommand_from observe" -l alsologtostderr -d 'log to standard error as well as files' -x
 complete -c oc -n "__fish_seen_subcommand_from observe" -l as -d 'Username to impersonate for the operation' -x
 complete -c oc -n "__fish_seen_subcommand_from observe" -l cache-dir -d 'Default cache directory' -x
@@ -2293,6 +2336,7 @@ complete -c oc -n "__fish_seen_subcommand_from observe" -l vmodule -d 'comma-sep
 
 
 complete -c oc -n "__fish_seen_subcommand_from policy" -l add-dir-header -d 'If true, adds the file directory to the header of the log messages' -x
+complete -c oc -n "__fish_seen_subcommand_from policy" -l add_dir_header -d 'If true, adds the file directory to the header of the log messages' -x
 complete -c oc -n "__fish_seen_subcommand_from policy" -l alsologtostderr -d 'log to standard error as well as files' -x
 complete -c oc -n "__fish_seen_subcommand_from policy" -l as -d 'Username to impersonate for the operation' -x
 complete -c oc -n "__fish_seen_subcommand_from policy" -l cache-dir -d 'Default cache directory' -x
@@ -2334,6 +2378,7 @@ complete -c oc -n "__fish_seen_subcommand_from policy" -l vmodule -d 'comma-sepa
 
 
 complete -c oc -n "__fish_seen_subcommand_from image" -l add-dir-header -d 'If true, adds the file directory to the header of the log messages' -x
+complete -c oc -n "__fish_seen_subcommand_from image" -l add_dir_header -d 'If true, adds the file directory to the header of the log messages' -x
 complete -c oc -n "__fish_seen_subcommand_from image" -l alsologtostderr -d 'log to standard error as well as files' -x
 complete -c oc -n "__fish_seen_subcommand_from image" -l as -d 'Username to impersonate for the operation' -x
 complete -c oc -n "__fish_seen_subcommand_from image" -l cache-dir -d 'Default cache directory' -x
@@ -2380,6 +2425,7 @@ complete -c oc -n "__fish_seen_subcommand_from idle" -l dry-run -d 'If true, onl
 complete -c oc -n "__fish_seen_subcommand_from idle" -l resource-names-file -d 'file containing list of services whose scalable resources to idle' -x
 complete -c oc -n "__fish_seen_subcommand_from idle" -s l -l selector -d 'Selector (label query) to use to select services' -x
 complete -c oc -n "__fish_seen_subcommand_from idle" -l add-dir-header -d 'If true, adds the file directory to the header of the log messages' -x
+complete -c oc -n "__fish_seen_subcommand_from idle" -l add_dir_header -d 'If true, adds the file directory to the header of the log messages' -x
 complete -c oc -n "__fish_seen_subcommand_from idle" -l alsologtostderr -d 'log to standard error as well as files' -x
 complete -c oc -n "__fish_seen_subcommand_from idle" -l as -d 'Username to impersonate for the operation' -x
 complete -c oc -n "__fish_seen_subcommand_from idle" -l cache-dir -d 'Default cache directory' -x
@@ -2427,6 +2473,7 @@ complete -c oc -n "__fish_seen_subcommand_from api-resources" -l no-headers -d '
 complete -c oc -n "__fish_seen_subcommand_from api-resources" -s o -l output -d 'Output format.' -x
 complete -c oc -n "__fish_seen_subcommand_from api-resources" -l sort-by -d 'If non-empty, sort list of resources using specified field.' -x
 complete -c oc -n "__fish_seen_subcommand_from api-resources" -l add-dir-header -d 'If true, adds the file directory to the header of the log messages' -x
+complete -c oc -n "__fish_seen_subcommand_from api-resources" -l add_dir_header -d 'If true, adds the file directory to the header of the log messages' -x
 complete -c oc -n "__fish_seen_subcommand_from api-resources" -l alsologtostderr -d 'log to standard error as well as files' -x
 complete -c oc -n "__fish_seen_subcommand_from api-resources" -l as -d 'Username to impersonate for the operation' -x
 complete -c oc -n "__fish_seen_subcommand_from api-resources" -l cache-dir -d 'Default cache directory' -x
@@ -2474,6 +2521,7 @@ complete -c oc -n "__fish_seen_subcommand_from diff" -s R -l recursive -d 'Proce
 complete -c oc -n "__fish_seen_subcommand_from diff" -s l -l selector -d 'Selector (label query) to filter on, supports \'=\', \'==\', and \'!=\'.(e.g. -l key1=value1,key2=value2)' -x
 complete -c oc -n "__fish_seen_subcommand_from diff" -l server-side -d 'If true, apply runs in the server instead of the client.' -x
 complete -c oc -n "__fish_seen_subcommand_from diff" -l add-dir-header -d 'If true, adds the file directory to the header of the log messages' -x
+complete -c oc -n "__fish_seen_subcommand_from diff" -l add_dir_header -d 'If true, adds the file directory to the header of the log messages' -x
 complete -c oc -n "__fish_seen_subcommand_from diff" -l alsologtostderr -d 'log to standard error as well as files' -x
 complete -c oc -n "__fish_seen_subcommand_from diff" -l as -d 'Username to impersonate for the operation' -x
 complete -c oc -n "__fish_seen_subcommand_from diff" -l cache-dir -d 'Default cache directory' -x
@@ -2524,6 +2572,7 @@ complete -c oc -n "__fish_seen_subcommand_from kustomize" -l network-name -d 'th
 complete -c oc -n "__fish_seen_subcommand_from kustomize" -s o -l output -d 'If specified, write output to this path.' -x
 complete -c oc -n "__fish_seen_subcommand_from kustomize" -l reorder -d 'Reorder the resources just before output.' -x
 complete -c oc -n "__fish_seen_subcommand_from kustomize" -l add-dir-header -d 'If true, adds the file directory to the header of the log messages' -x
+complete -c oc -n "__fish_seen_subcommand_from kustomize" -l add_dir_header -d 'If true, adds the file directory to the header of the log messages' -x
 complete -c oc -n "__fish_seen_subcommand_from kustomize" -l alsologtostderr -d 'log to standard error as well as files' -x
 complete -c oc -n "__fish_seen_subcommand_from kustomize" -l as -d 'Username to impersonate for the operation' -x
 complete -c oc -n "__fish_seen_subcommand_from kustomize" -l cache-dir -d 'Default cache directory' -x
@@ -2565,6 +2614,7 @@ complete -c oc -n "__fish_seen_subcommand_from kustomize" -l vmodule -d 'comma-s
 
 
 complete -c oc -n "__fish_seen_subcommand_from logout" -l add-dir-header -d 'If true, adds the file directory to the header of the log messages' -x
+complete -c oc -n "__fish_seen_subcommand_from logout" -l add_dir_header -d 'If true, adds the file directory to the header of the log messages' -x
 complete -c oc -n "__fish_seen_subcommand_from logout" -l alsologtostderr -d 'log to standard error as well as files' -x
 complete -c oc -n "__fish_seen_subcommand_from logout" -l as -d 'Username to impersonate for the operation' -x
 complete -c oc -n "__fish_seen_subcommand_from logout" -l cache-dir -d 'Default cache directory' -x
@@ -2606,6 +2656,7 @@ complete -c oc -n "__fish_seen_subcommand_from logout" -l vmodule -d 'comma-sepa
 
 
 complete -c oc -n "__fish_seen_subcommand_from config" -l add-dir-header -d 'If true, adds the file directory to the header of the log messages' -x
+complete -c oc -n "__fish_seen_subcommand_from config" -l add_dir_header -d 'If true, adds the file directory to the header of the log messages' -x
 complete -c oc -n "__fish_seen_subcommand_from config" -l alsologtostderr -d 'log to standard error as well as files' -x
 complete -c oc -n "__fish_seen_subcommand_from config" -l as -d 'Username to impersonate for the operation' -x
 complete -c oc -n "__fish_seen_subcommand_from config" -l cache-dir -d 'Default cache directory' -x
@@ -2651,6 +2702,7 @@ complete -c oc -n "__fish_seen_subcommand_from whoami" -s c -l show-context -d '
 complete -c oc -n "__fish_seen_subcommand_from whoami" -l show-server -d 'If true, print the current server\'s REST API URL' -x
 complete -c oc -n "__fish_seen_subcommand_from whoami" -s t -l show-token -d 'Print the token the current session is using.' -x
 complete -c oc -n "__fish_seen_subcommand_from whoami" -l add-dir-header -d 'If true, adds the file directory to the header of the log messages' -x
+complete -c oc -n "__fish_seen_subcommand_from whoami" -l add_dir_header -d 'If true, adds the file directory to the header of the log messages' -x
 complete -c oc -n "__fish_seen_subcommand_from whoami" -l alsologtostderr -d 'log to standard error as well as files' -x
 complete -c oc -n "__fish_seen_subcommand_from whoami" -l as -d 'Username to impersonate for the operation' -x
 complete -c oc -n "__fish_seen_subcommand_from whoami" -l cache-dir -d 'Default cache directory' -x
@@ -2691,5 +2743,86 @@ complete -c oc -n "__fish_seen_subcommand_from whoami" -l vmodule -d 'comma-sepa
 
 
 
+complete -c oc -n "__fish_seen_subcommand_from completion" -l add-dir-header -d 'If true, adds the file directory to the header of the log messages' -x
+complete -c oc -n "__fish_seen_subcommand_from completion" -l add_dir_header -d 'If true, adds the file directory to the header of the log messages' -x
+complete -c oc -n "__fish_seen_subcommand_from completion" -l alsologtostderr -d 'log to standard error as well as files' -x
+complete -c oc -n "__fish_seen_subcommand_from completion" -l as -d 'Username to impersonate for the operation' -x
+complete -c oc -n "__fish_seen_subcommand_from completion" -l cache-dir -d 'Default cache directory' -x
+complete -c oc -n "__fish_seen_subcommand_from completion" -l certificate-authority -d 'Path to a cert file for the certificate authority' -x
+complete -c oc -n "__fish_seen_subcommand_from completion" -l client-certificate -d 'Path to a client certificate file for TLS' -x
+complete -c oc -n "__fish_seen_subcommand_from completion" -l client-key -d 'Path to a client key file for TLS' -x
+complete -c oc -n "__fish_seen_subcommand_from completion" -l cluster -d 'The name of the kubeconfig cluster to use' -x
+complete -c oc -n "__fish_seen_subcommand_from completion" -l context -d 'The name of the kubeconfig context to use' -x
+complete -c oc -n "__fish_seen_subcommand_from completion" -l insecure-skip-tls-verify -d 'If true, the server\'s certificate will not be checked for validity.' -x
+complete -c oc -n "__fish_seen_subcommand_from completion" -l kubeconfig -d 'Path to the kubeconfig file to use for CLI requests.' -x
+complete -c oc -n "__fish_seen_subcommand_from completion" -l log-backtrace-at -d 'when logging hits line file:N, emit a stack trace' -x
+complete -c oc -n "__fish_seen_subcommand_from completion" -l log-dir -d 'If non-empty, write log files in this directory' -x
+complete -c oc -n "__fish_seen_subcommand_from completion" -l log-file -d 'If non-empty, use this log file' -x
+complete -c oc -n "__fish_seen_subcommand_from completion" -l log-file-max-size -d 'Defines the maximum size a log file can grow to.' -x
+complete -c oc -n "__fish_seen_subcommand_from completion" -l log-flush-frequency -d 'Maximum number of seconds between log flushes' -x
+complete -c oc -n "__fish_seen_subcommand_from completion" -l log_backtrace_at -d 'when logging hits line file:N, emit a stack trace' -x
+complete -c oc -n "__fish_seen_subcommand_from completion" -l log_dir -d 'If non-empty, write log files in this directory' -x
+complete -c oc -n "__fish_seen_subcommand_from completion" -l log_file -d 'If non-empty, use this log file' -x
+complete -c oc -n "__fish_seen_subcommand_from completion" -l log_file_max_size -d 'Defines the maximum size a log file can grow to.' -x
+complete -c oc -n "__fish_seen_subcommand_from completion" -l loglevel -d 'Set the level of log output (0-10)' -x
+complete -c oc -n "__fish_seen_subcommand_from completion" -l logtostderr -d 'log to standard error instead of files' -x
+complete -c oc -n "__fish_seen_subcommand_from completion" -l match-server-version -d 'Require server version to match client version' -x
+complete -c oc -n "__fish_seen_subcommand_from completion" -s n -l namespace -d 'If present, the namespace scope for this CLI request' -x
+complete -c oc -n "__fish_seen_subcommand_from completion" -l one-output -d 'If true, only write logs to their native severity level (vs also writing to each lower severity level)' -x
+complete -c oc -n "__fish_seen_subcommand_from completion" -l one_output -d 'If true, only write logs to their native severity level (vs also writing to each lower severity level)' -x
+complete -c oc -n "__fish_seen_subcommand_from completion" -l request-timeout -d 'The length of time to wait before giving up on a single server request.' -x
+complete -c oc -n "__fish_seen_subcommand_from completion" -s s -l server -d 'The address and port of the Kubernetes API server' -x
+complete -c oc -n "__fish_seen_subcommand_from completion" -l skip-headers -d 'If true, avoid header prefixes in the log messages' -x
+complete -c oc -n "__fish_seen_subcommand_from completion" -l skip-log-headers -d 'If true, avoid headers when opening log files' -x
+complete -c oc -n "__fish_seen_subcommand_from completion" -l skip_headers -d 'If true, avoid header prefixes in the log messages' -x
+complete -c oc -n "__fish_seen_subcommand_from completion" -l skip_log_headers -d 'If true, avoid headers when opening log files' -x
+complete -c oc -n "__fish_seen_subcommand_from completion" -l stderrthreshold -d 'logs at or above this threshold go to stderr' -x
+complete -c oc -n "__fish_seen_subcommand_from completion" -l tls-server-name -d 'Server name to use for server certificate validation.' -x
+complete -c oc -n "__fish_seen_subcommand_from completion" -l token -d 'Bearer token for authentication to the API server' -x
+complete -c oc -n "__fish_seen_subcommand_from completion" -l user -d 'The name of the kubeconfig user to use' -x
+complete -c oc -n "__fish_seen_subcommand_from completion" -s v -l v -d 'number for the log level verbosity' -x
+complete -c oc -n "__fish_seen_subcommand_from completion" -l vmodule -d 'comma-separated list of pattern=N settings for file-filtered logging'
+
+
+
 complete -c oc -n "__fish_seen_subcommand_from version" -l client -d 'Client version only (no server required).' -x
 complete -c oc -n "__fish_seen_subcommand_from version" -s o -l output -d 'One of \'yaml\' or \'json\'.' -x
+complete -c oc -n "__fish_seen_subcommand_from version" -l add-dir-header -d 'If true, adds the file directory to the header of the log messages' -x
+complete -c oc -n "__fish_seen_subcommand_from version" -l add_dir_header -d 'If true, adds the file directory to the header of the log messages' -x
+complete -c oc -n "__fish_seen_subcommand_from version" -l alsologtostderr -d 'log to standard error as well as files' -x
+complete -c oc -n "__fish_seen_subcommand_from version" -l as -d 'Username to impersonate for the operation' -x
+complete -c oc -n "__fish_seen_subcommand_from version" -l cache-dir -d 'Default cache directory' -x
+complete -c oc -n "__fish_seen_subcommand_from version" -l certificate-authority -d 'Path to a cert file for the certificate authority' -x
+complete -c oc -n "__fish_seen_subcommand_from version" -l client-certificate -d 'Path to a client certificate file for TLS' -x
+complete -c oc -n "__fish_seen_subcommand_from version" -l client-key -d 'Path to a client key file for TLS' -x
+complete -c oc -n "__fish_seen_subcommand_from version" -l cluster -d 'The name of the kubeconfig cluster to use' -x
+complete -c oc -n "__fish_seen_subcommand_from version" -l context -d 'The name of the kubeconfig context to use' -x
+complete -c oc -n "__fish_seen_subcommand_from version" -l insecure-skip-tls-verify -d 'If true, the server\'s certificate will not be checked for validity.' -x
+complete -c oc -n "__fish_seen_subcommand_from version" -l kubeconfig -d 'Path to the kubeconfig file to use for CLI requests.' -x
+complete -c oc -n "__fish_seen_subcommand_from version" -l log-backtrace-at -d 'when logging hits line file:N, emit a stack trace' -x
+complete -c oc -n "__fish_seen_subcommand_from version" -l log-dir -d 'If non-empty, write log files in this directory' -x
+complete -c oc -n "__fish_seen_subcommand_from version" -l log-file -d 'If non-empty, use this log file' -x
+complete -c oc -n "__fish_seen_subcommand_from version" -l log-file-max-size -d 'Defines the maximum size a log file can grow to.' -x
+complete -c oc -n "__fish_seen_subcommand_from version" -l log-flush-frequency -d 'Maximum number of seconds between log flushes' -x
+complete -c oc -n "__fish_seen_subcommand_from version" -l log_backtrace_at -d 'when logging hits line file:N, emit a stack trace' -x
+complete -c oc -n "__fish_seen_subcommand_from version" -l log_dir -d 'If non-empty, write log files in this directory' -x
+complete -c oc -n "__fish_seen_subcommand_from version" -l log_file -d 'If non-empty, use this log file' -x
+complete -c oc -n "__fish_seen_subcommand_from version" -l log_file_max_size -d 'Defines the maximum size a log file can grow to.' -x
+complete -c oc -n "__fish_seen_subcommand_from version" -l loglevel -d 'Set the level of log output (0-10)' -x
+complete -c oc -n "__fish_seen_subcommand_from version" -l logtostderr -d 'log to standard error instead of files' -x
+complete -c oc -n "__fish_seen_subcommand_from version" -l match-server-version -d 'Require server version to match client version' -x
+complete -c oc -n "__fish_seen_subcommand_from version" -s n -l namespace -d 'If present, the namespace scope for this CLI request' -x
+complete -c oc -n "__fish_seen_subcommand_from version" -l one-output -d 'If true, only write logs to their native severity level (vs also writing to each lower severity level)' -x
+complete -c oc -n "__fish_seen_subcommand_from version" -l one_output -d 'If true, only write logs to their native severity level (vs also writing to each lower severity level)' -x
+complete -c oc -n "__fish_seen_subcommand_from version" -l request-timeout -d 'The length of time to wait before giving up on a single server request.' -x
+complete -c oc -n "__fish_seen_subcommand_from version" -s s -l server -d 'The address and port of the Kubernetes API server' -x
+complete -c oc -n "__fish_seen_subcommand_from version" -l skip-headers -d 'If true, avoid header prefixes in the log messages' -x
+complete -c oc -n "__fish_seen_subcommand_from version" -l skip-log-headers -d 'If true, avoid headers when opening log files' -x
+complete -c oc -n "__fish_seen_subcommand_from version" -l skip_headers -d 'If true, avoid header prefixes in the log messages' -x
+complete -c oc -n "__fish_seen_subcommand_from version" -l skip_log_headers -d 'If true, avoid headers when opening log files' -x
+complete -c oc -n "__fish_seen_subcommand_from version" -l stderrthreshold -d 'logs at or above this threshold go to stderr' -x
+complete -c oc -n "__fish_seen_subcommand_from version" -l tls-server-name -d 'Server name to use for server certificate validation.' -x
+complete -c oc -n "__fish_seen_subcommand_from version" -l token -d 'Bearer token for authentication to the API server' -x
+complete -c oc -n "__fish_seen_subcommand_from version" -l user -d 'The name of the kubeconfig user to use' -x
+complete -c oc -n "__fish_seen_subcommand_from version" -s v -l v -d 'number for the log level verbosity' -x
+complete -c oc -n "__fish_seen_subcommand_from version" -l vmodule -d 'comma-separated list of pattern=N settings for file-filtered logging'

@@ -1,4 +1,4 @@
-# Generated with h2o 0.1.18
+# Auto-generated with h2o
 
 complete -c ansible -l ask-vault-pass -d 'ask for vault password'
 complete -c ansible -l become-method -d 'privilege escalation method to use (default=%(default)s), use ansible-doc -t become -l to list valid choices.' -x

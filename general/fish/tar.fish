@@ -1,4 +1,4 @@
-# Generated with h2o 0.1.18
+# Auto-generated with h2o
 
 complete -c tar -l add-file -d 'add given FILE to the archive (useful if its name starts with a dash)' -r
 complete -c tar -s C -l directory -d 'change to directory DIR' -r

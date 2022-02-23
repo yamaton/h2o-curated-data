@@ -1,4 +1,4 @@
-# Generated with h2o 0.1.18
+# Auto-generated with h2o
 
 complete -c xargs -s 0 -l null -d 'items are separated by a null, not whitespace; disables quote and backslash processing and logical EOF processing'
 complete -c xargs -s a -l arg-file -d 'read arguments from FILE, not standard input' -r

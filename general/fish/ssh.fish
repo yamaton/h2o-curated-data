@@ -1,4 +1,4 @@
-# Generated with h2o 0.1.18
+# Auto-generated with h2o
 
 complete -c ssh -s 4 -d 'Forces ssh to use IPv4 addresses only.'
 complete -c ssh -s 6 -d 'Forces ssh to use IPv6 addresses only.'
@@ -32,7 +32,7 @@ complete -c ssh -s p -d 'Port to connect to on the remote host.' -x
 complete -c ssh -s Q -d 'Queries ssh for the algorithms supported for the specified version 2.' -x
 complete -c ssh -s q -d 'Quiet mode.'
 complete -c ssh -s R -d 'Specifies that connections to the given TCP port or Unix socket on the remote (server) host are to be forwarded to the local side.' -x
-complete -c ssh -s S -d 'Specifies the location of a control socket for connection sharing, or the string “none” to disable connection sharing.' -x
+complete -c ssh -s S -d 'Specifies the location of a control socket for connection sharing, or the string “none” to disable connection sharing.' -r
 complete -c ssh -s s -d 'May be used to request invocation of a subsystem on the remote system.'
 complete -c ssh -s T -d 'Disable pseudo-terminal allocation.'
 complete -c ssh -s t -d 'Force pseudo-terminal allocation.'

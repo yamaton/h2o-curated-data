@@ -1,4 +1,4 @@
-# Generated with h2o 0.1.18
+# Auto-generated with h2o
 
 complete -c compare -o alpha -d 'on, activate, off, deactivate, set, opaque, copy transparent, extract, background, or shape' -x
 complete -c compare -o authenticate -d 'decipher image with this password' -x

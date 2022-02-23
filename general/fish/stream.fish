@@ -1,4 +1,4 @@
-# Generated with h2o 0.1.18
+# Auto-generated with h2o
 
 complete -c stream -o authenticate -d 'decipher image with this password' -x
 complete -c stream -o channel -d 'apply option to select image channels' -x

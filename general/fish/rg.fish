@@ -1,4 +1,4 @@
-# Generated with h2o 0.1.18
+# Auto-generated with h2o
 
 complete -c rg -s A -l after-context -d 'Show NUM lines after each match.' -x
 complete -c rg -l auto-hybrid-regex -d 'DEPRECATED.'
@@ -34,7 +34,7 @@ complete -c rg -l heading -d 'This flag prints the file path above clusters of m
 complete -c rg -s . -l hidden -d 'Search hidden files and directories.'
 complete -c rg -l iglob -d 'Include or exclude files and directories for searching that match the given glob.' -x
 complete -c rg -s i -l ignore-case -d 'When this flag is provided, the given patterns will be searched case insensitively.'
-complete -c rg -l ignore-file -d 'Specifies a path to one or more .gitignore format rules files.' -x
+complete -c rg -l ignore-file -d 'Specifies a path to one or more .gitignore format rules files.' -r
 complete -c rg -l ignore-file-case-insensitive -d 'Process ignore files (.gitignore, .ignore, etc.) case insensitively.'
 complete -c rg -l include-zero -d 'When used with --count or --count-matches, print the number of matches for each file even if there were zero matches.'
 complete -c rg -s v -l invert-match -d 'Invert matching.'

@@ -1,28 +1,28 @@
-# Generated with h2o 0.1.18
+# Auto-generated with h2o
 
-complete -c git -n __fish_use_subcommand -x -a clone -d 'Clone a repository into a new directory'
-complete -c git -n __fish_use_subcommand -x -a init -d 'Create an empty Git repository or reinitialize an existing one'
-complete -c git -n __fish_use_subcommand -x -a add -d 'Add file contents to the index'
-complete -c git -n __fish_use_subcommand -x -a mv -d 'Move or rename a file, a directory, or a symlink'
-complete -c git -n __fish_use_subcommand -x -a restore -d 'Restore working tree files'
-complete -c git -n __fish_use_subcommand -x -a rm -d 'Remove files from the working tree and from the index'
-complete -c git -n __fish_use_subcommand -x -a sparse-checkout -d 'Initialize and modify the sparse-checkout'
-complete -c git -n __fish_use_subcommand -x -a bisect -d 'Use binary search to find the commit that introduced a bug'
-complete -c git -n __fish_use_subcommand -x -a diff -d 'Show changes between commits, commit and working tree, etc'
-complete -c git -n __fish_use_subcommand -x -a grep -d 'Print lines matching a pattern'
-complete -c git -n __fish_use_subcommand -x -a log -d 'Show commit logs'
-complete -c git -n __fish_use_subcommand -x -a show -d 'Show various types of objects'
-complete -c git -n __fish_use_subcommand -x -a status -d 'Show the working tree status'
-complete -c git -n __fish_use_subcommand -x -a branch -d 'List, create, or delete branches'
-complete -c git -n __fish_use_subcommand -x -a commit -d 'Record changes to the repository'
-complete -c git -n __fish_use_subcommand -x -a merge -d 'Join two or more development histories together'
-complete -c git -n __fish_use_subcommand -x -a rebase -d 'Reapply commits on top of another base tip'
-complete -c git -n __fish_use_subcommand -x -a reset -d 'Reset current HEAD to the specified state'
-complete -c git -n __fish_use_subcommand -x -a switch -d 'Switch branches'
-complete -c git -n __fish_use_subcommand -x -a tag -d 'Create, list, delete or verify a tag object signed with GPG'
-complete -c git -n __fish_use_subcommand -x -a fetch -d 'Download objects and refs from another repository'
-complete -c git -n __fish_use_subcommand -x -a pull -d 'Fetch from and integrate with another repository or a local branch'
-complete -c git -n __fish_use_subcommand -x -a push -d 'Update remote refs along with associated objects'
+complete -k -c git -n __fish_use_subcommand -x -a push -d 'Update remote refs along with associated objects'
+complete -k -c git -n __fish_use_subcommand -x -a pull -d 'Fetch from and integrate with another repository or a local branch'
+complete -k -c git -n __fish_use_subcommand -x -a fetch -d 'Download objects and refs from another repository'
+complete -k -c git -n __fish_use_subcommand -x -a tag -d 'Create, list, delete or verify a tag object signed with GPG'
+complete -k -c git -n __fish_use_subcommand -x -a switch -d 'Switch branches'
+complete -k -c git -n __fish_use_subcommand -x -a reset -d 'Reset current HEAD to the specified state'
+complete -k -c git -n __fish_use_subcommand -x -a rebase -d 'Reapply commits on top of another base tip'
+complete -k -c git -n __fish_use_subcommand -x -a merge -d 'Join two or more development histories together'
+complete -k -c git -n __fish_use_subcommand -x -a commit -d 'Record changes to the repository'
+complete -k -c git -n __fish_use_subcommand -x -a branch -d 'List, create, or delete branches'
+complete -k -c git -n __fish_use_subcommand -x -a status -d 'Show the working tree status'
+complete -k -c git -n __fish_use_subcommand -x -a show -d 'Show various types of objects'
+complete -k -c git -n __fish_use_subcommand -x -a log -d 'Show commit logs'
+complete -k -c git -n __fish_use_subcommand -x -a grep -d 'Print lines matching a pattern'
+complete -k -c git -n __fish_use_subcommand -x -a diff -d 'Show changes between commits, commit and working tree, etc'
+complete -k -c git -n __fish_use_subcommand -x -a bisect -d 'Use binary search to find the commit that introduced a bug'
+complete -k -c git -n __fish_use_subcommand -x -a sparse-checkout -d 'Initialize and modify the sparse-checkout'
+complete -k -c git -n __fish_use_subcommand -x -a rm -d 'Remove files from the working tree and from the index'
+complete -k -c git -n __fish_use_subcommand -x -a restore -d 'Restore working tree files'
+complete -k -c git -n __fish_use_subcommand -x -a mv -d 'Move or rename a file, a directory, or a symlink'
+complete -k -c git -n __fish_use_subcommand -x -a add -d 'Add file contents to the index'
+complete -k -c git -n __fish_use_subcommand -x -a init -d 'Create an empty Git repository or reinitialize an existing one'
+complete -k -c git -n __fish_use_subcommand -x -a clone -d 'Clone a repository into a new directory'
 
 
 
@@ -53,7 +53,7 @@ complete -c git -n "__fish_seen_subcommand_from clone" -l shallow-exclude -d 'Cr
 complete -c git -n "__fish_seen_subcommand_from clone" -l single-branch -d 'Clone only the history leading to the tip of a single branch, either specified by the --branch option or the primary branch remote’s HEAD points at.'
 complete -c git -n "__fish_seen_subcommand_from clone" -l no-single-branch -d 'Clone only the history leading to the tip of a single branch, either specified by the --branch option or the primary branch remote’s HEAD points at.'
 complete -c git -n "__fish_seen_subcommand_from clone" -l no-tags -d 'Don’t clone any tags, and set remote.<remote>.tagOpt=--no-tags in the config, ensuring that future git pull and git fetch operations won’t follow any tags.'
-complete -c git -n "__fish_seen_subcommand_from clone" -l recurse-submodules -d 'After the clone is created, initialize and clone submodules within based on the provided pathspec.' -x
+complete -c git -n "__fish_seen_subcommand_from clone" -l recurse-submodules -d 'After the clone is created, initialize and clone submodules within based on the provided pathspec.' -r
 complete -c git -n "__fish_seen_subcommand_from clone" -l shallow-submodules -d 'All submodules which are cloned will be shallow with a depth of 1.'
 complete -c git -n "__fish_seen_subcommand_from clone" -l no-shallow-submodules -d 'All submodules which are cloned will be shallow with a depth of 1.'
 complete -c git -n "__fish_seen_subcommand_from clone" -l remote-submodules -d 'All submodules which are cloned will use the status of the submodule’s remote-tracking branch to update the submodule, rather than the superproject’s recorded SHA-1.'
@@ -193,7 +193,7 @@ complete -c git -n "__fish_seen_subcommand_from diff" -l pickaxe-regex -d 'Treat
 complete -c git -n "__fish_seen_subcommand_from diff" -s O -d 'Control the order in which files appear in the output.' -r
 complete -c git -n "__fish_seen_subcommand_from diff" -l skip-to -l rotate-to -d 'Discard the files before the named <file> from the output (i.e. skip to), or move them to the end of the output (i.e. rotate to).' -r
 complete -c git -n "__fish_seen_subcommand_from diff" -s R -d 'Swap two inputs; that is, show differences from index or on-disk file to tree contents.'
-complete -c git -n "__fish_seen_subcommand_from diff" -l relative -l no-relative -d 'When run from a subdirectory of the project, it can be told to exclude changes outside the directory and show pathnames relative to it with this option.' -x
+complete -c git -n "__fish_seen_subcommand_from diff" -l relative -l no-relative -d 'When run from a subdirectory of the project, it can be told to exclude changes outside the directory and show pathnames relative to it with this option.' -r
 complete -c git -n "__fish_seen_subcommand_from diff" -s a -l text -d 'Treat all files as text.'
 complete -c git -n "__fish_seen_subcommand_from diff" -l ignore-cr-at-eol -d 'Ignore carriage-return at the end of line when doing a comparison.'
 complete -c git -n "__fish_seen_subcommand_from diff" -l ignore-space-at-eol -d 'Ignore changes in whitespace at EOL.'
@@ -403,7 +403,7 @@ complete -c git -n "__fish_seen_subcommand_from log" -l pickaxe-regex -d 'Treat 
 complete -c git -n "__fish_seen_subcommand_from log" -s O -d 'Control the order in which files appear in the output.' -r
 complete -c git -n "__fish_seen_subcommand_from log" -l skip-to -l rotate-to -d 'Discard the files before the named <file> from the output (i.e. skip to), or move them to the end of the output (i.e. rotate to).' -r
 complete -c git -n "__fish_seen_subcommand_from log" -s R -d 'Swap two inputs; that is, show differences from index or on-disk file to tree contents.'
-complete -c git -n "__fish_seen_subcommand_from log" -l relative -l no-relative -d 'When run from a subdirectory of the project, it can be told to exclude changes outside the directory and show pathnames relative to it with this option.' -x
+complete -c git -n "__fish_seen_subcommand_from log" -l relative -l no-relative -d 'When run from a subdirectory of the project, it can be told to exclude changes outside the directory and show pathnames relative to it with this option.' -r
 complete -c git -n "__fish_seen_subcommand_from log" -s a -l text -d 'Treat all files as text.'
 complete -c git -n "__fish_seen_subcommand_from log" -l ignore-cr-at-eol -d 'Ignore carriage-return at the end of line when doing a comparison.'
 complete -c git -n "__fish_seen_subcommand_from log" -l ignore-space-at-eol -d 'Ignore changes in whitespace at EOL.'
@@ -494,7 +494,7 @@ complete -c git -n "__fish_seen_subcommand_from show" -l pickaxe-regex -d 'Treat
 complete -c git -n "__fish_seen_subcommand_from show" -s O -d 'Control the order in which files appear in the output.' -r
 complete -c git -n "__fish_seen_subcommand_from show" -l skip-to -l rotate-to -d 'Discard the files before the named <file> from the output (i.e. skip to), or move them to the end of the output (i.e. rotate to).' -r
 complete -c git -n "__fish_seen_subcommand_from show" -s R -d 'Swap two inputs; that is, show differences from index or on-disk file to tree contents.'
-complete -c git -n "__fish_seen_subcommand_from show" -l relative -l no-relative -d 'When run from a subdirectory of the project, it can be told to exclude changes outside the directory and show pathnames relative to it with this option.' -x
+complete -c git -n "__fish_seen_subcommand_from show" -l relative -l no-relative -d 'When run from a subdirectory of the project, it can be told to exclude changes outside the directory and show pathnames relative to it with this option.' -r
 complete -c git -n "__fish_seen_subcommand_from show" -s a -l text -d 'Treat all files as text.'
 complete -c git -n "__fish_seen_subcommand_from show" -l ignore-cr-at-eol -d 'Ignore carriage-return at the end of line when doing a comparison.'
 complete -c git -n "__fish_seen_subcommand_from show" -l ignore-space-at-eol -d 'Ignore changes in whitespace at EOL.'
@@ -770,7 +770,7 @@ complete -c git -n "__fish_seen_subcommand_from fetch" -l recurse-submodules -d 
 complete -c git -n "__fish_seen_subcommand_from fetch" -s j -l jobs -d 'Number of parallel children to be used for all forms of fetching.' -x
 complete -c git -n "__fish_seen_subcommand_from fetch" -l no-recurse-submodules -d 'Disable recursive fetching of submodules (this has the same effect as using the --recurse-submodules=no option).'
 complete -c git -n "__fish_seen_subcommand_from fetch" -l set-upstream -d 'If the remote is fetched successfully, add upstream (tracking) reference, used by argument-less gitpull(1) and other commands.'
-complete -c git -n "__fish_seen_subcommand_from fetch" -l submodule-prefix -d 'Prepend <path> to paths printed in informative messages such as "Fetching submodule foo".' -x
+complete -c git -n "__fish_seen_subcommand_from fetch" -l submodule-prefix -d 'Prepend <path> to paths printed in informative messages such as "Fetching submodule foo".' -r
 complete -c git -n "__fish_seen_subcommand_from fetch" -l recurse-submodules-default -d 'This option is used internally to temporarily provide a non-negative default value for the --recurse-submodules option.' -x
 complete -c git -n "__fish_seen_subcommand_from fetch" -s u -l update-head-ok -d 'By default git fetch refuses to update the head which corresponds to the current branch.'
 complete -c git -n "__fish_seen_subcommand_from fetch" -l upload-pack -d 'When given, and the repository to fetch from is handled by git fetch-pack, --exec=<upload-pack> is passed to the command to specify non-default path for the command run on the other end.' -x

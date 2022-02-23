@@ -1,4 +1,4 @@
-# Generated with h2o 0.1.18
+# Auto-generated with h2o
 
 complete -c composite -o affine -d 'affine transform matrix' -x
 complete -c composite -o alpha -d 'on, activate, off, deactivate, set, opaque, copy transparent, extract, background, or shape' -x

@@ -1,4 +1,4 @@
-# Generated with h2o 0.1.18
+# Auto-generated with h2o
 
 complete -c rm -s f -l force -d 'ignore nonexistent files and arguments, never prompt'
 complete -c rm -s i -d 'prompt before every removal'

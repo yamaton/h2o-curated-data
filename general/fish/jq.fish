@@ -1,4 +1,4 @@
-# Generated with h2o 0.1.18
+# Auto-generated with h2o
 
 complete -c jq -s c -d 'compact instead of pretty-printed output;'
 complete -c jq -s n -d 'use `null` as the single input value;'

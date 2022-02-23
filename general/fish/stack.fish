@@ -1,4 +1,4 @@
-# Generated with h2o 0.1.18
+# Auto-generated with h2o
 
 complete -c stack -n "not __fish_seen_subcommand_from build install uninstall test bench haddock new templates init setup path ls unpack update upgrade upload sdist dot ghc hoogle exec run ghci repl runghc runhaskell script eval clean purge query list ide docker config hpc" -l help -d 'Show this help text'
 complete -c stack -n "not __fish_seen_subcommand_from build install uninstall test bench haddock new templates init setup path ls unpack update upgrade upload sdist dot ghc hoogle exec run ghci repl runghc runhaskell script eval clean purge query list ide docker config hpc" -l version -d 'Show version'
@@ -24,7 +24,7 @@ complete -c stack -n "not __fish_seen_subcommand_from build install uninstall te
 complete -c stack -n "not __fish_seen_subcommand_from build install uninstall test bench haddock new templates init setup path ls unpack update upgrade upload sdist dot ghc hoogle exec run ghci repl runghc runhaskell script eval clean purge query list ide docker config hpc" -l extra-include-dirs -d 'Extra directories to check for C header files' -r
 complete -c stack -n "not __fish_seen_subcommand_from build install uninstall test bench haddock new templates init setup path ls unpack update upgrade upload sdist dot ghc hoogle exec run ghci repl runghc runhaskell script eval clean purge query list ide docker config hpc" -l extra-lib-dirs -d 'Extra directories to check for libraries' -r
 complete -c stack -n "not __fish_seen_subcommand_from build install uninstall test bench haddock new templates init setup path ls unpack update upgrade upload sdist dot ghc hoogle exec run ghci repl runghc runhaskell script eval clean purge query list ide docker config hpc" -l custom-preprocessor-extensions -d 'Extensions used for custom preprocessors' -x
-complete -c stack -n "not __fish_seen_subcommand_from build install uninstall test bench haddock new templates init setup path ls unpack update upgrade upload sdist dot ghc hoogle exec run ghci repl runghc runhaskell script eval clean purge query list ide docker config hpc" -l with-gcc -d 'Use gcc found at PATH-TO-GCC' -x
+complete -c stack -n "not __fish_seen_subcommand_from build install uninstall test bench haddock new templates init setup path ls unpack update upgrade upload sdist dot ghc hoogle exec run ghci repl runghc runhaskell script eval clean purge query list ide docker config hpc" -l with-gcc -d 'Use gcc found at PATH-TO-GCC' -r
 complete -c stack -n "not __fish_seen_subcommand_from build install uninstall test bench haddock new templates init setup path ls unpack update upgrade upload sdist dot ghc hoogle exec run ghci repl runghc runhaskell script eval clean purge query list ide docker config hpc" -l with-hpack -d 'Use HPACK executable (overrides bundled Hpack)' -x
 complete -c stack -n "not __fish_seen_subcommand_from build install uninstall test bench haddock new templates init setup path ls unpack update upgrade upload sdist dot ghc hoogle exec run ghci repl runghc runhaskell script eval clean purge query list ide docker config hpc" -l skip-ghc-check -d 'Enable/disable skipping the GHC version and architecture check (default: disabled)'
 complete -c stack -n "not __fish_seen_subcommand_from build install uninstall test bench haddock new templates init setup path ls unpack update upgrade upload sdist dot ghc hoogle exec run ghci repl runghc runhaskell script eval clean purge query list ide docker config hpc" -l no-skip-ghc-check -d 'Enable/disable skipping the GHC version and architecture check (default: disabled)'
@@ -48,45 +48,46 @@ complete -c stack -n "not __fish_seen_subcommand_from build install uninstall te
 complete -c stack -n "not __fish_seen_subcommand_from build install uninstall test bench haddock new templates init setup path ls unpack update upgrade upload sdist dot ghc hoogle exec run ghci repl runghc runhaskell script eval clean purge query list ide docker config hpc" -l terminal-width -d 'Specify the width of the terminal, used for pretty-print messages' -x
 complete -c stack -n "not __fish_seen_subcommand_from build install uninstall test bench haddock new templates init setup path ls unpack update upgrade upload sdist dot ghc hoogle exec run ghci repl runghc runhaskell script eval clean purge query list ide docker config hpc" -l stack-yaml -d 'Override project stack.yaml file (overrides any STACK_YAML environment variable)' -x
 complete -c stack -n "not __fish_seen_subcommand_from build install uninstall test bench haddock new templates init setup path ls unpack update upgrade upload sdist dot ghc hoogle exec run ghci repl runghc runhaskell script eval clean purge query list ide docker config hpc" -l lock-file -d 'Specify how to interact with lock files.' -x
+complete -c stack -n "not __fish_seen_subcommand_from build install uninstall test bench haddock new templates init setup path ls unpack update upgrade upload sdist dot ghc hoogle exec run ghci repl runghc runhaskell script eval clean purge query list ide docker config hpc" -l full -d 'query Query general build information (experimental)' -x
 
 
 
-complete -c stack -n __fish_use_subcommand -x -a build -d 'Build the package(s) in this directory/configuration'
-complete -c stack -n __fish_use_subcommand -x -a install -d 'Shortcut for \'build --copy-bins\''
-complete -c stack -n __fish_use_subcommand -x -a uninstall -d 'DEPRECATED: This command performs no actions, and is'
-complete -c stack -n __fish_use_subcommand -x -a test -d 'Shortcut for \'build --test\''
-complete -c stack -n __fish_use_subcommand -x -a bench -d 'Shortcut for \'build --bench\''
-complete -c stack -n __fish_use_subcommand -x -a haddock -d 'Shortcut for \'build --haddock\''
-complete -c stack -n __fish_use_subcommand -x -a new -d 'Create a new project from a template. Run `stack'
-complete -c stack -n __fish_use_subcommand -x -a templates -d 'Show how to find templates available for `stack new\'.'
-complete -c stack -n __fish_use_subcommand -x -a init -d 'Create stack project config from cabal or hpack'
-complete -c stack -n __fish_use_subcommand -x -a setup -d 'Get the appropriate GHC for your project'
-complete -c stack -n __fish_use_subcommand -x -a path -d 'Print out handy path information'
-complete -c stack -n __fish_use_subcommand -x -a ls -d 'List command. (Supports snapshots, dependencies and'
-complete -c stack -n __fish_use_subcommand -x -a unpack -d 'Unpack one or more packages locally'
-complete -c stack -n __fish_use_subcommand -x -a update -d 'Update the package index'
-complete -c stack -n __fish_use_subcommand -x -a upgrade -d 'Upgrade to the latest stack'
-complete -c stack -n __fish_use_subcommand -x -a upload -d 'Upload a package to Hackage'
-complete -c stack -n __fish_use_subcommand -x -a sdist -d 'Create source distribution tarballs'
-complete -c stack -n __fish_use_subcommand -x -a dot -d 'Visualize your project\'s dependency graph using'
-complete -c stack -n __fish_use_subcommand -x -a ghc -d 'Run ghc'
-complete -c stack -n __fish_use_subcommand -x -a hoogle -d 'Run hoogle, the Haskell API search engine. Use the'
-complete -c stack -n __fish_use_subcommand -x -a exec -d 'Execute a command. If the command is absent, the'
-complete -c stack -n __fish_use_subcommand -x -a run -d 'Build and run an executable. Defaults to the first'
-complete -c stack -n __fish_use_subcommand -x -a ghci -d 'Run ghci in the context of package(s) (experimental)'
-complete -c stack -n __fish_use_subcommand -x -a repl -d 'Run ghci in the context of package(s) (experimental)'
-complete -c stack -n __fish_use_subcommand -x -a runghc -d 'Run runghc'
-complete -c stack -n __fish_use_subcommand -x -a runhaskell -d 'Run runghc (alias for \'runghc\')'
-complete -c stack -n __fish_use_subcommand -x -a script -d 'Run a Stack Script'
-complete -c stack -n __fish_use_subcommand -x -a eval -d 'Evaluate some haskell code inline. Shortcut for'
-complete -c stack -n __fish_use_subcommand -x -a clean -d 'Delete build artefacts for the project packages.'
-complete -c stack -n __fish_use_subcommand -x -a purge -d 'Delete the project stack working directories'
-complete -c stack -n __fish_use_subcommand -x -a query -d 'Query general build information (experimental)'
-complete -c stack -n __fish_use_subcommand -x -a list -d 'List package id\'s in snapshot (experimental)'
-complete -c stack -n __fish_use_subcommand -x -a ide -d 'IDE-specific commands'
-complete -c stack -n __fish_use_subcommand -x -a docker -d 'Subcommands specific to Docker use'
-complete -c stack -n __fish_use_subcommand -x -a config -d 'Subcommands for accessing and modifying configuration'
-complete -c stack -n __fish_use_subcommand -x -a hpc -d 'Subcommands specific to Haskell Program Coverage'
+complete -k -c stack -n __fish_use_subcommand -x -a hpc -d 'Subcommands specific to Haskell Program Coverage'
+complete -k -c stack -n __fish_use_subcommand -x -a config -d 'Subcommands for accessing and modifying configuration'
+complete -k -c stack -n __fish_use_subcommand -x -a docker -d 'Subcommands specific to Docker use'
+complete -k -c stack -n __fish_use_subcommand -x -a ide -d 'IDE-specific commands'
+complete -k -c stack -n __fish_use_subcommand -x -a list -d 'List package id\'s in snapshot (experimental)'
+complete -k -c stack -n __fish_use_subcommand -x -a query -d 'Query general build information (experimental)'
+complete -k -c stack -n __fish_use_subcommand -x -a purge -d 'Delete the project stack working directories'
+complete -k -c stack -n __fish_use_subcommand -x -a clean -d 'Delete build artefacts for the project packages.'
+complete -k -c stack -n __fish_use_subcommand -x -a eval -d 'Evaluate some haskell code inline. Shortcut for'
+complete -k -c stack -n __fish_use_subcommand -x -a script -d 'Run a Stack Script'
+complete -k -c stack -n __fish_use_subcommand -x -a runhaskell -d 'Run runghc (alias for \'runghc\')'
+complete -k -c stack -n __fish_use_subcommand -x -a runghc -d 'Run runghc'
+complete -k -c stack -n __fish_use_subcommand -x -a repl -d 'Run ghci in the context of package(s) (experimental)'
+complete -k -c stack -n __fish_use_subcommand -x -a ghci -d 'Run ghci in the context of package(s) (experimental)'
+complete -k -c stack -n __fish_use_subcommand -x -a run -d 'Build and run an executable. Defaults to the first'
+complete -k -c stack -n __fish_use_subcommand -x -a exec -d 'Execute a command. If the command is absent, the'
+complete -k -c stack -n __fish_use_subcommand -x -a hoogle -d 'Run hoogle, the Haskell API search engine. Use the'
+complete -k -c stack -n __fish_use_subcommand -x -a ghc -d 'Run ghc'
+complete -k -c stack -n __fish_use_subcommand -x -a dot -d 'Visualize your project\'s dependency graph using'
+complete -k -c stack -n __fish_use_subcommand -x -a sdist -d 'Create source distribution tarballs'
+complete -k -c stack -n __fish_use_subcommand -x -a upload -d 'Upload a package to Hackage'
+complete -k -c stack -n __fish_use_subcommand -x -a upgrade -d 'Upgrade to the latest stack'
+complete -k -c stack -n __fish_use_subcommand -x -a update -d 'Update the package index'
+complete -k -c stack -n __fish_use_subcommand -x -a unpack -d 'Unpack one or more packages locally'
+complete -k -c stack -n __fish_use_subcommand -x -a ls -d 'List command. (Supports snapshots, dependencies and'
+complete -k -c stack -n __fish_use_subcommand -x -a path -d 'Print out handy path information'
+complete -k -c stack -n __fish_use_subcommand -x -a setup -d 'Get the appropriate GHC for your project'
+complete -k -c stack -n __fish_use_subcommand -x -a init -d 'Create stack project config from cabal or hpack'
+complete -k -c stack -n __fish_use_subcommand -x -a templates -d 'Show how to find templates available for `stack new\'.'
+complete -k -c stack -n __fish_use_subcommand -x -a new -d 'Create a new project from a template. Run `stack'
+complete -k -c stack -n __fish_use_subcommand -x -a haddock -d 'Shortcut for \'build --haddock\''
+complete -k -c stack -n __fish_use_subcommand -x -a bench -d 'Shortcut for \'build --bench\''
+complete -k -c stack -n __fish_use_subcommand -x -a test -d 'Shortcut for \'build --test\''
+complete -k -c stack -n __fish_use_subcommand -x -a uninstall -d 'DEPRECATED: This command performs no actions, and is'
+complete -k -c stack -n __fish_use_subcommand -x -a install -d 'Shortcut for \'build --copy-bins\''
+complete -k -c stack -n __fish_use_subcommand -x -a build -d 'Build the package(s) in this directory/configuration'
 
 
 
@@ -94,6 +95,7 @@ complete -c stack -n "__fish_seen_subcommand_from build" -l dry-run -d 'Don\'t b
 complete -c stack -n "__fish_seen_subcommand_from build" -l pedantic -d 'Turn on -Wall and -Werror'
 complete -c stack -n "__fish_seen_subcommand_from build" -l fast -d 'Turn off optimizations (-O0)'
 complete -c stack -n "__fish_seen_subcommand_from build" -l ghc-options -d 'Additional options passed to GHC' -x
+complete -c stack -n "__fish_seen_subcommand_from build" -l flag -d 'Override flags set in stack.yaml (applies to local packages and extra-deps)' -x
 complete -c stack -n "__fish_seen_subcommand_from build" -l dependencies-only -d 'A synonym for --only-dependencies'
 complete -c stack -n "__fish_seen_subcommand_from build" -l only-snapshot -d 'Only build packages for the snapshot database, not the local database'
 complete -c stack -n "__fish_seen_subcommand_from build" -l only-dependencies -d 'Only build packages that are dependencies of targets on the command line'
@@ -106,8 +108,12 @@ complete -c stack -n "__fish_seen_subcommand_from build" -l only-configure -d 'O
 complete -c stack -n "__fish_seen_subcommand_from build" -l trace -d 'Enable profiling in libraries, executables, etc.'
 complete -c stack -n "__fish_seen_subcommand_from build" -l profile -d 'profiling in libraries, executables, etc.'
 complete -c stack -n "__fish_seen_subcommand_from build" -l no-strip -d 'Disable DWARF debugging symbol stripping in libraries, executables, etc.'
+complete -c stack -n "__fish_seen_subcommand_from build" -l library-profiling -d 'Enable/disable library profiling for TARGETs and all its dependencies (default: disabled)'
+complete -c stack -n "__fish_seen_subcommand_from build" -l no-library-profiling -d 'Enable/disable library profiling for TARGETs and all its dependencies (default: disabled)'
 complete -c stack -n "__fish_seen_subcommand_from build" -l executable-profiling -d 'Enable/disable executable profiling for TARGETs and all its dependencies (default: disabled)'
 complete -c stack -n "__fish_seen_subcommand_from build" -l no-executable-profiling -d 'Enable/disable executable profiling for TARGETs and all its dependencies (default: disabled)'
+complete -c stack -n "__fish_seen_subcommand_from build" -l library-stripping -d 'Enable/disable library stripping for TARGETs and all its dependencies (default: enabled)'
+complete -c stack -n "__fish_seen_subcommand_from build" -l no-library-stripping -d 'Enable/disable library stripping for TARGETs and all its dependencies (default: enabled)'
 complete -c stack -n "__fish_seen_subcommand_from build" -l executable-stripping -d 'Enable/disable executable stripping for TARGETs and all its dependencies (default: enabled)'
 complete -c stack -n "__fish_seen_subcommand_from build" -l no-executable-stripping -d 'Enable/disable executable stripping for TARGETs and all its dependencies (default: enabled)'
 complete -c stack -n "__fish_seen_subcommand_from build" -l haddock -d 'Enable/disable generating Haddocks the package(s) in this directory/configuration (default: disabled)'
@@ -165,6 +171,7 @@ complete -c stack -n "__fish_seen_subcommand_from install" -l dry-run -d 'Don\'t
 complete -c stack -n "__fish_seen_subcommand_from install" -l pedantic -d 'Turn on -Wall and -Werror'
 complete -c stack -n "__fish_seen_subcommand_from install" -l fast -d 'Turn off optimizations (-O0)'
 complete -c stack -n "__fish_seen_subcommand_from install" -l ghc-options -d 'Additional options passed to GHC' -x
+complete -c stack -n "__fish_seen_subcommand_from install" -l flag -d 'Override flags set in stack.yaml (applies to local packages and extra-deps)' -x
 complete -c stack -n "__fish_seen_subcommand_from install" -l dependencies-only -d 'A synonym for --only-dependencies'
 complete -c stack -n "__fish_seen_subcommand_from install" -l only-snapshot -d 'Only build packages for the snapshot database, not the local database'
 complete -c stack -n "__fish_seen_subcommand_from install" -l only-dependencies -d 'Only build packages that are dependencies of targets on the command line'
@@ -177,8 +184,12 @@ complete -c stack -n "__fish_seen_subcommand_from install" -l only-configure -d 
 complete -c stack -n "__fish_seen_subcommand_from install" -l trace -d 'Enable profiling in libraries, executables, etc.'
 complete -c stack -n "__fish_seen_subcommand_from install" -l profile -d 'profiling in libraries, executables, etc.'
 complete -c stack -n "__fish_seen_subcommand_from install" -l no-strip -d 'Disable DWARF debugging symbol stripping in libraries, executables, etc.'
+complete -c stack -n "__fish_seen_subcommand_from install" -l library-profiling -d 'Enable/disable library profiling for TARGETs and all its dependencies (default: disabled)'
+complete -c stack -n "__fish_seen_subcommand_from install" -l no-library-profiling -d 'Enable/disable library profiling for TARGETs and all its dependencies (default: disabled)'
 complete -c stack -n "__fish_seen_subcommand_from install" -l executable-profiling -d 'Enable/disable executable profiling for TARGETs and all its dependencies (default: disabled)'
 complete -c stack -n "__fish_seen_subcommand_from install" -l no-executable-profiling -d 'Enable/disable executable profiling for TARGETs and all its dependencies (default: disabled)'
+complete -c stack -n "__fish_seen_subcommand_from install" -l library-stripping -d 'Enable/disable library stripping for TARGETs and all its dependencies (default: enabled)'
+complete -c stack -n "__fish_seen_subcommand_from install" -l no-library-stripping -d 'Enable/disable library stripping for TARGETs and all its dependencies (default: enabled)'
 complete -c stack -n "__fish_seen_subcommand_from install" -l executable-stripping -d 'Enable/disable executable stripping for TARGETs and all its dependencies (default: enabled)'
 complete -c stack -n "__fish_seen_subcommand_from install" -l no-executable-stripping -d 'Enable/disable executable stripping for TARGETs and all its dependencies (default: enabled)'
 complete -c stack -n "__fish_seen_subcommand_from install" -l haddock -d 'Enable/disable generating Haddocks the package(s) in this directory/configuration (default: disabled)'
@@ -232,7 +243,7 @@ complete -c stack -n "__fish_seen_subcommand_from install" -l help -d 'Show this
 
 
 
-complete -c stack -n "__fish_seen_subcommand_from uninstall" -l setup-info-yaml -d 'Alternate URL or relative / absolute path for stack' -x
+complete -c stack -n "__fish_seen_subcommand_from uninstall" -l setup-info-yaml -d 'Alternate URL or relative / absolute path for stack dependencies' -x
 complete -c stack -n "__fish_seen_subcommand_from uninstall" -l snapshot-location-base -d 'The base location of LTS/Nightly snapshots' -x
 complete -c stack -n "__fish_seen_subcommand_from uninstall" -l help -d 'Show this help text'
 
@@ -242,6 +253,7 @@ complete -c stack -n "__fish_seen_subcommand_from test" -l dry-run -d 'Don\'t bu
 complete -c stack -n "__fish_seen_subcommand_from test" -l pedantic -d 'Turn on -Wall and -Werror'
 complete -c stack -n "__fish_seen_subcommand_from test" -l fast -d 'Turn off optimizations (-O0)'
 complete -c stack -n "__fish_seen_subcommand_from test" -l ghc-options -d 'Additional options passed to GHC' -x
+complete -c stack -n "__fish_seen_subcommand_from test" -l flag -d 'Override flags set in stack.yaml (applies to local packages and extra-deps)' -x
 complete -c stack -n "__fish_seen_subcommand_from test" -l dependencies-only -d 'A synonym for --only-dependencies'
 complete -c stack -n "__fish_seen_subcommand_from test" -l only-snapshot -d 'Only build packages for the snapshot database, not the local database'
 complete -c stack -n "__fish_seen_subcommand_from test" -l only-dependencies -d 'Only build packages that are dependencies of targets on the command line'
@@ -254,8 +266,12 @@ complete -c stack -n "__fish_seen_subcommand_from test" -l only-configure -d 'On
 complete -c stack -n "__fish_seen_subcommand_from test" -l trace -d 'Enable profiling in libraries, executables, etc.'
 complete -c stack -n "__fish_seen_subcommand_from test" -l profile -d 'profiling in libraries, executables, etc.'
 complete -c stack -n "__fish_seen_subcommand_from test" -l no-strip -d 'Disable DWARF debugging symbol stripping in libraries, executables, etc.'
+complete -c stack -n "__fish_seen_subcommand_from test" -l library-profiling -d 'Enable/disable library profiling for TARGETs and all its dependencies (default: disabled)'
+complete -c stack -n "__fish_seen_subcommand_from test" -l no-library-profiling -d 'Enable/disable library profiling for TARGETs and all its dependencies (default: disabled)'
 complete -c stack -n "__fish_seen_subcommand_from test" -l executable-profiling -d 'Enable/disable executable profiling for TARGETs and all its dependencies (default: disabled)'
 complete -c stack -n "__fish_seen_subcommand_from test" -l no-executable-profiling -d 'Enable/disable executable profiling for TARGETs and all its dependencies (default: disabled)'
+complete -c stack -n "__fish_seen_subcommand_from test" -l library-stripping -d 'Enable/disable library stripping for TARGETs and all its dependencies (default: enabled)'
+complete -c stack -n "__fish_seen_subcommand_from test" -l no-library-stripping -d 'Enable/disable library stripping for TARGETs and all its dependencies (default: enabled)'
 complete -c stack -n "__fish_seen_subcommand_from test" -l executable-stripping -d 'Enable/disable executable stripping for TARGETs and all its dependencies (default: enabled)'
 complete -c stack -n "__fish_seen_subcommand_from test" -l no-executable-stripping -d 'Enable/disable executable stripping for TARGETs and all its dependencies (default: enabled)'
 complete -c stack -n "__fish_seen_subcommand_from test" -l haddock -d 'Enable/disable generating Haddocks the package(s) in this directory/configuration (default: disabled)'
@@ -313,6 +329,7 @@ complete -c stack -n "__fish_seen_subcommand_from bench" -l dry-run -d 'Don\'t b
 complete -c stack -n "__fish_seen_subcommand_from bench" -l pedantic -d 'Turn on -Wall and -Werror'
 complete -c stack -n "__fish_seen_subcommand_from bench" -l fast -d 'Turn off optimizations (-O0)'
 complete -c stack -n "__fish_seen_subcommand_from bench" -l ghc-options -d 'Additional options passed to GHC' -x
+complete -c stack -n "__fish_seen_subcommand_from bench" -l flag -d 'Override flags set in stack.yaml (applies to local packages and extra-deps)' -x
 complete -c stack -n "__fish_seen_subcommand_from bench" -l dependencies-only -d 'A synonym for --only-dependencies'
 complete -c stack -n "__fish_seen_subcommand_from bench" -l only-snapshot -d 'Only build packages for the snapshot database, not the local database'
 complete -c stack -n "__fish_seen_subcommand_from bench" -l only-dependencies -d 'Only build packages that are dependencies of targets on the command line'
@@ -325,8 +342,12 @@ complete -c stack -n "__fish_seen_subcommand_from bench" -l only-configure -d 'O
 complete -c stack -n "__fish_seen_subcommand_from bench" -l trace -d 'Enable profiling in libraries, executables, etc.'
 complete -c stack -n "__fish_seen_subcommand_from bench" -l profile -d 'profiling in libraries, executables, etc.'
 complete -c stack -n "__fish_seen_subcommand_from bench" -l no-strip -d 'Disable DWARF debugging symbol stripping in libraries, executables, etc.'
+complete -c stack -n "__fish_seen_subcommand_from bench" -l library-profiling -d 'Enable/disable library profiling for TARGETs and all its dependencies (default: disabled)'
+complete -c stack -n "__fish_seen_subcommand_from bench" -l no-library-profiling -d 'Enable/disable library profiling for TARGETs and all its dependencies (default: disabled)'
 complete -c stack -n "__fish_seen_subcommand_from bench" -l executable-profiling -d 'Enable/disable executable profiling for TARGETs and all its dependencies (default: disabled)'
 complete -c stack -n "__fish_seen_subcommand_from bench" -l no-executable-profiling -d 'Enable/disable executable profiling for TARGETs and all its dependencies (default: disabled)'
+complete -c stack -n "__fish_seen_subcommand_from bench" -l library-stripping -d 'Enable/disable library stripping for TARGETs and all its dependencies (default: enabled)'
+complete -c stack -n "__fish_seen_subcommand_from bench" -l no-library-stripping -d 'Enable/disable library stripping for TARGETs and all its dependencies (default: enabled)'
 complete -c stack -n "__fish_seen_subcommand_from bench" -l executable-stripping -d 'Enable/disable executable stripping for TARGETs and all its dependencies (default: enabled)'
 complete -c stack -n "__fish_seen_subcommand_from bench" -l no-executable-stripping -d 'Enable/disable executable stripping for TARGETs and all its dependencies (default: enabled)'
 complete -c stack -n "__fish_seen_subcommand_from bench" -l haddock -d 'Enable/disable generating Haddocks the package(s) in this directory/configuration (default: disabled)'
@@ -384,6 +405,7 @@ complete -c stack -n "__fish_seen_subcommand_from haddock" -l dry-run -d 'Don\'t
 complete -c stack -n "__fish_seen_subcommand_from haddock" -l pedantic -d 'Turn on -Wall and -Werror'
 complete -c stack -n "__fish_seen_subcommand_from haddock" -l fast -d 'Turn off optimizations (-O0)'
 complete -c stack -n "__fish_seen_subcommand_from haddock" -l ghc-options -d 'Additional options passed to GHC' -x
+complete -c stack -n "__fish_seen_subcommand_from haddock" -l flag -d 'Override flags set in stack.yaml (applies to local packages and extra-deps)' -x
 complete -c stack -n "__fish_seen_subcommand_from haddock" -l dependencies-only -d 'A synonym for --only-dependencies'
 complete -c stack -n "__fish_seen_subcommand_from haddock" -l only-snapshot -d 'Only build packages for the snapshot database, not the local database'
 complete -c stack -n "__fish_seen_subcommand_from haddock" -l only-dependencies -d 'Only build packages that are dependencies of targets on the command line'
@@ -396,8 +418,12 @@ complete -c stack -n "__fish_seen_subcommand_from haddock" -l only-configure -d 
 complete -c stack -n "__fish_seen_subcommand_from haddock" -l trace -d 'Enable profiling in libraries, executables, etc.'
 complete -c stack -n "__fish_seen_subcommand_from haddock" -l profile -d 'profiling in libraries, executables, etc.'
 complete -c stack -n "__fish_seen_subcommand_from haddock" -l no-strip -d 'Disable DWARF debugging symbol stripping in libraries, executables, etc.'
+complete -c stack -n "__fish_seen_subcommand_from haddock" -l library-profiling -d 'Enable/disable library profiling for TARGETs and all its dependencies (default: disabled)'
+complete -c stack -n "__fish_seen_subcommand_from haddock" -l no-library-profiling -d 'Enable/disable library profiling for TARGETs and all its dependencies (default: disabled)'
 complete -c stack -n "__fish_seen_subcommand_from haddock" -l executable-profiling -d 'Enable/disable executable profiling for TARGETs and all its dependencies (default: disabled)'
 complete -c stack -n "__fish_seen_subcommand_from haddock" -l no-executable-profiling -d 'Enable/disable executable profiling for TARGETs and all its dependencies (default: disabled)'
+complete -c stack -n "__fish_seen_subcommand_from haddock" -l library-stripping -d 'Enable/disable library stripping for TARGETs and all its dependencies (default: enabled)'
+complete -c stack -n "__fish_seen_subcommand_from haddock" -l no-library-stripping -d 'Enable/disable library stripping for TARGETs and all its dependencies (default: enabled)'
 complete -c stack -n "__fish_seen_subcommand_from haddock" -l executable-stripping -d 'Enable/disable executable stripping for TARGETs and all its dependencies (default: enabled)'
 complete -c stack -n "__fish_seen_subcommand_from haddock" -l no-executable-stripping -d 'Enable/disable executable stripping for TARGETs and all its dependencies (default: enabled)'
 complete -c stack -n "__fish_seen_subcommand_from haddock" -l haddock -d 'Enable/disable generating Haddocks the package(s) in this directory/configuration (default: disabled)'
@@ -462,7 +488,7 @@ complete -c stack -n "__fish_seen_subcommand_from new" -l help -d 'Show this hel
 
 
 
-complete -c stack -n "__fish_seen_subcommand_from templates" -l setup-info-yaml -d 'Alternate URL or relative / absolute path for stack' -x
+complete -c stack -n "__fish_seen_subcommand_from templates" -l setup-info-yaml -d 'Alternate URL or relative / absolute path for stack dependencies' -x
 complete -c stack -n "__fish_seen_subcommand_from templates" -l snapshot-location-base -d 'The base location of LTS/Nightly snapshots' -x
 complete -c stack -n "__fish_seen_subcommand_from templates" -l help -d 'Show this help text'
 
@@ -520,7 +546,7 @@ complete -c stack -n "__fish_seen_subcommand_from path" -l help -d 'Show this he
 
 
 
-complete -c stack -n "__fish_seen_subcommand_from ls" -l setup-info-yaml -d 'Alternate URL or relative / absolute path for stack' -x
+complete -c stack -n "__fish_seen_subcommand_from ls" -l setup-info-yaml -d 'Alternate URL or relative / absolute path for stack dependencies' -x
 complete -c stack -n "__fish_seen_subcommand_from ls" -l snapshot-location-base -d 'The base location of LTS/Nightly snapshots' -x
 complete -c stack -n "__fish_seen_subcommand_from ls" -l help -d 'Show this help text'
 
@@ -533,7 +559,7 @@ complete -c stack -n "__fish_seen_subcommand_from unpack" -l help -d 'Show this 
 
 
 
-complete -c stack -n "__fish_seen_subcommand_from update" -l setup-info-yaml -d 'Alternate URL or relative / absolute path for stack' -x
+complete -c stack -n "__fish_seen_subcommand_from update" -l setup-info-yaml -d 'Alternate URL or relative / absolute path for stack dependencies' -x
 complete -c stack -n "__fish_seen_subcommand_from update" -l snapshot-location-base -d 'The base location of LTS/Nightly snapshots' -x
 complete -c stack -n "__fish_seen_subcommand_from update" -l help -d 'Show this help text'
 
@@ -584,6 +610,7 @@ complete -c stack -n "__fish_seen_subcommand_from dot" -l include-base -d 'Enabl
 complete -c stack -n "__fish_seen_subcommand_from dot" -l no-include-base -d 'Enable/disable inclusion of dependencies on base (default: enabled)'
 complete -c stack -n "__fish_seen_subcommand_from dot" -l depth -d 'Limit the depth of dependency resolution (Default: No limit)' -x
 complete -c stack -n "__fish_seen_subcommand_from dot" -l prune -d 'Prune each package name from the comma separated list of package names PACKAGES' -x
+complete -c stack -n "__fish_seen_subcommand_from dot" -l flag -d 'Override flags set in stack.yaml (applies to local packages and extra-deps)' -x
 complete -c stack -n "__fish_seen_subcommand_from dot" -l test -d 'Consider dependencies of test components'
 complete -c stack -n "__fish_seen_subcommand_from dot" -l bench -d 'Consider dependencies of benchmark components'
 complete -c stack -n "__fish_seen_subcommand_from dot" -l global-hints -d 'Do not require an install GHC; instead, use a hints file for global packages'
@@ -645,6 +672,7 @@ complete -c stack -n "__fish_seen_subcommand_from run" -l help -d 'Show this hel
 complete -c stack -n "__fish_seen_subcommand_from ghci" -l pedantic -d 'Turn on -Wall and -Werror'
 complete -c stack -n "__fish_seen_subcommand_from ghci" -l ghci-options -d 'Additional options passed to GHCi' -x
 complete -c stack -n "__fish_seen_subcommand_from ghci" -l ghc-options -d 'Additional options passed to both GHC and GHCi' -x
+complete -c stack -n "__fish_seen_subcommand_from ghci" -l flag -d 'Override flags set in stack.yaml (applies to local packages and extra-deps)' -x
 complete -c stack -n "__fish_seen_subcommand_from ghci" -l with-ghc -d 'Use this GHC to run GHCi' -x
 complete -c stack -n "__fish_seen_subcommand_from ghci" -l load -d 'Enable/disable load modules on start-up (default: enabled)'
 complete -c stack -n "__fish_seen_subcommand_from ghci" -l no-load -d 'Enable/disable load modules on start-up (default: enabled)'
@@ -670,6 +698,7 @@ complete -c stack -n "__fish_seen_subcommand_from ghci" -l help -d 'Show this he
 complete -c stack -n "__fish_seen_subcommand_from repl" -l pedantic -d 'Turn on -Wall and -Werror'
 complete -c stack -n "__fish_seen_subcommand_from repl" -l ghci-options -d 'Additional options passed to GHCi' -x
 complete -c stack -n "__fish_seen_subcommand_from repl" -l ghc-options -d 'Additional options passed to both GHC and GHCi' -x
+complete -c stack -n "__fish_seen_subcommand_from repl" -l flag -d 'Override flags set in stack.yaml (applies to local packages and extra-deps)' -x
 complete -c stack -n "__fish_seen_subcommand_from repl" -l with-ghc -d 'Use this GHC to run GHCi' -x
 complete -c stack -n "__fish_seen_subcommand_from repl" -l load -d 'Enable/disable load modules on start-up (default: enabled)'
 complete -c stack -n "__fish_seen_subcommand_from repl" -l no-load -d 'Enable/disable load modules on start-up (default: enabled)'
@@ -723,6 +752,7 @@ complete -c stack -n "__fish_seen_subcommand_from script" -l compile -d 'Compile
 complete -c stack -n "__fish_seen_subcommand_from script" -l optimize -d 'Compile the script with optimization and run the executable'
 complete -c stack -n "__fish_seen_subcommand_from script" -l ghc-options -d 'Additional options passed to GHC' -x
 complete -c stack -n "__fish_seen_subcommand_from script" -l extra-dep -d 'Extra dependencies to be added to the snapshot' -x
+complete -c stack -n "__fish_seen_subcommand_from script" -l no-run -d 'Don\'t run, just compile.'
 complete -c stack -n "__fish_seen_subcommand_from script" -l setup-info-yaml -d 'Alternate URL or relative / absolute path for stack dependencies' -x
 complete -c stack -n "__fish_seen_subcommand_from script" -l snapshot-location-base -d 'The base location of LTS/Nightly snapshots' -x
 complete -c stack -n "__fish_seen_subcommand_from script" -l help -d 'Show this help text'
@@ -749,19 +779,19 @@ complete -c stack -n "__fish_seen_subcommand_from clean" -l help -d 'Show this h
 
 
 
-complete -c stack -n "__fish_seen_subcommand_from purge" -l setup-info-yaml -d 'Alternate URL or relative / absolute path for stack' -x
+complete -c stack -n "__fish_seen_subcommand_from purge" -l setup-info-yaml -d 'Alternate URL or relative / absolute path for stack dependencies' -x
 complete -c stack -n "__fish_seen_subcommand_from purge" -l snapshot-location-base -d 'The base location of LTS/Nightly snapshots' -x
 complete -c stack -n "__fish_seen_subcommand_from purge" -l help -d 'Show this help text'
 
 
 
-complete -c stack -n "__fish_seen_subcommand_from query" -l setup-info-yaml -d 'Alternate URL or relative / absolute path for stack' -x
+complete -c stack -n "__fish_seen_subcommand_from query" -l setup-info-yaml -d 'Alternate URL or relative / absolute path for stack dependencies' -x
 complete -c stack -n "__fish_seen_subcommand_from query" -l snapshot-location-base -d 'The base location of LTS/Nightly snapshots' -x
 complete -c stack -n "__fish_seen_subcommand_from query" -l help -d 'Show this help text'
 
 
 
-complete -c stack -n "__fish_seen_subcommand_from list" -l setup-info-yaml -d 'Alternate URL or relative / absolute path for stack' -x
+complete -c stack -n "__fish_seen_subcommand_from list" -l setup-info-yaml -d 'Alternate URL or relative / absolute path for stack dependencies' -x
 complete -c stack -n "__fish_seen_subcommand_from list" -l snapshot-location-base -d 'The base location of LTS/Nightly snapshots' -x
 complete -c stack -n "__fish_seen_subcommand_from list" -l help -d 'Show this help text'
 

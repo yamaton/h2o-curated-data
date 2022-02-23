@@ -1,82 +1,81 @@
 # Auto-generated with h2o
 
-complete -c podman -n "not __fish_seen_subcommand_from attach auto-update build commit container cp create diff events exec export history image images import info init inspect kill load login logout logs machine manifest mount network pause pod port ps pull push restart rm rmi run save search secret start stats stop system tag top unmount unpause unshare untag volume wait" -l cgroup-manager -d 'Cgroup manager to use ("cgroupfs"|"systemd") (default "cgroupfs")' -x
-complete -c podman -n "not __fish_seen_subcommand_from attach auto-update build commit container cp create diff events exec export history image images import info init inspect kill load login logout logs machine manifest mount network pause pod port ps pull push restart rm rmi run save search secret start stats stop system tag top unmount unpause unshare untag volume wait" -l cni-config-dir -d 'Path of the configuration directory for CNI networks' -x
-complete -c podman -n "not __fish_seen_subcommand_from attach auto-update build commit container cp create diff events exec export history image images import info init inspect kill load login logout logs machine manifest mount network pause pod port ps pull push restart rm rmi run save search secret start stats stop system tag top unmount unpause unshare untag volume wait" -l conmon -d 'Path of the conmon binary' -x
-complete -c podman -n "not __fish_seen_subcommand_from attach auto-update build commit container cp create diff events exec export history image images import info init inspect kill load login logout logs machine manifest mount network pause pod port ps pull push restart rm rmi run save search secret start stats stop system tag top unmount unpause unshare untag volume wait" -s c -l connection -d 'Connection to use for remote Podman service' -x
-complete -c podman -n "not __fish_seen_subcommand_from attach auto-update build commit container cp create diff events exec export history image images import info init inspect kill load login logout logs machine manifest mount network pause pod port ps pull push restart rm rmi run save search secret start stats stop system tag top unmount unpause unshare untag volume wait" -l events-backend -d 'Events backend to use ("file"|"journald"|"none") (default "file")' -x
-complete -c podman -n "not __fish_seen_subcommand_from attach auto-update build commit container cp create diff events exec export history image images import info init inspect kill load login logout logs machine manifest mount network pause pod port ps pull push restart rm rmi run save search secret start stats stop system tag top unmount unpause unshare untag volume wait" -l help -d 'Help for podman'
-complete -c podman -n "not __fish_seen_subcommand_from attach auto-update build commit container cp create diff events exec export history image images import info init inspect kill load login logout logs machine manifest mount network pause pod port ps pull push restart rm rmi run save search secret start stats stop system tag top unmount unpause unshare untag volume wait" -l hooks-dir -d 'Set the OCI hooks directory path (may be set multiple times) (default [/usr/share/containers/oci/hooks.d])' -x
-complete -c podman -n "not __fish_seen_subcommand_from attach auto-update build commit container cp create diff events exec export history image images import info init inspect kill load login logout logs machine manifest mount network pause pod port ps pull push restart rm rmi run save search secret start stats stop system tag top unmount unpause unshare untag volume wait" -l identity -d 'path to SSH identity file, (CONTAINER_SSHKEY)' -x
-complete -c podman -n "not __fish_seen_subcommand_from attach auto-update build commit container cp create diff events exec export history image images import info init inspect kill load login logout logs machine manifest mount network pause pod port ps pull push restart rm rmi run save search secret start stats stop system tag top unmount unpause unshare untag volume wait" -l log-level -d 'Log messages above specified level (trace, debug, info, warn, warning, error, fatal, panic) (default "warn")' -x
-complete -c podman -n "not __fish_seen_subcommand_from attach auto-update build commit container cp create diff events exec export history image images import info init inspect kill load login logout logs machine manifest mount network pause pod port ps pull push restart rm rmi run save search secret start stats stop system tag top unmount unpause unshare untag volume wait" -l namespace -d 'Set the libpod namespace, used to create separate views of the containers and pods on the system' -x
-complete -c podman -n "not __fish_seen_subcommand_from attach auto-update build commit container cp create diff events exec export history image images import info init inspect kill load login logout logs machine manifest mount network pause pod port ps pull push restart rm rmi run save search secret start stats stop system tag top unmount unpause unshare untag volume wait" -l network-cmd-path -d 'Path to the command for configuring the network' -x
-complete -c podman -n "not __fish_seen_subcommand_from attach auto-update build commit container cp create diff events exec export history image images import info init inspect kill load login logout logs machine manifest mount network pause pod port ps pull push restart rm rmi run save search secret start stats stop system tag top unmount unpause unshare untag volume wait" -s r -l remote -d 'Access remote Podman service (default false)'
-complete -c podman -n "not __fish_seen_subcommand_from attach auto-update build commit container cp create diff events exec export history image images import info init inspect kill load login logout logs machine manifest mount network pause pod port ps pull push restart rm rmi run save search secret start stats stop system tag top unmount unpause unshare untag volume wait" -l root -d 'Path to the root directory in which data, including images, is stored' -x
-complete -c podman -n "not __fish_seen_subcommand_from attach auto-update build commit container cp create diff events exec export history image images import info init inspect kill load login logout logs machine manifest mount network pause pod port ps pull push restart rm rmi run save search secret start stats stop system tag top unmount unpause unshare untag volume wait" -l runroot -d 'Path to the \'run directory\' where all state information is stored' -x
-complete -c podman -n "not __fish_seen_subcommand_from attach auto-update build commit container cp create diff events exec export history image images import info init inspect kill load login logout logs machine manifest mount network pause pod port ps pull push restart rm rmi run save search secret start stats stop system tag top unmount unpause unshare untag volume wait" -l runtime -d 'Path to the OCI-compatible binary used to run containers, default is /usr/bin/runc' -x
-complete -c podman -n "not __fish_seen_subcommand_from attach auto-update build commit container cp create diff events exec export history image images import info init inspect kill load login logout logs machine manifest mount network pause pod port ps pull push restart rm rmi run save search secret start stats stop system tag top unmount unpause unshare untag volume wait" -l runtime-flag -d 'add global flags for the container runtime' -x
-complete -c podman -n "not __fish_seen_subcommand_from attach auto-update build commit container cp create diff events exec export history image images import info init inspect kill load login logout logs machine manifest mount network pause pod port ps pull push restart rm rmi run save search secret start stats stop system tag top unmount unpause unshare untag volume wait" -l storage-driver -d 'Select which storage driver is used to manage storage of images and containers (default is overlay)' -x
-complete -c podman -n "not __fish_seen_subcommand_from attach auto-update build commit container cp create diff events exec export history image images import info init inspect kill load login logout logs machine manifest mount network pause pod port ps pull push restart rm rmi run save search secret start stats stop system tag top unmount unpause unshare untag volume wait" -l storage-opt -d 'Used to pass an option to the storage driver' -x
-complete -c podman -n "not __fish_seen_subcommand_from attach auto-update build commit container cp create diff events exec export history image images import info init inspect kill load login logout logs machine manifest mount network pause pod port ps pull push restart rm rmi run save search secret start stats stop system tag top unmount unpause unshare untag volume wait" -l syslog -d 'Output logging information to syslog as well as the console (default false)'
-complete -c podman -n "not __fish_seen_subcommand_from attach auto-update build commit container cp create diff events exec export history image images import info init inspect kill load login logout logs machine manifest mount network pause pod port ps pull push restart rm rmi run save search secret start stats stop system tag top unmount unpause unshare untag volume wait" -l tmpdir -d 'Path to the tmp directory for libpod state content.' -x
-complete -c podman -n "not __fish_seen_subcommand_from attach auto-update build commit container cp create diff events exec export history image images import info init inspect kill load login logout logs machine manifest mount network pause pod port ps pull push restart rm rmi run save search secret start stats stop system tag top unmount unpause unshare untag volume wait" -l url -d 'URL to access Podman service (CONTAINER_HOST) (default "unix:/tmp/podman-run-1000/podman/podman.sock")' -x
-complete -c podman -n "not __fish_seen_subcommand_from attach auto-update build commit container cp create diff events exec export history image images import info init inspect kill load login logout logs machine manifest mount network pause pod port ps pull push restart rm rmi run save search secret start stats stop system tag top unmount unpause unshare untag volume wait" -s v -l version -d 'version for podman'
+complete -c podman -n "not __fish_seen_subcommand_from attach build commit container cp create diff events exec export history image images import info init inspect kill load login logout logs machine manifest mount network pause pod port ps pull push restart rm rmi run save search secret start stats stop system tag top unmount unpause unshare untag volume wait" -l cgroup-manager -d 'Cgroup manager to use ("cgroupfs"|"systemd") (default "cgroupfs")' -x
+complete -c podman -n "not __fish_seen_subcommand_from attach build commit container cp create diff events exec export history image images import info init inspect kill load login logout logs machine manifest mount network pause pod port ps pull push restart rm rmi run save search secret start stats stop system tag top unmount unpause unshare untag volume wait" -l cni-config-dir -d 'Path of the configuration directory for CNI networks' -x
+complete -c podman -n "not __fish_seen_subcommand_from attach build commit container cp create diff events exec export history image images import info init inspect kill load login logout logs machine manifest mount network pause pod port ps pull push restart rm rmi run save search secret start stats stop system tag top unmount unpause unshare untag volume wait" -l conmon -d 'Path of the conmon binary' -x
+complete -c podman -n "not __fish_seen_subcommand_from attach build commit container cp create diff events exec export history image images import info init inspect kill load login logout logs machine manifest mount network pause pod port ps pull push restart rm rmi run save search secret start stats stop system tag top unmount unpause unshare untag volume wait" -s c -l connection -d 'Connection to use for remote Podman service' -x
+complete -c podman -n "not __fish_seen_subcommand_from attach build commit container cp create diff events exec export history image images import info init inspect kill load login logout logs machine manifest mount network pause pod port ps pull push restart rm rmi run save search secret start stats stop system tag top unmount unpause unshare untag volume wait" -l events-backend -d 'Events backend to use ("file"|"journald"|"none") (default "journald")' -x
+complete -c podman -n "not __fish_seen_subcommand_from attach build commit container cp create diff events exec export history image images import info init inspect kill load login logout logs machine manifest mount network pause pod port ps pull push restart rm rmi run save search secret start stats stop system tag top unmount unpause unshare untag volume wait" -l help -d 'Help for podman'
+complete -c podman -n "not __fish_seen_subcommand_from attach build commit container cp create diff events exec export history image images import info init inspect kill load login logout logs machine manifest mount network pause pod port ps pull push restart rm rmi run save search secret start stats stop system tag top unmount unpause unshare untag volume wait" -l hooks-dir -d 'Set the OCI hooks directory path (may be set multiple times) (default [/usr/share/containers/oci/hooks.d])' -x
+complete -c podman -n "not __fish_seen_subcommand_from attach build commit container cp create diff events exec export history image images import info init inspect kill load login logout logs machine manifest mount network pause pod port ps pull push restart rm rmi run save search secret start stats stop system tag top unmount unpause unshare untag volume wait" -l identity -d 'path to SSH identity file, (CONTAINER_SSHKEY)' -x
+complete -c podman -n "not __fish_seen_subcommand_from attach build commit container cp create diff events exec export history image images import info init inspect kill load login logout logs machine manifest mount network pause pod port ps pull push restart rm rmi run save search secret start stats stop system tag top unmount unpause unshare untag volume wait" -l log-level -d 'Log messages above specified level (trace, debug, info, warn, warning, error, fatal, panic) (default "warn")' -x
+complete -c podman -n "not __fish_seen_subcommand_from attach build commit container cp create diff events exec export history image images import info init inspect kill load login logout logs machine manifest mount network pause pod port ps pull push restart rm rmi run save search secret start stats stop system tag top unmount unpause unshare untag volume wait" -l namespace -d 'Set the libpod namespace, used to create separate views of the containers and pods on the system' -x
+complete -c podman -n "not __fish_seen_subcommand_from attach build commit container cp create diff events exec export history image images import info init inspect kill load login logout logs machine manifest mount network pause pod port ps pull push restart rm rmi run save search secret start stats stop system tag top unmount unpause unshare untag volume wait" -l network-cmd-path -d 'Path to the command for configuring the network' -x
+complete -c podman -n "not __fish_seen_subcommand_from attach build commit container cp create diff events exec export history image images import info init inspect kill load login logout logs machine manifest mount network pause pod port ps pull push restart rm rmi run save search secret start stats stop system tag top unmount unpause unshare untag volume wait" -s r -l remote -d 'Access remote Podman service (default false)'
+complete -c podman -n "not __fish_seen_subcommand_from attach build commit container cp create diff events exec export history image images import info init inspect kill load login logout logs machine manifest mount network pause pod port ps pull push restart rm rmi run save search secret start stats stop system tag top unmount unpause unshare untag volume wait" -l root -d 'Path to the root directory in which data, including images, is stored' -x
+complete -c podman -n "not __fish_seen_subcommand_from attach build commit container cp create diff events exec export history image images import info init inspect kill load login logout logs machine manifest mount network pause pod port ps pull push restart rm rmi run save search secret start stats stop system tag top unmount unpause unshare untag volume wait" -l runroot -d 'Path to the \'run directory\' where all state information is stored' -x
+complete -c podman -n "not __fish_seen_subcommand_from attach build commit container cp create diff events exec export history image images import info init inspect kill load login logout logs machine manifest mount network pause pod port ps pull push restart rm rmi run save search secret start stats stop system tag top unmount unpause unshare untag volume wait" -l runtime -d 'Path to the OCI-compatible binary used to run containers, default is /usr/bin/runc' -x
+complete -c podman -n "not __fish_seen_subcommand_from attach build commit container cp create diff events exec export history image images import info init inspect kill load login logout logs machine manifest mount network pause pod port ps pull push restart rm rmi run save search secret start stats stop system tag top unmount unpause unshare untag volume wait" -l runtime-flag -d 'add global flags for the container runtime' -x
+complete -c podman -n "not __fish_seen_subcommand_from attach build commit container cp create diff events exec export history image images import info init inspect kill load login logout logs machine manifest mount network pause pod port ps pull push restart rm rmi run save search secret start stats stop system tag top unmount unpause unshare untag volume wait" -l storage-driver -d 'Select which storage driver is used to manage storage of images and containers (default is overlay)' -x
+complete -c podman -n "not __fish_seen_subcommand_from attach build commit container cp create diff events exec export history image images import info init inspect kill load login logout logs machine manifest mount network pause pod port ps pull push restart rm rmi run save search secret start stats stop system tag top unmount unpause unshare untag volume wait" -l storage-opt -d 'Used to pass an option to the storage driver' -x
+complete -c podman -n "not __fish_seen_subcommand_from attach build commit container cp create diff events exec export history image images import info init inspect kill load login logout logs machine manifest mount network pause pod port ps pull push restart rm rmi run save search secret start stats stop system tag top unmount unpause unshare untag volume wait" -l syslog -d 'Output logging information to syslog as well as the console (default false)'
+complete -c podman -n "not __fish_seen_subcommand_from attach build commit container cp create diff events exec export history image images import info init inspect kill load login logout logs machine manifest mount network pause pod port ps pull push restart rm rmi run save search secret start stats stop system tag top unmount unpause unshare untag volume wait" -l tmpdir -d 'Path to the tmp directory for libpod state content.' -x
+complete -c podman -n "not __fish_seen_subcommand_from attach build commit container cp create diff events exec export history image images import info init inspect kill load login logout logs machine manifest mount network pause pod port ps pull push restart rm rmi run save search secret start stats stop system tag top unmount unpause unshare untag volume wait" -l url -d 'URL to access Podman service (CONTAINER_HOST) (default "unix:/run/user/1000/podman/podman.sock")' -x
+complete -c podman -n "not __fish_seen_subcommand_from attach build commit container cp create diff events exec export history image images import info init inspect kill load login logout logs machine manifest mount network pause pod port ps pull push restart rm rmi run save search secret start stats stop system tag top unmount unpause unshare untag volume wait" -s v -l version -d 'version for podman'
 
 
 
-complete -c podman -n __fish_use_subcommand -x -a attach -d 'Attach to a running container'
-complete -c podman -n __fish_use_subcommand -x -a auto-update -d 'Auto update containers according to their auto-update policy'
-complete -c podman -n __fish_use_subcommand -x -a build -d 'Build an image using instructions from Containerfiles'
-complete -c podman -n __fish_use_subcommand -x -a commit -d 'Create new image based on the changed container'
-complete -c podman -n __fish_use_subcommand -x -a container -d 'Manage containers'
-complete -c podman -n __fish_use_subcommand -x -a cp -d 'Copy files/folders between a container and the local filesystem'
-complete -c podman -n __fish_use_subcommand -x -a create -d 'Create but do not start a container'
-complete -c podman -n __fish_use_subcommand -x -a diff -d 'Display the changes to the object\'s file system'
-complete -c podman -n __fish_use_subcommand -x -a events -d 'Show podman events'
-complete -c podman -n __fish_use_subcommand -x -a exec -d 'Run a process in a running container'
-complete -c podman -n __fish_use_subcommand -x -a export -d 'Export container\'s filesystem contents as a tar archive'
-complete -c podman -n __fish_use_subcommand -x -a history -d 'Show history of a specified image'
-complete -c podman -n __fish_use_subcommand -x -a image -d 'Manage images'
-complete -c podman -n __fish_use_subcommand -x -a images -d 'List images in local storage'
-complete -c podman -n __fish_use_subcommand -x -a import -d 'Import a tarball to create a filesystem image'
-complete -c podman -n __fish_use_subcommand -x -a info -d 'Display podman system information'
-complete -c podman -n __fish_use_subcommand -x -a init -d 'Initialize one or more containers'
-complete -c podman -n __fish_use_subcommand -x -a inspect -d 'Display the configuration of object denoted by ID'
-complete -c podman -n __fish_use_subcommand -x -a kill -d 'Kill one or more running containers with a specific signal'
-complete -c podman -n __fish_use_subcommand -x -a load -d 'Load image(s) from a tar archive'
-complete -c podman -n __fish_use_subcommand -x -a login -d 'Login to a container registry'
-complete -c podman -n __fish_use_subcommand -x -a logout -d 'Logout of a container registry'
-complete -c podman -n __fish_use_subcommand -x -a logs -d 'Fetch the logs of one or more containers'
-complete -c podman -n __fish_use_subcommand -x -a machine -d 'Manage a virtual machine'
-complete -c podman -n __fish_use_subcommand -x -a manifest -d 'Manipulate manifest lists and image indexes'
-complete -c podman -n __fish_use_subcommand -x -a mount -d 'Mount a working container\'s root filesystem'
-complete -c podman -n __fish_use_subcommand -x -a network -d 'Manage networks'
-complete -c podman -n __fish_use_subcommand -x -a pause -d 'Pause all the processes in one or more containers'
-complete -c podman -n __fish_use_subcommand -x -a pod -d 'Manage pods'
-complete -c podman -n __fish_use_subcommand -x -a port -d 'List port mappings or a specific mapping for the container'
-complete -c podman -n __fish_use_subcommand -x -a ps -d 'List containers'
-complete -c podman -n __fish_use_subcommand -x -a pull -d 'Pull an image from a registry'
-complete -c podman -n __fish_use_subcommand -x -a push -d 'Push an image to a specified destination'
-complete -c podman -n __fish_use_subcommand -x -a restart -d 'Restart one or more containers'
-complete -c podman -n __fish_use_subcommand -x -a rm -d 'Remove one or more containers'
-complete -c podman -n __fish_use_subcommand -x -a rmi -d 'Removes one or more images from local storage'
-complete -c podman -n __fish_use_subcommand -x -a run -d 'Run a command in a new container'
-complete -c podman -n __fish_use_subcommand -x -a save -d 'Save image(s) to an archive'
-complete -c podman -n __fish_use_subcommand -x -a search -d 'Search registry for image'
-complete -c podman -n __fish_use_subcommand -x -a secret -d 'Manage secrets'
-complete -c podman -n __fish_use_subcommand -x -a start -d 'Start one or more containers'
-complete -c podman -n __fish_use_subcommand -x -a stats -d 'Display a live stream of container resource usage statistics'
-complete -c podman -n __fish_use_subcommand -x -a stop -d 'Stop one or more containers'
-complete -c podman -n __fish_use_subcommand -x -a system -d 'Manage podman'
-complete -c podman -n __fish_use_subcommand -x -a tag -d 'Add an additional name to a local image'
-complete -c podman -n __fish_use_subcommand -x -a top -d 'Display the running processes of a container'
-complete -c podman -n __fish_use_subcommand -x -a unmount -d 'Unmounts working container\'s root filesystem'
-complete -c podman -n __fish_use_subcommand -x -a unpause -d 'Unpause the processes in one or more containers'
-complete -c podman -n __fish_use_subcommand -x -a unshare -d 'Run a command in a modified user namespace'
-complete -c podman -n __fish_use_subcommand -x -a untag -d 'Remove a name from a local image'
-complete -c podman -n __fish_use_subcommand -x -a volume -d 'Manage volumes'
-complete -c podman -n __fish_use_subcommand -x -a wait -d 'Block on one or more containers'
+complete -k -c podman -n __fish_use_subcommand -x -a wait -d 'Block on one or more containers'
+complete -k -c podman -n __fish_use_subcommand -x -a volume -d 'Manage volumes'
+complete -k -c podman -n __fish_use_subcommand -x -a untag -d 'Remove a name from a local image'
+complete -k -c podman -n __fish_use_subcommand -x -a unshare -d 'Run a command in a modified user namespace'
+complete -k -c podman -n __fish_use_subcommand -x -a unpause -d 'Unpause the processes in one or more containers'
+complete -k -c podman -n __fish_use_subcommand -x -a unmount -d 'Unmounts working container\'s root filesystem'
+complete -k -c podman -n __fish_use_subcommand -x -a top -d 'Display the running processes of a container'
+complete -k -c podman -n __fish_use_subcommand -x -a tag -d 'Add an additional name to a local image'
+complete -k -c podman -n __fish_use_subcommand -x -a system -d 'Manage podman'
+complete -k -c podman -n __fish_use_subcommand -x -a stop -d 'Stop one or more containers'
+complete -k -c podman -n __fish_use_subcommand -x -a stats -d 'Display a live stream of container resource usage statistics'
+complete -k -c podman -n __fish_use_subcommand -x -a start -d 'Start one or more containers'
+complete -k -c podman -n __fish_use_subcommand -x -a secret -d 'Manage secrets'
+complete -k -c podman -n __fish_use_subcommand -x -a search -d 'Search registry for image'
+complete -k -c podman -n __fish_use_subcommand -x -a save -d 'Save image(s) to an archive'
+complete -k -c podman -n __fish_use_subcommand -x -a run -d 'Run a command in a new container'
+complete -k -c podman -n __fish_use_subcommand -x -a rmi -d 'Removes one or more images from local storage'
+complete -k -c podman -n __fish_use_subcommand -x -a rm -d 'Remove one or more containers'
+complete -k -c podman -n __fish_use_subcommand -x -a restart -d 'Restart one or more containers'
+complete -k -c podman -n __fish_use_subcommand -x -a push -d 'Push an image to a specified destination'
+complete -k -c podman -n __fish_use_subcommand -x -a pull -d 'Pull an image from a registry'
+complete -k -c podman -n __fish_use_subcommand -x -a ps -d 'List containers'
+complete -k -c podman -n __fish_use_subcommand -x -a port -d 'List port mappings or a specific mapping for the container'
+complete -k -c podman -n __fish_use_subcommand -x -a pod -d 'Manage pods'
+complete -k -c podman -n __fish_use_subcommand -x -a pause -d 'Pause all the processes in one or more containers'
+complete -k -c podman -n __fish_use_subcommand -x -a network -d 'Manage networks'
+complete -k -c podman -n __fish_use_subcommand -x -a mount -d 'Mount a working container\'s root filesystem'
+complete -k -c podman -n __fish_use_subcommand -x -a manifest -d 'Manipulate manifest lists and image indexes'
+complete -k -c podman -n __fish_use_subcommand -x -a machine -d 'Manage a virtual machine'
+complete -k -c podman -n __fish_use_subcommand -x -a logs -d 'Fetch the logs of one or more containers'
+complete -k -c podman -n __fish_use_subcommand -x -a logout -d 'Logout of a container registry'
+complete -k -c podman -n __fish_use_subcommand -x -a login -d 'Login to a container registry'
+complete -k -c podman -n __fish_use_subcommand -x -a load -d 'Load image(s) from a tar archive'
+complete -k -c podman -n __fish_use_subcommand -x -a kill -d 'Kill one or more running containers with a specific signal'
+complete -k -c podman -n __fish_use_subcommand -x -a inspect -d 'Display the configuration of object denoted by ID'
+complete -k -c podman -n __fish_use_subcommand -x -a init -d 'Initialize one or more containers'
+complete -k -c podman -n __fish_use_subcommand -x -a info -d 'Display podman system information'
+complete -k -c podman -n __fish_use_subcommand -x -a import -d 'Import a tarball to create a filesystem image'
+complete -k -c podman -n __fish_use_subcommand -x -a images -d 'List images in local storage'
+complete -k -c podman -n __fish_use_subcommand -x -a image -d 'Manage images'
+complete -k -c podman -n __fish_use_subcommand -x -a history -d 'Show history of a specified image'
+complete -k -c podman -n __fish_use_subcommand -x -a export -d 'Export container\'s filesystem contents as a tar archive'
+complete -k -c podman -n __fish_use_subcommand -x -a exec -d 'Run a process in a running container'
+complete -k -c podman -n __fish_use_subcommand -x -a events -d 'Show podman events'
+complete -k -c podman -n __fish_use_subcommand -x -a diff -d 'Display the changes to the object\'s file system'
+complete -k -c podman -n __fish_use_subcommand -x -a create -d 'Create but do not start a container'
+complete -k -c podman -n __fish_use_subcommand -x -a cp -d 'Copy files/folders between a container and the local filesystem'
+complete -k -c podman -n __fish_use_subcommand -x -a container -d 'Manage containers'
+complete -k -c podman -n __fish_use_subcommand -x -a commit -d 'Create new image based on the changed container'
+complete -k -c podman -n __fish_use_subcommand -x -a build -d 'Build an image using instructions from Containerfiles'
+complete -k -c podman -n __fish_use_subcommand -x -a attach -d 'Attach to a running container'
 
 
 
@@ -84,12 +83,6 @@ complete -c podman -n "__fish_seen_subcommand_from attach" -l detach-keys -d 'Se
 complete -c podman -n "__fish_seen_subcommand_from attach" -s l -l latest -d 'Act on the latest container podman is aware of Not supported with the "--remote" flag'
 complete -c podman -n "__fish_seen_subcommand_from attach" -l no-stdin -d 'Do not attach STDIN.'
 complete -c podman -n "__fish_seen_subcommand_from attach" -l sig-proxy -d 'Proxy received signals to the process (default true)'
-
-
-
-complete -c podman -n "__fish_seen_subcommand_from auto-update" -l authfile -d 'Path to the authentication file.' -x
-complete -c podman -n "__fish_seen_subcommand_from auto-update" -l dry-run -d 'Check for pending updates'
-complete -c podman -n "__fish_seen_subcommand_from auto-update" -l format -d 'Change the output format to JSON or a Go template' -x
 
 
 
@@ -137,7 +130,7 @@ complete -c podman -n "__fish_seen_subcommand_from build" -l network -d '\'priva
 complete -c podman -n "__fish_seen_subcommand_from build" -l no-cache -d 'Do not use existing cached images for the container build.'
 complete -c podman -n "__fish_seen_subcommand_from build" -l os -d 'set the OS to the provided value instead of the current operating system of the host (default "linux")' -x
 complete -c podman -n "__fish_seen_subcommand_from build" -l pid -d 'private, path of PID namespace to join, or \'host\'' -r
-complete -c podman -n "__fish_seen_subcommand_from build" -l platform -d 'set the OS/ARCH to the provided value instead of the current operating system and architecture of the host (for example linux/arm) (default "linux/amd64")' -x
+complete -c podman -n "__fish_seen_subcommand_from build" -l platform -d 'set the OS/ARCH/VARIANT of the image to the provided value instead of the current operating system and architecture of the host (for example linux/arm) (default [linux/amd64])' -x
 complete -c podman -n "__fish_seen_subcommand_from build" -l pull -d 'Always attempt to pull the image (errors are fatal) (default true)'
 complete -c podman -n "__fish_seen_subcommand_from build" -l pull-always -d 'pull the image even if the named image is present in store'
 complete -c podman -n "__fish_seen_subcommand_from build" -l pull-never -d 'do not pull the image, use the image present in store if available'
@@ -149,12 +142,13 @@ complete -c podman -n "__fish_seen_subcommand_from build" -l shm-size -d 'size o
 complete -c podman -n "__fish_seen_subcommand_from build" -l sign-by -d 'sign the image using a GPG key with the specified FINGERPRINT' -x
 complete -c podman -n "__fish_seen_subcommand_from build" -l squash -d 'squash newly built layers into a single new layer'
 complete -c podman -n "__fish_seen_subcommand_from build" -l squash-all -d 'Squash all layers into a single layer'
+complete -c podman -n "__fish_seen_subcommand_from build" -l ssh -d 'SSH agent socket or keys to expose to the build.' -x
 complete -c podman -n "__fish_seen_subcommand_from build" -l stdin -d 'pass stdin into containers'
 complete -c podman -n "__fish_seen_subcommand_from build" -s t -l tag -d 'tagged name to apply to the built image' -x
 complete -c podman -n "__fish_seen_subcommand_from build" -l target -d 'set the target build stage to build' -x
 complete -c podman -n "__fish_seen_subcommand_from build" -l timestamp -d 'set created timestamp to the specified epoch seconds to allow for deterministic builds, defaults to current time' -x
 complete -c podman -n "__fish_seen_subcommand_from build" -l tls-verify -d 'require HTTPS and verify certificates when accessing the registry (default true)'
-complete -c podman -n "__fish_seen_subcommand_from build" -l ulimit -d 'ulimit options (default [nproc=32768:32768])' -x
+complete -c podman -n "__fish_seen_subcommand_from build" -l ulimit -d 'ulimit options' -x
 complete -c podman -n "__fish_seen_subcommand_from build" -l userns -d '\'container\', path of user namespace to join, or \'host\'' -r
 complete -c podman -n "__fish_seen_subcommand_from build" -l userns-gid-map -d 'containerGID:hostGID:length GID mapping to use in user namespace' -x
 complete -c podman -n "__fish_seen_subcommand_from build" -l userns-gid-map-group -d 'name of entries from /etc/subgid to use to set user namespace GID mapping' -x
@@ -230,6 +224,7 @@ complete -c podman -n "__fish_seen_subcommand_from create" -s h -l hostname -d '
 complete -c podman -n "__fish_seen_subcommand_from create" -l http-proxy -d 'Set proxy environment variables in the container based on the host proxy vars (default true)'
 complete -c podman -n "__fish_seen_subcommand_from create" -l image-volume -d 'Tells podman how to handle the builtin image volumes ("bind"|"tmpfs"|"ignore") (default "bind")' -x
 complete -c podman -n "__fish_seen_subcommand_from create" -l init -d 'Run an init binary inside the container that forwards signals and reaps processes'
+complete -c podman -n "__fish_seen_subcommand_from create" -l init-ctr -d 'Make this a pod init container.' -x
 complete -c podman -n "__fish_seen_subcommand_from create" -l init-path -d 'Path to the container-init binary' -x
 complete -c podman -n "__fish_seen_subcommand_from create" -s i -l interactive -d 'Keep STDIN open even if not attached'
 complete -c podman -n "__fish_seen_subcommand_from create" -l ip -d 'Specify a static IPv4 address for the container' -x
@@ -237,7 +232,7 @@ complete -c podman -n "__fish_seen_subcommand_from create" -l ipc -d 'IPC namesp
 complete -c podman -n "__fish_seen_subcommand_from create" -l kernel-memory -d 'Kernel memory limit (format: <number>[<unit>], where unit = b (bytes), k (kilobytes), m (megabytes), or g (gigabytes))' -x
 complete -c podman -n "__fish_seen_subcommand_from create" -s l -l label -d 'Set metadata on container' -x
 complete -c podman -n "__fish_seen_subcommand_from create" -l label-file -d 'Read in a line delimited file of labels' -x
-complete -c podman -n "__fish_seen_subcommand_from create" -l log-driver -d 'Logging driver for the container (default "k8s-file")' -x
+complete -c podman -n "__fish_seen_subcommand_from create" -l log-driver -d 'Logging driver for the container (default "journald")' -x
 complete -c podman -n "__fish_seen_subcommand_from create" -l log-opt -d 'Logging driver options' -x
 complete -c podman -n "__fish_seen_subcommand_from create" -l mac-address -d 'Container MAC address (e.g. 92:d0:c6:0a:29:33)' -x
 complete -c podman -n "__fish_seen_subcommand_from create" -s m -l memory -d 'Memory limit (format: <number>[<unit>], where unit = b (bytes), k (kilobytes), m (megabytes), or g (gigabytes))' -x
@@ -253,9 +248,10 @@ complete -c podman -n "__fish_seen_subcommand_from create" -l no-hosts -d 'Do no
 complete -c podman -n "__fish_seen_subcommand_from create" -l oom-kill-disable -d 'Disable OOM Killer'
 complete -c podman -n "__fish_seen_subcommand_from create" -l oom-score-adj -d 'Tune the host\'s OOM preferences (-1000 to 1000)' -x
 complete -c podman -n "__fish_seen_subcommand_from create" -l os -d 'use OS instead of the running OS for choosing images' -x
+complete -c podman -n "__fish_seen_subcommand_from create" -l personality -d 'Configure execution domain using personality (e.g., LINUX/LINUX32)' -x
 complete -c podman -n "__fish_seen_subcommand_from create" -l pid -d 'PID namespace to use' -x
 complete -c podman -n "__fish_seen_subcommand_from create" -l pidfile -d 'Write the container process ID to the file' -x
-complete -c podman -n "__fish_seen_subcommand_from create" -l pids-limit -d 'Tune container pids limit (set 0 for unlimited, -1 for server defaults)' -x
+complete -c podman -n "__fish_seen_subcommand_from create" -l pids-limit -d 'Tune container pids limit (set -1 for unlimited)' -x
 complete -c podman -n "__fish_seen_subcommand_from create" -l platform -d 'Specify the platform for selecting the image.' -x
 complete -c podman -n "__fish_seen_subcommand_from create" -l pod -d 'Run container in an existing pod' -x
 complete -c podman -n "__fish_seen_subcommand_from create" -l pod-id-file -d 'Read the pod ID from the file' -x
@@ -283,16 +279,17 @@ complete -c podman -n "__fish_seen_subcommand_from create" -l subuidname -d 'Nam
 complete -c podman -n "__fish_seen_subcommand_from create" -l sysctl -d 'Sysctl options' -x
 complete -c podman -n "__fish_seen_subcommand_from create" -l systemd -d 'Run container in systemd mode ("true"|"false"|"always") (default "true")' -x
 complete -c podman -n "__fish_seen_subcommand_from create" -l timeout -d 'Maximum length of time a container is allowed to run.' -x
+complete -c podman -n "__fish_seen_subcommand_from create" -l tls-verify -d 'Require HTTPS and verify certificates when contacting registries for pulling images (default true)'
 complete -c podman -n "__fish_seen_subcommand_from create" -l tmpfs -d 'Mount a temporary filesystem (tmpfs) into a container' -x
 complete -c podman -n "__fish_seen_subcommand_from create" -s t -l tty -d 'Allocate a pseudo-TTY for container'
 complete -c podman -n "__fish_seen_subcommand_from create" -l tz -d 'Set timezone in container' -x
 complete -c podman -n "__fish_seen_subcommand_from create" -l uidmap -d 'UID map to use for the user namespace' -x
-complete -c podman -n "__fish_seen_subcommand_from create" -l ulimit -d 'Ulimit options (default [nproc=32768:32768])' -x
+complete -c podman -n "__fish_seen_subcommand_from create" -l ulimit -d 'Ulimit options' -x
 complete -c podman -n "__fish_seen_subcommand_from create" -l umask -d 'Set umask in container (default "0022")' -x
 complete -c podman -n "__fish_seen_subcommand_from create" -s u -l user -d 'Username or UID (format: <name|uid>[:<group|gid>])' -x
 complete -c podman -n "__fish_seen_subcommand_from create" -l userns -d 'User namespace to use' -x
 complete -c podman -n "__fish_seen_subcommand_from create" -l uts -d 'UTS namespace to use' -x
-complete -c podman -n "__fish_seen_subcommand_from create" -l variant -d 'Use _VARIANT_ instead of the running architecture variant for choosing images' -x
+complete -c podman -n "__fish_seen_subcommand_from create" -l variant -d 'Use VARIANT instead of the running architecture variant for choosing images' -x
 complete -c podman -n "__fish_seen_subcommand_from create" -s v -l volume -d 'Bind mount a volume into the container' -x
 complete -c podman -n "__fish_seen_subcommand_from create" -l volumes-from -d 'Mount volumes from the specified container(s)' -x
 complete -c podman -n "__fish_seen_subcommand_from create" -s w -l workdir -d 'Working directory inside the container' -x
@@ -345,7 +342,7 @@ complete -c podman -n "__fish_seen_subcommand_from images" -l history -d 'Displa
 complete -c podman -n "__fish_seen_subcommand_from images" -l no-trunc -d 'Do not truncate output'
 complete -c podman -n "__fish_seen_subcommand_from images" -s n -l noheading -d 'Do not print column headings'
 complete -c podman -n "__fish_seen_subcommand_from images" -s q -l quiet -d 'Display only image IDs'
-complete -c podman -n "__fish_seen_subcommand_from images" -l sort -d 'Sort by created, id, repository, size, tag (default "created")' -x
+complete -c podman -n "__fish_seen_subcommand_from images" -l sort -d 'Sort by size, tag, created, id, repository (default "created")' -x
 
 
 
@@ -454,7 +451,7 @@ complete -c podman -n "__fish_seen_subcommand_from pull" -l os -d 'Use OS instea
 complete -c podman -n "__fish_seen_subcommand_from pull" -l platform -d 'Specify the platform for selecting the image.' -x
 complete -c podman -n "__fish_seen_subcommand_from pull" -s q -l quiet -d 'Suppress output information when pulling images'
 complete -c podman -n "__fish_seen_subcommand_from pull" -l tls-verify -d 'Require HTTPS and verify certificates when contacting registries (default true)'
-complete -c podman -n "__fish_seen_subcommand_from pull" -l variant -d 'use VARIANT instead of the running architecture variant for choosing images' -x
+complete -c podman -n "__fish_seen_subcommand_from pull" -l variant -d 'Use VARIANT instead of the running architecture variant for choosing images' -x
 
 
 
@@ -551,7 +548,7 @@ complete -c podman -n "__fish_seen_subcommand_from run" -l ipc -d 'IPC namespace
 complete -c podman -n "__fish_seen_subcommand_from run" -l kernel-memory -d 'Kernel memory limit (format: <number>[<unit>], where unit = b (bytes), k (kilobytes), m (megabytes), or g (gigabytes))' -x
 complete -c podman -n "__fish_seen_subcommand_from run" -s l -l label -d 'Set metadata on container' -x
 complete -c podman -n "__fish_seen_subcommand_from run" -l label-file -d 'Read in a line delimited file of labels' -x
-complete -c podman -n "__fish_seen_subcommand_from run" -l log-driver -d 'Logging driver for the container (default "k8s-file")' -x
+complete -c podman -n "__fish_seen_subcommand_from run" -l log-driver -d 'Logging driver for the container (default "journald")' -x
 complete -c podman -n "__fish_seen_subcommand_from run" -l log-opt -d 'Logging driver options' -x
 complete -c podman -n "__fish_seen_subcommand_from run" -l mac-address -d 'Container MAC address (e.g. 92:d0:c6:0a:29:33)' -x
 complete -c podman -n "__fish_seen_subcommand_from run" -s m -l memory -d 'Memory limit (format: <number>[<unit>], where unit = b (bytes), k (kilobytes), m (megabytes), or g (gigabytes))' -x
@@ -567,9 +564,10 @@ complete -c podman -n "__fish_seen_subcommand_from run" -l no-hosts -d 'Do not c
 complete -c podman -n "__fish_seen_subcommand_from run" -l oom-kill-disable -d 'Disable OOM Killer'
 complete -c podman -n "__fish_seen_subcommand_from run" -l oom-score-adj -d 'Tune the host\'s OOM preferences (-1000 to 1000)' -x
 complete -c podman -n "__fish_seen_subcommand_from run" -l os -d 'use OS instead of the running OS for choosing images' -x
+complete -c podman -n "__fish_seen_subcommand_from run" -l personality -d 'Configure execution domain using personality (e.g., LINUX/LINUX32)' -x
 complete -c podman -n "__fish_seen_subcommand_from run" -l pid -d 'PID namespace to use' -x
 complete -c podman -n "__fish_seen_subcommand_from run" -l pidfile -d 'Write the container process ID to the file' -x
-complete -c podman -n "__fish_seen_subcommand_from run" -l pids-limit -d 'Tune container pids limit (set 0 for unlimited, -1 for server defaults)' -x
+complete -c podman -n "__fish_seen_subcommand_from run" -l pids-limit -d 'Tune container pids limit (set -1 for unlimited)' -x
 complete -c podman -n "__fish_seen_subcommand_from run" -l platform -d 'Specify the platform for selecting the image.' -x
 complete -c podman -n "__fish_seen_subcommand_from run" -l pod -d 'Run container in an existing pod' -x
 complete -c podman -n "__fish_seen_subcommand_from run" -l pod-id-file -d 'Read the pod ID from the file' -x
@@ -600,16 +598,17 @@ complete -c podman -n "__fish_seen_subcommand_from run" -l subuidname -d 'Name o
 complete -c podman -n "__fish_seen_subcommand_from run" -l sysctl -d 'Sysctl options' -x
 complete -c podman -n "__fish_seen_subcommand_from run" -l systemd -d 'Run container in systemd mode ("true"|"false"|"always") (default "true")' -x
 complete -c podman -n "__fish_seen_subcommand_from run" -l timeout -d 'Maximum length of time a container is allowed to run.' -x
+complete -c podman -n "__fish_seen_subcommand_from run" -l tls-verify -d 'Require HTTPS and verify certificates when contacting registries for pulling images (default true)'
 complete -c podman -n "__fish_seen_subcommand_from run" -l tmpfs -d 'Mount a temporary filesystem (tmpfs) into a container' -x
 complete -c podman -n "__fish_seen_subcommand_from run" -s t -l tty -d 'Allocate a pseudo-TTY for container'
 complete -c podman -n "__fish_seen_subcommand_from run" -l tz -d 'Set timezone in container' -x
 complete -c podman -n "__fish_seen_subcommand_from run" -l uidmap -d 'UID map to use for the user namespace' -x
-complete -c podman -n "__fish_seen_subcommand_from run" -l ulimit -d 'Ulimit options (default [nproc=32768:32768])' -x
+complete -c podman -n "__fish_seen_subcommand_from run" -l ulimit -d 'Ulimit options' -x
 complete -c podman -n "__fish_seen_subcommand_from run" -l umask -d 'Set umask in container (default "0022")' -x
 complete -c podman -n "__fish_seen_subcommand_from run" -s u -l user -d 'Username or UID (format: <name|uid>[:<group|gid>])' -x
 complete -c podman -n "__fish_seen_subcommand_from run" -l userns -d 'User namespace to use' -x
 complete -c podman -n "__fish_seen_subcommand_from run" -l uts -d 'UTS namespace to use' -x
-complete -c podman -n "__fish_seen_subcommand_from run" -l variant -d 'Use _VARIANT_ instead of the running architecture variant for choosing images' -x
+complete -c podman -n "__fish_seen_subcommand_from run" -l variant -d 'Use VARIANT instead of the running architecture variant for choosing images' -x
 complete -c podman -n "__fish_seen_subcommand_from run" -s v -l volume -d 'Bind mount a volume into the container' -x
 complete -c podman -n "__fish_seen_subcommand_from run" -l volumes-from -d 'Mount volumes from the specified container(s)' -x
 complete -c podman -n "__fish_seen_subcommand_from run" -s w -l workdir -d 'Working directory inside the container' -x
@@ -646,6 +645,7 @@ complete -c podman -n "__fish_seen_subcommand_from start" -l sig-proxy -d 'Proxy
 
 complete -c podman -n "__fish_seen_subcommand_from stats" -s a -l all -d 'Show all containers.'
 complete -c podman -n "__fish_seen_subcommand_from stats" -l format -d 'Pretty-print container statistics to JSON or using a Go template' -x
+complete -c podman -n "__fish_seen_subcommand_from stats" -s i -l interval -d 'Time in seconds between stats reports (default 5)' -x
 complete -c podman -n "__fish_seen_subcommand_from stats" -s l -l latest -d 'Act on the latest container podman is aware of Not supported with the "--remote" flag'
 complete -c podman -n "__fish_seen_subcommand_from stats" -l no-reset -d 'Disable resetting the screen between intervals'
 complete -c podman -n "__fish_seen_subcommand_from stats" -l no-stream -d 'Disable streaming stats and only pull the first result, default setting is false'

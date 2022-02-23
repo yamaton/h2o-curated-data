@@ -1,4 +1,4 @@
-# Generated with h2o 0.1.18
+# Auto-generated with h2o
 
 complete -c find -s P -d 'Never follow symbolic links.'
 complete -c find -s L -d 'Follow symbolic links.'

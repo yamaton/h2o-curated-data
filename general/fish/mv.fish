@@ -1,4 +1,4 @@
-# Generated with h2o 0.1.18
+# Auto-generated with h2o
 
 complete -c mv -l backup -d 'make a backup of each existing destination file' -x
 complete -c mv -s b -d 'like --backup but does not accept an argument'

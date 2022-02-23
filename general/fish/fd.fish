@@ -1,4 +1,4 @@
-# Generated with h2o 0.1.18
+# Auto-generated with h2o
 
 complete -c fd -s H -l hidden -d 'Include hidden directories and files in the search results (default: hidden files and directories are skipped).'
 complete -c fd -s I -l no-ignore -d 'Show search results from files and directories that would otherwise be ignored by \'.gitignore\', \'.ignore\', \'.fdignore\', or the global ignore file.'
@@ -28,14 +28,14 @@ complete -c fd -s e -l extension -d '(Additionally) filter search results by the
 complete -c fd -s x -l exec -d 'Execute a command for each search result.' -x
 complete -c fd -s X -l exec-batch -d 'Execute a command with all search results at once.' -x
 complete -c fd -s E -l exclude -d 'Exclude files/directories that match the given glob pattern.' -x
-complete -c fd -l ignore-file -d 'Add a custom ignore-file in \'.gitignore\' format.' -x
+complete -c fd -l ignore-file -d 'Add a custom ignore-file in \'.gitignore\' format.' -r
 complete -c fd -s c -l color -d 'Declare when to use color for the pattern match output:' -x
 complete -c fd -s j -l threads -d 'Set number of threads to use for searching & executing (default: number of available CPU cores)' -x
 complete -c fd -s S -l size -d 'Limit results based on the size of files using the format <+-><NUM><UNIT>.' -x
 complete -c fd -l changed-within -d 'Filter results based on the file modification time.' -x
 complete -c fd -l changed-before -d 'Filter results based on the file modification time.' -x
 complete -c fd -l max-results -d 'Limit the number of search results to \'count\' and quit immediately.' -x
-complete -c fd -l base-directory -d 'Change the current working directory of fd to the provided path.' -x
+complete -c fd -l base-directory -d 'Change the current working directory of fd to the provided path.' -r
 complete -c fd -l path-separator -d 'Set the path separator to use when printing file paths.' -x
-complete -c fd -l search-path -d 'Provide paths to search as an alternative to the positional <path> argument.' -x
+complete -c fd -l search-path -d 'Provide paths to search as an alternative to the positional <path> argument.' -r
 complete -c fd -s o -l owner -d 'Filter files by their user and/or group.' -x

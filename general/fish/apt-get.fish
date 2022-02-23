@@ -1,4 +1,4 @@
-# Generated with h2o 0.1.18
+# Auto-generated with h2o
 
 complete -c apt-get -n "not __fish_seen_subcommand_from update upgrade install reinstall remove purge autoremove dist-upgrade dselect-upgrade build-dep satisfy clean autoclean check source download changelog" -l no-install-recommends -d 'Do not consider recommended packages as a dependency for installing.'
 complete -c apt-get -n "not __fish_seen_subcommand_from update upgrade install reinstall remove purge autoremove dist-upgrade dselect-upgrade build-dep satisfy clean autoclean check source download changelog" -l install-suggests -d 'Consider suggested packages as a dependency for installing.'
@@ -48,20 +48,20 @@ complete -c apt-get -n "not __fish_seen_subcommand_from update upgrade install r
 
 
 
-complete -c apt-get -n __fish_use_subcommand -x -a update -d 'Retrieve new lists of packages'
-complete -c apt-get -n __fish_use_subcommand -x -a upgrade -d 'Perform an upgrade'
-complete -c apt-get -n __fish_use_subcommand -x -a install -d 'Install new packages (pkg is libc6 not libc6.deb)'
-complete -c apt-get -n __fish_use_subcommand -x -a reinstall -d 'Reinstall packages (pkg is libc6 not libc6.deb)'
-complete -c apt-get -n __fish_use_subcommand -x -a remove -d 'Remove packages'
-complete -c apt-get -n __fish_use_subcommand -x -a purge -d 'Remove packages and config files'
-complete -c apt-get -n __fish_use_subcommand -x -a autoremove -d 'Remove automatically all unused packages'
-complete -c apt-get -n __fish_use_subcommand -x -a dist-upgrade -d 'Distribution upgrade, see apt-get(8)'
-complete -c apt-get -n __fish_use_subcommand -x -a dselect-upgrade -d 'Follow dselect selections'
-complete -c apt-get -n __fish_use_subcommand -x -a build-dep -d 'Configure build-dependencies for source packages'
-complete -c apt-get -n __fish_use_subcommand -x -a satisfy -d 'Satisfy dependency strings'
-complete -c apt-get -n __fish_use_subcommand -x -a clean -d 'Erase downloaded archive files'
-complete -c apt-get -n __fish_use_subcommand -x -a autoclean -d 'Erase old downloaded archive files'
-complete -c apt-get -n __fish_use_subcommand -x -a check -d 'Verify that there are no broken dependencies'
-complete -c apt-get -n __fish_use_subcommand -x -a source -d 'Download source archives'
-complete -c apt-get -n __fish_use_subcommand -x -a download -d 'Download the binary package into the current directory'
-complete -c apt-get -n __fish_use_subcommand -x -a changelog -d 'Download and display the changelog for the given package'
+complete -k -c apt-get -n __fish_use_subcommand -x -a changelog -d 'Download and display the changelog for the given package'
+complete -k -c apt-get -n __fish_use_subcommand -x -a download -d 'Download the binary package into the current directory'
+complete -k -c apt-get -n __fish_use_subcommand -x -a source -d 'Download source archives'
+complete -k -c apt-get -n __fish_use_subcommand -x -a check -d 'Verify that there are no broken dependencies'
+complete -k -c apt-get -n __fish_use_subcommand -x -a autoclean -d 'Erase old downloaded archive files'
+complete -k -c apt-get -n __fish_use_subcommand -x -a clean -d 'Erase downloaded archive files'
+complete -k -c apt-get -n __fish_use_subcommand -x -a satisfy -d 'Satisfy dependency strings'
+complete -k -c apt-get -n __fish_use_subcommand -x -a build-dep -d 'Configure build-dependencies for source packages'
+complete -k -c apt-get -n __fish_use_subcommand -x -a dselect-upgrade -d 'Follow dselect selections'
+complete -k -c apt-get -n __fish_use_subcommand -x -a dist-upgrade -d 'Distribution upgrade, see apt-get(8)'
+complete -k -c apt-get -n __fish_use_subcommand -x -a autoremove -d 'Remove automatically all unused packages'
+complete -k -c apt-get -n __fish_use_subcommand -x -a purge -d 'Remove packages and config files'
+complete -k -c apt-get -n __fish_use_subcommand -x -a remove -d 'Remove packages'
+complete -k -c apt-get -n __fish_use_subcommand -x -a reinstall -d 'Reinstall packages (pkg is libc6 not libc6.deb)'
+complete -k -c apt-get -n __fish_use_subcommand -x -a install -d 'Install new packages (pkg is libc6 not libc6.deb)'
+complete -k -c apt-get -n __fish_use_subcommand -x -a upgrade -d 'Perform an upgrade'
+complete -k -c apt-get -n __fish_use_subcommand -x -a update -d 'Retrieve new lists of packages'

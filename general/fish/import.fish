@@ -1,4 +1,4 @@
-# Generated with h2o 0.1.18
+# Auto-generated with h2o
 
 complete -c import -o adjoin -d 'join images into a single multi-image file'
 complete -c import -o border -d 'include window border in the output image'

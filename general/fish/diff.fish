@@ -1,4 +1,4 @@
-# Generated with h2o 0.1.18
+# Auto-generated with h2o
 
 complete -c diff -l normal -d 'output a normal diff (the default)'
 complete -c diff -s q -l brief -d 'report only when files differ'

@@ -1,3 +1,5 @@
+# Auto-generated with h2o
+
 complete -c yq -n "not __fish_seen_subcommand_from eval eval-all help" -s C -l colors -d 'force print with colors'
 complete -c yq -n "not __fish_seen_subcommand_from eval eval-all help" -s e -l exit-status -d 'set exit status if there are no matches or null or false is returned'
 complete -c yq -n "not __fish_seen_subcommand_from eval eval-all help" -s f -l front-matter -d '(extract|process) first input as yaml front-matter.' -x
@@ -16,9 +18,9 @@ complete -c yq -n "not __fish_seen_subcommand_from eval eval-all help" -s V -l v
 
 
 
-complete -c yq -n __fish_use_subcommand -x -a eval -d 'Apply the expression to each document in each yaml file in sequence'
-complete -c yq -n __fish_use_subcommand -x -a eval-all -d 'Loads _all_ yaml documents of _all_ yaml files and runs expression once'
-complete -c yq -n __fish_use_subcommand -x -a help -d 'Help about any command'
+complete -k -c yq -n __fish_use_subcommand -x -a help -d 'Help about any command'
+complete -k -c yq -n __fish_use_subcommand -x -a eval-all -d 'Loads _all_ yaml documents of _all_ yaml files and runs expression once'
+complete -k -c yq -n __fish_use_subcommand -x -a eval -d 'Apply the expression to each document in each yaml file in sequence'
 
 
 

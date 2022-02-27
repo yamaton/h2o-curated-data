@@ -1,0 +1,54 @@
+# Auto-generated with h2o
+
+_croc()
+{
+    local i=1 cmd cur word_list
+    cur="${COMP_WORDS[COMP_CWORD]}"
+
+    # take the last word that's NOT starting with -
+    while [[ ( "$i" < "$COMP_CWORD" ) ]]; do
+        local s="${COMP_WORDS[i]}"
+        case "$s" in
+          -*) ;;
+          *)
+            cmd="$s"
+            ;;
+        esac
+        (( i++ ))
+    done
+
+    case "$cmd" in
+          send) _croc_send
+            return
+            ;;
+
+          relay) _croc_relay
+            return
+            ;;
+
+      *)
+          word_list=" send relay --internal-dns --remember --debug --yes --stdout --no-compress --ask --local --ignore-stdin --overwrite --curve --ip --relay --relay6 --out --pass --socks5 --throttleUpload --help -h --version -v" 
+          COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+          ;;
+    esac
+
+}
+
+_croc_send ()
+{
+    local cur word_list
+    word_list=" --code -c --hash --text -t --no-local --no-multi --ports --help -h" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_croc_relay ()
+{
+    local cur word_list
+    word_list=" --host --ports --help -h" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+## -o bashdefault and -o default are fallback
+complete -o bashdefault -o default -F _croc croc

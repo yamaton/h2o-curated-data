@@ -1,0 +1,202 @@
+#compdef _beet beet
+
+# Auto-generated with h2o
+
+    function _beet_config {
+        _arguments \
+            {-h,--help}'[show this help message and exit]' \
+            {-p,--paths}'[show files that configuration was loaded from]' \
+            {-e,--edit}'[edit user configuration with $EDITOR]' \
+            {-d,--defaults}'[include the default configuration]' \
+            {-c,--clear}'[do not redact sensitive fields]' \
+            "*: :_files"
+
+    }
+
+    function _beet_import {
+        _arguments \
+            {-h,--help}'[show this help message and exit]' \
+            {-c,--copy}'[copy tracks into library directory (default)]' \
+            {-C,--nocopy}'[don'\''t copy tracks (opposite of -c)]' \
+            {-m,--move}'[move tracks into the library (overrides -c)]' \
+            {-w,--write}'[write new metadata to files'\'' tags (default)]' \
+            {-W,--nowrite}'[don'\''t write metadata (opposite of -w)]' \
+            {-a,--autotag}'[infer tags for imported files (default)]' \
+            {-A,--noautotag}'[don'\''t infer tags for imported files (opposite of -a)]' \
+            {-p,--resume}'[resume importing if interrupted]' \
+            {-P,--noresume}'[do not try to resume importing]' \
+            {-q,--quiet}'[never prompt for input: skip albums instead]' \
+            {-l,--log}'[file to log untaggable albums for later review]' \
+            {-s,--singletons}'[import individual tracks instead of full albums]' \
+            {-t,--timid}'[always confirm all actions]' \
+            {-L,--library}'[retag items matching a query]' \
+            {-i,--incremental}'[skip already-imported directories]' \
+            {-I,--noincremental}'[do not skip already-imported directories]' \
+            '--from-scratch[erase existing metadata before applying new metadata]' \
+            '--flat[import an entire tree as a single album]' \
+            {-g,--group-albums}'[group tracks in a folder into separate albums]' \
+            '--pretend[just print the files to import]' \
+            {-S,--search-id}'[restrict matching to a specific metadata backend ID]' \
+            '--set[set the given fields to the supplied values]' \
+            "*: :_files"
+
+    }
+
+    function _beet_list {
+        _arguments \
+            {-h,--help}'[show this help message and exit]' \
+            {-a,--album}'[match albums instead of tracks]' \
+            {-p,--path}'[print paths for matched items or albums]':file:_files \
+            {-f,--format}'[print with custom format]' \
+            "*: :_files"
+
+    }
+
+    function _beet_modify {
+        _arguments \
+            {-h,--help}'[show this help message and exit]' \
+            {-m,--move}'[move files in the library directory]' \
+            {-M,--nomove}'[don'\''t move files in library]' \
+            {-w,--write}'[write new metadata to files'\'' tags (default)]' \
+            {-W,--nowrite}'[don'\''t write metadata (opposite of -w)]' \
+            {-a,--album}'[match albums instead of tracks]' \
+            {-f,--format}'[print with custom format]' \
+            {-y,--yes}'[skip confirmation]' \
+            "*: :_files"
+
+    }
+
+    function _beet_move {
+        _arguments \
+            {-h,--help}'[show this help message and exit]' \
+            {-d,--dest}'[destination directory]':file:_files \
+            {-c,--copy}'[copy instead of moving]' \
+            {-p,--pretend}'[show how files would be moved, but don'\''t touch anything]' \
+            {-t,--timid}'[always confirm all actions]' \
+            {-e,--export}'[copy without changing the database path]' \
+            {-a,--album}'[match albums instead of tracks]' \
+            "*: :_files"
+
+    }
+
+    function _beet_remove {
+        _arguments \
+            {-h,--help}'[show this help message and exit]' \
+            {-d,--delete}'[also remove files from disk]' \
+            {-f,--force}'[do not ask when removing items]' \
+            {-a,--album}'[match albums instead of tracks]' \
+            "*: :_files"
+
+    }
+
+    function _beet_stats {
+        _arguments \
+            {-h,--help}'[show this help message and exit]' \
+            {-e,--exact}'[exact size and time]' \
+            "*: :_files"
+
+    }
+
+    function _beet_update {
+        _arguments \
+            {-h,--help}'[show this help message and exit]' \
+            {-a,--album}'[match albums instead of tracks]' \
+            {-f,--format}'[print with custom format]' \
+            {-m,--move}'[move files in the library directory]' \
+            {-M,--nomove}'[don'\''t move files in library]' \
+            {-p,--pretend}'[show all changes but do nothing]' \
+            {-F,--field}'[list of fields to update]' \
+            "*: :_files"
+
+    }
+
+    function _beet_write {
+        _arguments \
+            {-h,--help}'[show this help message and exit]' \
+            {-p,--pretend}'[show all changes but do nothing]' \
+            {-f,--force}'[write tags even if the existing tags match the database]' \
+            "*: :_files"
+
+    }
+
+
+function _beet {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'config:show or edit the user configuration'
+            'import:import new music'
+            'list:query the library'
+            'modify:change metadata fields'
+            'move:move or copy items'
+            'remove:remove matching items from the library'
+            'stats:show statistics about the library or a query'
+            'update:update the library'
+            'write:write tag information to files'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        '--format-item[print with custom format]' \
+        '--format-album[print with custom format]' \
+        {-l,--library}'[library database file to use]' \
+        {-d,--directory}'[destination music directory]':file:_files \
+        {-v,--verbose}'[log more details]' \
+        {-c,--config}'[path to configuration file]' \
+        {-p,--plugins}'[a comma-separated list of plugins to load]' \
+        {-h,--help}'[show this help message and exit]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (config)
+            _beet_config
+            ;;
+
+        (import)
+            _beet_import
+            ;;
+
+        (list)
+            _beet_list
+            ;;
+
+        (modify)
+            _beet_modify
+            ;;
+
+        (move)
+            _beet_move
+            ;;
+
+        (remove)
+            _beet_remove
+            ;;
+
+        (stats)
+            _beet_stats
+            ;;
+
+        (update)
+            _beet_update
+            ;;
+
+        (write)
+            _beet_write
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+

@@ -1,0 +1,30 @@
+# Auto-generated with h2o
+
+_protoc()
+{
+    local i=1 cmd cur word_list
+    cur="${COMP_WORDS[COMP_CWORD]}"
+
+    # take the last word that's NOT starting with -
+    while [[ ( "$i" < "$COMP_CWORD" ) ]]; do
+        local s="${COMP_WORDS[i]}"
+        case "$s" in
+          -*) ;;
+          *)
+            cmd="$s"
+            ;;
+        esac
+        (( i++ ))
+    done
+
+    case "$cmd" in
+      *)
+          word_list="  -I --proto_path --version -h --help --encode --deterministic_output --decode --decode_raw --descriptor_set_in -o --descriptor_set_out --include_imports --include_source_info --dependency_out --error_format --fatal_warnings --print_free_field_numbers --plugin --cpp_out --csharp_out --java_out --js_out --kotlin_out --objc_out --php_out --python_out --ruby_out" 
+          COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+          ;;
+    esac
+
+}
+
+## -o bashdefault and -o default are fallback
+complete -o bashdefault -o default -F _protoc protoc

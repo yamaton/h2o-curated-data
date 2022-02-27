@@ -1,0 +1,343 @@
+name: bikeshed
+description: bikeshed
+options:
+  - names:
+      - -h
+      - --help
+    argument: ""
+    description: show this help message and exit
+  - names:
+      - --version
+    argument: ""
+    description: show program's version number and exit
+  - names:
+      - -q
+      - --quiet
+    argument: ""
+    description: Silences one level of message, least-important first.
+  - names:
+      - -s
+      - --silent
+    argument: ""
+    description: Shorthand for 'as many -q as you need to shut it up'
+  - names:
+      - -f
+      - --force
+    argument: ""
+    description: Force the preprocessor to run to completion; fatal errors don't stop processing.
+  - names:
+      - -d
+      - --dry-run
+    argument: ""
+    description: Prevents the processor from actually saving anything to disk, but otherwise fully runs.
+  - names:
+      - -a
+      - --ascii-only
+    argument: ""
+    description: Force all Bikeshed messages to be ASCII-only.
+  - names:
+      - --print
+    argument: PRINTMODE
+    description: Print mode. Options are 'plain' (just text), 'console' (colored with console color codes), 'markup', and 'json'. Defaults to 'console'.
+  - names:
+      - --die-on
+    argument: '{nothing,fatal,link-error,warning,everything}'
+    description: Determines what sorts of errors cause Bikeshed to die (quit immediately with an error status code). Default is 'fatal'; the -f flag is a shorthand for 'nothing'
+  - names:
+      - --allow-nonlocal-files
+    argument: ""
+    description: Allows Bikeshed to see/include files from folders higher than the one your source document is in.
+  - names:
+      - --allow-execute
+    argument: ""
+    description: Allow some features to execute arbitrary code from outside the Bikeshed codebase.
+subcommands:
+  - name: spec
+    description: Process a spec source file into a valid output file.
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --debug
+        argument: ""
+        description: Switches on some debugging tools. Don't use for production!
+      - names:
+          - --gh-token
+        argument: '[GHTOKEN]'
+        description: 'GitHub access token. Useful to avoid API rate limits. Generate tokens: https://github.com/settings/tokens.'
+      - names:
+          - --byos
+        argument: ""
+        description: 'Bring-Your-Own-Spec: turns off all the Bikeshed auto-niceties, so you can piecemeal its features into your existing doc instead. Experimental, let me know if things get crashy or weird.'
+      - names:
+          - -l
+          - --line-numbers
+        argument: ""
+        description: Hacky support for outputting line numbers on all error messages. Disables output, as this is hacky and might mess up your source.
+  - name: echidna
+    description: Process a spec source file into a valid output file and publish it according to certain automatic protocols.
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --gh-token
+        argument: '[GHTOKEN]'
+        description: 'GitHub access token. Useful to avoid API rate limits. Generate tokens: https://github.com/settings/tokens.'
+      - names:
+          - --u
+        argument: USERNAME
+        description: W3C username.
+      - names:
+          - --p
+        argument: PASSWORD
+        description: W3C password.
+      - names:
+          - --decision
+        argument: DECISION_URL
+        description: URL recording the decision to publish.
+      - names:
+          - --editorial
+        argument: ""
+        description: Flags update as editorial.
+      - names:
+          - --cc
+        argument: EMAIL
+        description: Comma-separated list of email addresses to ping with the publication status when complete.
+      - names:
+          - --additional-directories
+        argument: '[ADDITIONALDIRECTORIES ...]'
+        description: Directories to bundle in the tar file. Defaults to examples/, diagrams/, and images/.
+      - names:
+          - --self-contained
+        argument: ""
+        description: The spec is self-contained, do not bundle any extra directories in the tar file.
+  - name: watch
+    description: Process a spec source file into a valid output file, automatically rebuilding when it changes.
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --gh-token
+        argument: ""
+        description: 'GitHub access token. Useful to avoid API rate limits. Generate tokens: https://github.com/settings/tokens.'
+      - names:
+          - --gh-token
+        argument: GHTOKEN
+        description: 'GitHub access token. Useful to avoid API rate limits. Generate tokens: https://github.com/settings/tokens.'
+      - names:
+          - --byos
+        argument: ""
+        description: 'Bring-Your-Own-Spec: turns off all the Bikeshed auto-niceties, so you can piecemeal its features into your existing doc instead. Experimental, let me know if things get crashy or weird.'
+  - name: serve
+    description: Identical to 'watch', but also serves the folder on localhost.
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --port
+        argument: '[PORT]'
+        description: Specify the port to serve it over.
+      - names:
+          - --localhost
+        argument: ""
+        description: Only allow connections from localhost.
+      - names:
+          - --gh-token
+        argument: '[GHTOKEN]'
+        description: 'GitHub access token. Useful to avoid API rate limits. Generate tokens: https://github.com/settings/tokens.'
+      - names:
+          - --byos
+        argument: ""
+        description: 'Bring-Your-Own-Spec: turns off all the Bikeshed auto-niceties, so you can piecemeal its features into your existing doc instead. Experimental, let me know if things get crashy or weird.'
+  - name: update
+    description: Update supporting files (those in /spec-data).
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --skip-manifest
+        argument: ""
+        description: Forces Bikeshed to do a full update manually, rather than using the manifest to get the preprocessed update (which can be several minutes old).
+      - names:
+          - --anchors
+        argument: ""
+        description: Download crossref anchor data.
+      - names:
+          - --backrefs
+        argument: ""
+        description: Download link backref data.
+      - names:
+          - --biblio
+        argument: ""
+        description: Download biblio data.
+      - names:
+          - --boilerplate
+        argument: ""
+        description: Download boilerplate files.
+      - names:
+          - --caniuse
+        argument: ""
+        description: Download Can I Use... data.
+      - names:
+          - --mdn
+        argument: ""
+        description: Download MDN Spec Links... data.
+      - names:
+          - --link-defaults
+        argument: ""
+        description: Download link default data.
+      - names:
+          - --test-suites
+        argument: ""
+        description: Download test suite data.
+      - names:
+          - --languages
+        argument: ""
+        description: Download language/translation data.
+      - names:
+          - --wpt
+        argument: ""
+        description: Download web-platform-tests data.
+  - name: issues-list
+    description: Process a plain-text issues file into HTML. Call with no args to see an example input text.
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - -t
+        argument: ""
+        description: Output example Issues List template.
+  - name: debug
+    description: Run various debugging commands.
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --print-exports
+        argument: ""
+        description: Prints those terms that will be exported for cross-ref purposes.
+      - names:
+          - --print-refs-for
+        argument: LINKTEXT
+        description: Prints the ref data for a given link text.
+      - names:
+          - --print
+        argument: CODE
+        description: Runs the specified code and prints it.
+      - names:
+          - --print-json
+        argument: JSONCODE
+        description: Runs the specified code and prints it as formatted JSON.
+      - names:
+          - --refresh-data
+        argument: ""
+        description: Clobbers the readonly data files with the mutable ones.
+      - names:
+          - --print-metadata
+        argument: ""
+        description: Prints all the metadata parsed for the spec as JSON. Top-level keys are presented in increasing order of importance; second-level keys are in order of first appearance in each context.
+  - name: refs
+    description: Search Bikeshed's ref database.
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --text
+        argument: TEXT
+        description: --type LINKTYPE
+      - names:
+          - --for
+        argument: LINKFOR
+        description: --spec SPEC
+      - names:
+          - --status
+        argument: STATUS
+        description: --exact Only search for the exact text provided; don't apply Bikeshed's automatic conjugation help for plurals/etc.
+      - names:
+          - --latest-only
+        argument: ""
+        description: Apply Bikeshed's logic for only returning the latest version of a given ref when it exists in multiple levels of a spec.
+  - name: source
+    description: Tools for formatting the *source* document.
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --big-text
+        argument: ""
+        description: 'Finds HTML comments containing ''Big Text: foo'' and turns them into comments containing ''foo'' in big text.'
+  - name: test
+    description: Tools for running Bikeshed's testsuite.
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --rebase
+        argument: ""
+        description: Rebase the specified files.
+      - names:
+          - --manual-only
+        argument: ""
+        description: Skip testing the real-world files in the repo, and only run the manually-written ones.
+  - name: profile
+    description: Profiling Bikeshed. Needs graphviz, gprof2dot, and xdot installed.
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --root
+        argument: ROOTFUNC
+        description: Prune the graph to start with the specified root node.
+      - names:
+          - --leaf
+        argument: LEAFFUNC
+        description: Prune the graph to only show ancestors of the specified leaf node.
+      - names:
+          - --svg
+        argument: SVGFILE
+        description: Save the graph to a specified SVG file, rather than outputting with xdot immediately.
+  - name: wpt
+    description: Tools for writing Web Platform Tests.
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --template
+        argument: ""
+        description: Outputs a skeleton WPT file for you to start with.

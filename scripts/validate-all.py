@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 #
+# [Deprecated] Use ajv and JSON schema
+#
 # Apply validate.py to all files in json/*.json
 #
 # Usage:

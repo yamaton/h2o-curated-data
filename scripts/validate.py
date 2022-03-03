@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 #
+# [Deprecated] Use ajv and JSON schema
+#
 # Validate JSON schema
 #
 # Example:

@@ -338,7 +338,7 @@ subcommands:
       - names:
           - -d
         argument: distance
-        description: The optical duplicate distance. Suggested settings of 100 for HiSeq style platforms or about 2500 for NovaSeq ones. Default is 0 to not look for optical duplicates. When set, duplicate reads are tagged with dt:Z:SQ for optical duplicates and dt:Z:LB otherwise. Calculation of distance depends on coordinate data embedded in the read names produced by the Illumina sequencing machines. Optical duplicate detection will not work on non standard names.
+        description: The optical duplicate distance. Suggested settings of 100 for HiSeq style platforms or about 2500 for NovaSeq ones. Default is 0 to not look for optical duplicates. When set, duplicate reads are tagged with dt:Z:SQ for optical duplicates and dt:Z:LB otherwise. Calculation of distance depends on coordinate data embedded in the read names produced by the Illumina sequencing machines. Optical duplicate detection will not work on non standard names without the use of --read-coords.
       - names:
           - -c
         argument: ""
@@ -365,6 +365,14 @@ subcommands:
         argument: ""
         description: Stop checking duplicates of duplicates for correctness. While still marking reads as duplicates further checks to make sure all optical duplicates are found are not carried out. Also operates on -t tagging where reads may tagged with a better quality read but not necessarily the best one. Using this option can speed up duplicate marking when there are a great many duplicates for each original read.
       - names:
+          - --read-coords
+        argument: REGEX
+        description: This takes a POSIX regular expression for at least x and y to be used in optical duplicate marking It can also include another part of the read name to test for equality, eg lane:tile elements. Elements wanted are captured with parentheses. Examples below.
+      - names:
+          - --coords-order
+        argument: ORDER
+        description: 'The order of the elements captured in the regular expression. Default is txy where t is a part of the read name selected for string comparison and x/y the coordinates used for optical duplicate detection. Valid orders are: txy, tyx, xyt, yxt, xty, ytx, xy and yx.'
+      - names:
           - --no-PG
         argument: ""
         description: Do not add a PG line to the output file.
@@ -373,6 +381,14 @@ subcommands:
           - --threads
         argument: INT
         description: Number of input/output compression threads to use in addition to main thread [0].
+      - names:
+          - --coords-order
+        argument: txy
+        description: 'To match only the coordinates of x:y:randomstuff use:'
+      - names:
+          - --coords-order
+        argument: xy
+        description: It is possible that complex regular expressions may slow the running of the program. It would be best to keep them simple.
   - name: ampliconclip
     description: clip oligos from the end of reads
     options:
@@ -512,6 +528,125 @@ subcommands:
           - --threads
         argument: INT
         description: Number of input/output compression threads to use in addition to main thread [0].
+  - name: consensus
+    description: produce a consensus Pileup/FASTA/FASTQ
+    options:
+      - names:
+          - -r
+          - --region
+        argument: REG
+        description: Limit the query to region REG. This requires an index.
+      - names:
+          - -f
+          - --format
+        argument: FMT
+        description: Produce format FMT, with "fastq", "fasta" and "pileup" as permitted options.
+      - names:
+          - -l
+          - --line-len
+        argument: "N"
+        description: Sets the maximum line length of line-wrapped fasta and fastq formats to N.
+      - names:
+          - -o
+          - --output
+        argument: FILE
+        description: Output consensus to FILE instead of stdout.
+      - names:
+          - -m
+          - --mode
+        argument: STR
+        description: Select the consensus algorithm. Valid modes are "simple" frequency counting and the "bayesian" (Gap5) method, with Bayesian being the default. (Note case does not matter, so "Bayesian" is accepted too.)
+      - names:
+          - -a
+        argument: ""
+        description: Outputs all bases, from start to end of reference, even when the aligned data does not extend to the ends. This is most useful for construction of a full length reference sequence.
+      - names:
+          - --rf
+          - --incl-flags
+        argument: STR|INT
+        description: Only include reads with at least one FLAG bit set. Defaults to zero, which filters no reads.
+      - names:
+          - --ff
+          - --excl-flags
+        argument: STR|INT
+        description: Exclude reads with any FLAG bit set. Defaults to "UNMAP,SECONDARY,QCFAIL,DUP".
+      - names:
+          - --min-MQ
+        argument: INT
+        description: Filters out reads with a mapping quality below INT. This defaults to zero.
+      - names:
+          - --show-del
+        argument: yes/no
+        description: Whether to show deletions as "*" (no) or to omit from the output (yes). Defaults to no.
+      - names:
+          - --show-ins
+        argument: yes/no
+        description: Whether to show insertions in the consensus. Defaults to yes.
+      - names:
+          - -A
+          - --ambig
+        argument: ""
+        description: Enables IUPAC ambiguity codes in the consensus output. Without this the output will be limited to A, C, G, T, N and *.
+      - names:
+          - -q
+          - --use-qual
+        argument: ""
+        description: For the simple consensus algorithm, this enables use of base quality values. Instead of summing 1 per base called, it sums the base quality instead. These sums are also used in the --call-fract and --het-fract parameters too. Quality values are always used for the "Gap5" consensus method and this option has no affect. Note currently quality values only affect SNPs and not inserted sequences, which still get scores with a fixed +1 per base type occurrence.
+      - names:
+          - -d
+          - --min-depth
+        argument: D
+        description: The minimum depth required to make a call. Defaults to 1. Failing this depth check will produce consensus "N", or absent if it is an insertion.
+      - names:
+          - -H
+          - --het-fract
+        argument: H
+        description: For consensus columns containing multiple base types, if the second most frequent type is at least H fraction of the most common type then a heterozygous base type will be reported in the consensus. Otherwise the most common base is used, provided it meets the --call-fract parameter (otherwise "N"). The fractions computed may be modified by the use of quality values if the -q option is enabled. Note although IUPAC has ambiguity codes for A,C,G,T vs any other A,C,G,T it does not have codes for A,C,G,T vs gap (such as in a heterozygous deletion). Given the lack of any official code, we use lower-case letter to symbolise a half-present base type.
+      - names:
+          - -c
+          - --call-fract
+        argument: C
+        description: Only used for the simple consensus algorithm. Require at least C fraction of bases agreeing with the most likely consensus call to omit that base type. This defaults to 0.75. Failing this check will output "N".
+      - names:
+          - "-5"
+        argument: ""
+        description: Enable Bayesian consensus algorithm.
+      - names:
+          - -C
+          - --cutoff
+        argument: C
+        description: Only used for the Gap5 consensus mode, which produces a Phred style score for the final consensus quality. If this is below C then the consensus is called as "N".
+      - names:
+          - --use-MQ
+          - --no-use-MQ
+        argument: ""
+        description: Enable or disable the use of mapping qualities. Defaults to on.
+      - names:
+          - --adj-MQ
+          - --no-adj-MQ
+        argument: ""
+        description: If mapping qualities are used, this controls whether they are scaled by the local number of mismatches to the reference. The reference is unknown by this tool, so this data is obtained from the MD:Z auxiliary tag (or ignored if not present). Defaults to on.
+      - names:
+          - --NM-halo
+        argument: INT
+        description: Specifies the distance either side of the base call being considered for computing the number of local mismatches.
+      - names:
+          - --low-MQ
+          - --high-MQ
+        argument: MIN
+        description: Specifies a minimum and maximum value of the mapping quality. These are not filters and instead simply put upper and lower caps on the values. The defaults are 0 and 60.
+      - names:
+          - --scale-MQ
+        argument: FLOAT
+        description: This is a general multiplicative mapping quality scaling factor. The effect is to globally raise or lower the quality values used in the consensus algorithm. Defaults to 1.0, which leaves the values unchanged.
+      - names:
+          - --P-het
+        argument: FLOAT
+        description: Controls the likelihood of any position being a heterozygous site. Defaults to 1e-4. Smaller numbers makes the algorithm more likely to call a pure base type. Note the algorithm will always compute the probability of the base being homozygous vs heterozygous, irrespective of whether the output is reported as ambiguous (it will be "N" if deemed to be heterozygous without --ambig mode enabled).
+      - names:
+          - '-'
+        argument: ""
+        description: Create a FASTQ file for the contigs with aligned data, including insertions.
   - name: merge
     description: merge sorted alignments
     options:
@@ -607,7 +742,7 @@ subcommands:
           - -C
           - --adjust-MQ
         argument: INT
-        description: Coefficient for downgrading mapping quality for reads containing excessive mismatches. Given a read with a phredscaled probability q of being generated from the mapped position, the new mapping quality is about sqrt((INTq)/INT)*INT. A zero value disables this functionality; if enabled, the recommended value for BWA is 50. [0]
+        description: Coefficient for downgrading mapping quality for reads containing excessive mismatches. Given a read with a phred-scaled probability q of being generated from the mapped position, the new mapping quality is about sqrt((INT-q)/INT)*INT. A zero value disables this functionality; if enabled, the recommended value for BWA is 50. [0]
       - names:
           - -d
           - --max-depth
@@ -642,7 +777,7 @@ subcommands:
           - -Q
           - --min-BQ
         argument: INT
-        description: Minimum base quality for a base to be considered [13]
+        description: Minimum base quality for a base to be considered. [13]
       - names:
           - -r
           - --region
@@ -681,7 +816,11 @@ subcommands:
           - -O
           - --output-BP
         argument: ""
-        description: Output base positions on reads.
+        description: Output base positions on reads in orientation listed in the SAM file (left to right).
+      - names:
+          - --output-BP-5
+        argument: ""
+        description: Output base positions on reads in their original 5' to 3' orientation.
       - names:
           - -s
           - --output-MQ
@@ -703,6 +842,27 @@ subcommands:
           - --output-empty
         argument: CHAR
         description: Specify a different 'no value' character for tag list entries corresponding to reads that don't have a tag requested with the --output-extra option. The default is *.
+      - names:
+          - -M
+          - --output-mods
+        argument: ""
+        description: Adds base modification markup into the sequence column. This uses the Mm and Ml auxiliary tags (or their uppercase equivalents). Any base in the sequence output may be followed by a series of strand code quality strings enclosed within square brackets where strand is "+" or "-", code is a single character (such as "m" or "h") or a ChEBI numeric in parentheses, and quality is an optional numeric quality value. For example a "C" base with possible 5mC and 5hmC base modification may be reported as "C[+m179+h40]".
+      - names:
+          - --no-output-ins
+        argument: ""
+        description: Do not output the inserted bases in the sequence column. Usually this is reported as "+length sequence", but with this option it becomes simply "+length". For example an insertion of AGT in a pileup column changes from "CCC+3AGTGCC" to "CCC+3GCC".
+      - names:
+          - --no-output-ins-mods
+        argument: ""
+        description: Outputs the inserted bases in the sequence, but excluding any base modifications. This only affects output when --output-mods is also used.
+      - names:
+          - --no-output-del
+        argument: ""
+        description: Do not output deleted reference bases in the sequence column. Normally this is reported as "+length sequence", but with this option it becomes simply "+length". For example an deletion of 3 unknown bases (due to no reference being specified) would normally be seen in a column as e.g. "CCC-3NNNGCC", but will be reported as "CCC-3GCC" with this option.
+      - names:
+          - --no-output-ends
+        argument: ""
+        description: Removes the “^” (with mapping quality) and “$” markup from the sequence column.
       - names:
           - --reverse-del
         argument: ""
@@ -777,7 +937,7 @@ subcommands:
       - names:
           - -h
         argument: FILE2
-        description: Use the header from FILE2 when writing the file given in the -u option. This header completely replaces the
+        description: Use the header from FILE2 when writing the file given in the -u option. This header completely replaces the one from the input file. It must be compatible with the input file header, which means it must have the same number of references listed in the @SQ lines and the references must be in the same order and have the same lengths.
       - names:
           - -f
         argument: STRING
@@ -793,8 +953,8 @@ subcommands:
       - names:
           - -@
           - --threads
-        argument: INT
-        description: Number of input/output compression threads to use in addition to main thread [0].
+        argument: ""
+        description: INT
   - name: quickcheck
     description: quickly check if SAM/BAM/CRAM file appears intact
     options:
@@ -1012,6 +1172,11 @@ subcommands:
         argument: ""
         description: Specifies that the Illumina CASAVA identifiers should be processed. This may set the READ1, READ2 and QCFAIL flags and add a barcode tag.
       - names:
+          - -N
+          - --name2
+        argument: ""
+        description: Assume the read names are encoded in the SRA and ENA formats where the first word is an automatically generated name with the second field being the original name. This option extracts that second field instead.
+      - names:
           - --barcode-tag
         argument: TAG
         description: Changes the auxiliary tag used for barcode sequence. Defaults to BC.
@@ -1044,14 +1209,15 @@ subcommands:
       - names:
           - -T
         argument: TAGLIST
-        description: This looks for any SAM-format auxiliary tags in the comment field of a fastq read name. These must match the <alphanum><alpha-num>:<type>:<data> pattern as specified in the SAM specification. TAGLIST can be blank or * to indicate all tags should be copied to the output, otherwise it is a comma-separated list of tag types to include with all others being discarded.
+        description: This looks for any SAM-format auxiliary tags in the comment field of a fastq read name. These must match the <alpha-num><alpha-num>:<type>:<data> pattern as specified in the SAM specification. TAGLIST can be blank or * to indicate all tags should be copied to the output, otherwise it is a comma-separated list of tag types to include with all others being discarded.
   - name: bedcov
     description: read depth per BED region
     options:
       - names:
           - -Q
+          - --min-MQ
         argument: INT
-        description: Only count reads with mapping quality greater than INT
+        description: Only count reads with mapping quality greater than or equal to INT
       - names:
           - -g
         argument: FLAGS
@@ -1184,10 +1350,12 @@ subcommands:
         description: Write output to FILE. Using “-” for FILE will send the output to stdout (also the default if this option is not used).
       - names:
           - -q
+          - --min-BQ
         argument: INT
         description: Only count reads with base quality greater than or equal to INT
       - names:
           - -Q
+          - --min-MQ
         argument: INT
         description: Only count reads with mapping quality greater than or equal to INT
       - names:
@@ -1253,6 +1421,7 @@ subcommands:
         description: Minimum Phred-scaled LOD to call a heterozygote. [40]
       - names:
           - -Q
+          - --min-BQ
         argument: INT
         description: Minimum base quality to be used in het calling. [13]
       - names:
@@ -1262,10 +1431,6 @@ subcommands:
   - name: stats
     description: generate stats (former bamcheck)
     options:
-      - names:
-          - -q
-        argument: option.
-        description: bases duplicated - number of bases that belong to reads duplicated.
       - names:
           - -c
           - --coverage
@@ -1438,6 +1603,19 @@ subcommands:
   - name: flags
     description: explain BAM flags
     options: []
+  - name: head
+    description: header viewer
+    options:
+      - names:
+          - -h
+          - --headers
+        argument: INT
+        description: Display only the first INT header lines. By default, all header lines are displayed.
+      - names:
+          - -n
+          - --records
+        argument: INT
+        description: Also display the first INT alignment records. By default, no alignment records are displayed.
   - name: tview
     description: text alignment viewer
     options:
@@ -1474,12 +1652,12 @@ subcommands:
           - "-1"
           - --fast
         argument: ""
-        description: Enable fast BAM compression (implies -b).
+        description: Enable fast compression. This also changes the default output format to BAM, but this can be overridden by the explicit format options or using a filename with a known suffix.
       - names:
           - -u
           - --uncompressed
         argument: ""
-        description: Output uncompressed BAM. This option saves time spent on compression/decompression and is thus preferred when the output is piped to another samtools command.
+        description: Output uncompressed data. This also changes the default output format to BAM, but this can be overridden by the explicit format options or using a filename with a known suffix.
       - names:
           - -h
           - --with-header
@@ -1515,6 +1693,11 @@ subcommands:
           - --output-unselected
         argument: FILE
         description: Write alignments that are not selected by the various filter options to FILE. When this option is used, all alignments (or all alignments intersecting the regions specified) are written to either the output file or this file, but never both.
+      - names:
+          - -p
+          - --unmap
+        argument: ""
+        description: Set the UNMAP flag on alignments that are not selected by the filter options. These alignments are then written to the normal output. This is not compatible with -U.
       - names:
           - -t
           - --fai-reference
@@ -1598,14 +1781,24 @@ subcommands:
         argument: FLAG
         description: Do not output alignments with any bits set in FLAG present in the FLAG field. FLAG can be specified in hex by beginning with `0x' (i.e. /^0x[0-9A-F]+/), in octal by beginning with `0' (i.e. /^0[0-7]+/), as a decimal number not beginning with '0' or as a comma-separated list of flag names.
       - names:
+          - --rf
+          - --incl-flags
+          - --include-flags
+        argument: FLAG
+        description: Only output alignments with any bit set in FLAG present in the FLAG field. FLAG can be specified in hex by beginning with `0x' (i.e. /^0x[0-9A-F]+/), in octal by beginning with `0' (i.e. /^0[0-7]+/), as a decimal number not beginning with '0' or as a comma-separated list of flag names.
+      - names:
           - -G
         argument: FLAG
-        description: Do not output alignments with all bits set in INT present in the FLAG field. This is the opposite of -f such that -f12 -G12 is the same as no filtering at all. FLAG can be specified in hex by beginning with `0x' (i.e. /^0x[0-9AF]+/), in octal by beginning with `0' (i.e. /^0[0-7]+/), as a decimal number not beginning with '0' or as a commaseparated list of flag names.
+        description: Do not output alignments with all bits set in INT present in the FLAG field. This is the opposite of -f such that -f12 -G12 is the same as no filtering at all. FLAG can be specified in hex by beginning with `0x' (i.e. /^0x[0-9A-F]+/), in octal by beginning with `0' (i.e. /^0[0-7]+/), as a decimal number not beginning with '0' or as a comma-separated list of flag names.
       - names:
           - -x
           - --remove-tag
         argument: STR
-        description: Read tag to exclude from output (repeatable) [null]
+        description: Read tag(s) to exclude from output (repeatable) [null]. This can be a single tag or a comma separated list. Alternatively the option itself can be repeated multiple times.
+      - names:
+          - --keep-tag
+        argument: STR
+        description: This keeps only tags listed in STR and is directly equivalent to --remove-tag ^STR. Specifying an empty list will remove all tags. If both --keep-tag and --remove-tag are specified then --keep-tag has precedence.
       - names:
           - -B
           - --remove-B
@@ -1636,6 +1829,11 @@ subcommands:
           - --threads
         argument: INT
         description: Number of BAM compression threads to use in addition to main thread [0].
+      - names:
+          - -P
+          - --fetch-pairs
+        argument: ""
+        description: Retrieve pairs even when the mate is outside of the requested region. Enabling this option also turns on the multi-region iterator (-M). A region to search must be specified, either on the command-line, or using the -L option. The input file must be an indexed regular file.
       - names:
           - -S
         argument: ""
@@ -1684,3 +1882,30 @@ subcommands:
           - --no-PG
         argument: ""
         description: Do not add a @PG line to the header of the output file.
+  - name: samples
+    description: list the samples in a set of SAM/BAM/CRAM files
+    options:
+      - names:
+          - -?
+        argument: ""
+        description: print help and exit
+      - names:
+          - -h
+        argument: ""
+        description: print a header
+      - names:
+          - -i
+        argument: ""
+        description: test if the file is indexed. Add an extra column to the output with a single character value (Y/N).
+      - names:
+          - -T
+        argument: TAG
+        description: provide the sample tag name from the @RG line [SM].
+      - names:
+          - -o
+        argument: FILE output file .
+        description: -f FILE load an indexed fasta file in the collection of references. Can be used multiple times. Add an extra column with the path to the reference file.
+      - names:
+          - -o
+        argument: FILE output file stdout.
+        description: -f FILE load an indexed fasta file in the collection of references. Can be used multiple times. Add an extra column with the path to the reference file.

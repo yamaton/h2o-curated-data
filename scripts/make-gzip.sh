@@ -25,12 +25,13 @@ fi
 
 dirs=(general bio)
 basedir="$(dirname "$(readlink -f "$0")")"
-schema="$basedir"/../json-schema/command-2022-03-03.schema.json
+schema="$basedir"/../json-schema/command-2022-03-14.schema.json
+validator="$basedir"/validate-json.sh
 
 "$basedir"/make-list.py
 
 for dir_ in ${dirs[*]}; do
     cd "$basedir"/../"$dir_"/json
-    ls *.json | parallel ajv validate -s "$schema" -d {}
+    ls *.json | parallel "$validator" "$schema" {}
     jq -cs . *.json | gzip > "$basedir"/../"$dir_".json.gz
 done

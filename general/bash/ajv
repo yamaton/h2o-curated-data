@@ -1,0 +1,82 @@
+# Auto-generated with h2o
+
+_ajv()
+{
+    local i=1 cmd cur word_list
+    cur="${COMP_WORDS[COMP_CWORD]}"
+
+    # take the last word that's NOT starting with -
+    while [[ ( "$i" < "$COMP_CWORD" ) ]]; do
+        local s="${COMP_WORDS[i]}"
+        case "$s" in
+          -*) ;;
+          *)
+            cmd="$s"
+            ;;
+        esac
+        (( i++ ))
+    done
+
+    case "$cmd" in
+          validate) _ajv_validate
+            return
+            ;;
+
+          compile) _ajv_compile
+            return
+            ;;
+
+          migrate) _ajv_migrate
+            return
+            ;;
+
+          test) _ajv_test
+            return
+            ;;
+
+          help) _ajv_help
+            return
+            ;;
+
+      *)
+          word_list=" validate compile migrate test help --spec" 
+          COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+          ;;
+    esac
+
+}
+
+_ajv_validate ()
+{
+    local cur word_list
+    word_list=" -s -d -r -m -c --spec --errors --changes --strict --strict-tuples --strict-types --allow-matching-properties --allow-union-types --validate-formats --data --all-errors --verbose --comment --inline-refs --remove-additional --use-defaults --coerce-types --multiple-of-precision --messages --loop-required --loop-enum --own-properties --code.es5 --code.lines --code.optimize" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_ajv_compile ()
+{
+    local cur word_list
+    word_list=" -s -r -m -c -o --spec --strict --strict-tuples --strict-types --allow-matching-properties --allow-union-types --validate-formats --data --all-errors --verbose --comment --inline-refs --remove-additional --use-defaults --coerce-types --multiple-of-precision --messages --loop-required --loop-enum --own-properties --code.es5 --code.lines --code.optimize" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_ajv_migrate ()
+{
+    local cur word_list
+    word_list=" -s -o --spec --indent --validate-schema" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_ajv_test ()
+{
+    local cur word_list
+    word_list=" -s -d -r -m -c --valid --invalid --spec --errors --strict --strict-tuples --strict-types --allow-matching-properties --allow-union-types --validate-formats --data --all-errors --verbose --comment --inline-refs --remove-additional --use-defaults --coerce-types --multiple-of-precision --messages --loop-required --loop-enum --own-properties --code.es5 --code.lines --code.optimize" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+## -o bashdefault and -o default are fallback
+complete -o bashdefault -o default -F _ajv ajv

@@ -1,0 +1,219 @@
+name: rebot
+description: rebot
+options:
+  - names:
+      - --rpa
+    argument: ""
+    description: Turn on the generic automation mode. Mainly affects terminology so that "test" is replaced with "task" in logs and reports. By default the mode is got from the processed output files. New in RF 3.1.
+  - names:
+      - -R
+      - --merge
+    argument: ""
+    description: 'When combining results, merge outputs together instead of putting them under a new top level suite. Example: rebot --merge orig.xml rerun.xml'
+  - names:
+      - -N
+      - --name
+    argument: name
+    description: Set the name of the top level suite.
+  - names:
+      - -D
+      - --doc
+    argument: documentation
+    description: 'Set the documentation of the top level suite. Simple formatting is supported (e.g. *bold*). If the documentation contains spaces, it must be quoted. If the value is path to an existing file, actual documentation is read from that file. Examples: --doc "Very *good* example" --doc doc_from_file.txt'
+  - names:
+      - -M
+      - --metadata
+    argument: name:value *
+    description: 'Set metadata of the top level suite. Value can contain formatting and be read from a file similarly as --doc. Example: --metadata Version:1.2'
+  - names:
+      - -G
+      - --settag
+    argument: tag *
+    description: Sets given tag(s) to all tests.
+  - names:
+      - -t
+      - --test
+    argument: name *
+    description: Select tests by name or by long name containing also parent suite name like `Parent.Test`. Name is case and space insensitive and it can also be a simple pattern where `*` matches anything, `?` matches any single character, and `[chars]` matches one character in brackets.
+  - names:
+      - --task
+    argument: name *
+    description: Alias to --test. Especially applicable with --rpa.
+  - names:
+      - -s
+      - --suite
+    argument: name *
+    description: Select suites by name. When this option is used with --test, --include or --exclude, only tests in matching suites and also matching other filtering criteria are selected. Name can be a simple pattern similarly as with --test and it can contain parent name separated with a dot. For example, `-s X.Y` selects suite `Y` only if its parent is `X`.
+  - names:
+      - -i
+      - --include
+    argument: tag *
+    description: 'Select tests by tag. Similarly as name with --test, tag is case and space insensitive and it is possible to use patterns with `*`, `?` and `[]` as wildcards. Tags and patterns can also be combined together with `AND`, `OR`, and `NOT` operators. Examples: --include foo --include bar* --include fooANDbar*'
+  - names:
+      - -e
+      - --exclude
+    argument: tag *
+    description: Specify tests not to be included by tag. They are not selected even if included with --include. Tags are matched using same rules as with --include.
+  - names:
+      - --processemptysuite
+    argument: ""
+    description: Processes output also if the top level suite is empty. Useful e.g. with --include/--exclude when it is not an error that there are no matches.
+  - names:
+      - -c
+      - --critical
+    argument: tag *
+    description: Deprecated since RF 4.0 and has no effect anymore.
+  - names:
+      - -n
+      - --noncritical
+    argument: tag *
+    description: Deprecated since RF 4.0 and has no effect anymore. Use --skiponfailure when starting execution instead.
+  - names:
+      - -d
+      - --outputdir
+    argument: dir
+    description: Where to create output files. The default is the directory where Rebot is run from and the given path is considered relative to that unless it is absolute.
+  - names:
+      - -o
+      - --output
+    argument: file
+    description: XML output file. Not created unless this option is specified. Given path, similarly as paths given to --log, --report and --xunit, is relative to --outputdir unless given as an absolute path.
+  - names:
+      - -l
+      - --log
+    argument: file
+    description: 'HTML log file. Can be disabled by giving a special name `NONE`. Default: log.html Examples: `--log mylog.html`, `-l none`'
+  - names:
+      - -r
+      - --report
+    argument: file
+    description: 'HTML report file. Can be disabled with `NONE` similarly as --log. Default: report.html'
+  - names:
+      - -x
+      - --xunit
+    argument: file
+    description: xUnit compatible result file. Not created unless this option is specified.
+  - names:
+      - --xunitskipnoncritical
+    argument: ""
+    description: Deprecated since RF 4.0 and has no effect anymore.
+  - names:
+      - -T
+      - --timestampoutputs
+    argument: ""
+    description: When this option is used, timestamp in a format `YYYYMMDD-hhmmss` is added to all generated output files between their basename and extension. For example `-T -o output.xml -r report.html -l none` creates files like `output-20070503-154410.xml` and `report-20070503-154410.html`.
+  - names:
+      - --splitlog
+    argument: ""
+    description: Split the log file into smaller pieces that open in browsers transparently.
+  - names:
+      - --logtitle
+    argument: title
+    description: Title for the generated log file. The default title is `<SuiteName> Test Log`.
+  - names:
+      - --reporttitle
+    argument: title
+    description: Title for the generated report file. The default title is `<SuiteName> Test Report`.
+  - names:
+      - --reportbackground
+    argument: colors
+    description: 'Background colors to use in the report file. Either `all_passed:critical_passed:failed` or `passed:failed`. Both color names and codes work. Examples: --reportbackground green:yellow:red --reportbackground #00E:#E00'
+  - names:
+      - -L
+      - --loglevel
+    argument: level
+    description: 'Threshold for selecting messages. Available levels: TRACE (default), DEBUG, INFO, WARN, NONE (no msgs). Use syntax `LOGLEVEL:DEFAULT` to define the default visible log level in log files. Examples: --loglevel DEBUG --loglevel DEBUG:INFO'
+  - names:
+      - --suitestatlevel
+    argument: level
+    description: 'How many levels to show in `Statistics by Suite` in log and report. By default all suite levels are shown. Example: --suitestatlevel 3'
+  - names:
+      - --tagstatinclude
+    argument: tag *
+    description: Include only matching tags in `Statistics by Tag` in log and report. By default all tags are shown. Given tag can be a pattern like with --include.
+  - names:
+      - --tagstatexclude
+    argument: tag *
+    description: Exclude matching tags from `Statistics by Tag`. This option can be used with --tagstatinclude similarly as --exclude is used with --include.
+  - names:
+      - --tagstatcombine
+    argument: tags:name *
+    description: 'Create combined statistics based on tags. These statistics are added into `Statistics by Tag`. If the optional `name` is not given, name of the combined tag is got from the specified tags. Tags are matched using the same rules as with --include. Examples: --tagstatcombine requirement-* --tagstatcombine tag1ANDtag2:My_name'
+  - names:
+      - --tagdoc
+    argument: pattern:doc *
+    description: 'Add documentation to tags matching the given pattern. Documentation is shown in `Test Details` and also as a tooltip in `Statistics by Tag`. Pattern can use `*`, `?` and `[]` as wildcards like --test. Documentation can contain formatting like --doc. Examples: --tagdoc mytag:Example --tagdoc "owner-*:Original author"'
+  - names:
+      - --tagstatlink
+    argument: pattern:link:title *
+    description: 'Add external links into `Statistics by Tag`. Pattern can use `*`, `?` and `[]` as wildcards like --test. Characters matching to `*` and `?` wildcards can be used in link and title with syntax %N, where N is index of the match (starting from 1). Examples: --tagstatlink mytag:http://my.domain:Title --tagstatlink "bug-*:http://url/id=%1:Issue Tracker"'
+  - names:
+      - --expandkeywords
+    argument: name:<pattern>|tag:<pattern> *
+    description: 'Matching keywords will be automatically expanded in the log file. Matching against keyword name or tags work using same rules as with --removekeywords. Examples: --expandkeywords name:BuiltIn.Log --expandkeywords tag:expand New in RF 3.2.'
+  - names:
+      - --removekeywords
+    argument: all|passed|for|wuks|name:<pattern>|tag:<pattern> *
+    description: Remove keyword data from all generated outputs. Keywords containing warnings are not removed except in the `all` mode.
+  - names:
+      - --flattenkeywords
+    argument: for|foritem|name:<pattern>|tag:<pattern> *
+    description: 'Flattens matching keywords in all generated outputs. Matching keywords get all log messages from their child keywords and children are discarded otherwise. for: flatten for loops fully foritem: flatten individual for loop iterations name:<pattern>: flatten matched keywords using same matching rules as with `--removekeywords name:<pattern>` tag:<pattern>: flatten matched keywords using same matching rules as with `--removekeywords tag:<pattern>`'
+  - names:
+      - --starttime
+    argument: timestamp
+    description: Set execution start time. Timestamp must be given in format `2007-10-01 15:12:42.268` where all separators are optional (e.g. `20071001151242268` is ok too) and parts from milliseconds to hours can be omitted if they are zero (e.g. `2007-10-01`). This can be used to override start time of a single suite or to set start time for a combined suite, which would otherwise be `N/A`.
+  - names:
+      - --endtime
+    argument: timestamp
+    description: Same as --starttime but for end time. If both options are used, elapsed time of the suite is calculated based on them. For combined suites, it is otherwise calculated by adding elapsed times of the combined suites together.
+  - names:
+      - --nostatusrc
+    argument: ""
+    description: Sets the return code to zero regardless are there failures. Error codes are returned normally.
+  - names:
+      - --prerebotmodifier
+    argument: class *
+    description: Class to programmatically modify the result model before creating outputs.
+  - names:
+      - -C
+      - --consolecolors
+    argument: auto|on|ansi|off
+    description: 'Use colors on console output or not. auto: use colors when output not redirected (default) on: always use colors ansi: like `on` but use ANSI colors also on Windows off: disable colors altogether Note that colors do not work with Jython on Windows.'
+  - names:
+      - -P
+      - --pythonpath
+    argument: path *
+    description: Additional locations to add to the module search path that is used when importing Python based extensions.
+  - names:
+      - -A
+      - --argumentfile
+    argument: path *
+    description: 'Text file to read more arguments from. File can have both options and output files, one per line. Contents do not need to be escaped but spaces in the beginning and end of lines are removed. Empty lines and lines starting with a hash character (#) are ignored. Example file: | --include regression | --name Regression Tests | # This is a comment line | output.xml'
+  - names:
+      - -h
+      - -?
+      - --help
+    argument: ""
+    description: Print usage instructions.
+  - names:
+      - --version
+    argument: ""
+    description: Print version information.
+version: 4.1.3
+tldr: |
+  - Simple Rebot run that creates log and report with default names.
+
+  `rebot output.xml`
+
+  - Using options. Note that this is one long command split into multiple lines.
+
+  `rebot --log smoke_log.html --report smoke_report.html --include smoke --ReportTitle "Smoke Tests" --ReportBackground green:yellow:red --TagStatCombine tag1ANDtag2 path/to/myoutput.xml`
+
+  - Executing `robot.rebot` module using Python and creating combined outputs.
+
+  `python -m robot.rebot --name Combined outputs/*.xml`
+
+  - Running `robot/rebot.py` script with Jython.
+
+  `jython path/robot/rebot.py -N Project_X -l none -r x.html output.xml`

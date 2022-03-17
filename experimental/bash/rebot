@@ -1,0 +1,30 @@
+# Auto-generated with h2o
+
+_rebot()
+{
+    local i=1 cmd cur word_list
+    cur="${COMP_WORDS[COMP_CWORD]}"
+
+    # take the last word that's NOT starting with -
+    while [[ ( "$i" < "$COMP_CWORD" ) ]]; do
+        local s="${COMP_WORDS[i]}"
+        case "$s" in
+          -*) ;;
+          *)
+            cmd="$s"
+            ;;
+        esac
+        (( i++ ))
+    done
+
+    case "$cmd" in
+      *)
+          word_list="  --rpa -R --merge -N --name -D --doc -M --metadata -G --settag -t --test --task -s --suite -i --include -e --exclude --processemptysuite -c --critical -n --noncritical -d --outputdir -o --output -l --log -r --report -x --xunit --xunitskipnoncritical -T --timestampoutputs --splitlog --logtitle --reporttitle --reportbackground -L --loglevel --suitestatlevel --tagstatinclude --tagstatexclude --tagstatcombine --tagdoc --tagstatlink --expandkeywords --removekeywords --flattenkeywords --starttime --endtime --nostatusrc --prerebotmodifier -C --consolecolors -P --pythonpath -A --argumentfile -h -? --help --version"
+          COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+          ;;
+    esac
+
+}
+
+## -o bashdefault and -o default are fallback
+complete -o bashdefault -o default -F _rebot rebot

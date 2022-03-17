@@ -24,7 +24,6 @@ if [[ "$#" != 2 ]]; then
 fi
 
 case "$toshell" in
-
   bash)
     outpath="$toshell/$name"
     ;;
@@ -42,21 +41,18 @@ esac
 
 echo "Running: to-shellcomp.sh $toshell $name ..."
 
+function genScript() {
+  local dir="$1"
+  local json="$basedir/../$dir/json/$name.json"
+  if [[ -f "$json" ]]; then
+      mkdir -p "$basedir/../$dir/$toshell"
+      output="$basedir/../$dir/$outpath"
+      echo "  from: $json"
+      echo "  to  : $output"
+      h2o --loadjson "$json" --format "$toshell" > "$output"
+  fi
+}
 
-json="$basedir/../general/json/$name.json"
-if [[ -f "$json" ]]; then
-    mkdir -p "$basedir/../general/$toshell"
-    output="$basedir/../general/$outpath"
-    echo "  from: $json"
-    echo "  to  : $output"
-    h2o --loadjson "$json" --format "$toshell" > "$output"
-fi
-
-json="$basedir/../bio/json/$name.json"
-if [[ -f "$json" ]]; then
-    mkdir -p "$basedir/../bio/$toshell"
-    output="$basedir/../bio/$outpath"
-    echo "  from: $json"
-    echo "  to  : $output"
-    h2o --loadjson "$json" --format "$toshell" > "$output"
-fi
+genScript general
+genScript bio
+genScript experimental

@@ -23,3 +23,5 @@ function scan {
 scan general
 scan bio
 scan experimental
+
+"$basedir"/validate-json-simple.sh "$name"

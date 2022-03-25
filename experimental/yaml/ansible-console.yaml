@@ -1,8 +1,5 @@
-name: ansible
-description: Define and run a single task 'playbook' against a set of hosts
-positionalArguments:
-  - name: pattern
-    description: host pattern
+name: ansible-console
+description: REPL console for executing Ansible tasks.
 options:
   - names:
       - --ask-vault-password
@@ -57,6 +54,10 @@ options:
     argument: '''SSH_EXTRA_ARGS'''
     description: specify extra arguments to pass to ssh only (e.g. -R)
   - names:
+      - --step
+    argument: ""
+    description: 'one-step-at-a-time: confirm each task before running'
+  - names:
       - --syntax-check
     argument: ""
     description: perform a syntax check on the playbook, but do not execute it
@@ -78,11 +79,6 @@ options:
     argument: ""
     description: show program's version number, config file location, configured module search path, module location, executable location and exit
   - names:
-      - -B
-      - --background
-    argument: '''SECONDS'''
-    description: run asynchronously, failing after X seconds (default=N/A)
-  - names:
       - -C
       - --check
     argument: ""
@@ -103,20 +99,10 @@ options:
     argument: ""
     description: prepend colon-separated path(s) to module library (default=~/.ansible/plugins/modules:/usr/share/ansible/plugins/modules)
   - names:
-      - -P
-      - --poll
-    argument: '''POLL_INTERVAL'''
-    description: set the poll interval if using -B (default=15)
-  - names:
       - -T
       - --timeout
     argument: '''TIMEOUT'''
     description: override the connection timeout in seconds (default=10)
-  - names:
-      - -a
-      - --args
-    argument: '''MODULE_ARGS'''
-    description: 'The action''s options in space separated k=v format: -a ''opt1=val1 opt2=val2'''
   - names:
       - -b
       - --become
@@ -159,21 +145,6 @@ options:
     argument: '''SUBSET'''
     description: further limit selected hosts to an additional pattern
   - names:
-      - -m
-      - --module-name
-    argument: '''MODULE_NAME'''
-    description: Name of the action to execute (default=command)
-  - names:
-      - -o
-      - --one-line
-    argument: ""
-    description: condense output
-  - names:
-      - -t
-      - --tree
-    argument: '''TREE'''
-    description: log output to this directory
-  - names:
       - -u
       - --user
     argument: '''REMOTE_USER'''
@@ -183,39 +154,4 @@ options:
       - --verbose
     argument: ""
     description: verbose mode (-vvv for more, -vvvv to enable connection debugging)
-version: 'ansible [core 2.12.2]'
-tldr: |
-  # ansible
-
-  > Manage groups of computers remotely over SSH. (use the `/etc/ansible/hosts` file to add new groups/hosts).
-  > Some subcommands such as `ansible galaxy` have their own usage documentation.
-  > More information: <https://www.ansible.com/>.
-
-  - List hosts belonging to a group:
-
-  `ansible {{group}} --list-hosts`
-
-  - Ping a group of hosts by invoking the ping module:
-
-  `ansible {{group}} -m ping`
-
-  - Display facts about a group of hosts by invoking the setup module:
-
-  `ansible {{group}} -m setup`
-
-  - Execute a command on a group of hosts by invoking command module with arguments:
-
-  `ansible {{group}} -m command -a '{{my_command}}'`
-
-  - Execute a command with administrative privileges:
-
-  `ansible {{group}} --become --ask-become-pass -m command -a '{{my_command}}'`
-
-  - Execute a command using a custom inventory file:
-
-  `ansible {{group}} -i {{inventory_file}} -m command -a '{{my_command}}'`
-
-  - List the groups in an inventory:
-
-  `ansible localhost -m debug -a '{{var=groups.keys()}}'`
-
+version: 'ansible-console [core 2.12.2]'

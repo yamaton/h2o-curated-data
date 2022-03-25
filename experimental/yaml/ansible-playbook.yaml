@@ -1,8 +1,5 @@
-name: ansible
-description: Define and run a single task 'playbook' against a set of hosts
-positionalArguments:
-  - name: pattern
-    description: host pattern
+name: ansible-playbook
+description: Runs Ansible playbooks, executing the defined tasks on the targeted hosts
 options:
   - names:
       - --ask-vault-password
@@ -28,13 +25,25 @@ options:
     argument: '''CONNECTION_PASSWORD_FILE'''
     description: Connection password file
   - names:
+      - --flush-cache
+    argument: ""
+    description: clear the fact cache for every host in inventory
+  - names:
+      - --force-handlers
+    argument: ""
+    description: run handlers even if a task fails
+  - names:
       - --list-hosts
     argument: ""
     description: outputs a list of matching hosts; does not execute anything else
   - names:
-      - --playbook-dir
-    argument: '''BASEDIR'''
-    description: Since this tool does not use playbooks, use this as a substitute playbook directory.This sets the relative path for many features including roles/ group_vars/ etc.
+      - --list-tags
+    argument: ""
+    description: list all available tags
+  - names:
+      - --list-tasks
+    argument: ""
+    description: list all tasks that would be executed
   - names:
       - --private-key
       - --key-file
@@ -49,6 +58,10 @@ options:
     argument: '''SFTP_EXTRA_ARGS'''
     description: specify extra arguments to pass to sftp only (e.g. -f, -l)
   - names:
+      - --skip-tags
+    argument: ""
+    description: only run plays and tasks whose tags do not match these values
+  - names:
       - --ssh-common-args
     argument: '''SSH_COMMON_ARGS'''
     description: specify common arguments to pass to sftp/scp/ssh (e.g. ProxyCommand)
@@ -57,13 +70,17 @@ options:
     argument: '''SSH_EXTRA_ARGS'''
     description: specify extra arguments to pass to ssh only (e.g. -R)
   - names:
+      - --start-at-task
+    argument: '''START_AT_TASK'''
+    description: start the playbook at the task matching this name
+  - names:
+      - --step
+    argument: ""
+    description: 'one-step-at-a-time: confirm each task before running'
+  - names:
       - --syntax-check
     argument: ""
     description: perform a syntax check on the playbook, but do not execute it
-  - names:
-      - --task-timeout
-    argument: '''TASK_TIMEOUT'''
-    description: set task timeout limit in seconds, must be positive integer.
   - names:
       - --vault-id
     argument: ""
@@ -77,11 +94,6 @@ options:
       - --version
     argument: ""
     description: show program's version number, config file location, configured module search path, module location, executable location and exit
-  - names:
-      - -B
-      - --background
-    argument: '''SECONDS'''
-    description: run asynchronously, failing after X seconds (default=N/A)
   - names:
       - -C
       - --check
@@ -103,20 +115,10 @@ options:
     argument: ""
     description: prepend colon-separated path(s) to module library (default=~/.ansible/plugins/modules:/usr/share/ansible/plugins/modules)
   - names:
-      - -P
-      - --poll
-    argument: '''POLL_INTERVAL'''
-    description: set the poll interval if using -B (default=15)
-  - names:
       - -T
       - --timeout
     argument: '''TIMEOUT'''
     description: override the connection timeout in seconds (default=10)
-  - names:
-      - -a
-      - --args
-    argument: '''MODULE_ARGS'''
-    description: 'The action''s options in space separated k=v format: -a ''opt1=val1 opt2=val2'''
   - names:
       - -b
       - --become
@@ -159,20 +161,10 @@ options:
     argument: '''SUBSET'''
     description: further limit selected hosts to an additional pattern
   - names:
-      - -m
-      - --module-name
-    argument: '''MODULE_NAME'''
-    description: Name of the action to execute (default=command)
-  - names:
-      - -o
-      - --one-line
-    argument: ""
-    description: condense output
-  - names:
       - -t
-      - --tree
-    argument: '''TREE'''
-    description: log output to this directory
+      - --tags
+    argument: ""
+    description: only run plays and tasks tagged with these values
   - names:
       - -u
       - --user
@@ -183,39 +175,33 @@ options:
       - --verbose
     argument: ""
     description: verbose mode (-vvv for more, -vvvv to enable connection debugging)
-version: 'ansible [core 2.12.2]'
+version: 'ansible-playbook [core 2.12.2]'
 tldr: |
-  # ansible
+  # ansible-playbook
 
-  > Manage groups of computers remotely over SSH. (use the `/etc/ansible/hosts` file to add new groups/hosts).
-  > Some subcommands such as `ansible galaxy` have their own usage documentation.
-  > More information: <https://www.ansible.com/>.
+  > Execute tasks defined in playbook on remote machines over SSH.
+  > More information: <https://docs.ansible.com/ansible/latest/cli/ansible-playbook.html>.
 
-  - List hosts belonging to a group:
+  - Run tasks in playbook:
 
-  `ansible {{group}} --list-hosts`
+  `ansible-playbook {{playbook}}`
 
-  - Ping a group of hosts by invoking the ping module:
+  - Run tasks in playbook with custom host inventory:
 
-  `ansible {{group}} -m ping`
+  `ansible-playbook {{playbook}} -i {{inventory_file}}`
 
-  - Display facts about a group of hosts by invoking the setup module:
+  - Run tasks in playbook with extra variables defined via the command-line:
 
-  `ansible {{group}} -m setup`
+  `ansible-playbook {{playbook}} -e "{{variable1}}={{value1}} {{variable2}}={{value2}}"`
 
-  - Execute a command on a group of hosts by invoking command module with arguments:
+  - Run tasks in playbook with extra variables defined in a JSON file:
 
-  `ansible {{group}} -m command -a '{{my_command}}'`
+  `ansible-playbook {{playbook}} -e "@{{variables.json}}"`
 
-  - Execute a command with administrative privileges:
+  - Run tasks in playbook for the given tags:
 
-  `ansible {{group}} --become --ask-become-pass -m command -a '{{my_command}}'`
+  `ansible-playbook {{playbook}} --tags {{tag1,tag2}}`
 
-  - Execute a command using a custom inventory file:
+  - Run tasks in a playbook starting at a specific task:
 
-  `ansible {{group}} -i {{inventory_file}} -m command -a '{{my_command}}'`
-
-  - List the groups in an inventory:
-
-  `ansible localhost -m debug -a '{{var=groups.keys()}}'`
-
+  `ansible-playbook {{playbook}} --start-at {{task_name}}`

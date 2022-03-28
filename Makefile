@@ -7,13 +7,15 @@
 
 json_general := $(sort $(wildcard general/json/*.json))
 json_bio := $(sort $(wildcard bio/json/*.json))
+json_experimental := $(sort $(wildcard experimental/json/*.json))
+json_schema := json-schema/command-2022-03-14.schema.json
 
 all: validate general.txt bio.txt general.json.gz bio.json.gz
 
 .PHONY: validate
-validate: $(json_general) $(json_bio)
+validate: $(json_general) $(json_bio) $(json_experimental)
 	@echo $^
-	@parallel ajv -s json-schema/command-2022-03-03.schema.json -d {} ::: $^
+	@parallel scripts/validate-json.sh $(json_schema) {} ::: $^
 
 general.txt: $(json_general)
 	scripts/make-list.py general

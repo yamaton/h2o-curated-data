@@ -29,7 +29,7 @@ def create_db():
 
     db = sqlite3.connect(p)
     cur = db.cursor()
-    cur.execute("CREATE TABLE Command (name TEXT, json JSON)")
+    cur.execute("create table command (name text, json json)")
 
     cnt = 0
     names = set()
@@ -46,7 +46,7 @@ def create_db():
             logging.warning(f"Duplicate command name: {name}")
             continue
         names.add(name)
-        cur.execute("INSERT INTO Command VALUES (?, json(?))", (name, raw))
+        cur.execute("insert into command values (?, json(?))", (name, raw))
         cnt += 1
 
     db.commit()

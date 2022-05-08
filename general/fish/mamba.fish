@@ -54,8 +54,8 @@ complete -c mamba -n "__fish_seen_subcommand_from config" -s h -l help -d 'Show 
 complete -c mamba -n "__fish_seen_subcommand_from config" -l json -d 'Report all output as json.'
 complete -c mamba -n "__fish_seen_subcommand_from config" -s v -l verbose -d 'Use once for info, twice for debug, three times for trace.'
 complete -c mamba -n "__fish_seen_subcommand_from config" -s q -l quiet -d 'Do not display progress bar.'
-complete -c mamba -n "__fish_seen_subcommand_from config" -l system -d 'Write to the system .condarc file at \'/home/vierbein/miniconda3/.condarc\'.'
-complete -c mamba -n "__fish_seen_subcommand_from config" -l env -d 'Write to the active conda environment .condarc file (/home/vierbein/miniconda3).'
+complete -c mamba -n "__fish_seen_subcommand_from config" -l system -d 'Write to the system .condarc file at \'~/miniconda3/.condarc\'.'
+complete -c mamba -n "__fish_seen_subcommand_from config" -l env -d 'Write to the active conda environment .condarc file (~/miniconda3).'
 complete -c mamba -n "__fish_seen_subcommand_from config" -l file -d 'Write to the given file.' -r
 complete -c mamba -n "__fish_seen_subcommand_from config" -l show -d 'Display configuration values as calculated and compiled.' -x
 complete -c mamba -n "__fish_seen_subcommand_from config" -l show-sources -d 'Display all identified configuration sources.'

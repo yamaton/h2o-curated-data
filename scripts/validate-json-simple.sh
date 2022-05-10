@@ -11,5 +11,5 @@ name="$1"
 json=$(find "$basedir/.." -type f -name "$name".json)
 
 for f in $json; do
-    ajv -s "$schema" -d "$json"
+    ajv validate -s "$schema" -d "$f"
 done

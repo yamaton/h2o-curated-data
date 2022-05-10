@@ -141,3 +141,31 @@ options:
       - -x
     argument: STR
     description: preset (always applied before other options; see minimap2.1 for details) [] - map-pb/map-ont - PacBio CLR/Nanopore vs reference mapping - map-hifi - PacBio HiFi reads vs reference mapping - ava-pb/ava-ont - PacBio/Nanopore read overlap - asm5/asm10/asm20 - asm-to-ref mapping, for ~0.1/1/5% sequence divergence - splice/splice:hq - long-read/Pacbio-CCS spliced alignment - sr - genomic short-read mapping
+version: 2.24-r1122
+tldr: |
+  > Map and align between collections of DNA sequences.
+  > More information: <https://lh3.github.io/minimap2/>.
+
+  - Get alignment in SAM format
+
+  `minimap2 -a {{ref.fa}} {{query.fq}} > {{alignment.sam}}`
+
+  - Map long noisy genomic reads (PacBio):
+
+  `minimap2 -ax map-pb {{ref.fa}} {{pacbio-reads.fq}} > {{aln.sam}}`
+
+  - Map long cDNA-seq reads (Oxford Nanopore):
+
+  `minimap2 -ax splice {{ref.fa}} {{nanopore-cdna.fa}} > {{aln.sam}}`
+
+  - Find overlaps between long reads (Oxford Nanopore):
+
+  `minimap2 -x ava-ont {{reads.fq}} {{reads.fq}} > {{ovlp.paf}}`
+
+  - Map short accurate paired-end genomic reads:
+
+  `minimap2 -ax sr {{ref.fa}} {{read1.fq}} {{read2.fq}} > s{{aln.sam}}`
+
+  - Full genome/assembly alignment:
+
+  `minimap2 -ax asm5 {{ref.fa}} {{asm.fa}} > {{aln.sam}}`

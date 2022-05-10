@@ -9,6 +9,12 @@
 basedir="$(dirname "$(readlink -f "$0")")"
 name="$1"
 
+if [[ ! "$(command -v ajv)" ]]; then
+    echo "[error] ajv is missing. Install ajv-cli via"
+    echo "npm install -g ajv-cli"
+    exit 1
+fi
+
 function scan {
     dir="$1"
     yaml="$basedir/../$dir/yaml/$name.yaml"

@@ -1909,3 +1909,39 @@ subcommands:
           - -o
         argument: FILE output file stdout.
         description: -f FILE load an indexed fasta file in the collection of references. Can be used multiple times. Add an extra column with the path to the reference file.
+version: '1.15'
+tldr: |
+  > Manipulate sequencing data in SAM/BAM/CRAM.
+
+  - Quick look at a SAM file:
+
+  `samtools view {{sample.sam}} | head -5`
+
+  - Get a subset of a BAM file that overlaps with a region on chromosome 3:
+
+  `samtools view -b {{in.bam}} 3:120,000,000-121,000,000 > {{subset.bam}}`
+
+  - Convert a SAM file to a BAM file (if @SQ lines are absent):
+
+  `samtools faidx {{ref.fa}} && samtools view -bt {{ref.fa.fai}} {{aln.sam}} > {{sample.bam}}`
+
+  - Convert a BAM file to a CRAM file using a local reference sequence:
+
+  `samtools view -C -T {{ref.fa}} -o {{aln.cram}} {{aln.bam}}`
+
+  - Run a sanity check:
+
+  `samtools quickcheck {{in.sam}}`
+
+  - View file headers:
+
+  `samtools head {{in.sam}}`
+
+  - Index a BAM file:
+
+  `samtools index {{in.bam}}`
+
+  - Index a FASTA file:
+
+  `samtools faidx {{sample.fa}}`
+

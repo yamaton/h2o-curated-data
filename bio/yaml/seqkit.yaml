@@ -2509,5 +2509,36 @@ subcommands:
         description: length of sequence to validate (0 for whole seq) (default 10000)
       - names:
           - --alphabet-guess-seq-length
-        argument: ""
-        description: int   length of sequence prefix of the first FASTA record based on which seqkit guesses the sequence type (0 for whole seq) (default 10000)
+        argument: int
+        description: length of sequence prefix of the first FASTA record based on which seqkit guesses the sequence type (0 for whole seq) (default 10000)
+version: '2.1.0'
+tldr: |
+  > Manipulate FASTA and FASTQ files
+
+  - Get statistics of FASTA and FASTQ files
+
+  `seqkit stats *.f{a,q}.gz`
+
+  - Show only IDs in a FASTA file
+
+  `seqkit seq {{hairpin.fa.gz}} -n -i`
+
+  - Get reverse complement sequence
+
+  `seqkit seq {{reads_1.fq.gz}} -r -p`
+
+  - Search with list of sequence IDs
+
+  `seqkit grep -f {{id.txt}} {{seqs.fq.gz}} -o {{result.fq.gz}}`
+
+  - Locate subsequences
+
+  `zcat {{t.fa.gz}} | seqkit locate -p {{agc}} -M | csvtk pretty -t`
+
+  - Locate ORFs
+
+  `zcat {{hairpin.fa.gz}} | seqkit locate -i -p "A[TU]G(?:.{3})+?[TU](?:AG|AA|GA)" -r | head -n 4 | csvtk pretty -t`
+
+  - Sample sequence by 10%
+
+  `zcat {{hairpin.fa.gz}} | seqkit sample -p 0.1 -o {{sample.fa.gz}}`

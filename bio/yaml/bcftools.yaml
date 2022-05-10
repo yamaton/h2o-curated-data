@@ -2184,3 +2184,35 @@ subcommands:
           - --verbose
         argument: ""
         description: Produce verbose per-site and per-sample output
+version: '1.15'
+tldr: |
+  > Tools for variant calling and manipulating VCFs and BCFs
+
+  - Quick look at a VCF file:
+
+  `bcftools view -H {{sample.vcf.gz}} | head -5`
+
+  - Compute the genotypes from an alignment file in BAM:
+
+  `bcftools mpileup -Ovu -f {{ref.fa}} {{align.bam}} > {{genotypes.vcf}}`
+
+  - Call the variant from the genotypes:
+
+  `bcftools call -vc -O v {{genotypes.vcf}} > {{observed-mutations.vcf}}`
+
+  - Normalize a variant:
+
+  `bcftools norm -f {{ref.fa}} {{samples.vcf}}`
+
+  - Extract just the CHROM, POS, REF and ALT fields:
+
+  `bcftools query -f '%CHROM %POS %REF %ALT\n' {{subset.vcf.gz}} | head -3`
+
+  - Print genotype (GT) of all samples at each position:
+
+  `bcftools query -f '%CHROM\t%POS[\t%GT\t]\n' {{subset.vcf.gz}} | head -3`
+
+  - Find variant sites present in all vcf files:
+
+  `bcftools isec -p outdir -n=3 {{sample1.vcf.gz}} {{sample2.vcf.gz}} {{sample3.vcf.gz}}`
+

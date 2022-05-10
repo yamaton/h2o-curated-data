@@ -15,6 +15,11 @@ if [[ ! "$(command -v ajv)" ]]; then
     exit 1
 fi
 
+if [[ ! "$(command -v jq)" ]]; then
+    echo "[error] jq is missing. Install jq to run this script."
+    exit 1
+fi
+
 function scan {
     dir="$1"
     yaml="$basedir/../$dir/yaml/$name.yaml"

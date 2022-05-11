@@ -1,3 +1,29 @@
+#!/usr/bin/env python
+"""
+Add tldr-pages to command specs in YAML
+
+Usage example:
+
+    Add tldr entry to `tar` spec:
+    ```shell
+    ./scripts/addtldr.py tar
+    ```
+
+    For batch processing on bash/zsh,
+    ```shell
+    for cmd in $(cat general.txt); do
+        ./scripts/addtldr.py $cmd
+    done
+    ```
+
+    Or, on fish shell,
+    ```shell
+    for cmd in (cat general.txt);
+        ./scripts/addtldr.py $cmd
+    end
+    ```
+
+"""
 import yaml
 import argparse
 import logging

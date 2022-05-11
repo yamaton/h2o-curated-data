@@ -1,0 +1,101 @@
+import yaml
+import argparse
+import logging
+import urllib.request
+import pathlib
+import sys
+from typing import Optional
+from urllib.error import HTTPError
+
+
+def locate(cmd: str) -> Optional[pathlib.Path]:
+    """Locate yaml file corresponding for the given command."""
+    root = pathlib.Path(__file__).parent.parent
+    general = root / "general" / "yaml"
+    bio = root / "bio" / "yaml"
+    experimental = root / "experimental" / "yaml"
+
+    for dir in [general, bio, experimental]:
+        for path in dir.glob("*.yaml"):
+            if path.name == f"{cmd}.yaml":
+                return path
+    return None
+
+
+def load(p: pathlib.Path) -> dict:
+    with open(p) as f:
+        doc = dict(yaml.safe_load(f))
+    return doc
+
+
+def has_tldr(d: dict):
+    return "tldr" in d
+
+
+def fetch_tldr(cmd: str) -> Optional[str]:
+    """Fetch tldr markdown document from tldr-pages"""
+    url = (
+        f"https://raw.githubusercontent.com/tldr-pages/tldr/main/pages/common/{cmd}.md"
+    )
+    try:
+        with urllib.request.urlopen(url) as response:
+            raw = response.read()
+        logging.debug(f"{raw = }")
+    except HTTPError:
+        logging.info(f"HTTPError from tldr-pages")
+        return None
+    return bytes(raw).decode('utf-8')
+
+
+def format_tldr(doc: str) -> str:
+    """Format markdown document for command spec"""
+    lines = doc.strip().split("\n")
+    lines = [x for x in lines if not x.startswith("#")]
+    reconstructed = "\n".join(lines).strip()
+    res = "\n".join(f"  {line}" if line else "" for line in reconstructed.split("\n"))
+    return res
+
+
+def add_tldr(p: pathlib.Path, doc: str):
+    with open(p, "r") as f:
+        existing = f.read()
+
+    extra = f"tldr: |\n{doc}\n"
+    with open(p, "a") as f:
+        if not existing.endswith("\n"):
+            print("", file=f)
+        print(extra, file=f, end="")
+
+
+def run(cmd: str):
+    p = locate(cmd)
+    if p is None:
+        sys.stderr.write(f"{cmd}.yaml is not found. Exiting...\n")
+        sys.exit(1)
+
+    data = load(p)
+    if has_tldr(data):
+        sys.stderr.write(f"{cmd}.yaml already has tldr entry. Exiting...\n")
+        sys.exit(0)
+
+    doc = fetch_tldr(cmd)
+    if doc is None:
+        sys.stderr.write(f"tldr for {cmd} is unavailable. Exiting...\n")
+        sys.exit(1)
+
+    doc = format_tldr(doc)
+    if not doc.strip():
+        sys.stderr.write(f"Got empty tldr page for {cmd}. Exiting...\n")
+        sys.exit(1)
+
+    logging.debug("Adding tldr document.")
+    add_tldr(p, doc)
+    print(f"Added tldr to {cmd}.")
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument("cmd")
+    args = parser.parse_args()
+    cmd = args.cmd.strip()
+    run(cmd)

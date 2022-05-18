@@ -7,15 +7,10 @@ options:
     argument: ""
     description: Print help information
   - names:
-      - -L
-      - --log-level
-    argument: <log-level>
-    description: Set log level
-  - names:
       - -q
       - --quiet
     argument: ""
-    description: Suppress diagnostic output By default, subcommands print human-readable diagnostic messages to stderr. If the flag is set, restrict these messages to errors.
+    description: Suppress diagnostic output
   - names:
       - --unstable
     argument: ""
@@ -26,32 +21,84 @@ options:
     argument: ""
     description: Print version information
 subcommands:
-  - name: bundle
-    description: Bundle module and dependencies into single file
+  - name: bench
+    description: Run benchmarks
     options:
+      - names:
+          - -A
+          - --allow-all
+        argument: ""
+        description: Allow all permissions
+      - names:
+          - --allow-env
+        argument: '[=<allow-env>...]'
+        description: Allow environment access
+      - names:
+          - --allow-ffi
+        argument: '[=<allow-ffi>...]'
+        description: Allow loading dynamic libraries
+      - names:
+          - --allow-hrtime
+        argument: ""
+        description: Allow high resolution time measurement
+      - names:
+          - --allow-net
+        argument: '[=<allow-net>...]'
+        description: Allow network access
+      - names:
+          - --allow-read
+        argument: '[=<allow-read>...]'
+        description: Allow file system read access
+      - names:
+          - --allow-run
+        argument: '[=<allow-run>...]'
+        description: Allow running subprocesses
+      - names:
+          - --allow-write
+        argument: '[=<allow-write>...]'
+        description: Allow file system write access
       - names:
           - -c
           - --config
         argument: <FILE>
-        description: Load configuration file. Before 1.14 Deno only supported loading tsconfig.json that allowed to customise TypeScript compiler settings.
+        description: The configuration file can be used to configure different aspects of deno including TypeScript, linting, and code formatting. Typically the configuration file will be called `deno.json` or `deno.jsonc` and automatically detected; in that case this flag is not necessary. See https://deno.land/manual@v1.22.0/getting_started/configuration_file
+      - names:
+          - --cached-only
+        argument: ""
+        description: Require that remote dependencies are already cached
       - names:
           - --cert
         argument: <FILE>
         description: Load certificate authority from PEM encoded file
+      - names:
+          - --check
+        argument: '[=<CHECK_TYPE>...]'
+        description: Type check modules. Currently this is a default behavior to type check modules, but in future releases Deno will not automatically type check without the --check flag.
+      - names:
+          - --compat
+        argument: ""
+        description: See https://deno.land/manual@v1.22.0/node/compatibility_mode
+      - names:
+          - --filter
+        argument: <filter>
+        description: Run benchmarks with this string or pattern in the bench name
       - names:
           - -h
           - --help
         argument: ""
         description: Print help information
       - names:
+          - --ignore
+        argument: <ignore>
+        description: Ignore files
+      - names:
           - --import-map
         argument: <FILE>
-        description: 'Load import map file from local file or remote URL. Docs: https://deno.land/manual/linking_to_external_code/import_maps Specification: https://wicg.github.io/import-maps/ Examples: https://github.com/WICG/import-maps#the-import-map'
+        description: Load import map file from local file or remote URL.
       - names:
-          - -L
-          - --log-level
-        argument: <log-level>
-        description: Set log level
+          - --location
+        argument: <HREF>
+        description: Value of 'globalThis.location' used by some web APIs
       - names:
           - --lock
         argument: <FILE>
@@ -62,12 +109,20 @@ subcommands:
         description: Write lock file (use with --lock)
       - names:
           - --no-check
-        argument: <NO_CHECK_TYPE>...
-        description: Skip type checking of modules. If the value of '--no-check=remote' is supplied, diagnostic errors from remote modules will be ignored.
+        argument: '[=<NO_CHECK_TYPE>...]'
+        description: Skip type-checking. If the value of '--no-check=remote' is supplied, diagnostic errors from remote modules will be ignored.
       - names:
           - --no-clear-screen
         argument: ""
         description: Do not clear terminal screen when under watch mode
+      - names:
+          - --no-config
+        argument: ""
+        description: Disable automatic loading of the configuration file.
+      - names:
+          - --no-prompt
+        argument: ""
+        description: Always throw if required permission wasn't passed
       - names:
           - --no-remote
         argument: ""
@@ -76,11 +131,90 @@ subcommands:
           - -q
           - --quiet
         argument: ""
-        description: Suppress diagnostic output By default, subcommands print human-readable diagnostic messages to stderr. If the flag is set, restrict these messages to errors.
+        description: Suppress diagnostic output
       - names:
           - -r
           - --reload
-        argument: <CACHE_BLOCKLIST>...
+        argument: '[=<CACHE_BLOCKLIST>...]'
+        description: Reload source code cache (recompile TypeScript) --reload
+      - names:
+          - --seed
+        argument: <NUMBER>
+        description: Set the random number generator seed
+      - names:
+          - --unsafely-ignore-certificate-errors
+        argument: '[=<HOSTNAMES>...]'
+        description: 'DANGER: Disables verification of TLS certificates'
+      - names:
+          - --unstable
+        argument: ""
+        description: Enable unstable features and APIs
+      - names:
+          - --v8-flags
+        argument: <v8-flags>
+        description: To see a list of all available flags use --v8-flags=--help.
+      - names:
+          - --watch
+        argument: ""
+        description: 'UNSTABLE: Watch for file changes and restart process automatically. Only local files from entry point module graph are watched.'
+  - name: bundle
+    description: Bundle module and dependencies into single file
+    options:
+      - names:
+          - -c
+          - --config
+        argument: <FILE>
+        description: The configuration file can be used to configure different aspects of deno including TypeScript, linting, and code formatting. Typically the configuration file will be called `deno.json` or `deno.jsonc` and automatically detected; in that case this flag is not necessary. See https://deno.land/manual@v1.22.0/getting_started/configuration_file
+      - names:
+          - --cert
+        argument: <FILE>
+        description: Load certificate authority from PEM encoded file
+      - names:
+          - --check
+        argument: '[=<CHECK_TYPE>...]'
+        description: Type check modules. Currently this is a default behavior to type check modules, but in future releases Deno will not automatically type check without the --check flag.
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: Print help information
+      - names:
+          - --import-map
+        argument: <FILE>
+        description: Load import map file from local file or remote URL.
+      - names:
+          - --lock
+        argument: <FILE>
+        description: Check the specified lock file
+      - names:
+          - --lock-write
+        argument: ""
+        description: Write lock file (use with --lock)
+      - names:
+          - --no-check
+        argument: '[=<NO_CHECK_TYPE>...]'
+        description: Skip type-checking. If the value of '--no-check=remote' is supplied, diagnostic errors from remote modules will be ignored.
+      - names:
+          - --no-clear-screen
+        argument: ""
+        description: Do not clear terminal screen when under watch mode
+      - names:
+          - --no-config
+        argument: ""
+        description: Disable automatic loading of the configuration file.
+      - names:
+          - --no-remote
+        argument: ""
+        description: Do not resolve remote modules
+      - names:
+          - -q
+          - --quiet
+        argument: ""
+        description: Suppress diagnostic output
+      - names:
+          - -r
+          - --reload
+        argument: '[=<CACHE_BLOCKLIST>...]'
         description: Reload source code cache (recompile TypeScript) --reload
       - names:
           - --unstable
@@ -97,11 +231,15 @@ subcommands:
           - -c
           - --config
         argument: <FILE>
-        description: Load configuration file. Before 1.14 Deno only supported loading tsconfig.json that allowed to customise TypeScript compiler settings.
+        description: The configuration file can be used to configure different aspects of deno including TypeScript, linting, and code formatting. Typically the configuration file will be called `deno.json` or `deno.jsonc` and automatically detected; in that case this flag is not necessary. See https://deno.land/manual@v1.22.0/getting_started/configuration_file
       - names:
           - --cert
         argument: <FILE>
         description: Load certificate authority from PEM encoded file
+      - names:
+          - --check
+        argument: '[=<CHECK_TYPE>...]'
+        description: Type check modules. Currently this is a default behavior to type check modules, but in future releases Deno will not automatically type check without the --check flag.
       - names:
           - -h
           - --help
@@ -110,12 +248,7 @@ subcommands:
       - names:
           - --import-map
         argument: <FILE>
-        description: 'Load import map file from local file or remote URL. Docs: https://deno.land/manual/linking_to_external_code/import_maps Specification: https://wicg.github.io/import-maps/ Examples: https://github.com/WICG/import-maps#the-import-map'
-      - names:
-          - -L
-          - --log-level
-        argument: <log-level>
-        description: Set log level
+        description: Load import map file from local file or remote URL.
       - names:
           - --lock
         argument: <FILE>
@@ -126,8 +259,12 @@ subcommands:
         description: Write lock file (use with --lock)
       - names:
           - --no-check
-        argument: <NO_CHECK_TYPE>...
-        description: Skip type checking of modules. If the value of '--no-check=remote' is supplied, diagnostic errors from remote modules will be ignored.
+        argument: '[=<NO_CHECK_TYPE>...]'
+        description: Skip type-checking. If the value of '--no-check=remote' is supplied, diagnostic errors from remote modules will be ignored.
+      - names:
+          - --no-config
+        argument: ""
+        description: Disable automatic loading of the configuration file.
       - names:
           - --no-remote
         argument: ""
@@ -136,12 +273,67 @@ subcommands:
           - -q
           - --quiet
         argument: ""
-        description: Suppress diagnostic output By default, subcommands print human-readable diagnostic messages to stderr. If the flag is set, restrict these messages to errors.
+        description: Suppress diagnostic output
       - names:
           - -r
           - --reload
-        argument: <CACHE_BLOCKLIST>...
+        argument: '[=<CACHE_BLOCKLIST>...]'
         description: Reload source code cache (recompile TypeScript) --reload
+      - names:
+          - --unstable
+        argument: ""
+        description: Enable unstable features and APIs
+  - name: check
+    description: Type-check the dependencies
+    options:
+      - names:
+          - -c
+          - --config
+        argument: <FILE>
+        description: The configuration file can be used to configure different aspects of deno including TypeScript, linting, and code formatting. Typically the configuration file will be called `deno.json` or `deno.jsonc` and automatically detected; in that case this flag is not necessary. See https://deno.land/manual@v1.22.0/getting_started/configuration_file
+      - names:
+          - --cert
+        argument: <FILE>
+        description: Load certificate authority from PEM encoded file
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: Print help information
+      - names:
+          - --import-map
+        argument: <FILE>
+        description: Load import map file from local file or remote URL.
+      - names:
+          - --lock
+        argument: <FILE>
+        description: Check the specified lock file
+      - names:
+          - --lock-write
+        argument: ""
+        description: Write lock file (use with --lock)
+      - names:
+          - --no-config
+        argument: ""
+        description: Disable automatic loading of the configuration file.
+      - names:
+          - --no-remote
+        argument: ""
+        description: Do not resolve remote modules
+      - names:
+          - -q
+          - --quiet
+        argument: ""
+        description: Suppress diagnostic output
+      - names:
+          - -r
+          - --reload
+        argument: '[=<CACHE_BLOCKLIST>...]'
+        description: Reload source code cache (recompile TypeScript) --reload
+      - names:
+          - --remote
+        argument: ""
+        description: Type-check all modules, including remote
       - names:
           - --unstable
         argument: ""
@@ -150,25 +342,17 @@ subcommands:
     description: 'UNSTABLE: Compile the script into a self contained executable'
     options:
       - names:
-          - '-'
-        argument: ""
-        description: Attempt to take the file stem of the URL path. The above example would become 'file_server'.
-      - names:
-          - '-'
-        argument: ""
-        description: If the resulting name has an '@...' suffix, strip it.
-      - names:
           - -A
           - --allow-all
         argument: ""
         description: Allow all permissions
       - names:
           - --allow-env
-        argument: <allow-env>...
+        argument: '[=<allow-env>...]'
         description: Allow environment access
       - names:
           - --allow-ffi
-        argument: <allow-ffi>...
+        argument: '[=<allow-ffi>...]'
         description: Allow loading dynamic libraries
       - names:
           - --allow-hrtime
@@ -176,25 +360,25 @@ subcommands:
         description: Allow high resolution time measurement
       - names:
           - --allow-net
-        argument: <allow-net>...
+        argument: '[=<allow-net>...]'
         description: Allow network access
       - names:
           - --allow-read
-        argument: <allow-read>...
+        argument: '[=<allow-read>...]'
         description: Allow file system read access
       - names:
           - --allow-run
-        argument: <allow-run>...
+        argument: '[=<allow-run>...]'
         description: Allow running subprocesses
       - names:
           - --allow-write
-        argument: <allow-write>...
+        argument: '[=<allow-write>...]'
         description: Allow file system write access
       - names:
           - -c
           - --config
         argument: <FILE>
-        description: Load configuration file. Before 1.14 Deno only supported loading tsconfig.json that allowed to customise TypeScript compiler settings.
+        description: The configuration file can be used to configure different aspects of deno including TypeScript, linting, and code formatting. Typically the configuration file will be called `deno.json` or `deno.jsonc` and automatically detected; in that case this flag is not necessary. See https://deno.land/manual@v1.22.0/getting_started/configuration_file
       - names:
           - --cached-only
         argument: ""
@@ -204,9 +388,13 @@ subcommands:
         argument: <FILE>
         description: Load certificate authority from PEM encoded file
       - names:
+          - --check
+        argument: '[=<CHECK_TYPE>...]'
+        description: Type check modules. Currently this is a default behavior to type check modules, but in future releases Deno will not automatically type check without the --check flag.
+      - names:
           - --compat
         argument: ""
-        description: Node compatibility mode. Currently only enables built-in node modules like 'fs' and globals like 'process'.
+        description: See https://deno.land/manual@v1.22.0/node/compatibility_mode
       - names:
           - -h
           - --help
@@ -215,12 +403,7 @@ subcommands:
       - names:
           - --import-map
         argument: <FILE>
-        description: 'Load import map file from local file or remote URL. Docs: https://deno.land/manual/linking_to_external_code/import_maps Specification: https://wicg.github.io/import-maps/ Examples: https://github.com/WICG/import-maps#the-import-map'
-      - names:
-          - -L
-          - --log-level
-        argument: <log-level>
-        description: Set log level
+        description: Load import map file from local file or remote URL.
       - names:
           - --location
         argument: <HREF>
@@ -235,8 +418,12 @@ subcommands:
         description: Write lock file (use with --lock)
       - names:
           - --no-check
-        argument: <NO_CHECK_TYPE>...
-        description: Skip type checking of modules. If the value of '--no-check=remote' is supplied, diagnostic errors from remote modules will be ignored.
+        argument: '[=<NO_CHECK_TYPE>...]'
+        description: Skip type-checking. If the value of '--no-check=remote' is supplied, diagnostic errors from remote modules will be ignored.
+      - names:
+          - --no-config
+        argument: ""
+        description: Disable automatic loading of the configuration file.
       - names:
           - --no-prompt
         argument: ""
@@ -251,30 +438,26 @@ subcommands:
         argument: <output>
         description: Output file (defaults to $PWD/<inferred-name>)
       - names:
-          - --prompt
-        argument: ""
-        description: 'deprecated: Fallback to prompt if required permission wasn''t passed'
-      - names:
           - -q
           - --quiet
         argument: ""
-        description: Suppress diagnostic output By default, subcommands print human-readable diagnostic messages to stderr. If the flag is set, restrict these messages to errors.
+        description: Suppress diagnostic output
       - names:
           - -r
           - --reload
-        argument: <CACHE_BLOCKLIST>...
+        argument: '[=<CACHE_BLOCKLIST>...]'
         description: Reload source code cache (recompile TypeScript) --reload
       - names:
           - --seed
         argument: <NUMBER>
-        description: Seed Math.random()
+        description: Set the random number generator seed
       - names:
           - --target
         argument: <target>
         description: Target OS architecture
       - names:
           - --unsafely-ignore-certificate-errors
-        argument: <HOSTNAMES>...
+        argument: '[=<HOSTNAMES>...]'
         description: 'DANGER: Disables verification of TLS certificates'
       - names:
           - --unstable
@@ -283,7 +466,7 @@ subcommands:
       - names:
           - --v8-flags
         argument: <v8-flags>
-        description: 'Set V8 command line options (for help: --v8-flags=--help)'
+        description: To see a list of all available flags use --v8-flags=--help.
   - name: completions
     description: Generate shell completions
     options:
@@ -293,15 +476,10 @@ subcommands:
         argument: ""
         description: Print help information
       - names:
-          - -L
-          - --log-level
-        argument: <log-level>
-        description: Set log level
-      - names:
           - -q
           - --quiet
         argument: ""
-        description: Suppress diagnostic output By default, subcommands print human-readable diagnostic messages to stderr. If the flag is set, restrict these messages to errors.
+        description: Suppress diagnostic output
       - names:
           - --unstable
         argument: ""
@@ -327,11 +505,6 @@ subcommands:
         argument: <regex>...
         description: Include source files in the report
       - names:
-          - -L
-          - --log-level
-        argument: <log-level>
-        description: Set log level
-      - names:
           - --lcov
         argument: ""
         description: Output coverage report in lcov format
@@ -343,7 +516,7 @@ subcommands:
           - -q
           - --quiet
         argument: ""
-        description: Suppress diagnostic output By default, subcommands print human-readable diagnostic messages to stderr. If the flag is set, restrict these messages to errors.
+        description: Suppress diagnostic output
       - names:
           - --unstable
         argument: ""
@@ -359,16 +532,11 @@ subcommands:
       - names:
           - --import-map
         argument: <FILE>
-        description: 'Load import map file from local file or remote URL. Docs: https://deno.land/manual/linking_to_external_code/import_maps Specification: https://wicg.github.io/import-maps/ Examples: https://github.com/WICG/import-maps#the-import-map'
+        description: Load import map file from local file or remote URL.
       - names:
           - --json
         argument: ""
         description: Output documentation in JSON format
-      - names:
-          - -L
-          - --log-level
-        argument: <log-level>
-        description: Set log level
       - names:
           - --private
         argument: ""
@@ -377,11 +545,11 @@ subcommands:
           - -q
           - --quiet
         argument: ""
-        description: Suppress diagnostic output By default, subcommands print human-readable diagnostic messages to stderr. If the flag is set, restrict these messages to errors.
+        description: Suppress diagnostic output
       - names:
           - -r
           - --reload
-        argument: <CACHE_BLOCKLIST>...
+        argument: '[=<CACHE_BLOCKLIST>...]'
         description: Reload source code cache (recompile TypeScript) --reload
       - names:
           - --unstable
@@ -394,7 +562,7 @@ subcommands:
           - -c
           - --config
         argument: <FILE>
-        description: Load configuration file. Before 1.14 Deno only supported loading tsconfig.json that allowed to customise TypeScript compiler settings.
+        description: The configuration file can be used to configure different aspects of deno including TypeScript, linting, and code formatting. Typically the configuration file will be called `deno.json` or `deno.jsonc` and automatically detected; in that case this flag is not necessary. See https://deno.land/manual@v1.22.0/getting_started/configuration_file
       - names:
           - --cached-only
         argument: ""
@@ -404,9 +572,13 @@ subcommands:
         argument: <FILE>
         description: Load certificate authority from PEM encoded file
       - names:
+          - --check
+        argument: '[=<CHECK_TYPE>...]'
+        description: Type check modules. Currently this is a default behavior to type check modules, but in future releases Deno will not automatically type check without the --check flag.
+      - names:
           - --compat
         argument: ""
-        description: Node compatibility mode. Currently only enables built-in node modules like 'fs' and globals like 'process'.
+        description: See https://deno.land/manual@v1.22.0/node/compatibility_mode
       - names:
           - --ext
         argument: <ext>
@@ -419,20 +591,15 @@ subcommands:
       - names:
           - --import-map
         argument: <FILE>
-        description: 'Load import map file from local file or remote URL. Docs: https://deno.land/manual/linking_to_external_code/import_maps Specification: https://wicg.github.io/import-maps/ Examples: https://github.com/WICG/import-maps#the-import-map'
+        description: Load import map file from local file or remote URL.
       - names:
           - --inspect
-        argument: <HOST:PORT>...
+        argument: '[=<HOST:PORT>...]'
         description: 'Activate inspector on host:port (default: 127.0.0.1:9229)'
       - names:
           - --inspect-brk
-        argument: <HOST:PORT>...
+        argument: '[=<HOST:PORT>...]'
         description: Activate inspector on host:port and break at start of user script
-      - names:
-          - -L
-          - --log-level
-        argument: <log-level>
-        description: Set log level
       - names:
           - --location
         argument: <HREF>
@@ -447,8 +614,12 @@ subcommands:
         description: Write lock file (use with --lock)
       - names:
           - --no-check
-        argument: <NO_CHECK_TYPE>...
-        description: Skip type checking of modules. If the value of '--no-check=remote' is supplied, diagnostic errors from remote modules will be ignored.
+        argument: '[=<NO_CHECK_TYPE>...]'
+        description: Skip type-checking. If the value of '--no-check=remote' is supplied, diagnostic errors from remote modules will be ignored.
+      - names:
+          - --no-config
+        argument: ""
+        description: Disable automatic loading of the configuration file.
       - names:
           - --no-remote
         argument: ""
@@ -462,16 +633,16 @@ subcommands:
           - -q
           - --quiet
         argument: ""
-        description: Suppress diagnostic output By default, subcommands print human-readable diagnostic messages to stderr. If the flag is set, restrict these messages to errors.
+        description: Suppress diagnostic output
       - names:
           - -r
           - --reload
-        argument: <CACHE_BLOCKLIST>...
+        argument: '[=<CACHE_BLOCKLIST>...]'
         description: Reload source code cache (recompile TypeScript) --reload
       - names:
           - --seed
         argument: <NUMBER>
-        description: Seed Math.random()
+        description: Set the random number generator seed
       - names:
           - --unstable
         argument: ""
@@ -479,7 +650,7 @@ subcommands:
       - names:
           - --v8-flags
         argument: <v8-flags>
-        description: 'Set V8 command line options (for help: --v8-flags=--help)'
+        description: To see a list of all available flags use --v8-flags=--help.
   - name: fmt
     description: Format source files
     options:
@@ -487,7 +658,7 @@ subcommands:
           - -c
           - --config
         argument: <FILE>
-        description: Load configuration file. Before 1.14 Deno only supported loading tsconfig.json that allowed to customise TypeScript compiler settings.
+        description: The configuration file can be used to configure different aspects of deno including TypeScript, linting, and code formatting. Typically the configuration file will be called `deno.json` or `deno.jsonc` and automatically detected; in that case this flag is not necessary. See https://deno.land/manual@v1.22.0/getting_started/configuration_file
       - names:
           - --check
         argument: ""
@@ -506,14 +677,13 @@ subcommands:
         argument: <ignore>
         description: Ignore formatting particular source files
       - names:
-          - -L
-          - --log-level
-        argument: <log-level>
-        description: Set log level
-      - names:
           - --no-clear-screen
         argument: ""
         description: Do not clear terminal screen when under watch mode
+      - names:
+          - --no-config
+        argument: ""
+        description: Disable automatic loading of the configuration file.
       - names:
           - --options-indent-width
         argument: <options-indent-width>
@@ -538,7 +708,7 @@ subcommands:
           - -q
           - --quiet
         argument: ""
-        description: Suppress diagnostic output By default, subcommands print human-readable diagnostic messages to stderr. If the flag is set, restrict these messages to errors.
+        description: Suppress diagnostic output
       - names:
           - --unstable
         argument: ""
@@ -562,16 +732,11 @@ subcommands:
       - names:
           - --import-map
         argument: <FILE>
-        description: 'Load import map file from local file or remote URL. Docs: https://deno.land/manual/linking_to_external_code/import_maps Specification: https://wicg.github.io/import-maps/ Examples: https://github.com/WICG/import-maps#the-import-map'
+        description: Load import map file from local file or remote URL.
       - names:
           - --json
         argument: ""
         description: 'UNSTABLE: Outputs the information in JSON format'
-      - names:
-          - -L
-          - --log-level
-        argument: <log-level>
-        description: Set log level
       - names:
           - --location
         argument: <HREF>
@@ -580,11 +745,11 @@ subcommands:
           - -q
           - --quiet
         argument: ""
-        description: Suppress diagnostic output By default, subcommands print human-readable diagnostic messages to stderr. If the flag is set, restrict these messages to errors.
+        description: Suppress diagnostic output
       - names:
           - -r
           - --reload
-        argument: <CACHE_BLOCKLIST>...
+        argument: '[=<CACHE_BLOCKLIST>...]'
         description: Reload source code cache (recompile TypeScript) --reload
       - names:
           - --unstable
@@ -608,11 +773,11 @@ subcommands:
         description: Allow all permissions
       - names:
           - --allow-env
-        argument: <allow-env>...
+        argument: '[=<allow-env>...]'
         description: Allow environment access
       - names:
           - --allow-ffi
-        argument: <allow-ffi>...
+        argument: '[=<allow-ffi>...]'
         description: Allow loading dynamic libraries
       - names:
           - --allow-hrtime
@@ -620,25 +785,25 @@ subcommands:
         description: Allow high resolution time measurement
       - names:
           - --allow-net
-        argument: <allow-net>...
+        argument: '[=<allow-net>...]'
         description: Allow network access
       - names:
           - --allow-read
-        argument: <allow-read>...
+        argument: '[=<allow-read>...]'
         description: Allow file system read access
       - names:
           - --allow-run
-        argument: <allow-run>...
+        argument: '[=<allow-run>...]'
         description: Allow running subprocesses
       - names:
           - --allow-write
-        argument: <allow-write>...
+        argument: '[=<allow-write>...]'
         description: Allow file system write access
       - names:
           - -c
           - --config
         argument: <FILE>
-        description: Load configuration file. Before 1.14 Deno only supported loading tsconfig.json that allowed to customise TypeScript compiler settings.
+        description: The configuration file can be used to configure different aspects of deno including TypeScript, linting, and code formatting. Typically the configuration file will be called `deno.json` or `deno.jsonc` and automatically detected; in that case this flag is not necessary. See https://deno.land/manual@v1.22.0/getting_started/configuration_file
       - names:
           - --cached-only
         argument: ""
@@ -648,9 +813,13 @@ subcommands:
         argument: <FILE>
         description: Load certificate authority from PEM encoded file
       - names:
+          - --check
+        argument: '[=<CHECK_TYPE>...]'
+        description: Type check modules. Currently this is a default behavior to type check modules, but in future releases Deno will not automatically type check without the --check flag.
+      - names:
           - --compat
         argument: ""
-        description: Node compatibility mode. Currently only enables built-in node modules like 'fs' and globals like 'process'.
+        description: See https://deno.land/manual@v1.22.0/node/compatibility_mode
       - names:
           - -f
           - --force
@@ -664,20 +833,15 @@ subcommands:
       - names:
           - --import-map
         argument: <FILE>
-        description: 'Load import map file from local file or remote URL. Docs: https://deno.land/manual/linking_to_external_code/import_maps Specification: https://wicg.github.io/import-maps/ Examples: https://github.com/WICG/import-maps#the-import-map'
+        description: Load import map file from local file or remote URL.
       - names:
           - --inspect
-        argument: <HOST:PORT>...
+        argument: '[=<HOST:PORT>...]'
         description: 'Activate inspector on host:port (default: 127.0.0.1:9229)'
       - names:
           - --inspect-brk
-        argument: <HOST:PORT>...
+        argument: '[=<HOST:PORT>...]'
         description: Activate inspector on host:port and break at start of user script
-      - names:
-          - -L
-          - --log-level
-        argument: <log-level>
-        description: Set log level
       - names:
           - --location
         argument: <HREF>
@@ -697,8 +861,12 @@ subcommands:
         description: Executable file name
       - names:
           - --no-check
-        argument: <NO_CHECK_TYPE>...
-        description: Skip type checking of modules. If the value of '--no-check=remote' is supplied, diagnostic errors from remote modules will be ignored.
+        argument: '[=<NO_CHECK_TYPE>...]'
+        description: Skip type-checking. If the value of '--no-check=remote' is supplied, diagnostic errors from remote modules will be ignored.
+      - names:
+          - --no-config
+        argument: ""
+        description: Disable automatic loading of the configuration file.
       - names:
           - --no-prompt
         argument: ""
@@ -708,18 +876,14 @@ subcommands:
         argument: ""
         description: Do not resolve remote modules
       - names:
-          - --prompt
-        argument: ""
-        description: 'deprecated: Fallback to prompt if required permission wasn''t passed'
-      - names:
           - -q
           - --quiet
         argument: ""
-        description: Suppress diagnostic output By default, subcommands print human-readable diagnostic messages to stderr. If the flag is set, restrict these messages to errors.
+        description: Suppress diagnostic output
       - names:
           - -r
           - --reload
-        argument: <CACHE_BLOCKLIST>...
+        argument: '[=<CACHE_BLOCKLIST>...]'
         description: Reload source code cache (recompile TypeScript) --reload
       - names:
           - --root
@@ -728,10 +892,10 @@ subcommands:
       - names:
           - --seed
         argument: <NUMBER>
-        description: Seed Math.random()
+        description: Set the random number generator seed
       - names:
           - --unsafely-ignore-certificate-errors
-        argument: <HOSTNAMES>...
+        argument: '[=<HOSTNAMES>...]'
         description: 'DANGER: Disables verification of TLS certificates'
       - names:
           - --unstable
@@ -740,7 +904,7 @@ subcommands:
       - names:
           - --v8-flags
         argument: <v8-flags>
-        description: 'Set V8 command line options (for help: --v8-flags=--help)'
+        description: To see a list of all available flags use --v8-flags=--help.
   - name: lint
     description: Lint source files
     options:
@@ -748,7 +912,7 @@ subcommands:
           - -c
           - --config
         argument: <FILE>
-        description: Load configuration file. Before 1.14 Deno only supported loading tsconfig.json that allowed to customise TypeScript compiler settings.
+        description: The configuration file can be used to configure different aspects of deno including TypeScript, linting, and code formatting. Typically the configuration file will be called `deno.json` or `deno.jsonc` and automatically detected; in that case this flag is not necessary. See https://deno.land/manual@v1.22.0/getting_started/configuration_file
       - names:
           - -h
           - --help
@@ -763,19 +927,18 @@ subcommands:
         argument: ""
         description: Output lint result in JSON format
       - names:
-          - -L
-          - --log-level
-        argument: <log-level>
-        description: Set log level
-      - names:
           - --no-clear-screen
         argument: ""
         description: Do not clear terminal screen when under watch mode
       - names:
+          - --no-config
+        argument: ""
+        description: Disable automatic loading of the configuration file.
+      - names:
           - -q
           - --quiet
         argument: ""
-        description: Suppress diagnostic output By default, subcommands print human-readable diagnostic messages to stderr. If the flag is set, restrict these messages to errors.
+        description: Suppress diagnostic output
       - names:
           - --rules
         argument: ""
@@ -809,15 +972,10 @@ subcommands:
         argument: ""
         description: Print help information
       - names:
-          - -L
-          - --log-level
-        argument: <log-level>
-        description: Set log level
-      - names:
           - -q
           - --quiet
         argument: ""
-        description: Suppress diagnostic output By default, subcommands print human-readable diagnostic messages to stderr. If the flag is set, restrict these messages to errors.
+        description: Suppress diagnostic output
       - names:
           - --unstable
         argument: ""
@@ -829,7 +987,7 @@ subcommands:
           - -c
           - --config
         argument: <FILE>
-        description: Load configuration file. Before 1.14 Deno only supported loading tsconfig.json that allowed to customise TypeScript compiler settings.
+        description: The configuration file can be used to configure different aspects of deno including TypeScript, linting, and code formatting. Typically the configuration file will be called `deno.json` or `deno.jsonc` and automatically detected; in that case this flag is not necessary. See https://deno.land/manual@v1.22.0/getting_started/configuration_file
       - names:
           - --cached-only
         argument: ""
@@ -839,13 +997,21 @@ subcommands:
         argument: <FILE>
         description: Load certificate authority from PEM encoded file
       - names:
+          - --check
+        argument: '[=<CHECK_TYPE>...]'
+        description: Type check modules. Currently this is a default behavior to type check modules, but in future releases Deno will not automatically type check without the --check flag.
+      - names:
           - --compat
         argument: ""
-        description: Node compatibility mode. Currently only enables built-in node modules like 'fs' and globals like 'process'.
+        description: See https://deno.land/manual@v1.22.0/node/compatibility_mode
       - names:
           - --eval
         argument: <code>
         description: Evaluates the provided code when the REPL starts.
+      - names:
+          - --eval-file
+        argument: <eval-file>...
+        description: Evaluates the provided file(s) as scripts when the REPL starts. Accepts file paths and URLs.
       - names:
           - -h
           - --help
@@ -854,20 +1020,15 @@ subcommands:
       - names:
           - --import-map
         argument: <FILE>
-        description: 'Load import map file from local file or remote URL. Docs: https://deno.land/manual/linking_to_external_code/import_maps Specification: https://wicg.github.io/import-maps/ Examples: https://github.com/WICG/import-maps#the-import-map'
+        description: Load import map file from local file or remote URL.
       - names:
           - --inspect
-        argument: <HOST:PORT>...
+        argument: '[=<HOST:PORT>...]'
         description: 'Activate inspector on host:port (default: 127.0.0.1:9229)'
       - names:
           - --inspect-brk
-        argument: <HOST:PORT>...
+        argument: '[=<HOST:PORT>...]'
         description: Activate inspector on host:port and break at start of user script
-      - names:
-          - -L
-          - --log-level
-        argument: <log-level>
-        description: Set log level
       - names:
           - --location
         argument: <HREF>
@@ -882,8 +1043,12 @@ subcommands:
         description: Write lock file (use with --lock)
       - names:
           - --no-check
-        argument: <NO_CHECK_TYPE>...
-        description: Skip type checking of modules. If the value of '--no-check=remote' is supplied, diagnostic errors from remote modules will be ignored.
+        argument: '[=<NO_CHECK_TYPE>...]'
+        description: Skip type-checking. If the value of '--no-check=remote' is supplied, diagnostic errors from remote modules will be ignored.
+      - names:
+          - --no-config
+        argument: ""
+        description: Disable automatic loading of the configuration file.
       - names:
           - --no-remote
         argument: ""
@@ -892,19 +1057,19 @@ subcommands:
           - -q
           - --quiet
         argument: ""
-        description: Suppress diagnostic output By default, subcommands print human-readable diagnostic messages to stderr. If the flag is set, restrict these messages to errors.
+        description: Suppress diagnostic output
       - names:
           - -r
           - --reload
-        argument: <CACHE_BLOCKLIST>...
+        argument: '[=<CACHE_BLOCKLIST>...]'
         description: Reload source code cache (recompile TypeScript) --reload
       - names:
           - --seed
         argument: <NUMBER>
-        description: Seed Math.random()
+        description: Set the random number generator seed
       - names:
           - --unsafely-ignore-certificate-errors
-        argument: <HOSTNAMES>...
+        argument: '[=<HOSTNAMES>...]'
         description: 'DANGER: Disables verification of TLS certificates'
       - names:
           - --unstable
@@ -913,7 +1078,7 @@ subcommands:
       - names:
           - --v8-flags
         argument: <v8-flags>
-        description: 'Set V8 command line options (for help: --v8-flags=--help)'
+        description: To see a list of all available flags use --v8-flags=--help.
   - name: run
     description: Run a JavaScript or TypeScript program
     options:
@@ -924,11 +1089,11 @@ subcommands:
         description: Allow all permissions
       - names:
           - --allow-env
-        argument: <allow-env>...
+        argument: '[=<allow-env>...]'
         description: Allow environment access
       - names:
           - --allow-ffi
-        argument: <allow-ffi>...
+        argument: '[=<allow-ffi>...]'
         description: Allow loading dynamic libraries
       - names:
           - --allow-hrtime
@@ -936,25 +1101,25 @@ subcommands:
         description: Allow high resolution time measurement
       - names:
           - --allow-net
-        argument: <allow-net>...
+        argument: '[=<allow-net>...]'
         description: Allow network access
       - names:
           - --allow-read
-        argument: <allow-read>...
+        argument: '[=<allow-read>...]'
         description: Allow file system read access
       - names:
           - --allow-run
-        argument: <allow-run>...
+        argument: '[=<allow-run>...]'
         description: Allow running subprocesses
       - names:
           - --allow-write
-        argument: <allow-write>...
+        argument: '[=<allow-write>...]'
         description: Allow file system write access
       - names:
           - -c
           - --config
         argument: <FILE>
-        description: Load configuration file. Before 1.14 Deno only supported loading tsconfig.json that allowed to customise TypeScript compiler settings.
+        description: The configuration file can be used to configure different aspects of deno including TypeScript, linting, and code formatting. Typically the configuration file will be called `deno.json` or `deno.jsonc` and automatically detected; in that case this flag is not necessary. See https://deno.land/manual@v1.22.0/getting_started/configuration_file
       - names:
           - --cached-only
         argument: ""
@@ -964,9 +1129,13 @@ subcommands:
         argument: <FILE>
         description: Load certificate authority from PEM encoded file
       - names:
+          - --check
+        argument: '[=<CHECK_TYPE>...]'
+        description: Type check modules. Currently this is a default behavior to type check modules, but in future releases Deno will not automatically type check without the --check flag.
+      - names:
           - --compat
         argument: ""
-        description: Node compatibility mode. Currently only enables built-in node modules like 'fs' and globals like 'process'.
+        description: See https://deno.land/manual@v1.22.0/node/compatibility_mode
       - names:
           - -h
           - --help
@@ -975,20 +1144,15 @@ subcommands:
       - names:
           - --import-map
         argument: <FILE>
-        description: 'Load import map file from local file or remote URL. Docs: https://deno.land/manual/linking_to_external_code/import_maps Specification: https://wicg.github.io/import-maps/ Examples: https://github.com/WICG/import-maps#the-import-map'
+        description: Load import map file from local file or remote URL.
       - names:
           - --inspect
-        argument: <HOST:PORT>...
+        argument: '[=<HOST:PORT>...]'
         description: 'Activate inspector on host:port (default: 127.0.0.1:9229)'
       - names:
           - --inspect-brk
-        argument: <HOST:PORT>...
+        argument: '[=<HOST:PORT>...]'
         description: Activate inspector on host:port and break at start of user script
-      - names:
-          - -L
-          - --log-level
-        argument: <log-level>
-        description: Set log level
       - names:
           - --location
         argument: <HREF>
@@ -1003,12 +1167,16 @@ subcommands:
         description: Write lock file (use with --lock)
       - names:
           - --no-check
-        argument: <NO_CHECK_TYPE>...
-        description: Skip type checking of modules. If the value of '--no-check=remote' is supplied, diagnostic errors from remote modules will be ignored.
+        argument: '[=<NO_CHECK_TYPE>...]'
+        description: Skip type-checking. If the value of '--no-check=remote' is supplied, diagnostic errors from remote modules will be ignored.
       - names:
           - --no-clear-screen
         argument: ""
         description: Do not clear terminal screen when under watch mode
+      - names:
+          - --no-config
+        argument: ""
+        description: Disable automatic loading of the configuration file.
       - names:
           - --no-prompt
         argument: ""
@@ -1018,26 +1186,22 @@ subcommands:
         argument: ""
         description: Do not resolve remote modules
       - names:
-          - --prompt
-        argument: ""
-        description: 'deprecated: Fallback to prompt if required permission wasn''t passed'
-      - names:
           - -q
           - --quiet
         argument: ""
-        description: Suppress diagnostic output By default, subcommands print human-readable diagnostic messages to stderr. If the flag is set, restrict these messages to errors.
+        description: Suppress diagnostic output
       - names:
           - -r
           - --reload
-        argument: <CACHE_BLOCKLIST>...
+        argument: '[=<CACHE_BLOCKLIST>...]'
         description: Reload source code cache (recompile TypeScript) --reload
       - names:
           - --seed
         argument: <NUMBER>
-        description: Seed Math.random()
+        description: Set the random number generator seed
       - names:
           - --unsafely-ignore-certificate-errors
-        argument: <HOSTNAMES>...
+        argument: '[=<HOSTNAMES>...]'
         description: 'DANGER: Disables verification of TLS certificates'
       - names:
           - --unstable
@@ -1046,11 +1210,37 @@ subcommands:
       - names:
           - --v8-flags
         argument: <v8-flags>
-        description: 'Set V8 command line options (for help: --v8-flags=--help)'
+        description: To see a list of all available flags use --v8-flags=--help.
       - names:
           - --watch
-        argument: <FILES>...
+        argument: '[=<FILES>...]'
         description: 'UNSTABLE: Watch for file changes and restart process automatically. Local files from entry point module graph are watched by default. Additional paths might be watched by passing them as arguments to this flag.'
+  - name: task
+    description: Run a task defined in the configuration file
+    options:
+      - names:
+          - -c
+          - --config
+        argument: <FILE>
+        description: The configuration file can be used to configure different aspects of deno including TypeScript, linting, and code formatting. Typically the configuration file will be called `deno.json` or `deno.jsonc` and automatically detected; in that case this flag is not necessary. See https://deno.land/manual@v1.22.0/getting_started/configuration_file
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: Print help information
+      - names:
+          - --no-config
+        argument: ""
+        description: Disable automatic loading of the configuration file.
+      - names:
+          - -q
+          - --quiet
+        argument: ""
+        description: Suppress diagnostic output
+      - names:
+          - --unstable
+        argument: ""
+        description: Enable unstable features and APIs
   - name: test
     description: Run tests
     options:
@@ -1061,11 +1251,11 @@ subcommands:
         description: Allow all permissions
       - names:
           - --allow-env
-        argument: <allow-env>...
+        argument: '[=<allow-env>...]'
         description: Allow environment access
       - names:
           - --allow-ffi
-        argument: <allow-ffi>...
+        argument: '[=<allow-ffi>...]'
         description: Allow loading dynamic libraries
       - names:
           - --allow-hrtime
@@ -1073,7 +1263,7 @@ subcommands:
         description: Allow high resolution time measurement
       - names:
           - --allow-net
-        argument: <allow-net>...
+        argument: '[=<allow-net>...]'
         description: Allow network access
       - names:
           - --allow-none
@@ -1081,21 +1271,21 @@ subcommands:
         description: Don't return error code if no test files are found
       - names:
           - --allow-read
-        argument: <allow-read>...
+        argument: '[=<allow-read>...]'
         description: Allow file system read access
       - names:
           - --allow-run
-        argument: <allow-run>...
+        argument: '[=<allow-run>...]'
         description: Allow running subprocesses
       - names:
           - --allow-write
-        argument: <allow-write>...
+        argument: '[=<allow-write>...]'
         description: Allow file system write access
       - names:
           - -c
           - --config
         argument: <FILE>
-        description: Load configuration file. Before 1.14 Deno only supported loading tsconfig.json that allowed to customise TypeScript compiler settings.
+        description: The configuration file can be used to configure different aspects of deno including TypeScript, linting, and code formatting. Typically the configuration file will be called `deno.json` or `deno.jsonc` and automatically detected; in that case this flag is not necessary. See https://deno.land/manual@v1.22.0/getting_started/configuration_file
       - names:
           - --cached-only
         argument: ""
@@ -1105,9 +1295,13 @@ subcommands:
         argument: <FILE>
         description: Load certificate authority from PEM encoded file
       - names:
+          - --check
+        argument: '[=<CHECK_TYPE>...]'
+        description: Type check modules. Currently this is a default behavior to type check modules, but in future releases Deno will not automatically type check without the --check flag.
+      - names:
           - --compat
         argument: ""
-        description: Node compatibility mode. Currently only enables built-in node modules like 'fs' and globals like 'process'.
+        description: See https://deno.land/manual@v1.22.0/node/compatibility_mode
       - names:
           - --coverage
         argument: <DIR>
@@ -1118,7 +1312,7 @@ subcommands:
         description: 'UNSTABLE: type check code blocks'
       - names:
           - --fail-fast
-        argument: <N>...
+        argument: '[=<N>...]'
         description: Stop after N errors. Defaults to stopping after first failure.
       - names:
           - --filter
@@ -1136,25 +1330,20 @@ subcommands:
       - names:
           - --import-map
         argument: <FILE>
-        description: 'Load import map file from local file or remote URL. Docs: https://deno.land/manual/linking_to_external_code/import_maps Specification: https://wicg.github.io/import-maps/ Examples: https://github.com/WICG/import-maps#the-import-map'
+        description: Load import map file from local file or remote URL.
       - names:
           - --inspect
-        argument: <HOST:PORT>...
+        argument: '[=<HOST:PORT>...]'
         description: 'Activate inspector on host:port (default: 127.0.0.1:9229)'
       - names:
           - --inspect-brk
-        argument: <HOST:PORT>...
+        argument: '[=<HOST:PORT>...]'
         description: Activate inspector on host:port and break at start of user script
       - names:
           - -j
           - --jobs
-        argument: <jobs>...
+        argument: '[<jobs>...]'
         description: 'Number of parallel workers, defaults to # of CPUs when no value is provided. Defaults to 1 when the option is not present.'
-      - names:
-          - -L
-          - --log-level
-        argument: <log-level>
-        description: Set log level
       - names:
           - --location
         argument: <HREF>
@@ -1169,12 +1358,16 @@ subcommands:
         description: Write lock file (use with --lock)
       - names:
           - --no-check
-        argument: <NO_CHECK_TYPE>...
-        description: Skip type checking of modules. If the value of '--no-check=remote' is supplied, diagnostic errors from remote modules will be ignored.
+        argument: '[=<NO_CHECK_TYPE>...]'
+        description: Skip type-checking. If the value of '--no-check=remote' is supplied, diagnostic errors from remote modules will be ignored.
       - names:
           - --no-clear-screen
         argument: ""
         description: Do not clear terminal screen when under watch mode
+      - names:
+          - --no-config
+        argument: ""
+        description: Disable automatic loading of the configuration file.
       - names:
           - --no-prompt
         argument: ""
@@ -1188,30 +1381,30 @@ subcommands:
         argument: ""
         description: Cache test modules, but don't run tests
       - names:
-          - --prompt
-        argument: ""
-        description: 'deprecated: Fallback to prompt if required permission wasn''t passed'
-      - names:
           - -q
           - --quiet
         argument: ""
-        description: Suppress diagnostic output By default, subcommands print human-readable diagnostic messages to stderr. If the flag is set, restrict these messages to errors.
+        description: Suppress diagnostic output
       - names:
           - -r
           - --reload
-        argument: <CACHE_BLOCKLIST>...
+        argument: '[=<CACHE_BLOCKLIST>...]'
         description: Reload source code cache (recompile TypeScript) --reload
       - names:
           - --seed
         argument: <NUMBER>
-        description: Seed Math.random()
+        description: Set the random number generator seed
       - names:
           - --shuffle
-        argument: <NUMBER>...
+        argument: '[=<NUMBER>...]'
         description: '(UNSTABLE): Shuffle the order in which the tests are run'
       - names:
+          - --trace-ops
+        argument: ""
+        description: Enable tracing of async ops. Useful when debugging leaking ops in test, but impacts test execution time.
+      - names:
           - --unsafely-ignore-certificate-errors
-        argument: <HOSTNAMES>...
+        argument: '[=<HOSTNAMES>...]'
         description: 'DANGER: Disables verification of TLS certificates'
       - names:
           - --unstable
@@ -1220,7 +1413,7 @@ subcommands:
       - names:
           - --v8-flags
         argument: <v8-flags>
-        description: 'Set V8 command line options (for help: --v8-flags=--help)'
+        description: To see a list of all available flags use --v8-flags=--help.
       - names:
           - --watch
         argument: ""
@@ -1234,15 +1427,10 @@ subcommands:
         argument: ""
         description: Print help information
       - names:
-          - -L
-          - --log-level
-        argument: <log-level>
-        description: Set log level
-      - names:
           - -q
           - --quiet
         argument: ""
-        description: Suppress diagnostic output By default, subcommands print human-readable diagnostic messages to stderr. If the flag is set, restrict these messages to errors.
+        description: Suppress diagnostic output
       - names:
           - --unstable
         argument: ""
@@ -1256,15 +1444,10 @@ subcommands:
         argument: ""
         description: Print help information
       - names:
-          - -L
-          - --log-level
-        argument: <log-level>
-        description: Set log level
-      - names:
           - -q
           - --quiet
         argument: ""
-        description: Suppress diagnostic output By default, subcommands print human-readable diagnostic messages to stderr. If the flag is set, restrict these messages to errors.
+        description: Suppress diagnostic output
       - names:
           - --root
         argument: <root>
@@ -1299,11 +1482,6 @@ subcommands:
         argument: ""
         description: Print help information
       - names:
-          - -L
-          - --log-level
-        argument: <log-level>
-        description: Set log level
-      - names:
           - --output
         argument: <output>
         description: The path to output the updated version to
@@ -1311,7 +1489,7 @@ subcommands:
           - -q
           - --quiet
         argument: ""
-        description: Suppress diagnostic output By default, subcommands print human-readable diagnostic messages to stderr. If the flag is set, restrict these messages to errors.
+        description: Suppress diagnostic output
       - names:
           - --unstable
         argument: ""
@@ -1327,7 +1505,7 @@ subcommands:
           - -c
           - --config
         argument: <FILE>
-        description: Load configuration file. Before 1.14 Deno only supported loading tsconfig.json that allowed to customise TypeScript compiler settings.
+        description: The configuration file can be used to configure different aspects of deno including TypeScript, linting, and code formatting. Typically the configuration file will be called `deno.json` or `deno.jsonc` and automatically detected; in that case this flag is not necessary. See https://deno.land/manual@v1.22.0/getting_started/configuration_file
       - names:
           - --cert
         argument: <FILE>
@@ -1345,16 +1523,15 @@ subcommands:
       - names:
           - --import-map
         argument: <FILE>
-        description: 'Load import map file from local file or remote URL. Docs: https://deno.land/manual/linking_to_external_code/import_maps Specification: https://wicg.github.io/import-maps/ Examples: https://github.com/WICG/import-maps#the-import-map'
-      - names:
-          - -L
-          - --log-level
-        argument: <log-level>
-        description: Set log level
+        description: Load import map file from local file or remote URL.
       - names:
           - --lock
         argument: <FILE>
         description: Check the specified lock file
+      - names:
+          - --no-config
+        argument: ""
+        description: Disable automatic loading of the configuration file.
       - names:
           - --output
         argument: <output>
@@ -1363,16 +1540,17 @@ subcommands:
           - -q
           - --quiet
         argument: ""
-        description: Suppress diagnostic output By default, subcommands print human-readable diagnostic messages to stderr. If the flag is set, restrict these messages to errors.
+        description: Suppress diagnostic output
       - names:
           - -r
           - --reload
-        argument: <CACHE_BLOCKLIST>...
+        argument: '[=<CACHE_BLOCKLIST>...]'
         description: Reload source code cache (recompile TypeScript) --reload
       - names:
           - --unstable
         argument: ""
         description: Enable unstable features and APIs
+version: 'deno 1.22.0'
 tldr: |
   > A secure runtime for JavaScript and TypeScript.
   > More information: <https://deno.land/>.

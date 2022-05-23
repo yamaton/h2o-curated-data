@@ -26,7 +26,7 @@ options:
       - -w
       - --line-width
     argument: int
-    description: line width when outputing FASTA format (0 for no wrap) (default 60)
+    description: line width when outputting FASTA format (0 for no wrap) (default 60)
   - names:
       - -o
       - --out-file
@@ -45,10 +45,10 @@ options:
       - -j
       - --threads
     argument: int
-    description: 'number of CPUs. (default value: 1 for single-CPU PC, 2 for others. can also set with environment variable SEQKIT_THREADS) (default 2)'
+    description: number of CPUs. can also set with environment variable SEQKIT_THREADS) (default 4)
 subcommands:
   - name: amplicon
-    description: retrieve amplicon (or specific region around it) via primer(s)
+    description: extract amplicon (or specific region around it) via primer(s)
     options:
       - names:
           - --bed
@@ -85,6 +85,11 @@ subcommands:
         argument: ""
         description: only search on positive strand
       - names:
+          - -M
+          - --output-mismatches
+        argument: ""
+        description: append the total mismatches and mismatches of 5' end and 3' end
+      - names:
           - -p
           - --primer-file
         argument: string
@@ -99,6 +104,11 @@ subcommands:
           - --reverse
         argument: string
         description: reverse primer (5'-primer-3'), degenerate bases allowed
+      - names:
+          - -u
+          - --save-unmatched
+        argument: ""
+        description: also save records that do not match any primer
       - names:
           - -s
           - --strict-mode
@@ -124,7 +134,7 @@ subcommands:
           - -w
           - --line-width
         argument: int
-        description: line width when outputing FASTA format (0 for no wrap) (default 60)
+        description: line width when outputting FASTA format (0 for no wrap) (default 60)
       - names:
           - -o
           - --out-file
@@ -143,7 +153,7 @@ subcommands:
           - -j
           - --threads
         argument: int
-        description: 'number of CPUs. (default value: 1 for single-CPU PC, 2 for others. can also set with environment variable SEQKIT_THREADS) (default 2)'
+        description: number of CPUs. can also set with environment variable SEQKIT_THREADS) (default 4)
   - name: bam
     description: monitoring and online histograms of BAM record features
     options:
@@ -297,14 +307,6 @@ subcommands:
           - --top-size
         argument: int
         description: size of the top-mode buffer (default 100)
-  - name: common
-    description: find common sequences of multiple files by id/name/sequence
-    options:
-      - names:
-          - -n
-          - --by-name
-        argument: ""
-        description: match by full name    instead of just id
       - names:
           - --alphabet-guess-seq-length
         argument: int
@@ -325,7 +327,7 @@ subcommands:
           - -w
           - --line-width
         argument: int
-        description: line width when outputing FASTA format (0 for no wrap) (default 60)
+        description: line width when outputting FASTA format (0 for no wrap) (default 60)
       - names:
           - -o
           - --out-file
@@ -344,7 +346,15 @@ subcommands:
           - -j
           - --threads
         argument: int
-        description: 'number of CPUs. (default value: 1 for single-CPU PC, 2 for others. can also set with environment variable SEQKIT_THREADS) (default 2)'
+        description: number of CPUs. can also set with environment variable SEQKIT_THREADS) (default 4)
+  - name: common
+    description: find common sequences of multiple files by id/name/sequence
+    options:
+      - names:
+          - -n
+          - --by-name
+        argument: ""
+        description: match by full name instead of just id
       - names:
           - -s
           - --by-seq
@@ -360,9 +370,11 @@ subcommands:
           - --ignore-case
         argument: ""
         description: ignore case
-  - name: concat
-    description: concatenate sequences with same ID from multiple files
-    options:
+      - names:
+          - -P
+          - --only-positive-strand
+        argument: ""
+        description: only considering positive strand when comparing by sequence
       - names:
           - --alphabet-guess-seq-length
         argument: int
@@ -383,7 +395,7 @@ subcommands:
           - -w
           - --line-width
         argument: int
-        description: line width when outputing FASTA format (0 for no wrap) (default 60)
+        description: line width when outputting FASTA format (0 for no wrap) (default 60)
       - names:
           - -o
           - --out-file
@@ -402,12 +414,65 @@ subcommands:
           - -j
           - --threads
         argument: int
-        description: 'number of CPUs. (default value: 1 for single-CPU PC, 2 for others. can also set with environment variable SEQKIT_THREADS) (default 2)'
+        description: number of CPUs. can also set with environment variable SEQKIT_THREADS) (default 4)
+  - name: concat
+    description: concatenate sequences with the same ID from multiple files
+    options:
+      - names:
+          - -f
+          - --full
+        argument: ""
+        description: keep all sequences, like full/outter join
       - names:
           - -h
           - --help
         argument: ""
         description: help for concat
+      - names:
+          - -s
+          - --separator
+        argument: string
+        description: separator for descriptions of records with the same ID (default "|")
+      - names:
+          - --alphabet-guess-seq-length
+        argument: int
+        description: length of sequence prefix of the first FASTA record based on which seqkit guesses the sequence type (0 for whole seq) (default 10000)
+      - names:
+          - --id-ncbi
+        argument: ""
+        description: FASTA head is NCBI-style, e.g. >gi|110645304|ref|NC_002516.2| Pseud...
+      - names:
+          - --id-regexp
+        argument: string
+        description: regular expression for parsing ID (default "^(\\S+)\\s?")
+      - names:
+          - --infile-list
+        argument: string
+        description: file of input files list (one file per line), if given, they are appended to files from cli arguments
+      - names:
+          - -w
+          - --line-width
+        argument: int
+        description: line width when outputting FASTA format (0 for no wrap) (default 60)
+      - names:
+          - -o
+          - --out-file
+        argument: string
+        description: out file ("-" for stdout, suffix .gz for gzipped out) (default "-")
+      - names:
+          - --quiet
+        argument: ""
+        description: be quiet and do not show extra information
+      - names:
+          - -t
+          - --seq-type
+        argument: string
+        description: sequence type (dna|rna|protein|unlimit|auto) (for auto, it automatically detect by the first sequence) (default "auto")
+      - names:
+          - -j
+          - --threads
+        argument: int
+        description: number of CPUs. can also set with environment variable SEQKIT_THREADS) (default 4)
   - name: convert
     description: convert FASTQ quality encoding between Sanger, Solexa and Illumina
     options:
@@ -439,7 +504,7 @@ subcommands:
           - -N
           - --thresh-B-in-n-most-common
         argument: int
-        description: threshold of 'B' in top N most common quality for guessing Illumina 1.5. (default 4)
+        description: threshold of 'B' in top N most common quality for guessing Illumina 1.5. (default 2)
       - names:
           - -F
           - --thresh-illumina1.5-frac
@@ -469,7 +534,7 @@ subcommands:
           - -w
           - --line-width
         argument: int
-        description: line width when outputing FASTA format (0 for no wrap) (default 60)
+        description: line width when outputting FASTA format (0 for no wrap) (default 60)
       - names:
           - -o
           - --out-file
@@ -488,7 +553,7 @@ subcommands:
           - -j
           - --threads
         argument: int
-        description: 'number of CPUs. (default value: 1 for single-CPU PC, 2 for others. can also set with environment variable SEQKIT_THREADS) (default 2)'
+        description: number of CPUs. can also set with environment variable SEQKIT_THREADS) (default 4)
   - name: duplicate
     description: duplicate sequences N times
     options:
@@ -496,7 +561,12 @@ subcommands:
           - -h
           - --help
         argument: ""
-        description: help for duplicate,-n, --times int   duplication number (   default 1)
+        description: help for duplicate
+      - names:
+          - -n
+          - --times
+        argument: int
+        description: duplication number (default 1)
       - names:
           - --alphabet-guess-seq-length
         argument: int
@@ -517,7 +587,7 @@ subcommands:
           - -w
           - --line-width
         argument: int
-        description: line width when outputing FASTA format (0 for no wrap) (default 60)
+        description: line width when outputting FASTA format (0 for no wrap) (default 60)
       - names:
           - -o
           - --out-file
@@ -536,7 +606,65 @@ subcommands:
           - -j
           - --threads
         argument: int
-        description: 'number of CPUs. (default value: 1 for single-CPU PC, 2 for others. can also set with environment variable SEQKIT_THREADS) (default 2)'
+        description: number of CPUs. can also set with environment variable SEQKIT_THREADS) (default 4)
+  - name: fa2fq
+    description: retrieve corresponding FASTQ records by a FASTA file
+    options:
+      - names:
+          - -f
+          - --fasta-file
+        argument: string
+        description: FASTA file)
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: help for fa2fq
+      - names:
+          - -P
+          - --only-positive-strand
+        argument: ""
+        description: only search on positive strand
+      - names:
+          - --alphabet-guess-seq-length
+        argument: int
+        description: length of sequence prefix of the first FASTA record based on which seqkit guesses the sequence type (0 for whole seq) (default 10000)
+      - names:
+          - --id-ncbi
+        argument: ""
+        description: FASTA head is NCBI-style, e.g. >gi|110645304|ref|NC_002516.2| Pseud...
+      - names:
+          - --id-regexp
+        argument: string
+        description: regular expression for parsing ID (default "^(\\S+)\\s?")
+      - names:
+          - --infile-list
+        argument: string
+        description: file of input files list (one file per line), if given, they are appended to files from cli arguments
+      - names:
+          - -w
+          - --line-width
+        argument: int
+        description: line width when outputting FASTA format (0 for no wrap) (default 60)
+      - names:
+          - -o
+          - --out-file
+        argument: string
+        description: out file ("-" for stdout, suffix .gz for gzipped out) (default "-")
+      - names:
+          - --quiet
+        argument: ""
+        description: be quiet and do not show extra information
+      - names:
+          - -t
+          - --seq-type
+        argument: string
+        description: sequence type (dna|rna|protein|unlimit|auto) (for auto, it automatically detect by the first sequence) (default "auto")
+      - names:
+          - -j
+          - --threads
+        argument: int
+        description: number of CPUs. can also set with environment variable SEQKIT_THREADS) (default 4)
   - name: faidx
     description: create FASTA index file and extract subsequence
     options:
@@ -544,12 +672,32 @@ subcommands:
           - -f
           - --full-head
         argument: ""
-        description: print full header   line instead of just ID. New fasta index file ending with .seqkit.fai will be created
+        description: print full header line instead of just ID. New fasta index file ending with .seqkit.fai will be created
       - names:
           - -h
           - --help
         argument: ""
-        description: help for faidx,-i, --ignore-case   ignore case,-r, --use-regexp    IDs are regular ex   pression. But subseq region is not suppored here.
+        description: help for faidx
+      - names:
+          - -i
+          - --ignore-case
+        argument: ""
+        description: ignore case
+      - names:
+          - -I
+          - --immediate-output
+        argument: ""
+        description: print output immediately, do not use write buffer
+      - names:
+          - -l
+          - --region-file
+        argument: string
+        description: file containing a list of regions
+      - names:
+          - -r
+          - --use-regexp
+        argument: ""
+        description: IDs are regular expression. But subseq region is not supported here.
       - names:
           - --alphabet-guess-seq-length
         argument: int
@@ -570,7 +718,7 @@ subcommands:
           - -w
           - --line-width
         argument: int
-        description: line width when outputing FASTA format (0 for no wrap) (default 60)
+        description: line width when outputting FASTA format (0 for no wrap) (default 60)
       - names:
           - -o
           - --out-file
@@ -589,7 +737,7 @@ subcommands:
           - -j
           - --threads
         argument: int
-        description: 'number of CPUs. (default value: 1 for single-CPU PC, 2 for others. can also set with environment variable SEQKIT_THREADS) (default 2)'
+        description: number of CPUs. can also set with environment variable SEQKIT_THREADS) (default 4)
   - name: fish
     description: look for short sequences in larger sequences using local alignment
     options:
@@ -670,11 +818,52 @@ subcommands:
         description: length of sequence to validate (0 for whole seq) (default 10000)
       - names:
           - --alphabet-guess-seq-length
+        argument: int
+        description: length of sequence prefix of the first FASTA record based on which seqkit guesses the sequence type (0 for whole seq) (default 10000)
+      - names:
+          - --id-ncbi
         argument: ""
-        description: int   length of sequence prefix of the first FASTA record based on which seqkit guesses the sequence type (0 for whole seq) (default 10000)
+        description: FASTA head is NCBI-style, e.g. >gi|110645304|ref|NC_002516.2| Pseud...
+      - names:
+          - --id-regexp
+        argument: string
+        description: regular expression for parsing ID (default "^(\\S+)\\s?")
+      - names:
+          - --infile-list
+        argument: string
+        description: file of input files list (one file per line), if given, they are appended to files from cli arguments
+      - names:
+          - -w
+          - --line-width
+        argument: int
+        description: line width when outputting FASTA format (0 for no wrap) (default 60)
+      - names:
+          - -o
+          - --out-file
+        argument: string
+        description: out file ("-" for stdout, suffix .gz for gzipped out) (default "-")
+      - names:
+          - --quiet
+        argument: ""
+        description: be quiet and do not show extra information
+      - names:
+          - -t
+          - --seq-type
+        argument: string
+        description: sequence type (dna|rna|protein|unlimit|auto) (for auto, it automatically detect by the first sequence) (default "auto")
+      - names:
+          - -j
+          - --threads
+        argument: int
+        description: number of CPUs. can also set with environment variable SEQKIT_THREADS) (default 4)
   - name: fq2fa
     description: convert FASTQ to FASTA
     options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: help for fq2fa
       - names:
           - --alphabet-guess-seq-length
         argument: int
@@ -695,7 +884,7 @@ subcommands:
           - -w
           - --line-width
         argument: int
-        description: line width when outputing FASTA format (0 for no wrap) (default 60)
+        description: line width when outputting FASTA format (0 for no wrap) (default 60)
       - names:
           - -o
           - --out-file
@@ -714,14 +903,9 @@ subcommands:
           - -j
           - --threads
         argument: int
-        description: 'number of CPUs. (default value: 1 for single-CPU PC, 2 for others. can also set with environment variable SEQKIT_THREADS) (default 2)'
-      - names:
-          - -h
-          - --help
-        argument: ""
-        description: help for fq2fa
+        description: number of CPUs. can also set with environment variable SEQKIT_THREADS) (default 4)
   - name: fx2tab
-    description: convert FASTA/Q to tabular format (with length/GC content/GC skew)
+    description: convert FASTA/Q to tabular format (and length, GC content, average quality...)
     options:
       - names:
           - -a
@@ -747,7 +931,7 @@ subcommands:
           - -I
           - --case-sensitive
         argument: ""
-        description: calculate case sensitive base content
+        description: calculate case sensitive base content/sequence hash
       - names:
           - -g
           - --gc
@@ -779,6 +963,11 @@ subcommands:
         argument: ""
         description: only print names (no sequences and qualities)
       - names:
+          - -Q
+          - --no-qual
+        argument: ""
+        description: only output two column even for FASTQ file
+      - names:
           - -i
           - --only-id
         argument: ""
@@ -792,19 +981,7 @@ subcommands:
           - -s
           - --seq-hash
         argument: ""
-        description: print hash of sequence (case sensitive)
-  - name: genautocomplete
-    description: generate shell autocompletion script (bash|zsh|fish|powershell)
-    options:
-      - names:
-          - --file
-        argument: string
-        description: autocompletion fi   le (default "~/.bash_completion.d/seqkit.sh")
-      - names:
-          - -h
-          - --help
-        argument: ""
-        description: help for genautocomplete,--shell string   autocompletion ty   pe (bash|zsh|fish|powershell) (default "bash")
+        description: print hash (MD5) of sequence
       - names:
           - --alphabet-guess-seq-length
         argument: int
@@ -825,7 +1002,7 @@ subcommands:
           - -w
           - --line-width
         argument: int
-        description: line width when outputing FASTA format (0 for no wrap) (default 60)
+        description: line width when outputting FASTA format (0 for no wrap) (default 60)
       - names:
           - -o
           - --out-file
@@ -844,7 +1021,63 @@ subcommands:
           - -j
           - --threads
         argument: int
-        description: 'number of CPUs. (default value: 1 for single-CPU PC, 2 for others. can also set with environment variable SEQKIT_THREADS) (default 2)'
+        description: number of CPUs. can also set with environment variable SEQKIT_THREADS) (default 4)
+  - name: genautocomplete
+    description: generate shell autocompletion script (bash|zsh|fish|powershell)
+    options:
+      - names:
+          - --file
+        argument: string
+        description: autocompletion file (default "/home/vierbein/.bash_completion.d/seqkit.sh")
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: help for genautocomplete
+      - names:
+          - --shell
+        argument: string
+        description: autocompletion type (bash|zsh|fish|powershell) (default "bash")
+      - names:
+          - --alphabet-guess-seq-length
+        argument: int
+        description: length of sequence prefix of the first FASTA record based on which seqkit guesses the sequence type (0 for whole seq) (default 10000)
+      - names:
+          - --id-ncbi
+        argument: ""
+        description: FASTA head is NCBI-style, e.g. >gi|110645304|ref|NC_002516.2| Pseud...
+      - names:
+          - --id-regexp
+        argument: string
+        description: regular expression for parsing ID (default "^(\\S+)\\s?")
+      - names:
+          - --infile-list
+        argument: string
+        description: file of input files list (one file per line), if given, they are appended to files from cli arguments
+      - names:
+          - -w
+          - --line-width
+        argument: int
+        description: line width when outputting FASTA format (0 for no wrap) (default 60)
+      - names:
+          - -o
+          - --out-file
+        argument: string
+        description: out file ("-" for stdout, suffix .gz for gzipped out) (default "-")
+      - names:
+          - --quiet
+        argument: ""
+        description: be quiet and do not show extra information
+      - names:
+          - -t
+          - --seq-type
+        argument: string
+        description: sequence type (dna|rna|protein|unlimit|auto) (for auto, it automatically detect by the first sequence) (default "auto")
+      - names:
+          - -j
+          - --threads
+        argument: int
+        description: number of CPUs. can also set with environment variable SEQKIT_THREADS) (default 4)
   - name: grep
     description: search sequences by ID/name/sequence/sequence motifs, mismatch allowed
     options:
@@ -863,6 +1096,11 @@ subcommands:
           - --circular
         argument: ""
         description: circular genome
+      - names:
+          - -C
+          - --count
+        argument: ""
+        description: just print a count of matching records. with the -v/--invert-match flag, count non-matching records
       - names:
           - -d
           - --degenerate
@@ -922,9 +1160,6 @@ subcommands:
           - --use-regexp
         argument: ""
         description: patterns are regular expression
-  - name: head
-    description: print first N FASTA/Q records
-    options:
       - names:
           - --alphabet-guess-seq-length
         argument: int
@@ -945,7 +1180,7 @@ subcommands:
           - -w
           - --line-width
         argument: int
-        description: line width when outputing FASTA format (0 for no wrap) (default 60)
+        description: line width when outputting FASTA format (0 for no wrap) (default 60)
       - names:
           - -o
           - --out-file
@@ -964,7 +1199,10 @@ subcommands:
           - -j
           - --threads
         argument: int
-        description: 'number of CPUs. (default value: 1 for single-CPU PC, 2 for others. can also set with environment variable SEQKIT_THREADS) (default 2)'
+        description: number of CPUs. can also set with environment variable SEQKIT_THREADS) (default 4)
+  - name: head
+    description: print first N FASTA/Q records
+    options:
       - names:
           - -h
           - --help
@@ -975,9 +1213,6 @@ subcommands:
           - --number
         argument: int
         description: print first N FASTA/Q records (default 10)
-  - name: help
-    description: Help about any command
-    options:
       - names:
           - --alphabet-guess-seq-length
         argument: int
@@ -998,7 +1233,7 @@ subcommands:
           - -w
           - --line-width
         argument: int
-        description: line width when outputing FASTA format (0 for no wrap) (default 60)
+        description: line width when outputting FASTA format (0 for no wrap) (default 60)
       - names:
           - -o
           - --out-file
@@ -1017,12 +1252,60 @@ subcommands:
           - -j
           - --threads
         argument: int
-        description: 'number of CPUs. (default value: 1 for single-CPU PC, 2 for others. can also set with environment variable SEQKIT_THREADS) (default 2)'
+        description: number of CPUs. can also set with environment variable SEQKIT_THREADS) (default 4)
+  - name: head-genome
+    description: print sequences of the first genome with common prefixes in name
+    options:
       - names:
           - -h
           - --help
         argument: ""
-        description: help for help
+        description: help for head-genome
+      - names:
+          - -m
+          - --mini-common-words
+        argument: int
+        description: minimal shared prefix words (default 1)
+      - names:
+          - --alphabet-guess-seq-length
+        argument: int
+        description: length of sequence prefix of the first FASTA record based on which seqkit guesses the sequence type (0 for whole seq) (default 10000)
+      - names:
+          - --id-ncbi
+        argument: ""
+        description: FASTA head is NCBI-style, e.g. >gi|110645304|ref|NC_002516.2| Pseud...
+      - names:
+          - --id-regexp
+        argument: string
+        description: regular expression for parsing ID (default "^(\\S+)\\s?")
+      - names:
+          - --infile-list
+        argument: string
+        description: file of input files list (one file per line), if given, they are appended to files from cli arguments
+      - names:
+          - -w
+          - --line-width
+        argument: int
+        description: line width when outputting FASTA format (0 for no wrap) (default 60)
+      - names:
+          - -o
+          - --out-file
+        argument: string
+        description: out file ("-" for stdout, suffix .gz for gzipped out) (default "-")
+      - names:
+          - --quiet
+        argument: ""
+        description: be quiet and do not show extra information
+      - names:
+          - -t
+          - --seq-type
+        argument: string
+        description: sequence type (dna|rna|protein|unlimit|auto) (for auto, it automatically detect by the first sequence) (default "auto")
+      - names:
+          - -j
+          - --threads
+        argument: int
+        description: number of CPUs. can also set with environment variable SEQKIT_THREADS) (default 4)
   - name: locate
     description: locate subsequences/motifs, mismatch allowed
     options:
@@ -1106,8 +1389,44 @@ subcommands:
         description: length of sequence to validate (0 for whole seq) (default 10000)
       - names:
           - --alphabet-guess-seq-length
+        argument: int
+        description: length of sequence prefix of the first FASTA record based on which seqkit guesses the sequence type (0 for whole seq) (default 10000)
+      - names:
+          - --id-ncbi
         argument: ""
-        description: int   length of sequence prefix of the first FASTA record based on which seqkit guesses the sequence type (0 for whole seq) (default 10000)
+        description: FASTA head is NCBI-style, e.g. >gi|110645304|ref|NC_002516.2| Pseud...
+      - names:
+          - --id-regexp
+        argument: string
+        description: regular expression for parsing ID (default "^(\\S+)\\s?")
+      - names:
+          - --infile-list
+        argument: string
+        description: file of input files list (one file per line), if given, they are appended to files from cli arguments
+      - names:
+          - -w
+          - --line-width
+        argument: int
+        description: line width when outputting FASTA format (0 for no wrap) (default 60)
+      - names:
+          - -o
+          - --out-file
+        argument: string
+        description: out file ("-" for stdout, suffix .gz for gzipped out) (default "-")
+      - names:
+          - --quiet
+        argument: ""
+        description: be quiet and do not show extra information
+      - names:
+          - -t
+          - --seq-type
+        argument: string
+        description: sequence type (dna|rna|protein|unlimit|auto) (for auto, it automatically detect by the first sequence) (default "auto")
+      - names:
+          - -j
+          - --threads
+        argument: int
+        description: number of CPUs. can also set with environment variable SEQKIT_THREADS) (default 4)
   - name: mutate
     description: edit sequence (point mutation, insertion, deletion)
     options:
@@ -1161,6 +1480,46 @@ subcommands:
           - --use-regexp
         argument: ""
         description: '[match seqs to mutate] search patterns are regular expression'
+      - names:
+          - --alphabet-guess-seq-length
+        argument: int
+        description: length of sequence prefix of the first FASTA record based on which seqkit guesses the sequence type (0 for whole seq) (default 10000)
+      - names:
+          - --id-ncbi
+        argument: ""
+        description: FASTA head is NCBI-style, e.g. >gi|110645304|ref|NC_002516.2| Pseud...
+      - names:
+          - --id-regexp
+        argument: string
+        description: regular expression for parsing ID (default "^(\\S+)\\s?")
+      - names:
+          - --infile-list
+        argument: string
+        description: file of input files list (one file per line), if given, they are appended to files from cli arguments
+      - names:
+          - -w
+          - --line-width
+        argument: int
+        description: line width when outputting FASTA format (0 for no wrap) (default 60)
+      - names:
+          - -o
+          - --out-file
+        argument: string
+        description: out file ("-" for stdout, suffix .gz for gzipped out) (default "-")
+      - names:
+          - --quiet
+        argument: ""
+        description: be quiet and do not show extra information
+      - names:
+          - -t
+          - --seq-type
+        argument: string
+        description: sequence type (dna|rna|protein|unlimit|auto) (for auto, it automatically detect by the first sequence) (default "auto")
+      - names:
+          - -j
+          - --threads
+        argument: int
+        description: number of CPUs. can also set with environment variable SEQKIT_THREADS) (default 4)
   - name: pair
     description: match up paired-end reads from two fastq files
     options:
@@ -1168,22 +1527,32 @@ subcommands:
           - -f
           - --force
         argument: ""
-        description: overwrite outpu   t directory
+        description: overwrite output directory
       - names:
           - -h
           - --help
         argument: ""
-        description: help for pair,-O, --out-dir string   output directory,-1, --read1 string     (gzipped) read1    file
+        description: help for pair
+      - names:
+          - -O
+          - --out-dir
+        argument: string
+        description: output directory
+      - names:
+          - "-1"
+          - --read1
+        argument: string
+        description: (gzipped) read1 file
       - names:
           - "-2"
           - --read2
         argument: string
-        description: (gzipped) read2    file
+        description: (gzipped) read2 file
       - names:
           - -u
           - --save-unpaired
         argument: ""
-        description: save unpaired r   eads if there are
+        description: save unpaired reads if there are
       - names:
           - --alphabet-guess-seq-length
         argument: int
@@ -1204,7 +1573,7 @@ subcommands:
           - -w
           - --line-width
         argument: int
-        description: line width when outputing FASTA format (0 for no wrap) (default 60)
+        description: line width when outputting FASTA format (0 for no wrap) (default 60)
       - names:
           - -o
           - --out-file
@@ -1223,7 +1592,7 @@ subcommands:
           - -j
           - --threads
         argument: int
-        description: 'number of CPUs. (default value: 1 for single-CPU PC, 2 for others. can also set with environment variable SEQKIT_THREADS) (default 2)'
+        description: number of CPUs. can also set with environment variable SEQKIT_THREADS) (default 4)
   - name: range
     description: print FASTA/Q records in a range (start:end)
     options:
@@ -1231,7 +1600,12 @@ subcommands:
           - -h
           - --help
         argument: ""
-        description: help for range,-r, --range string   range. e.g., 1:12    for first 12 records (head -n 12), -12:-1 for last 12 records (tail -n 12)
+        description: help for range
+      - names:
+          - -r
+          - --range
+        argument: string
+        description: range. e.g., 1:12 for first 12 records (head -n 12), -12:-1 for last 12 records (tail -n 12)
       - names:
           - --alphabet-guess-seq-length
         argument: int
@@ -1252,7 +1626,7 @@ subcommands:
           - -w
           - --line-width
         argument: int
-        description: line width when outputing FASTA format (0 for no wrap) (default 60)
+        description: line width when outputting FASTA format (0 for no wrap) (default 60)
       - names:
           - -o
           - --out-file
@@ -1271,7 +1645,7 @@ subcommands:
           - -j
           - --threads
         argument: int
-        description: 'number of CPUs. (default value: 1 for single-CPU PC, 2 for others. can also set with environment variable SEQKIT_THREADS) (default 2)'
+        description: number of CPUs. can also set with environment variable SEQKIT_THREADS) (default 4)
   - name: rename
     description: rename duplicated IDs
     options:
@@ -1279,12 +1653,27 @@ subcommands:
           - -n
           - --by-name
         argument: ""
-        description: check duplication by full name instead of just id,-f, --force               overwrite ou   tput directory
+        description: check duplication by full name instead of just id
+      - names:
+          - -f
+          - --force
+        argument: ""
+        description: overwrite output directory
       - names:
           - -h
           - --help
         argument: ""
-        description: help for rename,-m, --multiple-outfiles   write result   s into separated files for multiple input files
+        description: help for rename
+      - names:
+          - -m
+          - --multiple-outfiles
+        argument: ""
+        description: write results into separated files for multiple input files
+      - names:
+          - -O
+          - --out-dir
+        argument: string
+        description: output directory (default "renamed")
       - names:
           - --alphabet-guess-seq-length
         argument: int
@@ -1305,7 +1694,7 @@ subcommands:
           - -w
           - --line-width
         argument: int
-        description: line width when outputing FASTA format (0 for no wrap) (default 60)
+        description: line width when outputting FASTA format (0 for no wrap) (default 60)
       - names:
           - -o
           - --out-file
@@ -1324,12 +1713,7 @@ subcommands:
           - -j
           - --threads
         argument: int
-        description: 'number of CPUs. (default value: 1 for single-CPU PC, 2 for others. can also set with environment variable SEQKIT_THREADS) (default 2)'
-      - names:
-          - -O
-          - --out-dir
-        argument: string
-        description: output directory (default "renamed")
+        description: number of CPUs. can also set with environment variable SEQKIT_THREADS) (default 4)
   - name: replace
     description: replace name/sequence by regular expression
     options:
@@ -1376,7 +1760,7 @@ subcommands:
       - names:
           - --nr-width
         argument: int
-        description: minimum width for {nr} in flag -r/--replacement. e.g., formating "1" to "001" by --nr-width 3 (default 1)
+        description: minimum width for {nr} in flag -r/--replacement. e.g., formatting "1" to "001" by --nr-width 3 (default 1)
       - names:
           - -p
           - --pattern
@@ -1386,10 +1770,7 @@ subcommands:
           - -r
           - --replacement
         argument: string
-        description: 'replacement. supporting capture variables.  e.g. $1 represents the text of the first submatch. ATTENTION: for *nix OS, use SINGLE quote NOT double quotes or use the \ escape character. Record number is also supported by "{nr}".use ${1} instead of $1 when {kv} given!'
-  - name: restart
-    description: reset start position for circular genome
-    options:
+        description: 'replacement. supporting capture variables. e.g. $1 represents the text of the first submatch. ATTENTION: for *nix OS, use SINGLE quote NOT double quotes or use the \ escape character. Record number is also supported by "{nr}".use ${1} instead of $1 when {kv} given!'
       - names:
           - --alphabet-guess-seq-length
         argument: int
@@ -1410,7 +1791,7 @@ subcommands:
           - -w
           - --line-width
         argument: int
-        description: line width when outputing FASTA format (0 for no wrap) (default 60)
+        description: line width when outputting FASTA format (0 for no wrap) (default 60)
       - names:
           - -o
           - --out-file
@@ -1429,7 +1810,10 @@ subcommands:
           - -j
           - --threads
         argument: int
-        description: 'number of CPUs. (default value: 1 for single-CPU PC, 2 for others. can also set with environment variable SEQKIT_THREADS) (default 2)'
+        description: number of CPUs. can also set with environment variable SEQKIT_THREADS) (default 4)
+  - name: restart
+    description: reset start position for circular genome
+    options:
       - names:
           - -h
           - --help
@@ -1440,34 +1824,6 @@ subcommands:
           - --new-start
         argument: int
         description: new start position (1-base, supporting negative value counting from the end) (default 1)
-  - name: rmdup
-    description: remove duplicated sequences by id/name/sequence
-    options:
-      - names:
-          - -n
-          - --by-name
-        argument: ""
-        description: by full n   ame instead of just id
-      - names:
-          - -s
-          - --by-seq
-        argument: ""
-        description: by seq,-D, --dup-num-file string    file to s   ave number and list of duplicated seqs
-      - names:
-          - -d
-          - --dup-seqs-file
-        argument: string
-        description: file to s   ave duplicated seqs
-      - names:
-          - -h
-          - --help
-        argument: ""
-        description: help for   rmdup
-      - names:
-          - -i
-          - --ignore-case
-        argument: ""
-        description: ignore ca   se
       - names:
           - --alphabet-guess-seq-length
         argument: int
@@ -1488,7 +1844,7 @@ subcommands:
           - -w
           - --line-width
         argument: int
-        description: line width when outputing FASTA format (0 for no wrap) (default 60)
+        description: line width when outputting FASTA format (0 for no wrap) (default 60)
       - names:
           - -o
           - --out-file
@@ -1507,7 +1863,85 @@ subcommands:
           - -j
           - --threads
         argument: int
-        description: 'number of CPUs. (default value: 1 for single-CPU PC, 2 for others. can also set with environment variable SEQKIT_THREADS) (default 2)'
+        description: number of CPUs. can also set with environment variable SEQKIT_THREADS) (default 4)
+  - name: rmdup
+    description: remove duplicated sequences by ID/name/sequence
+    options:
+      - names:
+          - -n
+          - --by-name
+        argument: ""
+        description: by full name instead of just id
+      - names:
+          - -s
+          - --by-seq
+        argument: ""
+        description: by seq
+      - names:
+          - -D
+          - --dup-num-file
+        argument: string
+        description: file to save number and list of duplicated seqs
+      - names:
+          - -d
+          - --dup-seqs-file
+        argument: string
+        description: file to save duplicated seqs
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: help for rmdup
+      - names:
+          - -i
+          - --ignore-case
+        argument: ""
+        description: ignore case
+      - names:
+          - -P
+          - --only-positive-strand
+        argument: ""
+        description: only considering positive strand when comparing by sequence
+      - names:
+          - --alphabet-guess-seq-length
+        argument: int
+        description: length of sequence prefix of the first FASTA record based on which seqkit guesses the sequence type (0 for whole seq) (default 10000)
+      - names:
+          - --id-ncbi
+        argument: ""
+        description: FASTA head is NCBI-style, e.g. >gi|110645304|ref|NC_002516.2| Pseud...
+      - names:
+          - --id-regexp
+        argument: string
+        description: regular expression for parsing ID (default "^(\\S+)\\s?")
+      - names:
+          - --infile-list
+        argument: string
+        description: file of input files list (one file per line), if given, they are appended to files from cli arguments
+      - names:
+          - -w
+          - --line-width
+        argument: int
+        description: line width when outputting FASTA format (0 for no wrap) (default 60)
+      - names:
+          - -o
+          - --out-file
+        argument: string
+        description: out file ("-" for stdout, suffix .gz for gzipped out) (default "-")
+      - names:
+          - --quiet
+        argument: ""
+        description: be quiet and do not show extra information
+      - names:
+          - -t
+          - --seq-type
+        argument: string
+        description: sequence type (dna|rna|protein|unlimit|auto) (for auto, it automatically detect by the first sequence) (default "auto")
+      - names:
+          - -j
+          - --threads
+        argument: int
+        description: number of CPUs. can also set with environment variable SEQKIT_THREADS) (default 4)
   - name: sample
     description: sample sequences by number or proportion
     options:
@@ -1515,7 +1949,27 @@ subcommands:
           - -h
           - --help
         argument: ""
-        description: help for sample,-n, --number int         sample by number (result may not exactly match), DO NOT use on large FASTQ files.,-p, --proportion float   sample by proportion,-s, --rand-seed int      rand seed (default 11),-2, --two-pass           2-pass mode r   ead files twice to lower memory usage. Not allowed when reading from stdin
+        description: help for sample
+      - names:
+          - -n
+          - --number
+        argument: int
+        description: sample by number (result may not exactly match), DO NOT use on large FASTQ files.
+      - names:
+          - -p
+          - --proportion
+        argument: float
+        description: sample by proportion
+      - names:
+          - -s
+          - --rand-seed
+        argument: int
+        description: rand seed (default 11)
+      - names:
+          - "-2"
+          - --two-pass
+        argument: ""
+        description: 2-pass mode read files twice to lower memory usage. Not allowed when reading from stdin
       - names:
           - --alphabet-guess-seq-length
         argument: int
@@ -1536,7 +1990,7 @@ subcommands:
           - -w
           - --line-width
         argument: int
-        description: line width when outputing FASTA format (0 for no wrap) (default 60)
+        description: line width when outputting FASTA format (0 for no wrap) (default 60)
       - names:
           - -o
           - --out-file
@@ -1555,30 +2009,40 @@ subcommands:
           - -j
           - --threads
         argument: int
-        description: 'number of CPUs. (default value: 1 for single-CPU PC, 2 for others. can also set with environment variable SEQKIT_THREADS) (default 2)'
+        description: number of CPUs. can also set with environment variable SEQKIT_THREADS) (default 4)
   - name: sana
-    description: sanitize broken single line fastq files
+    description: sanitize broken single line FASTQ files
     options:
       - names:
           - -A
           - --allow-gaps
         argument: ""
-        description: allow gap   character (-) in sequences
+        description: allow gap character (-) in sequences
       - names:
           - -i
           - --format
         argument: string
-        description: 'input and   output format: fastq or fasta (default "fastq")'
+        description: 'input and output format: fastq or fasta (default "fastq")'
       - names:
           - -h
           - --help
         argument: ""
-        description: help for s   ana
+        description: help for sana
       - names:
           - -I
           - --in-format
         argument: string
-        description: 'input format: fastq or fasta,-O, --out-format string     output format: fastq or fasta,-b, --qual-ascii-base int   ASCII BASE   , 33 for Phred+33 (default 33)'
+        description: 'input format: fastq or fasta'
+      - names:
+          - -O
+          - --out-format
+        argument: string
+        description: 'output format: fastq or fasta'
+      - names:
+          - -b
+          - --qual-ascii-base
+        argument: int
+        description: ASCII BASE, 33 for Phred+33 (default 33)
       - names:
           - --alphabet-guess-seq-length
         argument: int
@@ -1599,7 +2063,7 @@ subcommands:
           - -w
           - --line-width
         argument: int
-        description: line width when outputing FASTA format (0 for no wrap) (default 60)
+        description: line width when outputting FASTA format (0 for no wrap) (default 60)
       - names:
           - -o
           - --out-file
@@ -1618,7 +2082,7 @@ subcommands:
           - -j
           - --threads
         argument: int
-        description: 'number of CPUs. (default value: 1 for single-CPU PC, 2 for others. can also set with environment variable SEQKIT_THREADS) (default 2)'
+        description: number of CPUs. can also set with environment variable SEQKIT_THREADS) (default 4)
   - name: scat
     description: real time recursive concatenation and streaming of fastx files
     options:
@@ -1641,7 +2105,7 @@ subcommands:
           - -f
           - --find-only
         argument: ""
-        description: concatenate exisiting files and quit
+        description: concatenate existing files and quit
       - names:
           - -i
           - --format
@@ -1687,8 +2151,48 @@ subcommands:
           - --wait-pid
         argument: int
         description: after process with this PID exited (default -1)
+      - names:
+          - --alphabet-guess-seq-length
+        argument: int
+        description: length of sequence prefix of the first FASTA record based on which seqkit guesses the sequence type (0 for whole seq) (default 10000)
+      - names:
+          - --id-ncbi
+        argument: ""
+        description: FASTA head is NCBI-style, e.g. >gi|110645304|ref|NC_002516.2| Pseud...
+      - names:
+          - --id-regexp
+        argument: string
+        description: regular expression for parsing ID (default "^(\\S+)\\s?")
+      - names:
+          - --infile-list
+        argument: string
+        description: file of input files list (one file per line), if given, they are appended to files from cli arguments
+      - names:
+          - -w
+          - --line-width
+        argument: int
+        description: line width when outputting FASTA format (0 for no wrap) (default 60)
+      - names:
+          - -o
+          - --out-file
+        argument: string
+        description: out file ("-" for stdout, suffix .gz for gzipped out) (default "-")
+      - names:
+          - --quiet
+        argument: ""
+        description: be quiet and do not show extra information
+      - names:
+          - -t
+          - --seq-type
+        argument: string
+        description: sequence type (dna|rna|protein|unlimit|auto) (for auto, it automatically detect by the first sequence) (default "auto")
+      - names:
+          - -j
+          - --threads
+        argument: int
+        description: number of CPUs. can also set with environment variable SEQKIT_THREADS) (default 4)
   - name: seq
-    description: transform sequences (revserse, complement, extract ID...)
+    description: transform sequences (extract ID, filter by length, remove gaps...)
     options:
       - names:
           - -k
@@ -1795,8 +2299,44 @@ subcommands:
         description: length of sequence to validate (0 for whole seq) (default 10000)
       - names:
           - --alphabet-guess-seq-length
+        argument: int
+        description: length of sequence prefix of the first FASTA record based on which seqkit guesses the sequence type (0 for whole seq) (default 10000)
+      - names:
+          - --id-ncbi
         argument: ""
-        description: int   length of sequence prefix of the first FASTA record based on which seqkit guesses the sequence type (0 for whole seq) (default 10000)
+        description: FASTA head is NCBI-style, e.g. >gi|110645304|ref|NC_002516.2| Pseud...
+      - names:
+          - --id-regexp
+        argument: string
+        description: regular expression for parsing ID (default "^(\\S+)\\s?")
+      - names:
+          - --infile-list
+        argument: string
+        description: file of input files list (one file per line), if given, they are appended to files from cli arguments
+      - names:
+          - -w
+          - --line-width
+        argument: int
+        description: line width when outputting FASTA format (0 for no wrap) (default 60)
+      - names:
+          - -o
+          - --out-file
+        argument: string
+        description: out file ("-" for stdout, suffix .gz for gzipped out) (default "-")
+      - names:
+          - --quiet
+        argument: ""
+        description: be quiet and do not show extra information
+      - names:
+          - -t
+          - --seq-type
+        argument: string
+        description: sequence type (dna|rna|protein|unlimit|auto) (for auto, it automatically detect by the first sequence) (default "auto")
+      - names:
+          - -j
+          - --threads
+        argument: int
+        description: number of CPUs. can also set with environment variable SEQKIT_THREADS) (default 4)
   - name: shuffle
     description: shuffle sequences
     options:
@@ -1804,12 +2344,22 @@ subcommands:
           - -h
           - --help
         argument: ""
-        description: help for shuffle,-k, --keep-temp       keep tempory FASTA and .fai file when using 2-pass mode,-s, --rand-seed int   rand seed for sh   uffle (default 23)
+        description: help for shuffle
+      - names:
+          - -k
+          - --keep-temp
+        argument: ""
+        description: keep temporary FASTA and .fai file when using 2-pass mode
+      - names:
+          - -s
+          - --rand-seed
+        argument: int
+        description: rand seed for shuffle (default 23)
       - names:
           - "-2"
           - --two-pass
         argument: ""
-        description: two-pass mode re   ad files twice to lower memory usage. (only for FASTA format)
+        description: two-pass mode read files twice to lower memory usage. (only for FASTA format)
       - names:
           - --alphabet-guess-seq-length
         argument: int
@@ -1830,7 +2380,7 @@ subcommands:
           - -w
           - --line-width
         argument: int
-        description: line width when outputing FASTA format (0 for no wrap) (default 60)
+        description: line width when outputting FASTA format (0 for no wrap) (default 60)
       - names:
           - -o
           - --out-file
@@ -1849,65 +2399,25 @@ subcommands:
           - -j
           - --threads
         argument: int
-        description: 'number of CPUs. (default value: 1 for single-CPU PC, 2 for others. can also set with environment variable SEQKIT_THREADS) (default 2)'
+        description: number of CPUs. can also set with environment variable SEQKIT_THREADS) (default 4)
   - name: sliding
-    description: sliding sequences, circular genome supported
+    description: extract subsequences in sliding windows
     options:
       - names:
           - -c
           - --circular
         argument: ""
-        description: circular genom   e (same to -C/--circular-genome)
+        description: circular genome (same to -C/--circular-genome)
       - names:
           - -C
           - --circular-genome
         argument: ""
-        description: circular genom   e (same to -c/--circular)
+        description: circular genome (same to -c/--circular)
       - names:
           - -g
           - --greedy
         argument: ""
-        description: greedy mode, i   .e., exporting last subsequences even shorter than windows size
-      - names:
-          - --alphabet-guess-seq-length
-        argument: int
-        description: length of sequence prefix of the first FASTA record based on which seqkit guesses the sequence type (0 for whole seq) (default 10000)
-      - names:
-          - --id-ncbi
-        argument: ""
-        description: FASTA head is NCBI-style, e.g. >gi|110645304|ref|NC_002516.2| Pseud...
-      - names:
-          - --id-regexp
-        argument: string
-        description: regular expression for parsing ID (default "^(\\S+)\\s?")
-      - names:
-          - --infile-list
-        argument: string
-        description: file of input files list (one file per line), if given, they are appended to files from cli arguments
-      - names:
-          - -w
-          - --line-width
-        argument: int
-        description: line width when outputing FASTA format (0 for no wrap) (default 60)
-      - names:
-          - -o
-          - --out-file
-        argument: string
-        description: out file ("-" for stdout, suffix .gz for gzipped out) (default "-")
-      - names:
-          - --quiet
-        argument: ""
-        description: be quiet and do not show extra information
-      - names:
-          - -t
-          - --seq-type
-        argument: string
-        description: sequence type (dna|rna|protein|unlimit|auto) (for auto, it automatically detect by the first sequence) (default "auto")
-      - names:
-          - -j
-          - --threads
-        argument: int
-        description: 'number of CPUs. (default value: 1 for single-CPU PC, 2 for others. can also set with environment variable SEQKIT_THREADS) (default 2)'
+        description: greedy mode, i.e., exporting last subsequences even shorter than windows size
       - names:
           - -h
           - --help
@@ -1923,9 +2433,54 @@ subcommands:
           - --window
         argument: int
         description: window size
+      - names:
+          - --alphabet-guess-seq-length
+        argument: int
+        description: length of sequence prefix of the first FASTA record based on which seqkit guesses the sequence type (0 for whole seq) (default 10000)
+      - names:
+          - --id-ncbi
+        argument: ""
+        description: FASTA head is NCBI-style, e.g. >gi|110645304|ref|NC_002516.2| Pseud...
+      - names:
+          - --id-regexp
+        argument: string
+        description: regular expression for parsing ID (default "^(\\S+)\\s?")
+      - names:
+          - --infile-list
+        argument: string
+        description: file of input files list (one file per line), if given, they are appended to files from cli arguments
+      - names:
+          - -w
+          - --line-width
+        argument: int
+        description: line width when outputting FASTA format (0 for no wrap) (default 60)
+      - names:
+          - -o
+          - --out-file
+        argument: string
+        description: out file ("-" for stdout, suffix .gz for gzipped out) (default "-")
+      - names:
+          - --quiet
+        argument: ""
+        description: be quiet and do not show extra information
+      - names:
+          - -t
+          - --seq-type
+        argument: string
+        description: sequence type (dna|rna|protein|unlimit|auto) (for auto, it automatically detect by the first sequence) (default "auto")
+      - names:
+          - -j
+          - --threads
+        argument: int
+        description: number of CPUs. can also set with environment variable SEQKIT_THREADS) (default 4)
   - name: sort
     description: sort sequences by id/name/sequence/length
     options:
+      - names:
+          - -b
+          - --by-bases
+        argument: ""
+        description: by non-gap bases
       - names:
           - -l
           - --by-length
@@ -1942,6 +2497,11 @@ subcommands:
         argument: ""
         description: by sequence
       - names:
+          - -G
+          - --gap-letters
+        argument: string
+        description: gap letters (default "- \t.")
+      - names:
           - -h
           - --help
         argument: ""
@@ -1955,7 +2515,7 @@ subcommands:
           - -k
           - --keep-temp
         argument: ""
-        description: keep tempory FASTA and .fai file when using 2-pass mode
+        description: keep temporary FASTA and .fai file when using 2-pass mode
       - names:
           - -N
           - --natural-order
@@ -1977,9 +2537,45 @@ subcommands:
         argument: ""
         description: two-pass mode read files twice to lower memory usage. (only for FASTA format)
       - names:
-          - --alphabet-guess-seq-lengt
+          - --alphabet-guess-seq-length
+        argument: int
+        description: length of sequence prefix of the first FASTA record based on which seqkit guesses the sequence type (0 for whole seq) (default 10000)
+      - names:
+          - --id-ncbi
         argument: ""
-        description: h int   length of sequence prefix of the first FASTA record based on which seqkit guesses the sequence type (0 for whole seq) (default 10000)
+        description: FASTA head is NCBI-style, e.g. >gi|110645304|ref|NC_002516.2| Pseud...
+      - names:
+          - --id-regexp
+        argument: string
+        description: regular expression for parsing ID (default "^(\\S+)\\s?")
+      - names:
+          - --infile-list
+        argument: string
+        description: file of input files list (one file per line), if given, they are appended to files from cli arguments
+      - names:
+          - -w
+          - --line-width
+        argument: int
+        description: line width when outputting FASTA format (0 for no wrap) (default 60)
+      - names:
+          - -o
+          - --out-file
+        argument: string
+        description: out file ("-" for stdout, suffix .gz for gzipped out) (default "-")
+      - names:
+          - --quiet
+        argument: ""
+        description: be quiet and do not show extra information
+      - names:
+          - -t
+          - --seq-type
+        argument: string
+        description: sequence type (dna|rna|protein|unlimit|auto) (for auto, it automatically detect by the first sequence) (default "auto")
+      - names:
+          - -j
+          - --threads
+        argument: int
+        description: number of CPUs. can also set with environment variable SEQKIT_THREADS) (default 4)
   - name: split
     description: split sequences into files by id/seq region/size/parts (mainly for FASTA)
     options:
@@ -2022,7 +2618,7 @@ subcommands:
           - -k
           - --keep-temp
         argument: ""
-        description: keep tempory FASTA and .fai file when using 2-pass mode
+        description: keep temporary FASTA and .fai file when using 2-pass mode
       - names:
           - -O
           - --out-dir
@@ -2033,9 +2629,6 @@ subcommands:
           - --two-pass
         argument: ""
         description: two-pass mode read files twice to lower memory usage. (only for FASTA format)
-  - name: split2
-    description: split sequences into files by size/parts (FASTA, PE/SE FASTQ)
-    options:
       - names:
           - --alphabet-guess-seq-length
         argument: int
@@ -2056,7 +2649,7 @@ subcommands:
           - -w
           - --line-width
         argument: int
-        description: line width when outputing FASTA format (0 for no wrap) (default 60)
+        description: line width when outputting FASTA format (0 for no wrap) (default 60)
       - names:
           - -o
           - --out-file
@@ -2075,7 +2668,10 @@ subcommands:
           - -j
           - --threads
         argument: int
-        description: 'number of CPUs. (default value: 1 for single-CPU PC, 2 for others. can also set with environment variable SEQKIT_THREADS) (default 2)'
+        description: number of CPUs. can also set with environment variable SEQKIT_THREADS) (default 4)
+  - name: split2
+    description: split sequences into files by size/parts (FASTA, PE/SE FASTQ)
+    options:
       - names:
           - -l
           - --by-length
@@ -2091,6 +2687,11 @@ subcommands:
           - --by-size
         argument: int
         description: split sequences into multi parts with N sequences
+      - names:
+          - -e
+          - --extension
+        argument: string
+        description: set output file extension, e.g., ".gz", ".xz", or ".zst"
       - names:
           - -f
           - --force
@@ -2116,39 +2717,6 @@ subcommands:
           - --read2
         argument: string
         description: (gzipped) read2 file
-  - name: stats
-    description: simple statistics of FASTA/Q files
-    options:
-      - names:
-          - -a
-          - --all
-        argument: ""
-        description: all statistics, including quartiles of seq length, sum_gap, N50,-b, --basename             only output    basename of files
-      - names:
-          - -E
-          - --fq-encoding
-        argument: string
-        description: 'fastq quality encoding. available values: ''sanger'', ''solexa'', ''illumina-1.3+'', ''illumina-1.5+'', ''illumina-1.8+''. (default "sanger"),-G, --gap-letters string   gap letters    (default "- .")'
-      - names:
-          - -h
-          - --help
-        argument: ""
-        description: help for st   ats
-      - names:
-          - -e
-          - --skip-err
-        argument: ""
-        description: skip error,    only show warning message
-      - names:
-          - -i
-          - --stdin-label
-        argument: string
-        description: label for r   eplacing default "-" for stdin (default "-")
-      - names:
-          - -T
-          - --tabular
-        argument: ""
-        description: output in m   achine-friendly tabular format
       - names:
           - --alphabet-guess-seq-length
         argument: int
@@ -2169,7 +2737,7 @@ subcommands:
           - -w
           - --line-width
         argument: int
-        description: line width when outputing FASTA format (0 for no wrap) (default 60)
+        description: line width when outputting FASTA format (0 for no wrap) (default 60)
       - names:
           - -o
           - --out-file
@@ -2188,7 +2756,90 @@ subcommands:
           - -j
           - --threads
         argument: int
-        description: 'number of CPUs. (default value: 1 for single-CPU PC, 2 for others. can also set with environment variable SEQKIT_THREADS) (default 2)'
+        description: number of CPUs. can also set with environment variable SEQKIT_THREADS) (default 4)
+  - name: stats
+    description: simple statistics of FASTA/Q files
+    options:
+      - names:
+          - -a
+          - --all
+        argument: ""
+        description: all statistics, including quartiles of seq length, sum_gap, N50
+      - names:
+          - -b
+          - --basename
+        argument: ""
+        description: only output basename of files
+      - names:
+          - -E
+          - --fq-encoding
+        argument: string
+        description: 'fastq quality encoding. available values: ''sanger'', ''solexa'', ''illumina-1.3+'', ''illumina-1.5+'', ''illumina-1.8+''. (default "sanger")'
+      - names:
+          - -G
+          - --gap-letters
+        argument: string
+        description: gap letters (default "- .")
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: help for stats
+      - names:
+          - -e
+          - --skip-err
+        argument: ""
+        description: skip error, only show warning message
+      - names:
+          - -i
+          - --stdin-label
+        argument: string
+        description: label for replacing default "-" for stdin (default "-")
+      - names:
+          - -T
+          - --tabular
+        argument: ""
+        description: output in machine-friendly tabular format
+      - names:
+          - --alphabet-guess-seq-length
+        argument: int
+        description: length of sequence prefix of the first FASTA record based on which seqkit guesses the sequence type (0 for whole seq) (default 10000)
+      - names:
+          - --id-ncbi
+        argument: ""
+        description: FASTA head is NCBI-style, e.g. >gi|110645304|ref|NC_002516.2| Pseud...
+      - names:
+          - --id-regexp
+        argument: string
+        description: regular expression for parsing ID (default "^(\\S+)\\s?")
+      - names:
+          - --infile-list
+        argument: string
+        description: file of input files list (one file per line), if given, they are appended to files from cli arguments
+      - names:
+          - -w
+          - --line-width
+        argument: int
+        description: line width when outputting FASTA format (0 for no wrap) (default 60)
+      - names:
+          - -o
+          - --out-file
+        argument: string
+        description: out file ("-" for stdout, suffix .gz for gzipped out) (default "-")
+      - names:
+          - --quiet
+        argument: ""
+        description: be quiet and do not show extra information
+      - names:
+          - -t
+          - --seq-type
+        argument: string
+        description: sequence type (dna|rna|protein|unlimit|auto) (for auto, it automatically detect by the first sequence) (default "auto")
+      - names:
+          - -j
+          - --threads
+        argument: int
+        description: number of CPUs. can also set with environment variable SEQKIT_THREADS) (default 4)
   - name: subseq
     description: get subsequences by region/gtf/bed, including flanking sequences
     options:
@@ -2237,19 +2888,6 @@ subcommands:
           - --up-stream
         argument: int
         description: up stream length
-  - name: tab2fx
-    description: convert tabular format to FASTA/Q format
-    options:
-      - names:
-          - -p
-          - --comment-line-prefix
-        argument: strings
-        description: co   mment line prefix (default [#,//])
-      - names:
-          - -h
-          - --help
-        argument: ""
-        description: he   lp for tab2fx
       - names:
           - --alphabet-guess-seq-length
         argument: int
@@ -2270,7 +2908,7 @@ subcommands:
           - -w
           - --line-width
         argument: int
-        description: line width when outputing FASTA format (0 for no wrap) (default 60)
+        description: line width when outputting FASTA format (0 for no wrap) (default 60)
       - names:
           - -o
           - --out-file
@@ -2289,7 +2927,160 @@ subcommands:
           - -j
           - --threads
         argument: int
-        description: 'number of CPUs. (default value: 1 for single-CPU PC, 2 for others. can also set with environment variable SEQKIT_THREADS) (default 2)'
+        description: number of CPUs. can also set with environment variable SEQKIT_THREADS) (default 4)
+  - name: sum
+    description: compute message digest for all sequences in FASTA/Q files
+    options:
+      - names:
+          - '-'
+        argument: ""
+        description: For single-stranded genomes like ssRNA genomes, use -s/--single-strand.
+      - names:
+          - '-'
+        argument: ""
+        description: The message digest would change with different values of k-mer size.
+      - names:
+          - -a
+          - --all
+        argument: ""
+        description: show all information, including the sequences length and the number of sequences
+      - names:
+          - -b
+          - --basename
+        argument: ""
+        description: only output basename of files
+      - names:
+          - -c
+          - --circular
+        argument: ""
+        description: the file contains a single cicular genome sequence
+      - names:
+          - -G
+          - --gap-letters
+        argument: string
+        description: gap letters (default "- \t.*")
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: help for sum
+      - names:
+          - -k
+          - --kmer-size
+        argument: int
+        description: k-mer size for processing circular genomes (default 1000)
+      - names:
+          - -g
+          - --remove-gaps
+        argument: ""
+        description: remove gaps
+      - names:
+          - --rna2dna
+        argument: ""
+        description: convert RNA to DNA
+      - names:
+          - -s
+          - --single-strand
+        argument: ""
+        description: only consider the positive strand of a circular genome, e.g., ssRNA virus genomes
+      - names:
+          - --alphabet-guess-seq-length
+        argument: int
+        description: length of sequence prefix of the first FASTA record based on which seqkit guesses the sequence type (0 for whole seq) (default 10000)
+      - names:
+          - --id-ncbi
+        argument: ""
+        description: FASTA head is NCBI-style, e.g. >gi|110645304|ref|NC_002516.2| Pseud...
+      - names:
+          - --id-regexp
+        argument: string
+        description: regular expression for parsing ID (default "^(\\S+)\\s?")
+      - names:
+          - --infile-list
+        argument: string
+        description: file of input files list (one file per line), if given, they are appended to files from cli arguments
+      - names:
+          - -w
+          - --line-width
+        argument: int
+        description: line width when outputting FASTA format (0 for no wrap) (default 60)
+      - names:
+          - -o
+          - --out-file
+        argument: string
+        description: out file ("-" for stdout, suffix .gz for gzipped out) (default "-")
+      - names:
+          - --quiet
+        argument: ""
+        description: be quiet and do not show extra information
+      - names:
+          - -t
+          - --seq-type
+        argument: string
+        description: sequence type (dna|rna|protein|unlimit|auto) (for auto, it automatically detect by the first sequence) (default "auto")
+      - names:
+          - -j
+          - --threads
+        argument: int
+        description: number of CPUs. can also set with environment variable SEQKIT_THREADS) (default 4)
+  - name: tab2fx
+    description: convert tabular format to FASTA/Q format
+    options:
+      - names:
+          - -b
+          - --buffer-size
+        argument: string
+        description: 'size of buffer, supported unit: K, M, G. You need increase the value when "bufio.Scanner: token too long" error reported (default "1G")'
+      - names:
+          - -p
+          - --comment-line-prefix
+        argument: strings
+        description: comment line prefix (default [#,//])
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: help for tab2fx
+      - names:
+          - --alphabet-guess-seq-length
+        argument: int
+        description: length of sequence prefix of the first FASTA record based on which seqkit guesses the sequence type (0 for whole seq) (default 10000)
+      - names:
+          - --id-ncbi
+        argument: ""
+        description: FASTA head is NCBI-style, e.g. >gi|110645304|ref|NC_002516.2| Pseud...
+      - names:
+          - --id-regexp
+        argument: string
+        description: regular expression for parsing ID (default "^(\\S+)\\s?")
+      - names:
+          - --infile-list
+        argument: string
+        description: file of input files list (one file per line), if given, they are appended to files from cli arguments
+      - names:
+          - -w
+          - --line-width
+        argument: int
+        description: line width when outputting FASTA format (0 for no wrap) (default 60)
+      - names:
+          - -o
+          - --out-file
+        argument: string
+        description: out file ("-" for stdout, suffix .gz for gzipped out) (default "-")
+      - names:
+          - --quiet
+        argument: ""
+        description: be quiet and do not show extra information
+      - names:
+          - -t
+          - --seq-type
+        argument: string
+        description: sequence type (dna|rna|protein|unlimit|auto) (for auto, it automatically detect by the first sequence) (default "auto")
+      - names:
+          - -j
+          - --threads
+        argument: int
+        description: number of CPUs. can also set with environment variable SEQKIT_THREADS) (default 4)
   - name: translate
     description: translate DNA/RNA to protein sequence (supporting ambiguous bases)
     options:
@@ -2331,7 +3122,7 @@ subcommands:
           - -L
           - --list-transl-table-with-amb-codons
         argument: int
-        description: show details of translate table N (including ambigugous codons), 0 for all.  (default -1)
+        description: show details of translate table N (including ambigugous codons), 0 for all. (default -1)
       - names:
           - -T
           - --transl-table
@@ -2341,44 +3132,6 @@ subcommands:
           - --trim
         argument: ""
         description: remove all 'X' and '*' characters from the right end of the translation
-      - names:
-          - --alphabet-guess-seq-length
-        argument: int
-        description: length o   f sequence prefix of the first FASTA record based on which seqkit guesses the sequence type (0 for whole seq) (default 10000)
-      - names:
-          - --id-ncbi
-        argument: ""
-        description: FASTA he   ad is NCBI-style, e.g. >gi|110645304|ref|NC_002516.2| Pseud...
-      - names:
-          - --id-regexp
-        argument: string
-        description: regular   expression for parsing ID (default "^(\\S+)\\s?")
-      - names:
-          - --infile-list
-        argument: string
-        description: file of   input files list (one file per line), if given, they are appended to files from cli arguments
-      - names:
-          - -w
-          - --line-width
-        argument: int
-        description: line width when outputing FASTA format (0 for no wrap) (default 60),-o, --out-file string                 out file    ("-" for stdout, suffix .gz for gzipped out) (default "-")
-      - names:
-          - --quiet
-        argument: ""
-        description: be quiet    and do not show extra information
-      - names:
-          - -t
-          - --seq-type
-        argument: string
-        description: sequence    type (dna|rna|protein|unlimit|auto) (for auto, it automatically detect by the first sequence) (default "auto")
-      - names:
-          - -j
-          - --threads
-        argument: int
-        description: 'number o   f CPUs. (default value: 1 for single-CPU PC, 2 for others. can also set with environment variable SEQKIT_THREADS) (default 2)'
-  - name: version
-    description: print version information and check for update
-    options:
       - names:
           - --alphabet-guess-seq-length
         argument: int
@@ -2399,7 +3152,7 @@ subcommands:
           - -w
           - --line-width
         argument: int
-        description: line width when outputing FASTA format (0 for no wrap) (default 60)
+        description: line width when outputting FASTA format (0 for no wrap) (default 60)
       - names:
           - -o
           - --out-file
@@ -2418,7 +3171,10 @@ subcommands:
           - -j
           - --threads
         argument: int
-        description: 'number of CPUs. (default value: 1 for single-CPU PC, 2 for others. can also set with environment variable SEQKIT_THREADS) (default 2)'
+        description: number of CPUs. can also set with environment variable SEQKIT_THREADS) (default 4)
+  - name: version
+    description: print version information and check for update
+    options:
       - names:
           - -u
           - --check-update
@@ -2429,6 +3185,46 @@ subcommands:
           - --help
         argument: ""
         description: help for version
+      - names:
+          - --alphabet-guess-seq-length
+        argument: int
+        description: length of sequence prefix of the first FASTA record based on which seqkit guesses the sequence type (0 for whole seq) (default 10000)
+      - names:
+          - --id-ncbi
+        argument: ""
+        description: FASTA head is NCBI-style, e.g. >gi|110645304|ref|NC_002516.2| Pseud...
+      - names:
+          - --id-regexp
+        argument: string
+        description: regular expression for parsing ID (default "^(\\S+)\\s?")
+      - names:
+          - --infile-list
+        argument: string
+        description: file of input files list (one file per line), if given, they are appended to files from cli arguments
+      - names:
+          - -w
+          - --line-width
+        argument: int
+        description: line width when outputting FASTA format (0 for no wrap) (default 60)
+      - names:
+          - -o
+          - --out-file
+        argument: string
+        description: out file ("-" for stdout, suffix .gz for gzipped out) (default "-")
+      - names:
+          - --quiet
+        argument: ""
+        description: be quiet and do not show extra information
+      - names:
+          - -t
+          - --seq-type
+        argument: string
+        description: sequence type (dna|rna|protein|unlimit|auto) (for auto, it automatically detect by the first sequence) (default "auto")
+      - names:
+          - -j
+          - --threads
+        argument: int
+        description: number of CPUs. can also set with environment variable SEQKIT_THREADS) (default 4)
   - name: watch
     description: monitoring and online histograms of sequence features
     options:
@@ -2511,7 +3307,43 @@ subcommands:
           - --alphabet-guess-seq-length
         argument: int
         description: length of sequence prefix of the first FASTA record based on which seqkit guesses the sequence type (0 for whole seq) (default 10000)
-version: '2.1.0'
+      - names:
+          - --id-ncbi
+        argument: ""
+        description: FASTA head is NCBI-style, e.g. >gi|110645304|ref|NC_002516.2| Pseud...
+      - names:
+          - --id-regexp
+        argument: string
+        description: regular expression for parsing ID (default "^(\\S+)\\s?")
+      - names:
+          - --infile-list
+        argument: string
+        description: file of input files list (one file per line), if given, they are appended to files from cli arguments
+      - names:
+          - -w
+          - --line-width
+        argument: int
+        description: line width when outputting FASTA format (0 for no wrap) (default 60)
+      - names:
+          - -o
+          - --out-file
+        argument: string
+        description: out file ("-" for stdout, suffix .gz for gzipped out) (default "-")
+      - names:
+          - --quiet
+        argument: ""
+        description: be quiet and do not show extra information
+      - names:
+          - -t
+          - --seq-type
+        argument: string
+        description: sequence type (dna|rna|protein|unlimit|auto) (for auto, it automatically detect by the first sequence) (default "auto")
+      - names:
+          - -j
+          - --threads
+        argument: int
+        description: number of CPUs. can also set with environment variable SEQKIT_THREADS) (default 4)
+version: 'seqkit v2.2.0'
 tldr: |
   > Manipulate FASTA and FASTQ files
 

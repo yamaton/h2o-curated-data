@@ -21,22 +21,23 @@ function _tar {
         '--exclude-backups[exclude backup and lock files]' \
         '--exclude-caches[exclude contents of directories containing CACHEDIR.TAG, except for the tag file itself]' \
         '--exclude-caches-all[exclude directories containing CACHEDIR.TAG]' \
-        '--exclude-caches-under[CACHEDIR.TAG]':file:_files \
+        '--exclude-caches-under[exclude everything under directories containing CACHEDIR.TAG]' \
         '--exclude-ignore[read exclude patterns for each directory from FILE, if it exists]':file:_files \
         '--exclude-ignore-recursive[read exclude patterns for each directory and its subdirectories from FILE, if it exists]':file:_files \
         '--exclude-tag[exclude contents of directories containing FILE, except for FILE itself]':file:_files \
+        '--exclude-tag-all[exclude directories containing FILE]':file:_files \
         '--exclude-tag-under[exclude everything under directories containing FILE]':file:_files \
         '--exclude-vcs[exclude version control system directories]' \
         '--exclude-vcs-ignores[read exclude patterns from the VCS ignore files]' \
         '--no-null[disable the effect of the previous --null option]' \
         '--no-recursion[avoid descending automatically in directories]' \
         '--no-unquote[do not unquote input file or member names]' \
-        '--no-verbatim-files-from[make -T treat file names starting with dash as options (default)]' \
-        '--null[make -T read null-terminated names; implies --verbatim-files-from]' \
+        '--no-verbatim-files-from[-T treats file names starting with dash as options (default)]' \
+        '--null[-T reads null-terminated names; implies --verbatim-files-from]' \
         '--recursion[recurse into directories (default)]' \
         {-T,--files-from}'[get names to extract or create from FILE]':file:_files \
         '--unquote[unquote input file or member names (default)]' \
-        '--verbatim-files-from[make -T read file names verbatim (no escape or option handling)]' \
+        '--verbatim-files-from[-T reads file names verbatim (no escape or option handling)]' \
         {-X,--exclude-from}'[exclude patterns listed in FILE]':file:_files \
         '--anchored[patterns match file name start]' \
         '--ignore-case[ignore case]' \
@@ -109,7 +110,7 @@ function _tar {
         '--xattrs[Enable extended attributes support]' \
         '--xattrs-exclude[specify the exclude pattern for xattr keys]' \
         '--xattrs-include[specify the include pattern for xattr keys]' \
-        {-f,--file}'[use archive file or device ARCHIVE]' \
+        {-f,--file}'[use archive file or device ARCHIVE]':file:_files \
         '--force-local[archive file is local even if it has a colon]' \
         {-F,--info-script,--new-volume-script}'[run script at end of each tape (implies -M)]' \
         {-L,--tape-length}'[change tape after writing NUMBER x 1024 bytes]' \
@@ -121,7 +122,7 @@ function _tar {
         {-B,--read-full-records}'[reblock as we read (for 4.2BSD pipes)]' \
         {-i,--ignore-zeros}'[ignore zeroed blocks in archive (means EOF)]' \
         '--record-size[NUMBER of bytes per record, multiple of 512]' \
-        {-H,--format}'[create archive of the given format )]' \
+        {-H,--format}'[create archive of the given format]' \
         {--old-archive,--portability}'[same as --format=v7]' \
         '--pax-option[control pax keywords]' \
         '--posix[same as --format=posix]' \
@@ -149,7 +150,8 @@ function _tar {
         '--strip-components[strip NUMBER leading components from file names on extraction]' \
         {--transform,--xform}'[use sed replace EXPRESSION to transform file names]' \
         '--checkpoint[display progress messages every NUMBERth record (default 10)]' \
-        {--checkpoint-action,--full-time}'[print file time to its full resolution]' \
+        '--checkpoint-action[execute ACTION on each checkpoint]' \
+        '--full-time[print file time to its full resolution]' \
         '--index-file[send verbose output to FILE]':file:_files \
         {-l,--check-links}'[print a message if not all links are dumped]' \
         '--no-quote-chars[disable quoting for characters from STRING]' \

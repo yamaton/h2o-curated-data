@@ -6,22 +6,23 @@ complete -c tar -l exclude -d 'exclude files, given as a PATTERN' -x
 complete -c tar -l exclude-backups -d 'exclude backup and lock files'
 complete -c tar -l exclude-caches -d 'exclude contents of directories containing CACHEDIR.TAG, except for the tag file itself'
 complete -c tar -l exclude-caches-all -d 'exclude directories containing CACHEDIR.TAG'
-complete -c tar -l exclude-caches-under -d 'CACHEDIR.TAG' -r
+complete -c tar -l exclude-caches-under -d 'exclude everything under directories containing CACHEDIR.TAG'
 complete -c tar -l exclude-ignore -d 'read exclude patterns for each directory from FILE, if it exists' -r
 complete -c tar -l exclude-ignore-recursive -d 'read exclude patterns for each directory and its subdirectories from FILE, if it exists' -r
 complete -c tar -l exclude-tag -d 'exclude contents of directories containing FILE, except for FILE itself' -r
+complete -c tar -l exclude-tag-all -d 'exclude directories containing FILE' -r
 complete -c tar -l exclude-tag-under -d 'exclude everything under directories containing FILE' -r
 complete -c tar -l exclude-vcs -d 'exclude version control system directories'
 complete -c tar -l exclude-vcs-ignores -d 'read exclude patterns from the VCS ignore files'
 complete -c tar -l no-null -d 'disable the effect of the previous --null option'
 complete -c tar -l no-recursion -d 'avoid descending automatically in directories'
 complete -c tar -l no-unquote -d 'do not unquote input file or member names'
-complete -c tar -l no-verbatim-files-from -d 'make -T treat file names starting with dash as options (default)'
-complete -c tar -l null -d 'make -T read null-terminated names; implies --verbatim-files-from'
+complete -c tar -l no-verbatim-files-from -d '-T treats file names starting with dash as options (default)'
+complete -c tar -l null -d '-T reads null-terminated names; implies --verbatim-files-from'
 complete -c tar -l recursion -d 'recurse into directories (default)'
 complete -c tar -s T -l files-from -d 'get names to extract or create from FILE' -r
 complete -c tar -l unquote -d 'unquote input file or member names (default)'
-complete -c tar -l verbatim-files-from -d 'make -T read file names verbatim (no escape or option handling)'
+complete -c tar -l verbatim-files-from -d '-T reads file names verbatim (no escape or option handling)'
 complete -c tar -s X -l exclude-from -d 'exclude patterns listed in FILE' -r
 complete -c tar -l anchored -d 'patterns match file name start'
 complete -c tar -l ignore-case -d 'ignore case'
@@ -94,7 +95,7 @@ complete -c tar -l selinux -d 'Enable the SELinux context support'
 complete -c tar -l xattrs -d 'Enable extended attributes support'
 complete -c tar -l xattrs-exclude -d 'specify the exclude pattern for xattr keys' -x
 complete -c tar -l xattrs-include -d 'specify the include pattern for xattr keys' -x
-complete -c tar -s f -l file -d 'use archive file or device ARCHIVE' -x
+complete -c tar -s f -l file -d 'use archive file or device ARCHIVE' -r
 complete -c tar -l force-local -d 'archive file is local even if it has a colon'
 complete -c tar -s F -l info-script -l new-volume-script -d 'run script at end of each tape (implies -M)' -x
 complete -c tar -s L -l tape-length -d 'change tape after writing NUMBER x 1024 bytes' -x
@@ -106,7 +107,7 @@ complete -c tar -s b -l blocking-factor -d 'BLOCKS x 512 bytes per record' -x
 complete -c tar -s B -l read-full-records -d 'reblock as we read (for 4.2BSD pipes)'
 complete -c tar -s i -l ignore-zeros -d 'ignore zeroed blocks in archive (means EOF)'
 complete -c tar -l record-size -d 'NUMBER of bytes per record, multiple of 512' -x
-complete -c tar -s H -l format -d 'create archive of the given format )' -x
+complete -c tar -s H -l format -d 'create archive of the given format' -x
 complete -c tar -l old-archive -l portability -d 'same as --format=v7'
 complete -c tar -l pax-option -d 'control pax keywords' -x
 complete -c tar -l posix -d 'same as --format=posix'
@@ -134,7 +135,8 @@ complete -c tar -l suffix -d 'backup before removal, override usual suffix (\'~\
 complete -c tar -l strip-components -d 'strip NUMBER leading components from file names on extraction' -x
 complete -c tar -l transform -l xform -d 'use sed replace EXPRESSION to transform file names' -x
 complete -c tar -l checkpoint -d 'display progress messages every NUMBERth record (default 10)' -x
-complete -c tar -l checkpoint-action -l full-time -d 'print file time to its full resolution' -x
+complete -c tar -l checkpoint-action -d 'execute ACTION on each checkpoint' -x
+complete -c tar -l full-time -d 'print file time to its full resolution'
 complete -c tar -l index-file -d 'send verbose output to FILE' -r
 complete -c tar -s l -l check-links -d 'print a message if not all links are dumped'
 complete -c tar -l no-quote-chars -d 'disable quoting for characters from STRING' -x

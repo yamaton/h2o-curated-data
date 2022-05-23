@@ -1,0 +1,133 @@
+name: htseq-count
+description: htseq-count
+options:
+  - names:
+      - -h
+      - --help
+    argument: ""
+    description: show this help message and exit
+  - names:
+      - --version
+    argument: ""
+    description: Show software version and exit
+  - names:
+      - -f
+      - --format
+    argument: '{sam,bam,auto}'
+    description: 'Type of <alignment_file> data. DEPRECATED: file format is detected automatically. This option is ignored.'
+  - names:
+      - -r
+      - --order
+    argument: '{pos,name}'
+    description: '''pos'' or ''name''. Sorting order of <alignment_file> (default: name). Paired-end sequencing data must be sorted either by position or by read name, and the sorting order must be specified. Ignored for single-end data.'
+  - names:
+      - --max-reads-in-buffer
+    argument: MAX_BUFFER_SIZE
+    description: When <alignment_file> is paired end sorted by position, allow only so many reads to stay in memory until the mates are found (raising this number will use more memory). Has no effect for single end or paired end sorted by name
+  - names:
+      - -s
+      - --stranded
+    argument: '{yes,no,reverse}'
+    description: 'Whether the data is from a strand-specific assay. Specify ''yes'', ''no'', or ''reverse'' (default: yes). ''reverse'' means ''yes'' with reversed strand interpretation'
+  - names:
+      - -a
+      - --minaqual
+    argument: MINAQUAL
+    description: 'Skip all reads with MAPQ alignment quality lower than the given minimum value (default: 10). MAPQ is the 5th column of a SAM/BAM file and its usage depends on the software used to map the reads.'
+  - names:
+      - -t
+      - --type
+    argument: FEATURE_TYPE
+    description: 'Feature type (3rd column in GTF file) to be used, all features of other type are ignored (default, suitable for Ensembl GTF files: exon)'
+  - names:
+      - -i
+      - --idattr
+    argument: IDATTR
+    description: 'GTF attribute to be used as feature ID (default, suitable for Ensembl GTF files: gene_id). All feature of the right type (see -t option) within the same GTF attribute will be added together. The typical way of using this option is to count all exonic reads from each gene and add the exons but other uses are possible as well. You can call this option multiple times: in that case, the combination of all attributes separated by colons (:) will be used as a unique identifier, e.g. for exons you might use -i gene_id -i exon_number.'
+  - names:
+      - --additional-attr
+    argument: ADDITIONAL_ATTRIBUTES
+    description: 'Additional feature attributes (default: none, suitable for Ensembl GTF files: gene_name). Use multiple times for more than one additional attribute. These attributes are only used as annotations in the output, while the determination of how the counts are added together is done based on option -i.'
+  - names:
+      - --add-chromosome-info
+    argument: ""
+    description: Store information about the chromosome of each feature as an additional attribute (e.g. colunm in the TSV output file).
+  - names:
+      - -m
+      - --mode
+    argument: '{union,intersection-strict,intersection-nonempty}'
+    description: 'Mode to handle reads overlapping more than one feature (choices: union, intersection-strict, intersection-nonempty; default: union)'
+  - names:
+      - --nonunique
+    argument: '{none,all,fraction,random}'
+    description: 'Whether and how to score reads that are not uniquely aligned or ambiguously assigned to features (choices: none, all, fraction, random; default: none)'
+  - names:
+      - --secondary-alignments
+    argument: '{score,ignore}'
+    description: Whether to score secondary alignments (0x100 flag)
+  - names:
+      - --supplementary-alignments
+    argument: '{score,ignore}'
+    description: Whether to score supplementary alignments (0x800 flag)
+  - names:
+      - -o
+      - --samout
+    argument: SAMOUTS
+    description: Write out all SAM alignment records into SAM/BAM files (one per input file needed), annotating each line with its feature assignment (as an optional field with tag 'XF'). See the -p option to use BAM instead of SAM.
+  - names:
+      - -p
+      - --samout-format
+    argument: '{SAM,BAM,sam,bam}'
+    description: Format to use with the --samout option.
+  - names:
+      - -d
+      - --delimiter
+    argument: OUTPUT_DELIMITER
+    description: 'Column delimiter in output (default: TAB).'
+  - names:
+      - -c
+      - --counts_output
+    argument: OUTPUT_FILENAME
+    description: Filename to output the counts to instead of stdout.
+  - names:
+      - --counts-output-sparse
+    argument: ""
+    description: Store the counts as a sparse matrix (mtx, h5ad, loom).
+  - names:
+      - --append-output
+    argument: ""
+    description: Append counts output to an existing file instead of creating a new one. This option is useful if you have already creates a TSV/CSV/similar file with a header for your samples (with additional columns for the feature name and any additionl attributes) and want to fill in the rest of the file.
+  - names:
+      - -n
+      - --nprocesses
+    argument: NPROCESSES
+    description: 'Number of parallel CPU processes to use (default: 1). This option is useful to process several input files at once. Each file will use only 1 CPU. It is possible, of course, to split a very large input SAM/BAM files into smaller chunks upstream to make use of this option.'
+  - names:
+      - --feature-query
+    argument: FEATURE_QUERY
+    description: 'Restrict to features descibed in this expression. Currently supports a single kind of expression: attribute == "one attr" to restrict the GFF to a single gene or transcript, e.g. --feature-query ''gene_name == "ACTB"'' - notice the single quotes around the argument of this option and the double quotes around the gene name. Broader queries might become available in the future.'
+  - names:
+      - -q
+      - --quiet
+    argument: ""
+    description: Suppress progress report
+  - names:
+      - --with-header
+    argument: ""
+    description: Whether to add a column header to the output TSV file indicating which column corresponds to which input BAM file. Only used if output to console or tsv or csv file. Default to False.
+usage: |
+  htseq-count [-h] [--version] [-f {sam,bam,auto}] [-r {pos,name}]
+                   [--max-reads-in-buffer MAX_BUFFER_SIZE]
+                   [-s {yes,no,reverse}] [-a MINAQUAL] [-t FEATURE_TYPE]
+                   [-i IDATTR] [--additional-attr ADDITIONAL_ATTRIBUTES]
+                   [--add-chromosome-info]
+                   [-m {union,intersection-strict,intersection-nonempty}]
+                   [--nonunique {none,all,fraction,random}]
+                   [--secondary-alignments {score,ignore}]
+                   [--supplementary-alignments {score,ignore}] [-o SAMOUTS]
+                   [-p {SAM,BAM,sam,bam}] [-d OUTPUT_DELIMITER]
+                   [-c OUTPUT_FILENAME] [--counts-output-sparse]
+                   [--append-output] [-n NPROCESSES]
+                   [--feature-query FEATURE_QUERY] [-q] [--with-header]
+                   samfilenames [samfilenames ...] featuresfilename
+version: 2.0.1

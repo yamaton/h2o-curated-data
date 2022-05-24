@@ -1,0 +1,306 @@
+name: kallisto
+description: kallisto
+usage: kallisto <CMD> [arguments] ..
+options: []
+subcommands:
+  - name: index
+    description: Builds a kallisto index
+    usage: kallisto index [arguments] FASTA-files
+    options:
+      - names:
+          - -i
+          - --index
+        argument: STRING
+        description: Filename for the kallisto index to be constructed
+      - names:
+          - -k
+          - --kmer-size
+        argument: INT
+        description: 'k-mer (odd) length (default: 31, max value: 31)'
+      - names:
+          - --make-unique
+        argument: ""
+        description: Replace repeated target names with unique names
+  - name: quant
+    description: Runs the quantification algorithm
+    usage: kallisto quant [arguments] FASTQ-files
+    options:
+      - names:
+          - -i
+          - --index
+        argument: STRING
+        description: Filename for the kallisto index to be used for
+      - names:
+          - -o
+          - --output-dir
+        argument: STRING
+        description: Directory to write output to
+      - names:
+          - --bias
+        argument: ""
+        description: Perform sequence based bias correction
+      - names:
+          - -b
+          - --bootstrap-samples
+        argument: INT
+        description: 'Number of bootstrap samples (default: 0)'
+      - names:
+          - --seed
+        argument: INT
+        description: 'Seed for the bootstrap sampling (default: 42)'
+      - names:
+          - --plaintext
+        argument: ""
+        description: Output plaintext instead of HDF5
+      - names:
+          - --fusion
+        argument: ""
+        description: Search for fusions for Pizzly
+      - names:
+          - --single
+        argument: ""
+        description: Quantify single-end reads
+      - names:
+          - --single-overhang
+        argument: ""
+        description: Include reads where unobserved rest of fragment is predicted to lie outside a transcript
+      - names:
+          - --fr-stranded
+        argument: ""
+        description: Strand specific reads, first read forward
+      - names:
+          - --rf-stranded
+        argument: ""
+        description: Strand specific reads, first read reverse
+      - names:
+          - -l
+          - --fragment-length
+        argument: DOUBLE
+        description: Estimated average fragment length
+      - names:
+          - -s
+          - --sd
+        argument: DOUBLE
+        description: 'Estimated standard deviation of fragment length (default: -l, -s values are estimated from paired end data, but are required when using --single)'
+      - names:
+          - -t
+          - --threads
+        argument: INT
+        description: 'Number of threads to use (default: 1)'
+      - names:
+          - --pseudobam
+        argument: ""
+        description: Save pseudoalignments to transcriptome to BAM file
+      - names:
+          - --genomebam
+        argument: ""
+        description: Project pseudoalignments to genome sorted BAM file
+      - names:
+          - -g
+          - --gtf
+        argument: ""
+        description: GTF file for transcriptome information (required for --genomebam)
+      - names:
+          - -c
+          - --chromosomes
+        argument: ""
+        description: Tab separated file with chromosome names and lengths (optional for --genomebam, but recommended)
+      - names:
+          - --verbose
+        argument: ""
+        description: Print out progress information every 1M proccessed reads
+  - name: quant-tcc
+    description: Runs quantification on transcript-compatibility counts
+    usage: kallisto quant-tcc [arguments] transcript-compatibility-counts-file
+    options:
+      - names:
+          - -o
+          - --output-dir
+        argument: STRING
+        description: Directory to write output to
+      - names:
+          - -i
+          - --index
+        argument: STRING
+        description: Filename for the kallisto index to be used (required if file with names of transcripts not supplied)
+      - names:
+          - -T
+          - --txnames
+        argument: STRING
+        description: File with names of transcripts   (required if index file not supplied)
+      - names:
+          - -e
+          - --ec-file
+        argument: FILE
+        description: 'File containing equivalence classes (default: equivalence classes are taken from the index)'
+      - names:
+          - -f
+          - --fragment-file
+        argument: FILE
+        description: 'File containing fragment length distribution (default: effective length normalization is not performed)'
+      - names:
+          - -l
+          - --fragment-length
+        argument: DOUBLE
+        description: Estimated average fragment length
+      - names:
+          - -s
+          - --sd
+        argument: DOUBLE
+        description: 'Estimated standard deviation of fragment length (note: -l, -s values only should be supplied when'
+      - names:
+          - -t
+          - --threads
+        argument: INT
+        description: 'Number of threads to use (default: 1)'
+      - names:
+          - -g
+          - --genemap
+        argument: ""
+        description: File for mapping transcripts to genes (required for obtaining gene-level abundances)
+      - names:
+          - -G
+          - --gtf
+        argument: FILE
+        description: GTF file for transcriptome information (can be used instead of --genemap for obtaining gene-level abundances)
+      - names:
+          - -b
+          - --bootstrap-samples
+        argument: INT
+        description: 'Number of bootstrap samples (default: 0)'
+      - names:
+          - --seed
+        argument: INT
+        description: 'Seed for the bootstrap sampling (default: 42)'
+  - name: bus
+    description: Generate BUS files for single-cell data
+    usage: kallisto bus [arguments] FASTQ-files
+    options:
+      - names:
+          - -i
+          - --index
+        argument: STRING
+        description: Filename for the kallisto index to be used for pseudoalignment
+      - names:
+          - -o
+          - --output-dir
+        argument: STRING
+        description: Directory to write output to
+      - names:
+          - -x
+          - --technology
+        argument: STRING
+        description: Single-cell technology used
+      - names:
+          - -l
+          - --list
+        argument: ""
+        description: List all single-cell technologies supported
+      - names:
+          - -B
+          - --batch
+        argument: FILE
+        description: Process files listed in FILE
+      - names:
+          - -t
+          - --threads
+        argument: INT
+        description: 'Number of threads to use (default: 1)'
+      - names:
+          - -b
+          - --bam
+        argument: ""
+        description: Input file is a BAM file
+      - names:
+          - -n
+          - --num
+        argument: ""
+        description: Output number of read in flag column (incompatible with --bam)
+      - names:
+          - -T
+          - --tag
+        argument: STRING
+        description: 5′ tag sequence to identify UMI reads for certain technologies
+      - names:
+          - --fr-stranded
+        argument: ""
+        description: Strand specific reads for UMI-tagged reads, first read forward
+      - names:
+          - --rf-stranded
+        argument: ""
+        description: Strand specific reads for UMI-tagged reads, first read reverse
+      - names:
+          - --unstranded
+        argument: ""
+        description: Treat all read as non-strand-specific
+      - names:
+          - --paired
+        argument: ""
+        description: Treat reads as paired
+      - names:
+          - --genomebam
+        argument: ""
+        description: Project pseudoalignments to genome sorted BAM file
+      - names:
+          - -g
+          - --gtf
+        argument: ""
+        description: GTF file for transcriptome information (required for --genomebam)
+      - names:
+          - -c
+          - --chromosomes
+        argument: ""
+        description: Tab separated file with chromosome names and lengths (optional for --genomebam, but recommended)
+      - names:
+          - --verbose
+        argument: ""
+        description: Print out progress information every 1M proccessed reads
+  - name: merge
+    description: Merges several batch runs
+    usage: kallisto merge [arguments] ouput-directories
+    options:
+      - names:
+          - -i
+          - --index
+        argument: STRING
+        description: Filename for the kallisto index to be used for pseudoalignment
+      - names:
+          - -o
+          - --output-dir
+        argument: STRING
+        description: Directory to write output to
+  - name: h5dump
+    description: Converts HDF5-formatted results to plaintext
+    usage: kallisto h5dump [arguments] abundance.h5
+    options:
+      - names:
+          - -o
+          - --output-dir
+        argument: STRING
+        description: Directory to write output to
+  - name: inspect
+    description: Inspects and gives information about an index
+    usage: kallisto inspect INDEX-file
+    options:
+      - names:
+          - -G
+          - --gfa
+        argument: STRING
+        description: Filename for GFA output of T-DBG
+      - names:
+          - -g
+          - --gtf
+        argument: STRING
+        description: Filename for GTF file
+      - names:
+          - -b
+          - --bed
+        argument: STRING
+        description: 'Filename for BED output (default: index + ".bed")'
+  - name: version
+    description: Prints version information
+    options: []
+  - name: cite
+    description: Prints citation information
+    options: []
+version: kallisto 0.48.0

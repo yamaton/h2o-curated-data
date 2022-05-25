@@ -15,13 +15,13 @@ all: validate general.txt bio.txt general.json.gz bio.json.gz
 .PHONY: validate
 validate: $(json_general) $(json_bio) $(json_experimental)
 	@echo $^
-	@parallel scripts/validate-json.sh $(json_schema) {} ::: $^
+	@parallel scripts/validate-json $(json_schema) {} ::: $^
 
 general.txt: $(json_general)
-	scripts/make-list.py general
+	scripts/make-list general
 
 bio.txt: $(json_bio)
-	scripts/make-list.py bio
+	scripts/make-list bio
 
 general.json.gz: $(json_general)
 	@jq -s . $^ | gzip > general.json.gz

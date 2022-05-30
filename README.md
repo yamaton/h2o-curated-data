@@ -1,6 +1,10 @@
 # CLI curated data for shell completion
 
-This repository contains command-line data for [Shell Completion](https://marketplace.visualstudio.com/items?itemName=tetradresearch.vscode-h2o) for VS Code.
+This repository contains command-line specs for [Shell Completion](https://marketplace.visualstudio.com/items?itemName=tetradresearch.vscode-h2o) for VS Code. This repository also contains tab completion scripts for bash/zsh/fish shells.
+
+Shell completion scripts for bioinformatics tools are located in the separate repositories:
+  * [yamaton/fish-completions-bio](https://github.com/yamaton/fish-completions-bio)
+  * [yamaton/zsh-completions-bio](https://github.com/yamaton/zsh-completions-bio)
 
 
 

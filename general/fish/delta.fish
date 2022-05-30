@@ -14,30 +14,30 @@ complete -c delta -l dark -d 'Use default colors appropriate for a dark terminal
 complete -c delta -l default-language -d 'Default language used for syntax highlighting.' -x
 complete -c delta -l diff-highlight -d 'Emulate diff-highlight.'
 complete -c delta -l diff-so-fancy -d 'Emulate diff-so-fancy.'
-complete -c delta -l diff-stat-align-width -d 'Width allocated for file paths in a diff stat section.' -x
+complete -c delta -l diff-stat-align-width -d 'Width allocated for file paths in a diff stat section.' -r
 complete -c delta -l features -d 'Names of delta features to activate (space-separated).' -x
-complete -c delta -l file-added-label -d 'Text to display in front of an added file path.' -x
-complete -c delta -l file-copied-label -d 'Text to display in front of a copied file path' -x
-complete -c delta -l file-decoration-style -d 'Style string for the file decoration.' -x
-complete -c delta -l file-modified-label -d 'Text to display in front of a modified file path.' -x
-complete -c delta -l file-removed-label -d 'Text to display in front of a removed file path.' -x
-complete -c delta -l file-renamed-label -d 'Text to display in front of a renamed file path.' -x
-complete -c delta -l file-style -d 'Style string for the file section.' -x
-complete -c delta -l file-transformation -d 'Sed-style command transforming file paths for display' -x
+complete -c delta -l file-added-label -d 'Text to display before an added file path.' -r
+complete -c delta -l file-copied-label -d 'Text to display before a copied file path' -r
+complete -c delta -l file-decoration-style -d 'Style string for the file decoration.' -r
+complete -c delta -l file-modified-label -d 'Text to display before a modified file path.' -r
+complete -c delta -l file-removed-label -d 'Text to display before a removed file path.' -r
+complete -c delta -l file-renamed-label -d 'Text to display before a renamed file path.' -r
+complete -c delta -l file-style -d 'Style string for the file section.' -r
+complete -c delta -l file-transformation -d 'Sed-style command transforming file paths for display' -r
 complete -c delta -l grep-context-line-style -d 'Style string for non-matching lines of grep output.' -x
-complete -c delta -l grep-file-style -d 'Style string for file paths in grep output.' -x
+complete -c delta -l grep-file-style -d 'Style string for file paths in grep output.' -r
 complete -c delta -l grep-line-number-style -d 'Style string for line numbers in grep output.' -x
 complete -c delta -l grep-match-line-style -d 'Style string for matching lines of grep output.' -x
 complete -c delta -l grep-match-word-style -d 'Style string for the matching substrings within a matching line of grep output.' -x
-complete -c delta -l grep-separator-symbol -d 'Separator symbol printed after the file path and line number in grep output.' -x
+complete -c delta -l grep-separator-symbol -d 'Separator symbol printed after the file path and line number in grep output.' -r
 complete -c delta -l hunk-header-decoration-style -d 'Style string for the hunk-header decoration.' -x
-complete -c delta -l hunk-header-file-style -d 'Style string for the file path part of the hunk-header.' -x
+complete -c delta -l hunk-header-file-style -d 'Style string for the file path part of the hunk-header.' -r
 complete -c delta -l hunk-header-line-number-style -d 'Style string for the line number part of the hunk-header.' -x
 complete -c delta -l hunk-header-style -d 'Style string for the hunk-header.' -x
-complete -c delta -l hunk-label -d 'Text to display in front of a hunk header.' -x
+complete -c delta -l hunk-label -d 'Text to display before a hunk header.' -x
 complete -c delta -l hyperlinks -d 'Render commit hashes, file names, and line numbers as hyperlinks.'
-complete -c delta -l hyperlinks-commit-link-format -d 'Format string for commit hyperlinks (requiraes --hyperlinks).' -x
-complete -c delta -l hyperlinks-file-link-format -d 'Format string for file hyperlinks (requires --hyperlinks).' -x
+complete -c delta -l hyperlinks-commit-link-format -d 'Format string for commit hyperlinks (requires --hyperlinks).' -x
+complete -c delta -l hyperlinks-file-link-format -d 'Format string for file hyperlinks (requires --hyperlinks).' -r
 complete -c delta -l inline-hint-style -d 'Style string for short inline hint text.' -x
 complete -c delta -l inspect-raw-lines -d 'Kill-switch for --color-moved support.' -x
 complete -c delta -l keep-plus-minus-markers -d 'Prefix added/removed lines with a +/- character, as git does.'
@@ -47,8 +47,8 @@ complete -c delta -l line-fill-method -d 'Line-fill method in side-by-side mode.
 complete -c delta -s n -l line-numbers -d 'Display line numbers next to the diff.'
 complete -c delta -l line-numbers-left-format -d 'Format string for the left column of line numbers.' -x
 complete -c delta -l line-numbers-left-style -d 'Style string for the left column of line numbers.' -x
-complete -c delta -l line-numbers-minus-style -d 'Style string for line numbers in the old (minus) version of the file.' -x
-complete -c delta -l line-numbers-plus-style -d 'Style string for line numbers in the new (plus) version of the file.' -x
+complete -c delta -l line-numbers-minus-style -d 'Style string for line numbers in the old (minus) version of the file.' -r
+complete -c delta -l line-numbers-plus-style -d 'Style string for line numbers in the new (plus) version of the file.' -r
 complete -c delta -l line-numbers-right-format -d 'Format string for the right column of line numbers.' -x
 complete -c delta -l line-numbers-right-style -d 'Style string for the right column of line numbers.' -x
 complete -c delta -l line-numbers-zero-style -d 'Style string for line numbers in unchanged (zero) lines.' -x
@@ -79,7 +79,7 @@ complete -c delta -l plus-non-emph-style -d 'Style string for non-emphasized sec
 complete -c delta -l plus-style -d 'Style string for added lines.' -x
 complete -c delta -l raw -d 'Do not alter the input in any way.'
 complete -c delta -l relative-paths -d 'Output all file paths relative to the current directory.'
-complete -c delta -l right-arrow -d 'Text to display with a changed file path.' -x
+complete -c delta -l right-arrow -d 'Text to display with a changed file path.' -r
 complete -c delta -l show-colors -d 'Show available named colors.'
 complete -c delta -l show-config -d 'Display the active values for all Delta options.'
 complete -c delta -l show-syntax-themes -d 'Show example diff for available syntax-highlighting themes.'

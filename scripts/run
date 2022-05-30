@@ -8,13 +8,19 @@
 #
 
 basedir="$(dirname "$(readlink -f "$0")")"
-cmd="$1"
+name="$1"
 cd "$basedir"
 
-yaml="$cmd.yaml"
+yaml="$name.yaml"
+
+if [[ -z "$name" ]]; then
+    echo "Set command name as the argument."
+    echo "Usage: run <command-name>"
+    exit 1
+fi
 
 if [[ -z "$(find .. -name "$yaml" -type f)" ]]; then
-    echo "File not found: $cmd.yaml"
+    echo "File not found: $name.yaml"
     exit 1
 fi
 
@@ -40,12 +46,12 @@ if [[ ! "$(command -v parallel)" ]]; then
 fi
 
 echo "🚀 Adding tldr if possible"
-./addtldr "$cmd"
+./addtldr "$name"
 
 echo "🚀 Creating JSON"
-./tojson "$cmd"
+./tojson "$name"
 
 echo "🚀 Creating bash/zsh/fish"
-parallel ./gen-shellcomp {} "$cmd" ::: bash zsh fish
+parallel ./gen-shellcomp {} "$name" ::: bash zsh fish
 
 echo "🚀 Done. Don't forget to update gzipped files."

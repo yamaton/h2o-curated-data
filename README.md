@@ -16,9 +16,9 @@ This repository contains command-line data for [Shell Completion](https://market
 
 They would be useful especially for bioinformaticians.
 
-### bash 
+### bash
 
-Save files ([bio](https://github.com/yamaton/h2o-curated-data/tree/main/bio/fbash), [general](https://github.com/yamaton/h2o-curated-data/tree/main/general/bash)) to `~/.bash_completion.d/`, and add the following to `~/.bashrc`.
+Copy files ([general](https://github.com/yamaton/h2o-curated-data/tree/main/general/bash)) to `~/.bash_completion.d/`, and add the following to `~/.bashrc`.
 
 ```bash
 for bcfile in ~/.bash_completion.d/* ; do
@@ -30,7 +30,7 @@ done
 
 ### zsh
 
-Save files ([bio](https://github.com/yamaton/h2o-curated-data/tree/main/bio/zsh), [general](https://github.com/yamaton/h2o-curated-data/tree/main/general/zsh)) to `~/.zfunc`, and add the following line to `~/.zshrc`.
+Save files ([bio](https://github.com/yamaton/zsh-completions-bio/tree/main/completions), [general](https://github.com/yamaton/h2o-curated-data/tree/main/general/zsh)) to `~/.zfunc`, then add the following line to `~/.zshrc`.
 
 ```zsh
 fpath=( ~/.zfunc "${fpath[@]}" )
@@ -40,7 +40,7 @@ fpath=( ~/.zfunc "${fpath[@]}" )
 
 ### fish
 
-Save files ([bio](https://github.com/yamaton/h2o-curated-data/tree/main/bio/fish), [general](https://github.com/yamaton/h2o-curated-data/tree/main/general/fish)) to `~/.config/fish/completions/`. 
+Save files ([bio](https://github.com/yamaton/fish-completions-bio/tree/main/completions), [general](https://github.com/yamaton/h2o-curated-data/tree/main/general/fish)) to `~/.config/fish/completions/`.
 
 
 
@@ -48,13 +48,13 @@ Save files ([bio](https://github.com/yamaton/h2o-curated-data/tree/main/bio/fish
 
 ## How I prepare the data
 
-I use [h2o](https://github.com/yamaton/h2o) to extract CLI info, and [yq](https://github.com/mikefarah/yq) to convert from/to JSON and YAML.
+I use `h2o` (closed source code) to extract CLI specs, and then apply [yq](https://github.com/mikefarah/yq) to convert from JSON to YAML.
 
 Here is how I extracted the CLI info from [medaka](https://github.com/nanoporetech/medaka), for example.
 
 ```shell
 # Just see how it works
-$ h2o --command medaka 
+$ h2o --command medaka
 
 # ...OK. H2o seems to fail parsing some.
 # So save the help document as text file for manual editing...
@@ -66,11 +66,11 @@ $ medaka --help > medaka.txt
 # After finishing the edit, extract the data as YAML file.
 $ h2o --file medaka.txt --format json | yq eval -P > bio/yaml/medaka.yaml
 
-# Convert YAML to JSON
-$ ./scripts/tojson.sh medaka
+# Add TLDR to the YAML, then convert it to JSON and bash/zsh/fish scripts
+$ ./scripts/run medaka
 
 # Update bio.json.gz and bio.txt
-$ ./scripts/make-gzip.sh
+$ ./scripts/make-gzip
 ```
 
 
@@ -93,7 +93,8 @@ options:
       - -v
       - --verbose
     argument: ""
-    description: verbosely list files processed 
+    description: verbosely list files processed
+version: tar (GNU tar) 1.34
 ```
 
 
@@ -102,10 +103,16 @@ As you can see,  an entry has following key-values:
 
 * name (string)
 * description (string)
-* options
+* options (list)
   * names (list of strings)
   * argument (string)
   * description (string)
+* [optional] positionalArgument
+  * name (string)
+  * description (string)
 * **[optional]** subcommands:
   * (Here comes a list of the entire structure. Nested.)
-
+* [optional] inheritedOptions (same type as options)
+* [optional] usage (string)
+* [optional] version (string)
+* [optional] tldr (string)

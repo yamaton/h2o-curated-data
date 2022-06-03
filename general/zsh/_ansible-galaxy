@@ -1,0 +1,59 @@
+#compdef _ansible-galaxy ansible-galaxy
+
+# Auto-generated with h2o
+
+    function _ansible-galaxy_collection {
+        _arguments \
+            {-h,--help}'[show this help message and exit]' \
+            "*: :_files"
+
+    }
+
+    function _ansible-galaxy_role {
+        _arguments \
+            {-h,--help}'[show this help message and exit]' \
+            "*: :_files"
+
+    }
+
+
+function _ansible-galaxy {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'collection:Manage an Ansible Galaxy collection.'
+            'role:Manage an Ansible Galaxy role.'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        '--version[show program'\''s version number, config file location, configured module search path, module location, executable location and exit]' \
+        {-h,--help}'[show this help message and exit]' \
+        {-v,--verbose}'[Causes Ansible to print more debug messages. Adding multiple -v will increase the verbosity, the builtin plugins currently evaluate up to -vvvvvv. A reasonable level to start is -vvv, connection debugging might require -vvvv.]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (collection)
+            _ansible-galaxy_collection
+            ;;
+
+        (role)
+            _ansible-galaxy_role
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+

@@ -1,0 +1,30 @@
+# Auto-generated with h2o
+
+_ansibledoc()
+{
+    local i=1 cmd cur word_list
+    cur="${COMP_WORDS[COMP_CWORD]}"
+
+    # take the last word that's NOT starting with -
+    while [[ ( "$i" < "$COMP_CWORD" ) ]]; do
+        local s="${COMP_WORDS[i]}"
+        case "$s" in
+          -*) ;;
+          *)
+            cmd="$s"
+            ;;
+        esac
+        (( i++ ))
+    done
+
+    case "$cmd" in
+      *)
+          word_list="  --metadata-dump --no-fail-on-errors --playbook-dir --version -F --list_files -M --module-path -e --entry-point -h --help -j --json -l --list -r --roles-path -s --snippet -t --type -v --verbose"
+          COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+          ;;
+    esac
+
+}
+
+## -o bashdefault and -o default are fallback
+complete -o bashdefault -o default -F _ansibledoc ansible-doc

@@ -58,10 +58,10 @@ def has_tldr(d: dict):
     return "tldr" in d
 
 
-def fetch_tldr(cmd: str) -> Optional[str]:
+def fetch_tldr(cmd: str, kind: str="common") -> Optional[str]:
     """Fetch tldr markdown document from tldr-pages"""
     url = (
-        f"https://raw.githubusercontent.com/tldr-pages/tldr/main/pages/common/{cmd}.md"
+        f"https://raw.githubusercontent.com/tldr-pages/tldr/main/pages/{kind}/{cmd}.md"
     )
     try:
         with urllib.request.urlopen(url) as response:
@@ -104,8 +104,11 @@ def run(cmd: str):
         sys.stderr.write(f"{cmd}.yaml already has tldr entry. Exiting...\n")
         sys.exit(0)
 
-    doc = fetch_tldr(cmd)
-    if doc is None:
+    for kind in ["common", "linux", "osx"]:
+        doc = fetch_tldr(cmd, kind)
+        if doc is not None:
+            break
+    else:
         sys.stderr.write(f"tldr for {cmd} is unavailable. Exiting...\n")
         sys.exit(1)
 

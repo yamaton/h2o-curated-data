@@ -1,0 +1,102 @@
+# Auto-generated with h2o
+
+_condaenv()
+{
+    local i=1 cmd cur word_list
+    cur="${COMP_WORDS[COMP_CWORD]}"
+
+    # take the last word that's NOT starting with -
+    while [[ ( "$i" < "$COMP_CWORD" ) ]]; do
+        local s="${COMP_WORDS[i]}"
+        case "$s" in
+          -*) ;;
+          *)
+            cmd="$s"
+            ;;
+        esac
+        (( i++ ))
+    done
+
+    case "$cmd" in
+          create) _condaenv_create
+            return
+            ;;
+
+          export) _condaenv_export
+            return
+            ;;
+
+          list) _condaenv_list
+            return
+            ;;
+
+          remove) _condaenv_remove
+            return
+            ;;
+
+          update) _condaenv_update
+            return
+            ;;
+
+          config) _condaenv_config
+            return
+            ;;
+
+      *)
+          word_list=" create export list remove update config -h --help"
+          COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+          ;;
+    esac
+
+}
+
+_condaenv_create ()
+{
+    local cur word_list
+    word_list=" -h --help -f --file --force -d --dry-run --no-default-packages --experimental-solver -n --name -p --prefix -C --use-index-cache -k --insecure --offline --json -v --verbose -q --quiet" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_condaenv_export ()
+{
+    local cur word_list
+    word_list=" -h --help -c --channel --override-channels -f --file --no-builds --ignore-channels --from-history -n --name -p --prefix --json -v --verbose -q --quiet" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_condaenv_list ()
+{
+    local cur word_list
+    word_list=" -h --help --json -v --verbose -q --quiet" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_condaenv_remove ()
+{
+    local cur word_list
+    word_list=" -h --help --experimental-solver -n --name -p --prefix -d --dry-run --json -q --quiet -v --verbose -y --yes" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_condaenv_update ()
+{
+    local cur word_list
+    word_list=" -h --help -f --file --prune --experimental-solver -n --name -p --prefix --json -v --verbose -q --quiet" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_condaenv_config ()
+{
+    local cur word_list
+    word_list=" -h --help" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+## -o bashdefault and -o default are fallback
+complete -o bashdefault -o default -F _condaenv conda-env

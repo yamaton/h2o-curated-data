@@ -23,6 +23,7 @@
             {-t,--tarballs}'[Remove cached package tarballs.]' \
             {-f,--force-pkgs-dirs}'[Remove *all* writable package caches. This option is not included with the --all flag. WARNING: This will break environments with packages installed using symlinks back to the package cache.]' \
             {-c,--tempfiles}'[Remove temporary files that could not be deleted earlier due to being in-use. Argument is path(s) to prefix(es) where files should be found and removed.]':file:_files \
+            {-l,--logfiles}'[Remove log files.]' \
             {-d,--dry-run}'[Only display what would have been done.]' \
             '--json[Report all output as json. Suitable for using conda programmatically.]' \
             {-q,--quiet}'[Do not display progress bar.]' \
@@ -77,7 +78,7 @@
             '--dev[Use `sys.executable -m conda` in wrapper scripts instead of CONDA_EXE. This is mainly for use during tests where we test new conda source against old Python versions.]' \
             {-n,--name}'[Name of environment.]' \
             {-p,--prefix}'[Full path to environment location (i.e. prefix).]':file:_files \
-            {-c,--channel}'[Additional channel to search for packages. These are URLs searched in the order they are given (including local directories using the '\''file://'\'' syntax or simply a path like '\''/home/conda/mychan'\'' or '\''../mychan'\''). Then, the defaults or channels from .condarc are searched (unless --override-channels is given). You can use '\''defaults'\'' to get the default packages for conda. You can also use any name and the .condarc channel_alias value will be prepended. The default channel_alias is http://conda.anaconda.org/.]' \
+            {-c,--channel}'[Additional channel to search for packages. These are URLs searched in the order they are given (including local directories using the '\''file://'\'' syntax or simply a path like '\''/home/conda/mychan'\'' or '\''../mychan'\''). Then, the defaults or channels from .condarc are searched (unless --override-channels is given). You can use '\''defaults'\'' to get the default packages for conda. You can also use any name and the .condarc channel_alias value will be prepended. The default channel_alias is https://conda.anaconda.org/.]' \
             '--use-local[Use locally built packages. Identical to '\''-c local'\''.]' \
             '--override-channels[Do not search default or .condarc channels. Requires --channel.]' \
             '--repodata-fn[Specify name of repodata on remote server. Conda will try whatever you specify, but will ultimately fall back to repodata.json if your specs are not satisfiable with what you specify here. This is used to employ repodata that is reduced in time scope. You may pass this flag more than once. Leftmost entries are tried first, and the fallback to repodata.json is added for you automatically.]' \
@@ -87,6 +88,7 @@
             '--only-deps[Only install dependencies.]' \
             '--no-pin[Ignore pinned file.]' \
             '--no-default-packages[Ignore create_default_packages in the .condarc file.]' \
+            '--experimental-solver[EXPERIMENTAL. Choose which solver backend to use.]' \
             '--copy[Install all packages using copies instead of hard- or soft-linking.]' \
             {-C,--use-index-cache}'[Use cache of channel index files, even if it has expired.]' \
             {-k,--insecure}'[Allow conda to perform "insecure" SSL connections and transfers. Equivalent to setting '\''ssl_verify'\'' to '\''false'\''.]' \
@@ -145,7 +147,7 @@
             '--dev[Use `sys.executable -m conda` in wrapper scripts instead of CONDA_EXE. This is mainly for use during tests where we test new conda source against old Python versions.]' \
             {-n,--name}'[Name of environment.]' \
             {-p,--prefix}'[Full path to environment location (i.e. prefix).]':file:_files \
-            {-c,--channel}'[Additional channel to search for packages. These are URLs searched in the order they are given (including local directories using the '\''file://'\'' syntax or simply a path like '\''/home/conda/mychan'\'' or '\''../mychan'\''). Then, the defaults or channels from .condarc are searched (unless --override-channels is given). You can use '\''defaults'\'' to get the default packages for conda. You can also use any name and the .condarc channel_alias value will be prepended. The default channel_alias is http://conda.anaconda.org/.]' \
+            {-c,--channel}'[Additional channel to search for packages. These are URLs searched in the order they are given (including local directories using the '\''file://'\'' syntax or simply a path like '\''/home/conda/mychan'\'' or '\''../mychan'\''). Then, the defaults or channels from .condarc are searched (unless --override-channels is given). You can use '\''defaults'\'' to get the default packages for conda. You can also use any name and the .condarc channel_alias value will be prepended. The default channel_alias is https://conda.anaconda.org/.]' \
             '--use-local[Use locally built packages. Identical to '\''-c local'\''.]' \
             '--override-channels[Do not search default or .condarc channels. Requires --channel.]' \
             '--repodata-fn[Specify name of repodata on remote server. Conda will try whatever you specify, but will ultimately fall back to repodata.json if your specs are not satisfiable with what you specify here. This is used to employ repodata that is reduced in time scope. You may pass this flag more than once. Leftmost entries are tried first, and the fallback to repodata.json is added for you automatically.]' \
@@ -154,6 +156,7 @@
             '--no-deps[Do not install, update, remove, or change dependencies. This WILL lead to broken environments and inconsistent behavior. Use at your own risk.]' \
             '--only-deps[Only install dependencies.]' \
             '--no-pin[Ignore pinned file.]' \
+            '--experimental-solver[EXPERIMENTAL. Choose which solver backend to use.]' \
             '--force-reinstall[Ensure that any user-requested package for the current operation is uninstalled and reinstalled, even if that package already exists in the environment.]' \
             {--freeze-installed,--no-update-deps}'[Do not update or change already-installed dependencies.]' \
             '--update-deps[Update dependencies.]' \
@@ -181,7 +184,7 @@
         _arguments \
             {-h,--help}'[Show this help message and exit.]' \
             '--show-channel-urls[Show channel urls. Overrides the value given by `conda config --show show_channel_urls`.]' \
-            {-c,--canonical}'[Output canonical names of packages only. Implies --nopip.]' \
+            {-c,--canonical}'[Output canonical names of packages only. Implies --no-pip.]' \
             {-f,--full-name}'[Only search for full names, i.e., ^<regex>$.]' \
             '--explicit[List explicitly all installed conda packaged with URL (output may be used by conda create --file).]' \
             '--md5[Add MD5 hashsum when using --explicit]' \
@@ -218,7 +221,7 @@
             '--dev[Use `sys.executable -m conda` in wrapper scripts instead of CONDA_EXE. This is mainly for use during tests where we test new conda source against old Python versions.]' \
             {-n,--name}'[Name of environment.]' \
             {-p,--prefix}'[Full path to environment location (i.e. prefix).]':file:_files \
-            {-c,--channel}'[Additional channel to search for packages. These are URLs searched in the order they are given (including local directories using the '\''file://'\'' syntax or simply a path like '\''/home/conda/mychan'\'' or '\''../mychan'\''). Then, the defaults or channels from .condarc are searched (unless --override-channels is given). You can use '\''defaults'\'' to get the default packages for conda. You can also use any name and the .condarc channel_alias value will be prepended. The default channel_alias is http://conda.anaconda.org/.]' \
+            {-c,--channel}'[Additional channel to search for packages. These are URLs searched in the order they are given (including local directories using the '\''file://'\'' syntax or simply a path like '\''/home/conda/mychan'\'' or '\''../mychan'\''). Then, the defaults or channels from .condarc are searched (unless --override-channels is given). You can use '\''defaults'\'' to get the default packages for conda. You can also use any name and the .condarc channel_alias value will be prepended. The default channel_alias is https://conda.anaconda.org/.]' \
             '--use-local[Use locally built packages. Identical to '\''-c local'\''.]' \
             '--override-channels[Do not search default or .condarc channels. Requires --channel.]' \
             '--repodata-fn[Specify name of repodata on remote server. Conda will try whatever you specify, but will ultimately fall back to repodata.json if your specs are not satisfiable with what you specify here. This is used to employ repodata that is reduced in time scope. You may pass this flag more than once. Leftmost entries are tried first, and the fallback to repodata.json is added for you automatically.]' \
@@ -226,6 +229,7 @@
             '--features[Remove features (instead of packages).]' \
             {--force-remove,--force}'[Forces removal of a package without removing packages that depend on it. Using this option will usually leave your environment in a broken and inconsistent state.]' \
             '--no-pin[Ignore pinned file.]' \
+            '--experimental-solver[EXPERIMENTAL. Choose which solver backend to use.]' \
             {-C,--use-index-cache}'[Use cache of channel index files, even if it has expired.]' \
             {-k,--insecure}'[Allow conda to perform "insecure" SSL connections and transfers. Equivalent to setting '\''ssl_verify'\'' to '\''false'\''.]' \
             '--offline[Offline mode. Don'\''t connect to the Internet.]' \
@@ -244,7 +248,7 @@
             '--dev[Use `sys.executable -m conda` in wrapper scripts instead of CONDA_EXE. This is mainly for use during tests where we test new conda source against old Python versions.]' \
             {-n,--name}'[Name of environment.]' \
             {-p,--prefix}'[Full path to environment location (i.e. prefix).]':file:_files \
-            {-c,--channel}'[Additional channel to search for packages. These are URLs searched in the order they are given (including local directories using the '\''file://'\'' syntax or simply a path like '\''/home/conda/mychan'\'' or '\''../mychan'\''). Then, the defaults or channels from .condarc are searched (unless --override-channels is given). You can use '\''defaults'\'' to get the default packages for conda. You can also use any name and the .condarc channel_alias value will be prepended. The default channel_alias is http://conda.anaconda.org/.]' \
+            {-c,--channel}'[Additional channel to search for packages. These are URLs searched in the order they are given (including local directories using the '\''file://'\'' syntax or simply a path like '\''/home/conda/mychan'\'' or '\''../mychan'\''). Then, the defaults or channels from .condarc are searched (unless --override-channels is given). You can use '\''defaults'\'' to get the default packages for conda. You can also use any name and the .condarc channel_alias value will be prepended. The default channel_alias is https://conda.anaconda.org/.]' \
             '--use-local[Use locally built packages. Identical to '\''-c local'\''.]' \
             '--override-channels[Do not search default or .condarc channels. Requires --channel.]' \
             '--repodata-fn[Specify name of repodata on remote server. Conda will try whatever you specify, but will ultimately fall back to repodata.json if your specs are not satisfiable with what you specify here. This is used to employ repodata that is reduced in time scope. You may pass this flag more than once. Leftmost entries are tried first, and the fallback to repodata.json is added for you automatically.]' \
@@ -252,6 +256,7 @@
             '--features[Uninstall features (instead of packages).]' \
             {--force-remove,--force}'[Forces removal of a package without removing packages that depend on it. Using this option will usually leave your environment in a broken and inconsistent state.]' \
             '--no-pin[Ignore pinned file.]' \
+            '--experimental-solver[EXPERIMENTAL. Choose which solver backend to use.]' \
             {-C,--use-index-cache}'[Use cache of channel index files, even if it has expired.]' \
             {-k,--insecure}'[Allow conda to perform "insecure" SSL connections and transfers. Equivalent to setting '\''ssl_verify'\'' to '\''false'\''.]' \
             '--offline[Offline mode. Don'\''t connect to the Internet.]' \
@@ -271,8 +276,7 @@
             '--dev[Sets `CONDA_EXE` to `python -m conda`, assuming the CWD contains the root of conda development sources. This is mainly for use during tests where we test new conda source against old Python versions.]' \
             '--debug-wrapper-scripts[When this is set, where implemented, the shell wrapper scriptswill echo to stderr a lot of debugging information.]' \
             '--cwd[Current working directory for command to run in. Defaults to cwd]' \
-            '--no-capture-output[Don'\''t capture stdout/stderr]' \
-            '--live-stream[Display the output for the subprocess stdout and stderr on real time.]' \
+            {--no-capture-output,--live-stream}'[Don'\''t capture stdout/stderr.]' \
             {-n,--name}'[Name of environment.]' \
             {-p,--prefix}'[Full path to environment location (i.e. prefix).]':file:_files \
             "*: :_files"
@@ -285,7 +289,7 @@
             '--envs[Search all of the current user'\''s environments. If run as Administrator (on Windows) or UID 0 (on unix), search all known environments on the system.]' \
             {-i,--info}'[Provide detailed information about each package.]' \
             {--subdir,--platform}'[Search the given subdir. Should be formatted like '\''osx-64'\'', '\''linux-32'\'', '\''win-64'\'', and so on. The default is to search the current platform.]':file:_files \
-            {-c,--channel}'[Additional channel to search for packages. These are URLs searched in the order they are given (including local directories using the '\''file://'\'' syntax or simply a path like '\''/home/conda/mychan'\'' or '\''../mychan'\''). Then, the defaults or channels from .condarc are searched (unless --override-channels is given). You can use '\''defaults'\'' to get the default packages for conda. You can also use any name and the .condarc channel_alias value will be prepended. The default channel_alias is http://conda.anaconda.org/.]' \
+            {-c,--channel}'[Additional channel to search for packages. These are URLs searched in the order they are given (including local directories using the '\''file://'\'' syntax or simply a path like '\''/home/conda/mychan'\'' or '\''../mychan'\''). Then, the defaults or channels from .condarc are searched (unless --override-channels is given). You can use '\''defaults'\'' to get the default packages for conda. You can also use any name and the .condarc channel_alias value will be prepended. The default channel_alias is https://conda.anaconda.org/.]' \
             '--use-local[Use locally built packages. Identical to '\''-c local'\''.]' \
             '--override-channels[Do not search default or .condarc channels. Requires --channel.]' \
             '--repodata-fn[Specify name of repodata on remote server. Conda will try whatever you specify, but will ultimately fall back to repodata.json if your specs are not satisfiable with what you specify here. This is used to employ repodata that is reduced in time scope. You may pass this flag more than once. Leftmost entries are tried first, and the fallback to repodata.json is added for you automatically.]' \
@@ -305,7 +309,7 @@
             '--file[Read package versions from the given file. Repeated file specifications can be passed (e.g. --file=file1 --file=file2).]':file:_files \
             {-n,--name}'[Name of environment.]' \
             {-p,--prefix}'[Full path to environment location (i.e. prefix).]':file:_files \
-            {-c,--channel}'[Additional channel to search for packages. These are URLs searched in the order they are given (including local directories using the '\''file://'\'' syntax or simply a path like '\''/home/conda/mychan'\'' or '\''../mychan'\''). Then, the defaults or channels from .condarc are searched (unless --override-channels is given). You can use '\''defaults'\'' to get the default packages for conda. You can also use any name and the .condarc channel_alias value will be prepended. The default channel_alias is http://conda.anaconda.org/.]' \
+            {-c,--channel}'[Additional channel to search for packages. These are URLs searched in the order they are given (including local directories using the '\''file://'\'' syntax or simply a path like '\''/home/conda/mychan'\'' or '\''../mychan'\''). Then, the defaults or channels from .condarc are searched (unless --override-channels is given). You can use '\''defaults'\'' to get the default packages for conda. You can also use any name and the .condarc channel_alias value will be prepended. The default channel_alias is https://conda.anaconda.org/.]' \
             '--use-local[Use locally built packages. Identical to '\''-c local'\''.]' \
             '--override-channels[Do not search default or .condarc channels. Requires --channel.]' \
             '--repodata-fn[Specify name of repodata on remote server. Conda will try whatever you specify, but will ultimately fall back to repodata.json if your specs are not satisfiable with what you specify here. This is used to employ repodata that is reduced in time scope. You may pass this flag more than once. Leftmost entries are tried first, and the fallback to repodata.json is added for you automatically.]' \
@@ -314,6 +318,7 @@
             '--no-deps[Do not install, update, remove, or change dependencies. This WILL lead to broken environments and inconsistent behavior. Use at your own risk.]' \
             '--only-deps[Only install dependencies.]' \
             '--no-pin[Ignore pinned file.]' \
+            '--experimental-solver[EXPERIMENTAL. Choose which solver backend to use.]' \
             '--force-reinstall[Ensure that any user-requested package for the current operation is uninstalled and reinstalled, even if that package already exists in the environment.]' \
             {--freeze-installed,--no-update-deps}'[Do not update or change already-installed dependencies.]' \
             '--update-deps[Update dependencies.]' \
@@ -342,7 +347,7 @@
             '--file[Read package versions from the given file. Repeated file specifications can be passed (e.g. --file=file1 --file=file2).]':file:_files \
             {-n,--name}'[Name of environment.]' \
             {-p,--prefix}'[Full path to environment location (i.e. prefix).]':file:_files \
-            {-c,--channel}'[Additional channel to search for packages. These are URLs searched in the order they are given (including local directories using the '\''file://'\'' syntax or simply a path like '\''/home/conda/mychan'\'' or '\''../mychan'\''). Then, the defaults or channels from .condarc are searched (unless --override-channels is given). You can use '\''defaults'\'' to get the default packages for conda. You can also use any name and the .condarc channel_alias value will be prepended. The default channel_alias is http://conda.anaconda.org/.]' \
+            {-c,--channel}'[Additional channel to search for packages. These are URLs searched in the order they are given (including local directories using the '\''file://'\'' syntax or simply a path like '\''/home/conda/mychan'\'' or '\''../mychan'\''). Then, the defaults or channels from .condarc are searched (unless --override-channels is given). You can use '\''defaults'\'' to get the default packages for conda. You can also use any name and the .condarc channel_alias value will be prepended. The default channel_alias is https://conda.anaconda.org/.]' \
             '--use-local[Use locally built packages. Identical to '\''-c local'\''.]' \
             '--override-channels[Do not search default or .condarc channels. Requires --channel.]' \
             '--repodata-fn[Specify name of repodata on remote server. Conda will try whatever you specify, but will ultimately fall back to repodata.json if your specs are not satisfiable with what you specify here. This is used to employ repodata that is reduced in time scope. You may pass this flag more than once. Leftmost entries are tried first, and the fallback to repodata.json is added for you automatically.]' \
@@ -351,6 +356,7 @@
             '--no-deps[Do not install, update, remove, or change dependencies. This WILL lead to broken environments and inconsistent behavior. Use at your own risk.]' \
             '--only-deps[Only install dependencies.]' \
             '--no-pin[Ignore pinned file.]' \
+            '--experimental-solver[EXPERIMENTAL. Choose which solver backend to use.]' \
             '--force-reinstall[Ensure that any user-requested package for the current operation is uninstalled and reinstalled, even if that package already exists in the environment.]' \
             {--freeze-installed,--no-update-deps}'[Do not update or change already-installed dependencies.]' \
             '--update-deps[Update dependencies.]' \
@@ -373,6 +379,13 @@
 
     }
 
+    function _conda_env {
+        _arguments \
+            {-h,--help}'[Show this help message and exit.]' \
+            "*: :_files"
+
+    }
+
 
 function _conda {
     local line state
@@ -384,24 +397,25 @@ function _conda {
             'deactivate:Dectivate a conda environment'
             'clean:Remove unused packages and caches.'
             'compare:Compare packages between conda environments.'
-            'config:Modify configuration values in .condarc. This is modeled'
-            'create:Create a new conda environment from a list of specified'
+            'config:Modify configuration values in .condarc. This is modeled after the git config command. Writes to the user .condarc file (~/.condarc) by default.'
+            'create:Create a new conda environment from a list of specified packages.'
             'help:Displays a list of available conda commands and their help'
             'info:Display information about current conda install.'
             'init:Initialize conda for shell interaction. \[Experimental\]'
-            'install:Installs a list of packages into a specified conda'
+            'install:Installs a list of packages into a specified conda environment.'
             'list:List linked packages in a conda environment.'
             'package:Low-level conda package utility. (EXPERIMENTAL)'
             'remove:Remove a list of packages from a specified conda environment.'
             'uninstall:Alias for conda remove.'
-            'run:Run an executable in a conda environment. \[Experimental\]'
-            'search:Search for packages and display associated information. The'
+            'run:Run an executable in a conda environment.'
+            'search:Search for packages and display associated information. The input is a MatchSpec, a query language for conda packages. See examples below.'
             'update:Updates conda packages to the latest compatible version.'
             'upgrade:Alias for conda update.'
+            'env:Equivalent to conda-env'
         )
         _describe 'command' commands
     }
-
+ 
 
     _arguments -C \
         {-h,--help}'[Show this help message and exit.]' \
@@ -485,6 +499,10 @@ function _conda {
 
         (upgrade)
             _conda_upgrade
+            ;;
+
+        (env)
+            _conda_env
             ;;
 
         esac

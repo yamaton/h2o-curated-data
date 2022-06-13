@@ -12,6 +12,12 @@ options:
     argument: ""
     description: Show the conda version number and exit.
 subcommands:
+  - name: activate
+    description: Activate a conda environment
+    options: []
+  - name: deactivate
+    description: Dectivate a conda environment
+    options: []
   - name: clean
     description: Remove unused packages and caches.
     options:
@@ -48,10 +54,14 @@ subcommands:
       - names:
           - -c
           - --tempfiles
-        argument: TEMPFILES [TEMPFILES ...]
+        argument: '[TEMPFILES ...]'
         description: Remove temporary files that could not be deleted earlier due to being in-use. Argument is path(s) to prefix(es) where files should be found and removed.
       - names:
           - -l
+          - --logfiles
+        argument: ""
+        description: Remove log files.
+      - names:
           - --locks
         argument: ""
         description: Remove lock files.
@@ -112,7 +122,7 @@ subcommands:
         argument: PATH
         description: Full path to environment location (i.e. prefix).
   - name: config
-    description: Modify configuration values in .condarc. This is modeled
+    description: Modify configuration values in .condarc. This is modeled after the git config command. Writes to the user .condarc file (~/.condarc) by default.
     options:
       - names:
           - -h
@@ -195,7 +205,7 @@ subcommands:
         argument: ""
         description: Apply configuration information given in yaml format piped through stdin.
   - name: create
-    description: Create a new conda environment from a list of specified
+    description: Create a new conda environment from a list of specified packages.
     options:
       - names:
           - -h
@@ -228,7 +238,7 @@ subcommands:
           - -c
           - --channel
         argument: CHANNEL
-        description: Additional channel to search for packages. These are URLs searched in the order they are given (including local directories using the 'file://' syntax or simply a path like '/home/conda/mychan' or '../mychan'). Then, the defaults or channels from .condarc are searched (unless --override-channels is given). You can use 'defaults' to get the default packages for conda. You can also use any name and the .condarc channel_alias value will be prepended. The default channel_alias is http://conda.anaconda.org/.
+        description: Additional channel to search for packages. These are URLs searched in the order they are given (including local directories using the 'file://' syntax or simply a path like '/home/conda/mychan' or '../mychan'). Then, the defaults or channels from .condarc are searched (unless --override-channels is given). You can use 'defaults' to get the default packages for conda. You can also use any name and the .condarc channel_alias value will be prepended. The default channel_alias is https://conda.anaconda.org/.
       - names:
           - --use-local
         argument: ""
@@ -265,6 +275,10 @@ subcommands:
           - --no-default-packages
         argument: ""
         description: Ignore create_default_packages in the .condarc file.
+      - names:
+          - --experimental-solver
+        argument: '{classic,libmamba,libmamba-draft}'
+        description: EXPERIMENTAL. Choose which solver backend to use.
       - names:
           - --copy
         argument: ""
@@ -315,14 +329,6 @@ subcommands:
           - --show-channel-urls
         argument: ""
         description: Show channel urls. Overrides the value given by `conda config --show show_channel_urls`.
-  - name: help
-    description: Displays a list of available conda commands and their help
-    options:
-      - names:
-          - -h
-          - --help
-        argument: ""
-        description: Show this help message and exit.
   - name: info
     description: Display information about current conda install.
     options:
@@ -404,7 +410,7 @@ subcommands:
         argument: ""
         description: Do not display progress bar.
   - name: install
-    description: Installs a list of packages into a specified conda
+    description: Installs a list of packages into a specified conda environment.
     options:
       - names:
           - -h
@@ -437,7 +443,7 @@ subcommands:
           - -c
           - --channel
         argument: CHANNEL
-        description: Additional channel to search for packages. These are URLs searched in the order they are given (including local directories using the 'file://' syntax or simply a path like '/home/conda/mychan' or '../mychan'). Then, the defaults or channels from .condarc are searched (unless --override-channels is given). You can use 'defaults' to get the default packages for conda. You can also use any name and the .condarc channel_alias value will be prepended. The default channel_alias is http://conda.anaconda.org/.
+        description: Additional channel to search for packages. These are URLs searched in the order they are given (including local directories using the 'file://' syntax or simply a path like '/home/conda/mychan' or '../mychan'). Then, the defaults or channels from .condarc are searched (unless --override-channels is given). You can use 'defaults' to get the default packages for conda. You can also use any name and the .condarc channel_alias value will be prepended. The default channel_alias is https://conda.anaconda.org/.
       - names:
           - --use-local
         argument: ""
@@ -470,6 +476,10 @@ subcommands:
           - --no-pin
         argument: ""
         description: Ignore pinned file.
+      - names:
+          - --experimental-solver
+        argument: '{classic,libmamba,libmamba-draft}'
+        description: EXPERIMENTAL. Choose which solver backend to use.
       - names:
           - --force-reinstall
         argument: ""
@@ -572,7 +582,7 @@ subcommands:
           - -c
           - --canonical
         argument: ""
-        description: Output canonical names of packages only. Implies --nopip.
+        description: Output canonical names of packages only. Implies --no-pip.
       - names:
           - -f
           - --full-name
@@ -695,7 +705,7 @@ subcommands:
           - -c
           - --channel
         argument: CHANNEL
-        description: Additional channel to search for packages. These are URLs searched in the order they are given (including local directories using the 'file://' syntax or simply a path like '/home/conda/mychan' or '../mychan'). Then, the defaults or channels from .condarc are searched (unless --override-channels is given). You can use 'defaults' to get the default packages for conda. You can also use any name and the .condarc channel_alias value will be prepended. The default channel_alias is http://conda.anaconda.org/.
+        description: Additional channel to search for packages. These are URLs searched in the order they are given (including local directories using the 'file://' syntax or simply a path like '/home/conda/mychan' or '../mychan'). Then, the defaults or channels from .condarc are searched (unless --override-channels is given). You can use 'defaults' to get the default packages for conda. You can also use any name and the .condarc channel_alias value will be prepended. The default channel_alias is https://conda.anaconda.org/.
       - names:
           - --use-local
         argument: ""
@@ -725,6 +735,10 @@ subcommands:
           - --no-pin
         argument: ""
         description: Ignore pinned file.
+      - names:
+          - --experimental-solver
+        argument: '{classic,libmamba,libmamba-draft}'
+        description: EXPERIMENTAL. Choose which solver backend to use.
       - names:
           - -C
           - --use-index-cache
@@ -789,7 +803,7 @@ subcommands:
           - -c
           - --channel
         argument: CHANNEL
-        description: Additional channel to search for packages. These are URLs searched in the order they are given (including local directories using the 'file://' syntax or simply a path like '/home/conda/mychan' or '../mychan'). Then, the defaults or channels from .condarc are searched (unless --override-channels is given). You can use 'defaults' to get the default packages for conda. You can also use any name and the .condarc channel_alias value will be prepended. The default channel_alias is http://conda.anaconda.org/.
+        description: Additional channel to search for packages. These are URLs searched in the order they are given (including local directories using the 'file://' syntax or simply a path like '/home/conda/mychan' or '../mychan'). Then, the defaults or channels from .condarc are searched (unless --override-channels is given). You can use 'defaults' to get the default packages for conda. You can also use any name and the .condarc channel_alias value will be prepended. The default channel_alias is https://conda.anaconda.org/.
       - names:
           - --use-local
         argument: ""
@@ -819,6 +833,10 @@ subcommands:
           - --no-pin
         argument: ""
         description: Ignore pinned file.
+      - names:
+          - --experimental-solver
+        argument: '{classic,libmamba,libmamba-draft}'
+        description: EXPERIMENTAL. Choose which solver backend to use.
       - names:
           - -C
           - --use-index-cache
@@ -858,7 +876,7 @@ subcommands:
         argument: ""
         description: Do not ask for confirmation.
   - name: run
-    description: Run an executable in a conda environment. [Experimental]
+    description: Run an executable in a conda environment.
     options:
       - names:
           - -h
@@ -884,12 +902,9 @@ subcommands:
         description: Current working directory for command to run in. Defaults to cwd
       - names:
           - --no-capture-output
-        argument: ""
-        description: Don't capture stdout/stderr
-      - names:
           - --live-stream
         argument: ""
-        description: Display the output for the subprocess stdout and stderr on real time.
+        description: Don't capture stdout/stderr.
       - names:
           - -n
           - --name
@@ -900,12 +915,11 @@ subcommands:
           - --prefix
         argument: PATH
         description: Full path to environment location (i.e. prefix).
-    subcommands:
+    positionalArguments:
       - name: executable_call
-        description: Executable name, with additional arguments to be
-        options: []
+        description: Executable name, with additional arguments to be passed to the executable on invocation.
   - name: search
-    description: Search for packages and display associated information. The
+    description: Search for packages and display associated information. The input is a MatchSpec, a query language for conda packages. See examples below.
     options:
       - names:
           - -h
@@ -930,7 +944,7 @@ subcommands:
           - -c
           - --channel
         argument: CHANNEL
-        description: Additional channel to search for packages. These are URLs searched in the order they are given (including local directories using the 'file://' syntax or simply a path like '/home/conda/mychan' or '../mychan'). Then, the defaults or channels from .condarc are searched (unless --override-channels is given). You can use 'defaults' to get the default packages for conda. You can also use any name and the .condarc channel_alias value will be prepended. The default channel_alias is http://conda.anaconda.org/.
+        description: Additional channel to search for packages. These are URLs searched in the order they are given (including local directories using the 'file://' syntax or simply a path like '/home/conda/mychan' or '../mychan'). Then, the defaults or channels from .condarc are searched (unless --override-channels is given). You can use 'defaults' to get the default packages for conda. You can also use any name and the .condarc channel_alias value will be prepended. The default channel_alias is https://conda.anaconda.org/.
       - names:
           - --use-local
         argument: ""
@@ -997,7 +1011,7 @@ subcommands:
           - -c
           - --channel
         argument: CHANNEL
-        description: Additional channel to search for packages. These are URLs searched in the order they are given (including local directories using the 'file://' syntax or simply a path like '/home/conda/mychan' or '../mychan'). Then, the defaults or channels from .condarc are searched (unless --override-channels is given). You can use 'defaults' to get the default packages for conda. You can also use any name and the .condarc channel_alias value will be prepended. The default channel_alias is http://conda.anaconda.org/.
+        description: Additional channel to search for packages. These are URLs searched in the order they are given (including local directories using the 'file://' syntax or simply a path like '/home/conda/mychan' or '../mychan'). Then, the defaults or channels from .condarc are searched (unless --override-channels is given). You can use 'defaults' to get the default packages for conda. You can also use any name and the .condarc channel_alias value will be prepended. The default channel_alias is https://conda.anaconda.org/.
       - names:
           - --use-local
         argument: ""
@@ -1030,6 +1044,10 @@ subcommands:
           - --no-pin
         argument: ""
         description: Ignore pinned file.
+      - names:
+          - --experimental-solver
+        argument: '{classic,libmamba,libmamba-draft}'
+        description: EXPERIMENTAL. Choose which solver backend to use.
       - names:
           - --force-reinstall
         argument: ""
@@ -1137,7 +1155,7 @@ subcommands:
           - -c
           - --channel
         argument: CHANNEL
-        description: Additional channel to search for packages. These are URLs searched in the order they are given (including local directories using the 'file://' syntax or simply a path like '/home/conda/mychan' or '../mychan'). Then, the defaults or channels from .condarc are searched (unless --override-channels is given). You can use 'defaults' to get the default packages for conda. You can also use any name and the .condarc channel_alias value will be prepended. The default channel_alias is http://conda.anaconda.org/.
+        description: Additional channel to search for packages. These are URLs searched in the order they are given (including local directories using the 'file://' syntax or simply a path like '/home/conda/mychan' or '../mychan'). Then, the defaults or channels from .condarc are searched (unless --override-channels is given). You can use 'defaults' to get the default packages for conda. You can also use any name and the .condarc channel_alias value will be prepended. The default channel_alias is https://conda.anaconda.org/.
       - names:
           - --use-local
         argument: ""
@@ -1170,6 +1188,10 @@ subcommands:
           - --no-pin
         argument: ""
         description: Ignore pinned file.
+      - names:
+          - --experimental-solver
+        argument: '{classic,libmamba,libmamba-draft}'
+        description: EXPERIMENTAL. Choose which solver backend to use.
       - names:
           - --force-reinstall
         argument: ""
@@ -1281,7 +1303,7 @@ subcommands:
               - -c
               - --channel
             argument: CHANNEL
-            description: Additional channel to search for packages. These are URLs searched in the order they are given (including local directories using the 'file://' syntax or simply a path like '/home/conda/mychan' or '../mychan'). Then, the defaults or channels from .condarc are searched (unless --override-channels is given). You can use 'defaults' to get the default packages for conda. You can also use any name and the .condarc channel_alias value will be prepended. The default channel_alias is http://conda.anaconda.org/.
+            description: Additional channel to search for packages. These are URLs searched in the order they are given (including local directories using the 'file://' syntax or simply a path like '/home/conda/mychan' or '../mychan'). Then, the defaults or channels from .condarc are searched (unless --override-channels is given). You can use 'defaults' to get the default packages for conda. You can also use any name and the .condarc channel_alias value will be prepended. The default channel_alias is https://conda.anaconda.org/.
           - names:
               - --use-local
             argument: ""
@@ -1343,7 +1365,7 @@ subcommands:
               - -c
               - --channel
             argument: CHANNEL
-            description: Additional channel to search for packages. These are URLs searched in the order they are given (including local directories using the 'file://' syntax or simply a path like '/home/conda/mychan' or '../mychan'). Then, the defaults or channels from .condarc are searched (unless --override-channels is given). You can use 'defaults' to get the default packages for conda. You can also use any name and the .condarc channel_alias value will be prepended. The default channel_alias is http://conda.anaconda.org/.
+            description: Additional channel to search for packages. These are URLs searched in the order they are given (including local directories using the 'file://' syntax or simply a path like '/home/conda/mychan' or '../mychan'). Then, the defaults or channels from .condarc are searched (unless --override-channels is given). You can use 'defaults' to get the default packages for conda. You can also use any name and the .condarc channel_alias value will be prepended. The default channel_alias is https://conda.anaconda.org/.
           - names:
               - --use-local
             argument: ""
@@ -1405,7 +1427,7 @@ subcommands:
               - -c
               - --channel
             argument: CHANNEL
-            description: Additional channel to search for packages. These are URLs searched in the order they are given (including local directories using the 'file://' syntax or simply a path like '/home/conda/mychan' or '../mychan'). Then, the defaults or channels from .condarc are searched (unless --override-channels is given). You can use 'defaults' to get the default packages for conda. You can also use any name and the .condarc channel_alias value will be prepended. The default channel_alias is http://conda.anaconda.org/.
+            description: Additional channel to search for packages. These are URLs searched in the order they are given (including local directories using the 'file://' syntax or simply a path like '/home/conda/mychan' or '../mychan'). Then, the defaults or channels from .condarc are searched (unless --override-channels is given). You can use 'defaults' to get the default packages for conda. You can also use any name and the .condarc channel_alias value will be prepended. The default channel_alias is https://conda.anaconda.org/.
           - names:
               - --use-local
             argument: ""
@@ -1446,3 +1468,293 @@ subcommands:
               - --quiet
             argument: ""
             description: Do not display progress bar.
+  - name: env
+    description: Equivalent to conda-env
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: Show this help message and exit.
+    subcommands:
+      - name: create
+        description: Create an environment based on an environment file
+        options:
+          - names:
+              - -h
+              - --help
+            argument: ""
+            description: Show this help message and exit.
+          - names:
+              - -f
+              - --file
+            argument: FILE
+            description: 'environment definition file (default: environment.yml)'
+          - names:
+              - --force
+            argument: ""
+            description: force creation of environment (removing a previously existing environment of the same name).
+          - names:
+              - -d
+              - --dry-run
+            argument: ""
+            description: Only display what would have been done.
+          - names:
+              - --no-default-packages
+            argument: ""
+            description: Ignore create_default_packages in the .condarc file.
+          - names:
+              - --experimental-solver
+            argument: '{classic,libmamba,libmamba-draft}'
+            description: EXPERIMENTAL. Choose which solver backend to use.
+          - names:
+              - -n
+              - --name
+            argument: ENVIRONMENT
+            description: Name of environment.
+          - names:
+              - -p
+              - --prefix
+            argument: PATH
+            description: Full path to environment location (i.e. prefix).
+          - names:
+              - -C
+              - --use-index-cache
+            argument: ""
+            description: Use cache of channel index files, even if it has expired.
+          - names:
+              - -k
+              - --insecure
+            argument: ""
+            description: Allow conda to perform "insecure" SSL connections and transfers. Equivalent to setting 'ssl_verify' to 'false'.
+          - names:
+              - --offline
+            argument: ""
+            description: Offline mode. Don't connect to the Internet.
+          - names:
+              - --json
+            argument: ""
+            description: Report all output as json. Suitable for using conda programmatically.
+          - names:
+              - -v
+              - --verbose
+            argument: ""
+            description: Use once for info, twice for debug, three times for trace.
+          - names:
+              - -q
+              - --quiet
+            argument: ""
+            description: Do not display progress bar.
+      - name: export
+        description: Export a given environment
+        options:
+          - names:
+              - -h
+              - --help
+            argument: ""
+            description: Show this help message and exit.
+          - names:
+              - -c
+              - --channel
+            argument: CHANNEL
+            description: Additional channel to include in the export
+          - names:
+              - --override-channels
+            argument: ""
+            description: Do not include .condarc channels
+          - names:
+              - -f
+              - --file
+              - --no-builds
+            argument: FILE
+            description: Remove build specification from dependencies
+          - names:
+              - --ignore-channels
+            argument: ""
+            description: Do not include channel names with package names.
+          - names:
+              - --from-history
+            argument: ""
+            description: Build environment spec from explicit specs in history
+          - names:
+              - -n
+              - --name
+            argument: ENVIRONMENT
+            description: Name of environment.
+          - names:
+              - -p
+              - --prefix
+            argument: PATH
+            description: Full path to environment location (i.e. prefix).
+          - names:
+              - --json
+            argument: ""
+            description: Report all output as json. Suitable for using conda programmatically.
+          - names:
+              - -v
+              - --verbose
+            argument: ""
+            description: Use once for info, twice for debug, three times for trace.
+          - names:
+              - -q
+              - --quiet
+            argument: ""
+            description: Do not display progress bar.
+      - name: list
+        description: List the Conda environments
+        options:
+          - names:
+              - -h
+              - --help
+            argument: ""
+            description: Show this help message and exit.
+          - names:
+              - --json
+            argument: ""
+            description: Report all output as json. Suitable for using conda programmatically.
+          - names:
+              - -v
+              - --verbose
+            argument: ""
+            description: Use once for info, twice for debug, three times for trace.
+          - names:
+              - -q
+              - --quiet
+            argument: ""
+            description: Do not display progress bar.
+      - name: remove
+        description: Remove an environment
+        options:
+          - names:
+              - -h
+              - --help
+            argument: ""
+            description: Show this help message and exit.
+          - names:
+              - --experimental-solver
+            argument: '{classic,libmamba,libmamba-draft}'
+            description: EXPERIMENTAL. Choose which solver backend to use.
+          - names:
+              - -n
+              - --name
+            argument: ENVIRONMENT
+            description: Name of environment.
+          - names:
+              - -p
+              - --prefix
+            argument: PATH
+            description: Full path to environment location (i.e. prefix).
+          - names:
+              - -d
+              - --dry-run
+            argument: ""
+            description: Only display what would have been done.
+          - names:
+              - --json
+            argument: ""
+            description: Report all output as json. Suitable for using conda programmatically.
+          - names:
+              - -q
+              - --quiet
+            argument: ""
+            description: Do not display progress bar.
+          - names:
+              - -v
+              - --verbose
+            argument: ""
+            description: Can be used multiple times. Once for INFO, twice for DEBUG, three times for TRACE.
+          - names:
+              - -y
+              - --yes
+            argument: ""
+            description: Do not ask for confirmation.
+      - name: update
+        description: Update the current environment based on environment file
+        options:
+          - names:
+              - -h
+              - --help
+            argument: ""
+            description: Show this help message and exit.
+          - names:
+              - -f
+              - --file
+            argument: FILE
+            description: 'environment definition (default: environment.yml)'
+          - names:
+              - --prune
+            argument: ""
+            description: remove installed packages not defined in environment.yml
+          - names:
+              - --experimental-solver
+            argument: '{classic,libmamba,libmamba-draft}'
+            description: EXPERIMENTAL. Choose which solver backend to use.
+          - names:
+              - -n
+              - --name
+            argument: ENVIRONMENT
+            description: Name of environment.
+          - names:
+              - -p
+              - --prefix
+            argument: PATH
+            description: Full path to environment location (i.e. prefix).
+          - names:
+              - --json
+            argument: ""
+            description: Report all output as json. Suitable for using conda programmatically.
+          - names:
+              - -v
+              - --verbose
+            argument: ""
+            description: Use once for info, twice for debug, three times for trace.
+          - names:
+              - -q
+              - --quiet
+            argument: ""
+            description: Do not display progress bar.
+      - name: config
+        description: Configure a conda environment
+        options:
+          - names:
+              - -h
+              - --help
+            argument: ""
+            description: Show this help message and exit.
+version: mamba 0.24.0
+tldr: |
+  > Package, dependency and environment management for any programming language.
+  > Some subcommands such as `mamba create` have their own usage documentation.
+  > More information: <https://github.com/mamba-org/mamba>.
+
+  - Create a new environment, installing named packages into it:
+
+  `mamba create --name {{environment_name}} {{python=3.9 matplotlib}}`
+
+  - List all environments:
+
+  `mamba info --envs`
+
+  - Load an environment:
+
+  `mamba {{activate environment_name}}`
+
+  - Unload an environment:
+
+  `mamba {{deactivate}}`
+
+  - Delete an environment (remove all packages):
+
+  `mamba remove --name {{environment_name}} --all`
+
+  - Install packages into the current environment:
+
+  `mamba install {{python=3.4 numpy}}`
+
+  - List currently installed packages in current environment:
+
+  `mamba list`
+
+  - Delete unused packages and caches:
+
+  `mamba clean --all`

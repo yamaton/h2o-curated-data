@@ -1,0 +1,893 @@
+name: cellranger
+description: Process 10x Genomics Gene Expression, Feature Barcode, and Immune Profiling data
+options:
+  - names:
+      - -h
+      - --help
+    argument: ""
+    description: Print help information
+  - names:
+      - -V
+      - --version
+    argument: ""
+    description: Print version information
+subcommands:
+  - name: count
+    description: Count gene expression (targeted or whole-transcriptome) and/or feature
+    options:
+      - names:
+          - --id
+        argument: <ID>
+        description: A unique run id and output folder name [a-zA-Z0-9_-]+
+      - names:
+          - --description
+        argument: <TEXT>
+        description: 'Sample description to embed in output files [default: ]'
+      - names:
+          - --transcriptome
+        argument: <PATH>
+        description: Path of folder containing 10x-compatible transcriptome reference
+      - names:
+          - --fastqs
+        argument: <PATH>
+        description: Path to input FASTQ data
+      - names:
+          - --project
+        argument: <TEXT>
+        description: Name of the project folder within a mkfastq or bcl2fastq-generated folder from which to pick FASTQs
+      - names:
+          - --sample
+        argument: <PREFIX>
+        description: Prefix of the filenames of FASTQs to select
+      - names:
+          - --lanes
+        argument: <NUMS>
+        description: Only use FASTQs from selected lanes
+      - names:
+          - --libraries
+        argument: <CSV>
+        description: CSV file declaring input library data sources
+      - names:
+          - --feature-ref
+        argument: <CSV>
+        description: Feature reference CSV file, declaring Feature Barcode constructs and associated barcodes
+      - names:
+          - --target-panel
+        argument: <CSV>
+        description: The target panel CSV file declaring the target panel used, if any. Default analysis will exclude intronic mapped reads, which is the recommended mode for targeted assay. Use include-introns=true to include intronic mapped reads in analysis
+      - names:
+          - --expect-cells
+        argument: <NUM>
+        description: Expected number of recovered cells, used as input to cell calling algorithm
+      - names:
+          - --force-cells
+        argument: <NUM>
+        description: 'Force pipeline to use this number of cells, bypassing cell calling algorithm. [MINIMUM: 10]'
+      - names:
+          - --no-bam
+        argument: ""
+        description: Set --no-bam to not generate the BAM file. This will reduce the total computation time for the pipestance and the size of the output directory. If unsure, we recommend not to use this option. BAM file could be useful for troubleshooting and downstream analysis
+      - names:
+          - --nosecondary
+        argument: ""
+        description: Disable secondary analysis, e.g. clustering. Optional
+      - names:
+          - --r1-length
+        argument: <NUM>
+        description: Hard trim the input Read 1 to this length before analysis
+      - names:
+          - --r2-length
+        argument: <NUM>
+        description: Hard trim the input Read 2 to this length before analysis
+      - names:
+          - --include-introns
+        argument: <true|false>
+        description: Include intronic reads in count (default=true unless --target-panel is specified in which case default=false)
+      - names:
+          - --chemistry
+        argument: <CHEM>
+        description: 'Assay configuration. NOTE: by default the assay configuration is detected automatically, which is the recommened mode. You usually will not need to specify a chemistry. Options are: ''auto'' for autodetection, ''threeprime'' for Single Cell 3'', ''fiveprime'' for Single Cell 5'', ''SC3Pv1'' or ''SC3Pv2'' or ''SC3Pv3'' for Single Cell 3'' v1/v2/v3, ''SC3Pv3LT'' for Single Cell 3'' v3 LT, ''SC3Pv3HT'' for Single Cell 3'' v3 HT, ''SC5P-PE'' or ''SC5P-R2'' for Single Cell 5'', paired-end/R2-only, ''SC-FB'' for Single Cell Antibody-only 3'' v2 or 5'' [default: auto]'
+      - names:
+          - --no-libraries
+        argument: ""
+        description: Proceed with processing using a --feature-ref but no Feature Barcode libraries specified with the 'libraries' flag
+      - names:
+          - --check-library-compatibility
+        argument: <true|false>
+        description: 'Whether to check for barcode compatibility between libraries. [default: true]'
+      - names:
+          - --no-target-umi-filter
+        argument: ""
+        description: Turn off the target UMI filtering subpipeline. Only applies when --target-panel is used
+      - names:
+          - --dry
+        argument: ""
+        description: Do not execute the pipeline. Generate a pipeline invocation (.mro) file and stop
+      - names:
+          - --jobmode
+        argument: <MODE>
+        description: 'Job manager to use. Valid options: local (default), sge, lsf, slurm or path to a .template file. Search for help on "Cluster Mode" at support.10xgenomics.com for more details on configuring the pipeline to use a compute cluster [default: local]'
+      - names:
+          - --localcores
+        argument: <NUM>
+        description: Set max cores the pipeline may request at one time. Only applies to local jobs
+      - names:
+          - --localmem
+        argument: <NUM>
+        description: Set max GB the pipeline may request at one time. Only applies to local jobs
+      - names:
+          - --localvmem
+        argument: <NUM>
+        description: Set max virtual address space in GB for the pipeline. Only applies to local jobs
+      - names:
+          - --mempercore
+        argument: <NUM>
+        description: Reserve enough threads for each job to ensure enough memory will be available, assuming each core on your cluster has at least this much memory available. Only applies to cluster jobmodes
+      - names:
+          - --maxjobs
+        argument: <NUM>
+        description: Set max jobs submitted to cluster at one time. Only applies to cluster jobmodes
+      - names:
+          - --jobinterval
+        argument: <NUM>
+        description: Set delay between submitting jobs to cluster, in ms. Only applies to cluster jobmodes
+      - names:
+          - --overrides
+        argument: <PATH>
+        description: The path to a JSON file that specifies stage-level overrides for cores and memory. Finer-grained than --localcores, --mempercore and --localmem. Consult https://support.10xgenomics.com/ for an example override file
+      - names:
+          - --uiport
+        argument: <PORT>
+        description: Serve web UI at http://localhost:PORT
+      - names:
+          - --disable-ui
+        argument: ""
+        description: Do not serve the web UI
+      - names:
+          - --noexit
+        argument: ""
+        description: Keep web UI running after pipestance completes or fails
+      - names:
+          - --nopreflight
+        argument: ""
+        description: Skip preflight checks
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: Print help information
+  - name: multi
+    description: Analyze multiplexed data or combined gene expression/immune
+    options:
+      - names:
+          - --id
+        argument: <ID>
+        description: A unique run id and output folder name [a-zA-Z0-9_-]+
+      - names:
+          - --description
+        argument: <TEXT>
+        description: 'Sample description to embed in output files [default: ]'
+      - names:
+          - --csv
+        argument: <CSV>
+        description: Path of CSV file enumerating input libraries and analysis parameters
+      - names:
+          - --dry
+        argument: ""
+        description: Do not execute the pipeline. Generate a pipeline invocation (.mro) file and stop
+      - names:
+          - --jobmode
+        argument: <MODE>
+        description: 'Job manager to use. Valid options: local (default), sge, lsf, slurm or path to a .template file. Search for help on "Cluster Mode" at support.10xgenomics.com for more details on configuring the pipeline to use a compute cluster [default: local]'
+      - names:
+          - --localcores
+        argument: <NUM>
+        description: Set max cores the pipeline may request at one time. Only applies to local jobs
+      - names:
+          - --localmem
+        argument: <NUM>
+        description: Set max GB the pipeline may request at one time. Only applies to local jobs
+      - names:
+          - --localvmem
+        argument: <NUM>
+        description: Set max virtual address space in GB for the pipeline. Only applies to local jobs
+      - names:
+          - --mempercore
+        argument: <NUM>
+        description: Reserve enough threads for each job to ensure enough memory will be available, assuming each core on your cluster has at least this much memory available. Only applies to cluster jobmodes
+      - names:
+          - --maxjobs
+        argument: <NUM>
+        description: Set max jobs submitted to cluster at one time. Only applies to cluster jobmodes
+      - names:
+          - --jobinterval
+        argument: <NUM>
+        description: Set delay between submitting jobs to cluster, in ms. Only applies to cluster jobmodes
+      - names:
+          - --overrides
+        argument: <PATH>
+        description: The path to a JSON file that specifies stage-level overrides for cores and memory. Finer-grained than --localcores, --mempercore and --localmem. Consult https://support.10xgenomics.com/ for an example override file
+      - names:
+          - --uiport
+        argument: <PORT>
+        description: Serve web UI at http://localhost:PORT
+      - names:
+          - --disable-ui
+        argument: ""
+        description: Do not serve the web UI
+      - names:
+          - --noexit
+        argument: ""
+        description: Keep web UI running after pipestance completes or fails
+      - names:
+          - --nopreflight
+        argument: ""
+        description: Skip preflight checks
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: Print help information
+  - name: vdj
+    description: Assembles single-cell VDJ receptor sequences from 10x Immune Profiling
+    options:
+      - names:
+          - --id
+        argument: <ID>
+        description: A unique run id and output folder name [a-zA-Z0-9_-]+
+      - names:
+          - --description
+        argument: <TEXT>
+        description: 'Sample description to embed in output files [default: ]'
+      - names:
+          - --reference
+        argument: <PATH>
+        description: Path of folder containing 10x-compatible VDJ reference. Optional if '--denovo' is specified
+      - names:
+          - --fastqs
+        argument: <PATH>
+        description: Path to input FASTQ data
+      - names:
+          - --project
+        argument: <TEXT>
+        description: Name of the project folder within a mkfastq or bcl2fastq-generated folder to pick FASTQs from
+      - names:
+          - --sample
+        argument: <PREFIX>
+        description: Prefix of the filenames of FASTQs to select
+      - names:
+          - --lanes
+        argument: <NUMS>
+        description: Only use FASTQs from selected lanes
+      - names:
+          - --denovo
+        argument: ""
+        description: Run in reference-free mode (do not use annotations)
+      - names:
+          - --chain
+        argument: <CHAIN_SPEC>
+        description: 'Chain type to display metrics for: ''TR'' for T cell receptors, ''IG'' for B cell receptors, or ''auto'' to autodetect [default: auto]'
+      - names:
+          - --inner-enrichment-primers
+        argument: <PATH>
+        description: If inner enrichment primers other than those provided in the 10x kits are used, they need to be specified here as a textfile with one primer per line. Disable secondary analysis, e.g. clustering
+      - names:
+          - --dry
+        argument: ""
+        description: Do not execute the pipeline. Generate a pipeline invocation (.mro) file and stop
+      - names:
+          - --jobmode
+        argument: <MODE>
+        description: 'Job manager to use. Valid options: local (default), sge, lsf, slurm or path to a .template file. Search for help on "Cluster Mode" at support.10xgenomics.com for more details on configuring the pipeline to use a compute cluster [default: local]'
+      - names:
+          - --localcores
+        argument: <NUM>
+        description: Set max cores the pipeline may request at one time. Only applies to local jobs
+      - names:
+          - --localmem
+        argument: <NUM>
+        description: Set max GB the pipeline may request at one time. Only applies to local jobs
+      - names:
+          - --localvmem
+        argument: <NUM>
+        description: Set max virtual address space in GB for the pipeline. Only applies to local jobs
+      - names:
+          - --mempercore
+        argument: <NUM>
+        description: Reserve enough threads for each job to ensure enough memory will be available, assuming each core on your cluster has at least this much memory available. Only applies to cluster jobmodes
+      - names:
+          - --maxjobs
+        argument: <NUM>
+        description: Set max jobs submitted to cluster at one time. Only applies to cluster jobmodes
+      - names:
+          - --jobinterval
+        argument: <NUM>
+        description: Set delay between submitting jobs to cluster, in ms. Only applies to cluster jobmodes
+      - names:
+          - --overrides
+        argument: <PATH>
+        description: The path to a JSON file that specifies stage-level overrides for cores and memory. Finer-grained than --localcores, --mempercore and --localmem. Consult https://support.10xgenomics.com/ for an example override file
+      - names:
+          - --uiport
+        argument: <PORT>
+        description: Serve web UI at http://localhost:PORT
+      - names:
+          - --disable-ui
+        argument: ""
+        description: Do not serve the web UI
+      - names:
+          - --noexit
+        argument: ""
+        description: Keep web UI running after pipestance completes or fails
+      - names:
+          - --nopreflight
+        argument: ""
+        description: Skip preflight checks
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: Print help information
+  - name: aggr
+    description: Aggregate data from multiple Cell Ranger runs
+    options:
+      - names:
+          - --id
+        argument: <ID>
+        description: A unique run id and output folder name [a-zA-Z0-9_-]+
+      - names:
+          - --description
+        argument: <TEXT>
+        description: 'Sample description to embed in output files [default: ]'
+      - names:
+          - --csv
+        argument: <CSV>
+        description: Path of CSV file enumerating 'cellranger count/vdj/multi' outputs
+      - names:
+          - --normalize
+        argument: <MODE>
+        description: 'Library depth normalization mode [default: mapped] [possible values: mapped, none]'
+      - names:
+          - --nosecondary
+        argument: ""
+        description: Disable secondary analysis, e.g. clustering
+      - names:
+          - --dry
+        argument: ""
+        description: Do not execute the pipeline. Generate a pipeline invocation (.mro) file and stop
+      - names:
+          - --jobmode
+        argument: <MODE>
+        description: 'Job manager to use. Valid options: local (default), sge, lsf, slurm or path to a .template file. Search for help on "Cluster Mode" at support.10xgenomics.com for more details on configuring the pipeline to use a compute cluster [default: local]'
+      - names:
+          - --localcores
+        argument: <NUM>
+        description: Set max cores the pipeline may request at one time. Only applies to local jobs
+      - names:
+          - --localmem
+        argument: <NUM>
+        description: Set max GB the pipeline may request at one time. Only applies to local jobs
+      - names:
+          - --localvmem
+        argument: <NUM>
+        description: Set max virtual address space in GB for the pipeline. Only applies to local jobs
+      - names:
+          - --mempercore
+        argument: <NUM>
+        description: Reserve enough threads for each job to ensure enough memory will be available, assuming each core on your cluster has at least this much memory available. Only applies to cluster jobmodes
+      - names:
+          - --maxjobs
+        argument: <NUM>
+        description: Set max jobs submitted to cluster at one time. Only applies to cluster jobmodes
+      - names:
+          - --jobinterval
+        argument: <NUM>
+        description: Set delay between submitting jobs to cluster, in ms. Only applies to cluster jobmodes
+      - names:
+          - --overrides
+        argument: <PATH>
+        description: The path to a JSON file that specifies stage-level overrides for cores and memory. Finer-grained than --localcores, --mempercore and --localmem. Consult https://support.10xgenomics.com/ for an example override file
+      - names:
+          - --uiport
+        argument: <PORT>
+        description: Serve web UI at http://localhost:PORT
+      - names:
+          - --disable-ui
+        argument: ""
+        description: Do not serve the web UI
+      - names:
+          - --noexit
+        argument: ""
+        description: Keep web UI running after pipestance completes or fails
+      - names:
+          - --nopreflight
+        argument: ""
+        description: Skip preflight checks
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: Print help information
+  - name: reanalyze
+    description: Re-run secondary analysis (dimensionality reduction, clustering, etc)
+    options:
+      - names:
+          - --id
+        argument: <ID>
+        description: A unique run id and output folder name [a-zA-Z0-9_-]+
+      - names:
+          - --description
+        argument: <TEXT>
+        description: 'Sample description to embed in output files [default: ]'
+      - names:
+          - --matrix
+        argument: <MATRIX_H5>
+        description: A feature-barcode matrix containing data for one genome. Should be the filtered version, unless using --force-cells
+      - names:
+          - --params
+        argument: <PARAMS_CSV>
+        description: A CSV file specifying analysis parameters. Optional
+      - names:
+          - --barcodes
+        argument: <BARCODES_CSV>
+        description: A CSV file containing a list of cell barcodes to use for reanalysis, e.g. barcodes exported from Loupe Browser. Optional
+      - names:
+          - --genes
+        argument: <GENES_CSV>
+        description: A CSV file containing a list of feature IDs to use for reanalysis. For gene expression, this should correspond to the gene_id field in the reference GTF should be \(e.g. ENSG... for ENSEMBL-based references\). Optional
+      - names:
+          - --exclude-genes
+        argument: <GENES_CSV>
+        description: A CSV file containing a list of feature IDs to exclude from reanalysis. For gene expression, this should correspond to the gene_id field in the reference GTF \(e.g., ENSG... for ENSEMBL-based references\). The exclusion is applied after --genes. Optional
+      - names:
+          - --agg
+        argument: <AGGREGATION_CSV>
+        description: If the input matrix was produced by 'aggr', you may pass the same aggregation CSV in order to retain per-library tag information in the resulting .cloupe file. This argument is required to enable chemistry batch correction. Optional
+      - names:
+          - --force-cells
+        argument: <NUM>
+        description: 'Force pipeline to use this number of cells, bypassing cell calling algorithm. [MINIMUM: 10]'
+      - names:
+          - --dry
+        argument: ""
+        description: Do not execute the pipeline. Generate a pipeline invocation (.mro) file and stop
+      - names:
+          - --jobmode
+        argument: <MODE>
+        description: 'Job manager to use. Valid options: local (default), sge, lsf, slurm or path to a .template file. Search for help on "Cluster Mode" at support.10xgenomics.com for more details on configuring the pipeline to use a compute cluster [default: local]'
+      - names:
+          - --localcores
+        argument: <NUM>
+        description: Set max cores the pipeline may request at one time. Only applies to local jobs
+      - names:
+          - --localmem
+        argument: <NUM>
+        description: Set max GB the pipeline may request at one time. Only applies to local jobs
+      - names:
+          - --localvmem
+        argument: <NUM>
+        description: Set max virtual address space in GB for the pipeline. Only applies to local jobs
+      - names:
+          - --mempercore
+        argument: <NUM>
+        description: Reserve enough threads for each job to ensure enough memory will be available, assuming each core on your cluster has at least this much memory available. Only applies to cluster jobmodes
+      - names:
+          - --maxjobs
+        argument: <NUM>
+        description: Set max jobs submitted to cluster at one time. Only applies to cluster jobmodes
+      - names:
+          - --jobinterval
+        argument: <NUM>
+        description: Set delay between submitting jobs to cluster, in ms. Only applies to cluster jobmodes
+      - names:
+          - --overrides
+        argument: <PATH>
+        description: The path to a JSON file that specifies stage-level overrides for cores and memory. Finer-grained than --localcores, --mempercore and --localmem. Consult https://support.10xgenomics.com/ for an example override file
+      - names:
+          - --uiport
+        argument: <PORT>
+        description: Serve web UI at http://localhost:PORT
+      - names:
+          - --disable-ui
+        argument: ""
+        description: Do not serve the web UI
+      - names:
+          - --noexit
+        argument: ""
+        description: Keep web UI running after pipestance completes or fails
+      - names:
+          - --nopreflight
+        argument: ""
+        description: Skip preflight checks
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: Print help information
+  - name: targeted-compare
+    description: Analyze targeted enrichment performance by comparing a targeted sample
+    options:
+      - names:
+          - --id
+        argument: <ID>
+        description: A unique run id and output folder name [a-zA-Z0-9_-]+
+      - names:
+          - --description
+        argument: <TEXT>
+        description: 'Sample description to embed in output files [default: ]'
+      - names:
+          - --targeted
+        argument: <MOL_INFO_H5>
+        description: Path to the targeted molecule_info.h5 from a 'count --targetpanel' analysis run (targeted gene expression run)
+      - names:
+          - --parent
+        argument: <MOL_INFO_H5>
+        description: Path to the parent molecule_info.h5 from a 'count' analysis run (parent unbiased gene expression run)
+      - names:
+          - --target-panel
+        argument: <CSV>
+        description: A CSV file declaring the target gene panel used in the targeted experiment. Must be the same target panel CSV file specified in the 'count --target-panel' analysis run
+      - names:
+          - --dry
+        argument: ""
+        description: Do not execute the pipeline. Generate a pipeline invocation (.mro) file and stop
+      - names:
+          - --jobmode
+        argument: <MODE>
+        description: 'Job manager to use. Valid options: local (default), sge, lsf, slurm or path to a .template file. Search for help on "Cluster Mode" at support.10xgenomics.com for more details on configuring the pipeline to use a compute cluster [default: local]'
+      - names:
+          - --localcores
+        argument: <NUM>
+        description: Set max cores the pipeline may request at one time. Only applies to local jobs
+      - names:
+          - --localmem
+        argument: <NUM>
+        description: Set max GB the pipeline may request at one time. Only applies to local jobs
+      - names:
+          - --localvmem
+        argument: <NUM>
+        description: Set max virtual address space in GB for the pipeline. Only applies to local jobs
+      - names:
+          - --mempercore
+        argument: <NUM>
+        description: Reserve enough threads for each job to ensure enough memory will be available, assuming each core on your cluster has at least this much memory available. Only applies to cluster jobmodes
+      - names:
+          - --maxjobs
+        argument: <NUM>
+        description: Set max jobs submitted to cluster at one time. Only applies to cluster jobmodes
+      - names:
+          - --jobinterval
+        argument: <NUM>
+        description: Set delay between submitting jobs to cluster, in ms. Only applies to cluster jobmodes
+      - names:
+          - --overrides
+        argument: <PATH>
+        description: The path to a JSON file that specifies stage-level overrides for cores and memory. Finer-grained than --localcores, --mempercore and --localmem. Consult https://support.10xgenomics.com/ for an example override file
+      - names:
+          - --uiport
+        argument: <PORT>
+        description: Serve web UI at http://localhost:PORT
+      - names:
+          - --disable-ui
+        argument: ""
+        description: Do not serve the web UI
+      - names:
+          - --noexit
+        argument: ""
+        description: Keep web UI running after pipestance completes or fails
+      - names:
+          - --nopreflight
+        argument: ""
+        description: Skip preflight checks
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: Print help information
+  - name: targeted-depth
+    description: Estimate targeted read depth values (mean reads per cell) for a
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --molecule-h5
+        argument: MOLECULE_H5
+        description: path to molecule_info.h5 file from a whole transcriptome analysis
+      - names:
+          - --target-panel
+        argument: TARGET_PANEL
+        description: path to target panel CSV file
+  - name: mkvdjref
+    description: Prepare a reference for use with CellRanger VDJ
+    options:
+      - names:
+          - --ref-version
+        argument: <str>
+        description: Optional reference version string to include.
+      - names:
+          - --rm-transcripts
+        argument: PATH
+        description: Path to text file with transcript IDs to ignore. This
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: Show this message.
+      - names:
+          - --version
+        argument: ""
+        description: Show version.
+  - name: mkfastq
+    description: Run Illumina demultiplexer on sample sheets that contain 10x-specific
+    options:
+      - names:
+          - --fastq-cluster-count
+        argument: ""
+        description: --minimum-trimmed-read-length
+      - names:
+          - --run
+        argument: PATH
+        description: Path of Illumina BCL run folder.
+      - names:
+          - --id
+        argument: NAME
+        description: Name of the folder created by mkfastq. If not supplied,
+      - names:
+          - --csv
+          - --samplesheet
+          - --sample-sheet
+        argument: PATH
+        description: Path to the sample sheet. The sample sheet can either be
+      - names:
+          - --simple-csv
+        argument: PATH
+        description: Deprecated. Same meaning as --csv.
+      - names:
+          - --force-single-index
+        argument: ""
+        description: If 10x-supplied i7/i5 paired indices are specified,
+      - names:
+          - --filter-single-index
+        argument: ""
+        description: Only demultiplex samples identified
+      - names:
+          - --filter-dual-index
+        argument: ""
+        description: Only demultiplex samples identified
+      - names:
+          - --rc-i2-override
+        argument: BOOL
+        description: Indicates if the bases in the I2 read are emitted as
+      - names:
+          - --lanes
+        argument: NUMS
+        description: Comma-delimited series of lanes to demultiplex. Shortcut
+      - names:
+          - --use-bases-mask
+        argument: MASK
+        description: Same as bcl2fastq; override the read lengths as
+      - names:
+          - --delete-undetermined
+        argument: ""
+        description: Delete the Undetermined FASTQ files left by bcl2fastq
+      - names:
+          - --output-dir
+        argument: PATH
+        description: Same as in bcl2fastq. Folder where FASTQs, reports and
+      - names:
+          - --project
+        argument: NAME
+        description: Custom project name, to override the samplesheet or to
+      - names:
+          - --jobmode
+        argument: MODE
+        description: 'Job manager to use. Valid options: local (default), sge,'
+      - names:
+          - --localcores
+        argument: NUM
+        description: Set max cores the pipeline may request at one time. Only
+      - names:
+          - --localmem
+        argument: NUM
+        description: Set max GB the pipeline may request at one time. Only
+      - names:
+          - --localvmem
+        argument: NUM
+        description: Set max virtual address space in GB for the pipeline.
+      - names:
+          - --mempercore
+        argument: NUM
+        description: Reserve enough threads for each job to ensure enough memory will be available, assuming each core on your cluster has at least this much memory available. Only
+      - names:
+          - --maxjobs
+        argument: NUM
+        description: Set max jobs submitted to cluster at one time. Only
+      - names:
+          - --jobinterval
+        argument: NUM
+        description: Set delay between submitting jobs to cluster, in ms.
+      - names:
+          - --overrides
+        argument: PATH
+        description: The path to a JSON file that specifies stage-level
+      - names:
+          - --uiport
+        argument: PORT
+        description: Serve web UI at http://localhost:PORT
+      - names:
+          - --disable-ui
+        argument: ""
+        description: Do not serve the UI.
+      - names:
+          - --noexit
+        argument: ""
+        description: Keep web UI running after pipestance completes or fails.
+      - names:
+          - --nopreflight
+        argument: ""
+        description: Skip preflight checks.
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: Show this message.
+      - names:
+          - --version
+        argument: ""
+        description: Show version.
+  - name: testrun
+    description: Execute the 'count' pipeline on a small test dataset
+    options:
+      - names:
+          - --id
+        argument: <ID>
+        description: A unique run id and output folder name [a-zA-Z0-9_-]+
+      - names:
+          - --description
+        argument: <TEXT>
+        description: Sample description to embed in output files
+      - names:
+          - --dry
+        argument: ""
+        description: Do not execute the pipeline. Generate a pipeline invocation (.mro) file and stop
+      - names:
+          - --jobmode
+        argument: <MODE>
+        description: 'Job manager to use. Valid options: local (default), sge, lsf, slurm or path to a .template file. Search for help on "Cluster Mode" at support.10xgenomics.com for more details on configuring the pipeline to use a compute cluster [default: local]'
+      - names:
+          - --localcores
+        argument: <NUM>
+        description: Set max cores the pipeline may request at one time. Only applies to local jobs
+      - names:
+          - --localmem
+        argument: <NUM>
+        description: Set max GB the pipeline may request at one time. Only applies to local jobs
+      - names:
+          - --localvmem
+        argument: <NUM>
+        description: Set max virtual address space in GB for the pipeline. Only applies to local jobs
+      - names:
+          - --mempercore
+        argument: <NUM>
+        description: Reserve enough threads for each job to ensure enough memory will be available, assuming each core on your cluster has at least this much memory available. Only applies to cluster jobmodes
+      - names:
+          - --maxjobs
+        argument: <NUM>
+        description: Set max jobs submitted to cluster at one time. Only applies to cluster jobmodes
+      - names:
+          - --jobinterval
+        argument: <NUM>
+        description: Set delay between submitting jobs to cluster, in ms. Only applies to cluster jobmodes
+      - names:
+          - --overrides
+        argument: <PATH>
+        description: The path to a JSON file that specifies stage-level overrides for cores and memory. Finer-grained than --localcores, --mempercore and --localmem. Consult https://support.10xgenomics.com/ for an example override file
+      - names:
+          - --uiport
+        argument: <PORT>
+        description: Serve web UI at http://localhost:PORT
+      - names:
+          - --disable-ui
+        argument: ""
+        description: Do not serve the web UI
+      - names:
+          - --noexit
+        argument: ""
+        description: Keep web UI running after pipestance completes or fails
+      - names:
+          - --nopreflight
+        argument: ""
+        description: Skip preflight checks
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: Print help information
+  - name: mat2csv
+    description: Convert a gene count matrix to CSV format
+    options:
+      - names:
+          - --genome
+        argument: GENOME
+        description: Specify which genome to extract. This only applies to
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: Show this message.
+      - names:
+          - --version
+        argument: ""
+        description: Show version.
+  - name: mkref
+    description: Prepare a reference for use with 10x analysis software. Requires a GTF
+    options:
+      - names:
+          - --genome
+        argument: NAME
+        description: Unique genome name(s), used to name output folder [a-zA-Z0-9_-]+. Specify multiple genomes by specifying the --genome argument multiple times; the output folder will be <name1>_and_<name2>.
+      - names:
+          - --fasta
+        argument: PATH
+        description: Path(s) to FASTA file containing your genome reference.
+      - names:
+          - --genes
+        argument: PATH
+        description: Path(s) to genes GTF file(S) containing annotated genes for your genome reference. Specify multiple genomes by specifying the --genes argument multiple times.
+      - names:
+          - --nthreads
+        argument: <num>
+        description: Number of threads used during STAR genome index
+      - names:
+          - --memgb
+        argument: <num>
+        description: Maximum memory (GB) used when aligning reads with STAR.
+      - names:
+          - --ref-version
+        argument: <str>
+        description: Optional reference version string to include with
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: Show this message.
+      - names:
+          - --version
+        argument: ""
+        description: Show version.
+  - name: mkgtf
+    description: Filter a GTF file by attribute prior to creating a 10x reference
+    options:
+      - names:
+          - --attribute
+        argument: <key:value>
+        description: Key-value pair in attributes field to be kept in the GTF
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: Show this message.
+      - names:
+          - --version
+        argument: ""
+        description: Show version.
+  - name: upload
+    description: Upload analysis logs to 10x Genomics support
+    options: []
+    usage: cellranger upload <your_email> <file>
+  - name: sitecheck
+    description: Collect linux system configuration information
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: Show this message.
+      - names:
+          - --version
+        argument: ""
+        description: Show version.
+version: cellranger cellranger-7.0.0

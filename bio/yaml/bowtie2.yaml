@@ -2,6 +2,34 @@ name: bowtie2
 description: bowtie2
 options:
   - names:
+      - -x
+    argument: <bt2-idx-file-prefix>
+    description: "Index filename prefix (minus trailing .X.bt2)."
+  - names:
+      - '-1'
+    argument: <m1-files>
+    description: "Files with #1 mates, paired with files in <m2>."
+  - names:
+      - '-2'
+    argument: <m2-files>
+    description: "Files with #2 mates, paired with files in <m1>."
+  - names:
+      - -U
+    argument: <files>
+    description: "Files with unpaired reads."
+  - names:
+      - --interleaved
+    argument: <files>
+    description: "Files with interleaved paired-end FASTQ/FASTA reads."
+  - names:
+      - -b
+    argument: <bam-files>
+    description: "Files are unaligned BAM sorted by read name."
+  - names:
+      - -S
+    argument: <sam-file>
+    description: "File for SAM output (default: stdout)."
+  - names:
       - -q
     argument: ""
     description: query input files are FASTQ .fq/.fastq (default)
@@ -55,8 +83,8 @@ options:
     description: trim <int> bases from 3'/right end of reads (0)
   - names:
       - --trim-to
-    argument: '[3:|5:]<int> trim reads exceeding <int> bases from either 3'' or 5'' end'
-    description: If the read end is not specified then it defaults to 3 (0)
+    argument: '[3:|5:]<int>'
+    description: trim reads exceeding <int> bases from either 3' or 5' end   If the read end is not specified then it defaults to 3 (0)
   - names:
       - --phred33
     argument: ""
@@ -313,3 +341,16 @@ options:
       - --help
     argument: ""
     description: print this usage message
+usage: bowtie2 [options]* -x <bt2-idx> {-1 <m1> -2 <m2> | -U <r> | --interleaved <i> | -b <bam>} [-S <sam>]
+version: version 2.4.5
+tldr: |
+  > A fast and sensitive gapped read aligner
+  > More information: <https://github.com/BenLangmead/bowtie2>
+
+  - Align unpaired reads
+
+  `bowtie2 -x {{example/index/lambda_virus}} -U {{example/reads/longreads.fq}}`
+
+  - Align paired reads
+
+  `bowtie2 -x {{example/index/lambda_virus}} -1 {{example/reads/reads_1.fq}} -2 {{example/reads/reads_2.fq}}`

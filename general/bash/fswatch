@@ -1,0 +1,30 @@
+# Auto-generated with h2o
+
+_fswatch()
+{
+    local i=1 cmd cur word_list
+    cur="${COMP_WORDS[COMP_CWORD]}"
+
+    # take the last word that's NOT starting with -
+    while [[ ( "$i" < "$COMP_CWORD" ) ]]; do
+        local s="${COMP_WORDS[i]}"
+        case "$s" in
+          -*) ;;
+          *)
+            cmd="$s"
+            ;;
+        esac
+        (( i++ ))
+    done
+
+    case "$cmd" in
+      *)
+          word_list="  -0 --print0 -1 --one-event --allow-overflow --batch-marker -a --access -d --directories -e --exclude -E --extended --filter-from --format -f --format-time --fire-idle-event -h --help -i --include -I --insensitive -l --latency -L --follow-links -M --list-monitors -m --monitor --monitor-property -n --numeric -o --one-per-batch -r --recursive -t --timestamp -u --utc-time -x --event-flags --event --event-flag-separator -v --verbose --version"
+          COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+          ;;
+    esac
+
+}
+
+## -o bashdefault and -o default are fallback
+complete -o bashdefault -o default -F _fswatch fswatch

@@ -1,0 +1,693 @@
+name: pysradb
+description: pysradb
+options:
+  - names:
+      - -h
+      - --help
+    argument: ""
+    description: show this help message and exit
+  - names:
+      - --version
+    argument: ""
+    description: show program's version number and exit
+  - names:
+      - --citation
+    argument: ""
+    description: how to cite
+subcommands:
+  - name: metadata
+    description: Fetch metadata for SRA project (SRPnnnn)
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --saveto
+        argument: SAVETO
+        description: Save metadata dataframe to file
+      - names:
+          - --assay
+        argument: ""
+        description: Include assay type in output
+      - names:
+          - --desc
+        argument: ""
+        description: Should sample_attribute be included
+      - names:
+          - --detailed
+        argument: ""
+        description: Display detailed metadata table
+      - names:
+          - --expand
+        argument: ""
+        description: Should sample_attribute be expanded
+  - name: download
+    description: Download SRA project (SRPnnnn)
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --out-dir
+        argument: OUT_DIR
+        description: Output directory root
+      - names:
+          - --srx
+          - '-'
+        argument: SRX [SRX ...]
+        description: x SRX [SRX ...] Download only these SRX(s)
+      - names:
+          - --srp
+          - '-'
+        argument: SRP [SRP ...]
+        description: p SRP [SRP ...] SRP ID
+      - names:
+          - --geo
+          - '-'
+        argument: GEO [GEO ...]
+        description: g GEO [GEO ...] GEO ID
+      - names:
+          - --skip-confirmation
+          - -y
+        argument: ""
+        description: Skip confirmation
+      - names:
+          - --use_ascp
+          - -a
+        argument: ""
+        description: Use aspera instead of wget
+      - names:
+          - --col
+        argument: COL
+        description: Specify column to download
+      - names:
+          - --threads
+          - -t
+        argument: THREADS
+        description: Number of threads
+  - name: search
+    description: Search SRA/ENA for matching text
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - -o
+          - --saveto
+        argument: SAVETO
+        description: Save search result dataframe to file
+      - names:
+          - -s
+          - --stats
+        argument: ""
+        description: Displays some useful statistics for the search results.
+      - names:
+          - -g
+          - --graphs
+        argument: '[GRAPHS]'
+        description: 'Generates graphs to illustrate the search result. By default all graphs are generated. Alternatively, select a subset from the options below in a space-separated string: daterange, organism, source, selection, platform, basecount'
+      - names:
+          - -d
+          - --db
+        argument: '{ena,geo,sra}'
+        description: 'Select the db API (sra, ena, or geo) to query, default = sra. Note: pysradb search works slightly differently when db = geo. Please refer to ''pysradb search --geo-info'' for more details.'
+      - names:
+          - -v
+          - --verbosity
+        argument: '{0,1,2,3}'
+        description: 'Level of search result details (0, 1, 2 or 3), default = 2 0: run accession only 1: run accession and experiment title 2: accession numbers, titles and sequencing information 3: records in 2 and other information such as download url, sample attributes, etc'
+      - names:
+          - --run-description
+        argument: ""
+        description: Displays run accessions and descriptions only. Equivalent to --verbosity 1
+      - names:
+          - --detailed
+        argument: ""
+        description: Displays detailed search results. Equivalent to --verbosity 3.
+      - names:
+          - -m
+          - --max
+        argument: MAX
+        description: Maximum number of entries to return, default = 20
+      - names:
+          - -q
+          - --query
+        argument: QUERY [QUERY ...]
+        description: 'Main query string. Note that if no query is supplied, at least one of the following flags must be present:'
+      - names:
+          - -A
+          - --accession
+        argument: ACCESSION
+        description: Accession number
+      - names:
+          - -O
+          - --organism
+        argument: ORGANISM [ORGANISM ...]
+        description: Scientific name of the sample organism
+      - names:
+          - -L
+          - --layout
+        argument: '{SINGLE,PAIRED}'
+        description: Library layout. Accepts either SINGLE or PAIRED
+      - names:
+          - -M
+          - --mbases
+        argument: MBASES
+        description: Size of the sample rounded to the nearest megabase
+      - names:
+          - -D
+          - --publication-date
+        argument: PUBLICATION_DATE
+        description: 'Publication date of the run in the format dd-mm-yyyy. If a date range is desired, enter the start date, followed by end date, separated by a colon '':''. Example: 01-01-2010:31-12-2010'
+      - names:
+          - -P
+          - --platform
+        argument: PLATFORM [PLATFORM ...]
+        description: Sequencing platform
+      - names:
+          - -E
+          - --selection
+        argument: SELECTION [SELECTION ...]
+        description: Library selection
+      - names:
+          - -C
+          - --source
+        argument: SOURCE [SOURCE ...]
+        description: Library source
+      - names:
+          - -S
+          - --strategy
+        argument: STRATEGY [STRATEGY ...]
+        description: Library preparation strategy
+      - names:
+          - -T
+          - --title
+        argument: TITLE [TITLE ...]
+        description: Experiment title
+      - names:
+          - -I
+          - --geo-info
+        argument: ""
+        description: Displays information on how to query GEO DataSets via 'pysradb search --db geo ...', including accepted inputs for -G/--geo-query, -Y/--geo-dataset-type and -Z/--geo-entry-type.
+      - names:
+          - -G
+          - --geo-query
+        argument: GEO_QUERY [GEO_QUERY ...]
+        description: Main query string for GEO DataSet. This flag is only used when db is set to be geo.Please refer to 'pysradb search --geo-info' for more details.
+      - names:
+          - -Y
+          - --geo-dataset-type
+        argument: GEO_DATASET_TYPE [GEO_DATASET_TYPE ...]
+        description: GEO DataSet Type. This flag is only used when --db is set to be geo.Please refer to 'pysradb search --geo-info' for more details.
+      - names:
+          - -Z
+          - --geo-entry-type
+        argument: GEO_ENTRY_TYPE [GEO_ENTRY_TYPE ...]
+        description: GEO Entry Type. This flag is only used when --db is set to be geo.Please refer to 'pysradb search --geo-info' for more details.
+  - name: gse-to-gsm
+    description: Get GSM for a GSE
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --saveto
+        argument: SAVETO
+        description: Save output to file
+      - names:
+          - --detailed
+        argument: ""
+        description: 'Output additional columns: [sample_accession (SRS), run_accession (SRR), sample_alias (GSM), run_alias (GSM_r)]'
+      - names:
+          - --desc
+        argument: ""
+        description: Should sample_attribute be included
+      - names:
+          - --expand
+        argument: ""
+        description: Should sample_attribute be expanded
+  - name: gse-to-srp
+    description: Get SRP for a GSE
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --saveto
+        argument: SAVETO
+        description: Save output to file
+      - names:
+          - --detailed
+        argument: ""
+        description: 'Output additional columns: [experiment_accession (SRX), run_accession (SRR), sample_accession (SRS), experiment_alias (GSM_), run_alias (GSM_r), sample_alias (GSM)]'
+      - names:
+          - --desc
+        argument: ""
+        description: Should sample_attribute be included
+      - names:
+          - --expand
+        argument: ""
+        description: Should sample_attribute be expanded
+  - name: gsm-to-gse
+    description: Get GSE for a GSM
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --saveto
+        argument: SAVETO
+        description: Save output to file
+      - names:
+          - --detailed
+        argument: ""
+        description: 'Output additional columns: [sample_accession (SRS), run_accession (SRR), sample_alias (GSM), run_alias (GSM_r)]'
+      - names:
+          - --desc
+        argument: ""
+        description: Should sample_attribute be included
+      - names:
+          - --expand
+        argument: ""
+        description: Should sample_attribute be expanded
+  - name: gsm-to-srp
+    description: Get SRP for a GSM
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --desc
+        argument: ""
+        description: Should sample_attribute be included
+      - names:
+          - --detailed
+        argument: ""
+        description: 'Output additional columns: [experiment_accession (SRX), sample_accession (SRS), run_accession (SRR), experiment_alias (GSM), sample_alias (GSM), run_alias (GSM_r), study_alias (GSE)]'
+      - names:
+          - --expand
+        argument: ""
+        description: Should sample_attribute be expanded
+      - names:
+          - --saveto
+        argument: SAVETO
+        description: Save output to file
+  - name: gsm-to-srr
+    description: Get SRR for a GSM
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --desc
+        argument: ""
+        description: Should sample_attribute be included
+      - names:
+          - --detailed
+        argument: ""
+        description: 'Output additional columns: [experiment_accession (SRX), sample_accession (SRS), study_accession (SRS), run_alias (GSM_r), sample_alias (GSM), study_alias (GSE)]'
+      - names:
+          - --expand
+        argument: ""
+        description: Should sample_attribute be expanded
+      - names:
+          - --saveto
+        argument: SAVETO
+        description: Save output to file
+  - name: gsm-to-srs
+    description: Get SRS for a GSM
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --desc
+        argument: ""
+        description: Should sample_attribute be included
+      - names:
+          - --detailed
+        argument: ""
+        description: 'Output additional columns: [experiment_accession (SRX), run_accession (SRR), study_accession (SRP), run_alias (GSM_r), experiment_alias (GSM), study_alias (GSE)]'
+      - names:
+          - --expand
+        argument: ""
+        description: Should sample_attribute be expanded
+      - names:
+          - --saveto
+        argument: SAVETO
+        description: Save output to file
+  - name: gsm-to-srx
+    description: Get SRX for a GSM
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --desc
+        argument: ""
+        description: Should sample_attribute be included
+      - names:
+          - --detailed
+        argument: ""
+        description: 'Output additional columns: [experiment_accession (SRX), sample_accession (SRS), run_accession (SRR), experiment_alias (GSM), sample_alias (GSM), run_alias (GSM_r), study_alias (GSE)]'
+      - names:
+          - --expand
+        argument: ""
+        description: Should sample_attribute be expanded
+      - names:
+          - --saveto
+        argument: SAVETO
+        description: Save output to file
+  - name: srp-to-gse
+    description: Get GSE for a SRP
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --saveto
+        argument: SAVETO
+        description: Save output to file
+      - names:
+          - --detailed
+        argument: ""
+        description: 'Output additional columns: [sample_accession, run_accession]'
+      - names:
+          - --desc
+        argument: ""
+        description: Should sample_attribute be included
+      - names:
+          - --expand
+        argument: ""
+        description: Should sample_attribute be expanded
+  - name: srp-to-srr
+    description: Get SRR for a SRP
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --saveto
+        argument: SAVETO
+        description: Save output to file
+      - names:
+          - --detailed
+        argument: ""
+        description: 'Output additional columns: [experiment_accession (SRX), sample_accession (SRS), study_alias (GSE), experiment_alias (GSM), sample_alias (GSM_), run_alias (GSM_r)]'
+      - names:
+          - --desc
+        argument: ""
+        description: Should sample_attribute be included
+      - names:
+          - --expand
+        argument: ""
+        description: Should sample_attribute be expanded
+  - name: srp-to-srs
+    description: Get SRS for a SRP
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --saveto
+        argument: SAVETO
+        description: Save output to file
+      - names:
+          - --detailed
+        argument: ""
+        description: 'Output additional columns: [run_accession (SRR), study_accession (SRP), experiment_alias (GSM), sample_alias (GSM_), run_alias (GSM_r), study_alias (GSE)]'
+      - names:
+          - --desc
+        argument: ""
+        description: Should sample_attribute be included
+      - names:
+          - --expand
+        argument: ""
+        description: Should sample_attribute be expanded
+  - name: srp-to-srx
+    description: Get SRX for a SRP
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --saveto
+        argument: SAVETO
+        description: Save output to file
+      - names:
+          - --detailed
+        argument: ""
+        description: 'Output additional columns: [sample_accession (SRS), run_accession (SRR), experiment_alias (GSM), sample_alias (GSM_), run_alias (GSM_r)'', study_alias (GSE)]'
+      - names:
+          - --desc
+        argument: ""
+        description: Should sample_attribute be included
+      - names:
+          - --expand
+        argument: ""
+        description: Should sample_attribute be expanded
+  - name: srr-to-gsm
+    description: Get GSM for a SRR
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --detailed
+        argument: ""
+        description: '''Output additional columns: [experiment_accession (SRX), study_accession (SRP), run_alias (GSM_r), sample_alias (GSM_), experiment_alias (GSM), study_alias (GSE)]'
+      - names:
+          - --desc
+        argument: ""
+        description: Should sample_attribute be included
+      - names:
+          - --expand
+        argument: ""
+        description: Should sample_attribute be expanded
+      - names:
+          - --saveto
+        argument: SAVETO
+        description: Save output to file
+  - name: srr-to-srp
+    description: Get SRP for a SRR
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --detailed
+        argument: ""
+        description: '''Output additional columns: [experiment_accession (SRX), sample_accession (SRS), run_alias (GSM_r), experiment_alias (GSM), sample_alias (GSM_), study_alias (GSE)]'
+      - names:
+          - --desc
+        argument: ""
+        description: Should sample_attribute be included
+      - names:
+          - --expand
+        argument: ""
+        description: Should sample_attribute be expanded
+      - names:
+          - --saveto
+        argument: SAVETO
+        description: Save output to file
+  - name: srr-to-srs
+    description: Get SRS for a SRR
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --detailed
+        argument: ""
+        description: '''Output additional columns: [experiment_accession (SRX), study_accession (SRP), run_alias (GSM_r), sample_alias (GSM_), experiment_alias (GSM), study_alias (GSE)]'
+      - names:
+          - --desc
+        argument: ""
+        description: Should sample_attribute be included
+      - names:
+          - --expand
+        argument: ""
+        description: Should sample_attribute be expanded
+      - names:
+          - --saveto
+        argument: SAVETO
+        description: Save output to file
+  - name: srr-to-srx
+    description: Get SRX for a SRR
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --detailed
+        argument: ""
+        description: 'Output additional columns: [sample_accession (SRS), study_accession (SRP), run_alias (GSM_r), experiment_alias (GSM), sample_alias (GSM_), study_alias (GSE)]'
+      - names:
+          - --desc
+        argument: ""
+        description: Should sample_attribute be included
+      - names:
+          - --expand
+        argument: ""
+        description: Should sample_attribute be expanded
+      - names:
+          - --saveto
+        argument: SAVETO
+        description: Save output to file
+  - name: srs-to-gsm
+    description: Get GSM for a SRS
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --saveto
+        argument: SAVETO
+        description: Save output to file
+      - names:
+          - --detailed
+        argument: ""
+        description: 'Output additional columns: [run_accession, study_accession]'
+      - names:
+          - --desc
+        argument: ""
+        description: Should sample_attribute be included
+      - names:
+          - --expand
+        argument: ""
+        description: Should sample_attribute be expanded
+  - name: srs-to-srx
+    description: Get SRX for a SRS
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --saveto
+        argument: SAVETO
+        description: Save output to file
+      - names:
+          - --detailed
+        argument: ""
+        description: 'Output additional columns: [run_accession, study_accession]'
+      - names:
+          - --desc
+        argument: ""
+        description: Should sample_attribute be included
+      - names:
+          - --expand
+        argument: ""
+        description: Should sample_attribute be expanded
+  - name: srx-to-srp
+    description: Get SRP for a SRX
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --desc
+        argument: ""
+        description: Should sample_attribute be included
+      - names:
+          - --detailed
+        argument: ""
+        description: 'Output additional columns: [run_accession (SRR), sample_accession (SRS), experiment_alias (GSM), run_alias (GSM_r), sample_alias (GSM), study_alias (GSE)]'
+      - names:
+          - --expand
+        argument: ""
+        description: Should sample_attribute be expanded
+      - names:
+          - --saveto
+        argument: SAVETO
+        description: Save output to file
+  - name: srx-to-srr
+    description: Get SRR for a SRX
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --desc
+        argument: ""
+        description: Should sample_attribute be included
+      - names:
+          - --detailed
+        argument: ""
+        description: 'Output additional columns: [sample_accession, study_accession]'
+      - names:
+          - --expand
+        argument: ""
+        description: Should sample_attribute be expanded
+      - names:
+          - --saveto
+        argument: SAVETO
+        description: Save output to file
+  - name: srx-to-srs
+    description: Get SRS for a SRX
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --saveto
+        argument: SAVETO
+        description: Save output to file
+      - names:
+          - --detailed
+        argument: ""
+        description: 'Output additional columns: [run_accession, study_accession]'
+      - names:
+          - --desc
+        argument: ""
+        description: Should sample_attribute be included
+      - names:
+          - --expand
+        argument: ""
+        description: Should sample_attribute be expanded
+version: pysradb 1.4.1

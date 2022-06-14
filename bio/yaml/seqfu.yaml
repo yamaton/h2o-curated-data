@@ -4,6 +4,8 @@ options: []
 subcommands:
   - name: count
     description: count FASTA/FASTQ reads, pair-end aware
+    aliases:
+      - cnt
     options:
       - names:
           - -a
@@ -46,6 +48,8 @@ subcommands:
         argument: ""
         description: Show this help
   - name: deinterleave
+    aliases:
+      - dei
     description: deinterleave FASTQ
     options:
       - names:
@@ -84,6 +88,8 @@ subcommands:
         argument: '"string"'
         description: rename sequences (append a progressive number)
   - name: derep
+    aliases:
+      - der
     description: feature-rich dereplication of FASTA/FASTQ files
     options:
       - names:
@@ -156,6 +162,8 @@ subcommands:
         argument: ""
         description: Show this help
   - name: interleave
+    aliases:
+      - ilv
     description: interleave FASTQ pair ends
     options:
       - names:
@@ -194,6 +202,8 @@ subcommands:
         argument: '"string"'
         description: rename sequences (append a progressive number)
   - name: lanes
+    aliases:
+      - mrl
     description: merge Illumina lanes
     options:
       - names:
@@ -226,6 +236,8 @@ subcommands:
         argument: ""
         description: Show this help
   - name: list
+    aliases:
+      - lst
     description: print sequences from a list of names
     options:
       - names:
@@ -258,6 +270,8 @@ subcommands:
         argument: ""
         description: Show this help
   - name: metadata
+    aliases:
+      - met
     description: print a table of FASTQ reads (mapping files)
     options:
       - names:
@@ -276,19 +290,14 @@ subcommands:
         argument: STR
         description: 'Separator used in filename to identify the sample ID [default: _]'
       - names:
-          - -f
-          - --format
-        argument: TYPE
-        description: 'Output format: dadaist, manifest, qiime1, qiime2, irida [default: manifest]'
-      - names:
-          - -P
-          - --project
-        argument: INT
-        description: Project ID (only for irida)
-      - names:
           - --pos
         argument: INT...
         description: 'Which part of the filename is the Sample ID [default: 1]'
+      - names:
+          - -f
+          - --format
+        argument: TYPE
+        description: 'Output format: dadaist, irida, manifest, metaphage, qiime1, qiime2 [default: manifest]'
       - names:
           - --pe
         argument: ""
@@ -309,6 +318,23 @@ subcommands:
         argument: INT
         description: 'Number of simultaneously opened files [default: 2]'
       - names:
+          - -P
+          - --project
+        argument: INT
+        description: Project ID (only for irida)
+      - names:
+          - --meta-split
+        argument: STR
+        description: 'Separator in the SampleID to extract metadata, used in MetaPhage [default: _]'
+      - names:
+          - --meta-part
+        argument: INT
+        description: 'Which part of the SampleID to extract metadata, used in MetaPhage [default: 1]'
+      - names:
+          - --meta-default
+        argument: STR
+        description: 'Default value for metadata, used in MetaPhage [default: Cond]'
+      - names:
           - -v
           - --verbose
         argument: ""
@@ -319,9 +345,43 @@ subcommands:
         argument: ""
         description: Show this help
   - name: rotate
+    aliases:
+      - rot
     description: rotate a sequence with a new start position
-    options: []
+    options:
+      - names:
+          - -i
+          - --start-pos
+        argument: POS
+        description: 'Restart from base POS, where 1 is the first base [default: 1]'
+      - names:
+          - -m
+          - --motif
+        argument: STR
+        description: Rotate sequences using motif STR as the new start, where STR is a string of bases
+      - names:
+          - -s
+          - --skip-unmached
+        argument: ""
+        description: If a motif is provided, skip sequences that do not match the motif
+      - names:
+          - -r
+          - --revcomp
+        argument: ""
+        description: Also scan for reverse complemented motif
+      - names:
+          - -v
+          - --verbose
+        argument: ""
+        description: Verbose output
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: Show this help
   - name: sort
+    aliases:
+      - srt
     description: sort sequences by size (uniques)
     options:
       - names:
@@ -349,6 +409,8 @@ subcommands:
         argument: ""
         description: Show this help
   - name: stats
+    aliases:
+      - st
     description: statistics on sequence lengths
     options:
       - names:
@@ -367,13 +429,41 @@ subcommands:
         argument: ""
         description: Print nice terminal table
       - names:
+          - -j
+          - --json
+        argument: ""
+        description: Print json (experimental)
+      - names:
+          - -s
+          - --sort-by
+        argument: KEY
+        description: 'Sort by KEY from: filename, counts, n50, tot, avg, min, max descending for values, ascending for filenames [default: none]'
+      - names:
+          - -r
+          - --reverse
+        argument: ""
+        description: Reverse sort order
+      - names:
+          - -t
+          - --thousands
+        argument: ""
+        description: Add thousands separator
+      - names:
           - --csv
         argument: ""
-        description: 'Separate with commas (default: tabs)'
+        description: Separate output by commas instead of tabs
+      - names:
+          - --gc
+        argument: ""
+        description: Also print %GC
       - names:
           - --multiqc
         argument: FILE
         description: 'Saves a MultiQC report to FILE (suggested: name_mqc.txt)'
+      - names:
+          - --precision
+        argument: INT
+        description: 'Number of decimal places to round to [default: 2]'
       - names:
           - -v
           - --verbose
@@ -803,3 +893,4 @@ subcommands:
           - --help
         argument: ""
         description: Show this help
+version: 1.11.0

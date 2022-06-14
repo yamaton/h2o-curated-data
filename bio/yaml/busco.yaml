@@ -5,17 +5,17 @@ options:
       - -i
       - --in
     argument: SEQUENCE_FILE
-    description: Input sequence file in FASTA format. Can be an assembled genome or transcriptome (DNA), or protein sequences from an annotated gene set.
+    description: Input sequence file in FASTA format. Can be an assembled genome or transcriptome (DNA), or protein sequences from an annotated gene set. Also possible to use a path to a directory containing multiple input files.
   - names:
       - -o
       - --out
     argument: OUTPUT
-    description: 'Give your analysis run a recognisable short name. Output folders and files will be labelled with this name. WARNING: do not provide a path'
+    description: Give your analysis run a recognisable short name. Output folders and files will be labelled with this name. The path to the output folder is set with --out_path.
   - names:
       - -m
       - --mode
-    argument: MODE
-    description: 'Specify which BUSCO analysis mode to run. There are three valid modes: - geno or genome, for genome assemblies (DNA) - tran or transcriptome, for transcriptome assemblies (DNA) - prot or proteins, for annotated gene sets (protein)'
+    argument: '{genome|transcriptome|protein}'
+    description: 'Specify which BUSCO analysis mode to run.   There are three valid modes: - geno or genome, for genome assemblies (DNA) - tran or transcriptome, for transcriptome assemblies (DNA) - prot or proteins, for annotated gene sets (protein)'
   - names:
       - -l
       - --lineage_dataset
@@ -28,7 +28,7 @@ options:
   - names:
       - --augustus_parameters
     argument: '"--PARAM1=VALUE1,--PARAM2=VALUE2"'
-    description: Pass additional arguments to Augustus. All arguments should be contained within a single pair of quotation marks, separated by commas.
+    description: Pass additional arguments to Augustus. All arguments should be contained within a single string with no white space, with each argument separated by a comma.
   - names:
       - --augustus_species
     argument: AUGUSTUS_SPECIES
@@ -48,7 +48,7 @@ options:
   - names:
       - -c
       - --cpu
-    argument: N
+    argument: "N"
     description: Specify the number (N=integer) of threads/cores to use.
   - names:
       - --config
@@ -58,6 +58,10 @@ options:
       - --datasets_version
     argument: DATASETS_VERSION
     description: Specify the version of BUSCO datasets, e.g. odb10
+  - names:
+      - --download
+    argument: '[dataset [dataset ...]]'
+    description: Download dataset. Possible values are a specific dataset name, "all", "prokaryota", "eukaryota", or "virus". If used together with other command line arguments, make sure to place this last.
   - names:
       - --download_base_url
     argument: DOWNLOAD_BASE_URL
@@ -69,7 +73,7 @@ options:
   - names:
       - -e
       - --evalue
-    argument: N
+    argument: "N"
     description: 'E-value cutoff for BLAST searches. Allowed formats, 0.001 or 1e-03 (Default: 1e-03)'
   - names:
       - -f
@@ -83,7 +87,7 @@ options:
     description: Show this help message and exit
   - names:
       - --limit
-    argument: N
+    argument: "N"
     description: 'How many candidate regions (contig or transcript) to consider per BUSCO (default: 3)'
   - names:
       - --list-datasets
@@ -96,11 +100,11 @@ options:
   - names:
       - --metaeuk_parameters
     argument: '"--PARAM1=VALUE1,--PARAM2=VALUE2"'
-    description: Pass additional arguments to Metaeuk for the first run. All arguments should be contained within a single pair of quotation marks, separated by commas.
+    description: Pass additional arguments to Metaeuk for the first run. All arguments should be contained within a single string with no white space, with each argument separated by a comma.
   - names:
       - --metaeuk_rerun_parameters
     argument: '"--PARAM1=VALUE1,--PARAM2=VALUE2"'
-    description: Pass additional arguments to Metaeuk for the second run. All arguments should be contained within a single pair of quotation marks, separated by commas.
+    description: Pass additional arguments to Metaeuk for the second run. All arguments should be contained within a single string with no white space, with each argument separated by a comma.
   - names:
       - --offline
     argument: ""
@@ -120,6 +124,10 @@ options:
     argument: ""
     description: Continue a run that had already partially completed.
   - names:
+      - --tar
+    argument: ""
+    description: Compress some subdirectories with many files to save space
+  - names:
       - --update-data
     argument: ""
     description: Download and replace with last versions all lineages datasets and files necessary to their automated selection
@@ -128,3 +136,26 @@ options:
       - --version
     argument: ""
     description: Show this version and exit
+usage: busco -i [SEQUENCE_FILE] -l [LINEAGE] -o [OUTPUT_NAME] -m [MODE] [OTHER OPTIONS]
+version: BUSCO 5.3.2
+tldr: |
+  > Benchmarking Universal Single-Copy Ortholog assessment tool.
+  > More information: < https://gitlab.com/ezlab/busco#how-to-cite-busco>
+
+  - List of available BUSCO datasets
+
+  `busco --list-datasets`
+
+  - Assess a genome assembly using automated prokaryote lineage with 12 CPUs.
+
+  `busco -m genome -i {{input.fa}} -o {{OUTPUT}} --auto-lineage-prok -c {{12}}`
+
+  - Assess an assembled transcript using bacteria_odb10 lineage with 12 CPUs.
+
+  `busco -m transcriptome -i {{input.fa}} -o {{OUTPUT}} -l {{bacteria_odb10}} -c {{12}}`
+
+  - Assess a gene set using bacteria_odb10 lineage with 12 CPUs.
+
+  `busco -m protein -i {{input.fa}} -o {{OUTPUT}} -l {{bacteria_odb10}} -c {{12}}`
+
+

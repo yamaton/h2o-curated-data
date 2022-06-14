@@ -16,32 +16,22 @@
             '--add-host[Add a custom host-to-IP mapping (host:ip)]' \
             '--build-arg[Set build-time variables]' \
             '--cache-from[Images to consider as cache sources]' \
-            '--cgroup-parent[Optional parent cgroup for the container]' \
-            '--compress[Compress the build context using gzip]' \
-            '--cpu-period[Limit the CPU CFS (Completely Fair Scheduler) period]' \
-            '--cpu-quota[Limit the CPU CFS (Completely Fair Scheduler) quota]' \
-            {-c,--cpu-shares}'[CPU shares (relative weight)]' \
-            '--cpuset-cpus[CPUs in which to allow execution (0-3, 0,1)]' \
-            '--cpuset-mems[MEMs in which to allow execution (0-3, 0,1)]' \
             '--disable-content-trust[Skip image verification (default true)]' \
             {-f,--file}'[Name of the Dockerfile (Default is '\''PATH/Dockerfile'\'')]' \
-            '--force-rm[Always remove intermediate containers]' \
             '--iidfile[Write the image ID to the file]' \
             '--isolation[Container isolation technology]' \
             '--label[Set metadata for an image]' \
-            {-m,--memory}'[Memory limit]' \
-            '--memory-swap[Swap limit equal to memory plus swap: '\''-1'\'' to enable unlimited swap]' \
             '--network[Set the networking mode for the RUN instructions during build (default "default")]' \
             '--no-cache[Do not use cache when building the image]' \
+            {-o,--output}'[Output destination (format: type=local,dest=path)]' \
+            '--platform[Set platform if server is multi-platform capable]' \
+            '--progress[Set type of progress output (auto, plain, tty). Use plain to show container output (default "auto")]' \
             '--pull[Always attempt to pull a newer version of the image]' \
             {-q,--quiet}'[Suppress the build output and print image ID on success]' \
-            '--rm[Remove intermediate containers after a successful build (default true)]' \
-            '--security-opt[Security options]' \
-            '--shm-size[Size of /dev/shm]' \
-            '--squash[Squash newly built layers into a single new layer]' \
+            '--secret[Secret file to expose to the build (only if BuildKit enabled): id=mysecret,src=/local/secret]' \
+            '--ssh[SSH agent socket or keys to expose to the build (only if BuildKit enabled) (format: default|<id>\[=<socket>|<key>\[,<key>\]\])]' \
             {-t,--tag}'[Name and optionally a tag in the '\''name:tag'\'' format]' \
             '--target[Set the target build stage to build.]' \
-            '--ulimit[Ulimit options (default \[\])]' \
             "*: :_files"
 
     }
@@ -582,7 +572,7 @@
             '--env-file[Specify an alternate environment file.]' \
             {-f,--file}'[Compose configuration files]' \
             '--profile[Specify a profile to enable]' \
-            '--project-directory[Specify an alternate working directory (default: the path of the Compose file)]' \
+            '--project-directory[Specify an alternate working directory (default: the path of the, first specified, Compose file)]' \
             {-p,--project-name}'[Project name]' \
             "*: :_files"
 
@@ -632,6 +622,20 @@
 
     function _docker_plugin {
         _arguments \
+            "*: :_files"
+
+    }
+
+    function _docker_sbom {
+        _arguments \
+            {-D,--debug}'[show debug logging]' \
+            '--exclude[exclude paths from being scanned using a glob expression]' \
+            '--format[report output format, options=\[syft-json cyclonedx-xml cyclonedx-json github-0-json spdx-tag-value spdx-json table text\] (default "table")]' \
+            '--layers[\[experimental\] selection of layers to catalog, options=\[squashed all\] (default "squashed")]' \
+            {-o,--output}'[file to write the default report output to (default is STDOUT)]' \
+            '--platform[an optional platform specifier for container image sources (e.g. '\''linux/arm64'\'', '\''linux/arm64/v8'\'', '\''arm64'\'', '\''linux'\'')]' \
+            '--quiet[suppress all non-report output]' \
+            {-v,--version}'[version for sbom]' \
             "*: :_files"
 
     }
@@ -742,10 +746,10 @@ function _docker {
             'unpause:Unpause all processes within one or more containers'
             'update:Update configuration of one or more containers'
             'version:Show the Docker version information'
-            'wait:Show the Docker version information'
+            'wait:Block until one or more containers stop, then print their exit codes'
             'builder:Manage builds'
-            'buildx:Docker Buildx (Docker Inc., v0.7.1)'
-            'compose:Docker Compose (Docker Inc., v2.2.1)'
+            'buildx:Docker Buildx (Docker Inc., v0.8.2)'
+            'compose:Docker Compose (Docker Inc., v2.5.1)'
             'config:Manage Docker configs'
             'container:Manage containers'
             'context:Manage contexts'
@@ -754,7 +758,8 @@ function _docker {
             'network:Manage networks'
             'node:Manage Swarm nodes'
             'plugin:Manage plugins'
-            'scan:Docker Scan (Docker Inc., v0.14.0)'
+            'sbom:View the packaged-based Software Bill Of Materials (SBOM) for an image (Anchore Inc., 0.6.0)'
+            'scan:Docker Scan (Docker Inc., v0.17.0)'
             'secret:Manage Docker secrets'
             'service:Manage services'
             'stack:Manage Docker stacks'
@@ -765,7 +770,7 @@ function _docker {
         )
         _describe 'command' commands
     }
-
+ 
 
     _arguments -C \
         '--config[Location of client config files (default "~/.docker")]' \
@@ -990,6 +995,10 @@ function _docker {
 
         (plugin)
             _docker_plugin
+            ;;
+
+        (sbom)
+            _docker_sbom
             ;;
 
         (scan)

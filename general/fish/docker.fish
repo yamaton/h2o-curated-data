@@ -1,16 +1,16 @@
 # Auto-generated with h2o
 
-complete -c docker -n "not __fish_seen_subcommand_from attach build commit cp create diff events exec export history images import info inspect kill load login logout logs pause port ps pull push rename restart rm rmi run save search start stats stop tag top unpause update version wait builder buildx compose config container context image manifest network node plugin scan secret service stack swarm system trust volume" -l config -d 'Location of client config files (default "~/.docker")' -x
-complete -c docker -n "not __fish_seen_subcommand_from attach build commit cp create diff events exec export history images import info inspect kill load login logout logs pause port ps pull push rename restart rm rmi run save search start stats stop tag top unpause update version wait builder buildx compose config container context image manifest network node plugin scan secret service stack swarm system trust volume" -s c -l context -d 'Name of the context to use to connect to the daemon (overrides DOCKER_HOST env var and default context set with "docker context use")' -x
-complete -c docker -n "not __fish_seen_subcommand_from attach build commit cp create diff events exec export history images import info inspect kill load login logout logs pause port ps pull push rename restart rm rmi run save search start stats stop tag top unpause update version wait builder buildx compose config container context image manifest network node plugin scan secret service stack swarm system trust volume" -s D -l debug -d 'Enable debug mode'
-complete -c docker -n "not __fish_seen_subcommand_from attach build commit cp create diff events exec export history images import info inspect kill load login logout logs pause port ps pull push rename restart rm rmi run save search start stats stop tag top unpause update version wait builder buildx compose config container context image manifest network node plugin scan secret service stack swarm system trust volume" -s H -l host -d 'Daemon socket(s) to connect to' -x
-complete -c docker -n "not __fish_seen_subcommand_from attach build commit cp create diff events exec export history images import info inspect kill load login logout logs pause port ps pull push rename restart rm rmi run save search start stats stop tag top unpause update version wait builder buildx compose config container context image manifest network node plugin scan secret service stack swarm system trust volume" -s l -l log-level -d 'Set the logging level ("debug"|"info"|"warn"|"error"|"fatal") (default "info")' -x
-complete -c docker -n "not __fish_seen_subcommand_from attach build commit cp create diff events exec export history images import info inspect kill load login logout logs pause port ps pull push rename restart rm rmi run save search start stats stop tag top unpause update version wait builder buildx compose config container context image manifest network node plugin scan secret service stack swarm system trust volume" -l tls -d 'Use TLS; implied by --tlsverify'
-complete -c docker -n "not __fish_seen_subcommand_from attach build commit cp create diff events exec export history images import info inspect kill load login logout logs pause port ps pull push rename restart rm rmi run save search start stats stop tag top unpause update version wait builder buildx compose config container context image manifest network node plugin scan secret service stack swarm system trust volume" -l tlscacert -d 'Trust certs signed only by this CA (default "~/.docker/ca.pem")' -x
-complete -c docker -n "not __fish_seen_subcommand_from attach build commit cp create diff events exec export history images import info inspect kill load login logout logs pause port ps pull push rename restart rm rmi run save search start stats stop tag top unpause update version wait builder buildx compose config container context image manifest network node plugin scan secret service stack swarm system trust volume" -l tlscert -d 'Path to TLS certificate file (default "~/.docker/cert.pem")' -x
-complete -c docker -n "not __fish_seen_subcommand_from attach build commit cp create diff events exec export history images import info inspect kill load login logout logs pause port ps pull push rename restart rm rmi run save search start stats stop tag top unpause update version wait builder buildx compose config container context image manifest network node plugin scan secret service stack swarm system trust volume" -l tlskey -d 'Path to TLS key file (default "~/.docker/key.pem")' -x
-complete -c docker -n "not __fish_seen_subcommand_from attach build commit cp create diff events exec export history images import info inspect kill load login logout logs pause port ps pull push rename restart rm rmi run save search start stats stop tag top unpause update version wait builder buildx compose config container context image manifest network node plugin scan secret service stack swarm system trust volume" -l tlsverify -d 'Use TLS and verify the remote'
-complete -c docker -n "not __fish_seen_subcommand_from attach build commit cp create diff events exec export history images import info inspect kill load login logout logs pause port ps pull push rename restart rm rmi run save search start stats stop tag top unpause update version wait builder buildx compose config container context image manifest network node plugin scan secret service stack swarm system trust volume" -s v -l version -d 'Print version information and quit'
+complete -c docker -n "not __fish_seen_subcommand_from attach build commit cp create diff events exec export history images import info inspect kill load login logout logs pause port ps pull push rename restart rm rmi run save search start stats stop tag top unpause update version wait builder buildx compose config container context image manifest network node plugin sbom scan secret service stack swarm system trust volume" -l config -d 'Location of client config files (default "~/.docker")' -r
+complete -c docker -n "not __fish_seen_subcommand_from attach build commit cp create diff events exec export history images import info inspect kill load login logout logs pause port ps pull push rename restart rm rmi run save search start stats stop tag top unpause update version wait builder buildx compose config container context image manifest network node plugin sbom scan secret service stack swarm system trust volume" -s c -l context -d 'Name of the context to use to connect to the daemon (overrides DOCKER_HOST env var and default context set with "docker context use")' -x
+complete -c docker -n "not __fish_seen_subcommand_from attach build commit cp create diff events exec export history images import info inspect kill load login logout logs pause port ps pull push rename restart rm rmi run save search start stats stop tag top unpause update version wait builder buildx compose config container context image manifest network node plugin sbom scan secret service stack swarm system trust volume" -s D -l debug -d 'Enable debug mode'
+complete -c docker -n "not __fish_seen_subcommand_from attach build commit cp create diff events exec export history images import info inspect kill load login logout logs pause port ps pull push rename restart rm rmi run save search start stats stop tag top unpause update version wait builder buildx compose config container context image manifest network node plugin sbom scan secret service stack swarm system trust volume" -s H -l host -d 'Daemon socket(s) to connect to' -x
+complete -c docker -n "not __fish_seen_subcommand_from attach build commit cp create diff events exec export history images import info inspect kill load login logout logs pause port ps pull push rename restart rm rmi run save search start stats stop tag top unpause update version wait builder buildx compose config container context image manifest network node plugin sbom scan secret service stack swarm system trust volume" -s l -l log-level -d 'Set the logging level ("debug"|"info"|"warn"|"error"|"fatal") (default "info")' -x
+complete -c docker -n "not __fish_seen_subcommand_from attach build commit cp create diff events exec export history images import info inspect kill load login logout logs pause port ps pull push rename restart rm rmi run save search start stats stop tag top unpause update version wait builder buildx compose config container context image manifest network node plugin sbom scan secret service stack swarm system trust volume" -l tls -d 'Use TLS; implied by --tlsverify'
+complete -c docker -n "not __fish_seen_subcommand_from attach build commit cp create diff events exec export history images import info inspect kill load login logout logs pause port ps pull push rename restart rm rmi run save search start stats stop tag top unpause update version wait builder buildx compose config container context image manifest network node plugin sbom scan secret service stack swarm system trust volume" -l tlscacert -d 'Trust certs signed only by this CA (default "~/.docker/ca.pem")' -x
+complete -c docker -n "not __fish_seen_subcommand_from attach build commit cp create diff events exec export history images import info inspect kill load login logout logs pause port ps pull push rename restart rm rmi run save search start stats stop tag top unpause update version wait builder buildx compose config container context image manifest network node plugin sbom scan secret service stack swarm system trust volume" -l tlscert -d 'Path to TLS certificate file (default "~/.docker/cert.pem")' -r
+complete -c docker -n "not __fish_seen_subcommand_from attach build commit cp create diff events exec export history images import info inspect kill load login logout logs pause port ps pull push rename restart rm rmi run save search start stats stop tag top unpause update version wait builder buildx compose config container context image manifest network node plugin sbom scan secret service stack swarm system trust volume" -l tlskey -d 'Path to TLS key file (default "~/.docker/key.pem")' -r
+complete -c docker -n "not __fish_seen_subcommand_from attach build commit cp create diff events exec export history images import info inspect kill load login logout logs pause port ps pull push rename restart rm rmi run save search start stats stop tag top unpause update version wait builder buildx compose config container context image manifest network node plugin sbom scan secret service stack swarm system trust volume" -l tlsverify -d 'Use TLS and verify the remote'
+complete -c docker -n "not __fish_seen_subcommand_from attach build commit cp create diff events exec export history images import info inspect kill load login logout logs pause port ps pull push rename restart rm rmi run save search start stats stop tag top unpause update version wait builder buildx compose config container context image manifest network node plugin sbom scan secret service stack swarm system trust volume" -s v -l version -d 'Print version information and quit'
 
 
 
@@ -21,7 +21,8 @@ complete -k -c docker -n __fish_use_subcommand -x -a swarm -d 'Manage Swarm'
 complete -k -c docker -n __fish_use_subcommand -x -a stack -d 'Manage Docker stacks'
 complete -k -c docker -n __fish_use_subcommand -x -a service -d 'Manage services'
 complete -k -c docker -n __fish_use_subcommand -x -a secret -d 'Manage Docker secrets'
-complete -k -c docker -n __fish_use_subcommand -x -a scan -d 'Docker Scan (Docker Inc., v0.14.0)'
+complete -k -c docker -n __fish_use_subcommand -x -a scan -d 'Docker Scan (Docker Inc., v0.17.0)'
+complete -k -c docker -n __fish_use_subcommand -x -a sbom -d 'View the packaged-based Software Bill Of Materials (SBOM) for an image (Anchore Inc., 0.6.0)'
 complete -k -c docker -n __fish_use_subcommand -x -a plugin -d 'Manage plugins'
 complete -k -c docker -n __fish_use_subcommand -x -a node -d 'Manage Swarm nodes'
 complete -k -c docker -n __fish_use_subcommand -x -a network -d 'Manage networks'
@@ -30,10 +31,10 @@ complete -k -c docker -n __fish_use_subcommand -x -a image -d 'Manage images'
 complete -k -c docker -n __fish_use_subcommand -x -a context -d 'Manage contexts'
 complete -k -c docker -n __fish_use_subcommand -x -a container -d 'Manage containers'
 complete -k -c docker -n __fish_use_subcommand -x -a config -d 'Manage Docker configs'
-complete -k -c docker -n __fish_use_subcommand -x -a compose -d 'Docker Compose (Docker Inc., v2.2.1)'
-complete -k -c docker -n __fish_use_subcommand -x -a buildx -d 'Docker Buildx (Docker Inc., v0.7.1)'
+complete -k -c docker -n __fish_use_subcommand -x -a compose -d 'Docker Compose (Docker Inc., v2.5.1)'
+complete -k -c docker -n __fish_use_subcommand -x -a buildx -d 'Docker Buildx (Docker Inc., v0.8.2)'
 complete -k -c docker -n __fish_use_subcommand -x -a builder -d 'Manage builds'
-complete -k -c docker -n __fish_use_subcommand -x -a wait -d 'Show the Docker version information'
+complete -k -c docker -n __fish_use_subcommand -x -a wait -d 'Block until one or more containers stop, then print their exit codes'
 complete -k -c docker -n __fish_use_subcommand -x -a version -d 'Show the Docker version information'
 complete -k -c docker -n __fish_use_subcommand -x -a update -d 'Update configuration of one or more containers'
 complete -k -c docker -n __fish_use_subcommand -x -a unpause -d 'Unpause all processes within one or more containers'
@@ -85,37 +86,27 @@ complete -c docker -n "__fish_seen_subcommand_from attach" -l sig-proxy -d 'Prox
 complete -c docker -n "__fish_seen_subcommand_from build" -l add-host -d 'Add a custom host-to-IP mapping (host:ip)' -x
 complete -c docker -n "__fish_seen_subcommand_from build" -l build-arg -d 'Set build-time variables' -x
 complete -c docker -n "__fish_seen_subcommand_from build" -l cache-from -d 'Images to consider as cache sources' -x
-complete -c docker -n "__fish_seen_subcommand_from build" -l cgroup-parent -d 'Optional parent cgroup for the container' -x
-complete -c docker -n "__fish_seen_subcommand_from build" -l compress -d 'Compress the build context using gzip'
-complete -c docker -n "__fish_seen_subcommand_from build" -l cpu-period -d 'Limit the CPU CFS (Completely Fair Scheduler) period' -x
-complete -c docker -n "__fish_seen_subcommand_from build" -l cpu-quota -d 'Limit the CPU CFS (Completely Fair Scheduler) quota' -x
-complete -c docker -n "__fish_seen_subcommand_from build" -s c -l cpu-shares -d 'CPU shares (relative weight)' -x
-complete -c docker -n "__fish_seen_subcommand_from build" -l cpuset-cpus -d 'CPUs in which to allow execution (0-3, 0,1)' -x
-complete -c docker -n "__fish_seen_subcommand_from build" -l cpuset-mems -d 'MEMs in which to allow execution (0-3, 0,1)' -x
 complete -c docker -n "__fish_seen_subcommand_from build" -l disable-content-trust -d 'Skip image verification (default true)'
-complete -c docker -n "__fish_seen_subcommand_from build" -s f -l file -d 'Name of the Dockerfile (Default is \'PATH/Dockerfile\')' -x
-complete -c docker -n "__fish_seen_subcommand_from build" -l force-rm -d 'Always remove intermediate containers'
-complete -c docker -n "__fish_seen_subcommand_from build" -l iidfile -d 'Write the image ID to the file' -x
+complete -c docker -n "__fish_seen_subcommand_from build" -s f -l file -d 'Name of the Dockerfile (Default is \'PATH/Dockerfile\')' -r
+complete -c docker -n "__fish_seen_subcommand_from build" -l iidfile -d 'Write the image ID to the file' -r
 complete -c docker -n "__fish_seen_subcommand_from build" -l isolation -d 'Container isolation technology' -x
 complete -c docker -n "__fish_seen_subcommand_from build" -l label -d 'Set metadata for an image' -x
-complete -c docker -n "__fish_seen_subcommand_from build" -s m -l memory -d 'Memory limit' -x
-complete -c docker -n "__fish_seen_subcommand_from build" -l memory-swap -d 'Swap limit equal to memory plus swap: \'-1\' to enable unlimited swap' -x
 complete -c docker -n "__fish_seen_subcommand_from build" -l network -d 'Set the networking mode for the RUN instructions during build (default "default")' -x
 complete -c docker -n "__fish_seen_subcommand_from build" -l no-cache -d 'Do not use cache when building the image'
+complete -c docker -n "__fish_seen_subcommand_from build" -s o -l output -d 'Output destination (format: type=local,dest=path)' -r
+complete -c docker -n "__fish_seen_subcommand_from build" -l platform -d 'Set platform if server is multi-platform capable' -x
+complete -c docker -n "__fish_seen_subcommand_from build" -l progress -d 'Set type of progress output (auto, plain, tty).' -x
 complete -c docker -n "__fish_seen_subcommand_from build" -l pull -d 'Always attempt to pull a newer version of the image'
 complete -c docker -n "__fish_seen_subcommand_from build" -s q -l quiet -d 'Suppress the build output and print image ID on success'
-complete -c docker -n "__fish_seen_subcommand_from build" -l rm -d 'Remove intermediate containers after a successful build (default true)'
-complete -c docker -n "__fish_seen_subcommand_from build" -l security-opt -d 'Security options' -x
-complete -c docker -n "__fish_seen_subcommand_from build" -l shm-size -d 'Size of /dev/shm' -x
-complete -c docker -n "__fish_seen_subcommand_from build" -l squash -d 'Squash newly built layers into a single new layer'
+complete -c docker -n "__fish_seen_subcommand_from build" -l secret -d 'Secret file to expose to the build (only if BuildKit enabled): id=mysecret,src=/local/secret' -r
+complete -c docker -n "__fish_seen_subcommand_from build" -l ssh -d 'SSH agent socket or keys to expose to the build (only if BuildKit enabled) (format: default|<id>[=<socket>|<key>[,<key>]])' -x
 complete -c docker -n "__fish_seen_subcommand_from build" -s t -l tag -d 'Name and optionally a tag in the \'name:tag\' format' -x
 complete -c docker -n "__fish_seen_subcommand_from build" -l target -d 'Set the target build stage to build.' -x
-complete -c docker -n "__fish_seen_subcommand_from build" -l ulimit -d 'Ulimit options (default [])' -x
 
 
 
 complete -c docker -n "__fish_seen_subcommand_from commit" -s a -l author -d 'Author (e.g., "John Hannibal Smith <hannibal@a-team.com>")' -x
-complete -c docker -n "__fish_seen_subcommand_from commit" -s c -l change -d 'Apply Dockerfile instruction to the created image' -x
+complete -c docker -n "__fish_seen_subcommand_from commit" -s c -l change -d 'Apply Dockerfile instruction to the created image' -r
 complete -c docker -n "__fish_seen_subcommand_from commit" -s m -l message -d 'Commit message' -x
 complete -c docker -n "__fish_seen_subcommand_from commit" -s p -l pause -d 'Pause container during commit (default true)'
 
@@ -134,7 +125,7 @@ complete -c docker -n "__fish_seen_subcommand_from create" -l cap-add -d 'Add Li
 complete -c docker -n "__fish_seen_subcommand_from create" -l cap-drop -d 'Drop Linux capabilities' -x
 complete -c docker -n "__fish_seen_subcommand_from create" -l cgroup-parent -d 'Optional parent cgroup for the container' -x
 complete -c docker -n "__fish_seen_subcommand_from create" -l cgroupns -d 'Cgroup namespace to use (host|private)   \'host\': Run the container in the Docker host\'s cgroup namespace \'private\': Run the container in its own private cgroup namespace \'\': Use the cgroup namespace as configured by the' -x
-complete -c docker -n "__fish_seen_subcommand_from create" -l cidfile -d 'Write the container ID to the file' -x
+complete -c docker -n "__fish_seen_subcommand_from create" -l cidfile -d 'Write the container ID to the file' -r
 complete -c docker -n "__fish_seen_subcommand_from create" -l cpu-period -d 'Limit CPU CFS (Completely Fair Scheduler) period' -x
 complete -c docker -n "__fish_seen_subcommand_from create" -l cpu-quota -d 'Limit CPU CFS (Completely Fair Scheduler) quota' -x
 complete -c docker -n "__fish_seen_subcommand_from create" -l cpu-rt-period -d 'Limit CPU real-time period in microseconds' -x
@@ -156,7 +147,7 @@ complete -c docker -n "__fish_seen_subcommand_from create" -l dns-search -d 'Set
 complete -c docker -n "__fish_seen_subcommand_from create" -l domainname -d 'Container NIS domain name' -x
 complete -c docker -n "__fish_seen_subcommand_from create" -l entrypoint -d 'Overwrite the default ENTRYPOINT of the image' -x
 complete -c docker -n "__fish_seen_subcommand_from create" -s e -l env -d 'Set environment variables' -x
-complete -c docker -n "__fish_seen_subcommand_from create" -l env-file -d 'Read in a file of environment variables' -x
+complete -c docker -n "__fish_seen_subcommand_from create" -l env-file -d 'Read in a file of environment variables' -r
 complete -c docker -n "__fish_seen_subcommand_from create" -l expose -d 'Expose a port or a range of ports' -x
 complete -c docker -n "__fish_seen_subcommand_from create" -l gpus -d 'GPU devices to add to the container (\'all\' to pass all GPUs)' -x
 complete -c docker -n "__fish_seen_subcommand_from create" -l group-add -d 'Add additional groups to join' -x
@@ -175,7 +166,7 @@ complete -c docker -n "__fish_seen_subcommand_from create" -l ipc -d 'IPC mode t
 complete -c docker -n "__fish_seen_subcommand_from create" -l isolation -d 'Container isolation technology' -x
 complete -c docker -n "__fish_seen_subcommand_from create" -l kernel-memory -d 'Kernel memory limit' -x
 complete -c docker -n "__fish_seen_subcommand_from create" -s l -l label -d 'Set meta data on a container' -x
-complete -c docker -n "__fish_seen_subcommand_from create" -l label-file -d 'Read in a line delimited file of labels' -x
+complete -c docker -n "__fish_seen_subcommand_from create" -l label-file -d 'Read in a line delimited file of labels' -r
 complete -c docker -n "__fish_seen_subcommand_from create" -l link -d 'Add link to another container' -x
 complete -c docker -n "__fish_seen_subcommand_from create" -l link-local-ip -d 'Container IPv4/IPv6 link-local addresses' -x
 complete -c docker -n "__fish_seen_subcommand_from create" -l log-driver -d 'Logging driver for the container' -x
@@ -185,7 +176,7 @@ complete -c docker -n "__fish_seen_subcommand_from create" -s m -l memory -d 'Me
 complete -c docker -n "__fish_seen_subcommand_from create" -l memory-reservation -d 'Memory soft limit' -x
 complete -c docker -n "__fish_seen_subcommand_from create" -l memory-swap -d 'Swap limit equal to memory plus swap: \'-1\' to enable unlimited swap' -x
 complete -c docker -n "__fish_seen_subcommand_from create" -l memory-swappiness -d 'Tune container memory swappiness (0 to 100) (default -1)' -x
-complete -c docker -n "__fish_seen_subcommand_from create" -l mount -d 'Attach a filesystem mount to the container' -x
+complete -c docker -n "__fish_seen_subcommand_from create" -l mount -d 'Attach a filesystem mount to the container' -r
 complete -c docker -n "__fish_seen_subcommand_from create" -l name -d 'Assign a name to the container' -x
 complete -c docker -n "__fish_seen_subcommand_from create" -l network -d 'Connect a container to a network' -x
 complete -c docker -n "__fish_seen_subcommand_from create" -l network-alias -d 'Add network-scoped alias for the container' -x
@@ -209,7 +200,7 @@ complete -c docker -n "__fish_seen_subcommand_from create" -l stop-signal -d 'Si
 complete -c docker -n "__fish_seen_subcommand_from create" -l stop-timeout -d 'Timeout (in seconds) to stop a container' -x
 complete -c docker -n "__fish_seen_subcommand_from create" -l storage-opt -d 'Storage driver options for the container' -x
 complete -c docker -n "__fish_seen_subcommand_from create" -l sysctl -d 'Sysctl options (default map[])' -x
-complete -c docker -n "__fish_seen_subcommand_from create" -l tmpfs -d 'Mount a tmpfs directory' -x
+complete -c docker -n "__fish_seen_subcommand_from create" -l tmpfs -d 'Mount a tmpfs directory' -r
 complete -c docker -n "__fish_seen_subcommand_from create" -s t -l tty -d 'Allocate a pseudo-TTY'
 complete -c docker -n "__fish_seen_subcommand_from create" -l ulimit -d 'Ulimit options (default [])' -x
 complete -c docker -n "__fish_seen_subcommand_from create" -s u -l user -d 'Username or UID (format: <name|uid>[:<group|gid>])' -x
@@ -218,7 +209,7 @@ complete -c docker -n "__fish_seen_subcommand_from create" -l uts -d 'UTS namesp
 complete -c docker -n "__fish_seen_subcommand_from create" -s v -l volume -d 'Bind mount a volume' -x
 complete -c docker -n "__fish_seen_subcommand_from create" -l volume-driver -d 'Optional volume driver for the container' -x
 complete -c docker -n "__fish_seen_subcommand_from create" -l volumes-from -d 'Mount volumes from the specified container(s)' -x
-complete -c docker -n "__fish_seen_subcommand_from create" -s w -l workdir -d 'Working directory inside the container' -x
+complete -c docker -n "__fish_seen_subcommand_from create" -s w -l workdir -d 'Working directory inside the container' -r
 
 
 
@@ -232,16 +223,16 @@ complete -c docker -n "__fish_seen_subcommand_from events" -l until -d 'Stream e
 complete -c docker -n "__fish_seen_subcommand_from exec" -s d -l detach -d 'Detached mode: run command in the background'
 complete -c docker -n "__fish_seen_subcommand_from exec" -l detach-keys -d 'Override the key sequence for detaching a container' -x
 complete -c docker -n "__fish_seen_subcommand_from exec" -s e -l env -d 'Set environment variables' -x
-complete -c docker -n "__fish_seen_subcommand_from exec" -l env-file -d 'Read in a file of environment variables' -x
+complete -c docker -n "__fish_seen_subcommand_from exec" -l env-file -d 'Read in a file of environment variables' -r
 complete -c docker -n "__fish_seen_subcommand_from exec" -s i -l interactive -d 'Keep STDIN open even if not attached'
 complete -c docker -n "__fish_seen_subcommand_from exec" -l privileged -d 'Give extended privileges to the command'
 complete -c docker -n "__fish_seen_subcommand_from exec" -s t -l tty -d 'Allocate a pseudo-TTY'
 complete -c docker -n "__fish_seen_subcommand_from exec" -s u -l user -d 'Username or UID (format: <name|uid>[:<group|gid>])' -x
-complete -c docker -n "__fish_seen_subcommand_from exec" -s w -l workdir -d 'Working directory inside the container' -x
+complete -c docker -n "__fish_seen_subcommand_from exec" -s w -l workdir -d 'Working directory inside the container' -r
 
 
 
-complete -c docker -n "__fish_seen_subcommand_from export" -s o -l output -d 'Write to a file, instead of STDOUT' -x
+complete -c docker -n "__fish_seen_subcommand_from export" -s o -l output -d 'Write to a file, instead of STDOUT' -r
 
 
 
@@ -261,7 +252,7 @@ complete -c docker -n "__fish_seen_subcommand_from images" -s q -l quiet -d 'Onl
 
 
 
-complete -c docker -n "__fish_seen_subcommand_from import" -s c -l change -d 'Apply Dockerfile instruction to the created image' -x
+complete -c docker -n "__fish_seen_subcommand_from import" -s c -l change -d 'Apply Dockerfile instruction to the created image' -r
 complete -c docker -n "__fish_seen_subcommand_from import" -s m -l message -d 'Set commit message for imported image' -x
 complete -c docker -n "__fish_seen_subcommand_from import" -l platform -d 'Set platform if server is multi-platform capable' -x
 
@@ -281,7 +272,7 @@ complete -c docker -n "__fish_seen_subcommand_from kill" -s s -l signal -d 'Sign
 
 
 
-complete -c docker -n "__fish_seen_subcommand_from load" -s i -l input -d 'Read from tar archive file, instead of STDIN' -x
+complete -c docker -n "__fish_seen_subcommand_from load" -s i -l input -d 'Read from tar archive file, instead of STDIN' -r
 complete -c docker -n "__fish_seen_subcommand_from load" -s q -l quiet -d 'Suppress the load output'
 
 
@@ -347,7 +338,7 @@ complete -c docker -n "__fish_seen_subcommand_from run" -l cap-add -d 'Add Linux
 complete -c docker -n "__fish_seen_subcommand_from run" -l cap-drop -d 'Drop Linux capabilities' -x
 complete -c docker -n "__fish_seen_subcommand_from run" -l cgroup-parent -d 'Optional parent cgroup for the container' -x
 complete -c docker -n "__fish_seen_subcommand_from run" -l cgroupns -d 'Cgroup namespace to use (host|private)   \'host\': Run the container in the Docker host\'s cgroup namespace \'private\': Run the container in its own private cgroup namespace \'\': Use the cgroup namespace as configured by the' -x
-complete -c docker -n "__fish_seen_subcommand_from run" -l cidfile -d 'Write the container ID to the file' -x
+complete -c docker -n "__fish_seen_subcommand_from run" -l cidfile -d 'Write the container ID to the file' -r
 complete -c docker -n "__fish_seen_subcommand_from run" -l cpu-period -d 'Limit CPU CFS (Completely Fair Scheduler) period' -x
 complete -c docker -n "__fish_seen_subcommand_from run" -l cpu-quota -d 'Limit CPU CFS (Completely Fair Scheduler) quota' -x
 complete -c docker -n "__fish_seen_subcommand_from run" -l cpu-rt-period -d 'Limit CPU real-time period in microseconds' -x
@@ -371,7 +362,7 @@ complete -c docker -n "__fish_seen_subcommand_from run" -l dns-search -d 'Set cu
 complete -c docker -n "__fish_seen_subcommand_from run" -l domainname -d 'Container NIS domain name' -x
 complete -c docker -n "__fish_seen_subcommand_from run" -l entrypoint -d 'Overwrite the default ENTRYPOINT of the image' -x
 complete -c docker -n "__fish_seen_subcommand_from run" -s e -l env -d 'Set environment variables' -x
-complete -c docker -n "__fish_seen_subcommand_from run" -l env-file -d 'Read in a file of environment variables' -x
+complete -c docker -n "__fish_seen_subcommand_from run" -l env-file -d 'Read in a file of environment variables' -r
 complete -c docker -n "__fish_seen_subcommand_from run" -l expose -d 'Expose a port or a range of ports' -x
 complete -c docker -n "__fish_seen_subcommand_from run" -l gpus -d 'GPU devices to add to the container (\'all\' to pass all GPUs)' -x
 complete -c docker -n "__fish_seen_subcommand_from run" -l group-add -d 'Add additional groups to join' -x
@@ -390,7 +381,7 @@ complete -c docker -n "__fish_seen_subcommand_from run" -l ipc -d 'IPC mode to u
 complete -c docker -n "__fish_seen_subcommand_from run" -l isolation -d 'Container isolation technology' -x
 complete -c docker -n "__fish_seen_subcommand_from run" -l kernel-memory -d 'Kernel memory limit' -x
 complete -c docker -n "__fish_seen_subcommand_from run" -s l -l label -d 'Set meta data on a container' -x
-complete -c docker -n "__fish_seen_subcommand_from run" -l label-file -d 'Read in a line delimited file of labels' -x
+complete -c docker -n "__fish_seen_subcommand_from run" -l label-file -d 'Read in a line delimited file of labels' -r
 complete -c docker -n "__fish_seen_subcommand_from run" -l link -d 'Add link to another container' -x
 complete -c docker -n "__fish_seen_subcommand_from run" -l link-local-ip -d 'Container IPv4/IPv6 link-local addresses' -x
 complete -c docker -n "__fish_seen_subcommand_from run" -l log-driver -d 'Logging driver for the container' -x
@@ -400,7 +391,7 @@ complete -c docker -n "__fish_seen_subcommand_from run" -s m -l memory -d 'Memor
 complete -c docker -n "__fish_seen_subcommand_from run" -l memory-reservation -d 'Memory soft limit' -x
 complete -c docker -n "__fish_seen_subcommand_from run" -l memory-swap -d 'Swap limit equal to memory plus swap: \'-1\' to enable unlimited swap' -x
 complete -c docker -n "__fish_seen_subcommand_from run" -l memory-swappiness -d 'Tune container memory swappiness (0 to 100) (default -1)' -x
-complete -c docker -n "__fish_seen_subcommand_from run" -l mount -d 'Attach a filesystem mount to the container' -x
+complete -c docker -n "__fish_seen_subcommand_from run" -l mount -d 'Attach a filesystem mount to the container' -r
 complete -c docker -n "__fish_seen_subcommand_from run" -l name -d 'Assign a name to the container' -x
 complete -c docker -n "__fish_seen_subcommand_from run" -l network -d 'Connect a container to a network' -x
 complete -c docker -n "__fish_seen_subcommand_from run" -l network-alias -d 'Add network-scoped alias for the container' -x
@@ -425,7 +416,7 @@ complete -c docker -n "__fish_seen_subcommand_from run" -l stop-signal -d 'Signa
 complete -c docker -n "__fish_seen_subcommand_from run" -l stop-timeout -d 'Timeout (in seconds) to stop a container' -x
 complete -c docker -n "__fish_seen_subcommand_from run" -l storage-opt -d 'Storage driver options for the container' -x
 complete -c docker -n "__fish_seen_subcommand_from run" -l sysctl -d 'Sysctl options (default map[])' -x
-complete -c docker -n "__fish_seen_subcommand_from run" -l tmpfs -d 'Mount a tmpfs directory' -x
+complete -c docker -n "__fish_seen_subcommand_from run" -l tmpfs -d 'Mount a tmpfs directory' -r
 complete -c docker -n "__fish_seen_subcommand_from run" -s t -l tty -d 'Allocate a pseudo-TTY'
 complete -c docker -n "__fish_seen_subcommand_from run" -l ulimit -d 'Ulimit options (default [])' -x
 complete -c docker -n "__fish_seen_subcommand_from run" -s u -l user -d 'Username or UID (format: <name|uid>[:<group|gid>])' -x
@@ -434,11 +425,11 @@ complete -c docker -n "__fish_seen_subcommand_from run" -l uts -d 'UTS namespace
 complete -c docker -n "__fish_seen_subcommand_from run" -s v -l volume -d 'Bind mount a volume' -x
 complete -c docker -n "__fish_seen_subcommand_from run" -l volume-driver -d 'Optional volume driver for the container' -x
 complete -c docker -n "__fish_seen_subcommand_from run" -l volumes-from -d 'Mount volumes from the specified container(s)' -x
-complete -c docker -n "__fish_seen_subcommand_from run" -s w -l workdir -d 'Working directory inside the container' -x
+complete -c docker -n "__fish_seen_subcommand_from run" -s w -l workdir -d 'Working directory inside the container' -r
 
 
 
-complete -c docker -n "__fish_seen_subcommand_from save" -s o -l output -d 'Write to a file, instead of STDOUT' -x
+complete -c docker -n "__fish_seen_subcommand_from save" -s o -l output -d 'Write to a file, instead of STDOUT' -r
 
 
 
@@ -485,7 +476,7 @@ complete -c docker -n "__fish_seen_subcommand_from update" -l restart -d 'Restar
 
 
 complete -c docker -n "__fish_seen_subcommand_from version" -s f -l format -d 'Format the output using the given Go template' -x
-complete -c docker -n "__fish_seen_subcommand_from version" -l kubeconfig -d 'Kubernetes config file' -x
+complete -c docker -n "__fish_seen_subcommand_from version" -l kubeconfig -d 'Kubernetes config file' -r
 
 
 
@@ -495,18 +486,29 @@ complete -c docker -n "__fish_seen_subcommand_from buildx" -l builder -d 'Overri
 
 complete -c docker -n "__fish_seen_subcommand_from compose" -l ansi -d 'Control when to print ANSI control characters ("never"|"always"|"auto") (default "auto")' -x
 complete -c docker -n "__fish_seen_subcommand_from compose" -l compatibility -d 'Run compose in backward compatibility mode'
-complete -c docker -n "__fish_seen_subcommand_from compose" -l env-file -d 'Specify an alternate environment file.' -x
-complete -c docker -n "__fish_seen_subcommand_from compose" -s f -l file -d 'Compose configuration files' -x
-complete -c docker -n "__fish_seen_subcommand_from compose" -l profile -d 'Specify a profile to enable' -x
-complete -c docker -n "__fish_seen_subcommand_from compose" -l project-directory -d 'Specify an alternate working directory (default: the path of the Compose file)' -x
+complete -c docker -n "__fish_seen_subcommand_from compose" -l env-file -d 'Specify an alternate environment file.' -r
+complete -c docker -n "__fish_seen_subcommand_from compose" -s f -l file -d 'Compose configuration files' -r
+complete -c docker -n "__fish_seen_subcommand_from compose" -l profile -d 'Specify a profile to enable' -r
+complete -c docker -n "__fish_seen_subcommand_from compose" -l project-directory -d 'Specify an alternate working directory (default: the path of the, first specified, Compose file)' -r
 complete -c docker -n "__fish_seen_subcommand_from compose" -s p -l project-name -d 'Project name' -x
+
+
+
+complete -c docker -n "__fish_seen_subcommand_from sbom" -s D -l debug -d 'show debug logging'
+complete -c docker -n "__fish_seen_subcommand_from sbom" -l exclude -d 'exclude paths from being scanned using a glob expression' -r
+complete -c docker -n "__fish_seen_subcommand_from sbom" -l format -d 'report output format, options=[syft-json cyclonedx-xml cyclonedx-json github-0-json spdx-tag-value spdx-json table text] (default "table")' -x
+complete -c docker -n "__fish_seen_subcommand_from sbom" -l layers -d '[experimental] selection of layers to catalog, options=[squashed all] (default "squashed")' -x
+complete -c docker -n "__fish_seen_subcommand_from sbom" -s o -l output -d 'file to write the default report output to (default is STDOUT)' -r
+complete -c docker -n "__fish_seen_subcommand_from sbom" -l platform -d 'an optional platform specifier for container image sources (e.g. \'linux/arm64\', \'linux/arm64/v8\', \'arm64\', \'linux\')' -x
+complete -c docker -n "__fish_seen_subcommand_from sbom" -l quiet -d 'suppress all non-report output'
+complete -c docker -n "__fish_seen_subcommand_from sbom" -s v -l version -d 'version for sbom'
 
 
 
 complete -c docker -n "__fish_seen_subcommand_from scan" -l accept-license -d 'Accept using a third party scanning provider'
 complete -c docker -n "__fish_seen_subcommand_from scan" -l dependency-tree -d 'Show dependency tree with scan results'
 complete -c docker -n "__fish_seen_subcommand_from scan" -l exclude-base -d 'Exclude base image from vulnerability scanning (requires --file)'
-complete -c docker -n "__fish_seen_subcommand_from scan" -s f -l file -d 'Dockerfile associated with image, provides more detailed results' -x
+complete -c docker -n "__fish_seen_subcommand_from scan" -s f -l file -d 'Dockerfile associated with image, provides more detailed results' -r
 complete -c docker -n "__fish_seen_subcommand_from scan" -l group-issues -d 'Aggregate duplicated vulnerabilities and group them to a single one (requires --json)'
 complete -c docker -n "__fish_seen_subcommand_from scan" -l json -d 'Output results in JSON format'
 complete -c docker -n "__fish_seen_subcommand_from scan" -l login -d 'Authenticate to the scan provider using an optional token (with --token), or web base token if empty'

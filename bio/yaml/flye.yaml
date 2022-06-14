@@ -1,5 +1,5 @@
 name: flye
-description: flye
+description: Assembly of long reads with repeat graphs
 options:
   - names:
       - -h
@@ -8,28 +8,32 @@ options:
     description: show this help message and exit
   - names:
       - --pacbio-raw
-    argument: path
-    description: PacBio raw reads
+    argument: path [path ...]
+    description: PacBio regular CLR reads (<20% error)
   - names:
       - --pacbio-corr
-    argument: path
-    description: PacBio corrected reads
+    argument: path [path ...]
+    description: PacBio reads that were corrected with other methods (<3% error)
   - names:
       - --pacbio-hifi
-    argument: path
-    description: PacBio HiFi reads
+    argument: path [path ...]
+    description: PacBio HiFi reads (<1% error)
   - names:
       - --nano-raw
-    argument: path
-    description: ONT raw reads
+    argument: path [path ...]
+    description: ONT regular reads, pre-Guppy5 (<20% error)
   - names:
       - --nano-corr
-    argument: path
-    description: ONT corrected reads
+    argument: path [path ...]
+    description: ONT reads that were corrected with other methods (<3% error)
+  - names:
+      - --nano-hq
+    argument: path [path ...]
+    description: 'ONT high-quality reads: Guppy5+ or Q20 (<5% error)'
   - names:
       - --subassemblies
-    argument: path
-    description: high-quality contigs input
+    argument: path [path ...]
+    description: '[deprecated] high-quality contigs input'
   - names:
       - -g
       - --genome-size
@@ -62,11 +66,19 @@ options:
   - names:
       - --hifi-error
     argument: float
-    description: expected HiFi reads error rate (e.g. 0.01 or 0.001) [0.01]
+    description: '[deprecated] same as --read-error'
+  - names:
+      - --read-error
+    argument: float
+    description: adjust parameters for given read error rate (as fraction e.g. 0.03)
+  - names:
+      - --extra-params
+    argument: extra_params
+    description: extra configuration parameters list (comma-separated)
   - names:
       - --plasmids
     argument: ""
-    description: rescue short unassembled plasmids
+    description: unused (retained for backward compatibility)
   - names:
       - --meta
     argument: ""
@@ -76,9 +88,13 @@ options:
     argument: ""
     description: do not collapse alternative haplotypes
   - names:
+      - --scaffold
+    argument: ""
+    description: enable scaffolding using graph [disabled by default]
+  - names:
       - --trestle
     argument: ""
-    description: enable Trestle [disabled]
+    description: '[deprecated] enable Trestle [disabled by default]'
   - names:
       - --polish-target
     argument: path
@@ -104,3 +120,4 @@ options:
       - --version
     argument: ""
     description: show program's version number and exit
+version: 2.9-b1768

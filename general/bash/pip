@@ -58,6 +58,10 @@ _pip()
             return
             ;;
 
+          index) _pip_index
+            return
+            ;;
+
           wheel) _pip_wheel
             return
             ;;
@@ -74,12 +78,8 @@ _pip()
             return
             ;;
 
-          help) _pip_help
-            return
-            ;;
-
       *)
-          word_list=" install download uninstall freeze list show check config search cache wheel hash completion debug help -h --help --isolated -v --verbose -V --version -q --quiet --log --no-input --proxy --retries --timeout --exists-action --trusted-host --cert --client-cert --cache-dir --no-cache-dir --disable-pip-version-check --no-color --no-python-version-warning --use-feature --use-deprecated" 
+          word_list=" install download uninstall freeze list show check config search cache index wheel hash completion debug -h --help --debug --isolated --require-virtualenv -v --verbose -V --version -q --quiet --log --no-input --proxy --retries --timeout --exists-action --trusted-host --cert --client-cert --cache-dir --no-cache-dir --disable-pip-version-check --no-color --no-python-version-warning --use-feature --use-deprecated"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac
@@ -89,7 +89,7 @@ _pip()
 _pip_install ()
 {
     local cur word_list
-    word_list=" - -r --requirement -c --constraint --no-deps --pre -e --editable -t --target --platform --python-version --implementation --abi --user --root --prefix --src -U --upgrade --upgrade-strategy --force-reinstall -I --ignore-installed --ignore-requires-python --no-build-isolation --use-pep517 --install-option --global-option --compile --no-compile --no-warn-script-location --no-warn-conflicts --no-binary --only-binary --prefer-binary --require-hashes --progress-bar --no-clean -i --index-url --extra-index-url --no-index -f --find-links -h --help --isolated -v --verbose -V --version -q --quiet --log --no-input --proxy --retries --timeout --exists-action --trusted-host --cert --client-cert --cache-dir --no-cache-dir --disable-pip-version-check --no-color --no-python-version-warning --use-feature --use-deprecated" 
+    word_list=" -r --requirement -c --constraint --no-deps --pre -e --editable -t --target --platform --python-version --implementation --abi --user --root --prefix --src -U --upgrade --upgrade-strategy --force-reinstall -I --ignore-installed --ignore-requires-python --no-build-isolation --use-pep517 --check-build-dependencies --config-settings --install-option --global-option --compile --no-compile --no-warn-script-location --no-warn-conflicts --no-binary --only-binary --prefer-binary --require-hashes --progress-bar --root-user-action --no-clean -i --index-url --extra-index-url --no-index -f --find-links -h --help --debug --isolated --require-virtualenv -v --verbose -V --version -q --quiet --log --no-input --proxy --retries --timeout --exists-action --trusted-host --cert --client-cert --cache-dir --no-cache-dir --disable-pip-version-check --no-color --no-python-version-warning --use-feature --use-deprecated" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -97,7 +97,7 @@ _pip_install ()
 _pip_download ()
 {
     local cur word_list
-    word_list=" - -c --constraint -r --requirement --no-deps --global-option --no-binary --only-binary --prefer-binary --src --pre --require-hashes --progress-bar --no-build-isolation --use-pep517 --ignore-requires-python -d --dest --platform --python-version --implementation --abi --no-clean -i --index-url --extra-index-url --no-index -f --find-links -h --help --isolated -v --verbose -V --version -q --quiet --log --no-input --proxy --retries --timeout --exists-action --trusted-host --cert --client-cert --cache-dir --no-cache-dir --disable-pip-version-check --no-color --no-python-version-warning --use-feature --use-deprecated" 
+    word_list=" -c --constraint -r --requirement --no-deps --global-option --no-binary --only-binary --prefer-binary --src --pre --require-hashes --progress-bar --no-build-isolation --use-pep517 --check-build-dependencies --ignore-requires-python -d --dest --platform --python-version --implementation --abi --no-clean -i --index-url --extra-index-url --no-index -f --find-links -h --help --debug --isolated --require-virtualenv -v --verbose -V --version -q --quiet --log --no-input --proxy --retries --timeout --exists-action --trusted-host --cert --client-cert --cache-dir --no-cache-dir --disable-pip-version-check --no-color --no-python-version-warning --use-feature --use-deprecated" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -105,7 +105,7 @@ _pip_download ()
 _pip_uninstall ()
 {
     local cur word_list
-    word_list=" - - -r --requirement -y --yes -h --help --isolated -v --verbose -V --version -q --quiet --log --no-input --proxy --retries --timeout --exists-action --trusted-host --cert --client-cert --cache-dir --no-cache-dir --disable-pip-version-check --no-color --no-python-version-warning --use-feature --use-deprecated" 
+    word_list=" -r --requirement -y --yes --root-user-action -h --help --debug --isolated --require-virtualenv -v --verbose -V --version -q --quiet --log --no-input --proxy --retries --timeout --exists-action --trusted-host --cert --client-cert --cache-dir --no-cache-dir --disable-pip-version-check --no-color --no-python-version-warning --use-feature --use-deprecated" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -113,7 +113,109 @@ _pip_uninstall ()
 _pip_freeze ()
 {
     local cur word_list
-    word_list=" -r --requirement -f --find-links -l --local --user --path --all --exclude-editable --exclude -h --help --isolated -v --verbose -V --version -q --quiet --log --no-input --proxy --retries --timeout --exists-action --trusted-host --cert --client-cert --cache-dir --no-cache-dir --disable-pip-version-check --no-color --no-python-version-warning --use-feature --use-deprecated" 
+    local i=1 subcommand_index
+
+    # take the last word that's NOT starting with -
+    while [[ ( $i < $COMP_CWORD ) ]]; do
+        local s="${COMP_WORDS[i]}"
+        case "$s" in
+          freeze)
+            subcommand_index=$i
+            break
+            ;;
+        esac
+        (( i++ ))
+    done
+
+    while [[ ( $subcommand_index < $COMP_CWORD ) ]]; do
+        local s="${COMP_WORDS[subcommand_index}"
+        case "$s" in
+          packages) _pip_packages
+            return
+            ;;
+
+          *)  ;; 
+        esac
+        (( subcommand_index++ ))
+    done
+
+    word_list=" packages -r --requirement -l --local --user --path --all --exclude-editable --exclude -h --help --debug --isolated --require-virtualenv -v --verbose -V --version -q --quiet --log --no-input --proxy --retries --timeout --exists-action --trusted-host --cert --client-cert --cache-dir --no-cache-dir --disable-pip-version-check --no-color --no-python-version-warning --use-feature --use-deprecated" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_freeze_packages ()
+{
+    local cur word_list
+    local i=1 subcommand_index
+
+    # take the last word that's NOT starting with -
+    while [[ ( $i < $COMP_CWORD ) ]]; do
+        local s="${COMP_WORDS[i]}"
+        case "$s" in
+          packages)
+            subcommand_index=$i
+            break
+            ;;
+        esac
+        (( i++ ))
+    done
+
+    while [[ ( $subcommand_index < $COMP_CWORD ) ]]; do
+        local s="${COMP_WORDS[subcommand_index}"
+        case "$s" in
+          packages) _freeze_packages
+            return
+            ;;
+
+          *)  ;; 
+        esac
+        (( subcommand_index++ ))
+    done
+
+    word_list=" packages -r --requirement -l --local --user --path --all --exclude-editable --exclude -h --help --debug --isolated --require-virtualenv -v --verbose -V --version -q --quiet --log --no-input --proxy --retries --timeout --exists-action --trusted-host --cert --client-cert --cache-dir --no-cache-dir --disable-pip-version-check --no-color --no-python-version-warning --use-feature --use-deprecated" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_packages_packages ()
+{
+    local cur word_list
+    local i=1 subcommand_index
+
+    # take the last word that's NOT starting with -
+    while [[ ( $i < $COMP_CWORD ) ]]; do
+        local s="${COMP_WORDS[i]}"
+        case "$s" in
+          packages)
+            subcommand_index=$i
+            break
+            ;;
+        esac
+        (( i++ ))
+    done
+
+    while [[ ( $subcommand_index < $COMP_CWORD ) ]]; do
+        local s="${COMP_WORDS[subcommand_index}"
+        case "$s" in
+          packages) _packages_packages
+            return
+            ;;
+
+          *)  ;; 
+        esac
+        (( subcommand_index++ ))
+    done
+
+    word_list=" packages -r --requirement -l --local --user --path --all --exclude-editable --exclude -h --help --debug --isolated --require-virtualenv -v --verbose -V --version -q --quiet --log --no-input --proxy --retries --timeout --exists-action --trusted-host --cert --client-cert --cache-dir --no-cache-dir --disable-pip-version-check --no-color --no-python-version-warning --use-feature --use-deprecated" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_packages_packages ()
+{
+    local cur word_list
+    word_list=" -r --requirement -l --local --user --path --all --exclude-editable --exclude -h --help --debug --isolated --require-virtualenv -v --verbose -V --version -q --quiet --log --no-input --proxy --retries --timeout --exists-action --trusted-host --cert --client-cert --cache-dir --no-cache-dir --disable-pip-version-check --no-color --no-python-version-warning --use-feature --use-deprecated" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -121,7 +223,7 @@ _pip_freeze ()
 _pip_list ()
 {
     local cur word_list
-    word_list=" -o --outdated -u --uptodate -e --editable -l --local --user --path --pre --format --not-required --exclude-editable --include-editable --exclude -i --index-url --extra-index-url --no-index -f --find-links -h --help --isolated -v --verbose -V --version -q --quiet --log --no-input --proxy --retries --timeout --exists-action --trusted-host --cert --client-cert --cache-dir --no-cache-dir --disable-pip-version-check --no-color --no-python-version-warning --use-feature --use-deprecated" 
+    word_list=" -o --outdated -u --uptodate -e --editable -l --local --user --path --pre --format --not-required --exclude-editable --include-editable --exclude -i --index-url --extra-index-url --no-index -f --find-links -h --help --debug --isolated --require-virtualenv -v --verbose -V --version -q --quiet --log --no-input --proxy --retries --timeout --exists-action --trusted-host --cert --client-cert --cache-dir --no-cache-dir --disable-pip-version-check --no-color --no-python-version-warning --use-feature --use-deprecated" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -129,7 +231,7 @@ _pip_list ()
 _pip_show ()
 {
     local cur word_list
-    word_list=" -f --files -h --help --isolated -v --verbose -V --version -q --quiet --log --no-input --proxy --retries --timeout --exists-action --trusted-host --cert --client-cert --cache-dir --no-cache-dir --disable-pip-version-check --no-color --no-python-version-warning --use-feature --use-deprecated" 
+    word_list=" -f --files -h --help --debug --isolated --require-virtualenv -v --verbose -V --version -q --quiet --log --no-input --proxy --retries --timeout --exists-action --trusted-host --cert --client-cert --cache-dir --no-cache-dir --disable-pip-version-check --no-color --no-python-version-warning --use-feature --use-deprecated" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -137,7 +239,7 @@ _pip_show ()
 _pip_check ()
 {
     local cur word_list
-    word_list=" -h --help --isolated -v --verbose -V --version -q --quiet --log --no-input --proxy --retries --timeout --exists-action --trusted-host --cert --client-cert --cache-dir --no-cache-dir --disable-pip-version-check --no-color --no-python-version-warning --use-feature --use-deprecated" 
+    word_list=" -h --help --debug --isolated --require-virtualenv -v --verbose -V --version -q --quiet --log --no-input --proxy --retries --timeout --exists-action --trusted-host --cert --client-cert --cache-dir --no-cache-dir --disable-pip-version-check --no-color --no-python-version-warning --use-feature --use-deprecated" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -145,7 +247,7 @@ _pip_check ()
 _pip_config ()
 {
     local cur word_list
-    word_list=" --editor --global --user --site -h --help --isolated -v --verbose -V --version -q --quiet --log --no-input --proxy --retries --timeout --exists-action --trusted-host --cert --client-cert --cache-dir --no-cache-dir --disable-pip-version-check --no-color --no-python-version-warning --use-feature --use-deprecated" 
+    word_list=" --editor --global --user --site -h --help --debug --isolated --require-virtualenv -v --verbose -V --version -q --quiet --log --no-input --proxy --retries --timeout --exists-action --trusted-host --cert --client-cert --cache-dir --no-cache-dir --disable-pip-version-check --no-color --no-python-version-warning --use-feature --use-deprecated" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -153,7 +255,7 @@ _pip_config ()
 _pip_search ()
 {
     local cur word_list
-    word_list=" -i --index -h --help --isolated -v --verbose -V --version -q --quiet --log --no-input --proxy --retries --timeout --exists-action --trusted-host --cert --client-cert --cache-dir --no-cache-dir --disable-pip-version-check --no-color --no-python-version-warning --use-feature --use-deprecated" 
+    word_list=" -i --index -h --help --debug --isolated --require-virtualenv -v --verbose -V --version -q --quiet --log --no-input --proxy --retries --timeout --exists-action --trusted-host --cert --client-cert --cache-dir --no-cache-dir --disable-pip-version-check --no-color --no-python-version-warning --use-feature --use-deprecated" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -161,7 +263,15 @@ _pip_search ()
 _pip_cache ()
 {
     local cur word_list
-    word_list=" - - - - - --format -h --help --isolated -v --verbose -V --version -q --quiet --log --no-input --proxy --retries --timeout --exists-action --trusted-host --cert --client-cert --cache-dir --no-cache-dir --disable-pip-version-check --no-color --no-python-version-warning --use-feature --use-deprecated" 
+    word_list=" --format -h --help --debug --isolated --require-virtualenv -v --verbose -V --version -q --quiet --log --no-input --proxy --retries --timeout --exists-action --trusted-host --cert --client-cert --cache-dir --no-cache-dir --disable-pip-version-check --no-color --no-python-version-warning --use-feature --use-deprecated" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_pip_index ()
+{
+    local cur word_list
+    word_list=" --platform --python-version --implementation --abi --ignore-requires-python --pre --no-binary --only-binary -i --index-url --extra-index-url --no-index -f --find-links -h --help --debug --isolated --require-virtualenv -v --verbose -V --version -q --quiet --log --no-input --proxy --retries --timeout --exists-action --trusted-host --cert --client-cert --cache-dir --no-cache-dir --disable-pip-version-check --no-color --no-python-version-warning --use-feature --use-deprecated" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -169,7 +279,7 @@ _pip_cache ()
 _pip_wheel ()
 {
     local cur word_list
-    word_list=" -w --wheel-dir --no-binary --only-binary --prefer-binary --no-build-isolation --use-pep517 -c --constraint -e --editable -r --requirement --src --ignore-requires-python --no-deps --progress-bar --no-verify --build-option --global-option --pre --require-hashes --no-clean -i --index-url --extra-index-url --no-index -f --find-links -h --help --isolated -v --verbose -V --version -q --quiet --log --no-input --proxy --retries --timeout --exists-action --trusted-host --cert --client-cert --cache-dir --no-cache-dir --disable-pip-version-check --no-color --no-python-version-warning --use-feature --use-deprecated" 
+    word_list=" -w --wheel-dir --no-binary --only-binary --prefer-binary --no-build-isolation --use-pep517 --check-build-dependencies -c --constraint -e --editable -r --requirement --src --ignore-requires-python --no-deps --progress-bar --no-verify --config-settings --build-option --global-option --pre --require-hashes --no-clean -i --index-url --extra-index-url --no-index -f --find-links -h --help --debug --isolated --require-virtualenv -v --verbose -V --version -q --quiet --log --no-input --proxy --retries --timeout --exists-action --trusted-host --cert --client-cert --cache-dir --no-cache-dir --disable-pip-version-check --no-color --no-python-version-warning --use-feature --use-deprecated" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -177,7 +287,7 @@ _pip_wheel ()
 _pip_hash ()
 {
     local cur word_list
-    word_list=" -a --algorithm -h --help --isolated -v --verbose -V --version -q --quiet --log --no-input --proxy --retries --timeout --exists-action --trusted-host --cert --client-cert --cache-dir --no-cache-dir --disable-pip-version-check --no-color --no-python-version-warning --use-feature --use-deprecated" 
+    word_list=" -a --algorithm -h --help --debug --isolated --require-virtualenv -v --verbose -V --version -q --quiet --log --no-input --proxy --retries --timeout --exists-action --trusted-host --cert --client-cert --cache-dir --no-cache-dir --disable-pip-version-check --no-color --no-python-version-warning --use-feature --use-deprecated" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -185,7 +295,7 @@ _pip_hash ()
 _pip_completion ()
 {
     local cur word_list
-    word_list=" -b --bash -z --zsh -f --fish -h --help --isolated -v --verbose -V --version -q --quiet --log --no-input --proxy --retries --timeout --exists-action --trusted-host --cert --client-cert --cache-dir --no-cache-dir --disable-pip-version-check --no-color --no-python-version-warning --use-feature --use-deprecated" 
+    word_list=" -b --bash -z --zsh -f --fish -p --powershell -h --help --debug --isolated --require-virtualenv -v --verbose -V --version -q --quiet --log --no-input --proxy --retries --timeout --exists-action --trusted-host --cert --client-cert --cache-dir --no-cache-dir --disable-pip-version-check --no-color --no-python-version-warning --use-feature --use-deprecated" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -193,15 +303,7 @@ _pip_completion ()
 _pip_debug ()
 {
     local cur word_list
-    word_list=" --platform --python-version --implementation --abi -h --help --isolated -v --verbose -V --version -q --quiet --log --no-input --proxy --retries --timeout --exists-action --trusted-host --cert --client-cert --cache-dir --no-cache-dir --disable-pip-version-check --no-color --no-python-version-warning --use-feature --use-deprecated" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
-}
-
-_pip_help ()
-{
-    local cur word_list
-    word_list=" -h --help --isolated -v --verbose -V --version -q --quiet --log --no-input --proxy --retries --timeout --exists-action --trusted-host --cert --client-cert --cache-dir --no-cache-dir --disable-pip-version-check --no-color --no-python-version-warning --use-feature --use-deprecated" 
+    word_list=" --platform --python-version --implementation --abi -h --help --debug --isolated --require-virtualenv -v --verbose -V --version -q --quiet --log --no-input --proxy --retries --timeout --exists-action --trusted-host --cert --client-cert --cache-dir --no-cache-dir --disable-pip-version-check --no-color --no-python-version-warning --use-feature --use-deprecated" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }

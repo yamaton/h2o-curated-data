@@ -4,7 +4,6 @@
 
     function _pip_install {
         _arguments \
-            '-[sing requirement specifiers.]' \
             {-r,--requirement}'[Install from the given requirements file. This option can be used multiple times.]':file:_files \
             {-c,--constraint}'[Constrain versions using the given constraints file. This option can be used multiple times.]':file:_files \
             '--no-deps[Don'\''t install package dependencies.]' \
@@ -12,21 +11,23 @@
             {-e,--editable}'[Install a project in editable mode (i.e. setuptools "develop mode") from a local project path or a VCS url.]':file:_files \
             {-t,--target}'[Install packages into <dir>. By default this will not replace existing files/folders in <dir>. Use --upgrade to replace existing packages in <dir> with new versions.]':file:_files \
             '--platform[Only use wheels compatible with <platform>. Defaults to the platform of the running system. Use this option multiple times to specify multiple platforms supported by the target interpreter.]' \
-            '--python-version[The Python interpreter version to use for wheel and "Requires-Python" compatibility checks. Defaults to a version derived from the running interpreter. The version can be specified using up to three dot-separated integers (e.g. "3" for 3.0.0, "3.7" for 3.7.0, or "3.7.3"). A majorminor version can also be given as a string without dots (e.g. "37" for 3.7.0).]' \
-            '--implementation[Only use wheels compatible with Python implementation <implementation>, e.g. '\''pp'\'', '\''jy'\'', '\''cp'\'',  or '\''ip'\''. If not specified, then the current interpreter implementation is used.  Use '\''py'\'' to force implementation-agnostic wheels.]' \
-            '--abi[Only use wheels compatible with Python abi <abi>, e.g. '\''pypy_41'\''. If not specified, then the current interpreter abi tag is used. Use this option multiple times to specify multiple abis supported by the target interpreter. Generally you will need to specify --implementation, --platform, and --pythonversion when using this option.]' \
+            '--python-version[The Python interpreter version to use for wheel and "Requires-Python" compatibility checks. Defaults to a version derived from the running interpreter. The version can be specified using up to three dot-separated integers (e.g. "3" for 3.0.0, "3.7" for 3.7.0, or "3.7.3"). A major-minor version can also be given as a string without dots (e.g. "37" for 3.7.0).]' \
+            '--implementation[Only use wheels compatible with Python implementation <implementation>, e.g. '\''pp'\'', '\''jy'\'', '\''cp'\'', or '\''ip'\''. If not specified, then the current interpreter implementation is used. Use '\''py'\'' to force implementation-agnostic wheels.]' \
+            '--abi[Only use wheels compatible with Python abi <abi>, e.g. '\''pypy_41'\''. If not specified, then the current interpreter abi tag is used. Use this option multiple times to specify multiple abis supported by the target interpreter. Generally you will need to specify --implementation, --platform, and --python-version when using this option.]' \
             '--user[Install to the Python user install directory for your platform. Typically ~/.local/, or %APPDATA%\Python on Windows. (See the Python documentation for site.USER_BASE for full details.)]' \
             '--root[Install everything relative to this alternate root directory.]':file:_files \
             '--prefix[Installation prefix where lib, bin and other top-level folders are placed]':file:_files \
             '--src[Directory to check out editable projects into. The default in a virtualenv is "<venv path>/src". The default for global installs is "<current dir>/src".]':file:_files \
             {-U,--upgrade}'[Upgrade all specified packages to the newest available version. The handling of dependencies depends on the upgrade-strategy used.]' \
-            '--upgrade-strategy[Determines how dependency upgrading should be handled \[default: only-if-needed\]. "eager" dependencies are upgraded regardless of whether the currently installed version satisfies the requirements of the upgraded package(s). "onlyif-needed" -  are upgraded only when they do not satisfy the requirements of the upgraded package(s).]' \
+            '--upgrade-strategy[Determines how dependency upgrading should be handled \[default: only-if-needed\]. "eager" - dependencies are upgraded regardless of whether the currently installed version satisfies the requirements of the upgraded package(s). "only-if-needed" - are upgraded only when they do not satisfy the requirements of the upgraded package(s).]' \
             '--force-reinstall[Reinstall all packages even if they are already up-to-date.]' \
             {-I,--ignore-installed}'[Ignore the installed packages, overwriting them. This can break your system if the existing package is of a different version or was installed with a different package manager!]' \
             '--ignore-requires-python[Ignore the Requires-Python information.]' \
             '--no-build-isolation[Disable isolation when building a modern source distribution. Build dependencies specified by PEP 518 must be already installed if this option is used.]' \
             '--use-pep517[Use PEP 517 for building source distributions (use --no-use-pep517 to force legacy behaviour).]' \
-            '--install-option[Extra arguments to be supplied to the setup.py install command (use like --install-option="-install-scripts=/usr/local/bin"). Use multiple --install-option options to pass multiple options to setup.py install. If you are using an option with a directory path, be sure to use absolute path.]' \
+            '--check-build-dependencies[Check the build dependencies when PEP517 is used.]' \
+            '--config-settings[Configuration settings to be passed to the PEP 517 build backend. Settings take the form KEY=VALUE. Use multiple --config-settings options to pass multiple keys to the backend.]' \
+            '--install-option[Extra arguments to be supplied to the setup.py install command (use like --install-option="--install-scripts=/usr/local/bin"). Use multiple --install-option options to pass multiple options to setup.py install. If you are using an option with a directory path, be sure to use absolute path.]' \
             '--global-option[Extra global options to be supplied to the setup.py call before the install or bdist_wheel command.]' \
             '--compile[Compile Python source files to bytecode]' \
             '--no-compile[Do not compile Python source files to bytecode]' \
@@ -36,20 +37,23 @@
             '--only-binary[Do not use source packages. Can be supplied multiple times, and each time adds to the existing value. Accepts either ":all:" to disable all source packages, ":none:" to empty the set, or one or more package names with commas between them. Packages without binary distributions will fail to install when this option is used on them.]' \
             '--prefer-binary[Prefer older binary packages over newer source packages.]' \
             '--require-hashes[Require a hash to check each requirement against, for repeatable installs. This option is implied when any package in a requirements file has a --hash option.]' \
-            '--progress-bar[Specify type of progress to be displayed \[off|on|ascii|pretty|emoji\] (default: on)]' \
+            '--progress-bar[Specify whether the progress bar should be used \[on, off\] (default: on)]' \
+            '--root-user-action[Action if pip is run as a root user. By default, a warning message is shown.]' \
             '--no-clean[Don'\''t clean up build directories.]' \
             {-i,--index-url}'[Base URL of the Python Package Index (default https://pypi.org/simple). This should point to a repository compliant with PEP 503 (the simple repository API) or a local directory laid out in the same format.]' \
             '--extra-index-url[Extra URLs of package indexes to use in addition to --index-url. Should follow the same rules as --index-url.]' \
-            '--no-index[Ignore package index (only looking at --findlinks URLs instead).]' \
-            {-f,--find-links}'[If a URL or path to an html file, then parse for links to archives such as sdist (.tar.gz) or wheel (.whl) files. If a local path or file:// URL that'\''s a directory,  then look for archives in the directory listing. Links to VCS project URLs are not supported.]' \
+            '--no-index[Ignore package index (only looking at --find-links URLs instead).]' \
+            {-f,--find-links}'[If a URL or path to an html file, then parse for links to archives such as sdist (.tar.gz) or wheel (.whl) files. If a local path or file:// URL that'\''s a directory, then look for archives in the directory listing. Links to VCS project URLs are not supported.]' \
             {-h,--help}'[Show help.]' \
+            '--debug[Let unhandled exceptions propagate outside the main subroutine, instead of logging them to stderr.]' \
             '--isolated[Run pip in an isolated mode, ignoring environment variables and user configuration.]' \
+            '--require-virtualenv[Allow pip to only run in a virtual environment; exit with an error otherwise.]' \
             {-v,--verbose}'[Give more output. Option is additive, and can be used up to 3 times.]' \
             {-V,--version}'[Show version and exit.]' \
             {-q,--quiet}'[Give less output. Option is additive, and can be used up to 3 times (corresponding to WARNING, ERROR, and CRITICAL logging levels).]' \
             '--log[Path to a verbose appending log.]':file:_files \
             '--no-input[Disable prompting for input.]' \
-            '--proxy[Specify a proxy in the form \[user:passwd@\]proxy.server:port.]' \
+            '--proxy[Specify a proxy in the form scheme://\[user:passwd@\]proxy.server:port.]' \
             '--retries[Maximum number of retries each connection should attempt (default 5 times).]' \
             '--timeout[Set the socket timeout (default 15 seconds).]' \
             '--exists-action[Default action when a path already exists: (s)witch, (i)gnore, (w)ipe, (b)ackup, (a)bort.]' \
@@ -69,7 +73,6 @@
 
     function _pip_download {
         _arguments \
-            '-[sing requirement specifiers.]' \
             {-c,--constraint}'[Constrain versions using the given constraints file. This option can be used multiple times.]':file:_files \
             {-r,--requirement}'[Install from the given requirements file. This option can be used multiple times.]':file:_files \
             '--no-deps[Don'\''t install package dependencies.]' \
@@ -80,28 +83,31 @@
             '--src[Directory to check out editable projects into. The default in a virtualenv is "<venv path>/src". The default for global installs is "<current dir>/src".]':file:_files \
             '--pre[Include pre-release and development versions. By default, pip only finds stable versions.]' \
             '--require-hashes[Require a hash to check each requirement against, for repeatable installs. This option is implied when any package in a requirements file has a --hash option.]' \
-            '--progress-bar[Specify type of progress to be displayed \[off|on|ascii|pretty|emoji\] (default: on)]' \
+            '--progress-bar[Specify whether the progress bar should be used \[on, off\] (default: on)]' \
             '--no-build-isolation[Disable isolation when building a modern source distribution. Build dependencies specified by PEP 518 must be already installed if this option is used.]' \
             '--use-pep517[Use PEP 517 for building source distributions (use --no-use-pep517 to force legacy behaviour).]' \
+            '--check-build-dependencies[Check the build dependencies when PEP517 is used.]' \
             '--ignore-requires-python[Ignore the Requires-Python information.]' \
             {-d,--dest}'[Download packages into <dir>.]':file:_files \
             '--platform[Only use wheels compatible with <platform>. Defaults to the platform of the running system. Use this option multiple times to specify multiple platforms supported by the target interpreter.]' \
-            '--python-version[The Python interpreter version to use for wheel and "Requires-Python" compatibility checks. Defaults to a version derived from the running interpreter. The version can be specified using up to three dot-separated integers (e.g. "3" for 3.0.0, "3.7" for 3.7.0, or "3.7.3"). A majorminor version can also be given as a string without dots (e.g. "37" for 3.7.0).]' \
-            '--implementation[Only use wheels compatible with Python implementation <implementation>, e.g. '\''pp'\'', '\''jy'\'', '\''cp'\'',  or '\''ip'\''. If not specified, then the current interpreter implementation is used.  Use '\''py'\'' to force implementation-agnostic wheels.]' \
-            '--abi[Only use wheels compatible with Python abi <abi>, e.g. '\''pypy_41'\''. If not specified, then the current interpreter abi tag is used. Use this option multiple times to specify multiple abis supported by the target interpreter. Generally you will need to specify --implementation, --platform, and --pythonversion when using this option.]' \
+            '--python-version[The Python interpreter version to use for wheel and "Requires-Python" compatibility checks. Defaults to a version derived from the running interpreter. The version can be specified using up to three dot-separated integers (e.g. "3" for 3.0.0, "3.7" for 3.7.0, or "3.7.3"). A major-minor version can also be given as a string without dots (e.g. "37" for 3.7.0).]' \
+            '--implementation[Only use wheels compatible with Python implementation <implementation>, e.g. '\''pp'\'', '\''jy'\'', '\''cp'\'', or '\''ip'\''. If not specified, then the current interpreter implementation is used. Use '\''py'\'' to force implementation-agnostic wheels.]' \
+            '--abi[Only use wheels compatible with Python abi <abi>, e.g. '\''pypy_41'\''. If not specified, then the current interpreter abi tag is used. Use this option multiple times to specify multiple abis supported by the target interpreter. Generally you will need to specify --implementation, --platform, and --python-version when using this option.]' \
             '--no-clean[Don'\''t clean up build directories.]' \
             {-i,--index-url}'[Base URL of the Python Package Index (default https://pypi.org/simple). This should point to a repository compliant with PEP 503 (the simple repository API) or a local directory laid out in the same format.]' \
             '--extra-index-url[Extra URLs of package indexes to use in addition to --index-url. Should follow the same rules as --index-url.]' \
-            '--no-index[Ignore package index (only looking at --findlinks URLs instead).]' \
-            {-f,--find-links}'[If a URL or path to an html file, then parse for links to archives such as sdist (.tar.gz) or wheel (.whl) files. If a local path or file:// URL that'\''s a directory,  then look for archives in the directory listing. Links to VCS project URLs are not supported.]' \
+            '--no-index[Ignore package index (only looking at --find-links URLs instead).]' \
+            {-f,--find-links}'[If a URL or path to an html file, then parse for links to archives such as sdist (.tar.gz) or wheel (.whl) files. If a local path or file:// URL that'\''s a directory, then look for archives in the directory listing. Links to VCS project URLs are not supported.]' \
             {-h,--help}'[Show help.]' \
+            '--debug[Let unhandled exceptions propagate outside the main subroutine, instead of logging them to stderr.]' \
             '--isolated[Run pip in an isolated mode, ignoring environment variables and user configuration.]' \
+            '--require-virtualenv[Allow pip to only run in a virtual environment; exit with an error otherwise.]' \
             {-v,--verbose}'[Give more output. Option is additive, and can be used up to 3 times.]' \
             {-V,--version}'[Show version and exit.]' \
             {-q,--quiet}'[Give less output. Option is additive, and can be used up to 3 times (corresponding to WARNING, ERROR, and CRITICAL logging levels).]' \
             '--log[Path to a verbose appending log.]':file:_files \
             '--no-input[Disable prompting for input.]' \
-            '--proxy[Specify a proxy in the form \[user:passwd@\]proxy.server:port.]' \
+            '--proxy[Specify a proxy in the form scheme://\[user:passwd@\]proxy.server:port.]' \
             '--retries[Maximum number of retries each connection should attempt (default 5 times).]' \
             '--timeout[Set the socket timeout (default 15 seconds).]' \
             '--exists-action[Default action when a path already exists: (s)witch, (i)gnore, (w)ipe, (b)ackup, (a)bort.]' \
@@ -121,18 +127,19 @@
 
     function _pip_uninstall {
         _arguments \
-            '-[stalled with ``python setup.py install``, which]' \
-            '-[by ``python setup.py develop``.]' \
-            {-r,--requirement}'[Uninstall all the packages listed in the given requirements file.  This option can be used multiple times.]':file:_files \
+            {-r,--requirement}'[Uninstall all the packages listed in the given requirements file. This option can be used multiple times.]':file:_files \
             {-y,--yes}'[Don'\''t ask for confirmation of uninstall deletions.]' \
+            '--root-user-action[Action if pip is run as a root user. By default, a warning message is shown.]' \
             {-h,--help}'[Show help.]' \
+            '--debug[Let unhandled exceptions propagate outside the main subroutine, instead of logging them to stderr.]' \
             '--isolated[Run pip in an isolated mode, ignoring environment variables and user configuration.]' \
+            '--require-virtualenv[Allow pip to only run in a virtual environment; exit with an error otherwise.]' \
             {-v,--verbose}'[Give more output. Option is additive, and can be used up to 3 times.]' \
             {-V,--version}'[Show version and exit.]' \
             {-q,--quiet}'[Give less output. Option is additive, and can be used up to 3 times (corresponding to WARNING, ERROR, and CRITICAL logging levels).]' \
             '--log[Path to a verbose appending log.]':file:_files \
             '--no-input[Disable prompting for input.]' \
-            '--proxy[Specify a proxy in the form \[user:passwd@\]proxy.server:port.]' \
+            '--proxy[Specify a proxy in the form scheme://\[user:passwd@\]proxy.server:port.]' \
             '--retries[Maximum number of retries each connection should attempt (default 5 times).]' \
             '--timeout[Set the socket timeout (default 15 seconds).]' \
             '--exists-action[Default action when a path already exists: (s)witch, (i)gnore, (w)ipe, (b)ackup, (a)bort.]' \
@@ -153,21 +160,22 @@
     function _pip_freeze {
         _arguments \
             {-r,--requirement}'[Use the order in the given requirements file and its comments when generating output. This option can be used multiple times.]':file:_files \
-            {-f,--find-links}'[URL for finding packages, which will be added to the output.]' \
             {-l,--local}'[If in a virtualenv that has global access, do not output globally-installed packages.]' \
             '--user[Only output packages installed in user-site.]' \
             '--path[Restrict to the specified installation path for listing packages (can be used multiple times).]':file:_files \
-            '--all[Do not skip these packages in the output: pip, wheel, setuptools, distribute]' \
+            '--all[Do not skip these packages in the output: wheel, setuptools, pip, distribute]' \
             '--exclude-editable[Exclude editable package from output.]' \
             '--exclude[Exclude specified package from the output]' \
             {-h,--help}'[Show help.]' \
+            '--debug[Let unhandled exceptions propagate outside the main subroutine, instead of logging them to stderr.]' \
             '--isolated[Run pip in an isolated mode, ignoring environment variables and user configuration.]' \
+            '--require-virtualenv[Allow pip to only run in a virtual environment; exit with an error otherwise.]' \
             {-v,--verbose}'[Give more output. Option is additive, and can be used up to 3 times.]' \
             {-V,--version}'[Show version and exit.]' \
             {-q,--quiet}'[Give less output. Option is additive, and can be used up to 3 times (corresponding to WARNING, ERROR, and CRITICAL logging levels).]' \
             '--log[Path to a verbose appending log.]':file:_files \
             '--no-input[Disable prompting for input.]' \
-            '--proxy[Specify a proxy in the form \[user:passwd@\]proxy.server:port.]' \
+            '--proxy[Specify a proxy in the form scheme://\[user:passwd@\]proxy.server:port.]' \
             '--retries[Maximum number of retries each connection should attempt (default 5 times).]' \
             '--timeout[Set the socket timeout (default 15 seconds).]' \
             '--exists-action[Default action when a path already exists: (s)witch, (i)gnore, (w)ipe, (b)ackup, (a)bort.]' \
@@ -201,16 +209,18 @@
             '--exclude[Exclude specified package from the output]' \
             {-i,--index-url}'[Base URL of the Python Package Index (default https://pypi.org/simple). This should point to a repository compliant with PEP 503 (the simple repository API) or a local directory laid out in the same format.]' \
             '--extra-index-url[Extra URLs of package indexes to use in addition to --index-url. Should follow the same rules as --index-url.]' \
-            '--no-index[Ignore package index (only looking at --findlinks URLs instead).]' \
-            {-f,--find-links}'[If a URL or path to an html file, then parse for links to archives such as sdist (.tar.gz) or wheel (.whl) files. If a local path or file:// URL that'\''s a directory,  then look for archives in the directory listing. Links to VCS project URLs are not supported.]' \
+            '--no-index[Ignore package index (only looking at --find-links URLs instead).]' \
+            {-f,--find-links}'[If a URL or path to an html file, then parse for links to archives such as sdist (.tar.gz) or wheel (.whl) files. If a local path or file:// URL that'\''s a directory, then look for archives in the directory listing. Links to VCS project URLs are not supported.]' \
             {-h,--help}'[Show help.]' \
+            '--debug[Let unhandled exceptions propagate outside the main subroutine, instead of logging them to stderr.]' \
             '--isolated[Run pip in an isolated mode, ignoring environment variables and user configuration.]' \
+            '--require-virtualenv[Allow pip to only run in a virtual environment; exit with an error otherwise.]' \
             {-v,--verbose}'[Give more output. Option is additive, and can be used up to 3 times.]' \
             {-V,--version}'[Show version and exit.]' \
             {-q,--quiet}'[Give less output. Option is additive, and can be used up to 3 times (corresponding to WARNING, ERROR, and CRITICAL logging levels).]' \
             '--log[Path to a verbose appending log.]':file:_files \
             '--no-input[Disable prompting for input.]' \
-            '--proxy[Specify a proxy in the form \[user:passwd@\]proxy.server:port.]' \
+            '--proxy[Specify a proxy in the form scheme://\[user:passwd@\]proxy.server:port.]' \
             '--retries[Maximum number of retries each connection should attempt (default 5 times).]' \
             '--timeout[Set the socket timeout (default 15 seconds).]' \
             '--exists-action[Default action when a path already exists: (s)witch, (i)gnore, (w)ipe, (b)ackup, (a)bort.]' \
@@ -232,13 +242,15 @@
         _arguments \
             {-f,--files}'[Show the full list of installed files for each package.]' \
             {-h,--help}'[Show help.]' \
+            '--debug[Let unhandled exceptions propagate outside the main subroutine, instead of logging them to stderr.]' \
             '--isolated[Run pip in an isolated mode, ignoring environment variables and user configuration.]' \
+            '--require-virtualenv[Allow pip to only run in a virtual environment; exit with an error otherwise.]' \
             {-v,--verbose}'[Give more output. Option is additive, and can be used up to 3 times.]' \
             {-V,--version}'[Show version and exit.]' \
             {-q,--quiet}'[Give less output. Option is additive, and can be used up to 3 times (corresponding to WARNING, ERROR, and CRITICAL logging levels).]' \
             '--log[Path to a verbose appending log.]':file:_files \
             '--no-input[Disable prompting for input.]' \
-            '--proxy[Specify a proxy in the form \[user:passwd@\]proxy.server:port.]' \
+            '--proxy[Specify a proxy in the form scheme://\[user:passwd@\]proxy.server:port.]' \
             '--retries[Maximum number of retries each connection should attempt (default 5 times).]' \
             '--timeout[Set the socket timeout (default 15 seconds).]' \
             '--exists-action[Default action when a path already exists: (s)witch, (i)gnore, (w)ipe, (b)ackup, (a)bort.]' \
@@ -259,13 +271,15 @@
     function _pip_check {
         _arguments \
             {-h,--help}'[Show help.]' \
+            '--debug[Let unhandled exceptions propagate outside the main subroutine, instead of logging them to stderr.]' \
             '--isolated[Run pip in an isolated mode, ignoring environment variables and user configuration.]' \
+            '--require-virtualenv[Allow pip to only run in a virtual environment; exit with an error otherwise.]' \
             {-v,--verbose}'[Give more output. Option is additive, and can be used up to 3 times.]' \
             {-V,--version}'[Show version and exit.]' \
             {-q,--quiet}'[Give less output. Option is additive, and can be used up to 3 times (corresponding to WARNING, ERROR, and CRITICAL logging levels).]' \
             '--log[Path to a verbose appending log.]':file:_files \
             '--no-input[Disable prompting for input.]' \
-            '--proxy[Specify a proxy in the form \[user:passwd@\]proxy.server:port.]' \
+            '--proxy[Specify a proxy in the form scheme://\[user:passwd@\]proxy.server:port.]' \
             '--retries[Maximum number of retries each connection should attempt (default 5 times).]' \
             '--timeout[Set the socket timeout (default 15 seconds).]' \
             '--exists-action[Default action when a path already exists: (s)witch, (i)gnore, (w)ipe, (b)ackup, (a)bort.]' \
@@ -290,13 +304,15 @@
             '--user[Use the user configuration file only]' \
             '--site[Use the current environment configuration file only]' \
             {-h,--help}'[Show help.]' \
+            '--debug[Let unhandled exceptions propagate outside the main subroutine, instead of logging them to stderr.]' \
             '--isolated[Run pip in an isolated mode, ignoring environment variables and user configuration.]' \
+            '--require-virtualenv[Allow pip to only run in a virtual environment; exit with an error otherwise.]' \
             {-v,--verbose}'[Give more output. Option is additive, and can be used up to 3 times.]' \
             {-V,--version}'[Show version and exit.]' \
             {-q,--quiet}'[Give less output. Option is additive, and can be used up to 3 times (corresponding to WARNING, ERROR, and CRITICAL logging levels).]' \
             '--log[Path to a verbose appending log.]':file:_files \
             '--no-input[Disable prompting for input.]' \
-            '--proxy[Specify a proxy in the form \[user:passwd@\]proxy.server:port.]' \
+            '--proxy[Specify a proxy in the form scheme://\[user:passwd@\]proxy.server:port.]' \
             '--retries[Maximum number of retries each connection should attempt (default 5 times).]' \
             '--timeout[Set the socket timeout (default 15 seconds).]' \
             '--exists-action[Default action when a path already exists: (s)witch, (i)gnore, (w)ipe, (b)ackup, (a)bort.]' \
@@ -318,13 +334,15 @@
         _arguments \
             {-i,--index}'[Base URL of Python Package Index (default https://pypi.org/pypi)]' \
             {-h,--help}'[Show help.]' \
+            '--debug[Let unhandled exceptions propagate outside the main subroutine, instead of logging them to stderr.]' \
             '--isolated[Run pip in an isolated mode, ignoring environment variables and user configuration.]' \
+            '--require-virtualenv[Allow pip to only run in a virtual environment; exit with an error otherwise.]' \
             {-v,--verbose}'[Give more output. Option is additive, and can be used up to 3 times.]' \
             {-V,--version}'[Show version and exit.]' \
             {-q,--quiet}'[Give less output. Option is additive, and can be used up to 3 times (corresponding to WARNING, ERROR, and CRITICAL logging levels).]' \
             '--log[Path to a verbose appending log.]':file:_files \
             '--no-input[Disable prompting for input.]' \
-            '--proxy[Specify a proxy in the form \[user:passwd@\]proxy.server:port.]' \
+            '--proxy[Specify a proxy in the form scheme://\[user:passwd@\]proxy.server:port.]' \
             '--retries[Maximum number of retries each connection should attempt (default 5 times).]' \
             '--timeout[Set the socket timeout (default 15 seconds).]' \
             '--exists-action[Default action when a path already exists: (s)witch, (i)gnore, (w)ipe, (b)ackup, (a)bort.]' \
@@ -344,18 +362,58 @@
 
     function _pip_cache {
         _arguments \
-            {-,-,-}'[ckages stored in the cache.]':file:_files \
-            '-[package from the cache.]' \
-            '-[om the cache.]' \
             '--format[Select the output format among: human (default) or abspath]' \
             {-h,--help}'[Show help.]' \
+            '--debug[Let unhandled exceptions propagate outside the main subroutine, instead of logging them to stderr.]' \
             '--isolated[Run pip in an isolated mode, ignoring environment variables and user configuration.]' \
+            '--require-virtualenv[Allow pip to only run in a virtual environment; exit with an error otherwise.]' \
             {-v,--verbose}'[Give more output. Option is additive, and can be used up to 3 times.]' \
             {-V,--version}'[Show version and exit.]' \
             {-q,--quiet}'[Give less output. Option is additive, and can be used up to 3 times (corresponding to WARNING, ERROR, and CRITICAL logging levels).]' \
             '--log[Path to a verbose appending log.]':file:_files \
             '--no-input[Disable prompting for input.]' \
-            '--proxy[Specify a proxy in the form \[user:passwd@\]proxy.server:port.]' \
+            '--proxy[Specify a proxy in the form scheme://\[user:passwd@\]proxy.server:port.]' \
+            '--retries[Maximum number of retries each connection should attempt (default 5 times).]' \
+            '--timeout[Set the socket timeout (default 15 seconds).]' \
+            '--exists-action[Default action when a path already exists: (s)witch, (i)gnore, (w)ipe, (b)ackup, (a)bort.]' \
+            '--trusted-host[Mark this host or host:port pair as trusted, even though it does not have valid or any HTTPS.]' \
+            '--cert[Path to PEM-encoded CA certificate bundle. If provided, overrides the default. See '\''SSL Certificate Verification'\'' in pip documentation for more information.]':file:_files \
+            '--client-cert[Path to SSL client certificate, a single file containing the private key and the certificate in PEM format.]':file:_files \
+            '--cache-dir[Store the cache data in <dir>.]':file:_files \
+            '--no-cache-dir[Disable the cache.]' \
+            '--disable-pip-version-check[Don'\''t periodically check PyPI to determine whether a new version of pip is available for download. Implied with --no-index.]' \
+            '--no-color[Suppress colored output.]' \
+            '--no-python-version-warning[Silence deprecation warnings for upcoming unsupported Pythons.]' \
+            '--use-feature[Enable new functionality, that may be backward incompatible.]' \
+            '--use-deprecated[Enable deprecated functionality, that will be removed in the future.]' \
+            "*: :_files"
+
+    }
+
+    function _pip_index {
+        _arguments \
+            '--platform[Only use wheels compatible with <platform>. Defaults to the platform of the running system. Use this option multiple times to specify multiple platforms supported by the target interpreter.]' \
+            '--python-version[The Python interpreter version to use for wheel and "Requires-Python" compatibility checks. Defaults to a version derived from the running interpreter. The version can be specified using up to three dot-separated integers (e.g. "3" for 3.0.0, "3.7" for 3.7.0, or "3.7.3"). A major-minor version can also be given as a string without dots (e.g. "37" for 3.7.0).]' \
+            '--implementation[Only use wheels compatible with Python implementation <implementation>, e.g. '\''pp'\'', '\''jy'\'', '\''cp'\'', or '\''ip'\''. If not specified, then the current interpreter implementation is used. Use '\''py'\'' to force implementation-agnostic wheels.]' \
+            '--abi[Only use wheels compatible with Python abi <abi>, e.g. '\''pypy_41'\''. If not specified, then the current interpreter abi tag is used. Use this option multiple times to specify multiple abis supported by the target interpreter. Generally you will need to specify --implementation, --platform, and --python-version when using this option.]' \
+            '--ignore-requires-python[Ignore the Requires-Python information.]' \
+            '--pre[Include pre-release and development versions. By default, pip only finds stable versions.]' \
+            '--no-binary[Do not use binary packages. Can be supplied multiple times, and each time adds to the existing value. Accepts either ":all:" to disable all binary packages, ":none:" to empty the set (notice the colons), or one or more package names with commas between them (no colons). Note that some packages are tricky to compile and may fail to install when this option is used on them.]' \
+            '--only-binary[Do not use source packages. Can be supplied multiple times, and each time adds to the existing value. Accepts either ":all:" to disable all source packages, ":none:" to empty the set, or one or more package names with commas between them. Packages without binary distributions will fail to install when this option is used on them.]' \
+            {-i,--index-url}'[Base URL of the Python Package Index (default https://pypi.org/simple). This should point to a repository compliant with PEP 503 (the simple repository API) or a local directory laid out in the same format.]' \
+            '--extra-index-url[Extra URLs of package indexes to use in addition to --index-url. Should follow the same rules as --index-url.]' \
+            '--no-index[Ignore package index (only looking at --find-links URLs instead).]' \
+            {-f,--find-links}'[If a URL or path to an html file, then parse for links to archives such as sdist (.tar.gz) or wheel (.whl) files. If a local path or file:// URL that'\''s a directory, then look for archives in the directory listing. Links to VCS project URLs are not supported.]' \
+            {-h,--help}'[Show help.]' \
+            '--debug[Let unhandled exceptions propagate outside the main subroutine, instead of logging them to stderr.]' \
+            '--isolated[Run pip in an isolated mode, ignoring environment variables and user configuration.]' \
+            '--require-virtualenv[Allow pip to only run in a virtual environment; exit with an error otherwise.]' \
+            {-v,--verbose}'[Give more output. Option is additive, and can be used up to 3 times.]' \
+            {-V,--version}'[Show version and exit.]' \
+            {-q,--quiet}'[Give less output. Option is additive, and can be used up to 3 times (corresponding to WARNING, ERROR, and CRITICAL logging levels).]' \
+            '--log[Path to a verbose appending log.]':file:_files \
+            '--no-input[Disable prompting for input.]' \
+            '--proxy[Specify a proxy in the form scheme://\[user:passwd@\]proxy.server:port.]' \
             '--retries[Maximum number of retries each connection should attempt (default 5 times).]' \
             '--timeout[Set the socket timeout (default 15 seconds).]' \
             '--exists-action[Default action when a path already exists: (s)witch, (i)gnore, (w)ipe, (b)ackup, (a)bort.]' \
@@ -381,14 +439,16 @@
             '--prefer-binary[Prefer older binary packages over newer source packages.]' \
             '--no-build-isolation[Disable isolation when building a modern source distribution. Build dependencies specified by PEP 518 must be already installed if this option is used.]' \
             '--use-pep517[Use PEP 517 for building source distributions (use --no-use-pep517 to force legacy behaviour).]' \
+            '--check-build-dependencies[Check the build dependencies when PEP517 is used.]' \
             {-c,--constraint}'[Constrain versions using the given constraints file. This option can be used multiple times.]':file:_files \
             {-e,--editable}'[Install a project in editable mode (i.e. setuptools "develop mode") from a local project path or a VCS url.]':file:_files \
             {-r,--requirement}'[Install from the given requirements file. This option can be used multiple times.]':file:_files \
             '--src[Directory to check out editable projects into. The default in a virtualenv is "<venv path>/src". The default for global installs is "<current dir>/src".]':file:_files \
             '--ignore-requires-python[Ignore the Requires-Python information.]' \
             '--no-deps[Don'\''t install package dependencies.]' \
-            '--progress-bar[Specify type of progress to be displayed \[off|on|ascii|pretty|emoji\] (default: on)]' \
+            '--progress-bar[Specify whether the progress bar should be used \[on, off\] (default: on)]' \
             '--no-verify[Don'\''t verify if built wheel is valid.]' \
+            '--config-settings[Configuration settings to be passed to the PEP 517 build backend. Settings take the form KEY=VALUE. Use multiple --config-settings options to pass multiple keys to the backend.]' \
             '--build-option[Extra arguments to be supplied to '\''setup.py bdist_wheel'\''.]' \
             '--global-option[Extra global options to be supplied to the setup.py call before the install or bdist_wheel command.]' \
             '--pre[Include pre-release and development versions. By default, pip only finds stable versions.]' \
@@ -396,16 +456,18 @@
             '--no-clean[Don'\''t clean up build directories.]' \
             {-i,--index-url}'[Base URL of the Python Package Index (default https://pypi.org/simple). This should point to a repository compliant with PEP 503 (the simple repository API) or a local directory laid out in the same format.]' \
             '--extra-index-url[Extra URLs of package indexes to use in addition to --index-url. Should follow the same rules as --index-url.]' \
-            '--no-index[Ignore package index (only looking at --findlinks URLs instead).]' \
-            {-f,--find-links}'[If a URL or path to an html file, then parse for links to archives such as sdist (.tar.gz) or wheel (.whl) files. If a local path or file:// URL that'\''s a directory,  then look for archives in the directory listing. Links to VCS project URLs are not supported.]' \
+            '--no-index[Ignore package index (only looking at --find-links URLs instead).]' \
+            {-f,--find-links}'[If a URL or path to an html file, then parse for links to archives such as sdist (.tar.gz) or wheel (.whl) files. If a local path or file:// URL that'\''s a directory, then look for archives in the directory listing. Links to VCS project URLs are not supported.]' \
             {-h,--help}'[Show help.]' \
+            '--debug[Let unhandled exceptions propagate outside the main subroutine, instead of logging them to stderr.]' \
             '--isolated[Run pip in an isolated mode, ignoring environment variables and user configuration.]' \
+            '--require-virtualenv[Allow pip to only run in a virtual environment; exit with an error otherwise.]' \
             {-v,--verbose}'[Give more output. Option is additive, and can be used up to 3 times.]' \
             {-V,--version}'[Show version and exit.]' \
             {-q,--quiet}'[Give less output. Option is additive, and can be used up to 3 times (corresponding to WARNING, ERROR, and CRITICAL logging levels).]' \
             '--log[Path to a verbose appending log.]':file:_files \
             '--no-input[Disable prompting for input.]' \
-            '--proxy[Specify a proxy in the form \[user:passwd@\]proxy.server:port.]' \
+            '--proxy[Specify a proxy in the form scheme://\[user:passwd@\]proxy.server:port.]' \
             '--retries[Maximum number of retries each connection should attempt (default 5 times).]' \
             '--timeout[Set the socket timeout (default 15 seconds).]' \
             '--exists-action[Default action when a path already exists: (s)witch, (i)gnore, (w)ipe, (b)ackup, (a)bort.]' \
@@ -427,13 +489,15 @@
         _arguments \
             {-a,--algorithm}'[The hash algorithm to use: one of sha256, sha384, sha512]' \
             {-h,--help}'[Show help.]' \
+            '--debug[Let unhandled exceptions propagate outside the main subroutine, instead of logging them to stderr.]' \
             '--isolated[Run pip in an isolated mode, ignoring environment variables and user configuration.]' \
+            '--require-virtualenv[Allow pip to only run in a virtual environment; exit with an error otherwise.]' \
             {-v,--verbose}'[Give more output. Option is additive, and can be used up to 3 times.]' \
             {-V,--version}'[Show version and exit.]' \
             {-q,--quiet}'[Give less output. Option is additive, and can be used up to 3 times (corresponding to WARNING, ERROR, and CRITICAL logging levels).]' \
             '--log[Path to a verbose appending log.]':file:_files \
             '--no-input[Disable prompting for input.]' \
-            '--proxy[Specify a proxy in the form \[user:passwd@\]proxy.server:port.]' \
+            '--proxy[Specify a proxy in the form scheme://\[user:passwd@\]proxy.server:port.]' \
             '--retries[Maximum number of retries each connection should attempt (default 5 times).]' \
             '--timeout[Set the socket timeout (default 15 seconds).]' \
             '--exists-action[Default action when a path already exists: (s)witch, (i)gnore, (w)ipe, (b)ackup, (a)bort.]' \
@@ -456,14 +520,17 @@
             {-b,--bash}'[Emit completion code for bash]' \
             {-z,--zsh}'[Emit completion code for zsh]' \
             {-f,--fish}'[Emit completion code for fish]' \
+            {-p,--powershell}'[Emit completion code for powershell]' \
             {-h,--help}'[Show help.]' \
+            '--debug[Let unhandled exceptions propagate outside the main subroutine, instead of logging them to stderr.]' \
             '--isolated[Run pip in an isolated mode, ignoring environment variables and user configuration.]' \
+            '--require-virtualenv[Allow pip to only run in a virtual environment; exit with an error otherwise.]' \
             {-v,--verbose}'[Give more output. Option is additive, and can be used up to 3 times.]' \
             {-V,--version}'[Show version and exit.]' \
             {-q,--quiet}'[Give less output. Option is additive, and can be used up to 3 times (corresponding to WARNING, ERROR, and CRITICAL logging levels).]' \
             '--log[Path to a verbose appending log.]':file:_files \
             '--no-input[Disable prompting for input.]' \
-            '--proxy[Specify a proxy in the form \[user:passwd@\]proxy.server:port.]' \
+            '--proxy[Specify a proxy in the form scheme://\[user:passwd@\]proxy.server:port.]' \
             '--retries[Maximum number of retries each connection should attempt (default 5 times).]' \
             '--timeout[Set the socket timeout (default 15 seconds).]' \
             '--exists-action[Default action when a path already exists: (s)witch, (i)gnore, (w)ipe, (b)ackup, (a)bort.]' \
@@ -484,44 +551,19 @@
     function _pip_debug {
         _arguments \
             '--platform[Only use wheels compatible with <platform>. Defaults to the platform of the running system. Use this option multiple times to specify multiple platforms supported by the target interpreter.]' \
-            '--python-version[The Python interpreter version to use for wheel and "Requires-Python" compatibility checks. Defaults to a version derived from the running interpreter. The version can be specified using up to three dot-separated integers (e.g. "3" for 3.0.0, "3.7" for 3.7.0, or "3.7.3"). A majorminor version can also be given as a string without dots (e.g. "37" for 3.7.0).]' \
-            '--implementation[Only use wheels compatible with Python implementation <implementation>, e.g. '\''pp'\'', '\''jy'\'', '\''cp'\'',  or '\''ip'\''. If not specified, then the current interpreter implementation is used.  Use '\''py'\'' to force implementation-agnostic wheels.]' \
-            '--abi[Only use wheels compatible with Python abi <abi>, e.g. '\''pypy_41'\''. If not specified, then the current interpreter abi tag is used. Use this option multiple times to specify multiple abis supported by the target interpreter. Generally you will need to specify --implementation, --platform, and --pythonversion when using this option.]' \
+            '--python-version[The Python interpreter version to use for wheel and "Requires-Python" compatibility checks. Defaults to a version derived from the running interpreter. The version can be specified using up to three dot-separated integers (e.g. "3" for 3.0.0, "3.7" for 3.7.0, or "3.7.3"). A major-minor version can also be given as a string without dots (e.g. "37" for 3.7.0).]' \
+            '--implementation[Only use wheels compatible with Python implementation <implementation>, e.g. '\''pp'\'', '\''jy'\'', '\''cp'\'', or '\''ip'\''. If not specified, then the current interpreter implementation is used. Use '\''py'\'' to force implementation-agnostic wheels.]' \
+            '--abi[Only use wheels compatible with Python abi <abi>, e.g. '\''pypy_41'\''. If not specified, then the current interpreter abi tag is used. Use this option multiple times to specify multiple abis supported by the target interpreter. Generally you will need to specify --implementation, --platform, and --python-version when using this option.]' \
             {-h,--help}'[Show help.]' \
+            '--debug[Let unhandled exceptions propagate outside the main subroutine, instead of logging them to stderr.]' \
             '--isolated[Run pip in an isolated mode, ignoring environment variables and user configuration.]' \
+            '--require-virtualenv[Allow pip to only run in a virtual environment; exit with an error otherwise.]' \
             {-v,--verbose}'[Give more output. Option is additive, and can be used up to 3 times.]' \
             {-V,--version}'[Show version and exit.]' \
             {-q,--quiet}'[Give less output. Option is additive, and can be used up to 3 times (corresponding to WARNING, ERROR, and CRITICAL logging levels).]' \
             '--log[Path to a verbose appending log.]':file:_files \
             '--no-input[Disable prompting for input.]' \
-            '--proxy[Specify a proxy in the form \[user:passwd@\]proxy.server:port.]' \
-            '--retries[Maximum number of retries each connection should attempt (default 5 times).]' \
-            '--timeout[Set the socket timeout (default 15 seconds).]' \
-            '--exists-action[Default action when a path already exists: (s)witch, (i)gnore, (w)ipe, (b)ackup, (a)bort.]' \
-            '--trusted-host[Mark this host or host:port pair as trusted, even though it does not have valid or any HTTPS.]' \
-            '--cert[Path to PEM-encoded CA certificate bundle. If provided, overrides the default. See '\''SSL Certificate Verification'\'' in pip documentation for more information.]':file:_files \
-            '--client-cert[Path to SSL client certificate, a single file containing the private key and the certificate in PEM format.]':file:_files \
-            '--cache-dir[Store the cache data in <dir>.]':file:_files \
-            '--no-cache-dir[Disable the cache.]' \
-            '--disable-pip-version-check[Don'\''t periodically check PyPI to determine whether a new version of pip is available for download. Implied with --no-index.]' \
-            '--no-color[Suppress colored output.]' \
-            '--no-python-version-warning[Silence deprecation warnings for upcoming unsupported Pythons.]' \
-            '--use-feature[Enable new functionality, that may be backward incompatible.]' \
-            '--use-deprecated[Enable deprecated functionality, that will be removed in the future.]' \
-            "*: :_files"
-
-    }
-
-    function _pip_help {
-        _arguments \
-            {-h,--help}'[Show help.]' \
-            '--isolated[Run pip in an isolated mode, ignoring environment variables and user configuration.]' \
-            {-v,--verbose}'[Give more output. Option is additive, and can be used up to 3 times.]' \
-            {-V,--version}'[Show version and exit.]' \
-            {-q,--quiet}'[Give less output. Option is additive, and can be used up to 3 times (corresponding to WARNING, ERROR, and CRITICAL logging levels).]' \
-            '--log[Path to a verbose appending log.]':file:_files \
-            '--no-input[Disable prompting for input.]' \
-            '--proxy[Specify a proxy in the form \[user:passwd@\]proxy.server:port.]' \
+            '--proxy[Specify a proxy in the form scheme://\[user:passwd@\]proxy.server:port.]' \
             '--retries[Maximum number of retries each connection should attempt (default 5 times).]' \
             '--timeout[Set the socket timeout (default 15 seconds).]' \
             '--exists-action[Default action when a path already exists: (s)witch, (i)gnore, (w)ipe, (b)ackup, (a)bort.]' \
@@ -556,11 +598,11 @@ function _pip {
             'config:Manage local and global configuration.'
             'search:Search PyPI for packages.'
             'cache:Inspect and manage pip'\''s wheel cache.'
+            'index:Inspect information available from package indexes.'
             'wheel:Build wheels from your requirements.'
             'hash:Compute hashes of package archives.'
             'completion:A helper command used for command completion.'
             'debug:Show information useful for debugging.'
-            'help:Show help for commands.'
         )
         _describe 'command' commands
     }
@@ -568,13 +610,15 @@ function _pip {
 
     _arguments -C \
         {-h,--help}'[Show help.]' \
+        '--debug[Let unhandled exceptions propagate outside the main subroutine, instead of logging them to stderr.]' \
         '--isolated[Run pip in an isolated mode, ignoring environment variables and user configuration.]' \
+        '--require-virtualenv[Allow pip to only run in a virtual environment; exit with an error otherwise.]' \
         {-v,--verbose}'[Give more output. Option is additive, and can be used up to 3 times.]' \
         {-V,--version}'[Show version and exit.]' \
         {-q,--quiet}'[Give less output. Option is additive, and can be used up to 3 times (corresponding to WARNING, ERROR, and CRITICAL logging levels).]' \
         '--log[Path to a verbose appending log.]':file:_files \
         '--no-input[Disable prompting for input.]' \
-        '--proxy[Specify a proxy in the form \[user:passwd@\]proxy.server:port.]' \
+        '--proxy[Specify a proxy in the form scheme://\[user:passwd@\]proxy.server:port.]' \
         '--retries[Maximum number of retries each connection should attempt (default 5 times).]' \
         '--timeout[Set the socket timeout (default 15 seconds).]' \
         '--exists-action[Default action when a path already exists: (s)witch, (i)gnore, (w)ipe, (b)ackup, (a)bort.]' \
@@ -637,6 +681,10 @@ function _pip {
             _pip_cache
             ;;
 
+        (index)
+            _pip_index
+            ;;
+
         (wheel)
             _pip_wheel
             ;;
@@ -651,10 +699,6 @@ function _pip {
 
         (debug)
             _pip_debug
-            ;;
-
-        (help)
-            _pip_help
             ;;
 
         esac

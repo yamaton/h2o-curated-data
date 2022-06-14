@@ -7,9 +7,17 @@ options:
     argument: ""
     description: Show help.
   - names:
+      - --debug
+    argument: ""
+    description: Let unhandled exceptions propagate outside the main subroutine, instead of logging them to stderr.
+  - names:
       - --isolated
     argument: ""
     description: Run pip in an isolated mode, ignoring environment variables and user configuration.
+  - names:
+      - --require-virtualenv
+    argument: ""
+    description: Allow pip to only run in a virtual environment; exit with an error otherwise.
   - names:
       - -v
       - --verbose
@@ -36,7 +44,7 @@ options:
   - names:
       - --proxy
     argument: <proxy>
-    description: Specify a proxy in the form [user:passwd@]proxy.server:port.
+    description: Specify a proxy in the form scheme://[user:passwd@]proxy.server:port.
   - names:
       - --retries
     argument: <retries>
@@ -94,10 +102,6 @@ subcommands:
     description: Install packages.
     options:
       - names:
-          - '-'
-        argument: PyPI (and other indexes) u
-        description: sing requirement specifiers.
-      - names:
           - -r
           - --requirement
         argument: <file>
@@ -132,15 +136,15 @@ subcommands:
       - names:
           - --python-version
         argument: <python_version>
-        description: The Python interpreter version to use for wheel and "Requires-Python" compatibility checks. Defaults to a version derived from the running interpreter. The version can be specified using up to three dot-separated integers (e.g. "3" for 3.0.0, "3.7" for 3.7.0, or "3.7.3"). A majorminor version can also be given as a string without dots (e.g. "37" for 3.7.0).
+        description: The Python interpreter version to use for wheel and "Requires-Python" compatibility checks. Defaults to a version derived from the running interpreter. The version can be specified using up to three dot-separated integers (e.g. "3" for 3.0.0, "3.7" for 3.7.0, or "3.7.3"). A major-minor version can also be given as a string without dots (e.g. "37" for 3.7.0).
       - names:
           - --implementation
         argument: <implementation>
-        description: Only use wheels compatible with Python implementation <implementation>, e.g. 'pp', 'jy', 'cp',  or 'ip'. If not specified, then the current interpreter implementation is used.  Use 'py' to force implementation-agnostic wheels.
+        description: Only use wheels compatible with Python implementation <implementation>, e.g. 'pp', 'jy', 'cp', or 'ip'. If not specified, then the current interpreter implementation is used. Use 'py' to force implementation-agnostic wheels.
       - names:
           - --abi
         argument: <abi>
-        description: Only use wheels compatible with Python abi <abi>, e.g. 'pypy_41'. If not specified, then the current interpreter abi tag is used. Use this option multiple times to specify multiple abis supported by the target interpreter. Generally you will need to specify --implementation, --platform, and --pythonversion when using this option.
+        description: Only use wheels compatible with Python abi <abi>, e.g. 'pypy_41'. If not specified, then the current interpreter abi tag is used. Use this option multiple times to specify multiple abis supported by the target interpreter. Generally you will need to specify --implementation, --platform, and --python-version when using this option.
       - names:
           - --user
         argument: ""
@@ -165,7 +169,7 @@ subcommands:
       - names:
           - --upgrade-strategy
         argument: <upgrade_strategy>
-        description: 'Determines how dependency upgrading should be handled [default: only-if-needed]. "eager" dependencies are upgraded regardless of whether the currently installed version satisfies the requirements of the upgraded package(s). "onlyif-needed" -  are upgraded only when they do not satisfy the requirements of the upgraded package(s).'
+        description: 'Determines how dependency upgrading should be handled [default: only-if-needed]. "eager" - dependencies are upgraded regardless of whether the currently installed version satisfies the requirements of the upgraded package(s). "only-if-needed" - are upgraded only when they do not satisfy the requirements of the upgraded package(s).'
       - names:
           - --force-reinstall
         argument: ""
@@ -188,9 +192,17 @@ subcommands:
         argument: ""
         description: Use PEP 517 for building source distributions (use --no-use-pep517 to force legacy behaviour).
       - names:
+          - --check-build-dependencies
+        argument: ""
+        description: Check the build dependencies when PEP517 is used.
+      - names:
+          - --config-settings
+        argument: <settings>
+        description: Configuration settings to be passed to the PEP 517 build backend. Settings take the form KEY=VALUE. Use multiple --config-settings options to pass multiple keys to the backend.
+      - names:
           - --install-option
         argument: <options>
-        description: Extra arguments to be supplied to the setup.py install command (use like --install-option="-install-scripts=/usr/local/bin"). Use multiple --install-option options to pass multiple options to setup.py install. If you are using an option with a directory path, be sure to use absolute path.
+        description: Extra arguments to be supplied to the setup.py install command (use like --install-option="--install-scripts=/usr/local/bin"). Use multiple --install-option options to pass multiple options to setup.py install. If you are using an option with a directory path, be sure to use absolute path.
       - names:
           - --global-option
         argument: <options>
@@ -230,7 +242,11 @@ subcommands:
       - names:
           - --progress-bar
         argument: <progress_bar>
-        description: 'Specify type of progress to be displayed [off|on|ascii|pretty|emoji] (default: on)'
+        description: 'Specify whether the progress bar should be used [on, off] (default: on)'
+      - names:
+          - --root-user-action
+        argument: <root_user_action>
+        description: Action if pip is run as a root user. By default, a warning message is shown.
       - names:
           - --no-clean
         argument: ""
@@ -247,21 +263,29 @@ subcommands:
       - names:
           - --no-index
         argument: ""
-        description: Ignore package index (only looking at --findlinks URLs instead).
+        description: Ignore package index (only looking at --find-links URLs instead).
       - names:
           - -f
           - --find-links
         argument: <url>
-        description: If a URL or path to an html file, then parse for links to archives such as sdist (.tar.gz) or wheel (.whl) files. If a local path or file:// URL that's a directory,  then look for archives in the directory listing. Links to VCS project URLs are not supported.
+        description: If a URL or path to an html file, then parse for links to archives such as sdist (.tar.gz) or wheel (.whl) files. If a local path or file:// URL that's a directory, then look for archives in the directory listing. Links to VCS project URLs are not supported.
       - names:
           - -h
           - --help
         argument: ""
         description: Show help.
       - names:
+          - --debug
+        argument: ""
+        description: Let unhandled exceptions propagate outside the main subroutine, instead of logging them to stderr.
+      - names:
           - --isolated
         argument: ""
         description: Run pip in an isolated mode, ignoring environment variables and user configuration.
+      - names:
+          - --require-virtualenv
+        argument: ""
+        description: Allow pip to only run in a virtual environment; exit with an error otherwise.
       - names:
           - -v
           - --verbose
@@ -288,7 +312,7 @@ subcommands:
       - names:
           - --proxy
         argument: <proxy>
-        description: Specify a proxy in the form [user:passwd@]proxy.server:port.
+        description: Specify a proxy in the form scheme://[user:passwd@]proxy.server:port.
       - names:
           - --retries
         argument: <retries>
@@ -345,10 +369,6 @@ subcommands:
     description: Download packages.
     options:
       - names:
-          - '-'
-        argument: PyPI (and other indexes) u
-        description: sing requirement specifiers.
-      - names:
           - -c
           - --constraint
         argument: <file>
@@ -393,7 +413,7 @@ subcommands:
       - names:
           - --progress-bar
         argument: <progress_bar>
-        description: 'Specify type of progress to be displayed [off|on|ascii|pretty|emoji] (default: on)'
+        description: 'Specify whether the progress bar should be used [on, off] (default: on)'
       - names:
           - --no-build-isolation
         argument: ""
@@ -402,6 +422,10 @@ subcommands:
           - --use-pep517
         argument: ""
         description: Use PEP 517 for building source distributions (use --no-use-pep517 to force legacy behaviour).
+      - names:
+          - --check-build-dependencies
+        argument: ""
+        description: Check the build dependencies when PEP517 is used.
       - names:
           - --ignore-requires-python
         argument: ""
@@ -418,15 +442,15 @@ subcommands:
       - names:
           - --python-version
         argument: <python_version>
-        description: The Python interpreter version to use for wheel and "Requires-Python" compatibility checks. Defaults to a version derived from the running interpreter. The version can be specified using up to three dot-separated integers (e.g. "3" for 3.0.0, "3.7" for 3.7.0, or "3.7.3"). A majorminor version can also be given as a string without dots (e.g. "37" for 3.7.0).
+        description: The Python interpreter version to use for wheel and "Requires-Python" compatibility checks. Defaults to a version derived from the running interpreter. The version can be specified using up to three dot-separated integers (e.g. "3" for 3.0.0, "3.7" for 3.7.0, or "3.7.3"). A major-minor version can also be given as a string without dots (e.g. "37" for 3.7.0).
       - names:
           - --implementation
         argument: <implementation>
-        description: Only use wheels compatible with Python implementation <implementation>, e.g. 'pp', 'jy', 'cp',  or 'ip'. If not specified, then the current interpreter implementation is used.  Use 'py' to force implementation-agnostic wheels.
+        description: Only use wheels compatible with Python implementation <implementation>, e.g. 'pp', 'jy', 'cp', or 'ip'. If not specified, then the current interpreter implementation is used. Use 'py' to force implementation-agnostic wheels.
       - names:
           - --abi
         argument: <abi>
-        description: Only use wheels compatible with Python abi <abi>, e.g. 'pypy_41'. If not specified, then the current interpreter abi tag is used. Use this option multiple times to specify multiple abis supported by the target interpreter. Generally you will need to specify --implementation, --platform, and --pythonversion when using this option.
+        description: Only use wheels compatible with Python abi <abi>, e.g. 'pypy_41'. If not specified, then the current interpreter abi tag is used. Use this option multiple times to specify multiple abis supported by the target interpreter. Generally you will need to specify --implementation, --platform, and --python-version when using this option.
       - names:
           - --no-clean
         argument: ""
@@ -443,21 +467,29 @@ subcommands:
       - names:
           - --no-index
         argument: ""
-        description: Ignore package index (only looking at --findlinks URLs instead).
+        description: Ignore package index (only looking at --find-links URLs instead).
       - names:
           - -f
           - --find-links
         argument: <url>
-        description: If a URL or path to an html file, then parse for links to archives such as sdist (.tar.gz) or wheel (.whl) files. If a local path or file:// URL that's a directory,  then look for archives in the directory listing. Links to VCS project URLs are not supported.
+        description: If a URL or path to an html file, then parse for links to archives such as sdist (.tar.gz) or wheel (.whl) files. If a local path or file:// URL that's a directory, then look for archives in the directory listing. Links to VCS project URLs are not supported.
       - names:
           - -h
           - --help
         argument: ""
         description: Show help.
       - names:
+          - --debug
+        argument: ""
+        description: Let unhandled exceptions propagate outside the main subroutine, instead of logging them to stderr.
+      - names:
           - --isolated
         argument: ""
         description: Run pip in an isolated mode, ignoring environment variables and user configuration.
+      - names:
+          - --require-virtualenv
+        argument: ""
+        description: Allow pip to only run in a virtual environment; exit with an error otherwise.
       - names:
           - -v
           - --verbose
@@ -484,7 +516,7 @@ subcommands:
       - names:
           - --proxy
         argument: <proxy>
-        description: Specify a proxy in the form [user:passwd@]proxy.server:port.
+        description: Specify a proxy in the form scheme://[user:passwd@]proxy.server:port.
       - names:
           - --retries
         argument: <retries>
@@ -541,32 +573,36 @@ subcommands:
     description: Uninstall packages.
     options:
       - names:
-          - '-'
-        argument: Pure distutils packages in
-        description: stalled with ``python setup.py install``, which
-      - names:
-          - '-'
-        argument: Script wrappers installed
-        description: by ``python setup.py develop``.
-      - names:
           - -r
           - --requirement
         argument: <file>
-        description: Uninstall all the packages listed in the given requirements file.  This option can be used multiple times.
+        description: Uninstall all the packages listed in the given requirements file. This option can be used multiple times.
       - names:
           - -y
           - --yes
         argument: ""
         description: Don't ask for confirmation of uninstall deletions.
       - names:
+          - --root-user-action
+        argument: <root_user_action>
+        description: Action if pip is run as a root user. By default, a warning message is shown.
+      - names:
           - -h
           - --help
         argument: ""
         description: Show help.
       - names:
+          - --debug
+        argument: ""
+        description: Let unhandled exceptions propagate outside the main subroutine, instead of logging them to stderr.
+      - names:
           - --isolated
         argument: ""
         description: Run pip in an isolated mode, ignoring environment variables and user configuration.
+      - names:
+          - --require-virtualenv
+        argument: ""
+        description: Allow pip to only run in a virtual environment; exit with an error otherwise.
       - names:
           - -v
           - --verbose
@@ -593,7 +629,7 @@ subcommands:
       - names:
           - --proxy
         argument: <proxy>
-        description: Specify a proxy in the form [user:passwd@]proxy.server:port.
+        description: Specify a proxy in the form scheme://[user:passwd@]proxy.server:port.
       - names:
           - --retries
         argument: <retries>
@@ -655,11 +691,6 @@ subcommands:
         argument: <file>
         description: Use the order in the given requirements file and its comments when generating output. This option can be used multiple times.
       - names:
-          - -f
-          - --find-links
-        argument: <url>
-        description: URL for finding packages, which will be added to the output.
-      - names:
           - -l
           - --local
         argument: ""
@@ -675,7 +706,7 @@ subcommands:
       - names:
           - --all
         argument: ""
-        description: 'Do not skip these packages in the output: pip, wheel, setuptools, distribute'
+        description: 'Do not skip these packages in the output: wheel, setuptools, pip, distribute'
       - names:
           - --exclude-editable
         argument: ""
@@ -690,9 +721,17 @@ subcommands:
         argument: ""
         description: Show help.
       - names:
+          - --debug
+        argument: ""
+        description: Let unhandled exceptions propagate outside the main subroutine, instead of logging them to stderr.
+      - names:
           - --isolated
         argument: ""
         description: Run pip in an isolated mode, ignoring environment variables and user configuration.
+      - names:
+          - --require-virtualenv
+        argument: ""
+        description: Allow pip to only run in a virtual environment; exit with an error otherwise.
       - names:
           - -v
           - --verbose
@@ -719,7 +758,7 @@ subcommands:
       - names:
           - --proxy
         argument: <proxy>
-        description: Specify a proxy in the form [user:passwd@]proxy.server:port.
+        description: Specify a proxy in the form scheme://[user:passwd@]proxy.server:port.
       - names:
           - --retries
         argument: <retries>
@@ -772,6 +811,396 @@ subcommands:
           - --use-deprecated
         argument: <feature>
         description: Enable deprecated functionality, that will be removed in the future.
+    subcommands:
+      - name: packages
+        description: are listed in a case-insensitive sorted order.
+        options:
+          - names:
+              - -r
+              - --requirement
+            argument: <file>
+            description: Use the order in the given requirements file and its comments when generating output. This option can be used multiple times.
+          - names:
+              - -l
+              - --local
+            argument: ""
+            description: If in a virtualenv that has global access, do not output globally-installed packages.
+          - names:
+              - --user
+            argument: ""
+            description: Only output packages installed in user-site.
+          - names:
+              - --path
+            argument: <path>
+            description: Restrict to the specified installation path for listing packages (can be used multiple times).
+          - names:
+              - --all
+            argument: ""
+            description: 'Do not skip these packages in the output: pip, wheel, distribute, setuptools'
+          - names:
+              - --exclude-editable
+            argument: ""
+            description: Exclude editable package from output.
+          - names:
+              - --exclude
+            argument: <package>
+            description: Exclude specified package from the output
+          - names:
+              - -h
+              - --help
+            argument: ""
+            description: Show help.
+          - names:
+              - --debug
+            argument: ""
+            description: Let unhandled exceptions propagate outside the main subroutine, instead of logging them to stderr.
+          - names:
+              - --isolated
+            argument: ""
+            description: Run pip in an isolated mode, ignoring environment variables and user configuration.
+          - names:
+              - --require-virtualenv
+            argument: ""
+            description: Allow pip to only run in a virtual environment; exit with an error otherwise.
+          - names:
+              - -v
+              - --verbose
+            argument: ""
+            description: Give more output. Option is additive, and can be used up to 3 times.
+          - names:
+              - -V
+              - --version
+            argument: ""
+            description: Show version and exit.
+          - names:
+              - -q
+              - --quiet
+            argument: ""
+            description: Give less output. Option is additive, and can be used up to 3 times (corresponding to WARNING, ERROR, and CRITICAL logging levels).
+          - names:
+              - --log
+            argument: <path>
+            description: Path to a verbose appending log.
+          - names:
+              - --no-input
+            argument: ""
+            description: Disable prompting for input.
+          - names:
+              - --proxy
+            argument: <proxy>
+            description: Specify a proxy in the form scheme://[user:passwd@]proxy.server:port.
+          - names:
+              - --retries
+            argument: <retries>
+            description: Maximum number of retries each connection should attempt (default 5 times).
+          - names:
+              - --timeout
+            argument: <sec>
+            description: Set the socket timeout (default 15 seconds).
+          - names:
+              - --exists-action
+            argument: <action>
+            description: 'Default action when a path already exists: (s)witch, (i)gnore, (w)ipe, (b)ackup, (a)bort.'
+          - names:
+              - --trusted-host
+            argument: <hostname>
+            description: Mark this host or host:port pair as trusted, even though it does not have valid or any HTTPS.
+          - names:
+              - --cert
+            argument: <path>
+            description: Path to PEM-encoded CA certificate bundle. If provided, overrides the default. See 'SSL Certificate Verification' in pip documentation for more information.
+          - names:
+              - --client-cert
+            argument: <path>
+            description: Path to SSL client certificate, a single file containing the private key and the certificate in PEM format.
+          - names:
+              - --cache-dir
+            argument: <dir>
+            description: Store the cache data in <dir>.
+          - names:
+              - --no-cache-dir
+            argument: ""
+            description: Disable the cache.
+          - names:
+              - --disable-pip-version-check
+            argument: ""
+            description: Don't periodically check PyPI to determine whether a new version of pip is available for download. Implied with --no-index.
+          - names:
+              - --no-color
+            argument: ""
+            description: Suppress colored output.
+          - names:
+              - --no-python-version-warning
+            argument: ""
+            description: Silence deprecation warnings for upcoming unsupported Pythons.
+          - names:
+              - --use-feature
+            argument: <feature>
+            description: Enable new functionality, that may be backward incompatible.
+          - names:
+              - --use-deprecated
+            argument: <feature>
+            description: Enable deprecated functionality, that will be removed in the future.
+        subcommands:
+          - name: packages
+            description: are listed in a case-insensitive sorted order.
+            options:
+              - names:
+                  - -r
+                  - --requirement
+                argument: <file>
+                description: Use the order in the given requirements file and its comments when generating output. This option can be used multiple times.
+              - names:
+                  - -l
+                  - --local
+                argument: ""
+                description: If in a virtualenv that has global access, do not output globally-installed packages.
+              - names:
+                  - --user
+                argument: ""
+                description: Only output packages installed in user-site.
+              - names:
+                  - --path
+                argument: <path>
+                description: Restrict to the specified installation path for listing packages (can be used multiple times).
+              - names:
+                  - --all
+                argument: ""
+                description: 'Do not skip these packages in the output: distribute, setuptools, pip, wheel'
+              - names:
+                  - --exclude-editable
+                argument: ""
+                description: Exclude editable package from output.
+              - names:
+                  - --exclude
+                argument: <package>
+                description: Exclude specified package from the output
+              - names:
+                  - -h
+                  - --help
+                argument: ""
+                description: Show help.
+              - names:
+                  - --debug
+                argument: ""
+                description: Let unhandled exceptions propagate outside the main subroutine, instead of logging them to stderr.
+              - names:
+                  - --isolated
+                argument: ""
+                description: Run pip in an isolated mode, ignoring environment variables and user configuration.
+              - names:
+                  - --require-virtualenv
+                argument: ""
+                description: Allow pip to only run in a virtual environment; exit with an error otherwise.
+              - names:
+                  - -v
+                  - --verbose
+                argument: ""
+                description: Give more output. Option is additive, and can be used up to 3 times.
+              - names:
+                  - -V
+                  - --version
+                argument: ""
+                description: Show version and exit.
+              - names:
+                  - -q
+                  - --quiet
+                argument: ""
+                description: Give less output. Option is additive, and can be used up to 3 times (corresponding to WARNING, ERROR, and CRITICAL logging levels).
+              - names:
+                  - --log
+                argument: <path>
+                description: Path to a verbose appending log.
+              - names:
+                  - --no-input
+                argument: ""
+                description: Disable prompting for input.
+              - names:
+                  - --proxy
+                argument: <proxy>
+                description: Specify a proxy in the form scheme://[user:passwd@]proxy.server:port.
+              - names:
+                  - --retries
+                argument: <retries>
+                description: Maximum number of retries each connection should attempt (default 5 times).
+              - names:
+                  - --timeout
+                argument: <sec>
+                description: Set the socket timeout (default 15 seconds).
+              - names:
+                  - --exists-action
+                argument: <action>
+                description: 'Default action when a path already exists: (s)witch, (i)gnore, (w)ipe, (b)ackup, (a)bort.'
+              - names:
+                  - --trusted-host
+                argument: <hostname>
+                description: Mark this host or host:port pair as trusted, even though it does not have valid or any HTTPS.
+              - names:
+                  - --cert
+                argument: <path>
+                description: Path to PEM-encoded CA certificate bundle. If provided, overrides the default. See 'SSL Certificate Verification' in pip documentation for more information.
+              - names:
+                  - --client-cert
+                argument: <path>
+                description: Path to SSL client certificate, a single file containing the private key and the certificate in PEM format.
+              - names:
+                  - --cache-dir
+                argument: <dir>
+                description: Store the cache data in <dir>.
+              - names:
+                  - --no-cache-dir
+                argument: ""
+                description: Disable the cache.
+              - names:
+                  - --disable-pip-version-check
+                argument: ""
+                description: Don't periodically check PyPI to determine whether a new version of pip is available for download. Implied with --no-index.
+              - names:
+                  - --no-color
+                argument: ""
+                description: Suppress colored output.
+              - names:
+                  - --no-python-version-warning
+                argument: ""
+                description: Silence deprecation warnings for upcoming unsupported Pythons.
+              - names:
+                  - --use-feature
+                argument: <feature>
+                description: Enable new functionality, that may be backward incompatible.
+              - names:
+                  - --use-deprecated
+                argument: <feature>
+                description: Enable deprecated functionality, that will be removed in the future.
+            subcommands:
+              - name: packages
+                description: are listed in a case-insensitive sorted order.
+                options:
+                  - names:
+                      - -r
+                      - --requirement
+                    argument: <file>
+                    description: Use the order in the given requirements file and its comments when generating output. This option can be used multiple times.
+                  - names:
+                      - -l
+                      - --local
+                    argument: ""
+                    description: If in a virtualenv that has global access, do not output globally-installed packages.
+                  - names:
+                      - --user
+                    argument: ""
+                    description: Only output packages installed in user-site.
+                  - names:
+                      - --path
+                    argument: <path>
+                    description: Restrict to the specified installation path for listing packages (can be used multiple times).
+                  - names:
+                      - --all
+                    argument: ""
+                    description: 'Do not skip these packages in the output: setuptools, distribute, pip, wheel'
+                  - names:
+                      - --exclude-editable
+                    argument: ""
+                    description: Exclude editable package from output.
+                  - names:
+                      - --exclude
+                    argument: <package>
+                    description: Exclude specified package from the output
+                  - names:
+                      - -h
+                      - --help
+                    argument: ""
+                    description: Show help.
+                  - names:
+                      - --debug
+                    argument: ""
+                    description: Let unhandled exceptions propagate outside the main subroutine, instead of logging them to stderr.
+                  - names:
+                      - --isolated
+                    argument: ""
+                    description: Run pip in an isolated mode, ignoring environment variables and user configuration.
+                  - names:
+                      - --require-virtualenv
+                    argument: ""
+                    description: Allow pip to only run in a virtual environment; exit with an error otherwise.
+                  - names:
+                      - -v
+                      - --verbose
+                    argument: ""
+                    description: Give more output. Option is additive, and can be used up to 3 times.
+                  - names:
+                      - -V
+                      - --version
+                    argument: ""
+                    description: Show version and exit.
+                  - names:
+                      - -q
+                      - --quiet
+                    argument: ""
+                    description: Give less output. Option is additive, and can be used up to 3 times (corresponding to WARNING, ERROR, and CRITICAL logging levels).
+                  - names:
+                      - --log
+                    argument: <path>
+                    description: Path to a verbose appending log.
+                  - names:
+                      - --no-input
+                    argument: ""
+                    description: Disable prompting for input.
+                  - names:
+                      - --proxy
+                    argument: <proxy>
+                    description: Specify a proxy in the form scheme://[user:passwd@]proxy.server:port.
+                  - names:
+                      - --retries
+                    argument: <retries>
+                    description: Maximum number of retries each connection should attempt (default 5 times).
+                  - names:
+                      - --timeout
+                    argument: <sec>
+                    description: Set the socket timeout (default 15 seconds).
+                  - names:
+                      - --exists-action
+                    argument: <action>
+                    description: 'Default action when a path already exists: (s)witch, (i)gnore, (w)ipe, (b)ackup, (a)bort.'
+                  - names:
+                      - --trusted-host
+                    argument: <hostname>
+                    description: Mark this host or host:port pair as trusted, even though it does not have valid or any HTTPS.
+                  - names:
+                      - --cert
+                    argument: <path>
+                    description: Path to PEM-encoded CA certificate bundle. If provided, overrides the default. See 'SSL Certificate Verification' in pip documentation for more information.
+                  - names:
+                      - --client-cert
+                    argument: <path>
+                    description: Path to SSL client certificate, a single file containing the private key and the certificate in PEM format.
+                  - names:
+                      - --cache-dir
+                    argument: <dir>
+                    description: Store the cache data in <dir>.
+                  - names:
+                      - --no-cache-dir
+                    argument: ""
+                    description: Disable the cache.
+                  - names:
+                      - --disable-pip-version-check
+                    argument: ""
+                    description: Don't periodically check PyPI to determine whether a new version of pip is available for download. Implied with --no-index.
+                  - names:
+                      - --no-color
+                    argument: ""
+                    description: Suppress colored output.
+                  - names:
+                      - --no-python-version-warning
+                    argument: ""
+                    description: Silence deprecation warnings for upcoming unsupported Pythons.
+                  - names:
+                      - --use-feature
+                    argument: <feature>
+                    description: Enable new functionality, that may be backward incompatible.
+                  - names:
+                      - --use-deprecated
+                    argument: <feature>
+                    description: Enable deprecated functionality, that will be removed in the future.
   - name: list
     description: List installed packages.
     options:
@@ -839,21 +1268,29 @@ subcommands:
       - names:
           - --no-index
         argument: ""
-        description: Ignore package index (only looking at --findlinks URLs instead).
+        description: Ignore package index (only looking at --find-links URLs instead).
       - names:
           - -f
           - --find-links
         argument: <url>
-        description: If a URL or path to an html file, then parse for links to archives such as sdist (.tar.gz) or wheel (.whl) files. If a local path or file:// URL that's a directory,  then look for archives in the directory listing. Links to VCS project URLs are not supported.
+        description: If a URL or path to an html file, then parse for links to archives such as sdist (.tar.gz) or wheel (.whl) files. If a local path or file:// URL that's a directory, then look for archives in the directory listing. Links to VCS project URLs are not supported.
       - names:
           - -h
           - --help
         argument: ""
         description: Show help.
       - names:
+          - --debug
+        argument: ""
+        description: Let unhandled exceptions propagate outside the main subroutine, instead of logging them to stderr.
+      - names:
           - --isolated
         argument: ""
         description: Run pip in an isolated mode, ignoring environment variables and user configuration.
+      - names:
+          - --require-virtualenv
+        argument: ""
+        description: Allow pip to only run in a virtual environment; exit with an error otherwise.
       - names:
           - -v
           - --verbose
@@ -880,7 +1317,7 @@ subcommands:
       - names:
           - --proxy
         argument: <proxy>
-        description: Specify a proxy in the form [user:passwd@]proxy.server:port.
+        description: Specify a proxy in the form scheme://[user:passwd@]proxy.server:port.
       - names:
           - --retries
         argument: <retries>
@@ -947,9 +1384,17 @@ subcommands:
         argument: ""
         description: Show help.
       - names:
+          - --debug
+        argument: ""
+        description: Let unhandled exceptions propagate outside the main subroutine, instead of logging them to stderr.
+      - names:
           - --isolated
         argument: ""
         description: Run pip in an isolated mode, ignoring environment variables and user configuration.
+      - names:
+          - --require-virtualenv
+        argument: ""
+        description: Allow pip to only run in a virtual environment; exit with an error otherwise.
       - names:
           - -v
           - --verbose
@@ -976,7 +1421,7 @@ subcommands:
       - names:
           - --proxy
         argument: <proxy>
-        description: Specify a proxy in the form [user:passwd@]proxy.server:port.
+        description: Specify a proxy in the form scheme://[user:passwd@]proxy.server:port.
       - names:
           - --retries
         argument: <retries>
@@ -1038,9 +1483,17 @@ subcommands:
         argument: ""
         description: Show help.
       - names:
+          - --debug
+        argument: ""
+        description: Let unhandled exceptions propagate outside the main subroutine, instead of logging them to stderr.
+      - names:
           - --isolated
         argument: ""
         description: Run pip in an isolated mode, ignoring environment variables and user configuration.
+      - names:
+          - --require-virtualenv
+        argument: ""
+        description: Allow pip to only run in a virtual environment; exit with an error otherwise.
       - names:
           - -v
           - --verbose
@@ -1067,7 +1520,7 @@ subcommands:
       - names:
           - --proxy
         argument: <proxy>
-        description: Specify a proxy in the form [user:passwd@]proxy.server:port.
+        description: Specify a proxy in the form scheme://[user:passwd@]proxy.server:port.
       - names:
           - --retries
         argument: <retries>
@@ -1145,9 +1598,17 @@ subcommands:
         argument: ""
         description: Show help.
       - names:
+          - --debug
+        argument: ""
+        description: Let unhandled exceptions propagate outside the main subroutine, instead of logging them to stderr.
+      - names:
           - --isolated
         argument: ""
         description: Run pip in an isolated mode, ignoring environment variables and user configuration.
+      - names:
+          - --require-virtualenv
+        argument: ""
+        description: Allow pip to only run in a virtual environment; exit with an error otherwise.
       - names:
           - -v
           - --verbose
@@ -1174,7 +1635,7 @@ subcommands:
       - names:
           - --proxy
         argument: <proxy>
-        description: Specify a proxy in the form [user:passwd@]proxy.server:port.
+        description: Specify a proxy in the form scheme://[user:passwd@]proxy.server:port.
       - names:
           - --retries
         argument: <retries>
@@ -1241,9 +1702,17 @@ subcommands:
         argument: ""
         description: Show help.
       - names:
+          - --debug
+        argument: ""
+        description: Let unhandled exceptions propagate outside the main subroutine, instead of logging them to stderr.
+      - names:
           - --isolated
         argument: ""
         description: Run pip in an isolated mode, ignoring environment variables and user configuration.
+      - names:
+          - --require-virtualenv
+        argument: ""
+        description: Allow pip to only run in a virtual environment; exit with an error otherwise.
       - names:
           - -v
           - --verbose
@@ -1270,7 +1739,7 @@ subcommands:
       - names:
           - --proxy
         argument: <proxy>
-        description: Specify a proxy in the form [user:passwd@]proxy.server:port.
+        description: Specify a proxy in the form scheme://[user:passwd@]proxy.server:port.
       - names:
           - --retries
         argument: <retries>
@@ -1327,20 +1796,6 @@ subcommands:
     description: Inspect and manage pip's wheel cache.
     options:
       - names:
-          - '-'
-          - '-'
-          - '-'
-        argument: 'dir: Show the cache directory.'
-        description: ckages stored in the cache.
-      - names:
-          - '-'
-        argument: 'remove: Remove one or more'
-        description: package from the cache.
-      - names:
-          - '-'
-        argument: 'purge: Remove all items fr'
-        description: om the cache.
-      - names:
           - --format
         argument: <list_format>
         description: 'Select the output format among: human (default) or abspath'
@@ -1350,9 +1805,17 @@ subcommands:
         argument: ""
         description: Show help.
       - names:
+          - --debug
+        argument: ""
+        description: Let unhandled exceptions propagate outside the main subroutine, instead of logging them to stderr.
+      - names:
           - --isolated
         argument: ""
         description: Run pip in an isolated mode, ignoring environment variables and user configuration.
+      - names:
+          - --require-virtualenv
+        argument: ""
+        description: Allow pip to only run in a virtual environment; exit with an error otherwise.
       - names:
           - -v
           - --verbose
@@ -1379,7 +1842,156 @@ subcommands:
       - names:
           - --proxy
         argument: <proxy>
-        description: Specify a proxy in the form [user:passwd@]proxy.server:port.
+        description: Specify a proxy in the form scheme://[user:passwd@]proxy.server:port.
+      - names:
+          - --retries
+        argument: <retries>
+        description: Maximum number of retries each connection should attempt (default 5 times).
+      - names:
+          - --timeout
+        argument: <sec>
+        description: Set the socket timeout (default 15 seconds).
+      - names:
+          - --exists-action
+        argument: <action>
+        description: 'Default action when a path already exists: (s)witch, (i)gnore, (w)ipe, (b)ackup, (a)bort.'
+      - names:
+          - --trusted-host
+        argument: <hostname>
+        description: Mark this host or host:port pair as trusted, even though it does not have valid or any HTTPS.
+      - names:
+          - --cert
+        argument: <path>
+        description: Path to PEM-encoded CA certificate bundle. If provided, overrides the default. See 'SSL Certificate Verification' in pip documentation for more information.
+      - names:
+          - --client-cert
+        argument: <path>
+        description: Path to SSL client certificate, a single file containing the private key and the certificate in PEM format.
+      - names:
+          - --cache-dir
+        argument: <dir>
+        description: Store the cache data in <dir>.
+      - names:
+          - --no-cache-dir
+        argument: ""
+        description: Disable the cache.
+      - names:
+          - --disable-pip-version-check
+        argument: ""
+        description: Don't periodically check PyPI to determine whether a new version of pip is available for download. Implied with --no-index.
+      - names:
+          - --no-color
+        argument: ""
+        description: Suppress colored output.
+      - names:
+          - --no-python-version-warning
+        argument: ""
+        description: Silence deprecation warnings for upcoming unsupported Pythons.
+      - names:
+          - --use-feature
+        argument: <feature>
+        description: Enable new functionality, that may be backward incompatible.
+      - names:
+          - --use-deprecated
+        argument: <feature>
+        description: Enable deprecated functionality, that will be removed in the future.
+  - name: index
+    description: Inspect information available from package indexes.
+    options:
+      - names:
+          - --platform
+        argument: <platform>
+        description: Only use wheels compatible with <platform>. Defaults to the platform of the running system. Use this option multiple times to specify multiple platforms supported by the target interpreter.
+      - names:
+          - --python-version
+        argument: <python_version>
+        description: The Python interpreter version to use for wheel and "Requires-Python" compatibility checks. Defaults to a version derived from the running interpreter. The version can be specified using up to three dot-separated integers (e.g. "3" for 3.0.0, "3.7" for 3.7.0, or "3.7.3"). A major-minor version can also be given as a string without dots (e.g. "37" for 3.7.0).
+      - names:
+          - --implementation
+        argument: <implementation>
+        description: Only use wheels compatible with Python implementation <implementation>, e.g. 'pp', 'jy', 'cp', or 'ip'. If not specified, then the current interpreter implementation is used. Use 'py' to force implementation-agnostic wheels.
+      - names:
+          - --abi
+        argument: <abi>
+        description: Only use wheels compatible with Python abi <abi>, e.g. 'pypy_41'. If not specified, then the current interpreter abi tag is used. Use this option multiple times to specify multiple abis supported by the target interpreter. Generally you will need to specify --implementation, --platform, and --python-version when using this option.
+      - names:
+          - --ignore-requires-python
+        argument: ""
+        description: Ignore the Requires-Python information.
+      - names:
+          - --pre
+        argument: ""
+        description: Include pre-release and development versions. By default, pip only finds stable versions.
+      - names:
+          - --no-binary
+        argument: <format_control>
+        description: Do not use binary packages. Can be supplied multiple times, and each time adds to the existing value. Accepts either ":all:" to disable all binary packages, ":none:" to empty the set (notice the colons), or one or more package names with commas between them (no colons). Note that some packages are tricky to compile and may fail to install when this option is used on them.
+      - names:
+          - --only-binary
+        argument: <format_control>
+        description: Do not use source packages. Can be supplied multiple times, and each time adds to the existing value. Accepts either ":all:" to disable all source packages, ":none:" to empty the set, or one or more package names with commas between them. Packages without binary distributions will fail to install when this option is used on them.
+      - names:
+          - -i
+          - --index-url
+        argument: <url>
+        description: Base URL of the Python Package Index (default https://pypi.org/simple). This should point to a repository compliant with PEP 503 (the simple repository API) or a local directory laid out in the same format.
+      - names:
+          - --extra-index-url
+        argument: <url>
+        description: Extra URLs of package indexes to use in addition to --index-url. Should follow the same rules as --index-url.
+      - names:
+          - --no-index
+        argument: ""
+        description: Ignore package index (only looking at --find-links URLs instead).
+      - names:
+          - -f
+          - --find-links
+        argument: <url>
+        description: If a URL or path to an html file, then parse for links to archives such as sdist (.tar.gz) or wheel (.whl) files. If a local path or file:// URL that's a directory, then look for archives in the directory listing. Links to VCS project URLs are not supported.
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: Show help.
+      - names:
+          - --debug
+        argument: ""
+        description: Let unhandled exceptions propagate outside the main subroutine, instead of logging them to stderr.
+      - names:
+          - --isolated
+        argument: ""
+        description: Run pip in an isolated mode, ignoring environment variables and user configuration.
+      - names:
+          - --require-virtualenv
+        argument: ""
+        description: Allow pip to only run in a virtual environment; exit with an error otherwise.
+      - names:
+          - -v
+          - --verbose
+        argument: ""
+        description: Give more output. Option is additive, and can be used up to 3 times.
+      - names:
+          - -V
+          - --version
+        argument: ""
+        description: Show version and exit.
+      - names:
+          - -q
+          - --quiet
+        argument: ""
+        description: Give less output. Option is additive, and can be used up to 3 times (corresponding to WARNING, ERROR, and CRITICAL logging levels).
+      - names:
+          - --log
+        argument: <path>
+        description: Path to a verbose appending log.
+      - names:
+          - --no-input
+        argument: ""
+        description: Disable prompting for input.
+      - names:
+          - --proxy
+        argument: <proxy>
+        description: Specify a proxy in the form scheme://[user:passwd@]proxy.server:port.
       - names:
           - --retries
         argument: <retries>
@@ -1461,6 +2073,10 @@ subcommands:
         argument: ""
         description: Use PEP 517 for building source distributions (use --no-use-pep517 to force legacy behaviour).
       - names:
+          - --check-build-dependencies
+        argument: ""
+        description: Check the build dependencies when PEP517 is used.
+      - names:
           - -c
           - --constraint
         argument: <file>
@@ -1490,11 +2106,15 @@ subcommands:
       - names:
           - --progress-bar
         argument: <progress_bar>
-        description: 'Specify type of progress to be displayed [off|on|ascii|pretty|emoji] (default: on)'
+        description: 'Specify whether the progress bar should be used [on, off] (default: on)'
       - names:
           - --no-verify
         argument: ""
         description: Don't verify if built wheel is valid.
+      - names:
+          - --config-settings
+        argument: <settings>
+        description: Configuration settings to be passed to the PEP 517 build backend. Settings take the form KEY=VALUE. Use multiple --config-settings options to pass multiple keys to the backend.
       - names:
           - --build-option
         argument: <options>
@@ -1527,21 +2147,29 @@ subcommands:
       - names:
           - --no-index
         argument: ""
-        description: Ignore package index (only looking at --findlinks URLs instead).
+        description: Ignore package index (only looking at --find-links URLs instead).
       - names:
           - -f
           - --find-links
         argument: <url>
-        description: If a URL or path to an html file, then parse for links to archives such as sdist (.tar.gz) or wheel (.whl) files. If a local path or file:// URL that's a directory,  then look for archives in the directory listing. Links to VCS project URLs are not supported.
+        description: If a URL or path to an html file, then parse for links to archives such as sdist (.tar.gz) or wheel (.whl) files. If a local path or file:// URL that's a directory, then look for archives in the directory listing. Links to VCS project URLs are not supported.
       - names:
           - -h
           - --help
         argument: ""
         description: Show help.
       - names:
+          - --debug
+        argument: ""
+        description: Let unhandled exceptions propagate outside the main subroutine, instead of logging them to stderr.
+      - names:
           - --isolated
         argument: ""
         description: Run pip in an isolated mode, ignoring environment variables and user configuration.
+      - names:
+          - --require-virtualenv
+        argument: ""
+        description: Allow pip to only run in a virtual environment; exit with an error otherwise.
       - names:
           - -v
           - --verbose
@@ -1568,7 +2196,7 @@ subcommands:
       - names:
           - --proxy
         argument: <proxy>
-        description: Specify a proxy in the form [user:passwd@]proxy.server:port.
+        description: Specify a proxy in the form scheme://[user:passwd@]proxy.server:port.
       - names:
           - --retries
         argument: <retries>
@@ -1635,9 +2263,17 @@ subcommands:
         argument: ""
         description: Show help.
       - names:
+          - --debug
+        argument: ""
+        description: Let unhandled exceptions propagate outside the main subroutine, instead of logging them to stderr.
+      - names:
           - --isolated
         argument: ""
         description: Run pip in an isolated mode, ignoring environment variables and user configuration.
+      - names:
+          - --require-virtualenv
+        argument: ""
+        description: Allow pip to only run in a virtual environment; exit with an error otherwise.
       - names:
           - -v
           - --verbose
@@ -1664,7 +2300,7 @@ subcommands:
       - names:
           - --proxy
         argument: <proxy>
-        description: Specify a proxy in the form [user:passwd@]proxy.server:port.
+        description: Specify a proxy in the form scheme://[user:passwd@]proxy.server:port.
       - names:
           - --retries
         argument: <retries>
@@ -1736,14 +2372,27 @@ subcommands:
         argument: ""
         description: Emit completion code for fish
       - names:
+          - -p
+          - --powershell
+        argument: ""
+        description: Emit completion code for powershell
+      - names:
           - -h
           - --help
         argument: ""
         description: Show help.
       - names:
+          - --debug
+        argument: ""
+        description: Let unhandled exceptions propagate outside the main subroutine, instead of logging them to stderr.
+      - names:
           - --isolated
         argument: ""
         description: Run pip in an isolated mode, ignoring environment variables and user configuration.
+      - names:
+          - --require-virtualenv
+        argument: ""
+        description: Allow pip to only run in a virtual environment; exit with an error otherwise.
       - names:
           - -v
           - --verbose
@@ -1770,7 +2419,7 @@ subcommands:
       - names:
           - --proxy
         argument: <proxy>
-        description: Specify a proxy in the form [user:passwd@]proxy.server:port.
+        description: Specify a proxy in the form scheme://[user:passwd@]proxy.server:port.
       - names:
           - --retries
         argument: <retries>
@@ -1833,24 +2482,32 @@ subcommands:
       - names:
           - --python-version
         argument: <python_version>
-        description: The Python interpreter version to use for wheel and "Requires-Python" compatibility checks. Defaults to a version derived from the running interpreter. The version can be specified using up to three dot-separated integers (e.g. "3" for 3.0.0, "3.7" for 3.7.0, or "3.7.3"). A majorminor version can also be given as a string without dots (e.g. "37" for 3.7.0).
+        description: The Python interpreter version to use for wheel and "Requires-Python" compatibility checks. Defaults to a version derived from the running interpreter. The version can be specified using up to three dot-separated integers (e.g. "3" for 3.0.0, "3.7" for 3.7.0, or "3.7.3"). A major-minor version can also be given as a string without dots (e.g. "37" for 3.7.0).
       - names:
           - --implementation
         argument: <implementation>
-        description: Only use wheels compatible with Python implementation <implementation>, e.g. 'pp', 'jy', 'cp',  or 'ip'. If not specified, then the current interpreter implementation is used.  Use 'py' to force implementation-agnostic wheels.
+        description: Only use wheels compatible with Python implementation <implementation>, e.g. 'pp', 'jy', 'cp', or 'ip'. If not specified, then the current interpreter implementation is used. Use 'py' to force implementation-agnostic wheels.
       - names:
           - --abi
         argument: <abi>
-        description: Only use wheels compatible with Python abi <abi>, e.g. 'pypy_41'. If not specified, then the current interpreter abi tag is used. Use this option multiple times to specify multiple abis supported by the target interpreter. Generally you will need to specify --implementation, --platform, and --pythonversion when using this option.
+        description: Only use wheels compatible with Python abi <abi>, e.g. 'pypy_41'. If not specified, then the current interpreter abi tag is used. Use this option multiple times to specify multiple abis supported by the target interpreter. Generally you will need to specify --implementation, --platform, and --python-version when using this option.
       - names:
           - -h
           - --help
         argument: ""
         description: Show help.
       - names:
+          - --debug
+        argument: ""
+        description: Let unhandled exceptions propagate outside the main subroutine, instead of logging them to stderr.
+      - names:
           - --isolated
         argument: ""
         description: Run pip in an isolated mode, ignoring environment variables and user configuration.
+      - names:
+          - --require-virtualenv
+        argument: ""
+        description: Allow pip to only run in a virtual environment; exit with an error otherwise.
       - names:
           - -v
           - --verbose
@@ -1877,7 +2534,7 @@ subcommands:
       - names:
           - --proxy
         argument: <proxy>
-        description: Specify a proxy in the form [user:passwd@]proxy.server:port.
+        description: Specify a proxy in the form scheme://[user:passwd@]proxy.server:port.
       - names:
           - --retries
         argument: <retries>
@@ -1930,97 +2587,7 @@ subcommands:
           - --use-deprecated
         argument: <feature>
         description: Enable deprecated functionality, that will be removed in the future.
-  - name: help
-    description: Show help for commands.
-    options:
-      - names:
-          - -h
-          - --help
-        argument: ""
-        description: Show help.
-      - names:
-          - --isolated
-        argument: ""
-        description: Run pip in an isolated mode, ignoring environment variables and user configuration.
-      - names:
-          - -v
-          - --verbose
-        argument: ""
-        description: Give more output. Option is additive, and can be used up to 3 times.
-      - names:
-          - -V
-          - --version
-        argument: ""
-        description: Show version and exit.
-      - names:
-          - -q
-          - --quiet
-        argument: ""
-        description: Give less output. Option is additive, and can be used up to 3 times (corresponding to WARNING, ERROR, and CRITICAL logging levels).
-      - names:
-          - --log
-        argument: <path>
-        description: Path to a verbose appending log.
-      - names:
-          - --no-input
-        argument: ""
-        description: Disable prompting for input.
-      - names:
-          - --proxy
-        argument: <proxy>
-        description: Specify a proxy in the form [user:passwd@]proxy.server:port.
-      - names:
-          - --retries
-        argument: <retries>
-        description: Maximum number of retries each connection should attempt (default 5 times).
-      - names:
-          - --timeout
-        argument: <sec>
-        description: Set the socket timeout (default 15 seconds).
-      - names:
-          - --exists-action
-        argument: <action>
-        description: 'Default action when a path already exists: (s)witch, (i)gnore, (w)ipe, (b)ackup, (a)bort.'
-      - names:
-          - --trusted-host
-        argument: <hostname>
-        description: Mark this host or host:port pair as trusted, even though it does not have valid or any HTTPS.
-      - names:
-          - --cert
-        argument: <path>
-        description: Path to PEM-encoded CA certificate bundle. If provided, overrides the default. See 'SSL Certificate Verification' in pip documentation for more information.
-      - names:
-          - --client-cert
-        argument: <path>
-        description: Path to SSL client certificate, a single file containing the private key and the certificate in PEM format.
-      - names:
-          - --cache-dir
-        argument: <dir>
-        description: Store the cache data in <dir>.
-      - names:
-          - --no-cache-dir
-        argument: ""
-        description: Disable the cache.
-      - names:
-          - --disable-pip-version-check
-        argument: ""
-        description: Don't periodically check PyPI to determine whether a new version of pip is available for download. Implied with --no-index.
-      - names:
-          - --no-color
-        argument: ""
-        description: Suppress colored output.
-      - names:
-          - --no-python-version-warning
-        argument: ""
-        description: Silence deprecation warnings for upcoming unsupported Pythons.
-      - names:
-          - --use-feature
-        argument: <feature>
-        description: Enable new functionality, that may be backward incompatible.
-      - names:
-          - --use-deprecated
-        argument: <feature>
-        description: Enable deprecated functionality, that will be removed in the future.
+version: pip 22.1.2 from /home/vierbein/.local/lib/python3.9/site-packages/pip (python 3.9)
 tldr: |
   > Python package manager.
   > Some subcommands such as `pip install` have their own usage documentation.

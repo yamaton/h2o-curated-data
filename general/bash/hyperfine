@@ -1,0 +1,30 @@
+# Auto-generated with h2o
+
+_hyperfine()
+{
+    local i=1 cmd cur word_list
+    cur="${COMP_WORDS[COMP_CWORD]}"
+
+    # take the last word that's NOT starting with -
+    while [[ ( "$i" < "$COMP_CWORD" ) ]]; do
+        local s="${COMP_WORDS[i]}"
+        case "$s" in
+          -*) ;;
+          *)
+            cmd="$s"
+            ;;
+        esac
+        (( i++ ))
+    done
+
+    case "$cmd" in
+      *)
+          word_list="  -w --warmup -m --min-runs -M --max-runs -r --runs -s --setup -p --prepare -c --cleanup -P --parameter-scan -D --parameter-step-size -L --parameter-list --style -S --shell -i --ignore-failure -u --time-unit --export-asciidoc --export-csv --export-json --export-markdown --show-output -n --command-name -h --help -V --version"
+          COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+          ;;
+    esac
+
+}
+
+## -o bashdefault and -o default are fallback
+complete -o bashdefault -o default -F _hyperfine hyperfine

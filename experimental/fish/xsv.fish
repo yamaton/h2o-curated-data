@@ -72,7 +72,7 @@ complete -c xsv -n "__fish_seen_subcommand_from frequency" -s s -l select -d 'Se
 complete -c xsv -n "__fish_seen_subcommand_from frequency" -s l -l limit -d 'Limit the frequency table to the N most common items.' -x
 complete -c xsv -n "__fish_seen_subcommand_from frequency" -s a -l asc -d 'Sort the frequency tables in ascending order by count.'
 complete -c xsv -n "__fish_seen_subcommand_from frequency" -l no-nulls -d 'Don\'t include NULLs in the frequency table.'
-complete -c xsv -n "__fish_seen_subcommand_from frequency" -s j -l jobs -d 'The number of jobs to run in parallel.' -x
+complete -c xsv -n "__fish_seen_subcommand_from frequency" -s j -l jobs -d 'The number of jobs to run in parallel.' -r
 complete -c xsv -n "__fish_seen_subcommand_from frequency" -s h -l help -d 'Display this message'
 complete -c xsv -n "__fish_seen_subcommand_from frequency" -s o -l output -d 'Write output to <file> instead of stdout.' -r
 complete -c xsv -n "__fish_seen_subcommand_from frequency" -s n -l no-headers -d 'When set, the first row will NOT be included in the frequency table.'
@@ -161,7 +161,7 @@ complete -c xsv -n "__fish_seen_subcommand_from sort" -s d -l delimiter -d 'The 
 
 
 complete -c xsv -n "__fish_seen_subcommand_from split" -s s -l size -d 'The number of records to write into each chunk.' -x
-complete -c xsv -n "__fish_seen_subcommand_from split" -s j -l jobs -d 'The number of spliting jobs to run in parallel.' -x
+complete -c xsv -n "__fish_seen_subcommand_from split" -s j -l jobs -d 'The number of spliting jobs to run in parallel.' -r
 complete -c xsv -n "__fish_seen_subcommand_from split" -l filename -d 'A filename template to use when constructing the names of the output files.' -r
 complete -c xsv -n "__fish_seen_subcommand_from split" -s h -l help -d 'Display this message'
 complete -c xsv -n "__fish_seen_subcommand_from split" -s n -l no-headers -d 'When set, the first row will NOT be interpreted as column names.'
@@ -175,7 +175,7 @@ complete -c xsv -n "__fish_seen_subcommand_from stats" -l mode -d 'This requires
 complete -c xsv -n "__fish_seen_subcommand_from stats" -l cardinality -d 'This requires storing all CSV data in memory.' -x
 complete -c xsv -n "__fish_seen_subcommand_from stats" -l median -d 'This requires storing all CSV data in memory.' -x
 complete -c xsv -n "__fish_seen_subcommand_from stats" -l nulls -d 'Include NULLs in the population size for computing mean and standard deviation.'
-complete -c xsv -n "__fish_seen_subcommand_from stats" -s j -l jobs -d 'The number of jobs to run in parallel.' -x
+complete -c xsv -n "__fish_seen_subcommand_from stats" -s j -l jobs -d 'The number of jobs to run in parallel.' -r
 complete -c xsv -n "__fish_seen_subcommand_from stats" -s h -l help -d 'Display this message'
 complete -c xsv -n "__fish_seen_subcommand_from stats" -s o -l output -d 'Write output to <file> instead of stdout.' -r
 complete -c xsv -n "__fish_seen_subcommand_from stats" -s n -l no-headers -d 'When set, the first row will NOT be interpreted as column names.'

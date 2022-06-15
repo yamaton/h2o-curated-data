@@ -1,0 +1,110 @@
+#compdef _zoxide zoxide
+
+# Auto-generated with h2o
+
+    function _zoxide_add {
+        _arguments \
+            {-h,--help}'[Print help information]' \
+            {-V,--version}'[Print version information]' \
+            "*: :_files"
+
+    }
+
+    function _zoxide_import {
+        _arguments \
+            '--from[Application to import from \[possible values: autojump, z\]]' \
+            {-h,--help}'[Print help information]' \
+            '--merge[Merge into existing database]' \
+            {-V,--version}'[Print version information]' \
+            "*: :_files"
+
+    }
+
+    function _zoxide_init {
+        _arguments \
+            '--cmd[Changes the prefix of the `z` and `zi` commands \[default: z\]]' \
+            {-h,--help}'[Print help information]' \
+            '--hook[Changes how often zoxide increments a directory'\''s score \[default: pwd\] \[possible values: none, prompt, pwd\]]' \
+            '--no-cmd[Prevents zoxide from defining the `z` and `zi` commands]' \
+            {-V,--version}'[Print version information]' \
+            "*: :_files"
+
+    }
+
+    function _zoxide_query {
+        _arguments \
+            '--all[Show deleted directories]' \
+            '--exclude[Exclude a path from results]':file:_files \
+            {-h,--help}'[Print help information]' \
+            {-i,--interactive}'[Use interactive selection]' \
+            {-l,--list}'[List all matching directories]' \
+            {-s,--score}'[Print score with results]' \
+            {-V,--version}'[Print version information]' \
+            "*: :_files"
+
+    }
+
+    function _zoxide_remove {
+        _arguments \
+            {-h,--help}'[Print help information]' \
+            {-i,--interactive}'[Use interactive selection]' \
+            {-V,--version}'[Print version information]' \
+            "*: :_files"
+
+    }
+
+
+function _zoxide {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'add:Add a new directory or increment its rank'
+            'import:Import entries from another application'
+            'init:Generate shell configuration'
+            'query:Search for a directory in the database'
+            'remove:Remove a directory from the database'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-h,--help}'[Print help information]' \
+        {-V,--version}'[Print version information]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (add)
+            _zoxide_add
+            ;;
+
+        (import)
+            _zoxide_import
+            ;;
+
+        (init)
+            _zoxide_init
+            ;;
+
+        (query)
+            _zoxide_query
+            ;;
+
+        (remove)
+            _zoxide_remove
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+

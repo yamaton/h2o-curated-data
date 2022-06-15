@@ -1,0 +1,90 @@
+# Auto-generated with h2o
+
+_zoxide()
+{
+    local i=1 cmd cur word_list
+    cur="${COMP_WORDS[COMP_CWORD]}"
+
+    # take the last word that's NOT starting with -
+    while [[ ( "$i" < "$COMP_CWORD" ) ]]; do
+        local s="${COMP_WORDS[i]}"
+        case "$s" in
+          -*) ;;
+          *)
+            cmd="$s"
+            ;;
+        esac
+        (( i++ ))
+    done
+
+    case "$cmd" in
+          add) _zoxide_add
+            return
+            ;;
+
+          import) _zoxide_import
+            return
+            ;;
+
+          init) _zoxide_init
+            return
+            ;;
+
+          query) _zoxide_query
+            return
+            ;;
+
+          remove) _zoxide_remove
+            return
+            ;;
+
+      *)
+          word_list=" add import init query remove -h --help -V --version"
+          COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+          ;;
+    esac
+
+}
+
+_zoxide_add ()
+{
+    local cur word_list
+    word_list=" -h --help -V --version" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_zoxide_import ()
+{
+    local cur word_list
+    word_list=" --from -h --help --merge -V --version" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_zoxide_init ()
+{
+    local cur word_list
+    word_list=" --cmd -h --help --hook --no-cmd -V --version" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_zoxide_query ()
+{
+    local cur word_list
+    word_list=" --all --exclude -h --help -i --interactive -l --list -s --score -V --version" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_zoxide_remove ()
+{
+    local cur word_list
+    word_list=" -h --help -i --interactive -V --version" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+## -o bashdefault and -o default are fallback
+complete -o bashdefault -o default -F _zoxide zoxide

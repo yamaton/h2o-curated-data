@@ -1,0 +1,279 @@
+name: iperf3
+description: iperf3
+options:
+  - names:
+      - -p
+      - --port
+    argument: "n"
+    description: set server port to listen on/connect to to n (default 5201)
+  - names:
+      - -f
+      - --format
+    argument: ""
+    description: '[kmgtKMGT] format to report: Kbits/Mbits/Gbits/Tbits'
+  - names:
+      - -i
+      - --interval
+    argument: "n"
+    description: pause n seconds between periodic throughput reports; default is 1, use 0 to disable
+  - names:
+      - -F
+      - --file
+    argument: name
+    description: Use a file as the source (on the sender) or sink (on the receiver) of data, rather than just generating random data or throwing it away. This feature is used for finding whether or not the storage subsystem is the bottleneck for file transfers. It does not turn iperf3 into a file transfer tool. The length, attributes, and in some cases contents of the received file may not match those of the original file.
+  - names:
+      - -A
+      - --affinity
+    argument: n/n,m
+    description: Set the CPU affinity, if possible (Linux, FreeBSD, and Windows only). On both the client and server you can set the local affinity by using the n form of this argument (where n is a CPU number). In addition, on the client side you can override the server's affinity for just that one test, using the n,m form of argument. Note that when using this feature, a process will only be bound to a single CPU (as opposed to a set containing potentialy multiple CPUs).
+  - names:
+      - -B
+      - --bind
+    argument: host
+    description: bind to the specific interface associated with address host.
+  - names:
+      - -V
+      - --verbose
+    argument: ""
+    description: give more detailed output
+  - names:
+      - -J
+      - --json
+    argument: ""
+    description: output in JSON format
+  - names:
+      - --logfile
+    argument: file
+    description: send output to a log file.
+  - names:
+      - --forceflush
+    argument: ""
+    description: force flushing output at every interval. Used to avoid buffering when sending output to pipe.
+  - names:
+      - -d
+      - --debug
+    argument: ""
+    description: emit debugging output. Primarily (perhaps exclusively) of use to developers.
+  - names:
+      - -v
+      - --version
+    argument: ""
+    description: show version information and quit
+  - names:
+      - -h
+      - --help
+    argument: ""
+    description: show a help synopsis
+  - names:
+      - -s
+      - --server
+    argument: ""
+    description: run in server mode
+  - names:
+      - -D
+      - --daemon
+    argument: ""
+    description: run the server in background as a daemon
+  - names:
+      - -I
+      - --pidfile
+    argument: file
+    description: write a file with the process ID, most useful when running as a daemon.
+  - names:
+      - "-1"
+      - --one-off
+    argument: ""
+    description: handle one client connection, then exit.
+  - names:
+      - --rsa-private-key-path
+    argument: file
+    description: path to the RSA private key (not password-protected) used to decrypt authentication credentials from the client (if built with OpenSSL support).
+  - names:
+      - --authorized-users-path
+    argument: file
+    description: path to the configuration file containing authorized users credentials to run iperf tests (if built with OpenSSL support). The file is a comma separated list of usernames and password hashes; more information on the structure of the file can be found in the EXAMPLES section.
+  - names:
+      - -c
+      - --client
+    argument: host
+    description: run in client mode, connecting to the specified server. By default, a test consists of sending data from the client to the server, unless the -R flag is specified.
+  - names:
+      - --sctp
+    argument: ""
+    description: use SCTP rather than TCP (FreeBSD and Linux)
+  - names:
+      - -u
+      - --udp
+    argument: ""
+    description: use UDP rather than TCP
+  - names:
+      - --connect-timeout
+    argument: "n"
+    description: set timeout for establishing the initial control connection to the server, in milliseconds. The default behavior is the operating system's timeout for TCP connection establishment. Providing a shorter value may speed up detection of a down iperf3 server.
+  - names:
+      - -b
+      - --bitrate
+    argument: n[KM]
+    description: set target bitrate to n bits/sec (default 1 Mbit/sec for UDP, unlimited for TCP/SCTP). If there are multiple streams (-P flag), the throughput limit is applied separately to each stream. You can also add a '/' and a number to the bitrate specifier. This is called "burst mode". It will send the given number of packets without pausing, even if that temporarily exceeds the specified throughput limit. Setting the target bitrate to 0 will disable bitrate limits (particularly useful for UDP tests). This throughput limit is implemented internally inside iperf3, and is available on all platforms. Compare with the --fq-rate flag. This option replaces the --bandwidth flag, which is now deprecated but (at least for now) still accepted.
+  - names:
+      - --pacing-timer
+    argument: n[KMG]
+    description: set pacing timer interval in microseconds (default 1000 microseconds, or 1 ms). This controls iperf3's internal pacing timer for the -b/--bitrate option. The timer fires at the interval set by this parameter. Smaller values of the pacing timer parameter smooth out the traffic emitted by iperf3, but potentially at the cost of performance due to more frequent timer processing.
+  - names:
+      - --fq-rate
+    argument: n[KM]
+    description: Set a rate to be used with fair-queueing based socket-level pacing, in bits per second. This pacing (if specified) will be in addition to any pacing due to iperf3's internal throughput pacing (-b/--bitrate flag), and both can be specified for the same test. Only available on platforms supporting the SO_MAX_PACING_RATE socket option (currently only Linux). The default is no fair-queueing based pacing.
+  - names:
+      - --no-fq-socket-pacing
+    argument: ""
+    description: This option is deprecated and will be removed. It is equivalent to specifying --fq-rate=0.
+  - names:
+      - -t
+      - --time
+    argument: "n"
+    description: time in seconds to transmit for (default 10 secs)
+  - names:
+      - -n
+      - --bytes
+    argument: n[KM]
+    description: number of bytes to transmit (instead of -t)
+  - names:
+      - -k
+      - --blockcount
+    argument: n[KM]
+    description: number of blocks (packets) to transmit (instead of -t or -n)
+  - names:
+      - -l
+      - --length
+    argument: n[KM]
+    description: length of buffer to read or write. For TCP tests, the default value is 128KB. In the case of UDP, iperf3 tries to dynamically determine a reasonable sending size based on the path MTU; if that cannot be determined it uses 1460 bytes as a sending size. For SCTP tests, the default size is 64KB.
+  - names:
+      - --cport
+    argument: port
+    description: bind data streams to a specific client port (for TCP and UDP only, default is to use an ephemeral port)
+  - names:
+      - -P
+      - --parallel
+    argument: "n"
+    description: number of parallel client streams to run. Note that iperf3 is single threaded, so if you are CPU bound, this will not yield higher throughput.
+  - names:
+      - -R
+      - --reverse
+    argument: ""
+    description: reverse the direction of a test, so that the server sends data to the client
+  - names:
+      - -w
+      - --window
+    argument: n[KM]
+    description: window size / socket buffer size (this gets sent to the server and used on that side too)
+  - names:
+      - -M
+      - --set-mss
+    argument: "n"
+    description: set TCP/SCTP maximum segment size (MTU - 40 bytes)
+  - names:
+      - -N
+      - --no-delay
+    argument: ""
+    description: set TCP/SCTP no delay, disabling Nagle's Algorithm
+  - names:
+      - "-4"
+      - --version4
+    argument: ""
+    description: only use IPv4
+  - names:
+      - "-6"
+      - --version6
+    argument: ""
+    description: only use IPv6
+  - names:
+      - -S
+      - --tos
+    argument: "n"
+    description: set the IP type of service. The usual prefixes for octal and hex can be used, i.e. 52, 064 and 0x34 all specify the same value.
+  - names:
+      - --dscp
+    argument: dscp
+    description: set the IP DSCP bits. Both numeric and symbolic values are accepted. Numeric values can be specified in decimal, octal and hex (see --tos above).
+  - names:
+      - -L
+      - --flowlabel
+    argument: "n"
+    description: set the IPv6 flow label (currently only supported on Linux)
+  - names:
+      - -X
+      - --xbind
+    argument: name
+    description: Bind SCTP associations to a specific subset of links using sctp_bindx(3). The --B flag will be ignored if this flag is specified. Normally SCTP will include the protocol addresses of all active links on the local host when setting up an association. Specifying at least one --X name will disable this behaviour. This flag must be specified for each link to be included in the association, and is supported for both iperf servers and clients (the latter are supported by passing the first --X argument to bind(2)). Hostnames are accepted as arguments and are resolved using getaddrinfo(3). If the --4 or --6 flags are specified, names which do not resolve to addresses within the specified protocol family will be ignored.
+  - names:
+      - --nstreams
+    argument: "n"
+    description: Set number of SCTP streams.
+  - names:
+      - -Z
+      - --zerocopy
+    argument: ""
+    description: Use a "zero copy" method of sending data, such as sendfile(2), instead of the usual write(2).
+  - names:
+      - -O
+      - --omit
+    argument: "n"
+    description: Omit the first n seconds of the test, to skip past the TCP slow-start period.
+  - names:
+      - -T
+      - --title
+    argument: str
+    description: Prefix every output line with this string.
+  - names:
+      - --extra-data
+    argument: str
+    description: Specify an extra data string field to be included in JSON output.
+  - names:
+      - -C
+      - --congestion
+    argument: algo
+    description: Set the congestion control algorithm (Linux and FreeBSD only). An older --linux-congestion synonym for this flag is accepted but is deprecated.
+  - names:
+      - --get-server-output
+    argument: ""
+    description: Get the output from the server. The output format is determined by the server (in particular, if the server was invoked with the --json flag, the output will be in JSON format, otherwise it will be in human-readable format). If the client is run with --json, the server output is included in a JSON object; otherwise it is appended at the bottom of the human-readable output.
+  - names:
+      - --udp-counters-64bit
+    argument: ""
+    description: Use 64-bit counters in UDP test packets. The use of this option can help prevent counter overflows during long or high-bitrate UDP tests. Both client and server need to be running at least version 3.1 for this option to work. It may become the default behavior at some point in the future.
+  - names:
+      - --repeating-payload
+    argument: ""
+    description: Use repeating pattern in payload, instead of random bytes. The same payload is used in iperf2 (ASCII '0..9' repeating). It might help to test and reveal problems in networking gear with hardware compression (including some WiFi access points), where iperf2 and iperf3 perform differently, just based on payload entropy.
+  - names:
+      - --username
+    argument: username
+    description: username to use for authentication to the iperf server (if built with OpenSSL support). The password will be prompted for interactively when the test is run. Note, the password to use can also be specified via the IPERF3_PASSWORD environment variable. If this variable is present, the password prompt will be skipped.
+  - names:
+      - --rsa-public-key-path
+    argument: file
+    description: path to the RSA public key used to encrypt authentication credentials (if built with OpenSSL support)
+version: iperf 3.7 (cJSON 1.5.2)
+tldr: |
+  > Traffic generator for testing network bandwidth.
+  > More information: <https://iperf.fr>.
+
+  - Run iperf3 as a server:
+
+  `iperf3 -s`
+
+  - Run an iperf3 server on a specific port:
+
+  `iperf3 -s -p {{port}}`
+
+  - Start bandwidth test:
+
+  `iperf3 -c {{server}}`
+
+  - Run iperf3 in multiple parallel streams:
+
+  `iperf3 -c {{server}} -P {{streams}}`
+
+  - Reverse direction of the test. Server sends data to the client:
+
+  `iperf3 -c {{server}} -R`

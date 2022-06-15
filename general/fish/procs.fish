@@ -18,8 +18,8 @@ complete -c procs -l theme -d 'Theme mode' -x
 complete -c procs -s p -l pager -d 'Pager mode' -x
 complete -c procs -l interval -d 'Interval to calculate throughput' -x
 complete -c procs -l config -d 'Generate configuration sample file'
-complete -c procs -l completion -d 'Generate shell completion file' -x
-complete -c procs -l completion-out -d 'Generate shell completion file and write to stdout' -x
+complete -c procs -l completion -d 'Generate shell completion file' -r
+complete -c procs -l completion-out -d 'Generate shell completion file and write to stdout' -r
 complete -c procs -l no-header -d 'Suppress header'
 complete -c procs -s h -l help -d 'Print help information'
 complete -c procs -s V -l version -d 'Print version information'

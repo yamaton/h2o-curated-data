@@ -2,96 +2,106 @@ name: gzip
 description: gzip
 options:
   - names:
+      - -a
+      - --ascii
+    argument: ""
+    description: 'Ascii text mode: convert end-of-lines using local conventions. This option is supported only on some non-Unix systems. For MSDOS, CR LF is converted to LF when compressing, and LF is converted to CR LF when decompressing.'
+  - names:
       - -c
       - --stdout
+      - --to-stdout
     argument: ""
-    description: write on standard output, keep original files unchanged
+    description: Write output on standard output; keep original files unchanged. If there are several input files, the output consists of a sequence of independently compressed members. To obtain better compression, concatenate all input files before compressing them.
   - names:
       - -d
       - --decompress
+      - --uncompress
+    argument: ""
+    description: Decompress.
+  - names:
       - -f
       - --force
-    argument: decompress
-    description: force overwrite of output file and compress links
+    argument: ""
+    description: 'Force compression or decompression even if the file has multiple links or the corresponding file already exists, or if the compressed data is read from or written to a terminal. If the input data is not in a format recognized by gzip, and if the option --stdout is also given, copy the input data without change to the standard output: let zcat behave as cat. If -f is not given, and when not running in the background, gzip prompts to verify whether an existing file should be overwritten.'
   - names:
       - -h
       - --help
     argument: ""
-    description: give this help
+    description: Display a help screen and quit.
   - names:
       - -k
       - --keep
     argument: ""
-    description: keep (don't delete) input files
+    description: Keep (don't delete) input files during compression or decompression.
   - names:
       - -l
       - --list
     argument: ""
-    description: list compressed file contents
+    description: 'For each compressed file, list the following fields:'
   - names:
       - -L
       - --license
     argument: ""
-    description: display software license
+    description: Display the gzip license and quit.
   - names:
       - -n
       - --no-name
     argument: ""
-    description: do not save or restore the original name and timestamp
+    description: When compressing, do not save the original file name and timestamp by default. (The original name is always saved if the name had to be truncated.) When decompressing, do not restore the original file name if present (remove only the gzip suffix from the compressed file name) and do not restore the original timestamp if present (copy it from the compressed file). This option is the default when decompressing.
   - names:
       - -N
       - --name
     argument: ""
-    description: save or restore the original name and timestamp
+    description: When compressing, always save the original file name and timestamp; this is the default. When decompressing, restore the original file name and timestamp if present. This option is useful on systems which have a limit on file name length or when the timestamp has been lost after a file transfer.
   - names:
       - -q
       - --quiet
     argument: ""
-    description: suppress all warnings
+    description: Suppress all warnings.
   - names:
       - -r
       - --recursive
     argument: ""
-    description: operate recursively on directories
-  - names:
-      - --rsyncable
-    argument: ""
-    description: make rsync-friendly archive
+    description: Travel the directory structure recursively. If any of the file names specified on the command line are directories, gzip will descend into the directory and compress all the files it finds there (or decompress them in the case of gunzip ).
   - names:
       - -S
       - --suffix
-    argument: SUF
-    description: use suffix SUF on compressed files
+    argument: .suf
+    description: When compressing, use suffix .suf instead of .gz. Any non-empty suffix can be given, but suffixes other than .z and .gz should be avoided to avoid confusion when files are transferred to other systems.
   - names:
       - --synchronous
     argument: ""
-    description: synchronous output (safer if system crashes, but slower)
+    description: Use synchronous output. With this option, gzip is less likely to lose data during a system crash, but it can be considerably slower.
   - names:
       - -t
       - --test
     argument: ""
-    description: test compressed file integrity
+    description: Test. Check the compressed file integrity.
   - names:
       - -v
       - --verbose
     argument: ""
-    description: verbose mode
+    description: Verbose. Display the name and percentage reduction for each file compressed or decompressed.
   - names:
       - -V
       - --version
     argument: ""
-    description: display version number
+    description: Version. Display the version number and compilation options then quit.
   - names:
-      - "-1"
+      - -#
       - --fast
-    argument: ""
-    description: compress faster
-  - names:
-      - "-9"
       - --best
     argument: ""
-    description: compress better
-version: gunzip (gzip) 1.10
+    description: 'Regulate the speed of compression using the specified digit #, where -1 or --fast indicates the fastest compression method (less compression) and -9 or --best indicates the slowest compression method (best compression). The default compression level is -6 (that is, biased towards high compression at expense of speed).'
+  - names:
+      - --rsyncable
+    argument: ""
+    description: When you synchronize a compressed file between two computers, this option allows rsync to transfer only files that were changed in the archive instead of the entire archive. Normally, after a change is made to any file in the archive, the compression algorithm can generate a new version of the archive that does not match the previous version of the archive. In this case, rsync transfers the entire new version of the archive to the remote computer. With this option, rsync can transfer only the changed files as well as a small amount of metadata that is required to update the archive structure in the area that was changed.
+  - names:
+      - --
+    argument: has xx other links
+    description: unchanged   The input file has links; it is left unchanged. See ln(1) for more information. Use the -f flag to force compression of multiply-linked files.
+version: gzip 1.10
 tldr: |
   > Compress/uncompress files with gzip compression (LZ77).
   > More information: <https://www.gnu.org/software/gzip/manual/gzip.html>.

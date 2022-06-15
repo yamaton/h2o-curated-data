@@ -1,0 +1,30 @@
+# Auto-generated with h2o
+
+_mycli()
+{
+    local i=1 cmd cur word_list
+    cur="${COMP_WORDS[COMP_CWORD]}"
+
+    # take the last word that's NOT starting with -
+    while [[ ( "$i" < "$COMP_CWORD" ) ]]; do
+        local s="${COMP_WORDS[i]}"
+        case "$s" in
+          -*) ;;
+          *)
+            cmd="$s"
+            ;;
+        esac
+        (( i++ ))
+    done
+
+    case "$cmd" in
+      *)
+          word_list="  -h --host -P --port -u --user -S --socket -p --password --pass --ssh-user --ssh-host --ssh-port --ssh-password --ssh-key-filename --ssh-config-path --ssh-config-host --ssl-ca --ssl-capath --ssl-cert --ssl-key --ssl-cipher --ssl-verify-server-cert -V --version -v --verbose -D --database -d --dsn --list-dsn --list-ssh-config -R --prompt -l --logfile --defaults-group-suffix --defaults-file --myclirc --auto-vertical-output -t --table --csv --warn --no-warn --local-infile -g --login-path -e --execute --init-command --charset --password-file --help"
+          COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+          ;;
+    esac
+
+}
+
+## -o bashdefault and -o default are fallback
+complete -o bashdefault -o default -F _mycli mycli

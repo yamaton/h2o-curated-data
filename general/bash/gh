@@ -1489,53 +1489,7 @@ _gh_api ()
 _gh_completion ()
 {
     local cur word_list
-    local i=1 subcommand_index
-
-    # take the last word that's NOT starting with -
-    while [[ ( $i < $COMP_CWORD ) ]]; do
-        local s="${COMP_WORDS[i]}"
-        case "$s" in
-          completion)
-            subcommand_index=$i
-            break
-            ;;
-        esac
-        (( i++ ))
-    done
-
-    while [[ ( $subcommand_index < $COMP_CWORD ) ]]; do
-        local s="${COMP_WORDS[subcommand_index}"
-        case "$s" in
-          autoload) _gh_autoload
-            return
-            ;;
-
-          compinit) _gh_compinit
-            return
-            ;;
-
-          *)  ;; 
-        esac
-        (( subcommand_index++ ))
-    done
-
-    word_list=" autoload compinit -s --shell --help" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
-}
-
-_completion_autoload ()
-{
-    local cur word_list
-    word_list=" -s --shell" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
-}
-
-_completion_compinit ()
-{
-    local cur word_list
-    word_list=" -s --shell" 
+    word_list=" -s --shell --help" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }

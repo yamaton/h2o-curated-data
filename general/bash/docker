@@ -612,6 +612,10 @@ _docker_buildx ()
             return
             ;;
 
+          ls) _docker_ls
+            return
+            ;;
+
           prune) _docker_prune
             return
             ;;
@@ -628,12 +632,16 @@ _docker_buildx ()
             return
             ;;
 
+          version) _docker_version
+            return
+            ;;
+
           *)  ;; 
         esac
         (( subcommand_index++ ))
     done
 
-    word_list=" imagetools bake build create du inspect prune rm stop use --builder" 
+    word_list=" imagetools bake build create du inspect ls prune rm stop use version --builder" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -828,6 +836,10 @@ _docker_compose ()
             return
             ;;
 
+          pause) _docker_pause
+            return
+            ;;
+
           port) _docker_port
             return
             ;;
@@ -856,7 +868,19 @@ _docker_compose ()
             return
             ;;
 
+          start) _docker_start
+            return
+            ;;
+
           stop) _docker_stop
+            return
+            ;;
+
+          top) _docker_top
+            return
+            ;;
+
+          unpause) _docker_unpause
             return
             ;;
 
@@ -873,7 +897,7 @@ _docker_compose ()
         (( subcommand_index++ ))
     done
 
-    word_list=" build convert cp create down events exec images kill logs ls port ps pull push restart rm run stop up version --ansi --compatibility --env-file -f --file --profile --project-directory -p --project-name" 
+    word_list=" build convert cp create down events exec images kill logs ls pause port ps pull push restart rm run start stop top unpause up version --ansi --compatibility --env-file -f --file --profile --project-directory -p --project-name" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -1418,6 +1442,10 @@ _docker_context ()
             return
             ;;
 
+          import) _docker_import
+            return
+            ;;
+
           inspect) _docker_inspect
             return
             ;;
@@ -1434,12 +1462,16 @@ _docker_context ()
             return
             ;;
 
+          use) _docker_use
+            return
+            ;;
+
           *)  ;; 
         esac
         (( subcommand_index++ ))
     done
 
-    word_list=" create export inspect ls rm update" 
+    word_list=" create export import inspect ls rm update use" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -1866,11 +1898,19 @@ _docker_node ()
     while [[ ( $subcommand_index < $COMP_CWORD ) ]]; do
         local s="${COMP_WORDS[subcommand_index}"
         case "$s" in
+          demote) _docker_demote
+            return
+            ;;
+
           inspect) _docker_inspect
             return
             ;;
 
           ls) _docker_ls
+            return
+            ;;
+
+          promote) _docker_promote
             return
             ;;
 
@@ -1891,7 +1931,7 @@ _docker_node ()
         (( subcommand_index++ ))
     done
 
-    word_list=" inspect ls ps rm update" 
+    word_list=" demote inspect ls promote ps rm update" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -1988,6 +2028,10 @@ _docker_plugin ()
             return
             ;;
 
+          set) _docker_set
+            return
+            ;;
+
           upgrade) _docker_upgrade
             return
             ;;
@@ -1997,7 +2041,7 @@ _docker_plugin ()
         (( subcommand_index++ ))
     done
 
-    word_list=" create disable enable inspect install ls push rm upgrade" 
+    word_list=" create disable enable inspect install ls push rm set upgrade" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -2420,6 +2464,10 @@ _docker_swarm ()
             return
             ;;
 
+          unlock) _docker_unlock
+            return
+            ;;
+
           unlock-key) _docker_unlockkey
             return
             ;;
@@ -2433,7 +2481,7 @@ _docker_swarm ()
         (( subcommand_index++ ))
     done
 
-    word_list=" ca init join join-token leave unlock-key update" 
+    word_list=" ca init join join-token leave unlock unlock-key update" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }

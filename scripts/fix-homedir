@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+#
+# Replace directory, such as `/home/vierbein` by `~`.
+#
+# Example:
+#
+#     $ ./fix-homedir docker
+#
+basedir="$(dirname "$(readlink -f "$0")")"
+name="$1"
+
+function fix {
+    dir="$1"
+    yaml="$basedir/../$dir/yaml/$name.yaml"
+    if [[ -f "$yaml" ]]; then
+        echo "Replace $HOME with ~ in $yaml"
+        sed -i "s|$HOME|~|g" "$yaml"
+    fi
+}
+
+fix general
+fix bio
+fix experimental

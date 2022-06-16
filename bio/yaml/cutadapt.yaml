@@ -1,0 +1,263 @@
+name: cutadapt
+description: removes adapter sequences from high-throughput sequencing reads.
+options:
+  - names:
+      - -h
+      - --help
+    argument: ""
+    description: Show this help message and exit
+  - names:
+      - --version
+    argument: ""
+    description: Show version number and exit
+  - names:
+      - --debug
+    argument: ""
+    description: Print debug log. Use twice to also print DP matrices
+  - names:
+      - -j
+      - --cores
+    argument: CORES
+    description: 'Number of CPU cores to use. Use 0 to auto-detect. Default: 1'
+  - names:
+      - -a
+      - --adapter
+    argument: ADAPTER
+    description: 'Sequence of an adapter ligated to the 3'' end (paired data: of the first read). The adapter and subsequent bases are trimmed. If a ''$'' character is appended (''anchoring''), the adapter is only found if it is a suffix of the read.'
+  - names:
+      - -g
+      - --front
+    argument: ADAPTER
+    description: 'Sequence of an adapter ligated to the 5'' end (paired data: of the first read). The adapter and any preceding bases are trimmed. Partial matches at the 5'' end are allowed. If a ''^'' character is prepended (''anchoring''), the adapter is only found if it is a prefix of the read.'
+  - names:
+      - -b
+      - --anywhere
+    argument: ADAPTER
+    description: 'Sequence of an adapter that may be ligated to the 5'' or 3'' end (paired data: of the first read). Both types of matches as described under -a and -g are allowed. If the first base of the read is part of the match, the behavior is as with -g, otherwise as with -a. This option is mostly for rescuing failed library preparations - do not use if you know which end your adapter was ligated to!'
+  - names:
+      - -e
+      - --error-rate
+      - --errors
+    argument: E
+    description: 'Maximum allowed error rate (if 0 <= E < 1), or absolute number of errors for full-length adapter match (if E is an integer >= 1). Error rate = no. of errors divided by length of matching region. Default: 0.1 (10%)'
+  - names:
+      - --no-indels
+    argument: ""
+    description: 'Allow only mismatches in alignments. Default: allow both mismatches and indels'
+  - names:
+      - -n
+      - --times
+    argument: COUNT
+    description: 'Remove up to COUNT adapters from each read. Default: 1'
+  - names:
+      - -O
+      - --overlap
+    argument: MINLENGTH
+    description: 'Require MINLENGTH overlap between read and adapter for an adapter to be found. Default: 3'
+  - names:
+      - --match-read-wildcards
+    argument: ""
+    description: 'Interpret IUPAC wildcards in reads. Default: False'
+  - names:
+      - -N
+      - --no-match-adapter-wildcards
+    argument: ""
+    description: Do not interpret IUPAC wildcards in adapters.
+  - names:
+      - --action
+    argument: '{trim,retain,mask,lowercase,none}'
+    description: 'What to do if a match was found. trim: trim adapter and up- or downstream sequence; retain: trim, but retain adapter; mask: replace with ''N'' characters; lowercase: convert to lowercase; none: leave unchanged. Default: trim'
+  - names:
+      - --rc
+      - --revcomp
+    argument: ""
+    description: 'Check both the read and its reverse complement for adapter matches. If match is on reverse-complemented version, output that one. Default: check only read'
+  - names:
+      - -u
+      - --cut
+    argument: LENGTH
+    description: Remove bases from each read (first read only if paired). If LENGTH is positive, remove bases from the beginning. If LENGTH is negative, remove bases from the end. Can be used twice if LENGTHs have different signs. This is applied *before* adapter trimming.
+  - names:
+      - --nextseq-trim
+    argument: 3'CUTOFF
+    description: NextSeq-specific quality trimming (each read). Trims also dark cycles appearing as high-quality G bases.
+  - names:
+      - -q
+      - --quality-cutoff
+    argument: '[5''CUTOFF,]3''CUTOFF'
+    description: Trim low-quality bases from 5' and/or 3' ends of each read before adapter removal. Applied to both reads if data is paired. If one value is given, only the 3' end is trimmed. If two comma-separated cutoffs are given, the 5' end is trimmed with the first cutoff, the 3' end with the second.
+  - names:
+      - --quality-base
+    argument: "N"
+    description: 'Assume that quality values in FASTQ are encoded as ascii(quality + N). This needs to be set to 64 for some old Illumina FASTQ files. Default: 33'
+  - names:
+      - --length
+      - -l
+    argument: LENGTH
+    description: Shorten reads to LENGTH. Positive values remove bases at the end while negative ones remove bases at the beginning. This and the following modifications are applied after adapter trimming.
+  - names:
+      - --trim-n
+    argument: ""
+    description: Trim N's on ends of reads.
+  - names:
+      - --length-tag
+    argument: TAG
+    description: Search for TAG followed by a decimal number in the description field of the read. Replace the decimal number with the correct length of the trimmed read. For example, use --length-tag 'length=' to correct fields like 'length=123'.
+  - names:
+      - --strip-suffix
+    argument: STRIP_SUFFIX
+    description: Remove this suffix from read names if present. Can be given multiple times.
+  - names:
+      - -x
+      - --prefix
+    argument: PREFIX
+    description: Add this prefix to read names. Use {name} to insert the name of the matching adapter.
+  - names:
+      - -y
+      - --suffix
+    argument: SUFFIX
+    description: Add this suffix to read names; can also include {name}
+  - names:
+      - --rename
+    argument: TEMPLATE
+    description: Rename reads using TEMPLATE containing variables such as {id}, {adapter_name} etc. (see documentation)
+  - names:
+      - --zero-cap
+      - -z
+    argument: ""
+    description: Change negative quality values to zero.
+  - names:
+      - -m
+      - --minimum-length
+    argument: LEN[:LEN2]
+    description: 'Discard reads shorter than LEN. Default: 0'
+  - names:
+      - -M
+      - --maximum-length
+    argument: LEN[:LEN2]
+    description: 'Discard reads longer than LEN. Default: no limit'
+  - names:
+      - --max-n
+    argument: COUNT
+    description: Discard reads with more than COUNT 'N' bases. If COUNT is a number between 0 and 1, it is interpreted as a fraction of the read length.
+  - names:
+      - --max-expected-errors
+      - --max-ee
+    argument: ERRORS
+    description: Discard reads whose expected number of errors (computed from quality values) exceeds ERRORS.
+  - names:
+      - --discard-trimmed
+      - --discard
+    argument: ""
+    description: Discard reads that contain an adapter. Use also -O to avoid discarding too many randomly matching reads.
+  - names:
+      - --discard-untrimmed
+      - --trimmed-only
+    argument: ""
+    description: Discard reads that do not contain an adapter.
+  - names:
+      - --discard-casava
+    argument: ""
+    description: Discard reads that did not pass CASAVA filtering (header has :Y:).
+  - names:
+      - --quiet
+    argument: ""
+    description: Print only error messages.
+  - names:
+      - --report
+    argument: '{full,minimal}'
+    description: 'Which type of report to print: ''full'' or ''minimal''. Default: full'
+  - names:
+      - --json
+    argument: FILE
+    description: Dump report in JSON format to FILE
+  - names:
+      - -o
+      - --output
+    argument: FILE
+    description: 'Write trimmed reads to FILE. FASTQ or FASTA format is chosen depending on input. Summary report is sent to standard output. Use ''{name}'' for demultiplexing (see docs). Default: write to standard output'
+  - names:
+      - --fasta
+    argument: ""
+    description: Output FASTA to standard output even on FASTQ input.
+  - names:
+      - -Z
+    argument: ""
+    description: Use compression level 1 for gzipped output files (faster, but uses more space)
+  - names:
+      - --info-file
+    argument: FILE
+    description: Write information about each read and its adapter matches into FILE. See the documentation for the file format.
+  - names:
+      - -r
+      - --rest-file
+    argument: FILE
+    description: When the adapter matches in the middle of a read, write the rest (after the adapter) to FILE.
+  - names:
+      - --wildcard-file
+    argument: FILE
+    description: When the adapter has N wildcard bases, write adapter bases matching wildcard positions to FILE. (Inaccurate with indels.)
+  - names:
+      - --too-short-output
+    argument: FILE
+    description: 'Write reads that are too short (according to length specified by -m) to FILE. Default: discard reads'
+  - names:
+      - --too-long-output
+    argument: FILE
+    description: 'Write reads that are too long (according to length specified by -M) to FILE. Default: discard reads'
+  - names:
+      - --untrimmed-output
+    argument: FILE
+    description: 'Write reads that do not contain any adapter to FILE. Default: output to same file as trimmed reads'
+  - names:
+      - -A
+    argument: ADAPTER
+    description: 3' adapter to be removed from R2
+  - names:
+      - -G
+    argument: ADAPTER
+    description: 5' adapter to be removed from R2
+  - names:
+      - -B
+    argument: ADAPTER
+    description: 5'/3 adapter to be removed from R2
+  - names:
+      - -U
+    argument: LENGTH
+    description: Remove LENGTH bases from R2
+  - names:
+      - -Q
+    argument: '[5''CUTOFF,]3''CUTOFF'
+    description: 'Quality-trimming cutoff for R2. Default: same as for R1'
+  - names:
+      - -p
+      - --paired-output
+    argument: FILE
+    description: Write R2 to FILE.
+  - names:
+      - --pair-adapters
+    argument: ""
+    description: Treat adapters given with -a/-A etc. as pairs. Either both or none are removed from each read pair.
+  - names:
+      - --pair-filter
+    argument: '{any,both,first}'
+    description: 'Which of the reads in a paired-end read have to match the filtering criterion in order for the pair to be filtered. Default: any'
+  - names:
+      - --interleaved
+    argument: ""
+    description: Read and/or write interleaved paired-end reads.
+  - names:
+      - --untrimmed-paired-output
+    argument: FILE
+    description: 'Write second read in a pair to this FILE when no adapter was found. Use with --untrimmed-output. Default: output to same file as trimmed reads'
+  - names:
+      - --too-short-paired-output
+    argument: FILE
+    description: Write second read in a pair to this file if pair is too short.
+  - names:
+      - --too-long-paired-output
+    argument: FILE
+    description: Write second read in a pair to this file if pair is too long.
+usage: |
+  cutadapt -a ADAPTER [options] [-o output.fastq] input.fastq
+version: "4.1"

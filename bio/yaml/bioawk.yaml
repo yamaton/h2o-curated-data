@@ -1,14 +1,14 @@
 name: bioawk
-description: BWK awk modified for biological data
+description: bioawk
 options:
   - names:
       - -t
     argument: ""
-    description: Equivalent to -F'\t' -v OFS="\t"
+    description: "Set tabs as the separators: Equivalent to -F'\\t' -v OFS=\"\\t\""
   - names:
       - -c
-    argument: arg
-    description: Specify input format (hdr|header|sam|vcf|bed|gff|fastx)
+    argument: '{bed|sam|vcf|gff|fastx}'
+    description: Specify input format
   - names:
       - -f
     argument: progfile
@@ -21,3 +21,36 @@ options:
       - -F
     argument: fs
     description: Define input field separator as regular expression
+  - names:
+      - -H
+    argument: ''
+    description: Extract with header
+usage:  bioawk [-F fs] [-v var=value] [-c fmt] [-tH] [-f progfile | 'prog'] [file ...]
+tldr: |
+  > Extension of awk supporting biological data formats.
+  > More information <https://github.com/lh3/bioawk>
+
+  - List the supported formats:
+
+  `bioawk -c help`
+
+  - Extract unmapped reads without header:
+
+  `bioawk -c sam 'and($flag,4)' {{aln.sam.gz}}`
+
+  - Extract mapped reads with header:
+
+  `bioawk -Hc sam '!and($flag,4)'`
+
+  - Reverse complement FASTA:
+
+  `bioawk -c fastx '{print ">"$name;print revcomp($seq)}' {{seq.fa.gz}}`
+
+  - Create FASTA from SAM (uses revcomp if FLAG & 16)
+
+  `samtools view {{aln.bam}} | bioawk -c sam '{s=$seq; if(and($flag, 16)) {s=revcomp($seq)} print ">"$qname"\n"s}'`
+
+  - Print the genotypes of sample foo and bar from a VCF:
+
+  `grep -v ^## {{in.vcf}} | bioawk -tc hdr '{print $foo,$bar}'`
+

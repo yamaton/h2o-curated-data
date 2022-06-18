@@ -12,6 +12,7 @@ json_schema := json-schema/command-2022-03-14.schema.json
 
 all: validate general.txt bio.txt general.json.gz bio.json.gz
 
+# [NOTE] This .PHONY indicates the target is not a file
 .PHONY: validate
 validate: $(json_general) $(json_bio) $(json_experimental)
 	@echo $^

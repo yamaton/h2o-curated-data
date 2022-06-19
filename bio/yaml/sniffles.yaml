@@ -1,0 +1,273 @@
+name: sniffles
+description: sniffles
+options:
+  - names:
+      - -h
+      - --help
+    argument: ""
+    description: show this help message and exit
+  - names:
+      - --version
+    argument: ""
+    description: show program's version number and exit
+  - names:
+      - -i
+      - --input
+    argument: IN [IN ...]
+    description: 'For single-sample calling: A coordinate-sorted and indexed .bam/.cram (BAM/CRAM format) file containing aligned reads. - OR - For multi-sample calling: Multiple .snf files (generated before by running Sniffles2 for individual samples with --snf) (default: None)'
+  - names:
+      - -v
+      - --vcf
+    argument: OUT.vcf
+    description: 'VCF output filename to write the called and refined SVs to. If the given filename ends with .gz, the VCF file will be automatically bgzipped and a .tbi index built for it. (default: None)'
+  - names:
+      - --snf
+    argument: OUT.snf
+    description: 'Sniffles2 file (.snf) output filename to store candidates for later multi-sample calling (default: None)'
+  - names:
+      - --reference
+    argument: reference.fasta
+    description: '(Optional) Reference sequence the reads were aligned against. To enable output of deletion SV sequences, this parameter must be set. (default: None)'
+  - names:
+      - --tandem-repeats
+    argument: IN.bed
+    description: '(Optional) Input .bed file containing tandem repeat annotations for the reference genome. (default: None)'
+  - names:
+      - --non-germline
+    argument: ""
+    description: 'Call non-germline SVs (rare, somatic or mosaic SVs) (default: False)'
+  - names:
+      - --phase
+    argument: ""
+    description: 'Determine phase for SV calls (requires the input alignments to be phased) (default: False)'
+  - names:
+      - -t
+      - --threads
+    argument: "N"
+    description: 'Number of parallel threads to use (speed-up for multi-core CPUs) (default: 4)'
+  - names:
+      - --minsupport
+    argument: auto
+    description: 'Minimum number of supporting reads for a SV to be reported (default: automatically choose based on coverage) (default: auto)'
+  - names:
+      - --minsupport-auto-mult
+    argument: 0.1/0.025
+    description: 'Coverage based minimum support multiplier for germline/non-germline modes (only for auto minsupport) (default: None)'
+  - names:
+      - --minsvlen
+    argument: "N"
+    description: 'Minimum SV length (in bp) (default: 35)'
+  - names:
+      - --minsvlen-screen-ratio
+    argument: "N"
+    description: 'Minimum length for SV candidates (as fraction of --minsvlen) (default: 0.9)'
+  - names:
+      - --mapq
+    argument: "N"
+    description: 'Alignments with mapping quality lower than this value will be ignored (default: 25)'
+  - names:
+      - --no-qc
+      - --qc-output-all
+    argument: ""
+    description: 'Output all SV candidates, disregarding quality control steps. (default: False)'
+  - names:
+      - --qc-stdev
+    argument: "True"
+    description: 'Apply filtering based on SV start position and length standard deviation (default: True)'
+  - names:
+      - --qc-stdev-abs-max
+    argument: "N"
+    description: 'Maximum standard deviation for SV length and size (in bp) (default: 500)'
+  - names:
+      - --qc-strand
+    argument: "False"
+    description: 'Apply filtering based on strand support of SV calls (default: False)'
+  - names:
+      - --qc-coverage
+    argument: "N"
+    description: 'Minimum surrounding region coverage of SV calls (default: 1)'
+  - names:
+      - --long-ins-length
+    argument: "2500"
+    description: 'Insertion SVs longer than this value are considered as hard to detect based on the aligner and read length and subjected to more sensitive filtering. (default: 2500)'
+  - names:
+      - --long-del-length
+    argument: "50000"
+    description: 'Deletion SVs longer than this value are subjected to central coverage drop-based filtering (Not applicable for --non-germline) (default: 50000)'
+  - names:
+      - --long-del-coverage
+    argument: "0.66"
+    description: 'Long deletions with central coverage (in relation to upstream/downstream coverage) higher than this value will be filtered (Not applicable for --non-germline) (default: 0.66)'
+  - names:
+      - --long-dup-length
+    argument: "50000"
+    description: 'Duplication SVs longer than this value are subjected to central coverage increase-based filtering (Not applicable for --non-germline) (default: 50000)'
+  - names:
+      - --long-dup-coverage
+    argument: "1.33"
+    description: 'Long duplications with central coverage (in relation to upstream/downstream coverage) lower than this value will be filtered (Not applicable for --non-germline) (default: 1.33)'
+  - names:
+      - --max-splits-kb
+    argument: "N"
+    description: 'Additional number of splits per kilobase read sequence allowed before reads are ignored (default: 0.1)'
+  - names:
+      - --max-splits-base
+    argument: "N"
+    description: 'Base number of splits allowed before reads are ignored (in addition to --max-splits-kb) (default: 3)'
+  - names:
+      - --min-alignment-length
+    argument: "N"
+    description: 'Reads with alignments shorter than this length (in bp) will be ignored (default: 1000)'
+  - names:
+      - --phase-conflict-threshold
+    argument: F
+    description: 'Maximum fraction of conflicting reads permitted for SV phase information to be labelled as PASS (only for --phase) (default: 0.1)'
+  - names:
+      - --detect-large-ins
+    argument: "True"
+    description: 'Infer insertions that are longer than most reads and therefore are spanned by few alignments only. (default: True)'
+  - names:
+      - --cluster-binsize
+    argument: "N"
+    description: 'Initial screening bin size in bp (default: 100)'
+  - names:
+      - --cluster-r
+    argument: R
+    description: 'Multiplier for SV start position standard deviation criterion in cluster merging (default: 2.5)'
+  - names:
+      - --cluster-repeat-h
+    argument: H
+    description: 'Multiplier for mean SV length criterion for tandem repeat cluster merging (default: 1.5)'
+  - names:
+      - --cluster-repeat-h-max
+    argument: "N"
+    description: 'Max. merging distance based on SV length criterion for tandem repeat cluster merging (default: 1000)'
+  - names:
+      - --cluster-merge-pos
+    argument: "N"
+    description: 'Max. merging distance for insertions and deletions on the same read and cluster in non-repeat regions (default: 150)'
+  - names:
+      - --cluster-merge-len
+    argument: F
+    description: 'Max. size difference for merging SVs as fraction of SV length (default: 0.33)'
+  - names:
+      - --cluster-merge-bnd
+    argument: "N"
+    description: 'Max. merging distance for breakend SV candidates. (default: 1500)'
+  - names:
+      - --genotype-ploidy
+    argument: "N"
+    description: 'Sample ploidy (currently fixed at value 2) (default: 2)'
+  - names:
+      - --genotype-error
+    argument: "N"
+    description: 'Estimated false positve rate for leads (relating to total coverage) (default: 0.05)'
+  - names:
+      - --sample-id
+    argument: SAMPLE_ID
+    description: 'Custom ID for this sample, used for later multi-sample calling (stored in .snf) (default: None)'
+  - names:
+      - --genotype-vcf
+    argument: IN.vcf
+    description: 'Determine the genotypes for all SVs in the given input .vcf file (forced calling). Re-genotyped .vcf will be written to the output file specified with --vcf. (default: None)'
+  - names:
+      - --combine-high-confidence
+    argument: F
+    description: 'Minimum fraction of samples in which a SV needs to have individually passed QC for it to be reported in combined output (a value of zero will report all SVs that pass QC in at least one of the input samples) (default: 0.0)'
+  - names:
+      - --combine-low-confidence
+    argument: F
+    description: 'Minimum fraction of samples in which a SV needs to be present (failed QC) for it to be reported in combined output (default: 0.2)'
+  - names:
+      - --combine-low-confidence-abs
+    argument: "N"
+    description: 'Minimum absolute number of samples in which a SV needs to be present (failed QC) for it to be reported in combined output (default: 2)'
+  - names:
+      - --combine-null-min-coverage
+    argument: "N"
+    description: 'Minimum coverage for a sample genotype to be reported as 0/0 (sample genotypes with coverage below this threshold at the SV location will be output as ./.) (default: 5)'
+  - names:
+      - --combine-match
+    argument: "N"
+    description: 'Multiplier for maximum deviation of multiple SV''s start/end position for them to be combined across samples. Given by max_dev=M*sqrt(min(SV_length_a,SV_length_b)), where M is this parameter. (default: 250)'
+  - names:
+      - --combine-match-max
+    argument: "N"
+    description: 'Upper limit for the maximum deviation computed for --combine-match, in bp. (default: 1000)'
+  - names:
+      - --combine-separate-intra
+    argument: ""
+    description: 'Disable combination of SVs within the same sample (default: False)'
+  - names:
+      - --combine-output-filtered
+    argument: ""
+    description: 'Include low-confidence / putative non-germline SVs in multi-calling (default: False)'
+  - names:
+      - --output-rnames
+    argument: ""
+    description: 'Output names of all supporting reads for each SV in the RNAMEs info field (default: False)'
+  - names:
+      - --no-consensus
+    argument: ""
+    description: 'Disable consensus sequence generation for insertion SV calls (may improve performance) (default: False)'
+  - names:
+      - --no-sort
+    argument: ""
+    description: 'Do not sort output VCF by genomic coordinates (may slightly improve performance) (default: False)'
+  - names:
+      - --no-progress
+    argument: ""
+    description: 'Disable progress display (default: False)'
+  - names:
+      - --quiet
+    argument: ""
+    description: 'Disable all logging, except errors (default: False)'
+  - names:
+      - --max-del-seq-len
+    argument: "N"
+    description: 'Maximum deletion sequence length to be output. Deletion SVs longer than this value will be written to the output as symbolic SVs. (default: 50000)'
+  - names:
+      - --symbolic
+    argument: ""
+    description: 'Output all SVs as symbolic, including insertions and deletions, instead of reporting nucleotide sequences. (default: False)'
+  - names:
+      - --allow-overwrite
+    argument: ""
+    description: 'Allow overwriting output files if already existing (default: False)'
+  - names:
+      - --combine-consensus
+    argument: ""
+    description: 'Output the consensus genotype of all samples (default: False)'
+usage: sniffles --input SORTED_INPUT.bam [--vcf OUTPUT.vcf] [--snf MERGEABLE_OUTPUT.snf] [--threads 4] [--non-germline]
+version: Sniffles2, Version 2.0.6
+tldr: |
+  A fast structural variant (SV) caller for long-read sequencing data
+  More information <https://github.com/fritzsedlazeck/Sniffles>
+
+  - Call SVs for a single sample:
+
+  `sniffles --input {{sorted_indexed_alignments.bam}} --vcf {{output.vcf}}`
+
+  - Call SVs with CRAM input and bgzipped+tabix indexed VCF output:
+
+  `sniffles --input {{sample.cram}} --vcf {{output.vcf.gz}}`
+
+  - Produce only a SNF file with SV candidates for later multi-sample calling:
+
+  `sniffles --input {{sample1.bam}} --snf {{sample1.snf}}`
+
+  - Simultaneously produce a single-sample VCF and SNF file for later multi-sample calling:
+
+  `sniffles --input {{sample1.bam}} --vcf {{sample1.vcf.gz}} --snf {{sample1.snf}}`
+
+  - Multi-sample calling: Step 1. Create .snf for each sample:
+
+  `sniffles --input {{sample1.bam}} --snf {{sample1.snf}}`
+
+  - Multi-sample calling: Step 2. Combined calling:
+
+  `sniffles --input {{sample1.snf}} {{sample2.snf}} ... sampleN.snf --vcf multisample.vcf`
+
+  - Determine genotypes for a set of known SVs (force calling):
+
+  `sniffles --input {{sample.bam}} --genotype-vcf {{input_known_svs.vcf}} --vcf {{output_genotypes.vcf}}`

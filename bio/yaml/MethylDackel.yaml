@@ -1,0 +1,340 @@
+name: MethylDackel
+description: MethylDackel
+options: []
+subcommands:
+  - name: mbias
+    description: Determine the position-dependent methylation bias in a dataset, producing diagnostic SVG images.
+    usage: MethylDackel mbias [OPTIONS] <ref.fa> <sorted_alignments.bam> <output.prefix>
+    options:
+      - names:
+          - -q
+        argument: INT
+        description: Minimum MAPQ threshold to include an alignment (default 10)
+      - names:
+          - -p
+        argument: INT
+        description: Minimum Phred threshold to include a base (default 5). This must be >0.
+      - names:
+          - -D
+        argument: INT
+        description: Maximum per-base depth (default 2000)
+      - names:
+          - -r
+        argument: STR
+        description: Region string in which to extract methylation
+      - names:
+          - -l
+        argument: FILE
+        description: A BED file listing regions for inclusion.
+      - names:
+          - --keepStrand
+        argument: ""
+        description: If a BED file is specified, then this option will cause the strand column (column 6) to be utilized, if present. Thus, if a region has a '+' in this column, then only metrics from the top strand will be output. Note that the -r option can be used to limit the regions of -l.
+      - names:
+          - -@
+        argument: nThreads
+        description: The number of threads to use, the default 1
+      - names:
+          - --chunkSize
+        argument: INT
+        description: The size of the genome processed by a single thread at a time. The default is 1000000 bases. This value MUST be at least 1.
+      - names:
+          - --keepDupes
+        argument: ""
+        description: By default, any alignment marked as a duplicate is ignored. This option causes them to be incorporated.
+      - names:
+          - --keepSingleton
+        argument: ""
+        description: By default, if only one read in a pair aligns (a singleton) then it's ignored.
+      - names:
+          - --keepDiscordant
+        argument: ""
+        description: By default, paired-end alignments with the properly-paired bit unset in the FLAG field are ignored. Note that the definition of concordant and discordant is based on your aligner settings.
+      - names:
+          - -F
+          - --ignoreFlags
+        argument: ""
+        description: By deault, any alignment marked as secondary (bit 0x100),   failing QC (bit 0x200), a PCR/optical duplicate (0x400) or supplemental (0x800) is ignored. This equates to a value of 0xF00 or 3840 in decimal. If you would like to change that, you can specify a new value here. ignored. Specifying this causes them to be included.
+      - names:
+          - -R
+          - --requireFlags
+        argument: ""
+        description: Require each alignment to have all bits in this value   present, or else the alignment is ignored. This is equivalent to the -f option in samtools. The default is 0, which includes all alignments.
+      - names:
+          - --ignoreNH
+        argument: ""
+        description: Ignore NH auxiliary tags. By default, if an NH tag is present and its value is >1 then an entry is ignored as a multimapper.
+      - names:
+          - --minConversionEfficiency
+        argument: ""
+        description: The minimum non-CpG conversion efficiency observed   in a read to include it in the output. The default is 0.0 and the maximum is 1.0 (100% conversion). You are strongly encouraged to NOT use this option without an EXTREMELY compelling reason!
+      - names:
+          - --txt
+        argument: ""
+        description: Output tab separated metrics to the screen. These can be imported into R or another program for manual plotting and analysis. Note that coordinates are 1-based.
+      - names:
+          - --noSVG
+        argument: ""
+        description: Don't produce the SVG files. This option implies --txt. Note that an output prefix is no longer required with this option.
+      - names:
+          - --noCpG
+        argument: ""
+        description: Do not output CpG methylation metrics
+      - names:
+          - --CHG
+        argument: ""
+        description: Output CHG methylation metrics
+      - names:
+          - --CHH
+        argument: ""
+        description: Output CHH methylation metrics
+      - names:
+          - --nOT
+        argument: INT,INT,INT,INT
+        description: Inclusion bound for methylation calls from reads/pairs originating from the original top strand.
+      - names:
+          - --nOB
+          - --nCTOT
+          - --nCTOT
+        argument: INT,INT,INT,INT
+        description: As with --nOT, but for the original bottom, complementary to the original top, and complementary to the original bottom strands, respectively.
+      - names:
+          - --version
+        argument: ""
+        description: Print version and the quit
+  - name: extract
+    description: Extract methylation metrics from an alignment file in BAM/CRAM format.
+    usage: MethylDackel extract [OPTIONS] <ref.fa> <sorted_alignments.bam>
+    options:
+      - names:
+          - -q
+        argument: INT
+        description: Minimum MAPQ threshold to include an alignment (default 10)
+      - names:
+          - -p
+        argument: INT
+        description: Minimum Phred threshold to include a base (default 5). This must be >0.
+      - names:
+          - -D
+        argument: INT
+        description: Ignored, kept only for backward compatibility.
+      - names:
+          - -d
+        argument: INT
+        description: Minimum per-base depth for reporting output. If you use --mergeContext, this then applies to the merged CpG/CHG. (default 1)
+      - names:
+          - -r
+        argument: STR
+        description: Region string in which to extract methylation
+      - names:
+          - -l
+        argument: FILE
+        description: A BED file listing regions for inclusion.
+      - names:
+          - --keepStrand
+        argument: ""
+        description: If a BED file is specified, then this option will cause the strand column (column 6) to be utilized, if present. Thus, if a region has a '+' in this column, then only metrics from the top strand will be output. Note that the -r option can be used to limit the regions of -l.
+      - names:
+          - -M
+          - --mappability
+        argument: ""
+        description: FILE A bigWig file containing mappability data for filtering reads.
+      - names:
+          - -t
+          - --mappabilityThreshold
+        argument: FLOAT
+        description: If a bigWig file is provided, this sets the   threshold mappability value above which a base is considered mappable (default 0.01).
+      - names:
+          - -b
+          - --minMappableBases
+        argument: INT
+        description: If a bigWig file is provided, this sets the   number of mappable bases needed for a read to be considered mappable (default 15).
+      - names:
+          - -O
+          - --outputBBMFile
+        argument: ""
+        description: If this is specified, a Binary Bismap (.bbm) file will   be written with the same base name as the provided bigWig file, but with the .bbm extension. Neither this option nor -N have any effect if a bigWig is not specified with -M.
+      - names:
+          - -N
+          - --outputBBMFileName
+        argument: FILE
+        description: If this is specified, a Binary Bismap (.bbm) file will   be written at the provided filename. Neither this option nor -O have any effect if a bigWig is not specified with -M.
+      - names:
+          - -B
+          - --mappabilityBB
+        argument: FILE
+        description: A .bbm file containing mappability data for   filtering reads.
+      - names:
+          - -@
+        argument: nThreads
+        description: The number of threads to use, the default 1
+      - names:
+          - --chunkSize
+        argument: INT
+        description: The size of the genome processed by a single thread at a time. The default is 1000000 bases. This value MUST be at least 1.
+      - names:
+          - --mergeContext
+        argument: ""
+        description: Merge per-Cytosine metrics from CpG and CHG contexts into per-CPG or per-CHG metrics.
+      - names:
+          - -o
+          - --opref
+        argument: STR
+        description: Output filename prefix. CpG/CHG/CHH context metrics will be output to STR_CpG.bedGraph and so on.
+      - names:
+          - --keepDupes
+        argument: ""
+        description: By default, any alignment marked as a duplicate is ignored. This option causes them to be incorporated. This will unset bit 0x400 in --ignoreFlags.
+      - names:
+          - --keepSingleton
+        argument: ""
+        description: By default, if only one read in a pair aligns (a singleton) then it's ignored.
+      - names:
+          - --keepDiscordant
+        argument: ""
+        description: By default, paired-end alignments with the properly-paired bit unset in the FLAG field are ignored. Note that the definition of concordant and discordant is based on your aligner settings.
+      - names:
+          - -F
+          - --ignoreFlags
+        argument: ""
+        description: By default, any alignment marked as secondary (bit 0x100),   failing QC (bit 0x200), a PCR/optical duplicate (0x400) or supplemental (0x800) is ignored. This equates to a value of 0xF00 or 3840 in decimal. If you would like to change that, you can specify a new value here. ignored. Specifying this causes them to be included.
+      - names:
+          - -R
+          - --requireFlags
+        argument: ""
+        description: Require each alignment to have all bits in this value   present, or else the alignment is ignored. This is equivalent to the -f option in samtools. The default is 0, which includes all alignments.
+      - names:
+          - --noCpG
+        argument: ""
+        description: Do not output CpG context methylation metrics
+      - names:
+          - --CHG
+        argument: ""
+        description: Output CHG context methylation metrics
+      - names:
+          - --CHH
+        argument: ""
+        description: Output CHH context methylation metrics
+      - names:
+          - --fraction
+        argument: ""
+        description: Extract fractional methylation (only) at each position. This produces a file with a .meth.bedGraph extension.
+      - names:
+          - --counts
+        argument: ""
+        description: Extract base counts (only) at each position. This produces a file with a .counts.bedGraph extension.
+      - names:
+          - --logit
+        argument: ""
+        description: Extract logit(M/(M+U)) (only) at each position. This produces a file with a .logit.bedGraph extension.
+      - names:
+          - --ignoreNH
+        argument: ""
+        description: Ignore NH auxiliary tags. By default, if an NH tag is present and its value is >1 then an entry is ignored as a multimapper.
+      - names:
+          - --minOppositeDepth
+        argument: ""
+        description: If you would like to exclude sites that likely contain SNPs, then specifying a value greater than 0 here will indicate the minimum depth required on the strand opposite of a C to look for A/T/C bases. The fraction of these necessary to exclude a position from methylation extraction is specified by the --maxVariantFrac parameter. The default is 0, which means that no positions will be excluded. Note that the -p and -q apply here as well. Note further that if you use --mergeContext that a merged site will be excluded if either of its individual Cs would be excluded.
+      - names:
+          - --minConversionEfficiency
+        argument: ""
+        description: The minimum non-CpG conversion efficiency observed in a read to include it in the output. The default is 0.0 and the maximum is 1.0 (100% conversion). You are strongly encouraged to NOT use this option without an EXTREMELY compelling reason!
+      - names:
+          - --maxVariantFrac
+        argument: ""
+        description: The maximum fraction of A/T/C base calls on the strand opposite of a C to allow before a position is declared a variant (thereby being excluded from output). The default is 0.0. See also --minOppositeDepth.
+      - names:
+          - --methylKit
+        argument: ""
+        description: Output in the format required by methylKit. Note that this is incompatible with --mergeContext, --fraction and --counts.
+      - names:
+          - --cytosine_report
+        argument: ""
+        description: 'A per-base exhaustive report comparable to that produced with the same option in Bismark''s methylation extractor. The output is a tab-separated file with the following columns: chromosome, position (1-based), strand, number of alignments supporting methylation, number of alignments supporting unmethylation, CG/CHG/CHH, trinucleotide context. This is not compatible with --fraction, --counts, --methylKit, or --mergeContext. The produces a single file with a .cytosine_report.txt extension. Note that even bases with no coverage will be included in the output.'
+      - names:
+          - --OT
+        argument: INT,INT,INT,INT
+        description: 'Inclusion bounds for methylation calls from reads/pairs originating from the original top strand. Suggested values can be obtained from the MBias program. Each integer represents a 1-based position on a read. For example --OT A,B,C,D translates to, "Include calls at positions from A through B on read #1 and C through D on read #2". If a 0 is used a any position then that is translated to mean start/end of the alignment, as appropriate. For example, --OT 5,0,0,0 would include all but the first 4 bases on read #1. Users are strongly advised to consult a methylation bias plot, for example by using the MBias program.'
+      - names:
+          - --OB
+          - --CTOT
+          - --CTOB
+        argument: INT,INT,INT,INT
+        description: As with --OT, but for the original bottom, complementary to the original top, and complementary to the original bottom strands, respectively
+      - names:
+          - --nOT
+        argument: INT,INT,INT,INT
+        description: Like --OT, but always exclude INT bases from a given end from inclusion,regardless of the length of an alignment. This is useful in cases where reads may have already been trimmed to different lengths, but still none-the-less contain a certain length bias at one or more ends.
+      - names:
+          - --nOB
+          - --nCTOT
+          - --nCTOB
+        argument: INT,INT,INT,INT
+        description: As with --nOT, but for the original bottom, complementary to the original top, and complementary to the original bottom strands, respectively.
+      - names:
+          - --version
+        argument: ""
+        description: Print version and then quit.
+  - name: mergeContext
+    description: Combine single Cytosine metrics from 'MethylDackel extract' into per-CpG/CHG metrics.
+    usage: MethylDackel mergeContext [OPTIONS] <ref.fa> <input>
+    options:
+      - names:
+          - -o
+        argument: STR
+        description: Output file name [stdout]
+  - name: perRead
+    description: Generate a per-read methylation summary.
+    usage: MethylDackel perRead [OPTIONS] <ref.fa> <input>
+    options:
+      - names:
+          - -q
+        argument: INT
+        description: Minimum MAPQ threshold to include an alignment (default 10)
+      - names:
+          - -p
+        argument: INT
+        description: Minimum Phred threshold to include a base (default 5). This must be >0.
+      - names:
+          - -r
+        argument: STR
+        description: Region string in which to extract methylation
+      - names:
+          - -l
+        argument: FILE
+        description: A BED file listing regions for inclusion.
+      - names:
+          - --keepStrand
+        argument: ""
+        description: If a BED file is specified, then this option will cause the   strand column (column 6) to be utilized, if present. Thus, if a region has a '+' in this column, then only metrics from the top strand will be output. Note that the -r option can be used to limit the regions of -l.
+      - names:
+          - -o
+        argument: STR
+        description: Output file name [stdout]
+      - names:
+          - -F
+          - --ignoreFlags
+        argument: ""
+        description: By default, all reads are output. If you would like to ignore certain classes of reads then simply give a value for their flags here. Note that an alignment will be logically anded with this flag, so a single bit overlap will lead to exclusion. The default for this is 0.
+      - names:
+          - -R
+          - --requireFlags
+        argument: ""
+        description: Require each alignment to have all bits in this value   present, or else the alignment is ignored. This is equivalent to the -f option in samtools. The default is 0, which includes all alignments.
+      - names:
+          - --ignoreNH
+        argument: ""
+        description: Ignore NH auxiliary tags. By default, if an NH tag is present and its value is >1 then an entry is ignored as a multimapper.
+      - names:
+          - -@
+        argument: INT
+        description: The number of threads to use, the default 1
+      - names:
+          - --chunkSize
+        argument: ""
+        description: INT The size of the genome processed by a single thread at a time. The default is 1000000 bases. This value MUST be at least 1.
+      - names:
+          - --version
+        argument: ""
+        description: Print version and quit
+version: 0.6.1 (using HTSlib version 1.14)

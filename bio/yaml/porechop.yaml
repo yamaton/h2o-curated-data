@@ -1,0 +1,114 @@
+name: porechop
+description: adapter trimmer for Oxford Nanopore reads
+options:
+  - names:
+      - -i
+      - --input
+    argument: INPUT
+    description: FASTA/FASTQ of input reads or a directory which will be recursively searched for FASTQ files (required)
+  - names:
+      - -o
+      - --output
+    argument: OUTPUT
+    description: Filename for FASTA or FASTQ of trimmed reads (if not set, trimmed reads will be printed to stdout)
+  - names:
+      - --format
+    argument: '{auto,fasta,fastq,fasta.gz,fastq.gz}'
+    description: 'Output format for the reads - if auto, the format will be chosen based on the output filename or the input read format (default: auto)'
+  - names:
+      - -v
+      - --verbosity
+    argument: VERBOSITY
+    description: 'Level of progress information: 0 = none, 1 = some, 2 = lots, 3 = full - output will go to stdout if reads are saved to a file and stderr if reads are printed to stdout (default: 1)'
+  - names:
+      - -t
+      - --threads
+    argument: THREADS
+    description: 'Number of threads to use for adapter alignment (default: 12)'
+  - names:
+      - -b
+      - --barcode_dir
+    argument: BARCODE_DIR
+    description: Reads will be binned based on their barcode and saved to separate files in this directory (incompatible with --output)
+  - names:
+      - --barcode_threshold
+    argument: BARCODE_THRESHOLD
+    description: 'A read must have at least this percent identity to a barcode to be binned (default: 75.0)'
+  - names:
+      - --barcode_diff
+    argument: BARCODE_DIFF
+    description: 'If the difference between a read''s best barcode identity and its second-best barcode identity is less than this value, it will not be put in a barcode bin (to exclude cases which are too close to call) (default: 5.0)'
+  - names:
+      - --require_two_barcodes
+    argument: ""
+    description: 'Reads will only be put in barcode bins if they have a strong match for the barcode on both their start and end (default: a read can be binned with a match at its start or end)'
+  - names:
+      - --untrimmed
+    argument: ""
+    description: 'Bin reads but do not trim them (default: trim the reads)'
+  - names:
+      - --discard_unassigned
+    argument: ""
+    description: 'Discard unassigned reads (instead of creating a "none" bin) (default: False)'
+  - names:
+      - --adapter_threshold
+    argument: ADAPTER_THRESHOLD
+    description: 'An adapter set has to have at least this percent identity to be labelled as present and trimmed off (0 to 100) (default: 90.0)'
+  - names:
+      - --check_reads
+    argument: CHECK_READS
+    description: 'This many reads will be aligned to all possible adapters to determine which adapter sets are present (default: 10000)'
+  - names:
+      - --scoring_scheme
+    argument: SCORING_SCHEME
+    description: 'Comma-delimited string of alignment scores: match, mismatch, gap open, gap extend (default: 3,-6,-5,-2)'
+  - names:
+      - --end_size
+    argument: END_SIZE
+    description: 'The number of base pairs at each end of the read which will be searched for adapter sequences (default: 150)'
+  - names:
+      - --min_trim_size
+    argument: MIN_TRIM_SIZE
+    description: 'Adapter alignments smaller than this will be ignored (default: 4)'
+  - names:
+      - --extra_end_trim
+    argument: EXTRA_END_TRIM
+    description: 'This many additional bases will be removed next to adapters found at the ends of reads (default: 2)'
+  - names:
+      - --end_threshold
+    argument: END_THRESHOLD
+    description: 'Adapters at the ends of reads must have at least this percent identity to be removed (0 to 100) (default: 75.0)'
+  - names:
+      - --no_split
+    argument: ""
+    description: 'Skip splitting reads based on middle adapters (default: split reads when an adapter is found in the middle)'
+  - names:
+      - --discard_middle
+    argument: ""
+    description: 'Reads with middle adapters will be discarded (default: reads with middle adapters are split) (required for reads to be used with Nanopolish, this option is on by default when outputting reads into barcode bins)'
+  - names:
+      - --middle_threshold
+    argument: MIDDLE_THRESHOLD
+    description: 'Adapters in the middle of reads must have at least this percent identity to be found (0 to 100) (default: 90.0)'
+  - names:
+      - --extra_middle_trim_good_side
+    argument: EXTRA_MIDDLE_TRIM_GOOD_SIDE
+    description: 'This many additional bases will be removed next to middle adapters on their "good" side (default: 10)'
+  - names:
+      - --extra_middle_trim_bad_side
+    argument: EXTRA_MIDDLE_TRIM_BAD_SIDE
+    description: 'This many additional bases will be removed next to middle adapters on their "bad" side (default: 100)'
+  - names:
+      - --min_split_read_size
+    argument: MIN_SPLIT_READ_SIZE
+    description: 'Post-split read pieces smaller than this many base pairs will not be outputted (default: 1000)'
+  - names:
+      - -h
+      - --help
+    argument: ""
+    description: Show this help message and exit
+  - names:
+      - --version
+    argument: ""
+    description: Show program's version number and exit
+version: 0.2.4

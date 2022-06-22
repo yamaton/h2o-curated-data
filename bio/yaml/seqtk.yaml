@@ -3,6 +3,7 @@ description: seqtk
 options: []
 subcommands:
   - name: seq
+    usage: seqtk seq [options] <in.fq>|<in.fa>
     description: common transformation of FASTA/Q
     options:
       - names:
@@ -82,6 +83,7 @@ subcommands:
         argument: ""
         description: strip of white spaces in sequences
   - name: comp
+    usage: seqtk comp [-u] [-r in.bed] <in.fa>
     description: get the nucleotide composition of FASTA/Q
     options:
       - names:
@@ -93,6 +95,7 @@ subcommands:
         argument: file
         description: Specify input BED file
   - name: sample
+    usage: seqtk sample [-2] [-s seed=11] <in.fa> <frac>|<number>
     description: subsample sequences
     options:
       - names:
@@ -104,6 +107,7 @@ subcommands:
         argument: ""
         description: '2-pass mode: twice as slow but with much reduced memory'
   - name: subseq
+    usage: seqtk subseq [options] <in.fa> <in.bed>|<name.list>
     description: extract subsequences from FASTA/Q
     options:
       - names:
@@ -115,6 +119,7 @@ subcommands:
         argument: INT
         description: sequence line length [0]
   - name: fqchk
+    usage: seqtk fqchk [-q 20] <in.fq>
     description: fastq QC (base/quality summary)
     options:
       - names:
@@ -122,9 +127,11 @@ subcommands:
         argument: INT
         description: Quality value. Set 0 to get the distribution of all quality values.
   - name: mergepe
+    usage: seqtk mergepe <in1.fq> <in2.fq>
     description: interleave two PE FASTA/Q files
     options: []
   - name: trimfq
+    usage: seqtk trimfq [options] <in.fq>
     description: trim FASTQ using the Phred algorithm
     options:
       - names:
@@ -152,6 +159,7 @@ subcommands:
         argument: ""
         description: force FASTQ output
   - name: hety
+    usage: seqtk hety [options] <in.fa>
     description: regional heterozygosity
     options:
       - names:
@@ -167,6 +175,7 @@ subcommands:
         argument: ""
         description: treat lowercases as masked
   - name: gc
+    usage: seqtk gc [options] <in.fa>
     description: identify high- or low-GC regions
     options:
       - names:
@@ -186,9 +195,11 @@ subcommands:
         argument: FLOAT
         description: X-dropoff [10.0]
   - name: mutfa
+    usage: seqtk mutfa <in.fa> <in.snp>
     description: point mutate FASTA at specified positions
     options: []
   - name: mergefa
+    usage: seqtk mergefa [options] <in1.fa> <in2.fa>
     description: merge two FASTA/Q files
     options:
       - names:
@@ -212,18 +223,23 @@ subcommands:
         argument: ""
         description: suppress hets in the input
   - name: famask
+    usage: seqtk famask <src.fa> <mask.fa>
     description: apply a X-coded FASTA to a source FASTA
     options: []
   - name: dropse
+    usage: seqtk dropse <in.fq>
     description: drop unpaired from interleaved PE FASTA/Q
     options: []
   - name: rename
+    usage: seqtk rename <in.fq> [prefix]
     description: rename sequence names
     options: []
   - name: randbase
+    usage: seqtk randbase <in.fa>
     description: choose a random base from hets
     options: []
   - name: cutN
+    usage: seqtk cutN [options] <in.fa>
     description: cut sequence at long N
     options:
       - names:
@@ -239,5 +255,55 @@ subcommands:
         argument: ""
         description: print gaps only, no sequence
   - name: listhet
+    usage: seqtk listhet <in.fa>
     description: extract the position of each het
     options: []
+version: 1.3-r106
+tldr: |
+  Toolkit for processing sequences in FASTA/Q formats
+  More information <https://github.com/lh3/seqtk>
+
+  - Convert FASTQ to FASTA:
+
+  `seqtk seq -a {{in.fq.gz}} > {{out.fa}}`
+
+  - Convert ILLUMINA 1.3+ FASTQ to FASTA and mask bases with quality lower than 20 to lowercases:
+
+  `seqtk seq -aQ64 -q20 {{in.fq}} > {{out.fa}}`
+
+  - Fold long FASTA/Q lines and remove FASTA/Q comments:
+
+  `seqtk seq -Cl60 {{in.fa}} > {{out.fa}}`
+
+  - Convert multi-line FASTQ to 4-line FASTQ:
+
+  `seqtk seq -l0 {{in.fq}} > {{out.fq}}`
+
+  - Reverse complement FASTA/Q:
+
+  `seqtk seq -r {{in.fq}} > {{out.fq}}`
+
+  - Extract sequences with names in file name.lst, one sequence name per line:
+
+  `seqtk subseq {{in.fq}} name.lst > {{out.fq}}`
+
+  - Extract sequences in regions contained in file reg.bed:
+
+  `seqtk subseq {{in.fa}} reg.bed > {{out.fa}}`
+
+  - Mask regions in reg.bed to lowercases:
+
+  `seqtk seq -M reg.bed {{in.fa}} > {{out.fa}}`
+
+  - Subsample 10000 read pairs from two large paired FASTQ files:
+
+  `seqtk sample -s100 read1.fq 10000 > sub1.fq`
+
+  - Trim low-quality bases from both ends using the Phred algorithm:
+
+  `seqtk trimfq {{in.fq}} > {{out.fq}}`
+
+  - Trim 5bp from the left end of each read and 10bp from the right end:
+
+  `seqtk trimfq -b 5 -e 10 {{in.fa}} > {{out.fa}}`
+

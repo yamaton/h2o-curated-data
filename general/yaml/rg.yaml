@@ -4,7 +4,7 @@ options:
   - names:
       - -A
       - --after-context
-    argument: <NUM>
+    argument: NUM
     description: Show NUM lines after each match.
   - names:
       - --auto-hybrid-regex
@@ -13,7 +13,7 @@ options:
   - names:
       - -B
       - --before-context
-    argument: <NUM>
+    argument: NUM
     description: Show NUM lines before each match.
   - names:
       - --binary
@@ -22,7 +22,7 @@ options:
   - names:
       - --block-buffered
     argument: ""
-    description: When enabled, ripgrep will use block buffering. That is, whenever a matching line is found, it will be written to an in-memory buffer and will not be written to stdout until the buffer reaches a certain size. This is the default when ripgrep's stdout is redirected to a pipeline or a file. When ripgrep's stdout is connected to a terminal, line buffering will be used. Forcing block buffering can be useful when dumping a large amount of contents to a terminal.
+    description: When enabled, ripgrep will use block buffering. That is, whenever a matching line is found, it will be written to an in-memory buffer and will not be written to stdout until the buffer reaches a certain size. This is the default when ripgrep’s stdout is redirected to a pipeline or a file. When ripgrep’s stdout is connected to a terminal, line buffering will be used. Forcing block buffering can be useful when dumping a large amount of contents to a terminal.
   - names:
       - -b
       - --byte-offset
@@ -35,11 +35,11 @@ options:
     description: Search case sensitively.
   - names:
       - --color
-    argument: <WHEN>
-    description: This flag controls when to use colors. The default setting is 'auto', which means ripgrep will try to guess when to use colors. For example, if ripgrep is printing to a terminal, then it will use colors, but if it is redirected to a file or a pipe, then it will suppress color output. ripgrep will suppress color output in some other circumstances as well. For example, if the TERM environment variable is not set or set to 'dumb', then ripgrep will not use colors.
+    argument: WHEN
+    description: This flag controls when to use colors. The default setting is auto, which means ripgrep will try to guess when to use colors. For example, if ripgrep is printing to a terminal, then it will use colors, but if it is redirected to a file or a pipe, then it will suppress color output. ripgrep will suppress color output in some other circumstances as well. For example, if the TERM environment variable is not set or set to dumb, then ripgrep will not use colors.
   - names:
       - --colors
-    argument: <COLOR_SPEC>...
+    argument: COLOR_SPEC ...
     description: 'This flag specifies color settings for use in the output. This flag may be provided multiple times. Settings are applied iteratively. Colors are limited to one of eight choices: red, blue, green, cyan, magenta, yellow, white and black. Styles are limited to nobold, bold, nointense, intense, nounderline or underline.'
   - names:
       - --column
@@ -48,11 +48,11 @@ options:
   - names:
       - -C
       - --context
-    argument: <NUM>
+    argument: NUM
     description: Show NUM lines before and after each match. This is equivalent to providing both the -B/--before-context and -A/--after-context flags with the same value.
   - names:
       - --context-separator
-    argument: <SEPARATOR>
+    argument: SEPARATOR
     description: The string used to separate non-contiguous context lines in the output. This is only used when one of the context flags is used (-A, -B or -C). Escape sequences like \x7F or \t may be used. The default value is --.
   - names:
       - -c
@@ -66,36 +66,32 @@ options:
   - names:
       - --crlf
     argument: ""
-    description: When enabled, ripgrep will treat CRLF ('\r\n') as a line terminator instead of just '\n'.
+    description: When enabled, ripgrep will treat CRLF (\r\n) as a line terminator instead of just \n.
   - names:
       - --debug
     argument: ""
     description: Show debug messages. Please use this when filing a bug report.
   - names:
-      - --dfa-size-limit
-    argument: <NUM+SUFFIX?>
-    description: The upper size limit of the regex DFA. The default limit is 10M. This should only be changed on very large regex inputs where the (slower) fallback regex engine may otherwise be used if the limit is reached.
-  - names:
       - -E
       - --encoding
-    argument: <ENCODING>
-    description: Specify the text encoding that ripgrep will use on all files searched. The default value is 'auto', which will cause ripgrep to do a best effort automatic detection of encoding on a per-file basis. Automatic detection in this case only applies to files that begin with a UTF-8 or UTF-16 byte-order mark (BOM). No other automatic detection is performed. One can also specify 'none' which will then completely disable BOM sniffing and always result in searching the raw bytes, including a BOM if it's present, regardless of its encoding.
+    argument: ENCODING
+    description: Specify the text encoding that ripgrep will use on all files searched. The default value is auto, which will cause ripgrep to do a best effort automatic detection of encoding on a per-file basis. Automatic detection in this case only applies to files that begin with a UTF-8 or UTF-16 byte-order mark (BOM). No other automatic detection is performed. One can also specify none which will then completely disable BOM sniffing and always result in searching the raw bytes, including a BOM if it’s present, regardless of its encoding.
   - names:
       - --engine
-    argument: <ENGINE>
+    argument: ENGINE
     description: Specify which regular expression engine to use. When you choose a regex engine, it applies that choice for every regex provided to ripgrep (e.g., via multiple -e/--regexp or -f/--file flags).
   - names:
       - --field-context-separator
-    argument: <SEPARATOR>
+    argument: SEPARATOR
     description: Set the field context separator, which is used to delimit file paths, line numbers, columns and the context itself, when printing contextual lines. The separator may be any number of bytes, including zero. Escape sequences like \x7F or \t may be used. The default value is -.
   - names:
       - --field-match-separator
-    argument: <SEPARATOR>
+    argument: SEPARATOR
     description: Set the field match separator, which is used to delimit file paths, line numbers, columns and the match itself. The separator may be any number of bytes, including zero. Escape sequences like \x7F or \t may be used. The default value is -.
   - names:
       - -f
       - --file
-    argument: <PATTERNFILE>...
+    argument: PATTERNFILE ...
     description: Search for patterns from the given file, with one pattern per line. When this flag is used multiple times or in combination with the -e/--regexp flag, then all patterns provided are searched. Empty pattern lines will match all input lines, and the newline is not counted as part of the pattern.
   - names:
       - --files
@@ -123,17 +119,12 @@ options:
   - names:
       - -g
       - --glob
-    argument: <GLOB>...
+    argument: GLOB ...
     description: Include or exclude files and directories for searching that match the given glob. This always overrides any other ignore logic. Multiple glob flags may be used. Globbing rules match .gitignore globs. Precede a glob with a ! to exclude it. If multiple globs match a file or directory, the glob given later in the command line takes precedence.
   - names:
       - --glob-case-insensitive
     argument: ""
     description: Process glob patterns given with the -g/--glob flag case insensitively. This effectively treats --glob as --iglob.
-  - names:
-      - -h
-      - --help
-    argument: ""
-    description: Prints help information. Use --help for more details.
   - names:
       - --heading
     argument: ""
@@ -142,19 +133,19 @@ options:
       - -.
       - --hidden
     argument: ""
-    description: Search hidden files and directories. By default, hidden files and directories are skipped. Note that if a hidden file or a directory is whitelisted in an ignore file, then it will be searched even if this flag isn't provided.
+    description: Search hidden files and directories. By default, hidden files and directories are skipped. Note that if a hidden file or a directory is whitelisted in an ignore file, then it will be searched even if this flag isn’t provided.
   - names:
       - --iglob
-    argument: <GLOB>...
+    argument: GLOB ...
     description: Include or exclude files and directories for searching that match the given glob. This always overrides any other ignore logic. Multiple glob flags may be used. Globbing rules match .gitignore globs. Precede a glob with a ! to exclude it. Globs are matched case insensitively.
   - names:
       - -i
       - --ignore-case
     argument: ""
-    description: When this flag is provided, the given patterns will be searched case insensitively. The case insensitivity rules used by ripgrep conform to Unicode's "simple" case folding rules.
+    description: When this flag is provided, the given patterns will be searched case insensitively. The case insensitivity rules used by ripgrep conform to Unicode’s "simple" case folding rules.
   - names:
       - --ignore-file
-    argument: <PATH>...
+    argument: PATH ...
     description: Specifies a path to one or more .gitignore format rules files. These patterns are applied after the patterns found in .gitignore and .ignore are applied and are matched relative to the current working directory. Multiple additional ignore files can be specified by using the --ignore-file flag several times. When specifying multiple ignore files, earlier files have lower precedence than later files.
   - names:
       - --ignore-file-case-insensitive
@@ -176,7 +167,7 @@ options:
   - names:
       - --line-buffered
     argument: ""
-    description: When enabled, ripgrep will use line buffering. That is, whenever a matching line is found, it will be flushed to stdout immediately. This is the default when ripgrep's stdout is connected to a terminal, but otherwise, ripgrep will use block buffering, which is typically faster. This flag forces ripgrep to use line buffering even if it would otherwise use block buffering. This is typically useful in shell pipelines, e.g., 'tail -f something.log | rg foo --line-buffered | rg bar'.
+    description: When enabled, ripgrep will use line buffering. That is, whenever a matching line is found, it will be flushed to stdout immediately. This is the default when ripgrep’s stdout is connected to a terminal, but otherwise, ripgrep will use block buffering, which is typically faster. This flag forces ripgrep to use line buffering even if it would otherwise use block buffering. This is typically useful in shell pipelines, e.g., tail -f something.log | rg foo --line-buffered | rg bar.
   - names:
       - -n
       - --line-number
@@ -190,25 +181,21 @@ options:
   - names:
       - -M
       - --max-columns
-    argument: <NUM>
-    description: Don't print lines longer than this limit in bytes. Longer lines are omitted, and only the number of matches in that line is printed.
+    argument: NUM
+    description: Don’t print lines longer than this limit in bytes. Longer lines are omitted, and only the number of matches in that line is printed.
   - names:
       - --max-columns-preview
     argument: ""
-    description: When the '--max-columns' flag is used, ripgrep will by default completely replace any line that is too long with a message indicating that a matching line was removed. When this flag is combined with '--max-columns', a preview of the line (corresponding to the limit size) is shown instead, where the part of the line exceeding the limit is not shown.
+    description: When the --max-columns flag is used, ripgrep will by default completely replace any line that is too long with a message indicating that a matching line was removed. When this flag is combined with --max-columns, a preview of the line (corresponding to the limit size) is shown instead, where the part of the line exceeding the limit is not shown.
   - names:
       - -m
       - --max-count
-    argument: <NUM>
+    argument: NUM
     description: Limit the number of matching lines per file searched to NUM.
   - names:
       - --max-depth
-    argument: <NUM>
+    argument: NUM
     description: Limit the depth of directory traversal to NUM levels beyond the paths given. A value of zero only searches the explicitly given paths themselves.
-  - names:
-      - --max-filesize
-    argument: <NUM+SUFFIX?>
-    description: Ignore files larger than NUM in size. This does not apply to directories.
   - names:
       - --mmap
     argument: ""
@@ -221,7 +208,7 @@ options:
   - names:
       - --multiline-dotall
     argument: ""
-    description: This flag enables "dot all" in your regex pattern, which causes '.' to match newlines when multiline searching is enabled. This flag has no effect if multiline searching isn't enabled with the --multiline flag.
+    description: This flag enables "dot all" in your regex pattern, which causes . to match newlines when multiline searching is enabled. This flag has no effect if multiline searching isn’t enabled with the --multiline flag.
   - names:
       - --no-config
     argument: ""
@@ -234,19 +221,19 @@ options:
   - names:
       - --no-heading
     argument: ""
-    description: Don't group matches by each file. If --no-heading is provided in addition to the -H/--with-filename flag, then file paths will be printed as a prefix for every matched line. This is the default mode when not printing to a terminal.
+    description: Don’t group matches by each file. If --no-heading is provided in addition to the -H/--with-filename flag, then file paths will be printed as a prefix for every matched line. This is the default mode when not printing to a terminal.
   - names:
       - --no-ignore
     argument: ""
-    description: Don't respect ignore files (.gitignore, .ignore, etc.). This implies --no-ignore-dot, --no-ignore-exclude, --no-ignore-global, no-ignore-parent and --no-ignore-vcs.
+    description: Don’t respect ignore files (.gitignore, .ignore, etc.). This implies --no-ignore-dot, --no-ignore-exclude, --no-ignore-global, no-ignore-parent and --no-ignore-vcs.
   - names:
       - --no-ignore-dot
     argument: ""
-    description: Don't respect .ignore files.
+    description: Don’t respect .ignore files.
   - names:
       - --no-ignore-exclude
     argument: ""
-    description: Don't respect ignore files that are manually configured for the repository such as git's '.git/info/exclude'.
+    description: Don’t respect ignore files that are manually configured for the repository such as git’s .git/info/exclude.
   - names:
       - --no-ignore-files
     argument: ""
@@ -254,7 +241,7 @@ options:
   - names:
       - --no-ignore-global
     argument: ""
-    description: Don't respect ignore files that come from "global" sources such as git's `core.excludesFile` configuration option (which defaults to `$HOME/.config/git/ignore`).
+    description: Don’t respect ignore files that come from "global" sources such as git’s core.excludesFile configuration option (which defaults to $HOME/.config/git/ignore).
   - names:
       - --no-ignore-messages
     argument: ""
@@ -262,11 +249,11 @@ options:
   - names:
       - --no-ignore-parent
     argument: ""
-    description: Don't respect ignore files (.gitignore, .ignore, etc.) in parent directories.
+    description: Don’t respect ignore files (.gitignore, .ignore, etc.) in parent directories.
   - names:
       - --no-ignore-vcs
     argument: ""
-    description: Don't respect version control ignore files (.gitignore, etc.). This implies --no-ignore-parent for VCS files. Note that .ignore files will continue to be respected.
+    description: Don’t respect version control ignore files (.gitignore, etc.). This implies --no-ignore-parent for VCS files. Note that .ignore files will continue to be respected.
   - names:
       - -N
       - --no-line-number
@@ -287,7 +274,7 @@ options:
   - names:
       - --no-require-git
     argument: ""
-    description: By default, ripgrep will only respect global gitignore rules, .gitignore rules and local exclude rules if ripgrep detects that you are searching inside a git repository. This flag allows you to relax this restriction such that ripgrep will respect all git related ignore rules regardless of whether you're searching in a git repository or not.
+    description: By default, ripgrep will only respect global gitignore rules, .gitignore rules and local exclude rules if ripgrep detects that you are searching inside a git repository. This flag allows you to relax this restriction such that ripgrep will respect all git related ignore rules regardless of whether you’re searching in a git repository or not.
   - names:
       - --no-unicode
     argument: ""
@@ -300,7 +287,7 @@ options:
   - names:
       - --null-data
     argument: ""
-    description: Enabling this option causes ripgrep to use NUL as a line terminator instead of the default of '\n'.
+    description: Enabling this option causes ripgrep to use NUL as a line terminator instead of the default of \n.
   - names:
       - --one-file-system
     argument: ""
@@ -316,8 +303,8 @@ options:
     description: Print both matching and non-matching lines.
   - names:
       - --path-separator
-    argument: <SEPARATOR>
-    description: Set the path separator to use when printing file paths. This defaults to your platform's path separator, which is / on Unix and \ on Windows. This flag is intended for overriding the default when the environment demands it (e.g., cygwin). A path separator is limited to a single byte.
+    argument: SEPARATOR
+    description: Set the path separator to use when printing file paths. This defaults to your platform’s path separator, which is / on Unix and \ on Windows. This flag is intended for overriding the default when the environment demands it (e.g., cygwin). A path separator is limited to a single byte.
   - names:
       - -P
       - --pcre2
@@ -329,35 +316,31 @@ options:
     description: When this flag is present, ripgrep will print the version of PCRE2 in use, along with other information, and then exit. If PCRE2 is not available, then ripgrep will print an error message and exit with an error code.
   - names:
       - --pre
-    argument: <COMMAND>
-    description: For each input FILE, search the standard output of COMMAND FILE rather than the contents of FILE. This option expects the COMMAND program to either be an absolute path or to be available in your PATH. Either an empty string COMMAND or the '--no-pre' flag will disable this behavior.
+    argument: COMMAND
+    description: For each input FILE, search the standard output of COMMAND FILE rather than the contents of FILE. This option expects the COMMAND program to either be an absolute path or to be available in your PATH. Either an empty string COMMAND or the --no-pre flag will disable this behavior.
   - names:
       - --pre-glob
-    argument: <GLOB>...
+    argument: GLOB ...
     description: This flag works in conjunction with the --pre flag. Namely, when one or more --pre-glob flags are given, then only files that match the given set of globs will be handed to the command specified by the --pre flag. Any non-matching files will be searched without using the preprocessor command.
   - names:
       - -p
       - --pretty
     argument: ""
-    description: 'This is a convenience alias for ''--color always --heading --line-number''. This flag is useful when you still want pretty output even if you''re piping ripgrep to another program or file. For example: ''rg -p foo | less -R''.'
+    description: 'This is a convenience alias for --color always --heading --line-number. This flag is useful when you still want pretty output even if you’re piping ripgrep to another program or file. For example: rg -p foo | less -R.'
   - names:
       - -q
       - --quiet
     argument: ""
     description: Do not print anything to stdout. If a match is found in a file, then ripgrep will stop searching. This is useful when ripgrep is used only for its exit code (which will be an error if no matches are found).
   - names:
-      - --regex-size-limit
-    argument: <NUM+SUFFIX?>
-    description: The upper size limit of the compiled regex. The default limit is 10M.
-  - names:
       - -e
       - --regexp
-    argument: <PATTERN>...
+    argument: PATTERN ...
     description: A pattern to search for. This option can be provided multiple times, where all patterns given are searched. Lines matching at least one of the provided patterns are printed. This flag can also be used when searching for patterns that start with a dash.
   - names:
       - -r
       - --replace
-    argument: <REPLACEMENT_TEXT>
+    argument: REPLACEMENT_TEXT
     description: Replace every match with the text given when printing results. Neither this flag nor any other ripgrep flag will modify your files.
   - names:
       - -z
@@ -371,11 +354,11 @@ options:
     description: Searches case insensitively if the pattern is all lowercase. Search case sensitively otherwise.
   - names:
       - --sort
-    argument: <SORTBY>
+    argument: SORTBY
     description: 'This flag enables sorting of results in ascending order. The possible values for this flag are:'
   - names:
       - --sortr
-    argument: <SORTBY>
+    argument: SORTBY
     description: 'This flag enables sorting of results in descending order. The possible values for this flag are:'
   - names:
       - --stats
@@ -385,11 +368,11 @@ options:
       - -a
       - --text
     argument: ""
-    description: Search binary files as if they were text. When this flag is present, ripgrep's binary file detection is disabled. This means that when a binary file is searched, its contents may be printed if there is a match. This may cause escape codes to be printed that alter the behavior of your terminal.
+    description: Search binary files as if they were text. When this flag is present, ripgrep’s binary file detection is disabled. This means that when a binary file is searched, its contents may be printed if there is a match. This may cause escape codes to be printed that alter the behavior of your terminal.
   - names:
       - -j
       - --threads
-    argument: <NUM>
+    argument: NUM
     description: The approximate number of threads to use. A value of 0 (which is the default) causes ripgrep to choose the thread count using heuristics.
   - names:
       - --trim
@@ -398,15 +381,15 @@ options:
   - names:
       - -t
       - --type
-    argument: <TYPE>...
+    argument: TYPE ...
     description: Only search files matching TYPE. Multiple type flags may be provided. Use the --type-list flag to list all available types.
   - names:
       - --type-add
-    argument: <TYPE_SPEC>...
+    argument: TYPE_SPEC ...
     description: Add a new glob for a particular file type. Only one glob can be added at a time. Multiple --type-add flags can be provided. Unless --type-clear is used, globs are added to any existing globs defined inside of ripgrep.
   - names:
       - --type-clear
-    argument: <TYPE>...
+    argument: TYPE ...
     description: Clear the file type globs previously defined for TYPE. This only clears the default type definitions that are found inside of ripgrep.
   - names:
       - --type-list
@@ -415,18 +398,13 @@ options:
   - names:
       - -T
       - --type-not
-    argument: <TYPE>...
+    argument: TYPE ...
     description: Do not search files matching TYPE. Multiple type-not flags may be provided. Use the --type-list flag to list all available types.
   - names:
       - -u
       - --unrestricted
-    argument: ""
-    description: Reduce the level of "smart" searching. A single -u won't respect .gitignore (etc.) files (--no-ignore). Two -u flags will additionally search hidden files and directories (-./--hidden). Three -u flags will additionally search binary files (--binary).
-  - names:
-      - -V
-      - --version
-    argument: ""
-    description: Prints version information
+    argument: '...'
+    description: Reduce the level of "smart" searching. A single -u won’t respect .gitignore (etc.) files (--no-ignore). Two -u flags will additionally search hidden files and directories (-./--hidden). Three -u flags will additionally search binary files (--binary).
   - names:
       - --vimgrep
     argument: ""
@@ -441,6 +419,7 @@ options:
       - --word-regexp
     argument: ""
     description: Only show matches surrounded by word boundaries. This is roughly equivalent to putting \b before and after all of the search patterns.
+version: ripgrep 13.0.0 (rev 7ec2fd51ba)
 tldr: |
   > Ripgrep is a recursive line-oriented CLI search tool.
   > Aims to be a faster alternative to `grep`.

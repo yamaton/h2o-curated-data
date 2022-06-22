@@ -11,7 +11,8 @@ complete -c code -s h -l help -d 'Print usage.'
 complete -c code -l list-extensions -d 'List the installed extensions.'
 complete -c code -l show-versions -d 'Show versions of installed extensions, when using --list-extensions.'
 complete -c code -l category -d 'Filters installed extensions by provided category, when using --list-extensions.' -x
-complete -c code -l install-extension -d 'Installs or updates the extension.' -r
+complete -c code -l install-extension -d 'Installs or updates an extension.' -r
+complete -c code -l pre-release -d 'Installs the pre-release version of the extension, when using --install-extension'
 complete -c code -l uninstall-extension -d 'Uninstalls an extension.' -x
 complete -c code -l enable-proposed-api -d 'Enables proposed API features for extensions.' -x
 complete -c code -s v -l version -d 'Print version.'

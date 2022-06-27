@@ -1,32 +1,23 @@
 #!/usr/bin/env bash
 #
-# Create all.json.gz from json/*.json
+# Create
+#   - general.json.gz from general/json/*.json
+#   - bio.json.gz     from bio/json/*.json
 #
+# Usage:
 #   $ ./make-gzip
 #
-# Require jq, ajv, parallel
+# Requires jq
 #
-
 
 # -u  Treat unset variables as an error when substituting.
 # -e  Exit immediately if a command exits with a non-zero status.
 # -x  Print commands and their arguments as they are executed.
 # See `help set` in bash for more information.
-set -uex
-
-if [[ ! "$(command -v ajv)" ]]; then
-    echo "[error] ajv is missing. Install ajv-cli via"
-    echo "npm install -g ajv-cli"
-    exit 1
-fi
+set -ue
 
 if [[ ! "$(command -v jq)" ]]; then
     echo "[error] jq is missing. Install jq to run this script."
-    exit 1
-fi
-
-if [[ ! "$(command -v parallel)" ]]; then
-    echo "[error] parallel is missing. Install parallel to run this script."
     exit 1
 fi
 
@@ -35,9 +26,17 @@ rootdir="$basedir/.."
 
 dirnames=(general bio)
 for dir_ in ${dirnames[*]}; do
+    echo -n "Creating a compressed json from $dir_ ... "
+
     # Make a list of command names available as json files
     "$basedir"/make-list "$dir_" > "$rootdir"/"$dir_".txt
 
     # Make gzipped file from a json array
-    jq -cs . "$rootdir"/"$dir_"/json/*.json | gzip > "$rootdir"/"$dir_".json.gz
+    # ordered in natural sort.
+    find "$rootdir"/"$dir_"/json/ -name '*.json' \
+     | sort -V        \
+     | xargs jq -cs . \
+     | gzip > "$rootdir"/"$dir_".json.gz
+
+    echo "done"
 done

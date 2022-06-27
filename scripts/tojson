@@ -8,6 +8,7 @@
 #
 basedir="$(dirname "$(readlink -f "$0")")"
 name="$1"
+validator="$basedir"/validate-json
 
 if [[ ! "$(command -v ajv)" ]]; then
     echo "[error] ajv is missing. Install ajv-cli via"
@@ -32,7 +33,7 @@ if [[ -z "$name" ]]; then
 fi
 
 
-function scan {
+function scan_run {
     dir="$1"
     yaml="$basedir/../$dir/yaml/$name.yaml"
     if [[ -f "$yaml" ]]; then
@@ -40,11 +41,10 @@ function scan {
         echo "from: $yaml"
         echo "to  : $json"
         yq eval --output-format=json "$yaml" | jq -c > "$json"
+        "$validator" "$json"
     fi
 }
 
-scan general
-scan bio
-scan experimental
-
-"$basedir"/validate-json-simple "$name"
+scan_run general
+scan_run bio
+scan_run experimental

@@ -3,6 +3,16 @@
 # Use ajv to validate a JSON with a schema
 #
 # Example:
-#   $ ./validate-json ../json-schema/command-2022-03-14.schema.json ../general/json/jq.json
+#   $ ./validate-json ../general/json/jq.json
 #
-ajv -s "$1" -d "$2"
+
+# Require ajv
+if [[ ! "$(command -v ajv)" ]]; then
+    echo "[error] ajv is missing. Install ajv-cli via"
+    echo "npm install -g ajv-cli"
+    exit 1
+fi
+
+basedir="$(dirname "$(readlink -f "$0")")"
+schema="$basedir"/../json-schema/command-2022-03-14.schema.json
+ajv -s "$schema" -d "$1"

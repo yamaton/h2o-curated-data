@@ -2,31 +2,21 @@
 #
 #   $ make
 #
-# Require jq, ajv, parallel
-#
 
-json_general := $(sort $(wildcard general/json/*.json))
-json_bio := $(sort $(wildcard bio/json/*.json))
-json_experimental := $(sort $(wildcard experimental/json/*.json))
-json_schema := json-schema/command-2022-03-14.schema.json
+json_general = $(wildcard general/json/*.json)
+json_bio = $(wildcard bio/json/*.json)
+makelist_src = scripts/make-list
 
-all: validate general.txt bio.txt general.json.gz bio.json.gz
+all: general.txt bio.txt general.json.gz bio.json.gz
 
-# [NOTE] This .PHONY indicates the target is not a file
-.PHONY: validate
-validate: $(json_general) $(json_bio) $(json_experimental)
-	@echo $^
-	@parallel scripts/validate-json $(json_schema) {} ::: $^
+general.txt : $(makelist_src) $(json_general)
+	$(makelist_src) general > $@
 
-general.txt: $(json_general)
-	scripts/make-list general
+bio.txt : $(makelist_src) $(json_bio)
+	$(makelist_src) bio > $@
 
-bio.txt: $(json_bio)
-	scripts/make-list bio
+general.json.gz : $(json_general)
+	jq -cs . $^ | gzip > $@
 
-general.json.gz: $(json_general)
-	@jq -s . $^ | gzip > general.json.gz
-
-bio.json.gz: $(json_bio)
-	@jq -s . $^ | gzip > bio.json.gz
-
+bio.json.gz : $(json_bio)
+	jq -cs . $^ | gzip > $@

@@ -5,20 +5,23 @@
 #
 # Usage:
 #
-#   $ ./make-list
+#   $ ./make-list bio > bio.txt
 #
 
 import pathlib
+import argparse
 
 dirs = ["general", "bio"]
 
-root = pathlib.Path(__file__).parent.parent.absolute()
-for dir_ in dirs:
-    p = root / dir_ / "json"
-    files = p.glob("*.json")
-    names = sorted([q.stem for q in files])
-    # print(names)
+parser = argparse.ArgumentParser()
+parser.add_argument("dir", choices=dirs, help="directory to make list from")
+args = parser.parse_args()
+dir_ = args.dir
 
-    with open(root / (dir_ + ".txt"), "w") as f:
-        for name in names:
-            print(name, file=f)
+root = pathlib.Path(__file__).parent.parent.absolute()
+p = root / dir_ / "json"
+files = p.glob("*.json")
+names = sorted([q.stem for q in files])
+
+for name in names:
+    print(name)

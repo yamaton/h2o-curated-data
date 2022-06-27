@@ -7,6 +7,13 @@
 # Require jq, ajv, parallel
 #
 
+
+# -u  Treat unset variables as an error when substituting.
+# -e  Exit immediately if a command exits with a non-zero status.
+# -x  Print commands and their arguments as they are executed.
+# See `help set` in bash for more information.
+set -uex
+
 if [[ ! "$(command -v ajv)" ]]; then
     echo "[error] ajv is missing. Install ajv-cli via"
     echo "npm install -g ajv-cli"
@@ -23,15 +30,14 @@ if [[ ! "$(command -v parallel)" ]]; then
     exit 1
 fi
 
-dirs=(general bio)
 basedir="$(dirname "$(readlink -f "$0")")"
-schema="$basedir"/../json-schema/command-2022-03-14.schema.json
-validator="$basedir"/validate-json
+rootdir="$basedir/.."
 
-"$basedir"/make-list
+dirnames=(general bio)
+for dir_ in ${dirnames[*]}; do
+    # Make a list of command names available as json files
+    "$basedir"/make-list "$dir_" > "$rootdir"/"$dir_".txt
 
-for dir_ in ${dirs[*]}; do
-    cd "$basedir"/../"$dir_"/json
-    ls *.json | parallel "$validator" "$schema" {}
-    jq -cs . *.json | gzip > "$basedir"/../"$dir_".json.gz
+    # Make gzipped file from a json array
+    jq -cs . "$rootdir"/"$dir_"/json/*.json | gzip > "$rootdir"/"$dir_".json.gz
 done

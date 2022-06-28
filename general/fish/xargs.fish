@@ -4,7 +4,7 @@ complete -c xargs -s 0 -l null -d 'items are separated by a null, not whitespace
 complete -c xargs -s a -l arg-file -d 'read arguments from FILE, not standard input' -r
 complete -c xargs -s d -l delimiter -d 'items in input stream are separated by CHARACTER, not by whitespace; disables quote and backslash processing and logical EOF processing' -x
 complete -c xargs -s E -d 'set logical EOF string; if END occurs as a line of input, the rest of the input is ignored (ignored if -0 or -d was specified)' -x
-complete -c xargs -s e -l eof -d 'equivalent to -E END if END is specified; otherwise, there is no end-of-file string' -x
+complete -c xargs -s e -l eof -d 'equivalent to -E END if END is specified; otherwise, there is no end-of-file string' -r
 complete -c xargs -s I -d 'same as --replace=R' -x
 complete -c xargs -s i -l replace -d 'replace R in INITIAL-ARGS with names read from standard input; if R is unspecified, assume {}' -x
 complete -c xargs -s L -l max-lines -d 'use at most MAX-LINES non-blank input lines per command line' -x

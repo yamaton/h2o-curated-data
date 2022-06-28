@@ -20,7 +20,7 @@ complete -c composite -o endian -d 'endianness (MSB or LSB) of the image' -x
 complete -c composite -o filter -d 'use this filter when resizing an image' -x
 complete -c composite -o font -d 'render text with this font' -x
 complete -c composite -o format -d 'output formatted image characteristics' -x
-complete -c composite -o gravity -d 'which direction to gravitate towards' -x
+complete -c composite -o gravity -d 'which direction to gravitate towards' -r
 complete -c composite -o green-primary -d 'chromaticity green primary point' -x
 complete -c composite -o interlace -d 'type of image interlacing scheme' -x
 complete -c composite -o interpolate -d 'pixel color interpolation method' -x

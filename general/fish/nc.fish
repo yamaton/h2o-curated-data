@@ -22,7 +22,7 @@ complete -c nc -s p -d 'Specify the source port nc should use, subject to privil
 complete -c nc -s q -d 'after EOF on stdin, wait the specified number of seconds and then quit.' -x
 complete -c nc -s r -d 'Choose source and/or destination ports randomly instead of sequentially within a range or in the order that the system assigns them.'
 complete -c nc -s S -d 'Enable the RFC 2385 TCP MD5 signature option.'
-complete -c nc -s s -d 'Send packets from the interface with the source IP address.' -x
+complete -c nc -s s -d 'Send packets from the interface with the source IP address.' -r
 complete -c nc -s T -d 'Change the IPv4 TOS/IPv6 traffic class value.' -x
 complete -c nc -s t -d 'Send RFC 854 DON\'T and WON\'T responses to RFC 854 DO and WILL requests.'
 complete -c nc -s U -d 'Use UNIX-domain sockets.'

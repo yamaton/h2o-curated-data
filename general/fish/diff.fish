@@ -13,7 +13,7 @@ complete -c diff -l left-column -d 'output only the left column of common lines'
 complete -c diff -l suppress-common-lines -d 'do not output common lines'
 complete -c diff -s p -l show-c-function -d 'show which C function each change is in'
 complete -c diff -s F -l show-function-line -d 'show the most recent line matching RE' -x
-complete -c diff -l label -d 'use LABEL instead of file name and timestamp (can be repeated)' -x
+complete -c diff -l label -d 'use LABEL instead of file name and timestamp (can be repeated)' -r
 complete -c diff -s t -l expand-tabs -d 'expand tabs to spaces in output'
 complete -c diff -s T -l initial-tab -d 'make tabs line up by prepending a tab'
 complete -c diff -l tabsize -d 'tab stops every NUM (default 8) print columns' -x
@@ -25,7 +25,7 @@ complete -c diff -s N -l new-file -d 'treat absent files as empty'
 complete -c diff -l unidirectional-new-file -d 'treat absent first files as empty'
 complete -c diff -l ignore-file-name-case -d 'ignore case when comparing file names'
 complete -c diff -l no-ignore-file-name-case -d 'consider case when comparing file names'
-complete -c diff -s x -l exclude -d 'exclude files that match PAT' -x
+complete -c diff -s x -l exclude -d 'exclude files that match PAT' -r
 complete -c diff -s X -l exclude-from -d 'exclude files that match any pattern in FILE' -r
 complete -c diff -s S -l starting-file -d 'start with FILE when comparing directories' -r
 complete -c diff -l from-file -d 'compare FILE1 to all operands; FILE1 can be a directory' -r
@@ -39,7 +39,7 @@ complete -c diff -s B -l ignore-blank-lines -d 'ignore changes where lines are a
 complete -c diff -s I -l ignore-matching-lines -d 'ignore changes where all lines match RE' -x
 complete -c diff -s a -l text -d 'treat all files as text'
 complete -c diff -l strip-trailing-cr -d 'strip trailing carriage return on input'
-complete -c diff -s D -l ifdef -d 'output merged file with \'#ifdef NAME\' diffs' -x
+complete -c diff -s D -l ifdef -d 'output merged file with \'#ifdef NAME\' diffs' -r
 complete -c diff -l GTYPE-group-format -d 'format GTYPE input groups with GFMT' -x
 complete -c diff -l line-format -d 'format all input lines with LFMT' -x
 complete -c diff -l LTYPE-line-format -d 'format LTYPE input lines with LFMT' -x

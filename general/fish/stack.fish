@@ -11,7 +11,7 @@ complete -c stack -n "not __fish_seen_subcommand_from build install uninstall te
 complete -c stack -n "not __fish_seen_subcommand_from build install uninstall test bench haddock new templates init setup path ls unpack update upgrade upload sdist dot ghc hoogle exec run ghci repl runghc runhaskell script eval clean purge query list ide docker config hpc" -l silent -d 'Enable silent mode: verbosity level "silent"'
 complete -c stack -n "not __fish_seen_subcommand_from build install uninstall test bench haddock new templates init setup path ls unpack update upgrade upload sdist dot ghc hoogle exec run ghci repl runghc runhaskell script eval clean purge query list ide docker config hpc" -l time-in-log -d 'Enable/disable inclusion of timings in logs, for the purposes of using diff with logs (default: enabled)'
 complete -c stack -n "not __fish_seen_subcommand_from build install uninstall test bench haddock new templates init setup path ls unpack update upgrade upload sdist dot ghc hoogle exec run ghci repl runghc runhaskell script eval clean purge query list ide docker config hpc" -l no-time-in-log -d 'Enable/disable inclusion of timings in logs, for the purposes of using diff with logs (default: enabled)'
-complete -c stack -n "not __fish_seen_subcommand_from build install uninstall test bench haddock new templates init setup path ls unpack update upgrade upload sdist dot ghc hoogle exec run ghci repl runghc runhaskell script eval clean purge query list ide docker config hpc" -l stack-root -d 'Absolute path to the global stack root directory (Overrides any STACK_ROOT environment variable)' -x
+complete -c stack -n "not __fish_seen_subcommand_from build install uninstall test bench haddock new templates init setup path ls unpack update upgrade upload sdist dot ghc hoogle exec run ghci repl runghc runhaskell script eval clean purge query list ide docker config hpc" -l stack-root -d 'Absolute path to the global stack root directory (Overrides any STACK_ROOT environment variable)' -r
 complete -c stack -n "not __fish_seen_subcommand_from build install uninstall test bench haddock new templates init setup path ls unpack update upgrade upload sdist dot ghc hoogle exec run ghci repl runghc runhaskell script eval clean purge query list ide docker config hpc" -l work-dir -d 'Relative path of work directory (Overrides any STACK_WORK environment variable, default is \'.stack-work\')' -r
 complete -c stack -n "not __fish_seen_subcommand_from build install uninstall test bench haddock new templates init setup path ls unpack update upgrade upload sdist dot ghc hoogle exec run ghci repl runghc runhaskell script eval clean purge query list ide docker config hpc" -l system-ghc -d 'Enable/disable using the system installed GHC (on the PATH) if it is available and its version matches.'
 complete -c stack -n "not __fish_seen_subcommand_from build install uninstall test bench haddock new templates init setup path ls unpack update upgrade upload sdist dot ghc hoogle exec run ghci repl runghc runhaskell script eval clean purge query list ide docker config hpc" -l no-system-ghc -d 'Enable/disable using the system installed GHC (on the PATH) if it is available and its version matches.'
@@ -31,7 +31,7 @@ complete -c stack -n "not __fish_seen_subcommand_from build install uninstall te
 complete -c stack -n "not __fish_seen_subcommand_from build install uninstall test bench haddock new templates init setup path ls unpack update upgrade upload sdist dot ghc hoogle exec run ghci repl runghc runhaskell script eval clean purge query list ide docker config hpc" -l skip-msys -d 'Enable/disable skipping the local MSYS installation (Windows only) (default: disabled)'
 complete -c stack -n "not __fish_seen_subcommand_from build install uninstall test bench haddock new templates init setup path ls unpack update upgrade upload sdist dot ghc hoogle exec run ghci repl runghc runhaskell script eval clean purge query list ide docker config hpc" -l no-skip-msys -d 'Enable/disable skipping the local MSYS installation (Windows only) (default: disabled)'
 complete -c stack -n "not __fish_seen_subcommand_from build install uninstall test bench haddock new templates init setup path ls unpack update upgrade upload sdist dot ghc hoogle exec run ghci repl runghc runhaskell script eval clean purge query list ide docker config hpc" -l local-bin-path -d 'Install binaries to DIR' -r
-complete -c stack -n "not __fish_seen_subcommand_from build install uninstall test bench haddock new templates init setup path ls unpack update upgrade upload sdist dot ghc hoogle exec run ghci repl runghc runhaskell script eval clean purge query list ide docker config hpc" -l setup-info-yaml -d 'Alternate URL or relative / absolute path for stack dependencies' -x
+complete -c stack -n "not __fish_seen_subcommand_from build install uninstall test bench haddock new templates init setup path ls unpack update upgrade upload sdist dot ghc hoogle exec run ghci repl runghc runhaskell script eval clean purge query list ide docker config hpc" -l setup-info-yaml -d 'Alternate URL or relative / absolute path for stack dependencies' -r
 complete -c stack -n "not __fish_seen_subcommand_from build install uninstall test bench haddock new templates init setup path ls unpack update upgrade upload sdist dot ghc hoogle exec run ghci repl runghc runhaskell script eval clean purge query list ide docker config hpc" -l modify-code-page -d 'Enable/disable setting the codepage to support UTF-8 (Windows only) (default: enabled)'
 complete -c stack -n "not __fish_seen_subcommand_from build install uninstall test bench haddock new templates init setup path ls unpack update upgrade upload sdist dot ghc hoogle exec run ghci repl runghc runhaskell script eval clean purge query list ide docker config hpc" -l no-modify-code-page -d 'Enable/disable setting the codepage to support UTF-8 (Windows only) (default: enabled)'
 complete -c stack -n "not __fish_seen_subcommand_from build install uninstall test bench haddock new templates init setup path ls unpack update upgrade upload sdist dot ghc hoogle exec run ghci repl runghc runhaskell script eval clean purge query list ide docker config hpc" -l allow-different-user -d 'Enable/disable permission for users other than the owner of the stack root directory to use a stack installation (POSIX only) (default: true inside Docker, otherwise false)'
@@ -40,14 +40,14 @@ complete -c stack -n "not __fish_seen_subcommand_from build install uninstall te
 complete -c stack -n "not __fish_seen_subcommand_from build install uninstall test bench haddock new templates init setup path ls unpack update upgrade upload sdist dot ghc hoogle exec run ghci repl runghc runhaskell script eval clean purge query list ide docker config hpc" -l no-dump-logs -d 'Enable/disable dump the build output logs for local packages to the console (default: dump warning logs)'
 complete -c stack -n "not __fish_seen_subcommand_from build install uninstall test bench haddock new templates init setup path ls unpack update upgrade upload sdist dot ghc hoogle exec run ghci repl runghc runhaskell script eval clean purge query list ide docker config hpc" -l color -l colour -d 'Specify when to use color in output; WHEN is \'always\', \'never\', or \'auto\'.' -x
 complete -c stack -n "not __fish_seen_subcommand_from build install uninstall test bench haddock new templates init setup path ls unpack update upgrade upload sdist dot ghc hoogle exec run ghci repl runghc runhaskell script eval clean purge query list ide docker config hpc" -l snapshot-location-base -d 'The base location of LTS/Nightly snapshots' -x
-complete -c stack -n "not __fish_seen_subcommand_from build install uninstall test bench haddock new templates init setup path ls unpack update upgrade upload sdist dot ghc hoogle exec run ghci repl runghc runhaskell script eval clean purge query list ide docker config hpc" -l resolver -d 'Override resolver in project file' -x
+complete -c stack -n "not __fish_seen_subcommand_from build install uninstall test bench haddock new templates init setup path ls unpack update upgrade upload sdist dot ghc hoogle exec run ghci repl runghc runhaskell script eval clean purge query list ide docker config hpc" -l resolver -d 'Override resolver in project file' -r
 complete -c stack -n "not __fish_seen_subcommand_from build install uninstall test bench haddock new templates init setup path ls unpack update upgrade upload sdist dot ghc hoogle exec run ghci repl runghc runhaskell script eval clean purge query list ide docker config hpc" -l compiler -d 'Use the specified compiler' -x
 complete -c stack -n "not __fish_seen_subcommand_from build install uninstall test bench haddock new templates init setup path ls unpack update upgrade upload sdist dot ghc hoogle exec run ghci repl runghc runhaskell script eval clean purge query list ide docker config hpc" -l terminal -d 'Enable/disable overriding terminal detection in the case of running in a false terminal'
 complete -c stack -n "not __fish_seen_subcommand_from build install uninstall test bench haddock new templates init setup path ls unpack update upgrade upload sdist dot ghc hoogle exec run ghci repl runghc runhaskell script eval clean purge query list ide docker config hpc" -l no-terminal -d 'Enable/disable overriding terminal detection in the case of running in a false terminal'
 complete -c stack -n "not __fish_seen_subcommand_from build install uninstall test bench haddock new templates init setup path ls unpack update upgrade upload sdist dot ghc hoogle exec run ghci repl runghc runhaskell script eval clean purge query list ide docker config hpc" -l stack-colors -l stack-colours -d 'Specify stack\'s output styles; STYLES is a colon-delimited sequence of key=value, where \'key\' is a style name and \'value\' is a semicolon-delimited list of \'ANSI\' SGR (Select Graphic Rendition) control codes (in decimal).' -x
 complete -c stack -n "not __fish_seen_subcommand_from build install uninstall test bench haddock new templates init setup path ls unpack update upgrade upload sdist dot ghc hoogle exec run ghci repl runghc runhaskell script eval clean purge query list ide docker config hpc" -l terminal-width -d 'Specify the width of the terminal, used for pretty-print messages' -x
-complete -c stack -n "not __fish_seen_subcommand_from build install uninstall test bench haddock new templates init setup path ls unpack update upgrade upload sdist dot ghc hoogle exec run ghci repl runghc runhaskell script eval clean purge query list ide docker config hpc" -l stack-yaml -d 'Override project stack.yaml file (overrides any STACK_YAML environment variable)' -x
-complete -c stack -n "not __fish_seen_subcommand_from build install uninstall test bench haddock new templates init setup path ls unpack update upgrade upload sdist dot ghc hoogle exec run ghci repl runghc runhaskell script eval clean purge query list ide docker config hpc" -l lock-file -d 'Specify how to interact with lock files.' -x
+complete -c stack -n "not __fish_seen_subcommand_from build install uninstall test bench haddock new templates init setup path ls unpack update upgrade upload sdist dot ghc hoogle exec run ghci repl runghc runhaskell script eval clean purge query list ide docker config hpc" -l stack-yaml -d 'Override project stack.yaml file (overrides any STACK_YAML environment variable)' -r
+complete -c stack -n "not __fish_seen_subcommand_from build install uninstall test bench haddock new templates init setup path ls unpack update upgrade upload sdist dot ghc hoogle exec run ghci repl runghc runhaskell script eval clean purge query list ide docker config hpc" -l lock-file -d 'Specify how to interact with lock files.' -r
 complete -c stack -n "not __fish_seen_subcommand_from build install uninstall test bench haddock new templates init setup path ls unpack update upgrade upload sdist dot ghc hoogle exec run ghci repl runghc runhaskell script eval clean purge query list ide docker config hpc" -l full -d 'query Query general build information (experimental)' -x
 
 
@@ -160,8 +160,8 @@ complete -c stack -n "__fish_seen_subcommand_from build" -l no-split-objs -d 'En
 complete -c stack -n "__fish_seen_subcommand_from build" -l skip -d 'Skip given component, can be specified multiple times' -x
 complete -c stack -n "__fish_seen_subcommand_from build" -l interleaved-output -d 'Enable/disable Print concurrent GHC output to the console with a prefix for the package name (default: enabled)'
 complete -c stack -n "__fish_seen_subcommand_from build" -l no-interleaved-output -d 'Enable/disable Print concurrent GHC output to the console with a prefix for the package name (default: enabled)'
-complete -c stack -n "__fish_seen_subcommand_from build" -l ddump-dir -d 'Specify output ddump-files' -x
-complete -c stack -n "__fish_seen_subcommand_from build" -l setup-info-yaml -d 'Alternate URL or relative / absolute path for stack dependencies' -x
+complete -c stack -n "__fish_seen_subcommand_from build" -l ddump-dir -d 'Specify output ddump-files' -r
+complete -c stack -n "__fish_seen_subcommand_from build" -l setup-info-yaml -d 'Alternate URL or relative / absolute path for stack dependencies' -r
 complete -c stack -n "__fish_seen_subcommand_from build" -l snapshot-location-base -d 'The base location of LTS/Nightly snapshots' -x
 complete -c stack -n "__fish_seen_subcommand_from build" -l help -d 'Show this help text'
 
@@ -236,14 +236,14 @@ complete -c stack -n "__fish_seen_subcommand_from install" -l no-split-objs -d '
 complete -c stack -n "__fish_seen_subcommand_from install" -l skip -d 'Skip given component, can be specified multiple times' -x
 complete -c stack -n "__fish_seen_subcommand_from install" -l interleaved-output -d 'Enable/disable Print concurrent GHC output to the console with a prefix for the package name (default: enabled)'
 complete -c stack -n "__fish_seen_subcommand_from install" -l no-interleaved-output -d 'Enable/disable Print concurrent GHC output to the console with a prefix for the package name (default: enabled)'
-complete -c stack -n "__fish_seen_subcommand_from install" -l ddump-dir -d 'Specify output ddump-files' -x
-complete -c stack -n "__fish_seen_subcommand_from install" -l setup-info-yaml -d 'Alternate URL or relative / absolute path for stack dependencies' -x
+complete -c stack -n "__fish_seen_subcommand_from install" -l ddump-dir -d 'Specify output ddump-files' -r
+complete -c stack -n "__fish_seen_subcommand_from install" -l setup-info-yaml -d 'Alternate URL or relative / absolute path for stack dependencies' -r
 complete -c stack -n "__fish_seen_subcommand_from install" -l snapshot-location-base -d 'The base location of LTS/Nightly snapshots' -x
 complete -c stack -n "__fish_seen_subcommand_from install" -l help -d 'Show this help text'
 
 
 
-complete -c stack -n "__fish_seen_subcommand_from uninstall" -l setup-info-yaml -d 'Alternate URL or relative / absolute path for stack dependencies' -x
+complete -c stack -n "__fish_seen_subcommand_from uninstall" -l setup-info-yaml -d 'Alternate URL or relative / absolute path for stack dependencies' -r
 complete -c stack -n "__fish_seen_subcommand_from uninstall" -l snapshot-location-base -d 'The base location of LTS/Nightly snapshots' -x
 complete -c stack -n "__fish_seen_subcommand_from uninstall" -l help -d 'Show this help text'
 
@@ -318,8 +318,8 @@ complete -c stack -n "__fish_seen_subcommand_from test" -l no-split-objs -d 'Ena
 complete -c stack -n "__fish_seen_subcommand_from test" -l skip -d 'Skip given component, can be specified multiple times' -x
 complete -c stack -n "__fish_seen_subcommand_from test" -l interleaved-output -d 'Enable/disable Print concurrent GHC output to the console with a prefix for the package name (default: enabled)'
 complete -c stack -n "__fish_seen_subcommand_from test" -l no-interleaved-output -d 'Enable/disable Print concurrent GHC output to the console with a prefix for the package name (default: enabled)'
-complete -c stack -n "__fish_seen_subcommand_from test" -l ddump-dir -d 'Specify output ddump-files' -x
-complete -c stack -n "__fish_seen_subcommand_from test" -l setup-info-yaml -d 'Alternate URL or relative / absolute path for stack dependencies' -x
+complete -c stack -n "__fish_seen_subcommand_from test" -l ddump-dir -d 'Specify output ddump-files' -r
+complete -c stack -n "__fish_seen_subcommand_from test" -l setup-info-yaml -d 'Alternate URL or relative / absolute path for stack dependencies' -r
 complete -c stack -n "__fish_seen_subcommand_from test" -l snapshot-location-base -d 'The base location of LTS/Nightly snapshots' -x
 complete -c stack -n "__fish_seen_subcommand_from test" -l help -d 'Show this help text'
 
@@ -394,8 +394,8 @@ complete -c stack -n "__fish_seen_subcommand_from bench" -l no-split-objs -d 'En
 complete -c stack -n "__fish_seen_subcommand_from bench" -l skip -d 'Skip given component, can be specified multiple times' -x
 complete -c stack -n "__fish_seen_subcommand_from bench" -l interleaved-output -d 'Enable/disable Print concurrent GHC output to the console with a prefix for the package name (default: enabled)'
 complete -c stack -n "__fish_seen_subcommand_from bench" -l no-interleaved-output -d 'Enable/disable Print concurrent GHC output to the console with a prefix for the package name (default: enabled)'
-complete -c stack -n "__fish_seen_subcommand_from bench" -l ddump-dir -d 'Specify output ddump-files' -x
-complete -c stack -n "__fish_seen_subcommand_from bench" -l setup-info-yaml -d 'Alternate URL or relative / absolute path for stack dependencies' -x
+complete -c stack -n "__fish_seen_subcommand_from bench" -l ddump-dir -d 'Specify output ddump-files' -r
+complete -c stack -n "__fish_seen_subcommand_from bench" -l setup-info-yaml -d 'Alternate URL or relative / absolute path for stack dependencies' -r
 complete -c stack -n "__fish_seen_subcommand_from bench" -l snapshot-location-base -d 'The base location of LTS/Nightly snapshots' -x
 complete -c stack -n "__fish_seen_subcommand_from bench" -l help -d 'Show this help text'
 
@@ -470,8 +470,8 @@ complete -c stack -n "__fish_seen_subcommand_from haddock" -l no-split-objs -d '
 complete -c stack -n "__fish_seen_subcommand_from haddock" -l skip -d 'Skip given component, can be specified multiple times' -x
 complete -c stack -n "__fish_seen_subcommand_from haddock" -l interleaved-output -d 'Enable/disable Print concurrent GHC output to the console with a prefix for the package name (default: enabled)'
 complete -c stack -n "__fish_seen_subcommand_from haddock" -l no-interleaved-output -d 'Enable/disable Print concurrent GHC output to the console with a prefix for the package name (default: enabled)'
-complete -c stack -n "__fish_seen_subcommand_from haddock" -l ddump-dir -d 'Specify output ddump-files' -x
-complete -c stack -n "__fish_seen_subcommand_from haddock" -l setup-info-yaml -d 'Alternate URL or relative / absolute path for stack dependencies' -x
+complete -c stack -n "__fish_seen_subcommand_from haddock" -l ddump-dir -d 'Specify output ddump-files' -r
+complete -c stack -n "__fish_seen_subcommand_from haddock" -l setup-info-yaml -d 'Alternate URL or relative / absolute path for stack dependencies' -r
 complete -c stack -n "__fish_seen_subcommand_from haddock" -l snapshot-location-base -d 'The base location of LTS/Nightly snapshots' -x
 complete -c stack -n "__fish_seen_subcommand_from haddock" -l help -d 'Show this help text'
 
@@ -482,13 +482,13 @@ complete -c stack -n "__fish_seen_subcommand_from new" -s p -l param -d 'Paramet
 complete -c stack -n "__fish_seen_subcommand_from new" -l omit-packages -d 'Exclude conflicting or incompatible user packages'
 complete -c stack -n "__fish_seen_subcommand_from new" -l force -d 'Force overwriting an existing stack.yaml'
 complete -c stack -n "__fish_seen_subcommand_from new" -l ignore-subdirs -d 'Do not search for .cabal files in sub directories'
-complete -c stack -n "__fish_seen_subcommand_from new" -l setup-info-yaml -d 'Alternate URL or relative / absolute path for stack dependencies' -x
+complete -c stack -n "__fish_seen_subcommand_from new" -l setup-info-yaml -d 'Alternate URL or relative / absolute path for stack dependencies' -r
 complete -c stack -n "__fish_seen_subcommand_from new" -l snapshot-location-base -d 'The base location of LTS/Nightly snapshots' -x
 complete -c stack -n "__fish_seen_subcommand_from new" -l help -d 'Show this help text'
 
 
 
-complete -c stack -n "__fish_seen_subcommand_from templates" -l setup-info-yaml -d 'Alternate URL or relative / absolute path for stack dependencies' -x
+complete -c stack -n "__fish_seen_subcommand_from templates" -l setup-info-yaml -d 'Alternate URL or relative / absolute path for stack dependencies' -r
 complete -c stack -n "__fish_seen_subcommand_from templates" -l snapshot-location-base -d 'The base location of LTS/Nightly snapshots' -x
 complete -c stack -n "__fish_seen_subcommand_from templates" -l help -d 'Show this help text'
 
@@ -497,7 +497,7 @@ complete -c stack -n "__fish_seen_subcommand_from templates" -l help -d 'Show th
 complete -c stack -n "__fish_seen_subcommand_from init" -l omit-packages -d 'Exclude conflicting or incompatible user packages'
 complete -c stack -n "__fish_seen_subcommand_from init" -l force -d 'Force overwriting an existing stack.yaml'
 complete -c stack -n "__fish_seen_subcommand_from init" -l ignore-subdirs -d 'Do not search for .cabal files in sub directories'
-complete -c stack -n "__fish_seen_subcommand_from init" -l setup-info-yaml -d 'Alternate URL or relative / absolute path for stack dependencies' -x
+complete -c stack -n "__fish_seen_subcommand_from init" -l setup-info-yaml -d 'Alternate URL or relative / absolute path for stack dependencies' -r
 complete -c stack -n "__fish_seen_subcommand_from init" -l snapshot-location-base -d 'The base location of LTS/Nightly snapshots' -x
 complete -c stack -n "__fish_seen_subcommand_from init" -l help -d 'Show this help text'
 
@@ -509,7 +509,7 @@ complete -c stack -n "__fish_seen_subcommand_from setup" -l ghc-bindist -d 'Alte
 complete -c stack -n "__fish_seen_subcommand_from setup" -l ghcjs-boot-options -d 'Additional ghcjs-boot options' -x
 complete -c stack -n "__fish_seen_subcommand_from setup" -l ghcjs-boot-clean -d 'Enable/disable Control if ghcjs-boot should have --clean option present (default: enabled)'
 complete -c stack -n "__fish_seen_subcommand_from setup" -l no-ghcjs-boot-clean -d 'Enable/disable Control if ghcjs-boot should have --clean option present (default: enabled)'
-complete -c stack -n "__fish_seen_subcommand_from setup" -l setup-info-yaml -d 'Alternate URL or relative / absolute path for stack dependencies' -x
+complete -c stack -n "__fish_seen_subcommand_from setup" -l setup-info-yaml -d 'Alternate URL or relative / absolute path for stack dependencies' -r
 complete -c stack -n "__fish_seen_subcommand_from setup" -l snapshot-location-base -d 'The base location of LTS/Nightly snapshots' -x
 complete -c stack -n "__fish_seen_subcommand_from setup" -l help -d 'Show this help text'
 
@@ -540,26 +540,26 @@ complete -c stack -n "__fish_seen_subcommand_from path" -l local-hpc-root -d 'Wh
 complete -c stack -n "__fish_seen_subcommand_from path" -l local-bin-path -d 'DEPRECATED: Use \'--local-bin\' instead'
 complete -c stack -n "__fish_seen_subcommand_from path" -l ghc-paths -d 'DEPRECATED: Use \'--programs\' instead'
 complete -c stack -n "__fish_seen_subcommand_from path" -l global-stack-root -d 'DEPRECATED: Use \'--stack-root\' instead'
-complete -c stack -n "__fish_seen_subcommand_from path" -l setup-info-yaml -d 'Alternate URL or relative / absolute path for stack dependencies' -x
+complete -c stack -n "__fish_seen_subcommand_from path" -l setup-info-yaml -d 'Alternate URL or relative / absolute path for stack dependencies' -r
 complete -c stack -n "__fish_seen_subcommand_from path" -l snapshot-location-base -d 'The base location of LTS/Nightly snapshots' -x
 complete -c stack -n "__fish_seen_subcommand_from path" -l help -d 'Show this help text'
 
 
 
-complete -c stack -n "__fish_seen_subcommand_from ls" -l setup-info-yaml -d 'Alternate URL or relative / absolute path for stack dependencies' -x
+complete -c stack -n "__fish_seen_subcommand_from ls" -l setup-info-yaml -d 'Alternate URL or relative / absolute path for stack dependencies' -r
 complete -c stack -n "__fish_seen_subcommand_from ls" -l snapshot-location-base -d 'The base location of LTS/Nightly snapshots' -x
 complete -c stack -n "__fish_seen_subcommand_from ls" -l help -d 'Show this help text'
 
 
 
-complete -c stack -n "__fish_seen_subcommand_from unpack" -l to -d 'Optional path to unpack the package into (will unpack into subdirectory)' -x
-complete -c stack -n "__fish_seen_subcommand_from unpack" -l setup-info-yaml -d 'Alternate URL or relative / absolute path for stack dependencies' -x
+complete -c stack -n "__fish_seen_subcommand_from unpack" -l to -d 'Optional path to unpack the package into (will unpack into subdirectory)' -r
+complete -c stack -n "__fish_seen_subcommand_from unpack" -l setup-info-yaml -d 'Alternate URL or relative / absolute path for stack dependencies' -r
 complete -c stack -n "__fish_seen_subcommand_from unpack" -l snapshot-location-base -d 'The base location of LTS/Nightly snapshots' -x
 complete -c stack -n "__fish_seen_subcommand_from unpack" -l help -d 'Show this help text'
 
 
 
-complete -c stack -n "__fish_seen_subcommand_from update" -l setup-info-yaml -d 'Alternate URL or relative / absolute path for stack dependencies' -x
+complete -c stack -n "__fish_seen_subcommand_from update" -l setup-info-yaml -d 'Alternate URL or relative / absolute path for stack dependencies' -r
 complete -c stack -n "__fish_seen_subcommand_from update" -l snapshot-location-base -d 'The base location of LTS/Nightly snapshots' -x
 complete -c stack -n "__fish_seen_subcommand_from update" -l help -d 'Show this help text'
 
@@ -575,30 +575,30 @@ complete -c stack -n "__fish_seen_subcommand_from upgrade" -l binary-only -d 'Do
 complete -c stack -n "__fish_seen_subcommand_from upgrade" -l git -d 'Clone from Git instead of downloading from Hackage (more dangerous)'
 complete -c stack -n "__fish_seen_subcommand_from upgrade" -l git-repo -d 'Clone from specified git repository (default: "https://github.com/commercialhaskell/stack")' -x
 complete -c stack -n "__fish_seen_subcommand_from upgrade" -l git-branch -d 'Clone from this git branch (default: "master")' -x
-complete -c stack -n "__fish_seen_subcommand_from upgrade" -l setup-info-yaml -d 'Alternate URL or relative / absolute path for stack dependencies' -x
+complete -c stack -n "__fish_seen_subcommand_from upgrade" -l setup-info-yaml -d 'Alternate URL or relative / absolute path for stack dependencies' -r
 complete -c stack -n "__fish_seen_subcommand_from upgrade" -l snapshot-location-base -d 'The base location of LTS/Nightly snapshots' -x
 complete -c stack -n "__fish_seen_subcommand_from upgrade" -l help -d 'Show this help text'
 
 
 
-complete -c stack -n "__fish_seen_subcommand_from upload" -l pvp-bounds -d 'How PVP version bounds should be added to .cabal file: none, lower, upper, both' -x
+complete -c stack -n "__fish_seen_subcommand_from upload" -l pvp-bounds -d 'How PVP version bounds should be added to .cabal file: none, lower, upper, both' -r
 complete -c stack -n "__fish_seen_subcommand_from upload" -l ignore-check -d 'Do not check package for common mistakes'
 complete -c stack -n "__fish_seen_subcommand_from upload" -l test-tarball -d 'Enable/disable building of the resulting tarball (default: disabled)'
 complete -c stack -n "__fish_seen_subcommand_from upload" -l no-test-tarball -d 'Enable/disable building of the resulting tarball (default: disabled)'
-complete -c stack -n "__fish_seen_subcommand_from upload" -l tar-dir -d 'If specified, copy all the tar to this dir' -x
+complete -c stack -n "__fish_seen_subcommand_from upload" -l tar-dir -d 'If specified, copy all the tar to this dir' -r
 complete -c stack -n "__fish_seen_subcommand_from upload" -l candidate -d 'Upload as a package candidate'
-complete -c stack -n "__fish_seen_subcommand_from upload" -l setup-info-yaml -d 'Alternate URL or relative / absolute path for stack dependencies' -x
+complete -c stack -n "__fish_seen_subcommand_from upload" -l setup-info-yaml -d 'Alternate URL or relative / absolute path for stack dependencies' -r
 complete -c stack -n "__fish_seen_subcommand_from upload" -l snapshot-location-base -d 'The base location of LTS/Nightly snapshots' -x
 complete -c stack -n "__fish_seen_subcommand_from upload" -l help -d 'Show this help text'
 
 
 
-complete -c stack -n "__fish_seen_subcommand_from sdist" -l pvp-bounds -d 'How PVP version bounds should be added to .cabal file: none, lower, upper, both' -x
+complete -c stack -n "__fish_seen_subcommand_from sdist" -l pvp-bounds -d 'How PVP version bounds should be added to .cabal file: none, lower, upper, both' -r
 complete -c stack -n "__fish_seen_subcommand_from sdist" -l ignore-check -d 'Do not check package for common mistakes'
 complete -c stack -n "__fish_seen_subcommand_from sdist" -l test-tarball -d 'Enable/disable building of the resulting tarball (default: disabled)'
 complete -c stack -n "__fish_seen_subcommand_from sdist" -l no-test-tarball -d 'Enable/disable building of the resulting tarball (default: disabled)'
-complete -c stack -n "__fish_seen_subcommand_from sdist" -l tar-dir -d 'If specified, copy all the tar to this dir' -x
-complete -c stack -n "__fish_seen_subcommand_from sdist" -l setup-info-yaml -d 'Alternate URL or relative / absolute path for stack dependencies' -x
+complete -c stack -n "__fish_seen_subcommand_from sdist" -l tar-dir -d 'If specified, copy all the tar to this dir' -r
+complete -c stack -n "__fish_seen_subcommand_from sdist" -l setup-info-yaml -d 'Alternate URL or relative / absolute path for stack dependencies' -r
 complete -c stack -n "__fish_seen_subcommand_from sdist" -l snapshot-location-base -d 'The base location of LTS/Nightly snapshots' -x
 complete -c stack -n "__fish_seen_subcommand_from sdist" -l help -d 'Show this help text'
 
@@ -614,7 +614,7 @@ complete -c stack -n "__fish_seen_subcommand_from dot" -l flag -d 'Override flag
 complete -c stack -n "__fish_seen_subcommand_from dot" -l test -d 'Consider dependencies of test components'
 complete -c stack -n "__fish_seen_subcommand_from dot" -l bench -d 'Consider dependencies of benchmark components'
 complete -c stack -n "__fish_seen_subcommand_from dot" -l global-hints -d 'Do not require an install GHC; instead, use a hints file for global packages'
-complete -c stack -n "__fish_seen_subcommand_from dot" -l setup-info-yaml -d 'Alternate URL or relative / absolute path for stack dependencies' -x
+complete -c stack -n "__fish_seen_subcommand_from dot" -l setup-info-yaml -d 'Alternate URL or relative / absolute path for stack dependencies' -r
 complete -c stack -n "__fish_seen_subcommand_from dot" -l snapshot-location-base -d 'The base location of LTS/Nightly snapshots' -x
 complete -c stack -n "__fish_seen_subcommand_from dot" -l help -d 'Show this help text'
 
@@ -627,7 +627,7 @@ complete -c stack -n "__fish_seen_subcommand_from ghc" -l no-stack-exe -d 'Enabl
 complete -c stack -n "__fish_seen_subcommand_from ghc" -l package -d 'Additional package(s) that must be installed' -x
 complete -c stack -n "__fish_seen_subcommand_from ghc" -l rts-options -d 'Explicit RTS options to pass to application' -x
 complete -c stack -n "__fish_seen_subcommand_from ghc" -l cwd -d 'Sets the working directory before executing' -r
-complete -c stack -n "__fish_seen_subcommand_from ghc" -l setup-info-yaml -d 'Alternate URL or relative / absolute path for stack dependencies' -x
+complete -c stack -n "__fish_seen_subcommand_from ghc" -l setup-info-yaml -d 'Alternate URL or relative / absolute path for stack dependencies' -r
 complete -c stack -n "__fish_seen_subcommand_from ghc" -l snapshot-location-base -d 'The base location of LTS/Nightly snapshots' -x
 complete -c stack -n "__fish_seen_subcommand_from ghc" -l help -d 'Show this help text'
 
@@ -637,7 +637,7 @@ complete -c stack -n "__fish_seen_subcommand_from hoogle" -l setup -d 'Enable/di
 complete -c stack -n "__fish_seen_subcommand_from hoogle" -l no-setup -d 'Enable/disable If needed: install hoogle, build haddocks and generate a hoogle database (default: enabled)'
 complete -c stack -n "__fish_seen_subcommand_from hoogle" -l rebuild -d 'Rebuild the hoogle database'
 complete -c stack -n "__fish_seen_subcommand_from hoogle" -l server -d 'Start local Hoogle server'
-complete -c stack -n "__fish_seen_subcommand_from hoogle" -l setup-info-yaml -d 'Alternate URL or relative / absolute path for stack dependencies' -x
+complete -c stack -n "__fish_seen_subcommand_from hoogle" -l setup-info-yaml -d 'Alternate URL or relative / absolute path for stack dependencies' -r
 complete -c stack -n "__fish_seen_subcommand_from hoogle" -l snapshot-location-base -d 'The base location of LTS/Nightly snapshots' -x
 complete -c stack -n "__fish_seen_subcommand_from hoogle" -l help -d 'Show this help text'
 
@@ -650,7 +650,7 @@ complete -c stack -n "__fish_seen_subcommand_from exec" -l no-stack-exe -d 'Enab
 complete -c stack -n "__fish_seen_subcommand_from exec" -l package -d 'Additional package(s) that must be installed' -x
 complete -c stack -n "__fish_seen_subcommand_from exec" -l rts-options -d 'Explicit RTS options to pass to application' -x
 complete -c stack -n "__fish_seen_subcommand_from exec" -l cwd -d 'Sets the working directory before executing' -r
-complete -c stack -n "__fish_seen_subcommand_from exec" -l setup-info-yaml -d 'Alternate URL or relative / absolute path for stack dependencies' -x
+complete -c stack -n "__fish_seen_subcommand_from exec" -l setup-info-yaml -d 'Alternate URL or relative / absolute path for stack dependencies' -r
 complete -c stack -n "__fish_seen_subcommand_from exec" -l snapshot-location-base -d 'The base location of LTS/Nightly snapshots' -x
 complete -c stack -n "__fish_seen_subcommand_from exec" -l help -d 'Show this help text'
 
@@ -663,7 +663,7 @@ complete -c stack -n "__fish_seen_subcommand_from run" -l no-stack-exe -d 'Enabl
 complete -c stack -n "__fish_seen_subcommand_from run" -l package -d 'Additional package(s) that must be installed' -x
 complete -c stack -n "__fish_seen_subcommand_from run" -l rts-options -d 'Explicit RTS options to pass to application' -x
 complete -c stack -n "__fish_seen_subcommand_from run" -l cwd -d 'Sets the working directory before executing' -r
-complete -c stack -n "__fish_seen_subcommand_from run" -l setup-info-yaml -d 'Alternate URL or relative / absolute path for stack dependencies' -x
+complete -c stack -n "__fish_seen_subcommand_from run" -l setup-info-yaml -d 'Alternate URL or relative / absolute path for stack dependencies' -r
 complete -c stack -n "__fish_seen_subcommand_from run" -l snapshot-location-base -d 'The base location of LTS/Nightly snapshots' -x
 complete -c stack -n "__fish_seen_subcommand_from run" -l help -d 'Show this help text'
 
@@ -689,7 +689,7 @@ complete -c stack -n "__fish_seen_subcommand_from ghci" -l test -d 'Enable/disab
 complete -c stack -n "__fish_seen_subcommand_from ghci" -l no-test -d 'Enable/disable testing the package(s) in this directory/configuration (default: disabled)'
 complete -c stack -n "__fish_seen_subcommand_from ghci" -l bench -d 'Enable/disable benchmarking the package(s) in this directory/configuration (default: disabled)'
 complete -c stack -n "__fish_seen_subcommand_from ghci" -l no-bench -d 'Enable/disable benchmarking the package(s) in this directory/configuration (default: disabled)'
-complete -c stack -n "__fish_seen_subcommand_from ghci" -l setup-info-yaml -d 'Alternate URL or relative / absolute path for stack dependencies' -x
+complete -c stack -n "__fish_seen_subcommand_from ghci" -l setup-info-yaml -d 'Alternate URL or relative / absolute path for stack dependencies' -r
 complete -c stack -n "__fish_seen_subcommand_from ghci" -l snapshot-location-base -d 'The base location of LTS/Nightly snapshots' -x
 complete -c stack -n "__fish_seen_subcommand_from ghci" -l help -d 'Show this help text'
 
@@ -715,7 +715,7 @@ complete -c stack -n "__fish_seen_subcommand_from repl" -l test -d 'Enable/disab
 complete -c stack -n "__fish_seen_subcommand_from repl" -l no-test -d 'Enable/disable testing the package(s) in this directory/configuration (default: disabled)'
 complete -c stack -n "__fish_seen_subcommand_from repl" -l bench -d 'Enable/disable benchmarking the package(s) in this directory/configuration (default: disabled)'
 complete -c stack -n "__fish_seen_subcommand_from repl" -l no-bench -d 'Enable/disable benchmarking the package(s) in this directory/configuration (default: disabled)'
-complete -c stack -n "__fish_seen_subcommand_from repl" -l setup-info-yaml -d 'Alternate URL or relative / absolute path for stack dependencies' -x
+complete -c stack -n "__fish_seen_subcommand_from repl" -l setup-info-yaml -d 'Alternate URL or relative / absolute path for stack dependencies' -r
 complete -c stack -n "__fish_seen_subcommand_from repl" -l snapshot-location-base -d 'The base location of LTS/Nightly snapshots' -x
 complete -c stack -n "__fish_seen_subcommand_from repl" -l help -d 'Show this help text'
 
@@ -728,7 +728,7 @@ complete -c stack -n "__fish_seen_subcommand_from runghc" -l no-stack-exe -d 'En
 complete -c stack -n "__fish_seen_subcommand_from runghc" -l package -d 'Additional package(s) that must be installed' -x
 complete -c stack -n "__fish_seen_subcommand_from runghc" -l rts-options -d 'Explicit RTS options to pass to application' -x
 complete -c stack -n "__fish_seen_subcommand_from runghc" -l cwd -d 'Sets the working directory before executing' -r
-complete -c stack -n "__fish_seen_subcommand_from runghc" -l setup-info-yaml -d 'Alternate URL or relative / absolute path for stack dependencies' -x
+complete -c stack -n "__fish_seen_subcommand_from runghc" -l setup-info-yaml -d 'Alternate URL or relative / absolute path for stack dependencies' -r
 complete -c stack -n "__fish_seen_subcommand_from runghc" -l snapshot-location-base -d 'The base location of LTS/Nightly snapshots' -x
 complete -c stack -n "__fish_seen_subcommand_from runghc" -l help -d 'Show this help text'
 
@@ -741,7 +741,7 @@ complete -c stack -n "__fish_seen_subcommand_from runhaskell" -l no-stack-exe -d
 complete -c stack -n "__fish_seen_subcommand_from runhaskell" -l package -d 'Additional package(s) that must be installed' -x
 complete -c stack -n "__fish_seen_subcommand_from runhaskell" -l rts-options -d 'Explicit RTS options to pass to application' -x
 complete -c stack -n "__fish_seen_subcommand_from runhaskell" -l cwd -d 'Sets the working directory before executing' -r
-complete -c stack -n "__fish_seen_subcommand_from runhaskell" -l setup-info-yaml -d 'Alternate URL or relative / absolute path for stack dependencies' -x
+complete -c stack -n "__fish_seen_subcommand_from runhaskell" -l setup-info-yaml -d 'Alternate URL or relative / absolute path for stack dependencies' -r
 complete -c stack -n "__fish_seen_subcommand_from runhaskell" -l snapshot-location-base -d 'The base location of LTS/Nightly snapshots' -x
 complete -c stack -n "__fish_seen_subcommand_from runhaskell" -l help -d 'Show this help text'
 
@@ -753,7 +753,7 @@ complete -c stack -n "__fish_seen_subcommand_from script" -l optimize -d 'Compil
 complete -c stack -n "__fish_seen_subcommand_from script" -l ghc-options -d 'Additional options passed to GHC' -x
 complete -c stack -n "__fish_seen_subcommand_from script" -l extra-dep -d 'Extra dependencies to be added to the snapshot' -x
 complete -c stack -n "__fish_seen_subcommand_from script" -l no-run -d 'Don\'t run, just compile.'
-complete -c stack -n "__fish_seen_subcommand_from script" -l setup-info-yaml -d 'Alternate URL or relative / absolute path for stack dependencies' -x
+complete -c stack -n "__fish_seen_subcommand_from script" -l setup-info-yaml -d 'Alternate URL or relative / absolute path for stack dependencies' -r
 complete -c stack -n "__fish_seen_subcommand_from script" -l snapshot-location-base -d 'The base location of LTS/Nightly snapshots' -x
 complete -c stack -n "__fish_seen_subcommand_from script" -l help -d 'Show this help text'
 
@@ -766,55 +766,55 @@ complete -c stack -n "__fish_seen_subcommand_from eval" -l no-stack-exe -d 'Enab
 complete -c stack -n "__fish_seen_subcommand_from eval" -l package -d 'Additional package(s) that must be installed' -x
 complete -c stack -n "__fish_seen_subcommand_from eval" -l rts-options -d 'Explicit RTS options to pass to application' -x
 complete -c stack -n "__fish_seen_subcommand_from eval" -l cwd -d 'Sets the working directory before executing' -r
-complete -c stack -n "__fish_seen_subcommand_from eval" -l setup-info-yaml -d 'Alternate URL or relative / absolute path for stack dependencies' -x
+complete -c stack -n "__fish_seen_subcommand_from eval" -l setup-info-yaml -d 'Alternate URL or relative / absolute path for stack dependencies' -r
 complete -c stack -n "__fish_seen_subcommand_from eval" -l snapshot-location-base -d 'The base location of LTS/Nightly snapshots' -x
 complete -c stack -n "__fish_seen_subcommand_from eval" -l help -d 'Show this help text'
 
 
 
 complete -c stack -n "__fish_seen_subcommand_from clean" -l full -d 'Delete the project’s stack working directories (.stack-work by default).'
-complete -c stack -n "__fish_seen_subcommand_from clean" -l setup-info-yaml -d 'Alternate URL or relative / absolute path for stack dependencies' -x
+complete -c stack -n "__fish_seen_subcommand_from clean" -l setup-info-yaml -d 'Alternate URL or relative / absolute path for stack dependencies' -r
 complete -c stack -n "__fish_seen_subcommand_from clean" -l snapshot-location-base -d 'The base location of LTS/Nightly snapshots' -x
 complete -c stack -n "__fish_seen_subcommand_from clean" -l help -d 'Show this help text'
 
 
 
-complete -c stack -n "__fish_seen_subcommand_from purge" -l setup-info-yaml -d 'Alternate URL or relative / absolute path for stack dependencies' -x
+complete -c stack -n "__fish_seen_subcommand_from purge" -l setup-info-yaml -d 'Alternate URL or relative / absolute path for stack dependencies' -r
 complete -c stack -n "__fish_seen_subcommand_from purge" -l snapshot-location-base -d 'The base location of LTS/Nightly snapshots' -x
 complete -c stack -n "__fish_seen_subcommand_from purge" -l help -d 'Show this help text'
 
 
 
-complete -c stack -n "__fish_seen_subcommand_from query" -l setup-info-yaml -d 'Alternate URL or relative / absolute path for stack dependencies' -x
+complete -c stack -n "__fish_seen_subcommand_from query" -l setup-info-yaml -d 'Alternate URL or relative / absolute path for stack dependencies' -r
 complete -c stack -n "__fish_seen_subcommand_from query" -l snapshot-location-base -d 'The base location of LTS/Nightly snapshots' -x
 complete -c stack -n "__fish_seen_subcommand_from query" -l help -d 'Show this help text'
 
 
 
-complete -c stack -n "__fish_seen_subcommand_from list" -l setup-info-yaml -d 'Alternate URL or relative / absolute path for stack dependencies' -x
+complete -c stack -n "__fish_seen_subcommand_from list" -l setup-info-yaml -d 'Alternate URL or relative / absolute path for stack dependencies' -r
 complete -c stack -n "__fish_seen_subcommand_from list" -l snapshot-location-base -d 'The base location of LTS/Nightly snapshots' -x
 complete -c stack -n "__fish_seen_subcommand_from list" -l help -d 'Show this help text'
 
 
 
-complete -c stack -n "__fish_seen_subcommand_from ide" -l setup-info-yaml -d 'Alternate URL or relative / absolute path for stack dependencies' -x
+complete -c stack -n "__fish_seen_subcommand_from ide" -l setup-info-yaml -d 'Alternate URL or relative / absolute path for stack dependencies' -r
 complete -c stack -n "__fish_seen_subcommand_from ide" -l snapshot-location-base -d 'The base location of LTS/Nightly snapshots' -x
 complete -c stack -n "__fish_seen_subcommand_from ide" -l help -d 'Show this help text'
 
 
 
-complete -c stack -n "__fish_seen_subcommand_from docker" -l setup-info-yaml -d 'Alternate URL or relative / absolute path for stack dependencies' -x
+complete -c stack -n "__fish_seen_subcommand_from docker" -l setup-info-yaml -d 'Alternate URL or relative / absolute path for stack dependencies' -r
 complete -c stack -n "__fish_seen_subcommand_from docker" -l snapshot-location-base -d 'The base location of LTS/Nightly snapshots' -x
 complete -c stack -n "__fish_seen_subcommand_from docker" -l help -d 'Show this help text'
 
 
 
-complete -c stack -n "__fish_seen_subcommand_from config" -l setup-info-yaml -d 'Alternate URL or relative / absolute path for stack dependencies' -x
+complete -c stack -n "__fish_seen_subcommand_from config" -l setup-info-yaml -d 'Alternate URL or relative / absolute path for stack dependencies' -r
 complete -c stack -n "__fish_seen_subcommand_from config" -l snapshot-location-base -d 'The base location of LTS/Nightly snapshots' -x
 complete -c stack -n "__fish_seen_subcommand_from config" -l help -d 'Show this help text'
 
 
 
-complete -c stack -n "__fish_seen_subcommand_from hpc" -l setup-info-yaml -d 'Alternate URL or relative / absolute path for stack dependencies' -x
+complete -c stack -n "__fish_seen_subcommand_from hpc" -l setup-info-yaml -d 'Alternate URL or relative / absolute path for stack dependencies' -r
 complete -c stack -n "__fish_seen_subcommand_from hpc" -l snapshot-location-base -d 'The base location of LTS/Nightly snapshots' -x
 complete -c stack -n "__fish_seen_subcommand_from hpc" -l help -d 'Show this help text'

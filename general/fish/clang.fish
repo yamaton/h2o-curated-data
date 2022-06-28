@@ -1,10 +1,10 @@
 # Auto-generated with h2o
 
 complete -c clang -s \# -d 'Print (but do not run) the commands to run for this compilation' -x
-complete -c clang -l analyzer-output -d 'Static analyzer report output format (html|plist|plist-multi-file|plist-html|sarif|text).' -x
+complete -c clang -l analyzer-output -d 'Static analyzer report output format (html|plist|plist-multi-file|plist-html|sarif|text).' -r
 complete -c clang -l analyze -d 'Run the static analyzer'
 complete -c clang -o arcmt-migrate-emit-errors -d 'Emit ARC errors even if the migrator can fix them'
-complete -c clang -o arcmt-migrate-report-output -d 'Output path for the plist report' -x
+complete -c clang -o arcmt-migrate-report-output -d 'Output path for the plist report' -r
 complete -c clang -s B -d 'Add <dir> to search path for binaries and object files used implicitly' -r
 complete -c clang -o CC -d 'Include comments from within macros in preprocessed output'
 complete -c clang -o cl-denorms-are-zero -d 'OpenCL only.'
@@ -20,7 +20,7 @@ complete -c clang -o cl-std -d 'OpenCL language standard to compile for.' -x
 complete -c clang -o cl-strict-aliasing -d 'OpenCL only.'
 complete -c clang -o cl-uniform-work-group-size -d 'OpenCL only.'
 complete -c clang -o cl-unsafe-math-optimizations -d 'OpenCL only.'
-complete -c clang -l config -d 'Specifies configuration file' -x
+complete -c clang -l config -d 'Specifies configuration file' -r
 complete -c clang -l cuda-compile-host-device -d 'Compile CUDA code for both host and device (default).'
 complete -c clang -l cuda-device-only -d 'Compile CUDA code for device only'
 complete -c clang -l cuda-gpu-arch -d 'CUDA GPU architecture (e.g. sm_35).' -x
@@ -28,13 +28,13 @@ complete -c clang -l cuda-host-only -d 'Compile CUDA code for host only.'
 complete -c clang -l cuda-include-ptx -d 'Include PTX for the following GPU architecture (e.g. sm_35) or \'all\'.' -x
 complete -c clang -l cuda-noopt-device-debug -d 'Enable device-side debug info generation.'
 complete -c clang -l cuda-path-ignore-env -d 'Ignore environment variables to detect CUDA installation'
-complete -c clang -l cuda-path -d 'CUDA installation path' -x
+complete -c clang -l cuda-path -d 'CUDA installation path' -r
 complete -c clang -o cxx-isystem -d 'Add directory to the C++ SYSTEM include search path' -r
 complete -c clang -s C -d 'Include comments in preprocessed output'
 complete -c clang -s c -d 'Only run preprocess, compile, and assemble steps'
 complete -c clang -o dD -d 'Print macro definitions in -E mode in addition to normal output'
-complete -c clang -o dependency-dot -d 'Filename to write DOT-formatted header dependencies to' -x
-complete -c clang -o dependency-file -d 'Filename (or -) to write dependency output to' -x
+complete -c clang -o dependency-dot -d 'Filename to write DOT-formatted header dependencies to' -r
+complete -c clang -o dependency-file -d 'Filename (or -) to write dependency output to' -r
 complete -c clang -o dI -d 'Print include directives in -E mode in addition to normal output'
 complete -c clang -o dM -d 'Print macro definitions in -E mode instead of normal output'
 complete -c clang -s D -d 'Define <macro> to <value> (or 1 if <value> omitted)' -x
@@ -84,18 +84,18 @@ complete -c clang -o fcuda-flush-denormals-to-zero -d 'Flush denormal floating p
 complete -c clang -o fcuda-short-ptr -d 'Use 32-bit pointers for accessing const/local/shared address spaces.'
 complete -c clang -o fcxx-exceptions -d 'Enable C++ exceptions'
 complete -c clang -o fdata-sections -d 'Place each data in its own section (ELF Only)'
-complete -c clang -o fdebug-compilation-dir -d 'The compilation directory to embed in the debug info.' -x
+complete -c clang -o fdebug-compilation-dir -d 'The compilation directory to embed in the debug info.' -r
 complete -c clang -o fdebug-default-version -d 'Default DWARF version to use, if a -g option caused DWARF debug info to be produced' -x
 complete -c clang -o fdebug-info-for-profiling -d 'Emit extra debug info to make sample profile more accurate.'
 complete -c clang -o fdebug-macro -d 'Emit macro debug information'
-complete -c clang -o fdebug-prefix-map -d 'remap file source paths in debug info' -x
+complete -c clang -o fdebug-prefix-map -d 'remap file source paths in debug info' -r
 complete -c clang -o fdebug-ranges-base-address -d 'Use DWARF base address selection entries in debug_ranges'
 complete -c clang -o fdebug-types-section -d 'Place debug types in their own section (ELF Only)'
 complete -c clang -o fdeclspec -d 'Allow __declspec as a keyword'
 complete -c clang -o fdelayed-template-parsing -d 'Parse templated function definitions at the end of the translation unit'
 complete -c clang -o fdelete-null-pointer-checks -d 'Treat usage of null pointers as undefined behavior.'
 complete -c clang -o fdiagnostics-absolute-paths -d 'Print absolute paths in diagnostics'
-complete -c clang -o fdiagnostics-hotness-threshold -d 'Prevent optimization remarks from being output if they do not have at least this profile count' -x
+complete -c clang -o fdiagnostics-hotness-threshold -d 'Prevent optimization remarks from being output if they do not have at least this profile count' -r
 complete -c clang -o fdiagnostics-parseable-fixits -d 'Print fix-its in machine parseable form'
 complete -c clang -o fdiagnostics-print-source-range-info -d 'Print source range spans in numeric form'
 complete -c clang -o fdiagnostics-show-hotness -d 'Enable profile hotness information in diagnostic line'
@@ -117,7 +117,7 @@ complete -c clang -o fexperimental-isel -d 'Enables the experimental global inst
 complete -c clang -o fexperimental-new-constant-interpreter -d 'Enable the experimental new constant interpreter'
 complete -c clang -o fexperimental-new-pass-manager -d 'Enables an experimental new pass manager in LLVM.'
 complete -c clang -o ffast-math -d 'Allow aggressive, lossy floating-point optimizations'
-complete -c clang -o ffile-prefix-map -d 'remap file source paths in debug info and predefined preprocessor macros' -x
+complete -c clang -o ffile-prefix-map -d 'remap file source paths in debug info and predefined preprocessor macros' -r
 complete -c clang -o ffine-grained-bitfield-accesses -d 'Use separate accesses for consecutive bitfield runs with legal widths and alignments.'
 complete -c clang -o ffixed-point -d 'Enable fixed point types'
 complete -c clang -o ffixed-r19 -d 'Reserve register r19 (Hexagon only)'
@@ -181,7 +181,7 @@ complete -c clang -o flax-vector-conversions -d 'Enable implicit vector bit-cast
 complete -c clang -o flto-jobs -d 'Controls the backend parallelism of -flto=thin (default of 0 means the number of threads will be derived from the number of CPUs detected)' -x
 complete -c clang -o flto -d 'Set LTO mode to either \'full\' or \'thin\'' -x
 complete -c clang -o flto -d 'Enable LTO in \'full\' mode'
-complete -c clang -o fmacro-prefix-map -d 'remap file source paths in predefined preprocessor macros' -x
+complete -c clang -o fmacro-prefix-map -d 'remap file source paths in predefined preprocessor macros' -r
 complete -c clang -o fmath-errno -d 'Require math functions to indicate errors by setting errno'
 complete -c clang -o fmax-type-align -d 'Specify the maximum alignment to enforce on pointers lacking an explicit alignment' -x
 complete -c clang -o fmerge-all-constants -d 'Allow merging of constants'
@@ -192,7 +192,7 @@ complete -c clang -o fmodules-cache-path -d 'Specify the module cache path' -r
 complete -c clang -o fmodules-decluse -d 'Require declaration of modules used within a module'
 complete -c clang -o fmodules-disable-diagnostic-validation -d 'Disable validation of the diagnostic options when loading the module'
 complete -c clang -o fmodules-ignore-macro -d 'Ignore the definition of the given macro when building and loading modules' -x
-complete -c clang -o fmodules-prune-after -d 'Specify the interval (in seconds) after which a module file will be considered unused' -x
+complete -c clang -o fmodules-prune-after -d 'Specify the interval (in seconds) after which a module file will be considered unused' -r
 complete -c clang -o fmodules-prune-interval -d 'Specify the interval (in seconds) between attempts to prune the module cache' -x
 complete -c clang -o fmodules-search-all -d 'Search even non-imported modules to resolve references'
 complete -c clang -o fmodules-strict-decluse -d 'Like -fmodules-decluse but requires all headers to be in modules'
@@ -307,16 +307,16 @@ complete -c clang -o fpch-validate-input-files-content -d 'Validate PCH input fi
 complete -c clang -o fplt -d 'Use the PLT to make function calls'
 complete -c clang -o fplugin -d 'Load the named plugin (dynamic shared object)' -r
 complete -c clang -o fprebuilt-module-path -d 'Specify the prebuilt module path' -r
-complete -c clang -o fprofile-exclude-files -d 'Instrument only functions from files where names don\'t match all the regexes separated by a semi-colon' -x
-complete -c clang -o fprofile-filter-files -d 'Instrument only functions from files where names match any regex separated by a semi-colon' -x
+complete -c clang -o fprofile-exclude-files -d 'Instrument only functions from files where names don\'t match all the regexes separated by a semi-colon' -r
+complete -c clang -o fprofile-filter-files -d 'Instrument only functions from files where names match any regex separated by a semi-colon' -r
 complete -c clang -o fprofile-generate -d 'Generate instrumented code to collect execution counts into <directory>/default.profraw (overridden by LLVM_PROFILE_FILE env var)' -r
 complete -c clang -o fprofile-generate -d 'Generate instrumented code to collect execution counts into default.profraw (overridden by LLVM_PROFILE_FILE env var)'
 complete -c clang -o fprofile-instr-generate -d 'Generate instrumented code to collect execution counts into <file> (overridden by LLVM_PROFILE_FILE env var)' -r
 complete -c clang -o fprofile-instr-generate -d 'Generate instrumented code to collect execution counts into default.profraw file (overridden by \'=\' form of option or LLVM_PROFILE_FILE env var)'
-complete -c clang -o fprofile-instr-use -d 'Use instrumentation data for profile-guided optimization' -x
+complete -c clang -o fprofile-instr-use -d 'Use instrumentation data for profile-guided optimization' -r
 complete -c clang -o fprofile-remapping-file -d 'Use the remappings described in <file> to match the profile data against names in the program' -r
 complete -c clang -o fprofile-sample-accurate -d 'Specifies that the sample profile is accurate'
-complete -c clang -o fprofile-sample-use -d 'Enable sample-based profile guided optimizations' -x
+complete -c clang -o fprofile-sample-use -d 'Enable sample-based profile guided optimizations' -r
 complete -c clang -o fprofile-use -d 'Use instrumentation data for profile-guided optimization.' -r
 complete -c clang -o freciprocal-math -d 'Allow division operations to be reassociated'
 complete -c clang -o freg-struct-return -d 'Override the default ABI to return small structs in registers'
@@ -329,7 +329,7 @@ complete -c clang -o fsanitize-address-globals-dead-stripping -d 'Enable linker 
 complete -c clang -o fsanitize-address-poison-custom-array-cookie -d 'Enable poisoning array cookies when using custom operator new[] in AddressSanitizer'
 complete -c clang -o fsanitize-address-use-after-scope -d 'Enable use-after-scope detection in AddressSanitizer'
 complete -c clang -o fsanitize-address-use-odr-indicator -d 'Enable ODR indicator globals to avoid false ODR violation reports in partially sanitized programs at the cost of an increase in binary size'
-complete -c clang -o fsanitize-blacklist -d 'Path to blacklist file for sanitizers' -x
+complete -c clang -o fsanitize-blacklist -d 'Path to blacklist file for sanitizers' -r
 complete -c clang -o fsanitize-cfi-canonical-jump-tables -d 'Make the jump table addresses canonical in the symbol table'
 complete -c clang -o fsanitize-cfi-cross-dso -d 'Enable control flow integrity (CFI) checks for cross-DSO calls.'
 complete -c clang -o fsanitize-cfi-icall-generalize-pointers -d 'Generalize pointers in CFI indirect call type signature checks'
@@ -340,14 +340,14 @@ complete -c clang -o fsanitize-memory-track-origins -d 'Enable origins tracking 
 complete -c clang -o fsanitize-memory-use-after-dtor -d 'Enable use-after-destroy detection in MemorySanitizer'
 complete -c clang -o fsanitize-recover -d 'Enable recovery for specified sanitizers' -x
 complete -c clang -o fsanitize-stats -d 'Enable sanitizer statistics gathering.'
-complete -c clang -o fsanitize-system-blacklist -d 'Path to system blacklist file for sanitizers' -x
+complete -c clang -o fsanitize-system-blacklist -d 'Path to system blacklist file for sanitizers' -r
 complete -c clang -o fsanitize-thread-atomics -d 'Enable atomic operations instrumentation in ThreadSanitizer (default)'
 complete -c clang -o fsanitize-thread-func-entry-exit -d 'Enable function entry/exit instrumentation in ThreadSanitizer (default)'
 complete -c clang -o fsanitize-thread-memory-access -d 'Enable memory access instrumentation in ThreadSanitizer (default)'
 complete -c clang -o fsanitize-trap -d 'Enable trapping for specified sanitizers' -x
-complete -c clang -o fsanitize-undefined-strip-path-components -d 'Strip (or keep only, if negative) a given number of path components when emitting check metadata.' -x
+complete -c clang -o fsanitize-undefined-strip-path-components -d 'Strip (or keep only, if negative) a given number of path components when emitting check metadata.' -r
 complete -c clang -o fsanitize -d 'Turn on runtime checks for various forms of undefined or suspicious behavior.' -x
-complete -c clang -o fsave-optimization-record -d 'Generate an optimization record file in a specific format' -x
+complete -c clang -o fsave-optimization-record -d 'Generate an optimization record file in a specific format' -r
 complete -c clang -o fsave-optimization-record -d 'Generate a YAML optimization record file'
 complete -c clang -o fseh-exceptions -d 'Use SEH style exceptions'
 complete -c clang -o fshort-enums -d 'Allocate to an enum type only as many bytes as it needs for the declared range of possible values'
@@ -367,9 +367,9 @@ complete -c clang -o fstrict-enums -d 'Enable optimizations based on the strict 
 complete -c clang -o fstrict-float-cast-overflow -d 'Assume that overflowing float-to-int casts are undefined (default)'
 complete -c clang -o fstrict-return -d 'Always treat control flow paths that fall off the end of a non-void function as unreachable'
 complete -c clang -o fstrict-vtable-pointers -d 'Enable optimizations based on the strict rules for overwriting polymorphic C++ objects'
-complete -c clang -o fthin-link-bitcode -d 'Write minimized bitcode to <file> for the ThinLTO thin link only' -x
+complete -c clang -o fthin-link-bitcode -d 'Write minimized bitcode to <file> for the ThinLTO thin link only' -r
 complete -c clang -o fthinlto-index -d 'Perform ThinLTO importing using provided function summary index' -x
-complete -c clang -o ftime-trace-granularity -d 'Minimum time granularity (in microseconds) traced by time profiler' -x
+complete -c clang -o ftime-trace-granularity -d 'Minimum time granularity (in microseconds) traced by time profiler' -r
 complete -c clang -o ftime-trace -d 'Turn on time profiler.'
 complete -c clang -o ftrap-function -d 'Issue call to specified function rather than a trap instruction' -x
 complete -c clang -o ftrapv-handler -d 'Specify the function to be called on overflow' -x
@@ -393,17 +393,17 @@ complete -c clang -o fwrapv -d 'Treat signed integer overflow as two\'s compleme
 complete -c clang -o fwritable-strings -d 'Store string literals as writable data'
 complete -c clang -o fxray-always-emit-customevents -d 'Determine whether to always emit __xray_customevent(...) calls even if the function it appears in is not always instrumented.'
 complete -c clang -o fxray-always-emit-typedevents -d 'Determine whether to always emit __xray_typedevent(...) calls even if the function it appears in is not always instrumented.'
-complete -c clang -o fxray-always-instrument -d 'DEPRECATED: Filename defining the whitelist for imbuing the \'always instrument\' XRay attribute.' -x
-complete -c clang -o fxray-attr-list -d 'Filename defining the list of functions/types for imbuing XRay attributes.' -x
+complete -c clang -o fxray-always-instrument -d 'DEPRECATED: Filename defining the whitelist for imbuing the \'always instrument\' XRay attribute.' -r
+complete -c clang -o fxray-attr-list -d 'Filename defining the list of functions/types for imbuing XRay attributes.' -r
 complete -c clang -o fxray-instruction-threshold -d 'Sets the minimum function size to instrument with XRay' -x
 complete -c clang -o fxray-instrumentation-bundle -d 'Select which XRay instrumentation points to emit.' -x
 complete -c clang -o fxray-instrument -d 'Generate XRay instrumentation sleds on function entry and exit'
 complete -c clang -o fxray-link-deps -d 'Tells clang to add the link dependencies for XRay.'
 complete -c clang -o fxray-modes -d 'List of modes to link in by default into XRay instrumented binaries.' -x
-complete -c clang -o fxray-never-instrument -d 'DEPRECATED: Filename defining the whitelist for imbuing the \'never instrument\' XRay attribute.' -x
+complete -c clang -o fxray-never-instrument -d 'DEPRECATED: Filename defining the whitelist for imbuing the \'never instrument\' XRay attribute.' -r
 complete -c clang -o fzvector -d 'Enable System z vector language extension'
-complete -c clang -s F -d 'Add directory to framework include search path' -x
-complete -c clang -l gcc-toolchain -d 'Use the gcc toolchain at the given directory' -x
+complete -c clang -s F -d 'Add directory to framework include search path' -r
+complete -c clang -l gcc-toolchain -d 'Use the gcc toolchain at the given directory' -r
 complete -c clang -o gcodeview-ghash -d 'Emit type record hashes in a .debug$H section'
 complete -c clang -o gcodeview -d 'Generate CodeView debug information'
 complete -c clang -o gdwarf-2 -d 'Generate source-level debug information with dwarf version 2'
@@ -425,14 +425,14 @@ complete -c clang -s G -d 'Put objects of at most <size> bytes into small data s
 complete -c clang -s g -d 'Generate source-level debug information'
 complete -c clang -l help-hidden -d 'Display help for hidden options'
 complete -c clang -o help -d 'Display available options'
-complete -c clang -l hip-device-lib-path -d 'HIP device library path' -x
+complete -c clang -l hip-device-lib-path -d 'HIP device library path' -r
 complete -c clang -l hip-device-lib -d 'HIP device library' -x
 complete -c clang -l hip-link -d 'Link clang-offload-bundler bundles for HIP'
 complete -c clang -s H -d 'Show header includes and nesting depth'
 complete -c clang -o I- -d 'Restrict all prior -I flags to double-quoted inclusion and remove current directory from include path'
-complete -c clang -o idirafter -d 'Add directory to AFTER include search path' -x
+complete -c clang -o idirafter -d 'Add directory to AFTER include search path' -r
 complete -c clang -o iframeworkwithsysroot -d 'Add directory to SYSTEM framework search path, absolute paths are relative to -isysroot' -r
-complete -c clang -o iframework -d 'Add directory to SYSTEM framework search path' -x
+complete -c clang -o iframework -d 'Add directory to SYSTEM framework search path' -r
 complete -c clang -o imacros -d 'Include macros from file before parsing' -r
 complete -c clang -o include-pch -d 'Include precompiled header file' -r
 complete -c clang -o include -d 'Include file before parsing' -r
@@ -442,17 +442,17 @@ complete -c clang -o iquote -d 'Add directory to QUOTE include search path' -r
 complete -c clang -o isysroot -d 'Set the system root directory (usually /)' -r
 complete -c clang -o isystem-after -d 'Add directory to end of the SYSTEM include search path' -r
 complete -c clang -o isystem -d 'Add directory to SYSTEM include search path' -r
-complete -c clang -o ivfsoverlay -d 'Overlay the virtual filesystem described by file over the real file system' -x
+complete -c clang -o ivfsoverlay -d 'Overlay the virtual filesystem described by file over the real file system' -r
 complete -c clang -o iwithprefixbefore -d 'Set directory to include search path with prefix' -r
 complete -c clang -o iwithprefix -d 'Set directory to SYSTEM include search path with prefix' -r
 complete -c clang -o iwithsysroot -d 'Add directory to SYSTEM include search path, absolute paths are relative to -isysroot' -r
 complete -c clang -s I -d 'Add directory to include search path' -r
-complete -c clang -l libomptarget-nvptx-path -d 'Path to libomptarget-nvptx libraries' -x
+complete -c clang -l libomptarget-nvptx-path -d 'Path to libomptarget-nvptx libraries' -r
 complete -c clang -s L -d 'Add directory to library search path' -r
 complete -c clang -o mabicalls -d 'Enable SVR4-style position-independent code (Mips only)'
 complete -c clang -o malign-double -d 'Align doubles to two words in structs (x86 only)'
 complete -c clang -o mbackchain -d 'Link stack frames through backchain on System Z'
-complete -c clang -o mbranch-protection -d 'Enforce targets of indirect branches and function returns' -x
+complete -c clang -o mbranch-protection -d 'Enforce targets of indirect branches and function returns' -r
 complete -c clang -o mcmodel -d 'Equivalent to -mcmodel=medium, compatible with RISC-V gcc.' -x
 complete -c clang -o mcmodel -d 'Equivalent to -mcmodel=small, compatible with RISC-V gcc.' -x
 complete -c clang -o mcmse -d 'Allow use of CMSE (Armv8-M Security Extensions)'
@@ -479,7 +479,7 @@ complete -c clang -o mhvx -d 'Enable Hexagon Vector eXtensions'
 complete -c clang -o miamcu -d 'Use Intel MCU ABI'
 complete -c clang -l migrate -d 'Run the migrator'
 complete -c clang -o mincremental-linker-compatible -d '(integrated-as) Emit an object file which can be used with an incremental linker'
-complete -c clang -o mindirect-jump -d 'Change indirect jump instructions to inhibit speculation' -x
+complete -c clang -o mindirect-jump -d 'Change indirect jump instructions to inhibit speculation' -r
 complete -c clang -o mios-version-min -d 'Set iOS deployment target' -x
 complete -c clang -o MJ -d 'Write a compilation database entry per input' -x
 complete -c clang -o mllvm -d 'Additional arguments to forward to LLVM\'s option processing' -x
@@ -535,7 +535,7 @@ complete -c clang -o mnocrc -d 'Disallow use of CRC instructions (ARM only)'
 complete -c clang -o mnop-mcount -d 'Generate mcount/__fentry__ calls as nops.'
 complete -c clang -o mnvj -d 'Enable generation of new-value jumps'
 complete -c clang -o mnvs -d 'Enable generation of new-value stores'
-complete -c clang -o module-dependency-dir -d 'Directory to dump module dependencies to' -x
+complete -c clang -o module-dependency-dir -d 'Directory to dump module dependencies to' -r
 complete -c clang -o module-file-info -d 'Provide information about a particular module file'
 complete -c clang -o momit-leaf-frame-pointer -d 'Omit frame pointer setup for leaf functions'
 complete -c clang -o moutline -d 'Enable function outlining (AArch64 only)'
@@ -545,7 +545,7 @@ complete -c clang -o mpie-copy-relocations -d 'Use copy relocations support for 
 complete -c clang -o mprefer-vector-width -d 'Specifies preferred vector width for auto-vectorization.' -x
 complete -c clang -o MP -d 'Create phony target for each dependency (other than main file)'
 complete -c clang -o mqdsp6-compat -d 'Enable hexagon-qdsp6 backward compatibility'
-complete -c clang -o MQ -d 'Specify name of main file output to quote in depfile' -x
+complete -c clang -o MQ -d 'Specify name of main file output to quote in depfile' -r
 complete -c clang -o mrecord-mcount -d 'Generate a __mcount_loc section entry for each __fentry__ call.'
 complete -c clang -o mrelax-all -d '(integrated-as) Relax all machine instructions'
 complete -c clang -o mrelax -d 'Enable linker relaxation'
@@ -563,7 +563,7 @@ complete -c clang -o mthread-model -d 'The thread model to use, e.g. posix, sing
 complete -c clang -o mtls-direct-seg-refs -d 'Enable direct TLS access through segment registers (default)'
 complete -c clang -o mtls-size -d 'Specify bit size of immediate TLS offsets (AArch64 ELF only): 12 (for 4KB) | 24 (for 16MB, default) | 32 (for 4GB) | 48 (for 256TB, needs -mcmodel=large)' -x
 complete -c clang -o mtp -d 'Thread pointer access method (AArch32/AArch64 only)' -x
-complete -c clang -o MT -d 'Specify name of main file output in depfile' -x
+complete -c clang -o MT -d 'Specify name of main file output in depfile' -r
 complete -c clang -o munaligned-access -d 'Allow memory accesses to be unaligned (AArch32/AArch64 only)'
 complete -c clang -o MV -d 'Use NMake/Jom format for the depfile'
 complete -c clang -o mwavefrontsize64 -d 'Wavefront size 64 is used'
@@ -572,7 +572,7 @@ complete -c clang -s M -d 'Like -MD, but also implies -E and writes to stdout by
 complete -c clang -l no-cuda-gpu-arch -d 'Remove GPU architecture (e.g. sm_35) from the list of GPUs to compile for.' -x
 complete -c clang -l no-cuda-include-ptx -d 'Do not include PTX for the following GPU architecture (e.g. sm_35) or \'all\'.' -x
 complete -c clang -l no-cuda-version-check -d 'Don\'t error out if the detected version of the CUDA install is too low for the requested CUDA gpu architecture.'
-complete -c clang -l no-system-header-prefix -d 'Treat all #include paths starting with <prefix> as not including a system header.' -x
+complete -c clang -l no-system-header-prefix -d 'Treat all #include paths starting with <prefix> as not including a system header.' -r
 complete -c clang -o nobuiltininc -d 'Disable builtin #include directories'
 complete -c clang -o nogpulib -d 'Do not link device library for CUDA/HIP device compilation'
 complete -c clang -o nostdinc++ -d 'Disable standard #include directories for the C++ standard library'
@@ -592,7 +592,7 @@ complete -c clang -o objcmt-migrate-readwrite-property -d 'Enable migration to m
 complete -c clang -o objcmt-migrate-subscripting -d 'Enable migration to modern ObjC subscripting'
 complete -c clang -o objcmt-ns-nonatomic-iosonly -d 'Enable migration to use NS_NONATOMIC_IOSONLY macro for setting property\'s \'atomic\' attribute'
 complete -c clang -o objcmt-returns-innerpointer-property -d 'Enable migration to annotate property with NS_RETURNS_INNER_POINTER'
-complete -c clang -o objcmt-whitelist-dir-path -d 'Only modify files with a filename contained in the provided directory path' -x
+complete -c clang -o objcmt-whitelist-dir-path -d 'Only modify files with a filename contained in the provided directory path' -r
 complete -c clang -o ObjC -d 'Treat source input files as Objective-C inputs'
 complete -c clang -s o -d 'Write output to <file>' -r
 complete -c clang -o pg -d 'Enable mcount instrumentation'
@@ -602,13 +602,13 @@ complete -c clang -o print-effective-triple -d 'Print the effective target tripl
 complete -c clang -o print-file-name -d 'Print the full library path of <file>' -r
 complete -c clang -o print-ivar-layout -d 'Enable Objective-C Ivar layout bitmap print trace'
 complete -c clang -o print-libgcc-file-name -d 'Print the library path for the currently used compiler runtime library ("libgcc.a" or "libclang_rt.builtins.*.a")'
-complete -c clang -o print-prog-name -d 'Print the full program path of <name>' -x
+complete -c clang -o print-prog-name -d 'Print the full program path of <name>' -r
 complete -c clang -o print-resource-dir -d 'Print the resource directory pathname'
 complete -c clang -o print-search-dirs -d 'Print the paths used for finding libraries and programs'
 complete -c clang -o print-supported-cpus -d 'Print supported cpu models for the given target (if target is not specified, it will print the supported cpus for the default target)'
 complete -c clang -o print-target-triple -d 'Print the normalized target triple'
 complete -c clang -o pthread -d 'Support POSIX threads in generated code'
-complete -c clang -l ptxas-path -d 'Path to ptxas (used for compiling CUDA code)' -x
+complete -c clang -l ptxas-path -d 'Path to ptxas (used for compiling CUDA code)' -r
 complete -c clang -s P -d 'Disable linemarker output in -E mode'
 complete -c clang -o Qn -d 'Do not emit metadata containing compiler name and version'
 complete -c clang -o Qunused-arguments -d 'Don\'t emit warning for unused driver arguments'
@@ -625,14 +625,14 @@ complete -c clang -o save-stats -d 'Save llvm statistics.' -x
 complete -c clang -o save-stats -d 'Save llvm statistics.'
 complete -c clang -o save-temps -d 'Save intermediate compilation results.' -x
 complete -c clang -o save-temps -d 'Save intermediate compilation results'
-complete -c clang -o serialize-diagnostics -d 'Serialize compiler diagnostics to a file' -x
+complete -c clang -o serialize-diagnostics -d 'Serialize compiler diagnostics to a file' -r
 complete -c clang -o shared-libsan -d 'Dynamically link the sanitizer runtime'
 complete -c clang -o static-libsan -d 'Statically link the sanitizer runtime'
 complete -c clang -o static-openmp -d 'Use the static host OpenMP runtime while linking.'
 complete -c clang -o std -d 'Language standard to compile for' -x
 complete -c clang -o stdlib++-isystem -d 'Use directory as the C++ standard library include path' -r
 complete -c clang -o stdlib -d 'C++ standard library to use' -x
-complete -c clang -l system-header-prefix -d 'Treat all #include paths starting with <prefix> as including a system header.' -x
+complete -c clang -l system-header-prefix -d 'Treat all #include paths starting with <prefix> as including a system header.' -r
 complete -c clang -s S -d 'Only run preprocess and compilation steps'
 complete -c clang -l target -d 'Generate code for the given target' -x
 complete -c clang -o Tbss -d 'Set starting address of BSS to <addr>' -x
@@ -652,7 +652,7 @@ complete -c clang -s v -d 'Show commands to run and use verbose output'
 complete -c clang -o Wa -d 'Pass the comma separated arguments in <arg> to the assembler' -x
 complete -c clang -o Wdeprecated -d 'Enable warnings for deprecated constructs and define __DEPRECATED'
 complete -c clang -o Wl -d 'Pass the comma separated arguments in <arg> to the linker' -x
-complete -c clang -o working-directory -d 'Resolve file paths relative to the specified directory' -x
+complete -c clang -o working-directory -d 'Resolve file paths relative to the specified directory' -r
 complete -c clang -o Wp -d 'Pass the comma separated arguments in <arg> to the preprocessor' -x
 complete -c clang -s W -d 'Enable the specified warning' -x
 complete -c clang -s w -d 'Suppress all warnings'
@@ -665,5 +665,5 @@ complete -c clang -o Xlinker -d 'Pass <arg> to the linker' -x
 complete -c clang -o Xopenmp-target -d '<arg> Pass <arg> to the target offloading toolchain identified by <triple>.' -x
 complete -c clang -o Xopenmp-target -d 'Pass <arg> to the target offloading toolchain.' -x
 complete -c clang -o Xpreprocessor -d 'Pass <arg> to the preprocessor' -x
-complete -c clang -s x -d 'Treat subsequent input files as having type <language>' -x
+complete -c clang -s x -d 'Treat subsequent input files as having type <language>' -r
 complete -c clang -s z -d 'Pass -z <arg> to the linker' -x

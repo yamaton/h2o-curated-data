@@ -1,6 +1,6 @@
 # Auto-generated with h2o
 
-complete -c mv -l backup -d 'make a backup of each existing destination file' -x
+complete -c mv -l backup -d 'make a backup of each existing destination file' -r
 complete -c mv -s b -d 'like --backup but does not accept an argument'
 complete -c mv -s f -l force -d 'do not prompt before overwriting'
 complete -c mv -s i -l interactive -d 'prompt before overwrite'

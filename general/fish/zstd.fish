@@ -40,22 +40,22 @@ complete -c zstd -l target-compressed-block-size -d 'generate compressed block o
 complete -c zstd -l no-dictID -d 'don\'t write dictID into header (dictionary compression only)'
 complete -c zstd -l compress-literals -d 'force (un)compressed literals'
 complete -c zstd -l no-compress-literals -d 'force (un)compressed literals'
-complete -c zstd -l format -d 'compress files to the .zst format (default)' -x
+complete -c zstd -l format -d 'compress files to the .zst format (default)' -r
 complete -c zstd -s l -d 'print information about zstd compressed files'
 complete -c zstd -l test -d 'test compressed file integrity'
 complete -c zstd -s M -d 'Set a memory usage limit for decompression' -x
 complete -c zstd -l sparse -d 'sparse mode (default: enabled on file, disabled on stdout)'
 complete -c zstd -l no-sparse -d 'sparse mode (default: enabled on file, disabled on stdout)'
-complete -c zstd -l train -d 'create a dictionary from a training set of files' -x
+complete -c zstd -l train -d 'create a dictionary from a training set of files' -r
 complete -c zstd -l train-cover -d 'use the cover algorithm with optional args' -x
 complete -c zstd -l train-fastcover -d 'use the fast cover algorithm with optional args' -x
 complete -c zstd -l train-legacy -d 'use the legacy algorithm with selectivity (default: 9)' -x
 complete -c zstd -s o -d 'DICT is dictionary name (default: dictionary)' -x
 complete -c zstd -l maxdict -d 'limit dictionary to specified size (default: 112640)' -x
 complete -c zstd -l dictID -d 'force dictionary ID to specified value (default: random)' -x
-complete -c zstd -s b -d 'benchmark file(s), using # compression level (default: 3)' -x
+complete -c zstd -s b -d 'benchmark file(s), using # compression level (default: 3)' -r
 complete -c zstd -s e -d 'test all compression levels successively from -b# to -e# (default: 1)' -x
 complete -c zstd -s i -d 'minimum evaluation time in seconds (default: 3s)' -x
-complete -c zstd -s B -d 'cut file into independent blocks of size # (default: no block)' -x
+complete -c zstd -s B -d 'cut file into independent blocks of size # (default: no block)' -r
 complete -c zstd -s S -d 'output one benchmark result per input file (default: consolidated result)'
 complete -c zstd -l priority -d 'set process priority to real-time' -x

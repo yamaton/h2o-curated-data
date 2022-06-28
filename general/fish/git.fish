@@ -16,7 +16,6 @@ complete -k -c git -n __fish_use_subcommand -x -a log -d 'Show commit logs'
 complete -k -c git -n __fish_use_subcommand -x -a grep -d 'Print lines matching a pattern'
 complete -k -c git -n __fish_use_subcommand -x -a diff -d 'Show changes between commits, commit and working tree, etc'
 complete -k -c git -n __fish_use_subcommand -x -a bisect -d 'Use binary search to find the commit that introduced a bug'
-complete -k -c git -n __fish_use_subcommand -x -a sparse-checkout -d 'Initialize and modify the sparse-checkout'
 complete -k -c git -n __fish_use_subcommand -x -a rm -d 'Remove files from the working tree and from the index'
 complete -k -c git -n __fish_use_subcommand -x -a restore -d 'Restore working tree files'
 complete -k -c git -n __fish_use_subcommand -x -a mv -d 'Move or rename a file, a directory, or a symlink'
@@ -29,7 +28,7 @@ complete -k -c git -n __fish_use_subcommand -x -a clone -d 'Clone a repository i
 complete -c git -n "__fish_seen_subcommand_from clone" -s l -l local -d 'When the repository to clone from is on a local machine, this flag bypasses the normal "Git aware" transport mechanism and clones the repository by making a copy of HEAD and everything under objects and refs directories.'
 complete -c git -n "__fish_seen_subcommand_from clone" -l no-hardlinks -d 'Force the cloning process from a repository on a local filesystem to copy the files under the .git/objects directory instead of using hardlinks.'
 complete -c git -n "__fish_seen_subcommand_from clone" -s s -l shared -d 'When the repository to clone is on the local machine, instead of using hard links, automatically setup .git/objects/info/alternates to share the objects with the source repository.'
-complete -c git -n "__fish_seen_subcommand_from clone" -l reference -d 'If the reference repository is on the local machine, automatically setup .git/objects/info/alternates to obtain objects from the reference repository.' -x
+complete -c git -n "__fish_seen_subcommand_from clone" -l reference -d 'If the reference repository is on the local machine, automatically setup .git/objects/info/alternates to obtain objects from the reference repository.' -r
 complete -c git -n "__fish_seen_subcommand_from clone" -l dissociate -d 'Borrow the objects from reference repositories specified with the --reference options only to reduce network transfer, and stop borrowing from them after a clone is made by making necessary local copies of borrowed objects.'
 complete -c git -n "__fish_seen_subcommand_from clone" -s q -l quiet -d 'Operate quietly.'
 complete -c git -n "__fish_seen_subcommand_from clone" -s v -l verbose -d 'Run verbosely.'
@@ -39,14 +38,14 @@ complete -c git -n "__fish_seen_subcommand_from clone" -s n -l no-checkout -d 'N
 complete -c git -n "__fish_seen_subcommand_from clone" -l reject-shallow -d 'Fail if the source repository is a shallow repository.'
 complete -c git -n "__fish_seen_subcommand_from clone" -l no-reject-shallow -d 'Fail if the source repository is a shallow repository.'
 complete -c git -n "__fish_seen_subcommand_from clone" -l bare -d 'Make a bare Git repository.'
-complete -c git -n "__fish_seen_subcommand_from clone" -l sparse -d 'Initialize the sparse-checkout file so the working directory starts with only the files in the root of the repository.'
-complete -c git -n "__fish_seen_subcommand_from clone" -l filter -d 'Use the partial clone feature and request that the server sends a subset of reachable objects according to a given object filter.' -x
+complete -c git -n "__fish_seen_subcommand_from clone" -l sparse -d 'Employ a sparse-checkout, with only files in the toplevel directory initially being present.'
+complete -c git -n "__fish_seen_subcommand_from clone" -l filter -d 'Use the partial clone feature and request that the server sends a subset of reachable objects according to a given object filter.' -r
 complete -c git -n "__fish_seen_subcommand_from clone" -l mirror -d 'Set up a mirror of the source repository.'
 complete -c git -n "__fish_seen_subcommand_from clone" -s o -l origin -d 'Instead of using the remote name origin to keep track of the upstream repository, use <name>.' -x
 complete -c git -n "__fish_seen_subcommand_from clone" -s b -l branch -d 'Instead of pointing the newly created HEAD to the branch pointed to by the cloned repository’s HEAD, point to <name> branch instead.' -x
-complete -c git -n "__fish_seen_subcommand_from clone" -s u -l upload-pack -d 'When given, and the repository to clone from is accessed via ssh, this specifies a non-default path for the command run on the other end.' -x
-complete -c git -n "__fish_seen_subcommand_from clone" -l template -d 'Specify the directory from which templates will be used; (See the "TEMPLATE DIRECTORY" section of gitinit(1).)' -r
-complete -c git -n "__fish_seen_subcommand_from clone" -s c -l config -d 'Set a configuration variable in the newly-created repository; this takes effect immediately after the repository is initialized, but before the remote history is fetched or any files checked out.' -x
+complete -c git -n "__fish_seen_subcommand_from clone" -s u -l upload-pack -d 'When given, and the repository to clone from is accessed via ssh, this specifies a non-default path for the command run on the other end.' -r
+complete -c git -n "__fish_seen_subcommand_from clone" -l template -d 'Specify the directory from which templates will be used; (See the "TEMPLATE DIRECTORY" section of git-init(1).)' -r
+complete -c git -n "__fish_seen_subcommand_from clone" -s c -l config -d 'Set a configuration variable in the newly-created repository; this takes effect immediately after the repository is initialized, but before the remote history is fetched or any files checked out.' -r
 complete -c git -n "__fish_seen_subcommand_from clone" -l depth -d 'Create a shallow clone with a history truncated to the specified number of commits.' -x
 complete -c git -n "__fish_seen_subcommand_from clone" -l shallow-since -d 'Create a shallow clone with a history after the specified time.' -x
 complete -c git -n "__fish_seen_subcommand_from clone" -l shallow-exclude -d 'Create a shallow clone with a history, excluding commits reachable from a specified remote branch or tag.' -x
@@ -69,13 +68,14 @@ complete -c git -n "__fish_seen_subcommand_from init" -l object-format -d 'Speci
 complete -c git -n "__fish_seen_subcommand_from init" -l template -d 'Specify the directory from which templates will be used.' -r
 complete -c git -n "__fish_seen_subcommand_from init" -l separate-git-dir -d 'Instead of initializing the repository as a directory to either $GIT_DIR or ./.git/, create a text file there containing the path to the actual repository.' -r
 complete -c git -n "__fish_seen_subcommand_from init" -s b -l initial-branch -d 'Use the specified name for the initial branch in the newly created repository.' -x
-complete -c git -n "__fish_seen_subcommand_from init" -l shared -d 'Specify that the Git repository is to be shared amongst several users.' -x
+complete -c git -n "__fish_seen_subcommand_from init" -l shared -d 'Specify that the Git repository is to be shared amongst several users.' -r
 
 
 
 complete -c git -n "__fish_seen_subcommand_from add" -s n -l dry-run -d 'Don’t actually add the file(s), just show if they exist and/or will be ignored.'
 complete -c git -n "__fish_seen_subcommand_from add" -s v -l verbose -d 'Be verbose.'
 complete -c git -n "__fish_seen_subcommand_from add" -s f -l force -d 'Allow adding otherwise ignored files.'
+complete -c git -n "__fish_seen_subcommand_from add" -l sparse -d 'Allow updating index entries outside of the sparse-checkout cone.'
 complete -c git -n "__fish_seen_subcommand_from add" -s i -l interactive -d 'Add modified contents in the working tree interactively to the index.'
 complete -c git -n "__fish_seen_subcommand_from add" -s p -l patch -d 'Interactively choose hunks of patch between the index and the work tree and add them to the index.'
 complete -c git -n "__fish_seen_subcommand_from add" -s e -l edit -d 'Open the diff vs.'
@@ -88,7 +88,7 @@ complete -c git -n "__fish_seen_subcommand_from add" -l ignore-errors -d 'If som
 complete -c git -n "__fish_seen_subcommand_from add" -l ignore-missing -d 'This option can only be used together with --dry-run.'
 complete -c git -n "__fish_seen_subcommand_from add" -l no-warn-embedded-repo -d 'By default, git add will warn when adding an embedded repository to the index without using git submodule add to create an entry in .gitmodules.'
 complete -c git -n "__fish_seen_subcommand_from add" -l renormalize -d 'Apply the "clean" process freshly to all tracked files to forcibly add them again to the index.'
-complete -c git -n "__fish_seen_subcommand_from add" -l chmod -d 'Override the executable bit of the added files.' -x
+complete -c git -n "__fish_seen_subcommand_from add" -l chmod -d 'Override the executable bit of the added files.' -r
 complete -c git -n "__fish_seen_subcommand_from add" -l pathspec-from-file -d 'Pathspec is passed in <file> instead of commandline args.' -r
 complete -c git -n "__fish_seen_subcommand_from add" -l pathspec-file-nul -d 'Only meaningful with --pathspec-from-file.'
 complete -c git -n "__fish_seen_subcommand_from add"  -d 'This option can be used to separate command-line options from the list of files, (useful when filenames might be mistaken for command-line options).'
@@ -102,7 +102,7 @@ complete -c git -n "__fish_seen_subcommand_from mv" -s v -l verbose -d 'Report t
 
 
 
-complete -c git -n "__fish_seen_subcommand_from restore" -s s -l source -d 'Restore the working tree files with the content from the given tree.' -x
+complete -c git -n "__fish_seen_subcommand_from restore" -s s -l source -d 'Restore the working tree files with the content from the given tree.' -r
 complete -c git -n "__fish_seen_subcommand_from restore" -s p -l patch -d 'Interactively select hunks in the difference between the restore source and the restore location.'
 complete -c git -n "__fish_seen_subcommand_from restore" -s W -l worktree -s S -l staged -d 'Specify the restore location.'
 complete -c git -n "__fish_seen_subcommand_from restore" -s q -l quiet -d 'Quiet, suppress feedback messages.'
@@ -126,6 +126,7 @@ complete -c git -n "__fish_seen_subcommand_from rm" -s r -d 'Allow recursive rem
 complete -c git -n "__fish_seen_subcommand_from rm"  -d 'This option can be used to separate command-line options from the list of files, (useful when filenames might be mistaken for command-line options).'
 complete -c git -n "__fish_seen_subcommand_from rm" -l cached -d 'Use this option to unstage and remove paths only from the index.'
 complete -c git -n "__fish_seen_subcommand_from rm" -l ignore-unmatch -d 'Exit with a zero status even if no files matched.'
+complete -c git -n "__fish_seen_subcommand_from rm" -l sparse -d 'Allow updating index entries outside of the sparse-checkout cone.'
 complete -c git -n "__fish_seen_subcommand_from rm" -s q -l quiet -d 'git rm normally outputs one line (in the form of an rm command) for each file removed.'
 complete -c git -n "__fish_seen_subcommand_from rm" -l pathspec-from-file -d 'Pathspec is passed in <file> instead of commandline args.' -r
 complete -c git -n "__fish_seen_subcommand_from rm" -l pathspec-file-nul -d 'Only meaningful with --pathspec-from-file.'
@@ -151,12 +152,13 @@ complete -c git -n "__fish_seen_subcommand_from diff" -l patience -d 'Generate a
 complete -c git -n "__fish_seen_subcommand_from diff" -l histogram -d 'Generate a diff using the "histogram diff" algorithm.'
 complete -c git -n "__fish_seen_subcommand_from diff" -l anchored -d 'Generate a diff using the "anchored diff" algorithm.' -x
 complete -c git -n "__fish_seen_subcommand_from diff" -l diff-algorithm -d 'Choose a diff algorithm.' -x
+complete -c git -n "__fish_seen_subcommand_from diff" -l stat -d 'Generate a diffstat.' -r
 complete -c git -n "__fish_seen_subcommand_from diff" -l compact-summary -d 'Output a condensed summary of extended header information such as file creations or deletions ("new" or "gone", optionally "+l" if it’s a symlink) and mode changes ("+x" or "-x" for adding or removing executable bit respectively) in diffstat.'
 complete -c git -n "__fish_seen_subcommand_from diff" -l numstat -d 'Similar to --stat, but shows number of added and deleted lines in decimal notation and pathname without abbreviation, to make it more machine friendly.'
 complete -c git -n "__fish_seen_subcommand_from diff" -l shortstat -d 'Output only the last line of the --stat format containing total number of modified files, as well as number of added and deleted lines.'
-complete -c git -n "__fish_seen_subcommand_from diff" -s X -l dirstat -d 'Output the distribution of relative amount of changes for each sub-directory.' -x
+complete -c git -n "__fish_seen_subcommand_from diff" -s X -l dirstat -d 'Output the distribution of relative amount of changes for each sub-directory.' -r
 complete -c git -n "__fish_seen_subcommand_from diff" -l cumulative -d 'Synonym for --dirstat=cumulative'
-complete -c git -n "__fish_seen_subcommand_from diff" -l dirstat-by-file -d 'Synonym for --dirstat=files,param1,param2...' -x
+complete -c git -n "__fish_seen_subcommand_from diff" -l dirstat-by-file -d 'Synonym for --dirstat=files,param1,param2...' -r
 complete -c git -n "__fish_seen_subcommand_from diff" -l summary -d 'Output a condensed summary of extended header information such as creations, renames and mode changes.'
 complete -c git -n "__fish_seen_subcommand_from diff" -l patch-with-stat -d 'Synonym for -p --stat.'
 complete -c git -n "__fish_seen_subcommand_from diff" -s z -d 'When --raw, --numstat, --name-only or --name-status has been given, do not munge pathnames and use NULs as output field terminators.'
@@ -180,12 +182,14 @@ complete -c git -n "__fish_seen_subcommand_from diff" -l ws-error-highlight -d '
 complete -c git -n "__fish_seen_subcommand_from diff" -l full-index -d 'Instead of the first handful of characters, show the full pre- and post-image blob object names on the "index" line when generating patch format output.'
 complete -c git -n "__fish_seen_subcommand_from diff" -l binary -d 'In addition to --full-index, output a binary diff that can be applied with git-apply.'
 complete -c git -n "__fish_seen_subcommand_from diff" -l abbrev -d 'Instead of showing the full 40-byte hexadecimal object name in diff-raw format output and diff-tree header lines, show the shortest prefix that is at least <n> hexdigits long that uniquely refers the object.' -x
-complete -c git -n "__fish_seen_subcommand_from diff" -s M -l find-renames -d 'Detect renames.' -x
+complete -c git -n "__fish_seen_subcommand_from diff" -s B -l break-rewrites -d 'Break complete rewrite changes into pairs of delete and create.' -x
+complete -c git -n "__fish_seen_subcommand_from diff" -s M -l find-renames -d 'Detect renames.' -r
 complete -c git -n "__fish_seen_subcommand_from diff" -s C -l find-copies -d 'Detect copies as well as renames.' -x
 complete -c git -n "__fish_seen_subcommand_from diff" -l find-copies-harder -d 'For performance reasons, by default, -C option finds copies only if the original file of the copy was modified in the same changeset.'
 complete -c git -n "__fish_seen_subcommand_from diff" -s D -l irreversible-delete -d 'Omit the preimage for deletes, i.e. print only the header but not the diff between the preimage and /dev/null.'
-complete -c git -n "__fish_seen_subcommand_from diff" -s l -d 'The -M and -C options require O(n^2) processing time where n is the number of potential rename/copy targets.' -x
-complete -c git -n "__fish_seen_subcommand_from diff" -s S -d 'Look for differences that change the number of occurrences of the specified string (i.e. addition/deletion) in a file.' -x
+complete -c git -n "__fish_seen_subcommand_from diff" -s l -d 'The -M and -C options involve some preliminary steps that can detect subsets of renames/copies cheaply, followed by an exhaustive fallback portion that compares all remaining unpaired destinations to all relevant sources.' -r
+complete -c git -n "__fish_seen_subcommand_from diff" -l diff-filter -d 'Select only files that are Added (A), Copied (C), Deleted (D), Modified (M), Renamed (R), have their type (i.e. regular file, symlink, submodule, ...) changed (T), are Unmerged (U), are Unknown (X), or have had their pairing Broken (B).' -r
+complete -c git -n "__fish_seen_subcommand_from diff" -s S -d 'Look for differences that change the number of occurrences of the specified string (i.e. addition/deletion) in a file.' -r
 complete -c git -n "__fish_seen_subcommand_from diff" -s G -d 'Look for differences whose patch text contains added/removed lines that match <regex>.' -x
 complete -c git -n "__fish_seen_subcommand_from diff" -l find-object -d 'Look for differences that change the number of occurrences of the specified object.' -x
 complete -c git -n "__fish_seen_subcommand_from diff" -l pickaxe-all -d 'When -S or -G finds a change, show all the changes in that changeset, not just the files that contain the change in <string>.'
@@ -208,7 +212,7 @@ complete -c git -n "__fish_seen_subcommand_from diff" -l quiet -d 'Disable all o
 complete -c git -n "__fish_seen_subcommand_from diff" -l ext-diff -d 'Allow an external diff helper to be executed.'
 complete -c git -n "__fish_seen_subcommand_from diff" -l no-ext-diff -d 'Disallow external diff drivers.'
 complete -c git -n "__fish_seen_subcommand_from diff" -l textconv -l no-textconv -d 'Allow (or disallow) external text conversion filters to be run when comparing binary files.'
-complete -c git -n "__fish_seen_subcommand_from diff" -l ignore-submodules -d 'Ignore changes to submodules in the diff generation.' -x
+complete -c git -n "__fish_seen_subcommand_from diff" -l ignore-submodules -d 'Ignore changes to submodules in the diff generation.' -r
 complete -c git -n "__fish_seen_subcommand_from diff" -l src-prefix -d 'Show the given source prefix instead of "a/".' -x
 complete -c git -n "__fish_seen_subcommand_from diff" -l dst-prefix -d 'Show the given destination prefix instead of "b/".' -x
 complete -c git -n "__fish_seen_subcommand_from diff" -l no-prefix -d 'Do not show any source or destination prefix.'
@@ -230,7 +234,7 @@ complete -c git -n "__fish_seen_subcommand_from grep" -l textconv -d 'Honor text
 complete -c git -n "__fish_seen_subcommand_from grep" -l no-textconv -d 'Do not honor textconv filter settings.'
 complete -c git -n "__fish_seen_subcommand_from grep" -s i -l ignore-case -d 'Ignore case differences between the patterns and the files.'
 complete -c git -n "__fish_seen_subcommand_from grep" -s I -d 'Don’t match the pattern in binary files.'
-complete -c git -n "__fish_seen_subcommand_from grep" -l max-depth -d 'For each <pathspec> given on command line, descend at most <depth> levels of directories.' -x
+complete -c git -n "__fish_seen_subcommand_from grep" -l max-depth -d 'For each <pathspec> given on command line, descend at most <depth> levels of directories.' -r
 complete -c git -n "__fish_seen_subcommand_from grep" -s r -l recursive -d 'Same as --max-depth=-1; this is the default.'
 complete -c git -n "__fish_seen_subcommand_from grep" -l no-recursive -d 'Same as --max-depth=0.'
 complete -c git -n "__fish_seen_subcommand_from grep" -s w -l word-regexp -d 'Match the pattern only at word boundary (either begin at the beginning of a line, or preceded by a non-word character; end at the end of a line or followed by a non-word character).'
@@ -243,7 +247,7 @@ complete -c git -n "__fish_seen_subcommand_from grep" -s F -l fixed-strings -d '
 complete -c git -n "__fish_seen_subcommand_from grep" -s n -l line-number -d 'Prefix the line number to matching lines.'
 complete -c git -n "__fish_seen_subcommand_from grep" -l column -d 'Prefix the 1-indexed byte-offset of the first match from the start of the matching line.'
 complete -c git -n "__fish_seen_subcommand_from grep" -s l -l files-with-matches -l name-only -s L -l files-without-match -d 'Instead of showing every matched line, show only the names of files that contain (or do not contain) matches.'
-complete -c git -n "__fish_seen_subcommand_from grep" -s O -l open-files-in-pager -d 'Open the matching files in the pager (not the output of grep).' -x
+complete -c git -n "__fish_seen_subcommand_from grep" -s O -l open-files-in-pager -d 'Open the matching files in the pager (not the output of grep).' -r
 complete -c git -n "__fish_seen_subcommand_from grep" -s z -l null -d 'Use \0 as the delimiter for pathnames in the output, and print them verbatim.'
 complete -c git -n "__fish_seen_subcommand_from grep" -s o -l only-matching -d 'Print only the matched (non-empty) parts of a matching line, with each such part on a separate output line.'
 complete -c git -n "__fish_seen_subcommand_from grep" -s c -l count -d 'Instead of showing every matched line, show the number of lines that match.'
@@ -252,7 +256,7 @@ complete -c git -n "__fish_seen_subcommand_from grep" -l no-color -d 'Turn off m
 complete -c git -n "__fish_seen_subcommand_from grep" -l break -d 'Print an empty line between matches from different files.'
 complete -c git -n "__fish_seen_subcommand_from grep" -l heading -d 'Show the filename above the matches in that file instead of at the start of each shown line.'
 complete -c git -n "__fish_seen_subcommand_from grep" -s p -l show-function -d 'Show the preceding line that contains the function name of the match, unless the matching line is a function name itself.'
-complete -c git -n "__fish_seen_subcommand_from grep"  -s C -l context -d 'Show <num> leading and trailing lines, and place a line containing -- between contiguous groups of matches.' -x
+complete -c git -n "__fish_seen_subcommand_from grep" -s C -l context -d 'Show <num> leading and trailing lines, and place a line containing -- between contiguous groups of matches.' -x
 complete -c git -n "__fish_seen_subcommand_from grep" -s A -l after-context -d 'Show <num> trailing lines, and place a line containing -- between contiguous groups of matches.' -x
 complete -c git -n "__fish_seen_subcommand_from grep" -s B -l before-context -d 'Show <num> leading lines, and place a line containing -- between contiguous groups of matches.' -x
 complete -c git -n "__fish_seen_subcommand_from grep" -s W -l function-context -d 'Show the surrounding text from the previous line containing a function name up to the one before the next function name, effectively showing the whole function in which the match was found.'
@@ -271,7 +275,7 @@ complete -c git -n "__fish_seen_subcommand_from log" -l decorate-refs -l decorat
 complete -c git -n "__fish_seen_subcommand_from log" -l source -d 'Print out the ref name given on the command line by which each commit was reached.'
 complete -c git -n "__fish_seen_subcommand_from log" -l full-diff -d 'Without this flag, git log -p <path>...'
 complete -c git -n "__fish_seen_subcommand_from log" -l log-size -d 'Include a line “log size <number>” in the output for each commit, where <number> is the length of that commit’s message in bytes.'
-complete -c git -n "__fish_seen_subcommand_from log"  -s n -l max-count -d 'Limit the number of commits to output.' -x
+complete -c git -n "__fish_seen_subcommand_from log" -s n -l max-count -d 'Limit the number of commits to output.' -x
 complete -c git -n "__fish_seen_subcommand_from log" -l skip -d 'Skip number commits before starting to show the commit output.' -x
 complete -c git -n "__fish_seen_subcommand_from log" -l since -l after -d 'Show commits more recent than a specific date.' -x
 complete -c git -n "__fish_seen_subcommand_from log" -l until -l before -d 'Show commits older than a specific date.' -x
@@ -332,7 +336,7 @@ complete -c git -n "__fish_seen_subcommand_from log" -l pretty -l format -d 'Pre
 complete -c git -n "__fish_seen_subcommand_from log" -l abbrev-commit -d 'Instead of showing the full 40-byte hexadecimal commit object name, show a prefix that names the object uniquely.'
 complete -c git -n "__fish_seen_subcommand_from log" -l no-abbrev-commit -d 'Show the full 40-byte hexadecimal commit object name.'
 complete -c git -n "__fish_seen_subcommand_from log" -l oneline -d 'This is a shorthand for "--pretty=oneline --abbrev-commit" used together.'
-complete -c git -n "__fish_seen_subcommand_from log" -l encoding -d 'The commit objects record the encoding used for the log message in their encoding header; this option can be used to tell the command to re-code the commit log message in the encoding preferred by the user.' -x
+complete -c git -n "__fish_seen_subcommand_from log" -l encoding -d 'Commit objects record the character encoding used for the log message in their encoding header; this option can be used to tell the command to re-code the commit log message in the encoding preferred by the user.' -x
 complete -c git -n "__fish_seen_subcommand_from log" -l expand-tabs -l no-expand-tabs -d 'Perform a tab expansion (replace each tab with enough spaces to fill to the next display column that is multiple of <n>) in the log message before showing it in the output.' -x
 complete -c git -n "__fish_seen_subcommand_from log" -l notes -d 'Show the notes (see git-notes(1)) that annotate the commit, when showing the commit log message.' -x
 complete -c git -n "__fish_seen_subcommand_from log" -l no-notes -d 'Do not show notes.'
@@ -361,12 +365,13 @@ complete -c git -n "__fish_seen_subcommand_from log" -l patience -d 'Generate a 
 complete -c git -n "__fish_seen_subcommand_from log" -l histogram -d 'Generate a diff using the "histogram diff" algorithm.'
 complete -c git -n "__fish_seen_subcommand_from log" -l anchored -d 'Generate a diff using the "anchored diff" algorithm.' -x
 complete -c git -n "__fish_seen_subcommand_from log" -l diff-algorithm -d 'Choose a diff algorithm.' -x
+complete -c git -n "__fish_seen_subcommand_from log" -l stat -d 'Generate a diffstat.' -r
 complete -c git -n "__fish_seen_subcommand_from log" -l compact-summary -d 'Output a condensed summary of extended header information such as file creations or deletions ("new" or "gone", optionally "+l" if it’s a symlink) and mode changes ("+x" or "-x" for adding or removing executable bit respectively) in diffstat.'
 complete -c git -n "__fish_seen_subcommand_from log" -l numstat -d 'Similar to --stat, but shows number of added and deleted lines in decimal notation and pathname without abbreviation, to make it more machine friendly.'
 complete -c git -n "__fish_seen_subcommand_from log" -l shortstat -d 'Output only the last line of the --stat format containing total number of modified files, as well as number of added and deleted lines.'
-complete -c git -n "__fish_seen_subcommand_from log" -s X -l dirstat -d 'Output the distribution of relative amount of changes for each sub-directory.' -x
+complete -c git -n "__fish_seen_subcommand_from log" -s X -l dirstat -d 'Output the distribution of relative amount of changes for each sub-directory.' -r
 complete -c git -n "__fish_seen_subcommand_from log" -l cumulative -d 'Synonym for --dirstat=cumulative'
-complete -c git -n "__fish_seen_subcommand_from log" -l dirstat-by-file -d 'Synonym for --dirstat=files,param1,param2...' -x
+complete -c git -n "__fish_seen_subcommand_from log" -l dirstat-by-file -d 'Synonym for --dirstat=files,param1,param2...' -r
 complete -c git -n "__fish_seen_subcommand_from log" -l summary -d 'Output a condensed summary of extended header information such as creations, renames and mode changes.'
 complete -c git -n "__fish_seen_subcommand_from log" -l patch-with-stat -d 'Synonym for -p --stat.'
 complete -c git -n "__fish_seen_subcommand_from log" -s z -d 'Separate the commits with NULs instead of with new newlines.'
@@ -390,12 +395,14 @@ complete -c git -n "__fish_seen_subcommand_from log" -l ws-error-highlight -d 'H
 complete -c git -n "__fish_seen_subcommand_from log" -l full-index -d 'Instead of the first handful of characters, show the full pre- and post-image blob object names on the "index" line when generating patch format output.'
 complete -c git -n "__fish_seen_subcommand_from log" -l binary -d 'In addition to --full-index, output a binary diff that can be applied with git-apply.'
 complete -c git -n "__fish_seen_subcommand_from log" -l abbrev -d 'Instead of showing the full 40-byte hexadecimal object name in diff-raw format output and diff-tree header lines, show the shortest prefix that is at least <n> hexdigits long that uniquely refers the object.' -x
-complete -c git -n "__fish_seen_subcommand_from log" -s M -l find-renames -d 'If generating diffs, detect and report renames for each commit.' -x
+complete -c git -n "__fish_seen_subcommand_from log" -s B -l break-rewrites -d 'Break complete rewrite changes into pairs of delete and create.' -x
+complete -c git -n "__fish_seen_subcommand_from log" -s M -l find-renames -d 'If generating diffs, detect and report renames for each commit.' -r
 complete -c git -n "__fish_seen_subcommand_from log" -s C -l find-copies -d 'Detect copies as well as renames.' -x
 complete -c git -n "__fish_seen_subcommand_from log" -l find-copies-harder -d 'For performance reasons, by default, -C option finds copies only if the original file of the copy was modified in the same changeset.'
 complete -c git -n "__fish_seen_subcommand_from log" -s D -l irreversible-delete -d 'Omit the preimage for deletes, i.e. print only the header but not the diff between the preimage and /dev/null.'
-complete -c git -n "__fish_seen_subcommand_from log" -s l -d 'The -M and -C options require O(n^2) processing time where n is the number of potential rename/copy targets.' -x
-complete -c git -n "__fish_seen_subcommand_from log" -s S -d 'Look for differences that change the number of occurrences of the specified string (i.e. addition/deletion) in a file.' -x
+complete -c git -n "__fish_seen_subcommand_from log" -s l -d 'The -M and -C options involve some preliminary steps that can detect subsets of renames/copies cheaply, followed by an exhaustive fallback portion that compares all remaining unpaired destinations to all relevant sources.' -r
+complete -c git -n "__fish_seen_subcommand_from log" -l diff-filter -d 'Select only files that are Added (A), Copied (C), Deleted (D), Modified (M), Renamed (R), have their type (i.e. regular file, symlink, submodule, ...) changed (T), are Unmerged (U), are Unknown (X), or have had their pairing Broken (B).' -r
+complete -c git -n "__fish_seen_subcommand_from log" -s S -d 'Look for differences that change the number of occurrences of the specified string (i.e. addition/deletion) in a file.' -r
 complete -c git -n "__fish_seen_subcommand_from log" -s G -d 'Look for differences whose patch text contains added/removed lines that match <regex>.' -x
 complete -c git -n "__fish_seen_subcommand_from log" -l find-object -d 'Look for differences that change the number of occurrences of the specified object.' -x
 complete -c git -n "__fish_seen_subcommand_from log" -l pickaxe-all -d 'When -S or -G finds a change, show all the changes in that changeset, not just the files that contain the change in <string>.'
@@ -416,13 +423,12 @@ complete -c git -n "__fish_seen_subcommand_from log" -s W -l function-context -d
 complete -c git -n "__fish_seen_subcommand_from log" -l ext-diff -d 'Allow an external diff helper to be executed.'
 complete -c git -n "__fish_seen_subcommand_from log" -l no-ext-diff -d 'Disallow external diff drivers.'
 complete -c git -n "__fish_seen_subcommand_from log" -l textconv -l no-textconv -d 'Allow (or disallow) external text conversion filters to be run when comparing binary files.'
-complete -c git -n "__fish_seen_subcommand_from log" -l ignore-submodules -d 'Ignore changes to submodules in the diff generation.' -x
+complete -c git -n "__fish_seen_subcommand_from log" -l ignore-submodules -d 'Ignore changes to submodules in the diff generation.' -r
 complete -c git -n "__fish_seen_subcommand_from log" -l src-prefix -d 'Show the given source prefix instead of "a/".' -x
 complete -c git -n "__fish_seen_subcommand_from log" -l dst-prefix -d 'Show the given destination prefix instead of "b/".' -x
 complete -c git -n "__fish_seen_subcommand_from log" -l no-prefix -d 'Do not show any source or destination prefix.'
 complete -c git -n "__fish_seen_subcommand_from log" -l line-prefix -d 'Prepend an additional prefix to every line of output.' -x
 complete -c git -n "__fish_seen_subcommand_from log" -l ita-invisible-in-index -d 'By default entries added by "git add -N" appear as an existing empty file in "git diff" and a new file in "git diff --cached".'
-complete -c git -n "__fish_seen_subcommand_from log" -l grep -d 'further limits to commits whose log message has a line that matches <pattern>), unless otherwise noted.' -x
 
 
 
@@ -430,7 +436,7 @@ complete -c git -n "__fish_seen_subcommand_from show" -l pretty -l format -d 'Pr
 complete -c git -n "__fish_seen_subcommand_from show" -l abbrev-commit -d 'Instead of showing the full 40-byte hexadecimal commit object name, show a prefix that names the object uniquely.'
 complete -c git -n "__fish_seen_subcommand_from show" -l no-abbrev-commit -d 'Show the full 40-byte hexadecimal commit object name.'
 complete -c git -n "__fish_seen_subcommand_from show" -l oneline -d 'This is a shorthand for "--pretty=oneline --abbrev-commit" used together.'
-complete -c git -n "__fish_seen_subcommand_from show" -l encoding -d 'The commit objects record the encoding used for the log message in their encoding header; this option can be used to tell the command to re-code the commit log message in the encoding preferred by the user.' -x
+complete -c git -n "__fish_seen_subcommand_from show" -l encoding -d 'Commit objects record the character encoding used for the log message in their encoding header; this option can be used to tell the command to re-code the commit log message in the encoding preferred by the user.' -x
 complete -c git -n "__fish_seen_subcommand_from show" -l expand-tabs -l no-expand-tabs -d 'Perform a tab expansion (replace each tab with enough spaces to fill to the next display column that is multiple of <n>) in the log message before showing it in the output.' -x
 complete -c git -n "__fish_seen_subcommand_from show" -l notes -d 'Show the notes (see git-notes(1)) that annotate the commit, when showing the commit log message.' -x
 complete -c git -n "__fish_seen_subcommand_from show" -l no-notes -d 'Do not show notes.'
@@ -452,12 +458,13 @@ complete -c git -n "__fish_seen_subcommand_from show" -l patience -d 'Generate a
 complete -c git -n "__fish_seen_subcommand_from show" -l histogram -d 'Generate a diff using the "histogram diff" algorithm.'
 complete -c git -n "__fish_seen_subcommand_from show" -l anchored -d 'Generate a diff using the "anchored diff" algorithm.' -x
 complete -c git -n "__fish_seen_subcommand_from show" -l diff-algorithm -d 'Choose a diff algorithm.' -x
+complete -c git -n "__fish_seen_subcommand_from show" -l stat -d 'Generate a diffstat.' -r
 complete -c git -n "__fish_seen_subcommand_from show" -l compact-summary -d 'Output a condensed summary of extended header information such as file creations or deletions ("new" or "gone", optionally "+l" if it’s a symlink) and mode changes ("+x" or "-x" for adding or removing executable bit respectively) in diffstat.'
 complete -c git -n "__fish_seen_subcommand_from show" -l numstat -d 'Similar to --stat, but shows number of added and deleted lines in decimal notation and pathname without abbreviation, to make it more machine friendly.'
 complete -c git -n "__fish_seen_subcommand_from show" -l shortstat -d 'Output only the last line of the --stat format containing total number of modified files, as well as number of added and deleted lines.'
-complete -c git -n "__fish_seen_subcommand_from show" -s X -l dirstat -d 'Output the distribution of relative amount of changes for each sub-directory.' -x
+complete -c git -n "__fish_seen_subcommand_from show" -s X -l dirstat -d 'Output the distribution of relative amount of changes for each sub-directory.' -r
 complete -c git -n "__fish_seen_subcommand_from show" -l cumulative -d 'Synonym for --dirstat=cumulative'
-complete -c git -n "__fish_seen_subcommand_from show" -l dirstat-by-file -d 'Synonym for --dirstat=files,param1,param2...' -x
+complete -c git -n "__fish_seen_subcommand_from show" -l dirstat-by-file -d 'Synonym for --dirstat=files,param1,param2...' -r
 complete -c git -n "__fish_seen_subcommand_from show" -l summary -d 'Output a condensed summary of extended header information such as creations, renames and mode changes.'
 complete -c git -n "__fish_seen_subcommand_from show" -l patch-with-stat -d 'Synonym for -p --stat.'
 complete -c git -n "__fish_seen_subcommand_from show" -s z -d 'Separate the commits with NULs instead of with new newlines.'
@@ -481,12 +488,14 @@ complete -c git -n "__fish_seen_subcommand_from show" -l ws-error-highlight -d '
 complete -c git -n "__fish_seen_subcommand_from show" -l full-index -d 'Instead of the first handful of characters, show the full pre- and post-image blob object names on the "index" line when generating patch format output.'
 complete -c git -n "__fish_seen_subcommand_from show" -l binary -d 'In addition to --full-index, output a binary diff that can be applied with git-apply.'
 complete -c git -n "__fish_seen_subcommand_from show" -l abbrev -d 'Instead of showing the full 40-byte hexadecimal object name in diff-raw format output and diff-tree header lines, show the shortest prefix that is at least <n> hexdigits long that uniquely refers the object.' -x
-complete -c git -n "__fish_seen_subcommand_from show" -s M -l find-renames -d 'If generating diffs, detect and report renames for each commit.' -x
+complete -c git -n "__fish_seen_subcommand_from show" -s B -l break-rewrites -d 'Break complete rewrite changes into pairs of delete and create.' -x
+complete -c git -n "__fish_seen_subcommand_from show" -s M -l find-renames -d 'If generating diffs, detect and report renames for each commit.' -r
 complete -c git -n "__fish_seen_subcommand_from show" -s C -l find-copies -d 'Detect copies as well as renames.' -x
 complete -c git -n "__fish_seen_subcommand_from show" -l find-copies-harder -d 'For performance reasons, by default, -C option finds copies only if the original file of the copy was modified in the same changeset.'
 complete -c git -n "__fish_seen_subcommand_from show" -s D -l irreversible-delete -d 'Omit the preimage for deletes, i.e. print only the header but not the diff between the preimage and /dev/null.'
-complete -c git -n "__fish_seen_subcommand_from show" -s l -d 'The -M and -C options require O(n^2) processing time where n is the number of potential rename/copy targets.' -x
-complete -c git -n "__fish_seen_subcommand_from show" -s S -d 'Look for differences that change the number of occurrences of the specified string (i.e. addition/deletion) in a file.' -x
+complete -c git -n "__fish_seen_subcommand_from show" -s l -d 'The -M and -C options involve some preliminary steps that can detect subsets of renames/copies cheaply, followed by an exhaustive fallback portion that compares all remaining unpaired destinations to all relevant sources.' -r
+complete -c git -n "__fish_seen_subcommand_from show" -l diff-filter -d 'Select only files that are Added (A), Copied (C), Deleted (D), Modified (M), Renamed (R), have their type (i.e. regular file, symlink, submodule, ...) changed (T), are Unmerged (U), are Unknown (X), or have had their pairing Broken (B).' -r
+complete -c git -n "__fish_seen_subcommand_from show" -s S -d 'Look for differences that change the number of occurrences of the specified string (i.e. addition/deletion) in a file.' -r
 complete -c git -n "__fish_seen_subcommand_from show" -s G -d 'Look for differences whose patch text contains added/removed lines that match <regex>.' -x
 complete -c git -n "__fish_seen_subcommand_from show" -l find-object -d 'Look for differences that change the number of occurrences of the specified object.' -x
 complete -c git -n "__fish_seen_subcommand_from show" -l pickaxe-all -d 'When -S or -G finds a change, show all the changes in that changeset, not just the files that contain the change in <string>.'
@@ -507,7 +516,7 @@ complete -c git -n "__fish_seen_subcommand_from show" -s W -l function-context -
 complete -c git -n "__fish_seen_subcommand_from show" -l ext-diff -d 'Allow an external diff helper to be executed.'
 complete -c git -n "__fish_seen_subcommand_from show" -l no-ext-diff -d 'Disallow external diff drivers.'
 complete -c git -n "__fish_seen_subcommand_from show" -l textconv -l no-textconv -d 'Allow (or disallow) external text conversion filters to be run when comparing binary files.'
-complete -c git -n "__fish_seen_subcommand_from show" -l ignore-submodules -d 'Ignore changes to submodules in the diff generation.' -x
+complete -c git -n "__fish_seen_subcommand_from show" -l ignore-submodules -d 'Ignore changes to submodules in the diff generation.' -r
 complete -c git -n "__fish_seen_subcommand_from show" -l src-prefix -d 'Show the given source prefix instead of "a/".' -x
 complete -c git -n "__fish_seen_subcommand_from show" -l dst-prefix -d 'Show the given destination prefix instead of "b/".' -x
 complete -c git -n "__fish_seen_subcommand_from show" -l no-prefix -d 'Do not show any source or destination prefix.'
@@ -522,11 +531,11 @@ complete -c git -n "__fish_seen_subcommand_from status" -l show-stash -d 'Show t
 complete -c git -n "__fish_seen_subcommand_from status" -l porcelain -d 'Give the output in an easy-to-parse format for scripts.' -x
 complete -c git -n "__fish_seen_subcommand_from status" -l long -d 'Give the output in the long-format.'
 complete -c git -n "__fish_seen_subcommand_from status" -s v -l verbose -d 'In addition to the names of files that have been changed, also show the textual changes that are staged to be committed (i.e., like the output of git diff --cached).'
-complete -c git -n "__fish_seen_subcommand_from status" -s u -l untracked-files -d 'Show untracked files.' -x
-complete -c git -n "__fish_seen_subcommand_from status" -l ignore-submodules -d 'Ignore changes to submodules when looking for changes.' -x
-complete -c git -n "__fish_seen_subcommand_from status" -l ignored -d 'Show ignored files as well.' -x
+complete -c git -n "__fish_seen_subcommand_from status" -s u -l untracked-files -d 'Show untracked files.' -r
+complete -c git -n "__fish_seen_subcommand_from status" -l ignore-submodules -d 'Ignore changes to submodules when looking for changes.' -r
+complete -c git -n "__fish_seen_subcommand_from status" -l ignored -d 'Show ignored files as well.' -r
 complete -c git -n "__fish_seen_subcommand_from status" -s z -d 'Terminate entries with NUL, instead of LF.'
-complete -c git -n "__fish_seen_subcommand_from status" -l column -l no-column -d 'Display untracked files in columns.' -x
+complete -c git -n "__fish_seen_subcommand_from status" -l column -l no-column -d 'Display untracked files in columns.' -r
 complete -c git -n "__fish_seen_subcommand_from status" -l ahead-behind -l no-ahead-behind -d 'Display or do not display detailed ahead/behind counts for the branch relative to its upstream branch.'
 complete -c git -n "__fish_seen_subcommand_from status" -l renames -l no-renames -d 'Turn on/off rename detection regardless of user configuration.'
 complete -c git -n "__fish_seen_subcommand_from status" -l find-renames -d 'Turn on rename detection, optionally setting the similarity threshold.' -x
@@ -537,9 +546,9 @@ complete -c git -n "__fish_seen_subcommand_from branch" -s d -l delete -d 'Delet
 complete -c git -n "__fish_seen_subcommand_from branch" -s D -d 'Shortcut for --delete --force.'
 complete -c git -n "__fish_seen_subcommand_from branch" -l create-reflog -d 'Create the branch’s reflog.'
 complete -c git -n "__fish_seen_subcommand_from branch" -s f -l force -d 'Reset <branchname> to <startpoint>, even if <branchname> exists already.'
-complete -c git -n "__fish_seen_subcommand_from branch" -s m -l move -d 'Move/rename a branch and the corresponding reflog.'
+complete -c git -n "__fish_seen_subcommand_from branch" -s m -l move -d 'Move/rename a branch, together with its config and reflog.'
 complete -c git -n "__fish_seen_subcommand_from branch" -s M -d 'Shortcut for --move --force.'
-complete -c git -n "__fish_seen_subcommand_from branch" -s c -l copy -d 'Copy a branch and the corresponding reflog.'
+complete -c git -n "__fish_seen_subcommand_from branch" -s c -l copy -d 'Copy a branch, together with its config and reflog.'
 complete -c git -n "__fish_seen_subcommand_from branch" -s C -d 'Shortcut for --copy --force.'
 complete -c git -n "__fish_seen_subcommand_from branch" -l color -d 'Color branches to highlight current, local, and remote-tracking branches.' -x
 complete -c git -n "__fish_seen_subcommand_from branch" -l no-color -d 'Turn off branch colors, even when the configuration file gives the default to color output.'
@@ -553,8 +562,8 @@ complete -c git -n "__fish_seen_subcommand_from branch" -s v -o vv -l verbose -d
 complete -c git -n "__fish_seen_subcommand_from branch" -s q -l quiet -d 'Be more quiet when creating or deleting a branch, suppressing non-error messages.'
 complete -c git -n "__fish_seen_subcommand_from branch" -l abbrev -d 'In the verbose listing that show the commit object name, show the shortest prefix that is at least <n> hexdigits long that uniquely refers the object.' -x
 complete -c git -n "__fish_seen_subcommand_from branch" -l no-abbrev -d 'Display the full sha1s in the output listing rather than abbreviating them.'
-complete -c git -n "__fish_seen_subcommand_from branch" -s t -l track -d 'When creating a new branch, set up branch.<name>.remote and branch.<name>.merge configuration entries to mark the start-point branch as "upstream" from the new branch.'
-complete -c git -n "__fish_seen_subcommand_from branch" -l no-track -d 'Do not set up "upstream" configuration, even if the branch.autoSetupMerge configuration variable is true.'
+complete -c git -n "__fish_seen_subcommand_from branch" -s t -l track -d 'When creating a new branch, set up branch.<name>.remote and branch.<name>.merge configuration entries to set "upstream" tracking configuration for the new branch.' -r
+complete -c git -n "__fish_seen_subcommand_from branch" -l no-track -d 'Do not set up "upstream" configuration, even if the branch.autoSetupMerge configuration variable is set.'
 complete -c git -n "__fish_seen_subcommand_from branch" -l set-upstream -d 'As this option had confusing syntax, it is no longer supported.'
 complete -c git -n "__fish_seen_subcommand_from branch" -s u -l set-upstream-to -d 'Set up <branchname>\'s tracking information so <upstream> is considered <branchname>\'s upstream branch.' -x
 complete -c git -n "__fish_seen_subcommand_from branch" -l unset-upstream -d 'Remove the upstream information for <branchname>.'
@@ -570,7 +579,7 @@ complete -c git -n "__fish_seen_subcommand_from branch" -l format -d 'A string t
 
 
 complete -c git -n "__fish_seen_subcommand_from commit" -s a -l all -d 'Tell the command to automatically stage files that have been modified and deleted, but new files you have not told Git about are not affected.'
-complete -c git -n "__fish_seen_subcommand_from commit" -s p -l patch -d 'Use the interactive patch selection interface to chose which changes to commit.'
+complete -c git -n "__fish_seen_subcommand_from commit" -s p -l patch -d 'Use the interactive patch selection interface to choose which changes to commit.'
 complete -c git -n "__fish_seen_subcommand_from commit" -s C -l reuse-message -d 'Take an existing commit object, and reuse the log message and the authorship information (including the timestamp) when creating the commit.' -x
 complete -c git -n "__fish_seen_subcommand_from commit" -s c -l reedit-message -d 'Like -C, but with -c the editor is invoked, so that the user can further edit the commit message.' -x
 complete -c git -n "__fish_seen_subcommand_from commit" -l fixup -d 'Create a new commit which "fixes up" <commit> when applied with git rebase --autosquash.' -x
@@ -588,7 +597,8 @@ complete -c git -n "__fish_seen_subcommand_from commit" -s m -l message -d 'Use 
 complete -c git -n "__fish_seen_subcommand_from commit" -s t -l template -d 'When editing the commit message, start the editor with the contents in the given file.' -r
 complete -c git -n "__fish_seen_subcommand_from commit" -s s -l signoff -l no-signoff -d 'Add a Signed-off-by trailer by the committer at the end of the commit log message.'
 complete -c git -n "__fish_seen_subcommand_from commit" -l trailer -d 'Specify a (<token>, <value>) pair that should be applied as a trailer.' -x
-complete -c git -n "__fish_seen_subcommand_from commit" -s n -l no-verify -d 'This option bypasses the pre-commit and commit-msg hooks.'
+complete -c git -n "__fish_seen_subcommand_from commit" -s n -l verify -d 'By default, the pre-commit and commit-msg hooks are run.'
+complete -c git -n "__fish_seen_subcommand_from commit" -s n -l no-verify -d 'By default, the pre-commit and commit-msg hooks are run.'
 complete -c git -n "__fish_seen_subcommand_from commit" -l allow-empty -d 'Usually recording a commit that has the exact same tree as its sole parent commit is a mistake, and the command prevents you from making such a commit.'
 complete -c git -n "__fish_seen_subcommand_from commit" -l allow-empty-message -d 'Like --allow-empty this command is primarily for use by foreign SCM interface scripts.'
 complete -c git -n "__fish_seen_subcommand_from commit" -l cleanup -d 'This option determines how the supplied commit message should be cleaned up before committing.' -x
@@ -600,7 +610,7 @@ complete -c git -n "__fish_seen_subcommand_from commit" -s i -l include -d 'Befo
 complete -c git -n "__fish_seen_subcommand_from commit" -s o -l only -d 'Make a commit by taking the updated working tree contents of the paths specified on the command line, disregarding any contents that have been staged for other paths.'
 complete -c git -n "__fish_seen_subcommand_from commit" -l pathspec-from-file -d 'Pathspec is passed in <file> instead of commandline args.' -r
 complete -c git -n "__fish_seen_subcommand_from commit" -l pathspec-file-nul -d 'Only meaningful with --pathspec-from-file.'
-complete -c git -n "__fish_seen_subcommand_from commit" -s u -l untracked-files -d 'Show untracked files.' -x
+complete -c git -n "__fish_seen_subcommand_from commit" -s u -l untracked-files -d 'Show untracked files.' -r
 complete -c git -n "__fish_seen_subcommand_from commit" -s v -l verbose -d 'Show unified diff between the HEAD commit and what would be committed at the bottom of the commit message template to help the user describe the commit by reminding what changes the commit has.'
 complete -c git -n "__fish_seen_subcommand_from commit" -s q -l quiet -d 'Suppress commit summary message.'
 complete -c git -n "__fish_seen_subcommand_from commit" -l dry-run -d 'Do not create a commit, but show a list of paths that are to be committed, paths with local changes that will be left uncommitted and paths that are untracked.'
@@ -620,7 +630,8 @@ complete -c git -n "__fish_seen_subcommand_from merge" -l log -l no-log -d 'In a
 complete -c git -n "__fish_seen_subcommand_from merge" -l signoff -l no-signoff -d 'Add a Signed-off-by trailer by the committer at the end of the commit log message.'
 complete -c git -n "__fish_seen_subcommand_from merge" -l stat -s n -l no-stat -d 'Show a diffstat at the end of the merge.'
 complete -c git -n "__fish_seen_subcommand_from merge" -l squash -l no-squash -d 'Produce the working tree and index state as if a real merge happened (except for the merge information), but do not actually make a commit, move the HEAD, or record $GIT_DIR/MERGE_HEAD (to cause the next git commit command to create a merge commit).'
-complete -c git -n "__fish_seen_subcommand_from merge" -l no-verify -d 'This option bypasses the pre-merge and commit-msg hooks.'
+complete -c git -n "__fish_seen_subcommand_from merge" -l verify -d 'By default, the pre-merge and commit-msg hooks are run.'
+complete -c git -n "__fish_seen_subcommand_from merge" -l no-verify -d 'By default, the pre-merge and commit-msg hooks are run.'
 complete -c git -n "__fish_seen_subcommand_from merge" -s s -l strategy -d 'Use the given merge strategy; can be supplied more than once to specify them in the order they should be tried.' -x
 complete -c git -n "__fish_seen_subcommand_from merge" -s X -l strategy-option -d 'Pass merge strategy specific option through to the merge strategy.' -x
 complete -c git -n "__fish_seen_subcommand_from merge" -l verify-signatures -l no-verify-signatures -d 'Verify that the tip commit of the side branch being merged is signed with a valid key, i.e. a key that has a valid uid: in the default trust model, this means the signing key has been signed by a trusted key.'
@@ -628,9 +639,10 @@ complete -c git -n "__fish_seen_subcommand_from merge" -l summary -l no-summary 
 complete -c git -n "__fish_seen_subcommand_from merge" -s q -l quiet -d 'Operate quietly.'
 complete -c git -n "__fish_seen_subcommand_from merge" -s v -l verbose -d 'Be verbose.'
 complete -c git -n "__fish_seen_subcommand_from merge" -l progress -l no-progress -d 'Turn progress on/off explicitly.'
-complete -c git -n "__fish_seen_subcommand_from merge" -l autostash -l no-autostash -d 'Automatically create a temporary stash entry before the operation begins, and apply it after the operation ends.'
+complete -c git -n "__fish_seen_subcommand_from merge" -l autostash -l no-autostash -d 'Automatically create a temporary stash entry before the operation begins, record it in the special ref MERGE_AUTOSTASH and apply it after the operation ends.'
 complete -c git -n "__fish_seen_subcommand_from merge" -l allow-unrelated-histories -d 'By default, git merge command refuses to merge histories that do not share a common ancestor.'
 complete -c git -n "__fish_seen_subcommand_from merge" -s m -d 'Set the commit message to be used for the merge commit (in case one is created).' -x
+complete -c git -n "__fish_seen_subcommand_from merge" -l into-name -d 'Prepare the default merge message as if merging to the branch <branch>, instead of the name of the real branch to which the merge is made.' -x
 complete -c git -n "__fish_seen_subcommand_from merge" -s F -l file -d 'Read the commit message to be used for the merge commit (in case one is created).' -r
 complete -c git -n "__fish_seen_subcommand_from merge" -l rerere-autoupdate -l no-rerere-autoupdate -d 'Allow the rerere mechanism to update the index with the result of auto-conflict resolution if possible.'
 complete -c git -n "__fish_seen_subcommand_from merge" -l overwrite-ignore -l no-overwrite-ignore -d 'Silently overwrite ignored files from the merge result.'
@@ -646,15 +658,15 @@ complete -c git -n "__fish_seen_subcommand_from rebase" -l continue -d 'Restart 
 complete -c git -n "__fish_seen_subcommand_from rebase" -l abort -d 'Abort the rebase operation and reset HEAD to the original branch.'
 complete -c git -n "__fish_seen_subcommand_from rebase" -l quit -d 'Abort the rebase operation but HEAD is not reset back to the original branch.'
 complete -c git -n "__fish_seen_subcommand_from rebase" -l apply -d 'Use applying strategies to rebase (calling git-am internally).'
-complete -c git -n "__fish_seen_subcommand_from rebase" -l empty -d 'How to handle commits that are not empty to start and are not clean cherry-picks of any upstream commit, but which become empty after rebasing (because they contain a subset of already upstream changes).' -x
+complete -c git -n "__fish_seen_subcommand_from rebase" -l empty -d 'How to handle commits that are not empty to start and are not clean cherry-picks of any upstream commit, but which become empty after rebasing (because they contain a subset of already upstream changes).' -r
 complete -c git -n "__fish_seen_subcommand_from rebase" -l no-keep-empty -l keep-empty -d 'Do not keep commits that start empty before the rebase (i.e. that do not change anything from its parent) in the result.'
 complete -c git -n "__fish_seen_subcommand_from rebase" -l reapply-cherry-picks -l no-reapply-cherry-picks -d 'Reapply all clean cherry-picks of any upstream commit instead of preemptively dropping them.'
 complete -c git -n "__fish_seen_subcommand_from rebase" -l allow-empty-message -d 'No-op.'
 complete -c git -n "__fish_seen_subcommand_from rebase" -l skip -d 'Restart the rebasing process by skipping the current patch.'
 complete -c git -n "__fish_seen_subcommand_from rebase" -l edit-todo -d 'Edit the todo list during an interactive rebase.'
 complete -c git -n "__fish_seen_subcommand_from rebase" -l show-current-patch -d 'Show the current patch in an interactive rebase or when rebase is stopped because of conflicts.'
-complete -c git -n "__fish_seen_subcommand_from rebase" -s m -l merge -d 'Use merging strategies to rebase.'
-complete -c git -n "__fish_seen_subcommand_from rebase" -s s -l strategy -d 'Use the given merge strategy.' -x
+complete -c git -n "__fish_seen_subcommand_from rebase" -s m -l merge -d 'Using merging strategies to rebase (default).'
+complete -c git -n "__fish_seen_subcommand_from rebase" -s s -l strategy -d 'Use the given merge strategy, instead of the default ort.' -x
 complete -c git -n "__fish_seen_subcommand_from rebase" -s X -l strategy-option -d 'Pass the <strategy-option> through to the merge strategy.' -x
 complete -c git -n "__fish_seen_subcommand_from rebase" -l rerere-autoupdate -l no-rerere-autoupdate -d 'Allow the rerere mechanism to update the index with the result of auto-conflict resolution if possible.'
 complete -c git -n "__fish_seen_subcommand_from rebase" -s S -l gpg-sign -l no-gpg-sign -d 'GPG-sign commits.' -x
@@ -674,7 +686,6 @@ complete -c git -n "__fish_seen_subcommand_from rebase" -l ignore-date -l reset-
 complete -c git -n "__fish_seen_subcommand_from rebase" -l signoff -d 'Add a Signed-off-by trailer to all the rebased commits.'
 complete -c git -n "__fish_seen_subcommand_from rebase" -s i -l interactive -d 'Make a list of the commits which are about to be rebased.'
 complete -c git -n "__fish_seen_subcommand_from rebase" -s r -l rebase-merges -d 'By default, a rebase will simply drop merge commits from the todo list, and put the rebased commits into a single, linear branch.' -x
-complete -c git -n "__fish_seen_subcommand_from rebase" -s p -l preserve-merges -d '[DEPRECATED: use --rebase-merges instead] Recreate merge commits instead of flattening the history by replaying commits a merge commit introduces.'
 complete -c git -n "__fish_seen_subcommand_from rebase" -s x -l exec -d 'Append "exec <cmd>" after each line creating a commit in the final history.' -x
 complete -c git -n "__fish_seen_subcommand_from rebase" -l root -d 'Rebase all commits reachable from <branch>, instead of limiting them with an <upstream>.'
 complete -c git -n "__fish_seen_subcommand_from rebase" -l autosquash -l no-autosquash -d 'When the commit log message begins with "squash! ..." or "fixup! ..." or "amend! ...", and there is already a commit in the todo list that matches the same ..., automatically modify the todo list of rebase -i, so that the commit marked for squashing comes right after the commit to be modified, and change the action of the moved commit from pick to squash or fixup or fixup -C respectively.'
@@ -683,11 +694,11 @@ complete -c git -n "__fish_seen_subcommand_from rebase" -l reschedule-failed-exe
 
 
 
-complete -c git -n "__fish_seen_subcommand_from reset" -l soft -d 'Does not touch the index file or the working tree at all (but resets the head to <commit>, just like'
-complete -c git -n "__fish_seen_subcommand_from reset" -l mixed -d 'Resets the index but not the working tree (i.e., the changed files are preserved but not marked for'
+complete -c git -n "__fish_seen_subcommand_from reset" -l soft -d 'Does not touch the index file or the working tree at all (but resets the head to <commit>, just like all modes do).'
+complete -c git -n "__fish_seen_subcommand_from reset" -l mixed -d 'Resets the index but not the working tree (i.e., the changed files are preserved but not marked for commit) and reports what has not been updated.'
 complete -c git -n "__fish_seen_subcommand_from reset" -l hard -d 'Resets the index and working tree.'
-complete -c git -n "__fish_seen_subcommand_from reset" -l merge -d 'Resets the index and updates the files in the working tree that are different between <commit> and'
-complete -c git -n "__fish_seen_subcommand_from reset" -l keep -d 'Resets index entries and updates files in the working tree that are different between <commit> and'
+complete -c git -n "__fish_seen_subcommand_from reset" -l merge -d 'Resets the index and updates the files in the working tree that are different between <commit> and HEAD, but keeps those which are different between the index and working tree (i.e. which have changes which have not been added).'
+complete -c git -n "__fish_seen_subcommand_from reset" -l keep -d 'Resets index entries and updates files in the working tree that are different between <commit> and HEAD.'
 complete -c git -n "__fish_seen_subcommand_from reset" -l recurse-submodules -d 'When the working tree is updated, using --recurse-submodules will also recursively reset the working tree of all active submodules according to the commit recorded in the superproject, also setting the submodules\' HEAD to be detached at that commit.'
 complete -c git -n "__fish_seen_subcommand_from reset" -l no-recurse-submodules -d 'When the working tree is updated, using --recurse-submodules will also recursively reset the working tree of all active submodules according to the commit recorded in the superproject, also setting the submodules\' HEAD to be detached at that commit.'
 complete -c git -n "__fish_seen_subcommand_from reset" -s q -l quiet -l no-quiet -d 'Be quiet, only report errors.'
@@ -707,9 +718,9 @@ complete -c git -n "__fish_seen_subcommand_from switch" -s m -l merge -d 'If you
 complete -c git -n "__fish_seen_subcommand_from switch" -l conflict -d 'The same as --merge option above, but changes the way the conflicting hunks are presented, overriding the merge.conflictStyle configuration variable.' -x
 complete -c git -n "__fish_seen_subcommand_from switch" -s q -l quiet -d 'Quiet, suppress feedback messages.'
 complete -c git -n "__fish_seen_subcommand_from switch" -l progress -l no-progress -d 'Progress status is reported on the standard error stream by default when it is attached to a terminal, unless --quiet is specified.'
-complete -c git -n "__fish_seen_subcommand_from switch" -s t -l track -d 'When creating a new branch, set up "upstream" configuration.'
+complete -c git -n "__fish_seen_subcommand_from switch" -s t -l track -d 'When creating a new branch, set up "upstream" configuration.' -r
 complete -c git -n "__fish_seen_subcommand_from switch" -l no-track -d 'Do not set up "upstream" configuration, even if the branch.autoSetupMerge configuration variable is true.'
-complete -c git -n "__fish_seen_subcommand_from switch" -l orphan -d 'Create a new orphan branch, named <new-branch>.' -x
+complete -c git -n "__fish_seen_subcommand_from switch" -l orphan -d 'Create a new orphan branch, named <new-branch>.' -r
 complete -c git -n "__fish_seen_subcommand_from switch" -l ignore-other-worktrees -d 'git switch refuses when the wanted ref is already checked out by another worktree.'
 complete -c git -n "__fish_seen_subcommand_from switch" -l recurse-submodules -l no-recurse-submodules -d 'Using --recurse-submodules will update the content of all active submodules according to the commit recorded in the superproject.'
 
@@ -751,7 +762,8 @@ complete -c git -n "__fish_seen_subcommand_from fetch" -l shallow-since -d 'Deep
 complete -c git -n "__fish_seen_subcommand_from fetch" -l shallow-exclude -d 'Deepen or shorten the history of a shallow repository to exclude commits reachable from a specified remote branch or tag.' -x
 complete -c git -n "__fish_seen_subcommand_from fetch" -l unshallow -d 'If the source repository is complete, convert a shallow repository to a complete one, removing all the limitations imposed by shallow repositories.'
 complete -c git -n "__fish_seen_subcommand_from fetch" -l update-shallow -d 'By default when fetching from a shallow repository, git fetch refuses refs that require updating .git/shallow.'
-complete -c git -n "__fish_seen_subcommand_from fetch" -l negotiation-tip -d 'By default, Git will report, to the server, commits reachable from all local refs to find common commits in an attempt to reduce the size of the to-be-received packfile.' -x
+complete -c git -n "__fish_seen_subcommand_from fetch" -l negotiation-tip -d 'By default, Git will report, to the server, commits reachable from all local refs to find common commits in an attempt to reduce the size of the to-be-received packfile.' -r
+complete -c git -n "__fish_seen_subcommand_from fetch" -l negotiate-only -d 'Do not fetch anything from the server, and instead print the ancestors of the provided --negotiation-tip=* arguments, which we have in common with the server.'
 complete -c git -n "__fish_seen_subcommand_from fetch" -l dry-run -d 'Show what would be done, without making any changes.'
 complete -c git -n "__fish_seen_subcommand_from fetch" -l write-fetch-head -d 'Write the list of remote refs fetched in the FETCH_HEAD file directly under $GIT_DIR.'
 complete -c git -n "__fish_seen_subcommand_from fetch" -l no-write-fetch-head -d 'Write the list of remote refs fetched in the FETCH_HEAD file directly under $GIT_DIR.'
@@ -769,11 +781,11 @@ complete -c git -n "__fish_seen_subcommand_from fetch" -s t -l tags -d 'Fetch al
 complete -c git -n "__fish_seen_subcommand_from fetch" -l recurse-submodules -d 'This option controls if and under what conditions new commits of populated submodules should be fetched too.' -x
 complete -c git -n "__fish_seen_subcommand_from fetch" -s j -l jobs -d 'Number of parallel children to be used for all forms of fetching.' -x
 complete -c git -n "__fish_seen_subcommand_from fetch" -l no-recurse-submodules -d 'Disable recursive fetching of submodules (this has the same effect as using the --recurse-submodules=no option).'
-complete -c git -n "__fish_seen_subcommand_from fetch" -l set-upstream -d 'If the remote is fetched successfully, add upstream (tracking) reference, used by argument-less gitpull(1) and other commands.'
+complete -c git -n "__fish_seen_subcommand_from fetch" -l set-upstream -d 'If the remote is fetched successfully, add upstream (tracking) reference, used by argument-less git-pull(1) and other commands.'
 complete -c git -n "__fish_seen_subcommand_from fetch" -l submodule-prefix -d 'Prepend <path> to paths printed in informative messages such as "Fetching submodule foo".' -r
-complete -c git -n "__fish_seen_subcommand_from fetch" -l recurse-submodules-default -d 'This option is used internally to temporarily provide a non-negative default value for the --recurse-submodules option.' -x
+complete -c git -n "__fish_seen_subcommand_from fetch" -l recurse-submodules-default -d 'This option is used internally to temporarily provide a non-negative default value for the --recurse-submodules option.' -r
 complete -c git -n "__fish_seen_subcommand_from fetch" -s u -l update-head-ok -d 'By default git fetch refuses to update the head which corresponds to the current branch.'
-complete -c git -n "__fish_seen_subcommand_from fetch" -l upload-pack -d 'When given, and the repository to fetch from is handled by git fetch-pack, --exec=<upload-pack> is passed to the command to specify non-default path for the command run on the other end.' -x
+complete -c git -n "__fish_seen_subcommand_from fetch" -l upload-pack -d 'When given, and the repository to fetch from is handled by git fetch-pack, --exec=<upload-pack> is passed to the command to specify non-default path for the command run on the other end.' -r
 complete -c git -n "__fish_seen_subcommand_from fetch" -s q -l quiet -d 'Pass --quiet to git-fetch-pack and silence any other internally used git commands.'
 complete -c git -n "__fish_seen_subcommand_from fetch" -s v -l verbose -d 'Be verbose.'
 complete -c git -n "__fish_seen_subcommand_from fetch" -l progress -d 'Progress status is reported on the standard error stream by default when it is attached to a terminal, unless -q is specified.'
@@ -791,21 +803,23 @@ complete -c git -n "__fish_seen_subcommand_from pull" -s v -l verbose -d 'Pass -
 complete -c git -n "__fish_seen_subcommand_from pull" -l commit -l no-commit -d 'Perform the merge and commit the result.'
 complete -c git -n "__fish_seen_subcommand_from pull" -l edit -s e -l no-edit -d 'Invoke an editor before committing successful mechanical merge to further edit the auto-generated merge message, so that the user can explain and justify the merge.'
 complete -c git -n "__fish_seen_subcommand_from pull" -l cleanup -d 'This option determines how the merge message will be cleaned up before committing.' -x
-complete -c git -n "__fish_seen_subcommand_from pull" -l ff -l no-ff -l ff-only -d 'Specifies how a merge is handled when the merged-in history is already a descendant of the current history.'
+complete -c git -n "__fish_seen_subcommand_from pull" -l ff-only -d 'Only update to the new history if there is no divergent local history.'
+complete -c git -n "__fish_seen_subcommand_from pull" -l ff -l no-ff -d 'When merging rather than rebasing, specifies how a merge is handled when the merged-in history is already a descendant of the current history.'
 complete -c git -n "__fish_seen_subcommand_from pull" -s S -l gpg-sign -l no-gpg-sign -d 'GPG-sign the resulting merge commit.' -x
 complete -c git -n "__fish_seen_subcommand_from pull" -l log -l no-log -d 'In addition to branch names, populate the log message with one-line descriptions from at most <n> actual commits that are being merged.' -x
 complete -c git -n "__fish_seen_subcommand_from pull" -l signoff -l no-signoff -d 'Add a Signed-off-by trailer by the committer at the end of the commit log message.'
 complete -c git -n "__fish_seen_subcommand_from pull" -l stat -s n -l no-stat -d 'Show a diffstat at the end of the merge.'
 complete -c git -n "__fish_seen_subcommand_from pull" -l squash -l no-squash -d 'Produce the working tree and index state as if a real merge happened (except for the merge information), but do not actually make a commit, move the HEAD, or record $GIT_DIR/MERGE_HEAD (to cause the next git commit command to create a merge commit).'
-complete -c git -n "__fish_seen_subcommand_from pull" -l no-verify -d 'This option bypasses the pre-merge and commit-msg hooks.'
+complete -c git -n "__fish_seen_subcommand_from pull" -l verify -d 'By default, the pre-merge and commit-msg hooks are run.'
+complete -c git -n "__fish_seen_subcommand_from pull" -l no-verify -d 'By default, the pre-merge and commit-msg hooks are run.'
 complete -c git -n "__fish_seen_subcommand_from pull" -s s -l strategy -d 'Use the given merge strategy; can be supplied more than once to specify them in the order they should be tried.' -x
 complete -c git -n "__fish_seen_subcommand_from pull" -s X -l strategy-option -d 'Pass merge strategy specific option through to the merge strategy.' -x
 complete -c git -n "__fish_seen_subcommand_from pull" -l verify-signatures -l no-verify-signatures -d 'Verify that the tip commit of the side branch being merged is signed with a valid key, i.e. a key that has a valid uid: in the default trust model, this means the signing key has been signed by a trusted key.'
 complete -c git -n "__fish_seen_subcommand_from pull" -l summary -l no-summary -d 'Synonyms to --stat and --no-stat; these are deprecated and will be removed in the future.'
-complete -c git -n "__fish_seen_subcommand_from pull" -l autostash -l no-autostash -d 'Automatically create a temporary stash entry before the operation begins, and apply it after the operation ends.'
+complete -c git -n "__fish_seen_subcommand_from pull" -l autostash -l no-autostash -d 'Automatically create a temporary stash entry before the operation begins, record it in the special ref MERGE_AUTOSTASH and apply it after the operation ends.'
 complete -c git -n "__fish_seen_subcommand_from pull" -l allow-unrelated-histories -d 'By default, git merge command refuses to merge histories that do not share a common ancestor.'
 complete -c git -n "__fish_seen_subcommand_from pull" -s r -l rebase -d 'When true, rebase the current branch on top of the upstream branch after fetching.' -x
-complete -c git -n "__fish_seen_subcommand_from pull" -l no-rebase -d 'Override earlier --rebase.'
+complete -c git -n "__fish_seen_subcommand_from pull" -l no-rebase -d 'This is shorthand for --rebase=false.'
 complete -c git -n "__fish_seen_subcommand_from pull" -l all -d 'Fetch all remotes.'
 complete -c git -n "__fish_seen_subcommand_from pull" -s a -l append -d 'Append ref names and object names of fetched refs to the existing contents of .git/FETCH_HEAD.'
 complete -c git -n "__fish_seen_subcommand_from pull" -l atomic -d 'Use an atomic transaction to update local refs.'
@@ -815,7 +829,8 @@ complete -c git -n "__fish_seen_subcommand_from pull" -l shallow-since -d 'Deepe
 complete -c git -n "__fish_seen_subcommand_from pull" -l shallow-exclude -d 'Deepen or shorten the history of a shallow repository to exclude commits reachable from a specified remote branch or tag.' -x
 complete -c git -n "__fish_seen_subcommand_from pull" -l unshallow -d 'If the source repository is complete, convert a shallow repository to a complete one, removing all the limitations imposed by shallow repositories.'
 complete -c git -n "__fish_seen_subcommand_from pull" -l update-shallow -d 'By default when fetching from a shallow repository, git fetch refuses refs that require updating .git/shallow.'
-complete -c git -n "__fish_seen_subcommand_from pull" -l negotiation-tip -d 'By default, Git will report, to the server, commits reachable from all local refs to find common commits in an attempt to reduce the size of the to-be-received packfile.' -x
+complete -c git -n "__fish_seen_subcommand_from pull" -l negotiation-tip -d 'By default, Git will report, to the server, commits reachable from all local refs to find common commits in an attempt to reduce the size of the to-be-received packfile.' -r
+complete -c git -n "__fish_seen_subcommand_from pull" -l negotiate-only -d 'Do not fetch anything from the server, and instead print the ancestors of the provided --negotiation-tip=* arguments, which we have in common with the server.'
 complete -c git -n "__fish_seen_subcommand_from pull" -l dry-run -d 'Show what would be done, without making any changes.'
 complete -c git -n "__fish_seen_subcommand_from pull" -s f -l force -d 'When git fetch is used with <src>:<dst> refspec it may refuse to update the local branch as discussed in the <refspec> part of the git-fetch(1) documentation.'
 complete -c git -n "__fish_seen_subcommand_from pull" -s k -l keep -d 'Keep downloaded pack.'
@@ -825,8 +840,8 @@ complete -c git -n "__fish_seen_subcommand_from pull" -l no-tags -d 'By default,
 complete -c git -n "__fish_seen_subcommand_from pull" -l refmap -d 'When fetching refs listed on the command line, use the specified refspec (can be given more than once) to map the refs to remote-tracking branches, instead of the values of remote.*.fetch configuration variables for the remote repository.' -x
 complete -c git -n "__fish_seen_subcommand_from pull" -s t -l tags -d 'Fetch all tags from the remote (i.e., fetch remote tags refs/tags/* into local tags with the same name), in addition to whatever else would otherwise be fetched.'
 complete -c git -n "__fish_seen_subcommand_from pull" -s j -l jobs -d 'Number of parallel children to be used for all forms of fetching.' -x
-complete -c git -n "__fish_seen_subcommand_from pull" -l set-upstream -d 'If the remote is fetched successfully, add upstream (tracking) reference, used by argument-less gitpull(1) and other commands.'
-complete -c git -n "__fish_seen_subcommand_from pull" -l upload-pack -d 'When given, and the repository to fetch from is handled by git fetch-pack, --exec=<upload-pack> is passed to the command to specify non-default path for the command run on the other end.' -x
+complete -c git -n "__fish_seen_subcommand_from pull" -l set-upstream -d 'If the remote is fetched successfully, add upstream (tracking) reference, used by argument-less git-pull(1) and other commands.'
+complete -c git -n "__fish_seen_subcommand_from pull" -l upload-pack -d 'When given, and the repository to fetch from is handled by git fetch-pack, --exec=<upload-pack> is passed to the command to specify non-default path for the command run on the other end.' -r
 complete -c git -n "__fish_seen_subcommand_from pull" -l progress -d 'Progress status is reported on the standard error stream by default when it is attached to a terminal, unless -q is specified.'
 complete -c git -n "__fish_seen_subcommand_from pull" -s o -l server-option -d 'Transmit the given string to the server when communicating using protocol version 2.' -x
 complete -c git -n "__fish_seen_subcommand_from pull" -l show-forced-updates -d 'By default, git checks if a branch is force-updated during fetch.'
@@ -849,7 +864,7 @@ complete -c git -n "__fish_seen_subcommand_from push" -l no-signed -l signed -d 
 complete -c git -n "__fish_seen_subcommand_from push" -l atomic -d 'Use an atomic transaction on the remote side if available.'
 complete -c git -n "__fish_seen_subcommand_from push" -l no-atomic -d 'Use an atomic transaction on the remote side if available.'
 complete -c git -n "__fish_seen_subcommand_from push" -s o -l push-option -d 'Transmit the given string to the server, which passes them to the pre-receive as well as the post-receive hook.' -x
-complete -c git -n "__fish_seen_subcommand_from push" -l receive-pack -l exec -d 'Path to the git-receive-pack program on the remote end.' -x
+complete -c git -n "__fish_seen_subcommand_from push" -l receive-pack -l exec -d 'Path to the git-receive-pack program on the remote end.' -r
 complete -c git -n "__fish_seen_subcommand_from push" -l force-with-lease -d 'Usually, "git push" refuses to update a remote ref that is not an ancestor of the local ref used to overwrite it.' -x
 complete -c git -n "__fish_seen_subcommand_from push" -l no-force-with-lease -l force-with-lease -d 'Usually, "git push" refuses to update a remote ref that is not an ancestor of the local ref used to overwrite it.' -x
 complete -c git -n "__fish_seen_subcommand_from push" -s f -l force -d 'Usually, the command refuses to update a remote ref that is not an ancestor of the local ref used to overwrite it.'

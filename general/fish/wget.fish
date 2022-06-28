@@ -13,7 +13,7 @@ complete -c wget -o nv -l no-verbose -d 'turn off verboseness, without being qui
 complete -c wget -l report-speed -d 'output bandwidth as TYPE.' -x
 complete -c wget -s i -l input-file -d 'download URLs found in local or external FILE' -r
 complete -c wget -s F -l force-html -d 'treat input file as HTML'
-complete -c wget -s B -l base -d 'resolves HTML input-file links (-i -F) relative to URL' -x
+complete -c wget -s B -l base -d 'resolves HTML input-file links (-i -F) relative to URL' -r
 complete -c wget -l config -d 'specify config file to use' -r
 complete -c wget -l no-config -d 'do not read any config file'
 complete -c wget -l rejected-log -d 'log reasons for URL rejection to FILE' -r
@@ -44,7 +44,7 @@ complete -c wget -s Q -l quota -d 'set retrieval quota to NUMBER' -x
 complete -c wget -l bind-address -d 'bind to ADDRESS (hostname or IP) on local host' -x
 complete -c wget -l limit-rate -d 'limit download rate to RATE' -x
 complete -c wget -l no-dns-cache -d 'disable caching DNS lookups'
-complete -c wget -l restrict-file-names -d 'restrict chars in file names to ones OS allows' -x
+complete -c wget -l restrict-file-names -d 'restrict chars in file names to ones OS allows' -r
 complete -c wget -l ignore-case -d 'ignore case when matching files/directories'
 complete -c wget -s 4 -l inet4-only -d 'connect only to IPv4 addresses'
 complete -c wget -s 6 -l inet6-only -d 'connect only to IPv6 addresses'
@@ -62,8 +62,8 @@ complete -c wget -o nd -l no-directories -d 'don\'t create directories'
 complete -c wget -s x -l force-directories -d 'force creation of directories'
 complete -c wget -o nH -l no-host-directories -d 'don\'t create host directories'
 complete -c wget -l protocol-directories -d 'use protocol name in directories'
-complete -c wget -s P -l directory-prefix -d 'save files to PREFIX/..' -x
-complete -c wget -l cut-dirs -d 'ignore NUMBER remote directory components' -x
+complete -c wget -s P -l directory-prefix -d 'save files to PREFIX/..' -r
+complete -c wget -l cut-dirs -d 'ignore NUMBER remote directory components' -r
 complete -c wget -l http-user -d 'set http user to USER' -x
 complete -c wget -l http-password -d 'set http password to PASS' -x
 complete -c wget -l no-cache -d 'disallow server-cached data'
@@ -103,7 +103,7 @@ complete -c wget -l ca-directory -d 'directory where hash list of CAs is stored'
 complete -c wget -l crl-file -d 'file with bundle of CRLs' -r
 complete -c wget -l pinnedpubkey -d 'Public key (PEM/DER) file, or any number of base64 encoded sha256 hashes preceded by \'sha256//\' and separated by \';\', to verify peer against' -r
 complete -c wget -l random-file -d 'file with random data for seeding the SSL PRNG' -r
-complete -c wget -l ciphers -d 'Set the priority string (GnuTLS) or cipher list string (OpenSSL) directly.' -x
+complete -c wget -l ciphers -d 'Set the priority string (GnuTLS) or cipher list string (OpenSSL) directly.' -r
 complete -c wget -l no-hsts -d 'disable HSTS'
 complete -c wget -l hsts-file -d 'path of HSTS database (will override default)'
 complete -c wget -l ftp-user -d 'set ftp user to USER' -x
@@ -119,7 +119,7 @@ complete -c wget -l ftps-clear-data-connection -d 'cipher the control channel on
 complete -c wget -l ftps-fallback-to-ftp -d 'fall back to FTP if FTPS is not supported in the target server'
 complete -c wget -l warc-file -d 'save request/response data to a .warc.gz file' -r
 complete -c wget -l warc-header -d 'insert STRING into the warcinfo record' -x
-complete -c wget -l warc-max-size -d 'set maximum size of WARC files to NUMBER' -x
+complete -c wget -l warc-max-size -d 'set maximum size of WARC files to NUMBER' -r
 complete -c wget -l warc-cdx -d 'write CDX index files'
 complete -c wget -l warc-dedup -d 'do not store records listed in this CDX file' -r
 complete -c wget -l no-warc-compression -d 'do not compress WARC files with GZIP'
@@ -131,7 +131,7 @@ complete -c wget -s l -l level -d 'maximum recursion depth (inf or 0 for infinit
 complete -c wget -l delete-after -d 'delete files locally after downloading them'
 complete -c wget -s k -l convert-links -d 'make links in downloaded HTML or CSS point to local files'
 complete -c wget -l convert-file-only -d 'convert the file part of the URLs only (usually known as the basename)'
-complete -c wget -l backups -d 'before writing file X, rotate up to N backup files' -x
+complete -c wget -l backups -d 'before writing file X, rotate up to N backup files' -r
 complete -c wget -s K -l backup-converted -d 'before converting file X, back up as X.orig'
 complete -c wget -s m -l mirror -d 'shortcut for -N -r -l inf --no-remove-listing'
 complete -c wget -s p -l page-requisites -d 'get all images, etc.'
@@ -148,7 +148,7 @@ complete -c wget -l follow-tags -d 'comma-separated list of followed HTML tags' 
 complete -c wget -l ignore-tags -d 'comma-separated list of ignored HTML tags' -x
 complete -c wget -s H -l span-hosts -d 'go to foreign hosts when recursive'
 complete -c wget -s L -l relative -d 'follow relative links only'
-complete -c wget -s I -l include-directories -d 'list of allowed directories' -x
+complete -c wget -s I -l include-directories -d 'list of allowed directories' -r
 complete -c wget -l trust-server-names -d 'use the name specified by the redirection URL\'s last component'
-complete -c wget -s X -l exclude-directories -d 'list of excluded directories' -x
+complete -c wget -s X -l exclude-directories -d 'list of excluded directories' -r
 complete -c wget -o np -l no-parent -d 'don\'t ascend to the parent directory'

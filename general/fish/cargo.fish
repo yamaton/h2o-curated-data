@@ -171,7 +171,7 @@ complete -c cargo -n "__fish_seen_subcommand_from new" -l vcs -d 'Initialize a n
 complete -c cargo -n "__fish_seen_subcommand_from new" -l bin -d 'Use a binary (application) template [default]'
 complete -c cargo -n "__fish_seen_subcommand_from new" -l lib -d 'Use a library template'
 complete -c cargo -n "__fish_seen_subcommand_from new" -l edition -d 'Edition to set for the crate generated [possible values: 2015, 2018, 2021]' -x
-complete -c cargo -n "__fish_seen_subcommand_from new" -l name -d 'Set the resulting package name, defaults to the directory name' -x
+complete -c cargo -n "__fish_seen_subcommand_from new" -l name -d 'Set the resulting package name, defaults to the directory name' -r
 complete -c cargo -n "__fish_seen_subcommand_from new" -s v -l verbose -d 'Use verbose output (-vv very verbose/build.rs output)'
 complete -c cargo -n "__fish_seen_subcommand_from new" -l color -d 'Coloring: auto, always, never' -x
 complete -c cargo -n "__fish_seen_subcommand_from new" -l frozen -d 'Require Cargo.lock and cache are up to date'
@@ -189,7 +189,7 @@ complete -c cargo -n "__fish_seen_subcommand_from init" -l vcs -d 'Initialize a 
 complete -c cargo -n "__fish_seen_subcommand_from init" -l bin -d 'Use a binary (application) template [default]'
 complete -c cargo -n "__fish_seen_subcommand_from init" -l lib -d 'Use a library template'
 complete -c cargo -n "__fish_seen_subcommand_from init" -l edition -d 'Edition to set for the crate generated [possible values: 2015, 2018, 2021]' -x
-complete -c cargo -n "__fish_seen_subcommand_from init" -l name -d 'Set the resulting package name, defaults to the directory name' -x
+complete -c cargo -n "__fish_seen_subcommand_from init" -l name -d 'Set the resulting package name, defaults to the directory name' -r
 complete -c cargo -n "__fish_seen_subcommand_from init" -s v -l verbose -d 'Use verbose output (-vv very verbose/build.rs output)'
 complete -c cargo -n "__fish_seen_subcommand_from init" -l color -d 'Coloring: auto, always, never' -x
 complete -c cargo -n "__fish_seen_subcommand_from init" -l frozen -d 'Require Cargo.lock and cache are up to date'

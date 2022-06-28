@@ -7,7 +7,7 @@ complete -c du -s B -l block-size -d 'scale sizes by SIZE before printing them; 
 complete -c du -s b -l bytes -d 'equivalent to \'--apparent-size --block-size=1\''
 complete -c du -s c -l total -d 'produce a grand total'
 complete -c du -s D -l dereference-args -d 'dereference only symlinks that are listed on the'
-complete -c du -s d -l max-depth -d 'print the total for a directory (or file, with --all)' -x
+complete -c du -s d -l max-depth -d 'print the total for a directory (or file, with --all)' -r
 complete -c du -l files0-from -d 'summarize disk usage of the' -x
 complete -c du -s H -d 'equivalent to --dereference-args (-D)'
 complete -c du -s h -l human-readable -d 'print sizes in human readable format (e.g., 1K 234M 2G)'

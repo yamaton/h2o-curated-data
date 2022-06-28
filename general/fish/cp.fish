@@ -2,7 +2,7 @@
 
 complete -c cp -s a -l archive -d 'same as -dR --preserve=all'
 complete -c cp -l attributes-only -d 'don\'t copy the file data, just the attributes'
-complete -c cp -l backup -d 'make a backup of each existing destination file' -x
+complete -c cp -l backup -d 'make a backup of each existing destination file' -r
 complete -c cp -s b -d 'like --backup but does not accept an argument'
 complete -c cp -l copy-contents -d 'copy contents of special files when recursive'
 complete -c cp -s d -d 'same as --no-dereference --preserve=links'
@@ -20,7 +20,7 @@ complete -c cp -l parents -d 'use full source file name under DIRECTORY'
 complete -c cp -s R -s r -l recursive -d 'copy directories recursively'
 complete -c cp -l reflink -d 'control clone/CoW copies.' -x
 complete -c cp -l remove-destination -d 'remove each existing destination file before attempting to open it (contrast with --force)'
-complete -c cp -l sparse -d 'control creation of sparse files.' -x
+complete -c cp -l sparse -d 'control creation of sparse files.' -r
 complete -c cp -l strip-trailing-slashes -d 'remove any trailing slashes from each SOURCE argument'
 complete -c cp -s s -l symbolic-link -d 'make symbolic links instead of copying'
 complete -c cp -s S -l suffix -d 'override the usual backup suffix' -x

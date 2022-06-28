@@ -130,7 +130,7 @@ complete -c gcc -o fanalyzer-state-purge -d 'Purge unneeded state during analysi
 complete -c gcc -o fanalyzer-transitivity -d 'Enable transitivity of constraints during analysis.'
 complete -c gcc -o fanalyzer-verbose-edges -d 'Emit more verbose descriptions of control flow in diagnostics.'
 complete -c gcc -o fanalyzer-verbose-state-changes -d 'Emit more verbose descriptions of state changes in diagnostics.'
-complete -c gcc -o fanalyzer-verbosity -d 'Control which events are displayed in diagnostic paths.' -x
+complete -c gcc -o fanalyzer-verbosity -d 'Control which events are displayed in diagnostic paths.' -r
 complete -c gcc -o fargument-alias -d 'Does nothing.'
 complete -c gcc -o fargument-noalias -d 'Does nothing.'
 complete -c gcc -o fargument-noalias-anything -d 'Does nothing.'
@@ -140,7 +140,7 @@ complete -c gcc -o fassociative-math -d 'Allow optimization for floating-point a
 complete -c gcc -o fasynchronous-unwind-tables -d 'Generate unwind tables that are exact at each instruction boundary.'
 complete -c gcc -o fauto-inc-dec -d 'Generate auto-inc/dec instructions.'
 complete -c gcc -o fauto-profile -d 'Use sample profile information for call graph node weights.'
-complete -c gcc -o fauto-profile -d 'Use sample profile information for call graph node weights.' -x
+complete -c gcc -o fauto-profile -d 'Use sample profile information for call graph node weights.' -r
 complete -c gcc -o fbranch-count-reg -d 'Replace add, compare, branch with branch on count register.'
 complete -c gcc -o fbranch-probabilities -d 'Use profiling information for branch probabilities.'
 complete -c gcc -o fbranch-target-load-optimize -d 'Does nothing.'
@@ -150,7 +150,7 @@ complete -c gcc -o fcall-saved- -d 'Mark <register> as being preserved across fu
 complete -c gcc -o fcall-used- -d 'Mark <register> as being corrupted by function calls.' -x
 complete -c gcc -o fcaller-saves -d 'Save registers around function calls.'
 complete -c gcc -o fcallgraph-info -d 'Output callgraph information on a per-file basis.'
-complete -c gcc -o fcallgraph-info -d 'Output callgraph information on a per-file basis with decorations.' -x
+complete -c gcc -o fcallgraph-info -d 'Output callgraph information on a per-file basis with decorations.' -r
 complete -c gcc -o fcf-protection -d 'Same as -fcf-protection=full.'
 complete -c gcc -o fcf-protection -d 'Instrument functions with checks to verify jump/call/return control-flow transfer instructions have valid targets.' -x
 complete -c gcc -o fcheck-data-deps -d 'This switch is deprecated; do not use.'
@@ -174,7 +174,7 @@ complete -c gcc -o fdata-sections -d 'Place data items into their own section.'
 complete -c gcc -o fdbg-cnt-list -d 'List all available debugging counters with their limits and counts.'
 complete -c gcc -o fdbg-cnt -d 'Set the debug counter limit.' -x
 complete -c gcc -o fdce -d 'Use the RTL dead code elimination pass.'
-complete -c gcc -o fdebug-prefix-map -d 'Map one directory name to another in debug information.' -x
+complete -c gcc -o fdebug-prefix-map -d 'Map one directory name to another in debug information.' -r
 complete -c gcc -o fdebug-types-section -d 'Output .debug_types section when using DWARF v4 debuginfo.'
 complete -c gcc -o fdefer-pop -d 'Defer popping functions args from stack until later.'
 complete -c gcc -o fdelayed-branch -d 'Attempt to fill delay slots of branch instructions.'
@@ -189,7 +189,7 @@ complete -c gcc -o fdiagnostics-format -d 'Select output format.' -x
 complete -c gcc -o fdiagnostics-generate-patch -d 'Print fix-it hints to stderr in unified diff format.'
 complete -c gcc -o fdiagnostics-minimum-margin-width -d 'Set minimum width of left margin of source code when showing source.' -x
 complete -c gcc -o fdiagnostics-parseable-fixits -d 'Print fix-it hints in machine-readable form.'
-complete -c gcc -o fdiagnostics-path-format -d 'Specify how to print any control-flow path associated with a diagnostic.' -x
+complete -c gcc -o fdiagnostics-path-format -d 'Specify how to print any control-flow path associated with a diagnostic.' -r
 complete -c gcc -o fdiagnostics-show-caret -d 'Show the source line with a caret indicating the column.'
 complete -c gcc -o fdiagnostics-show-cwe -d 'Print CWE identifiers for diagnostic messages, where available.'
 complete -c gcc -o fdiagnostics-show-labels -d 'Show labels annotating ranges of source code when showing source.'
@@ -200,7 +200,7 @@ complete -c gcc -o fdiagnostics-show-path-depths -d 'Show stack depths of events
 complete -c gcc -o fdiagnostics-urls -d 'Embed URLs in diagnostics.' -x
 complete -c gcc -o fdisable- -d 'Disable an optimization pass.' -x
 complete -c gcc -o fdse -d 'Use the RTL dead store elimination pass.'
-complete -c gcc -o fdump- -d 'Dump various compiler internals to a file.' -x
+complete -c gcc -o fdump- -d 'Dump various compiler internals to a file.' -r
 complete -c gcc -o fdump-analyzer -d 'Dump various analyzer internals to SRCFILE.analyzer.txt.'
 complete -c gcc -o fdump-analyzer-callgraph -d 'Dump analyzer-specific call graph information to a SRCFILE.callgraph.dot file.'
 complete -c gcc -o fdump-analyzer-exploded-graph -d 'Dump the analyzer exploded graph to a SRCFILE.eg.dot file.'
@@ -228,7 +228,7 @@ complete -c gcc -o fexcess-precision -d 'Specify handling of excess floating-poi
 complete -c gcc -o fexpensive-optimizations -d 'Perform a number of minor, expensive optimizations.'
 complete -c gcc -o ffast-math -d 'This option lacks documentation.'
 complete -c gcc -o ffat-lto-objects -d 'Output lto objects containing both the intermediate language and binary output.'
-complete -c gcc -o ffile-prefix-map -d 'Map one directory name to another in compilation result.' -x
+complete -c gcc -o ffile-prefix-map -d 'Map one directory name to another in compilation result.' -r
 complete -c gcc -o ffinite-loops -d 'Assume that loops with an exit will terminate and not loop indefinitely.'
 complete -c gcc -o ffinite-math-only -d 'Assume no NaNs or infinities are generated.'
 complete -c gcc -o ffixed- -d 'Mark <register> as being unavailable to the compiler.' -x
@@ -366,20 +366,20 @@ complete -c gcc -o fprofile -d 'Enable basic program profiling code.'
 complete -c gcc -o fprofile-abs-path -d 'Generate absolute source path names for gcov.'
 complete -c gcc -o fprofile-arcs -d 'Insert arc-based program profiling code.'
 complete -c gcc -o fprofile-correction -d 'Enable correction of flow inconsistent profile data input.'
-complete -c gcc -o fprofile-dir -d 'Set the top-level directory for storing the profile data.' -x
+complete -c gcc -o fprofile-dir -d 'Set the top-level directory for storing the profile data.' -r
 complete -c gcc -o fprofile-exclude-files -d 'Instrument only functions from files where names do not match all the regular expressions (separated by a semi-colon).' -r
 complete -c gcc -o fprofile-filter-files -d 'Instrument only functions from files where names match any regular expression (separated by a semi-colon).' -r
 complete -c gcc -o fprofile-generate -d 'Enable common options for generating profile info for profile feedback directed optimizations.'
-complete -c gcc -o fprofile-generate -d 'Enable common options for generating profile info for profile feedback directed optimizations, and set -fprofile-dir=.' -x
-complete -c gcc -o fprofile-note -d 'Select the name for storing the profile note file.' -x
+complete -c gcc -o fprofile-generate -d 'Enable common options for generating profile info for profile feedback directed optimizations, and set -fprofile-dir=.' -r
+complete -c gcc -o fprofile-note -d 'Select the name for storing the profile note file.' -r
 complete -c gcc -o fprofile-partial-training -d 'Do not assume that functions never executed during the train run are cold.'
-complete -c gcc -o fprofile-prefix-path -d 'Remove prefix from absolute path before mangling name for -fprofile-generate= and -fprofile-use=.' -x
+complete -c gcc -o fprofile-prefix-path -d 'Remove prefix from absolute path before mangling name for -fprofile-generate= and -fprofile-use=.' -r
 complete -c gcc -o fprofile-reorder-functions -d 'Enable function reordering that improves code placement.'
 complete -c gcc -o fprofile-report -d 'Report on consistency of profile.'
-complete -c gcc -o fprofile-reproducible -d 'Control level of reproducibility of profile gathered by -fprofile-generate.' -x
-complete -c gcc -o fprofile-update -d 'Set the profile update method.' -x
+complete -c gcc -o fprofile-reproducible -d 'Control level of reproducibility of profile gathered by -fprofile-generate.' -r
+complete -c gcc -o fprofile-update -d 'Set the profile update method.' -r
 complete -c gcc -o fprofile-use -d 'Enable common options for performing profile feedback directed optimizations.'
-complete -c gcc -o fprofile-use -d 'Enable common options for performing profile feedback directed optimizations, and set -fprofile-dir=.' -x
+complete -c gcc -o fprofile-use -d 'Enable common options for performing profile feedback directed optimizations, and set -fprofile-dir=.' -r
 complete -c gcc -o fprofile-values -d 'Insert code to profile values of expressions.'
 complete -c gcc -o frandom-seed -d 'This option lacks documentation.'
 complete -c gcc -o frandom-seed -d 'Make compile reproducible using <string>.' -x
@@ -434,14 +434,14 @@ complete -c gcc -o fsel-sched-pipelining-outer-loops -d 'Perform software pipeli
 complete -c gcc -o fsel-sched-reschedule-pipelined -d 'Reschedule pipelined regions without pipelining.'
 complete -c gcc -o fselective-scheduling -d 'Schedule instructions using selective scheduling algorithm.'
 complete -c gcc -o fselective-scheduling2 -d 'Run selective scheduling after reload.'
-complete -c gcc -o fself-test -d 'Run self-tests, using the given path to locate test files.' -x
+complete -c gcc -o fself-test -d 'Run self-tests, using the given path to locate test files.' -r
 complete -c gcc -o fsemantic-interposition -d 'Allow interposing function (or variables) by ones with different semantics (or initializer) respectively by dynamic linker.'
 complete -c gcc -o fshow-column -d 'Show column numbers in diagnostics, when available.'
 complete -c gcc -o fshrink-wrap -d 'Emit function prologues only before parts of the function that need it, rather than at the top of the function.'
 complete -c gcc -o fshrink-wrap-separate -d 'Shrink-wrap parts of the prologue and epilogue separately.'
 complete -c gcc -o fsignaling-nans -d 'Disable optimizations observable by IEEE signaling NaNs.'
 complete -c gcc -o fsigned-zeros -d 'Disable floating point optimizations that ignore the IEEE signedness of zero.'
-complete -c gcc -o fsimd-cost-model -d 'Specifies the vectorization cost model for code marked with a simd directive.' -x
+complete -c gcc -o fsimd-cost-model -d 'Specifies the vectorization cost model for code marked with a simd directive.' -r
 complete -c gcc -o fsingle-precision-constant -d 'Convert floating point constants to single precision constants.'
 complete -c gcc -o fsplit-ivs-in-unroller -d 'Split lifetimes of induction variables when loops are unrolled.'
 complete -c gcc -o fsplit-loops -d 'Perform loop splitting.'

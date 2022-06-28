@@ -37,9 +37,9 @@ complete -c deno -n "__fish_seen_subcommand_from bench" -l allow-env -d 'Allow e
 complete -c deno -n "__fish_seen_subcommand_from bench" -l allow-ffi -d 'Allow loading dynamic libraries' -x
 complete -c deno -n "__fish_seen_subcommand_from bench" -l allow-hrtime -d 'Allow high resolution time measurement'
 complete -c deno -n "__fish_seen_subcommand_from bench" -l allow-net -d 'Allow network access' -x
-complete -c deno -n "__fish_seen_subcommand_from bench" -l allow-read -d 'Allow file system read access' -x
+complete -c deno -n "__fish_seen_subcommand_from bench" -l allow-read -d 'Allow file system read access' -r
 complete -c deno -n "__fish_seen_subcommand_from bench" -l allow-run -d 'Allow running subprocesses' -x
-complete -c deno -n "__fish_seen_subcommand_from bench" -l allow-write -d 'Allow file system write access' -x
+complete -c deno -n "__fish_seen_subcommand_from bench" -l allow-write -d 'Allow file system write access' -r
 complete -c deno -n "__fish_seen_subcommand_from bench" -s c -l config -d 'The configuration file can be used to configure different aspects of deno including TypeScript, linting, and code formatting.' -r
 complete -c deno -n "__fish_seen_subcommand_from bench" -l cached-only -d 'Require that remote dependencies are already cached'
 complete -c deno -n "__fish_seen_subcommand_from bench" -l cert -d 'Load certificate authority from PEM encoded file' -r
@@ -47,7 +47,7 @@ complete -c deno -n "__fish_seen_subcommand_from bench" -l check -d 'Type check 
 complete -c deno -n "__fish_seen_subcommand_from bench" -l compat -d 'See https://deno.land/manual@v1.22.0/node/compatibility_mode'
 complete -c deno -n "__fish_seen_subcommand_from bench" -l filter -d 'Run benchmarks with this string or pattern in the bench name' -x
 complete -c deno -n "__fish_seen_subcommand_from bench" -s h -l help -d 'Print help information'
-complete -c deno -n "__fish_seen_subcommand_from bench" -l ignore -d 'Ignore files' -x
+complete -c deno -n "__fish_seen_subcommand_from bench" -l ignore -d 'Ignore files' -r
 complete -c deno -n "__fish_seen_subcommand_from bench" -l import-map -d 'Load import map file from local file or remote URL.' -r
 complete -c deno -n "__fish_seen_subcommand_from bench" -l location -d 'Value of \'globalThis.location\' used by some web APIs' -x
 complete -c deno -n "__fish_seen_subcommand_from bench" -l lock -d 'Check the specified lock file' -r
@@ -121,9 +121,9 @@ complete -c deno -n "__fish_seen_subcommand_from compile" -l allow-env -d 'Allow
 complete -c deno -n "__fish_seen_subcommand_from compile" -l allow-ffi -d 'Allow loading dynamic libraries' -x
 complete -c deno -n "__fish_seen_subcommand_from compile" -l allow-hrtime -d 'Allow high resolution time measurement'
 complete -c deno -n "__fish_seen_subcommand_from compile" -l allow-net -d 'Allow network access' -x
-complete -c deno -n "__fish_seen_subcommand_from compile" -l allow-read -d 'Allow file system read access' -x
+complete -c deno -n "__fish_seen_subcommand_from compile" -l allow-read -d 'Allow file system read access' -r
 complete -c deno -n "__fish_seen_subcommand_from compile" -l allow-run -d 'Allow running subprocesses' -x
-complete -c deno -n "__fish_seen_subcommand_from compile" -l allow-write -d 'Allow file system write access' -x
+complete -c deno -n "__fish_seen_subcommand_from compile" -l allow-write -d 'Allow file system write access' -r
 complete -c deno -n "__fish_seen_subcommand_from compile" -s c -l config -d 'The configuration file can be used to configure different aspects of deno including TypeScript, linting, and code formatting.' -r
 complete -c deno -n "__fish_seen_subcommand_from compile" -l cached-only -d 'Require that remote dependencies are already cached'
 complete -c deno -n "__fish_seen_subcommand_from compile" -l cert -d 'Load certificate authority from PEM encoded file' -r
@@ -138,7 +138,7 @@ complete -c deno -n "__fish_seen_subcommand_from compile" -l no-check -d 'Skip t
 complete -c deno -n "__fish_seen_subcommand_from compile" -l no-config -d 'Disable automatic loading of the configuration file.'
 complete -c deno -n "__fish_seen_subcommand_from compile" -l no-prompt -d 'Always throw if required permission wasn\'t passed'
 complete -c deno -n "__fish_seen_subcommand_from compile" -l no-remote -d 'Do not resolve remote modules'
-complete -c deno -n "__fish_seen_subcommand_from compile" -s o -l output -d 'Output file (defaults to $PWD/<inferred-name>)' -x
+complete -c deno -n "__fish_seen_subcommand_from compile" -s o -l output -d 'Output file (defaults to $PWD/<inferred-name>)' -r
 complete -c deno -n "__fish_seen_subcommand_from compile" -s q -l quiet -d 'Suppress diagnostic output'
 complete -c deno -n "__fish_seen_subcommand_from compile" -s r -l reload -d 'Reload source code cache (recompile TypeScript) --reload' -x
 complete -c deno -n "__fish_seen_subcommand_from compile" -l seed -d 'Set the random number generator seed' -x
@@ -155,12 +155,12 @@ complete -c deno -n "__fish_seen_subcommand_from completions" -l unstable -d 'En
 
 
 
-complete -c deno -n "__fish_seen_subcommand_from coverage" -l exclude -d 'Exclude source files from the report' -x
+complete -c deno -n "__fish_seen_subcommand_from coverage" -l exclude -d 'Exclude source files from the report' -r
 complete -c deno -n "__fish_seen_subcommand_from coverage" -s h -l help -d 'Print help information'
-complete -c deno -n "__fish_seen_subcommand_from coverage" -l ignore -d 'Ignore coverage files' -x
-complete -c deno -n "__fish_seen_subcommand_from coverage" -l include -d 'Include source files in the report' -x
+complete -c deno -n "__fish_seen_subcommand_from coverage" -l ignore -d 'Ignore coverage files' -r
+complete -c deno -n "__fish_seen_subcommand_from coverage" -l include -d 'Include source files in the report' -r
 complete -c deno -n "__fish_seen_subcommand_from coverage" -l lcov -d 'Output coverage report in lcov format'
-complete -c deno -n "__fish_seen_subcommand_from coverage" -l output -d 'Exports the coverage report in lcov format to the given file.' -x
+complete -c deno -n "__fish_seen_subcommand_from coverage" -l output -d 'Exports the coverage report in lcov format to the given file.' -r
 complete -c deno -n "__fish_seen_subcommand_from coverage" -s q -l quiet -d 'Suppress diagnostic output'
 complete -c deno -n "__fish_seen_subcommand_from coverage" -l unstable -d 'Enable unstable features and APIs'
 
@@ -205,7 +205,7 @@ complete -c deno -n "__fish_seen_subcommand_from fmt" -s c -l config -d 'The con
 complete -c deno -n "__fish_seen_subcommand_from fmt" -l check -d 'Check if the source files are formatted'
 complete -c deno -n "__fish_seen_subcommand_from fmt" -l ext -d 'Set standard input (stdin) content type' -x
 complete -c deno -n "__fish_seen_subcommand_from fmt" -s h -l help -d 'Print help information'
-complete -c deno -n "__fish_seen_subcommand_from fmt" -l ignore -d 'Ignore formatting particular source files' -x
+complete -c deno -n "__fish_seen_subcommand_from fmt" -l ignore -d 'Ignore formatting particular source files' -r
 complete -c deno -n "__fish_seen_subcommand_from fmt" -l no-clear-screen -d 'Do not clear terminal screen when under watch mode'
 complete -c deno -n "__fish_seen_subcommand_from fmt" -l no-config -d 'Disable automatic loading of the configuration file.'
 complete -c deno -n "__fish_seen_subcommand_from fmt" -l options-indent-width -d 'Define indentation width.' -x
@@ -223,7 +223,7 @@ complete -c deno -n "__fish_seen_subcommand_from info" -l cert -d 'Load certific
 complete -c deno -n "__fish_seen_subcommand_from info" -s h -l help -d 'Print help information'
 complete -c deno -n "__fish_seen_subcommand_from info" -l import-map -d 'Load import map file from local file or remote URL.' -r
 complete -c deno -n "__fish_seen_subcommand_from info" -l json -d 'UNSTABLE: Outputs the information in JSON format'
-complete -c deno -n "__fish_seen_subcommand_from info" -l location -d 'Show files used for origin bound APIs like the Web Storage API when running a script with \'--location=<HREF>\'' -x
+complete -c deno -n "__fish_seen_subcommand_from info" -l location -d 'Show files used for origin bound APIs like the Web Storage API when running a script with \'--location=<HREF>\'' -r
 complete -c deno -n "__fish_seen_subcommand_from info" -s q -l quiet -d 'Suppress diagnostic output'
 complete -c deno -n "__fish_seen_subcommand_from info" -s r -l reload -d 'Reload source code cache (recompile TypeScript) --reload' -x
 complete -c deno -n "__fish_seen_subcommand_from info" -l unstable -d 'Enable unstable features and APIs'
@@ -237,9 +237,9 @@ complete -c deno -n "__fish_seen_subcommand_from install" -l allow-env -d 'Allow
 complete -c deno -n "__fish_seen_subcommand_from install" -l allow-ffi -d 'Allow loading dynamic libraries' -x
 complete -c deno -n "__fish_seen_subcommand_from install" -l allow-hrtime -d 'Allow high resolution time measurement'
 complete -c deno -n "__fish_seen_subcommand_from install" -l allow-net -d 'Allow network access' -x
-complete -c deno -n "__fish_seen_subcommand_from install" -l allow-read -d 'Allow file system read access' -x
+complete -c deno -n "__fish_seen_subcommand_from install" -l allow-read -d 'Allow file system read access' -r
 complete -c deno -n "__fish_seen_subcommand_from install" -l allow-run -d 'Allow running subprocesses' -x
-complete -c deno -n "__fish_seen_subcommand_from install" -l allow-write -d 'Allow file system write access' -x
+complete -c deno -n "__fish_seen_subcommand_from install" -l allow-write -d 'Allow file system write access' -r
 complete -c deno -n "__fish_seen_subcommand_from install" -s c -l config -d 'The configuration file can be used to configure different aspects of deno including TypeScript, linting, and code formatting.' -r
 complete -c deno -n "__fish_seen_subcommand_from install" -l cached-only -d 'Require that remote dependencies are already cached'
 complete -c deno -n "__fish_seen_subcommand_from install" -l cert -d 'Load certificate authority from PEM encoded file' -r
@@ -253,7 +253,7 @@ complete -c deno -n "__fish_seen_subcommand_from install" -l inspect-brk -d 'Act
 complete -c deno -n "__fish_seen_subcommand_from install" -l location -d 'Value of \'globalThis.location\' used by some web APIs' -x
 complete -c deno -n "__fish_seen_subcommand_from install" -l lock -d 'Check the specified lock file' -r
 complete -c deno -n "__fish_seen_subcommand_from install" -l lock-write -d 'Write lock file (use with --lock)'
-complete -c deno -n "__fish_seen_subcommand_from install" -s n -l name -d 'Executable file name' -x
+complete -c deno -n "__fish_seen_subcommand_from install" -s n -l name -d 'Executable file name' -r
 complete -c deno -n "__fish_seen_subcommand_from install" -l no-check -d 'Skip type-checking.' -x
 complete -c deno -n "__fish_seen_subcommand_from install" -l no-config -d 'Disable automatic loading of the configuration file.'
 complete -c deno -n "__fish_seen_subcommand_from install" -l no-prompt -d 'Always throw if required permission wasn\'t passed'
@@ -270,7 +270,7 @@ complete -c deno -n "__fish_seen_subcommand_from install" -l v8-flags -d 'To see
 
 complete -c deno -n "__fish_seen_subcommand_from lint" -s c -l config -d 'The configuration file can be used to configure different aspects of deno including TypeScript, linting, and code formatting.' -r
 complete -c deno -n "__fish_seen_subcommand_from lint" -s h -l help -d 'Print help information'
-complete -c deno -n "__fish_seen_subcommand_from lint" -l ignore -d 'Ignore linting particular source files' -x
+complete -c deno -n "__fish_seen_subcommand_from lint" -l ignore -d 'Ignore linting particular source files' -r
 complete -c deno -n "__fish_seen_subcommand_from lint" -l json -d 'Output lint result in JSON format'
 complete -c deno -n "__fish_seen_subcommand_from lint" -l no-clear-screen -d 'Do not clear terminal screen when under watch mode'
 complete -c deno -n "__fish_seen_subcommand_from lint" -l no-config -d 'Disable automatic loading of the configuration file.'
@@ -321,9 +321,9 @@ complete -c deno -n "__fish_seen_subcommand_from run" -l allow-env -d 'Allow env
 complete -c deno -n "__fish_seen_subcommand_from run" -l allow-ffi -d 'Allow loading dynamic libraries' -x
 complete -c deno -n "__fish_seen_subcommand_from run" -l allow-hrtime -d 'Allow high resolution time measurement'
 complete -c deno -n "__fish_seen_subcommand_from run" -l allow-net -d 'Allow network access' -x
-complete -c deno -n "__fish_seen_subcommand_from run" -l allow-read -d 'Allow file system read access' -x
+complete -c deno -n "__fish_seen_subcommand_from run" -l allow-read -d 'Allow file system read access' -r
 complete -c deno -n "__fish_seen_subcommand_from run" -l allow-run -d 'Allow running subprocesses' -x
-complete -c deno -n "__fish_seen_subcommand_from run" -l allow-write -d 'Allow file system write access' -x
+complete -c deno -n "__fish_seen_subcommand_from run" -l allow-write -d 'Allow file system write access' -r
 complete -c deno -n "__fish_seen_subcommand_from run" -s c -l config -d 'The configuration file can be used to configure different aspects of deno including TypeScript, linting, and code formatting.' -r
 complete -c deno -n "__fish_seen_subcommand_from run" -l cached-only -d 'Require that remote dependencies are already cached'
 complete -c deno -n "__fish_seen_subcommand_from run" -l cert -d 'Load certificate authority from PEM encoded file' -r
@@ -365,9 +365,9 @@ complete -c deno -n "__fish_seen_subcommand_from test" -l allow-ffi -d 'Allow lo
 complete -c deno -n "__fish_seen_subcommand_from test" -l allow-hrtime -d 'Allow high resolution time measurement'
 complete -c deno -n "__fish_seen_subcommand_from test" -l allow-net -d 'Allow network access' -x
 complete -c deno -n "__fish_seen_subcommand_from test" -l allow-none -d 'Don\'t return error code if no test files are found'
-complete -c deno -n "__fish_seen_subcommand_from test" -l allow-read -d 'Allow file system read access' -x
+complete -c deno -n "__fish_seen_subcommand_from test" -l allow-read -d 'Allow file system read access' -r
 complete -c deno -n "__fish_seen_subcommand_from test" -l allow-run -d 'Allow running subprocesses' -x
-complete -c deno -n "__fish_seen_subcommand_from test" -l allow-write -d 'Allow file system write access' -x
+complete -c deno -n "__fish_seen_subcommand_from test" -l allow-write -d 'Allow file system write access' -r
 complete -c deno -n "__fish_seen_subcommand_from test" -s c -l config -d 'The configuration file can be used to configure different aspects of deno including TypeScript, linting, and code formatting.' -r
 complete -c deno -n "__fish_seen_subcommand_from test" -l cached-only -d 'Require that remote dependencies are already cached'
 complete -c deno -n "__fish_seen_subcommand_from test" -l cert -d 'Load certificate authority from PEM encoded file' -r
@@ -378,7 +378,7 @@ complete -c deno -n "__fish_seen_subcommand_from test" -l doc -d 'UNSTABLE: type
 complete -c deno -n "__fish_seen_subcommand_from test" -l fail-fast -d 'Stop after N errors.' -x
 complete -c deno -n "__fish_seen_subcommand_from test" -l filter -d 'Run tests with this string or pattern in the test name' -x
 complete -c deno -n "__fish_seen_subcommand_from test" -s h -l help -d 'Print help information'
-complete -c deno -n "__fish_seen_subcommand_from test" -l ignore -d 'Ignore files' -x
+complete -c deno -n "__fish_seen_subcommand_from test" -l ignore -d 'Ignore files' -r
 complete -c deno -n "__fish_seen_subcommand_from test" -l import-map -d 'Load import map file from local file or remote URL.' -r
 complete -c deno -n "__fish_seen_subcommand_from test" -l inspect -d 'Activate inspector on host:port (default: 127.0.0.1:9229)' -x
 complete -c deno -n "__fish_seen_subcommand_from test" -l inspect-brk -d 'Activate inspector on host:port and break at start of user script' -x
@@ -422,7 +422,7 @@ complete -c deno -n "__fish_seen_subcommand_from upgrade" -l cert -d 'Load certi
 complete -c deno -n "__fish_seen_subcommand_from upgrade" -l dry-run -d 'Perform all checks without replacing old exe'
 complete -c deno -n "__fish_seen_subcommand_from upgrade" -s f -l force -d 'Replace current exe even if not out-of-date'
 complete -c deno -n "__fish_seen_subcommand_from upgrade" -s h -l help -d 'Print help information'
-complete -c deno -n "__fish_seen_subcommand_from upgrade" -l output -d 'The path to output the updated version to' -x
+complete -c deno -n "__fish_seen_subcommand_from upgrade" -l output -d 'The path to output the updated version to' -r
 complete -c deno -n "__fish_seen_subcommand_from upgrade" -s q -l quiet -d 'Suppress diagnostic output'
 complete -c deno -n "__fish_seen_subcommand_from upgrade" -l unstable -d 'Enable unstable features and APIs'
 complete -c deno -n "__fish_seen_subcommand_from upgrade" -l version -d 'The version to upgrade to' -x
@@ -436,7 +436,7 @@ complete -c deno -n "__fish_seen_subcommand_from vendor" -s h -l help -d 'Print 
 complete -c deno -n "__fish_seen_subcommand_from vendor" -l import-map -d 'Load import map file from local file or remote URL.' -r
 complete -c deno -n "__fish_seen_subcommand_from vendor" -l lock -d 'Check the specified lock file' -r
 complete -c deno -n "__fish_seen_subcommand_from vendor" -l no-config -d 'Disable automatic loading of the configuration file.'
-complete -c deno -n "__fish_seen_subcommand_from vendor" -l output -d 'The directory to output the vendored modules to' -x
+complete -c deno -n "__fish_seen_subcommand_from vendor" -l output -d 'The directory to output the vendored modules to' -r
 complete -c deno -n "__fish_seen_subcommand_from vendor" -s q -l quiet -d 'Suppress diagnostic output'
 complete -c deno -n "__fish_seen_subcommand_from vendor" -s r -l reload -d 'Reload source code cache (recompile TypeScript) --reload' -x
 complete -c deno -n "__fish_seen_subcommand_from vendor" -l unstable -d 'Enable unstable features and APIs'

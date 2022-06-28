@@ -39,7 +39,7 @@ complete -c ffplay -o noborder -d 'Borderless window.'
 complete -c ffplay -o alwaysontop -d 'Window always on top.'
 complete -c ffplay -o volume -d 'Set the startup volume.'
 complete -c ffplay -s f -d 'Force format.' -x
-complete -c ffplay -o window_title -d 'Set window title (default is the input filename).' -x
+complete -c ffplay -o window_title -d 'Set window title (default is the input filename).' -r
 complete -c ffplay -o left -d 'Set the x position for the left of the window (default is a centered window).' -x
 complete -c ffplay -o top -d 'Set the y position for the top of the window (default is a centered window).' -x
 complete -c ffplay -o loop -d 'Loops movie playback <number> times.' -x

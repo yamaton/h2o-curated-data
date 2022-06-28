@@ -49,7 +49,7 @@ complete -c display -o support -d 'resize support: > 1.0 is blurry, < 1.0 is sha
 complete -c display -o texture -d 'name of texture to tile onto the image background' -r
 complete -c display -o transparent-color -d 'transparent color' -x
 complete -c display -o treedepth -d 'color tree depth' -x
-complete -c display -o update -d 'detect when image file is modified and redisplay' -x
+complete -c display -o update -d 'detect when image file is modified and redisplay' -r
 complete -c display -o verbose -d 'print detailed information about the image'
 complete -c display -o visual -d 'display image using this visual type' -x
 complete -c display -o virtual-pixel -d 'virtual pixel access method' -x
@@ -59,7 +59,7 @@ complete -c display -o write -d 'write image to a file' -r
 complete -c display -o auto-orient -d 'automagically orient image'
 complete -c display -o border -d 'surround image with a border of color' -x
 complete -c display -o clip -d 'clip along the first path from the 8BIM profile'
-complete -c display -o clip-path -d 'clip along a named path from the 8BIM profile' -x
+complete -c display -o clip-path -d 'clip along a named path from the 8BIM profile' -r
 complete -c display -o colors -d 'preferred number of colors in the image' -x
 complete -c display -o contrast -d 'enhance or reduce the image contrast'
 complete -c display -o crop -d 'preferred size and location of the cropped image' -x

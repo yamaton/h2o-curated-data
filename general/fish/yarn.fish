@@ -2,7 +2,7 @@
 
 complete -c yarn -n "not __fish_seen_subcommand_from access add audit autoclean bin cache check config create exec generate-lock-entry global help import info init install licenses link list login logout node outdated owner pack policies publish remove run tag team unlink unplug upgrade upgrade-interactive version versions why workspace workspaces" -l cache-folder -d 'specify a custom folder that must be used to store the yarn cache' -r
 complete -c yarn -n "not __fish_seen_subcommand_from access add audit autoclean bin cache check config create exec generate-lock-entry global help import info init install licenses link list login logout node outdated owner pack policies publish remove run tag team unlink unplug upgrade upgrade-interactive version versions why workspace workspaces" -l check-files -d 'install will verify file tree of packages for consistency'
-complete -c yarn -n "not __fish_seen_subcommand_from access add audit autoclean bin cache check config create exec generate-lock-entry global help import info init install licenses link list login logout node outdated owner pack policies publish remove run tag team unlink unplug upgrade upgrade-interactive version versions why workspace workspaces" -l cwd -d 'working directory to use (default: ~/repos/h2o-curated-data)' -x
+complete -c yarn -n "not __fish_seen_subcommand_from access add audit autoclean bin cache check config create exec generate-lock-entry global help import info init install licenses link list login logout node outdated owner pack policies publish remove run tag team unlink unplug upgrade upgrade-interactive version versions why workspace workspaces" -l cwd -d 'working directory to use (default: ~/repos/h2o-curated-data)' -r
 complete -c yarn -n "not __fish_seen_subcommand_from access add audit autoclean bin cache check config create exec generate-lock-entry global help import info init install licenses link list login logout node outdated owner pack policies publish remove run tag team unlink unplug upgrade upgrade-interactive version versions why workspace workspaces" -l disable-pnp -d 'disable the Plug\'n\'Play installation'
 complete -c yarn -n "not __fish_seen_subcommand_from access add audit autoclean bin cache check config create exec generate-lock-entry global help import info init install licenses link list login logout node outdated owner pack policies publish remove run tag team unlink unplug upgrade upgrade-interactive version versions why workspace workspaces" -l emoji -d 'enable emoji in output (default: false)' -x
 complete -c yarn -n "not __fish_seen_subcommand_from access add audit autoclean bin cache check config create exec generate-lock-entry global help import info init install licenses link list login logout node outdated owner pack policies publish remove run tag team unlink unplug upgrade upgrade-interactive version versions why workspace workspaces" -l enable-pnp -l pnp -d 'enable the Plug\'n\'Play installation'
@@ -39,7 +39,7 @@ complete -c yarn -n "not __fish_seen_subcommand_from access add audit autoclean 
 complete -c yarn -n "not __fish_seen_subcommand_from access add audit autoclean bin cache check config create exec generate-lock-entry global help import info init install licenses link list login logout node outdated owner pack policies publish remove run tag team unlink unplug upgrade upgrade-interactive version versions why workspace workspaces" -l pure-lockfile -d 'don\'t generate a lockfile'
 complete -c yarn -n "not __fish_seen_subcommand_from access add audit autoclean bin cache check config create exec generate-lock-entry global help import info init install licenses link list login logout node outdated owner pack policies publish remove run tag team unlink unplug upgrade upgrade-interactive version versions why workspace workspaces" -l registry -d 'override configuration registry' -x
 complete -c yarn -n "not __fish_seen_subcommand_from access add audit autoclean bin cache check config create exec generate-lock-entry global help import info init install licenses link list login logout node outdated owner pack policies publish remove run tag team unlink unplug upgrade upgrade-interactive version versions why workspace workspaces" -s s -l silent -d 'skip Yarn console logs, other types of logs (script output) will be printed'
-complete -c yarn -n "not __fish_seen_subcommand_from access add audit autoclean bin cache check config create exec generate-lock-entry global help import info init install licenses link list login logout node outdated owner pack policies publish remove run tag team unlink unplug upgrade upgrade-interactive version versions why workspace workspaces" -l scripts-prepend-node-path -d 'prepend the node executable dir to the PATH in scripts' -x
+complete -c yarn -n "not __fish_seen_subcommand_from access add audit autoclean bin cache check config create exec generate-lock-entry global help import info init install licenses link list login logout node outdated owner pack policies publish remove run tag team unlink unplug upgrade upgrade-interactive version versions why workspace workspaces" -l scripts-prepend-node-path -d 'prepend the node executable dir to the PATH in scripts' -r
 complete -c yarn -n "not __fish_seen_subcommand_from access add audit autoclean bin cache check config create exec generate-lock-entry global help import info init install licenses link list login logout node outdated owner pack policies publish remove run tag team unlink unplug upgrade upgrade-interactive version versions why workspace workspaces" -l skip-integrity-check -d 'run install without checking if node_modules is installed'
 complete -c yarn -n "not __fish_seen_subcommand_from access add audit autoclean bin cache check config create exec generate-lock-entry global help import info init install licenses link list login logout node outdated owner pack policies publish remove run tag team unlink unplug upgrade upgrade-interactive version versions why workspace workspaces" -l strict-semver -d 'strict semver'
 complete -c yarn -n "not __fish_seen_subcommand_from access add audit autoclean bin cache check config create exec generate-lock-entry global help import info init install licenses link list login logout node outdated owner pack policies publish remove run tag team unlink unplug upgrade upgrade-interactive version versions why workspace workspaces" -l update-checksums -d 'update package checksums from current repository'
@@ -128,14 +128,14 @@ complete -c yarn -n "__fish_seen_subcommand_from add" -l cache-folder -d 'specif
 complete -c yarn -n "__fish_seen_subcommand_from add" -l mutex -d 'use a mutex to ensure only one yarn instance is executing' -x
 complete -c yarn -n "__fish_seen_subcommand_from add" -l emoji -d 'enable emoji in output (default: false)' -x
 complete -c yarn -n "__fish_seen_subcommand_from add" -s s -l silent -d 'skip Yarn console logs, other types of logs (script output) will be printed'
-complete -c yarn -n "__fish_seen_subcommand_from add" -l cwd -d 'working directory to use (default: ~/repos/h2o-curated-data/general)' -x
+complete -c yarn -n "__fish_seen_subcommand_from add" -l cwd -d 'working directory to use (default: ~/repos/h2o-curated-data/general)' -r
 complete -c yarn -n "__fish_seen_subcommand_from add" -l proxy -l https-proxy -d 'proxy' -x
 complete -c yarn -n "__fish_seen_subcommand_from add" -l registry -d 'override configuration registry' -x
 complete -c yarn -n "__fish_seen_subcommand_from add" -l no-progress -d 'disable progress bar'
 complete -c yarn -n "__fish_seen_subcommand_from add" -l network-concurrency -d 'maximum number of concurrent network requests' -x
 complete -c yarn -n "__fish_seen_subcommand_from add" -l network-timeout -d 'TCP timeout for network requests' -x
 complete -c yarn -n "__fish_seen_subcommand_from add" -l non-interactive -d 'do not show interactive prompts'
-complete -c yarn -n "__fish_seen_subcommand_from add" -l scripts-prepend-node-path -d 'prepend the node executable dir to the PATH in scripts' -x
+complete -c yarn -n "__fish_seen_subcommand_from add" -l scripts-prepend-node-path -d 'prepend the node executable dir to the PATH in scripts' -r
 complete -c yarn -n "__fish_seen_subcommand_from add" -l no-node-version-check -d 'do not warn when using a potentially unsupported Node version'
 complete -c yarn -n "__fish_seen_subcommand_from add" -l focus -d 'Focus on a single workspace by installing remote copies of its sibling workspaces.'
 complete -c yarn -n "__fish_seen_subcommand_from add" -l otp -d 'one-time password for two factor authentication' -x
@@ -184,14 +184,14 @@ complete -c yarn -n "__fish_seen_subcommand_from audit" -l cache-folder -d 'spec
 complete -c yarn -n "__fish_seen_subcommand_from audit" -l mutex -d 'use a mutex to ensure only one yarn instance is executing' -x
 complete -c yarn -n "__fish_seen_subcommand_from audit" -l emoji -d 'enable emoji in output (default: false)' -x
 complete -c yarn -n "__fish_seen_subcommand_from audit" -s s -l silent -d 'skip Yarn console logs, other types of logs (script output) will be printed'
-complete -c yarn -n "__fish_seen_subcommand_from audit" -l cwd -d 'working directory to use (default: ~/repos/h2o-curated-data/general)' -x
+complete -c yarn -n "__fish_seen_subcommand_from audit" -l cwd -d 'working directory to use (default: ~/repos/h2o-curated-data/general)' -r
 complete -c yarn -n "__fish_seen_subcommand_from audit" -l proxy -l https-proxy -d 'proxy' -x
 complete -c yarn -n "__fish_seen_subcommand_from audit" -l registry -d 'override configuration registry' -x
 complete -c yarn -n "__fish_seen_subcommand_from audit" -l no-progress -d 'disable progress bar'
 complete -c yarn -n "__fish_seen_subcommand_from audit" -l network-concurrency -d 'maximum number of concurrent network requests' -x
 complete -c yarn -n "__fish_seen_subcommand_from audit" -l network-timeout -d 'TCP timeout for network requests' -x
 complete -c yarn -n "__fish_seen_subcommand_from audit" -l non-interactive -d 'do not show interactive prompts'
-complete -c yarn -n "__fish_seen_subcommand_from audit" -l scripts-prepend-node-path -d 'prepend the node executable dir to the PATH in scripts' -x
+complete -c yarn -n "__fish_seen_subcommand_from audit" -l scripts-prepend-node-path -d 'prepend the node executable dir to the PATH in scripts' -r
 complete -c yarn -n "__fish_seen_subcommand_from audit" -l no-node-version-check -d 'do not warn when using a potentially unsupported Node version'
 complete -c yarn -n "__fish_seen_subcommand_from audit" -l focus -d 'Focus on a single workspace by installing remote copies of its sibling workspaces.'
 complete -c yarn -n "__fish_seen_subcommand_from audit" -l otp -d 'one-time password for two factor authentication' -x
@@ -236,14 +236,14 @@ complete -c yarn -n "__fish_seen_subcommand_from autoclean" -l cache-folder -d '
 complete -c yarn -n "__fish_seen_subcommand_from autoclean" -l mutex -d 'use a mutex to ensure only one yarn instance is executing' -x
 complete -c yarn -n "__fish_seen_subcommand_from autoclean" -l emoji -d 'enable emoji in output (default: false)' -x
 complete -c yarn -n "__fish_seen_subcommand_from autoclean" -s s -l silent -d 'skip Yarn console logs, other types of logs (script output) will be printed'
-complete -c yarn -n "__fish_seen_subcommand_from autoclean" -l cwd -d 'working directory to use (default: ~/repos/h2o-curated-data/general)' -x
+complete -c yarn -n "__fish_seen_subcommand_from autoclean" -l cwd -d 'working directory to use (default: ~/repos/h2o-curated-data/general)' -r
 complete -c yarn -n "__fish_seen_subcommand_from autoclean" -l proxy -l https-proxy -d 'proxy' -x
 complete -c yarn -n "__fish_seen_subcommand_from autoclean" -l registry -d 'override configuration registry' -x
 complete -c yarn -n "__fish_seen_subcommand_from autoclean" -l no-progress -d 'disable progress bar'
 complete -c yarn -n "__fish_seen_subcommand_from autoclean" -l network-concurrency -d 'maximum number of concurrent network requests' -x
 complete -c yarn -n "__fish_seen_subcommand_from autoclean" -l network-timeout -d 'TCP timeout for network requests' -x
 complete -c yarn -n "__fish_seen_subcommand_from autoclean" -l non-interactive -d 'do not show interactive prompts'
-complete -c yarn -n "__fish_seen_subcommand_from autoclean" -l scripts-prepend-node-path -d 'prepend the node executable dir to the PATH in scripts' -x
+complete -c yarn -n "__fish_seen_subcommand_from autoclean" -l scripts-prepend-node-path -d 'prepend the node executable dir to the PATH in scripts' -r
 complete -c yarn -n "__fish_seen_subcommand_from autoclean" -l no-node-version-check -d 'do not warn when using a potentially unsupported Node version'
 complete -c yarn -n "__fish_seen_subcommand_from autoclean" -l focus -d 'Focus on a single workspace by installing remote copies of its sibling workspaces.'
 complete -c yarn -n "__fish_seen_subcommand_from autoclean" -l otp -d 'one-time password for two factor authentication' -x
@@ -287,14 +287,14 @@ complete -c yarn -n "__fish_seen_subcommand_from bin" -l cache-folder -d 'specif
 complete -c yarn -n "__fish_seen_subcommand_from bin" -l mutex -d 'use a mutex to ensure only one yarn instance is executing' -x
 complete -c yarn -n "__fish_seen_subcommand_from bin" -l emoji -d 'enable emoji in output (default: false)' -x
 complete -c yarn -n "__fish_seen_subcommand_from bin" -s s -l silent -d 'skip Yarn console logs, other types of logs (script output) will be printed'
-complete -c yarn -n "__fish_seen_subcommand_from bin" -l cwd -d 'working directory to use (default: ~/repos/h2o-curated-data/general)' -x
+complete -c yarn -n "__fish_seen_subcommand_from bin" -l cwd -d 'working directory to use (default: ~/repos/h2o-curated-data/general)' -r
 complete -c yarn -n "__fish_seen_subcommand_from bin" -l proxy -l https-proxy -d 'proxy' -x
 complete -c yarn -n "__fish_seen_subcommand_from bin" -l registry -d 'override configuration registry' -x
 complete -c yarn -n "__fish_seen_subcommand_from bin" -l no-progress -d 'disable progress bar'
 complete -c yarn -n "__fish_seen_subcommand_from bin" -l network-concurrency -d 'maximum number of concurrent network requests' -x
 complete -c yarn -n "__fish_seen_subcommand_from bin" -l network-timeout -d 'TCP timeout for network requests' -x
 complete -c yarn -n "__fish_seen_subcommand_from bin" -l non-interactive -d 'do not show interactive prompts'
-complete -c yarn -n "__fish_seen_subcommand_from bin" -l scripts-prepend-node-path -d 'prepend the node executable dir to the PATH in scripts' -x
+complete -c yarn -n "__fish_seen_subcommand_from bin" -l scripts-prepend-node-path -d 'prepend the node executable dir to the PATH in scripts' -r
 complete -c yarn -n "__fish_seen_subcommand_from bin" -l no-node-version-check -d 'do not warn when using a potentially unsupported Node version'
 complete -c yarn -n "__fish_seen_subcommand_from bin" -l focus -d 'Focus on a single workspace by installing remote copies of its sibling workspaces.'
 complete -c yarn -n "__fish_seen_subcommand_from bin" -l otp -d 'one-time password for two factor authentication' -x
@@ -336,14 +336,14 @@ complete -c yarn -n "__fish_seen_subcommand_from cache" -l cache-folder -d 'spec
 complete -c yarn -n "__fish_seen_subcommand_from cache" -l mutex -d 'use a mutex to ensure only one yarn instance is executing' -x
 complete -c yarn -n "__fish_seen_subcommand_from cache" -l emoji -d 'enable emoji in output (default: false)' -x
 complete -c yarn -n "__fish_seen_subcommand_from cache" -s s -l silent -d 'skip Yarn console logs, other types of logs (script output) will be printed'
-complete -c yarn -n "__fish_seen_subcommand_from cache" -l cwd -d 'working directory to use (default: ~/repos/h2o-curated-data/general)' -x
+complete -c yarn -n "__fish_seen_subcommand_from cache" -l cwd -d 'working directory to use (default: ~/repos/h2o-curated-data/general)' -r
 complete -c yarn -n "__fish_seen_subcommand_from cache" -l proxy -l https-proxy -d 'proxy' -x
 complete -c yarn -n "__fish_seen_subcommand_from cache" -l registry -d 'override configuration registry' -x
 complete -c yarn -n "__fish_seen_subcommand_from cache" -l no-progress -d 'disable progress bar'
 complete -c yarn -n "__fish_seen_subcommand_from cache" -l network-concurrency -d 'maximum number of concurrent network requests' -x
 complete -c yarn -n "__fish_seen_subcommand_from cache" -l network-timeout -d 'TCP timeout for network requests' -x
 complete -c yarn -n "__fish_seen_subcommand_from cache" -l non-interactive -d 'do not show interactive prompts'
-complete -c yarn -n "__fish_seen_subcommand_from cache" -l scripts-prepend-node-path -d 'prepend the node executable dir to the PATH in scripts' -x
+complete -c yarn -n "__fish_seen_subcommand_from cache" -l scripts-prepend-node-path -d 'prepend the node executable dir to the PATH in scripts' -r
 complete -c yarn -n "__fish_seen_subcommand_from cache" -l no-node-version-check -d 'do not warn when using a potentially unsupported Node version'
 complete -c yarn -n "__fish_seen_subcommand_from cache" -l focus -d 'Focus on a single workspace by installing remote copies of its sibling workspaces.'
 complete -c yarn -n "__fish_seen_subcommand_from cache" -l otp -d 'one-time password for two factor authentication' -x
@@ -386,14 +386,14 @@ complete -c yarn -n "__fish_seen_subcommand_from check" -l cache-folder -d 'spec
 complete -c yarn -n "__fish_seen_subcommand_from check" -l mutex -d 'use a mutex to ensure only one yarn instance is executing' -x
 complete -c yarn -n "__fish_seen_subcommand_from check" -l emoji -d 'enable emoji in output (default: false)' -x
 complete -c yarn -n "__fish_seen_subcommand_from check" -s s -l silent -d 'skip Yarn console logs, other types of logs (script output) will be printed'
-complete -c yarn -n "__fish_seen_subcommand_from check" -l cwd -d 'working directory to use (default: ~/repos/h2o-curated-data/general)' -x
+complete -c yarn -n "__fish_seen_subcommand_from check" -l cwd -d 'working directory to use (default: ~/repos/h2o-curated-data/general)' -r
 complete -c yarn -n "__fish_seen_subcommand_from check" -l proxy -l https-proxy -d 'proxy' -x
 complete -c yarn -n "__fish_seen_subcommand_from check" -l registry -d 'override configuration registry' -x
 complete -c yarn -n "__fish_seen_subcommand_from check" -l no-progress -d 'disable progress bar'
 complete -c yarn -n "__fish_seen_subcommand_from check" -l network-concurrency -d 'maximum number of concurrent network requests' -x
 complete -c yarn -n "__fish_seen_subcommand_from check" -l network-timeout -d 'TCP timeout for network requests' -x
 complete -c yarn -n "__fish_seen_subcommand_from check" -l non-interactive -d 'do not show interactive prompts'
-complete -c yarn -n "__fish_seen_subcommand_from check" -l scripts-prepend-node-path -d 'prepend the node executable dir to the PATH in scripts' -x
+complete -c yarn -n "__fish_seen_subcommand_from check" -l scripts-prepend-node-path -d 'prepend the node executable dir to the PATH in scripts' -r
 complete -c yarn -n "__fish_seen_subcommand_from check" -l no-node-version-check -d 'do not warn when using a potentially unsupported Node version'
 complete -c yarn -n "__fish_seen_subcommand_from check" -l focus -d 'Focus on a single workspace by installing remote copies of its sibling workspaces.'
 complete -c yarn -n "__fish_seen_subcommand_from check" -l otp -d 'one-time password for two factor authentication' -x
@@ -435,14 +435,14 @@ complete -c yarn -n "__fish_seen_subcommand_from config" -l cache-folder -d 'spe
 complete -c yarn -n "__fish_seen_subcommand_from config" -l mutex -d 'use a mutex to ensure only one yarn instance is executing' -x
 complete -c yarn -n "__fish_seen_subcommand_from config" -l emoji -d 'enable emoji in output (default: false)' -x
 complete -c yarn -n "__fish_seen_subcommand_from config" -s s -l silent -d 'skip Yarn console logs, other types of logs (script output) will be printed'
-complete -c yarn -n "__fish_seen_subcommand_from config" -l cwd -d 'working directory to use (default: ~/repos/h2o-curated-data/general)' -x
+complete -c yarn -n "__fish_seen_subcommand_from config" -l cwd -d 'working directory to use (default: ~/repos/h2o-curated-data/general)' -r
 complete -c yarn -n "__fish_seen_subcommand_from config" -l proxy -l https-proxy -d 'proxy' -x
 complete -c yarn -n "__fish_seen_subcommand_from config" -l registry -d 'override configuration registry' -x
 complete -c yarn -n "__fish_seen_subcommand_from config" -l no-progress -d 'disable progress bar'
 complete -c yarn -n "__fish_seen_subcommand_from config" -l network-concurrency -d 'maximum number of concurrent network requests' -x
 complete -c yarn -n "__fish_seen_subcommand_from config" -l network-timeout -d 'TCP timeout for network requests' -x
 complete -c yarn -n "__fish_seen_subcommand_from config" -l non-interactive -d 'do not show interactive prompts'
-complete -c yarn -n "__fish_seen_subcommand_from config" -l scripts-prepend-node-path -d 'prepend the node executable dir to the PATH in scripts' -x
+complete -c yarn -n "__fish_seen_subcommand_from config" -l scripts-prepend-node-path -d 'prepend the node executable dir to the PATH in scripts' -r
 complete -c yarn -n "__fish_seen_subcommand_from config" -l no-node-version-check -d 'do not warn when using a potentially unsupported Node version'
 complete -c yarn -n "__fish_seen_subcommand_from config" -l focus -d 'Focus on a single workspace by installing remote copies of its sibling workspaces.'
 complete -c yarn -n "__fish_seen_subcommand_from config" -l otp -d 'one-time password for two factor authentication' -x
@@ -484,14 +484,14 @@ complete -c yarn -n "__fish_seen_subcommand_from create" -l cache-folder -d 'spe
 complete -c yarn -n "__fish_seen_subcommand_from create" -l mutex -d 'use a mutex to ensure only one yarn instance is executing' -x
 complete -c yarn -n "__fish_seen_subcommand_from create" -l emoji -d 'enable emoji in output (default: false)' -x
 complete -c yarn -n "__fish_seen_subcommand_from create" -s s -l silent -d 'skip Yarn console logs, other types of logs (script output) will be printed'
-complete -c yarn -n "__fish_seen_subcommand_from create" -l cwd -d 'working directory to use (default: ~/repos/h2o-curated-data/general)' -x
+complete -c yarn -n "__fish_seen_subcommand_from create" -l cwd -d 'working directory to use (default: ~/repos/h2o-curated-data/general)' -r
 complete -c yarn -n "__fish_seen_subcommand_from create" -l proxy -l https-proxy -d 'proxy' -x
 complete -c yarn -n "__fish_seen_subcommand_from create" -l registry -d 'override configuration registry' -x
 complete -c yarn -n "__fish_seen_subcommand_from create" -l no-progress -d 'disable progress bar'
 complete -c yarn -n "__fish_seen_subcommand_from create" -l network-concurrency -d 'maximum number of concurrent network requests' -x
 complete -c yarn -n "__fish_seen_subcommand_from create" -l network-timeout -d 'TCP timeout for network requests' -x
 complete -c yarn -n "__fish_seen_subcommand_from create" -l non-interactive -d 'do not show interactive prompts'
-complete -c yarn -n "__fish_seen_subcommand_from create" -l scripts-prepend-node-path -d 'prepend the node executable dir to the PATH in scripts' -x
+complete -c yarn -n "__fish_seen_subcommand_from create" -l scripts-prepend-node-path -d 'prepend the node executable dir to the PATH in scripts' -r
 complete -c yarn -n "__fish_seen_subcommand_from create" -l no-node-version-check -d 'do not warn when using a potentially unsupported Node version'
 complete -c yarn -n "__fish_seen_subcommand_from create" -l focus -d 'Focus on a single workspace by installing remote copies of its sibling workspaces.'
 complete -c yarn -n "__fish_seen_subcommand_from create" -l otp -d 'one-time password for two factor authentication' -x
@@ -533,14 +533,14 @@ complete -c yarn -n "__fish_seen_subcommand_from exec" -l cache-folder -d 'speci
 complete -c yarn -n "__fish_seen_subcommand_from exec" -l mutex -d 'use a mutex to ensure only one yarn instance is executing' -x
 complete -c yarn -n "__fish_seen_subcommand_from exec" -l emoji -d 'enable emoji in output (default: false)' -x
 complete -c yarn -n "__fish_seen_subcommand_from exec" -s s -l silent -d 'skip Yarn console logs, other types of logs (script output) will be printed'
-complete -c yarn -n "__fish_seen_subcommand_from exec" -l cwd -d 'working directory to use (default: ~/repos/h2o-curated-data/general)' -x
+complete -c yarn -n "__fish_seen_subcommand_from exec" -l cwd -d 'working directory to use (default: ~/repos/h2o-curated-data/general)' -r
 complete -c yarn -n "__fish_seen_subcommand_from exec" -l proxy -l https-proxy -d 'proxy' -x
 complete -c yarn -n "__fish_seen_subcommand_from exec" -l registry -d 'override configuration registry' -x
 complete -c yarn -n "__fish_seen_subcommand_from exec" -l no-progress -d 'disable progress bar'
 complete -c yarn -n "__fish_seen_subcommand_from exec" -l network-concurrency -d 'maximum number of concurrent network requests' -x
 complete -c yarn -n "__fish_seen_subcommand_from exec" -l network-timeout -d 'TCP timeout for network requests' -x
 complete -c yarn -n "__fish_seen_subcommand_from exec" -l non-interactive -d 'do not show interactive prompts'
-complete -c yarn -n "__fish_seen_subcommand_from exec" -l scripts-prepend-node-path -d 'prepend the node executable dir to the PATH in scripts' -x
+complete -c yarn -n "__fish_seen_subcommand_from exec" -l scripts-prepend-node-path -d 'prepend the node executable dir to the PATH in scripts' -r
 complete -c yarn -n "__fish_seen_subcommand_from exec" -l no-node-version-check -d 'do not warn when using a potentially unsupported Node version'
 complete -c yarn -n "__fish_seen_subcommand_from exec" -l focus -d 'Focus on a single workspace by installing remote copies of its sibling workspaces.'
 complete -c yarn -n "__fish_seen_subcommand_from exec" -l otp -d 'one-time password for two factor authentication' -x
@@ -582,14 +582,14 @@ complete -c yarn -n "__fish_seen_subcommand_from generate-lock-entry" -l cache-f
 complete -c yarn -n "__fish_seen_subcommand_from generate-lock-entry" -l mutex -d 'use a mutex to ensure only one yarn instance is executing' -x
 complete -c yarn -n "__fish_seen_subcommand_from generate-lock-entry" -l emoji -d 'enable emoji in output (default: false)' -x
 complete -c yarn -n "__fish_seen_subcommand_from generate-lock-entry" -s s -l silent -d 'skip Yarn console logs, other types of logs (script output) will be printed'
-complete -c yarn -n "__fish_seen_subcommand_from generate-lock-entry" -l cwd -d 'working directory to use (default: ~/repos/h2o-curated-data/general)' -x
+complete -c yarn -n "__fish_seen_subcommand_from generate-lock-entry" -l cwd -d 'working directory to use (default: ~/repos/h2o-curated-data/general)' -r
 complete -c yarn -n "__fish_seen_subcommand_from generate-lock-entry" -l proxy -l https-proxy -d 'proxy' -x
 complete -c yarn -n "__fish_seen_subcommand_from generate-lock-entry" -l registry -d 'override configuration registry' -x
 complete -c yarn -n "__fish_seen_subcommand_from generate-lock-entry" -l no-progress -d 'disable progress bar'
 complete -c yarn -n "__fish_seen_subcommand_from generate-lock-entry" -l network-concurrency -d 'maximum number of concurrent network requests' -x
 complete -c yarn -n "__fish_seen_subcommand_from generate-lock-entry" -l network-timeout -d 'TCP timeout for network requests' -x
 complete -c yarn -n "__fish_seen_subcommand_from generate-lock-entry" -l non-interactive -d 'do not show interactive prompts'
-complete -c yarn -n "__fish_seen_subcommand_from generate-lock-entry" -l scripts-prepend-node-path -d 'prepend the node executable dir to the PATH in scripts' -x
+complete -c yarn -n "__fish_seen_subcommand_from generate-lock-entry" -l scripts-prepend-node-path -d 'prepend the node executable dir to the PATH in scripts' -r
 complete -c yarn -n "__fish_seen_subcommand_from generate-lock-entry" -l no-node-version-check -d 'do not warn when using a potentially unsupported Node version'
 complete -c yarn -n "__fish_seen_subcommand_from generate-lock-entry" -l focus -d 'Focus on a single workspace by installing remote copies of its sibling workspaces.'
 complete -c yarn -n "__fish_seen_subcommand_from generate-lock-entry" -l otp -d 'one-time password for two factor authentication' -x
@@ -634,14 +634,14 @@ complete -c yarn -n "__fish_seen_subcommand_from global" -l cache-folder -d 'spe
 complete -c yarn -n "__fish_seen_subcommand_from global" -l mutex -d 'use a mutex to ensure only one yarn instance is executing' -x
 complete -c yarn -n "__fish_seen_subcommand_from global" -l emoji -d 'enable emoji in output (default: false)' -x
 complete -c yarn -n "__fish_seen_subcommand_from global" -s s -l silent -d 'skip Yarn console logs, other types of logs (script output) will be printed'
-complete -c yarn -n "__fish_seen_subcommand_from global" -l cwd -d 'working directory to use (default: ~/repos/h2o-curated-data/general)' -x
+complete -c yarn -n "__fish_seen_subcommand_from global" -l cwd -d 'working directory to use (default: ~/repos/h2o-curated-data/general)' -r
 complete -c yarn -n "__fish_seen_subcommand_from global" -l proxy -l https-proxy -d 'proxy' -x
 complete -c yarn -n "__fish_seen_subcommand_from global" -l registry -d 'override configuration registry' -x
 complete -c yarn -n "__fish_seen_subcommand_from global" -l no-progress -d 'disable progress bar'
 complete -c yarn -n "__fish_seen_subcommand_from global" -l network-concurrency -d 'maximum number of concurrent network requests' -x
 complete -c yarn -n "__fish_seen_subcommand_from global" -l network-timeout -d 'TCP timeout for network requests' -x
 complete -c yarn -n "__fish_seen_subcommand_from global" -l non-interactive -d 'do not show interactive prompts'
-complete -c yarn -n "__fish_seen_subcommand_from global" -l scripts-prepend-node-path -d 'prepend the node executable dir to the PATH in scripts' -x
+complete -c yarn -n "__fish_seen_subcommand_from global" -l scripts-prepend-node-path -d 'prepend the node executable dir to the PATH in scripts' -r
 complete -c yarn -n "__fish_seen_subcommand_from global" -l no-node-version-check -d 'do not warn when using a potentially unsupported Node version'
 complete -c yarn -n "__fish_seen_subcommand_from global" -l focus -d 'Focus on a single workspace by installing remote copies of its sibling workspaces.'
 complete -c yarn -n "__fish_seen_subcommand_from global" -l otp -d 'one-time password for two factor authentication' -x
@@ -685,14 +685,14 @@ complete -c yarn -n "__fish_seen_subcommand_from help" -l cache-folder -d 'speci
 complete -c yarn -n "__fish_seen_subcommand_from help" -l mutex -d 'use a mutex to ensure only one yarn instance is executing' -x
 complete -c yarn -n "__fish_seen_subcommand_from help" -l emoji -d 'enable emoji in output (default: false)' -x
 complete -c yarn -n "__fish_seen_subcommand_from help" -s s -l silent -d 'skip Yarn console logs, other types of logs (script output) will be printed'
-complete -c yarn -n "__fish_seen_subcommand_from help" -l cwd -d 'working directory to use (default: ~/repos/h2o-curated-data/general)' -x
+complete -c yarn -n "__fish_seen_subcommand_from help" -l cwd -d 'working directory to use (default: ~/repos/h2o-curated-data/general)' -r
 complete -c yarn -n "__fish_seen_subcommand_from help" -l proxy -l https-proxy -d 'proxy' -x
 complete -c yarn -n "__fish_seen_subcommand_from help" -l registry -d 'override configuration registry' -x
 complete -c yarn -n "__fish_seen_subcommand_from help" -l no-progress -d 'disable progress bar'
 complete -c yarn -n "__fish_seen_subcommand_from help" -l network-concurrency -d 'maximum number of concurrent network requests' -x
 complete -c yarn -n "__fish_seen_subcommand_from help" -l network-timeout -d 'TCP timeout for network requests' -x
 complete -c yarn -n "__fish_seen_subcommand_from help" -l non-interactive -d 'do not show interactive prompts'
-complete -c yarn -n "__fish_seen_subcommand_from help" -l scripts-prepend-node-path -d 'prepend the node executable dir to the PATH in scripts' -x
+complete -c yarn -n "__fish_seen_subcommand_from help" -l scripts-prepend-node-path -d 'prepend the node executable dir to the PATH in scripts' -r
 complete -c yarn -n "__fish_seen_subcommand_from help" -l no-node-version-check -d 'do not warn when using a potentially unsupported Node version'
 complete -c yarn -n "__fish_seen_subcommand_from help" -l focus -d 'Focus on a single workspace by installing remote copies of its sibling workspaces.'
 complete -c yarn -n "__fish_seen_subcommand_from help" -l otp -d 'one-time password for two factor authentication' -x
@@ -734,14 +734,14 @@ complete -c yarn -n "__fish_seen_subcommand_from import" -l cache-folder -d 'spe
 complete -c yarn -n "__fish_seen_subcommand_from import" -l mutex -d 'use a mutex to ensure only one yarn instance is executing' -x
 complete -c yarn -n "__fish_seen_subcommand_from import" -l emoji -d 'enable emoji in output (default: false)' -x
 complete -c yarn -n "__fish_seen_subcommand_from import" -s s -l silent -d 'skip Yarn console logs, other types of logs (script output) will be printed'
-complete -c yarn -n "__fish_seen_subcommand_from import" -l cwd -d 'working directory to use (default: ~/repos/h2o-curated-data/general)' -x
+complete -c yarn -n "__fish_seen_subcommand_from import" -l cwd -d 'working directory to use (default: ~/repos/h2o-curated-data/general)' -r
 complete -c yarn -n "__fish_seen_subcommand_from import" -l proxy -l https-proxy -d 'proxy' -x
 complete -c yarn -n "__fish_seen_subcommand_from import" -l registry -d 'override configuration registry' -x
 complete -c yarn -n "__fish_seen_subcommand_from import" -l no-progress -d 'disable progress bar'
 complete -c yarn -n "__fish_seen_subcommand_from import" -l network-concurrency -d 'maximum number of concurrent network requests' -x
 complete -c yarn -n "__fish_seen_subcommand_from import" -l network-timeout -d 'TCP timeout for network requests' -x
 complete -c yarn -n "__fish_seen_subcommand_from import" -l non-interactive -d 'do not show interactive prompts'
-complete -c yarn -n "__fish_seen_subcommand_from import" -l scripts-prepend-node-path -d 'prepend the node executable dir to the PATH in scripts' -x
+complete -c yarn -n "__fish_seen_subcommand_from import" -l scripts-prepend-node-path -d 'prepend the node executable dir to the PATH in scripts' -r
 complete -c yarn -n "__fish_seen_subcommand_from import" -l no-node-version-check -d 'do not warn when using a potentially unsupported Node version'
 complete -c yarn -n "__fish_seen_subcommand_from import" -l focus -d 'Focus on a single workspace by installing remote copies of its sibling workspaces.'
 complete -c yarn -n "__fish_seen_subcommand_from import" -l otp -d 'one-time password for two factor authentication' -x
@@ -783,14 +783,14 @@ complete -c yarn -n "__fish_seen_subcommand_from info" -l cache-folder -d 'speci
 complete -c yarn -n "__fish_seen_subcommand_from info" -l mutex -d 'use a mutex to ensure only one yarn instance is executing' -x
 complete -c yarn -n "__fish_seen_subcommand_from info" -l emoji -d 'enable emoji in output (default: false)' -x
 complete -c yarn -n "__fish_seen_subcommand_from info" -s s -l silent -d 'skip Yarn console logs, other types of logs (script output) will be printed'
-complete -c yarn -n "__fish_seen_subcommand_from info" -l cwd -d 'working directory to use (default: ~/repos/h2o-curated-data/general)' -x
+complete -c yarn -n "__fish_seen_subcommand_from info" -l cwd -d 'working directory to use (default: ~/repos/h2o-curated-data/general)' -r
 complete -c yarn -n "__fish_seen_subcommand_from info" -l proxy -l https-proxy -d 'proxy' -x
 complete -c yarn -n "__fish_seen_subcommand_from info" -l registry -d 'override configuration registry' -x
 complete -c yarn -n "__fish_seen_subcommand_from info" -l no-progress -d 'disable progress bar'
 complete -c yarn -n "__fish_seen_subcommand_from info" -l network-concurrency -d 'maximum number of concurrent network requests' -x
 complete -c yarn -n "__fish_seen_subcommand_from info" -l network-timeout -d 'TCP timeout for network requests' -x
 complete -c yarn -n "__fish_seen_subcommand_from info" -l non-interactive -d 'do not show interactive prompts'
-complete -c yarn -n "__fish_seen_subcommand_from info" -l scripts-prepend-node-path -d 'prepend the node executable dir to the PATH in scripts' -x
+complete -c yarn -n "__fish_seen_subcommand_from info" -l scripts-prepend-node-path -d 'prepend the node executable dir to the PATH in scripts' -r
 complete -c yarn -n "__fish_seen_subcommand_from info" -l no-node-version-check -d 'do not warn when using a potentially unsupported Node version'
 complete -c yarn -n "__fish_seen_subcommand_from info" -l focus -d 'Focus on a single workspace by installing remote copies of its sibling workspaces.'
 complete -c yarn -n "__fish_seen_subcommand_from info" -l otp -d 'one-time password for two factor authentication' -x
@@ -832,14 +832,14 @@ complete -c yarn -n "__fish_seen_subcommand_from init" -l cache-folder -d 'speci
 complete -c yarn -n "__fish_seen_subcommand_from init" -l mutex -d 'use a mutex to ensure only one yarn instance is executing' -x
 complete -c yarn -n "__fish_seen_subcommand_from init" -l emoji -d 'enable emoji in output (default: false)' -x
 complete -c yarn -n "__fish_seen_subcommand_from init" -s s -l silent -d 'skip Yarn console logs, other types of logs (script output) will be printed'
-complete -c yarn -n "__fish_seen_subcommand_from init" -l cwd -d 'working directory to use (default: ~/repos/h2o-curated-data/general)' -x
+complete -c yarn -n "__fish_seen_subcommand_from init" -l cwd -d 'working directory to use (default: ~/repos/h2o-curated-data/general)' -r
 complete -c yarn -n "__fish_seen_subcommand_from init" -l proxy -l https-proxy -d 'proxy' -x
 complete -c yarn -n "__fish_seen_subcommand_from init" -l registry -d 'override configuration registry' -x
 complete -c yarn -n "__fish_seen_subcommand_from init" -l no-progress -d 'disable progress bar'
 complete -c yarn -n "__fish_seen_subcommand_from init" -l network-concurrency -d 'maximum number of concurrent network requests' -x
 complete -c yarn -n "__fish_seen_subcommand_from init" -l network-timeout -d 'TCP timeout for network requests' -x
 complete -c yarn -n "__fish_seen_subcommand_from init" -l non-interactive -d 'do not show interactive prompts'
-complete -c yarn -n "__fish_seen_subcommand_from init" -l scripts-prepend-node-path -d 'prepend the node executable dir to the PATH in scripts' -x
+complete -c yarn -n "__fish_seen_subcommand_from init" -l scripts-prepend-node-path -d 'prepend the node executable dir to the PATH in scripts' -r
 complete -c yarn -n "__fish_seen_subcommand_from init" -l no-node-version-check -d 'do not warn when using a potentially unsupported Node version'
 complete -c yarn -n "__fish_seen_subcommand_from init" -l focus -d 'Focus on a single workspace by installing remote copies of its sibling workspaces.'
 complete -c yarn -n "__fish_seen_subcommand_from init" -l otp -d 'one-time password for two factor authentication' -x
@@ -885,14 +885,14 @@ complete -c yarn -n "__fish_seen_subcommand_from install" -l cache-folder -d 'sp
 complete -c yarn -n "__fish_seen_subcommand_from install" -l mutex -d 'use a mutex to ensure only one yarn instance is executing' -x
 complete -c yarn -n "__fish_seen_subcommand_from install" -l emoji -d 'enable emoji in output (default: false)' -x
 complete -c yarn -n "__fish_seen_subcommand_from install" -s s -l silent -d 'skip Yarn console logs, other types of logs (script output) will be printed'
-complete -c yarn -n "__fish_seen_subcommand_from install" -l cwd -d 'working directory to use (default: ~/repos/h2o-curated-data/general)' -x
+complete -c yarn -n "__fish_seen_subcommand_from install" -l cwd -d 'working directory to use (default: ~/repos/h2o-curated-data/general)' -r
 complete -c yarn -n "__fish_seen_subcommand_from install" -l proxy -l https-proxy -d 'proxy' -x
 complete -c yarn -n "__fish_seen_subcommand_from install" -l registry -d 'override configuration registry' -x
 complete -c yarn -n "__fish_seen_subcommand_from install" -l no-progress -d 'disable progress bar'
 complete -c yarn -n "__fish_seen_subcommand_from install" -l network-concurrency -d 'maximum number of concurrent network requests' -x
 complete -c yarn -n "__fish_seen_subcommand_from install" -l network-timeout -d 'TCP timeout for network requests' -x
 complete -c yarn -n "__fish_seen_subcommand_from install" -l non-interactive -d 'do not show interactive prompts'
-complete -c yarn -n "__fish_seen_subcommand_from install" -l scripts-prepend-node-path -d 'prepend the node executable dir to the PATH in scripts' -x
+complete -c yarn -n "__fish_seen_subcommand_from install" -l scripts-prepend-node-path -d 'prepend the node executable dir to the PATH in scripts' -r
 complete -c yarn -n "__fish_seen_subcommand_from install" -l no-node-version-check -d 'do not warn when using a potentially unsupported Node version'
 complete -c yarn -n "__fish_seen_subcommand_from install" -l focus -d 'Focus on a single workspace by installing remote copies of its sibling workspaces.'
 complete -c yarn -n "__fish_seen_subcommand_from install" -l otp -d 'one-time password for two factor authentication' -x
@@ -942,14 +942,14 @@ complete -c yarn -n "__fish_seen_subcommand_from licenses" -l cache-folder -d 's
 complete -c yarn -n "__fish_seen_subcommand_from licenses" -l mutex -d 'use a mutex to ensure only one yarn instance is executing' -x
 complete -c yarn -n "__fish_seen_subcommand_from licenses" -l emoji -d 'enable emoji in output (default: false)' -x
 complete -c yarn -n "__fish_seen_subcommand_from licenses" -s s -l silent -d 'skip Yarn console logs, other types of logs (script output) will be printed'
-complete -c yarn -n "__fish_seen_subcommand_from licenses" -l cwd -d 'working directory to use (default: ~/repos/h2o-curated-data/general)' -x
+complete -c yarn -n "__fish_seen_subcommand_from licenses" -l cwd -d 'working directory to use (default: ~/repos/h2o-curated-data/general)' -r
 complete -c yarn -n "__fish_seen_subcommand_from licenses" -l proxy -l https-proxy -d 'proxy' -x
 complete -c yarn -n "__fish_seen_subcommand_from licenses" -l registry -d 'override configuration registry' -x
 complete -c yarn -n "__fish_seen_subcommand_from licenses" -l no-progress -d 'disable progress bar'
 complete -c yarn -n "__fish_seen_subcommand_from licenses" -l network-concurrency -d 'maximum number of concurrent network requests' -x
 complete -c yarn -n "__fish_seen_subcommand_from licenses" -l network-timeout -d 'TCP timeout for network requests' -x
 complete -c yarn -n "__fish_seen_subcommand_from licenses" -l non-interactive -d 'do not show interactive prompts'
-complete -c yarn -n "__fish_seen_subcommand_from licenses" -l scripts-prepend-node-path -d 'prepend the node executable dir to the PATH in scripts' -x
+complete -c yarn -n "__fish_seen_subcommand_from licenses" -l scripts-prepend-node-path -d 'prepend the node executable dir to the PATH in scripts' -r
 complete -c yarn -n "__fish_seen_subcommand_from licenses" -l no-node-version-check -d 'do not warn when using a potentially unsupported Node version'
 complete -c yarn -n "__fish_seen_subcommand_from licenses" -l focus -d 'Focus on a single workspace by installing remote copies of its sibling workspaces.'
 complete -c yarn -n "__fish_seen_subcommand_from licenses" -l otp -d 'one-time password for two factor authentication' -x
@@ -991,14 +991,14 @@ complete -c yarn -n "__fish_seen_subcommand_from link" -l cache-folder -d 'speci
 complete -c yarn -n "__fish_seen_subcommand_from link" -l mutex -d 'use a mutex to ensure only one yarn instance is executing' -x
 complete -c yarn -n "__fish_seen_subcommand_from link" -l emoji -d 'enable emoji in output (default: false)' -x
 complete -c yarn -n "__fish_seen_subcommand_from link" -s s -l silent -d 'skip Yarn console logs, other types of logs (script output) will be printed'
-complete -c yarn -n "__fish_seen_subcommand_from link" -l cwd -d 'working directory to use (default: ~/repos/h2o-curated-data/general)' -x
+complete -c yarn -n "__fish_seen_subcommand_from link" -l cwd -d 'working directory to use (default: ~/repos/h2o-curated-data/general)' -r
 complete -c yarn -n "__fish_seen_subcommand_from link" -l proxy -l https-proxy -d 'proxy' -x
 complete -c yarn -n "__fish_seen_subcommand_from link" -l registry -d 'override configuration registry' -x
 complete -c yarn -n "__fish_seen_subcommand_from link" -l no-progress -d 'disable progress bar'
 complete -c yarn -n "__fish_seen_subcommand_from link" -l network-concurrency -d 'maximum number of concurrent network requests' -x
 complete -c yarn -n "__fish_seen_subcommand_from link" -l network-timeout -d 'TCP timeout for network requests' -x
 complete -c yarn -n "__fish_seen_subcommand_from link" -l non-interactive -d 'do not show interactive prompts'
-complete -c yarn -n "__fish_seen_subcommand_from link" -l scripts-prepend-node-path -d 'prepend the node executable dir to the PATH in scripts' -x
+complete -c yarn -n "__fish_seen_subcommand_from link" -l scripts-prepend-node-path -d 'prepend the node executable dir to the PATH in scripts' -r
 complete -c yarn -n "__fish_seen_subcommand_from link" -l no-node-version-check -d 'do not warn when using a potentially unsupported Node version'
 complete -c yarn -n "__fish_seen_subcommand_from link" -l focus -d 'Focus on a single workspace by installing remote copies of its sibling workspaces.'
 complete -c yarn -n "__fish_seen_subcommand_from link" -l otp -d 'one-time password for two factor authentication' -x
@@ -1040,14 +1040,14 @@ complete -c yarn -n "__fish_seen_subcommand_from list" -l cache-folder -d 'speci
 complete -c yarn -n "__fish_seen_subcommand_from list" -l mutex -d 'use a mutex to ensure only one yarn instance is executing' -x
 complete -c yarn -n "__fish_seen_subcommand_from list" -l emoji -d 'enable emoji in output (default: false)' -x
 complete -c yarn -n "__fish_seen_subcommand_from list" -s s -l silent -d 'skip Yarn console logs, other types of logs (script output) will be printed'
-complete -c yarn -n "__fish_seen_subcommand_from list" -l cwd -d 'working directory to use (default: ~/repos/h2o-curated-data/general)' -x
+complete -c yarn -n "__fish_seen_subcommand_from list" -l cwd -d 'working directory to use (default: ~/repos/h2o-curated-data/general)' -r
 complete -c yarn -n "__fish_seen_subcommand_from list" -l proxy -l https-proxy -d 'proxy' -x
 complete -c yarn -n "__fish_seen_subcommand_from list" -l registry -d 'override configuration registry' -x
 complete -c yarn -n "__fish_seen_subcommand_from list" -l no-progress -d 'disable progress bar'
 complete -c yarn -n "__fish_seen_subcommand_from list" -l network-concurrency -d 'maximum number of concurrent network requests' -x
 complete -c yarn -n "__fish_seen_subcommand_from list" -l network-timeout -d 'TCP timeout for network requests' -x
 complete -c yarn -n "__fish_seen_subcommand_from list" -l non-interactive -d 'do not show interactive prompts'
-complete -c yarn -n "__fish_seen_subcommand_from list" -l scripts-prepend-node-path -d 'prepend the node executable dir to the PATH in scripts' -x
+complete -c yarn -n "__fish_seen_subcommand_from list" -l scripts-prepend-node-path -d 'prepend the node executable dir to the PATH in scripts' -r
 complete -c yarn -n "__fish_seen_subcommand_from list" -l no-node-version-check -d 'do not warn when using a potentially unsupported Node version'
 complete -c yarn -n "__fish_seen_subcommand_from list" -l focus -d 'Focus on a single workspace by installing remote copies of its sibling workspaces.'
 complete -c yarn -n "__fish_seen_subcommand_from list" -l otp -d 'one-time password for two factor authentication' -x
@@ -1091,14 +1091,14 @@ complete -c yarn -n "__fish_seen_subcommand_from login" -l cache-folder -d 'spec
 complete -c yarn -n "__fish_seen_subcommand_from login" -l mutex -d 'use a mutex to ensure only one yarn instance is executing' -x
 complete -c yarn -n "__fish_seen_subcommand_from login" -l emoji -d 'enable emoji in output (default: false)' -x
 complete -c yarn -n "__fish_seen_subcommand_from login" -s s -l silent -d 'skip Yarn console logs, other types of logs (script output) will be printed'
-complete -c yarn -n "__fish_seen_subcommand_from login" -l cwd -d 'working directory to use (default: ~/repos/h2o-curated-data/general)' -x
+complete -c yarn -n "__fish_seen_subcommand_from login" -l cwd -d 'working directory to use (default: ~/repos/h2o-curated-data/general)' -r
 complete -c yarn -n "__fish_seen_subcommand_from login" -l proxy -l https-proxy -d 'proxy' -x
 complete -c yarn -n "__fish_seen_subcommand_from login" -l registry -d 'override configuration registry' -x
 complete -c yarn -n "__fish_seen_subcommand_from login" -l no-progress -d 'disable progress bar'
 complete -c yarn -n "__fish_seen_subcommand_from login" -l network-concurrency -d 'maximum number of concurrent network requests' -x
 complete -c yarn -n "__fish_seen_subcommand_from login" -l network-timeout -d 'TCP timeout for network requests' -x
 complete -c yarn -n "__fish_seen_subcommand_from login" -l non-interactive -d 'do not show interactive prompts'
-complete -c yarn -n "__fish_seen_subcommand_from login" -l scripts-prepend-node-path -d 'prepend the node executable dir to the PATH in scripts' -x
+complete -c yarn -n "__fish_seen_subcommand_from login" -l scripts-prepend-node-path -d 'prepend the node executable dir to the PATH in scripts' -r
 complete -c yarn -n "__fish_seen_subcommand_from login" -l no-node-version-check -d 'do not warn when using a potentially unsupported Node version'
 complete -c yarn -n "__fish_seen_subcommand_from login" -l focus -d 'Focus on a single workspace by installing remote copies of its sibling workspaces.'
 complete -c yarn -n "__fish_seen_subcommand_from login" -l otp -d 'one-time password for two factor authentication' -x
@@ -1140,14 +1140,14 @@ complete -c yarn -n "__fish_seen_subcommand_from logout" -l cache-folder -d 'spe
 complete -c yarn -n "__fish_seen_subcommand_from logout" -l mutex -d 'use a mutex to ensure only one yarn instance is executing' -x
 complete -c yarn -n "__fish_seen_subcommand_from logout" -l emoji -d 'enable emoji in output (default: false)' -x
 complete -c yarn -n "__fish_seen_subcommand_from logout" -s s -l silent -d 'skip Yarn console logs, other types of logs (script output) will be printed'
-complete -c yarn -n "__fish_seen_subcommand_from logout" -l cwd -d 'working directory to use (default: ~/repos/h2o-curated-data/general)' -x
+complete -c yarn -n "__fish_seen_subcommand_from logout" -l cwd -d 'working directory to use (default: ~/repos/h2o-curated-data/general)' -r
 complete -c yarn -n "__fish_seen_subcommand_from logout" -l proxy -l https-proxy -d 'proxy' -x
 complete -c yarn -n "__fish_seen_subcommand_from logout" -l registry -d 'override configuration registry' -x
 complete -c yarn -n "__fish_seen_subcommand_from logout" -l no-progress -d 'disable progress bar'
 complete -c yarn -n "__fish_seen_subcommand_from logout" -l network-concurrency -d 'maximum number of concurrent network requests' -x
 complete -c yarn -n "__fish_seen_subcommand_from logout" -l network-timeout -d 'TCP timeout for network requests' -x
 complete -c yarn -n "__fish_seen_subcommand_from logout" -l non-interactive -d 'do not show interactive prompts'
-complete -c yarn -n "__fish_seen_subcommand_from logout" -l scripts-prepend-node-path -d 'prepend the node executable dir to the PATH in scripts' -x
+complete -c yarn -n "__fish_seen_subcommand_from logout" -l scripts-prepend-node-path -d 'prepend the node executable dir to the PATH in scripts' -r
 complete -c yarn -n "__fish_seen_subcommand_from logout" -l no-node-version-check -d 'do not warn when using a potentially unsupported Node version'
 complete -c yarn -n "__fish_seen_subcommand_from logout" -l focus -d 'Focus on a single workspace by installing remote copies of its sibling workspaces.'
 complete -c yarn -n "__fish_seen_subcommand_from logout" -l otp -d 'one-time password for two factor authentication' -x
@@ -1189,14 +1189,14 @@ complete -c yarn -n "__fish_seen_subcommand_from node" -l cache-folder -d 'speci
 complete -c yarn -n "__fish_seen_subcommand_from node" -l mutex -d 'use a mutex to ensure only one yarn instance is executing' -x
 complete -c yarn -n "__fish_seen_subcommand_from node" -l emoji -d 'enable emoji in output (default: false)' -x
 complete -c yarn -n "__fish_seen_subcommand_from node" -s s -l silent -d 'skip Yarn console logs, other types of logs (script output) will be printed'
-complete -c yarn -n "__fish_seen_subcommand_from node" -l cwd -d 'working directory to use (default: ~/repos/h2o-curated-data/general)' -x
+complete -c yarn -n "__fish_seen_subcommand_from node" -l cwd -d 'working directory to use (default: ~/repos/h2o-curated-data/general)' -r
 complete -c yarn -n "__fish_seen_subcommand_from node" -l proxy -l https-proxy -d 'proxy' -x
 complete -c yarn -n "__fish_seen_subcommand_from node" -l registry -d 'override configuration registry' -x
 complete -c yarn -n "__fish_seen_subcommand_from node" -l no-progress -d 'disable progress bar'
 complete -c yarn -n "__fish_seen_subcommand_from node" -l network-concurrency -d 'maximum number of concurrent network requests' -x
 complete -c yarn -n "__fish_seen_subcommand_from node" -l network-timeout -d 'TCP timeout for network requests' -x
 complete -c yarn -n "__fish_seen_subcommand_from node" -l non-interactive -d 'do not show interactive prompts'
-complete -c yarn -n "__fish_seen_subcommand_from node" -l scripts-prepend-node-path -d 'prepend the node executable dir to the PATH in scripts' -x
+complete -c yarn -n "__fish_seen_subcommand_from node" -l scripts-prepend-node-path -d 'prepend the node executable dir to the PATH in scripts' -r
 complete -c yarn -n "__fish_seen_subcommand_from node" -l no-node-version-check -d 'do not warn when using a potentially unsupported Node version'
 complete -c yarn -n "__fish_seen_subcommand_from node" -l focus -d 'Focus on a single workspace by installing remote copies of its sibling workspaces.'
 complete -c yarn -n "__fish_seen_subcommand_from node" -l otp -d 'one-time password for two factor authentication' -x
@@ -1239,14 +1239,14 @@ complete -c yarn -n "__fish_seen_subcommand_from outdated" -l cache-folder -d 's
 complete -c yarn -n "__fish_seen_subcommand_from outdated" -l mutex -d 'use a mutex to ensure only one yarn instance is executing' -x
 complete -c yarn -n "__fish_seen_subcommand_from outdated" -l emoji -d 'enable emoji in output (default: false)' -x
 complete -c yarn -n "__fish_seen_subcommand_from outdated" -s s -l silent -d 'skip Yarn console logs, other types of logs (script output) will be printed'
-complete -c yarn -n "__fish_seen_subcommand_from outdated" -l cwd -d 'working directory to use (default: ~/repos/h2o-curated-data/general)' -x
+complete -c yarn -n "__fish_seen_subcommand_from outdated" -l cwd -d 'working directory to use (default: ~/repos/h2o-curated-data/general)' -r
 complete -c yarn -n "__fish_seen_subcommand_from outdated" -l proxy -l https-proxy -d 'proxy' -x
 complete -c yarn -n "__fish_seen_subcommand_from outdated" -l registry -d 'override configuration registry' -x
 complete -c yarn -n "__fish_seen_subcommand_from outdated" -l no-progress -d 'disable progress bar'
 complete -c yarn -n "__fish_seen_subcommand_from outdated" -l network-concurrency -d 'maximum number of concurrent network requests' -x
 complete -c yarn -n "__fish_seen_subcommand_from outdated" -l network-timeout -d 'TCP timeout for network requests' -x
 complete -c yarn -n "__fish_seen_subcommand_from outdated" -l non-interactive -d 'do not show interactive prompts'
-complete -c yarn -n "__fish_seen_subcommand_from outdated" -l scripts-prepend-node-path -d 'prepend the node executable dir to the PATH in scripts' -x
+complete -c yarn -n "__fish_seen_subcommand_from outdated" -l scripts-prepend-node-path -d 'prepend the node executable dir to the PATH in scripts' -r
 complete -c yarn -n "__fish_seen_subcommand_from outdated" -l no-node-version-check -d 'do not warn when using a potentially unsupported Node version'
 complete -c yarn -n "__fish_seen_subcommand_from outdated" -l focus -d 'Focus on a single workspace by installing remote copies of its sibling workspaces.'
 complete -c yarn -n "__fish_seen_subcommand_from outdated" -l otp -d 'one-time password for two factor authentication' -x
@@ -1288,14 +1288,14 @@ complete -c yarn -n "__fish_seen_subcommand_from owner" -l cache-folder -d 'spec
 complete -c yarn -n "__fish_seen_subcommand_from owner" -l mutex -d 'use a mutex to ensure only one yarn instance is executing' -x
 complete -c yarn -n "__fish_seen_subcommand_from owner" -l emoji -d 'enable emoji in output (default: false)' -x
 complete -c yarn -n "__fish_seen_subcommand_from owner" -s s -l silent -d 'skip Yarn console logs, other types of logs (script output) will be printed'
-complete -c yarn -n "__fish_seen_subcommand_from owner" -l cwd -d 'working directory to use (default: ~/repos/h2o-curated-data/general)' -x
+complete -c yarn -n "__fish_seen_subcommand_from owner" -l cwd -d 'working directory to use (default: ~/repos/h2o-curated-data/general)' -r
 complete -c yarn -n "__fish_seen_subcommand_from owner" -l proxy -l https-proxy -d 'proxy' -x
 complete -c yarn -n "__fish_seen_subcommand_from owner" -l registry -d 'override configuration registry' -x
 complete -c yarn -n "__fish_seen_subcommand_from owner" -l no-progress -d 'disable progress bar'
 complete -c yarn -n "__fish_seen_subcommand_from owner" -l network-concurrency -d 'maximum number of concurrent network requests' -x
 complete -c yarn -n "__fish_seen_subcommand_from owner" -l network-timeout -d 'TCP timeout for network requests' -x
 complete -c yarn -n "__fish_seen_subcommand_from owner" -l non-interactive -d 'do not show interactive prompts'
-complete -c yarn -n "__fish_seen_subcommand_from owner" -l scripts-prepend-node-path -d 'prepend the node executable dir to the PATH in scripts' -x
+complete -c yarn -n "__fish_seen_subcommand_from owner" -l scripts-prepend-node-path -d 'prepend the node executable dir to the PATH in scripts' -r
 complete -c yarn -n "__fish_seen_subcommand_from owner" -l no-node-version-check -d 'do not warn when using a potentially unsupported Node version'
 complete -c yarn -n "__fish_seen_subcommand_from owner" -l focus -d 'Focus on a single workspace by installing remote copies of its sibling workspaces.'
 complete -c yarn -n "__fish_seen_subcommand_from owner" -l otp -d 'one-time password for two factor authentication' -x
@@ -1337,14 +1337,14 @@ complete -c yarn -n "__fish_seen_subcommand_from pack" -l cache-folder -d 'speci
 complete -c yarn -n "__fish_seen_subcommand_from pack" -l mutex -d 'use a mutex to ensure only one yarn instance is executing' -x
 complete -c yarn -n "__fish_seen_subcommand_from pack" -l emoji -d 'enable emoji in output (default: false)' -x
 complete -c yarn -n "__fish_seen_subcommand_from pack" -s s -l silent -d 'skip Yarn console logs, other types of logs (script output) will be printed'
-complete -c yarn -n "__fish_seen_subcommand_from pack" -l cwd -d 'working directory to use (default: ~/repos/h2o-curated-data/general)' -x
+complete -c yarn -n "__fish_seen_subcommand_from pack" -l cwd -d 'working directory to use (default: ~/repos/h2o-curated-data/general)' -r
 complete -c yarn -n "__fish_seen_subcommand_from pack" -l proxy -l https-proxy -d 'proxy' -x
 complete -c yarn -n "__fish_seen_subcommand_from pack" -l registry -d 'override configuration registry' -x
 complete -c yarn -n "__fish_seen_subcommand_from pack" -l no-progress -d 'disable progress bar'
 complete -c yarn -n "__fish_seen_subcommand_from pack" -l network-concurrency -d 'maximum number of concurrent network requests' -x
 complete -c yarn -n "__fish_seen_subcommand_from pack" -l network-timeout -d 'TCP timeout for network requests' -x
 complete -c yarn -n "__fish_seen_subcommand_from pack" -l non-interactive -d 'do not show interactive prompts'
-complete -c yarn -n "__fish_seen_subcommand_from pack" -l scripts-prepend-node-path -d 'prepend the node executable dir to the PATH in scripts' -x
+complete -c yarn -n "__fish_seen_subcommand_from pack" -l scripts-prepend-node-path -d 'prepend the node executable dir to the PATH in scripts' -r
 complete -c yarn -n "__fish_seen_subcommand_from pack" -l no-node-version-check -d 'do not warn when using a potentially unsupported Node version'
 complete -c yarn -n "__fish_seen_subcommand_from pack" -l focus -d 'Focus on a single workspace by installing remote copies of its sibling workspaces.'
 complete -c yarn -n "__fish_seen_subcommand_from pack" -l otp -d 'one-time password for two factor authentication' -x
@@ -1387,14 +1387,14 @@ complete -c yarn -n "__fish_seen_subcommand_from policies" -l cache-folder -d 's
 complete -c yarn -n "__fish_seen_subcommand_from policies" -l mutex -d 'use a mutex to ensure only one yarn instance is executing' -x
 complete -c yarn -n "__fish_seen_subcommand_from policies" -l emoji -d 'enable emoji in output (default: false)' -x
 complete -c yarn -n "__fish_seen_subcommand_from policies" -s s -l silent -d 'skip Yarn console logs, other types of logs (script output) will be printed'
-complete -c yarn -n "__fish_seen_subcommand_from policies" -l cwd -d 'working directory to use (default: ~/repos/h2o-curated-data/general)' -x
+complete -c yarn -n "__fish_seen_subcommand_from policies" -l cwd -d 'working directory to use (default: ~/repos/h2o-curated-data/general)' -r
 complete -c yarn -n "__fish_seen_subcommand_from policies" -l proxy -l https-proxy -d 'proxy' -x
 complete -c yarn -n "__fish_seen_subcommand_from policies" -l registry -d 'override configuration registry' -x
 complete -c yarn -n "__fish_seen_subcommand_from policies" -l no-progress -d 'disable progress bar'
 complete -c yarn -n "__fish_seen_subcommand_from policies" -l network-concurrency -d 'maximum number of concurrent network requests' -x
 complete -c yarn -n "__fish_seen_subcommand_from policies" -l network-timeout -d 'TCP timeout for network requests' -x
 complete -c yarn -n "__fish_seen_subcommand_from policies" -l non-interactive -d 'do not show interactive prompts'
-complete -c yarn -n "__fish_seen_subcommand_from policies" -l scripts-prepend-node-path -d 'prepend the node executable dir to the PATH in scripts' -x
+complete -c yarn -n "__fish_seen_subcommand_from policies" -l scripts-prepend-node-path -d 'prepend the node executable dir to the PATH in scripts' -r
 complete -c yarn -n "__fish_seen_subcommand_from policies" -l no-node-version-check -d 'do not warn when using a potentially unsupported Node version'
 complete -c yarn -n "__fish_seen_subcommand_from policies" -l focus -d 'Focus on a single workspace by installing remote copies of its sibling workspaces.'
 complete -c yarn -n "__fish_seen_subcommand_from policies" -l otp -d 'one-time password for two factor authentication' -x
@@ -1436,14 +1436,14 @@ complete -c yarn -n "__fish_seen_subcommand_from publish" -l cache-folder -d 'sp
 complete -c yarn -n "__fish_seen_subcommand_from publish" -l mutex -d 'use a mutex to ensure only one yarn instance is executing' -x
 complete -c yarn -n "__fish_seen_subcommand_from publish" -l emoji -d 'enable emoji in output (default: false)' -x
 complete -c yarn -n "__fish_seen_subcommand_from publish" -s s -l silent -d 'skip Yarn console logs, other types of logs (script output) will be printed'
-complete -c yarn -n "__fish_seen_subcommand_from publish" -l cwd -d 'working directory to use (default: ~/repos/h2o-curated-data/general)' -x
+complete -c yarn -n "__fish_seen_subcommand_from publish" -l cwd -d 'working directory to use (default: ~/repos/h2o-curated-data/general)' -r
 complete -c yarn -n "__fish_seen_subcommand_from publish" -l proxy -l https-proxy -d 'proxy' -x
 complete -c yarn -n "__fish_seen_subcommand_from publish" -l registry -d 'override configuration registry' -x
 complete -c yarn -n "__fish_seen_subcommand_from publish" -l no-progress -d 'disable progress bar'
 complete -c yarn -n "__fish_seen_subcommand_from publish" -l network-concurrency -d 'maximum number of concurrent network requests' -x
 complete -c yarn -n "__fish_seen_subcommand_from publish" -l network-timeout -d 'TCP timeout for network requests' -x
 complete -c yarn -n "__fish_seen_subcommand_from publish" -l non-interactive -d 'do not show interactive prompts'
-complete -c yarn -n "__fish_seen_subcommand_from publish" -l scripts-prepend-node-path -d 'prepend the node executable dir to the PATH in scripts' -x
+complete -c yarn -n "__fish_seen_subcommand_from publish" -l scripts-prepend-node-path -d 'prepend the node executable dir to the PATH in scripts' -r
 complete -c yarn -n "__fish_seen_subcommand_from publish" -l no-node-version-check -d 'do not warn when using a potentially unsupported Node version'
 complete -c yarn -n "__fish_seen_subcommand_from publish" -l focus -d 'Focus on a single workspace by installing remote copies of its sibling workspaces.'
 complete -c yarn -n "__fish_seen_subcommand_from publish" -l otp -d 'one-time password for two factor authentication' -x
@@ -1499,14 +1499,14 @@ complete -c yarn -n "__fish_seen_subcommand_from remove" -l cache-folder -d 'spe
 complete -c yarn -n "__fish_seen_subcommand_from remove" -l mutex -d 'use a mutex to ensure only one yarn instance is executing' -x
 complete -c yarn -n "__fish_seen_subcommand_from remove" -l emoji -d 'enable emoji in output (default: false)' -x
 complete -c yarn -n "__fish_seen_subcommand_from remove" -s s -l silent -d 'skip Yarn console logs, other types of logs (script output) will be printed'
-complete -c yarn -n "__fish_seen_subcommand_from remove" -l cwd -d 'working directory to use (default: ~/repos/h2o-curated-data/general)' -x
+complete -c yarn -n "__fish_seen_subcommand_from remove" -l cwd -d 'working directory to use (default: ~/repos/h2o-curated-data/general)' -r
 complete -c yarn -n "__fish_seen_subcommand_from remove" -l proxy -l https-proxy -d 'proxy' -x
 complete -c yarn -n "__fish_seen_subcommand_from remove" -l registry -d 'override configuration registry' -x
 complete -c yarn -n "__fish_seen_subcommand_from remove" -l no-progress -d 'disable progress bar'
 complete -c yarn -n "__fish_seen_subcommand_from remove" -l network-concurrency -d 'maximum number of concurrent network requests' -x
 complete -c yarn -n "__fish_seen_subcommand_from remove" -l network-timeout -d 'TCP timeout for network requests' -x
 complete -c yarn -n "__fish_seen_subcommand_from remove" -l non-interactive -d 'do not show interactive prompts'
-complete -c yarn -n "__fish_seen_subcommand_from remove" -l scripts-prepend-node-path -d 'prepend the node executable dir to the PATH in scripts' -x
+complete -c yarn -n "__fish_seen_subcommand_from remove" -l scripts-prepend-node-path -d 'prepend the node executable dir to the PATH in scripts' -r
 complete -c yarn -n "__fish_seen_subcommand_from remove" -l no-node-version-check -d 'do not warn when using a potentially unsupported Node version'
 complete -c yarn -n "__fish_seen_subcommand_from remove" -l focus -d 'Focus on a single workspace by installing remote copies of its sibling workspaces.'
 complete -c yarn -n "__fish_seen_subcommand_from remove" -l otp -d 'one-time password for two factor authentication' -x
@@ -1549,14 +1549,14 @@ complete -c yarn -n "__fish_seen_subcommand_from run" -l cache-folder -d 'specif
 complete -c yarn -n "__fish_seen_subcommand_from run" -l mutex -d 'use a mutex to ensure only one yarn instance is executing' -x
 complete -c yarn -n "__fish_seen_subcommand_from run" -l emoji -d 'enable emoji in output (default: false)' -x
 complete -c yarn -n "__fish_seen_subcommand_from run" -s s -l silent -d 'skip Yarn console logs, other types of logs (script output) will be printed'
-complete -c yarn -n "__fish_seen_subcommand_from run" -l cwd -d 'working directory to use (default: ~/repos/h2o-curated-data/general)' -x
+complete -c yarn -n "__fish_seen_subcommand_from run" -l cwd -d 'working directory to use (default: ~/repos/h2o-curated-data/general)' -r
 complete -c yarn -n "__fish_seen_subcommand_from run" -l proxy -l https-proxy -d 'proxy' -x
 complete -c yarn -n "__fish_seen_subcommand_from run" -l registry -d 'override configuration registry' -x
 complete -c yarn -n "__fish_seen_subcommand_from run" -l no-progress -d 'disable progress bar'
 complete -c yarn -n "__fish_seen_subcommand_from run" -l network-concurrency -d 'maximum number of concurrent network requests' -x
 complete -c yarn -n "__fish_seen_subcommand_from run" -l network-timeout -d 'TCP timeout for network requests' -x
 complete -c yarn -n "__fish_seen_subcommand_from run" -l non-interactive -d 'do not show interactive prompts'
-complete -c yarn -n "__fish_seen_subcommand_from run" -l scripts-prepend-node-path -d 'prepend the node executable dir to the PATH in scripts' -x
+complete -c yarn -n "__fish_seen_subcommand_from run" -l scripts-prepend-node-path -d 'prepend the node executable dir to the PATH in scripts' -r
 complete -c yarn -n "__fish_seen_subcommand_from run" -l no-node-version-check -d 'do not warn when using a potentially unsupported Node version'
 complete -c yarn -n "__fish_seen_subcommand_from run" -l focus -d 'Focus on a single workspace by installing remote copies of its sibling workspaces.'
 complete -c yarn -n "__fish_seen_subcommand_from run" -l otp -d 'one-time password for two factor authentication' -x
@@ -1598,14 +1598,14 @@ complete -c yarn -n "__fish_seen_subcommand_from tag" -l cache-folder -d 'specif
 complete -c yarn -n "__fish_seen_subcommand_from tag" -l mutex -d 'use a mutex to ensure only one yarn instance is executing' -x
 complete -c yarn -n "__fish_seen_subcommand_from tag" -l emoji -d 'enable emoji in output (default: false)' -x
 complete -c yarn -n "__fish_seen_subcommand_from tag" -s s -l silent -d 'skip Yarn console logs, other types of logs (script output) will be printed'
-complete -c yarn -n "__fish_seen_subcommand_from tag" -l cwd -d 'working directory to use (default: ~/repos/h2o-curated-data/general)' -x
+complete -c yarn -n "__fish_seen_subcommand_from tag" -l cwd -d 'working directory to use (default: ~/repos/h2o-curated-data/general)' -r
 complete -c yarn -n "__fish_seen_subcommand_from tag" -l proxy -l https-proxy -d 'proxy' -x
 complete -c yarn -n "__fish_seen_subcommand_from tag" -l registry -d 'override configuration registry' -x
 complete -c yarn -n "__fish_seen_subcommand_from tag" -l no-progress -d 'disable progress bar'
 complete -c yarn -n "__fish_seen_subcommand_from tag" -l network-concurrency -d 'maximum number of concurrent network requests' -x
 complete -c yarn -n "__fish_seen_subcommand_from tag" -l network-timeout -d 'TCP timeout for network requests' -x
 complete -c yarn -n "__fish_seen_subcommand_from tag" -l non-interactive -d 'do not show interactive prompts'
-complete -c yarn -n "__fish_seen_subcommand_from tag" -l scripts-prepend-node-path -d 'prepend the node executable dir to the PATH in scripts' -x
+complete -c yarn -n "__fish_seen_subcommand_from tag" -l scripts-prepend-node-path -d 'prepend the node executable dir to the PATH in scripts' -r
 complete -c yarn -n "__fish_seen_subcommand_from tag" -l no-node-version-check -d 'do not warn when using a potentially unsupported Node version'
 complete -c yarn -n "__fish_seen_subcommand_from tag" -l focus -d 'Focus on a single workspace by installing remote copies of its sibling workspaces.'
 complete -c yarn -n "__fish_seen_subcommand_from tag" -l otp -d 'one-time password for two factor authentication' -x
@@ -1647,14 +1647,14 @@ complete -c yarn -n "__fish_seen_subcommand_from team" -l cache-folder -d 'speci
 complete -c yarn -n "__fish_seen_subcommand_from team" -l mutex -d 'use a mutex to ensure only one yarn instance is executing' -x
 complete -c yarn -n "__fish_seen_subcommand_from team" -l emoji -d 'enable emoji in output (default: false)' -x
 complete -c yarn -n "__fish_seen_subcommand_from team" -s s -l silent -d 'skip Yarn console logs, other types of logs (script output) will be printed'
-complete -c yarn -n "__fish_seen_subcommand_from team" -l cwd -d 'working directory to use (default: ~/repos/h2o-curated-data/general)' -x
+complete -c yarn -n "__fish_seen_subcommand_from team" -l cwd -d 'working directory to use (default: ~/repos/h2o-curated-data/general)' -r
 complete -c yarn -n "__fish_seen_subcommand_from team" -l proxy -l https-proxy -d 'proxy' -x
 complete -c yarn -n "__fish_seen_subcommand_from team" -l registry -d 'override configuration registry' -x
 complete -c yarn -n "__fish_seen_subcommand_from team" -l no-progress -d 'disable progress bar'
 complete -c yarn -n "__fish_seen_subcommand_from team" -l network-concurrency -d 'maximum number of concurrent network requests' -x
 complete -c yarn -n "__fish_seen_subcommand_from team" -l network-timeout -d 'TCP timeout for network requests' -x
 complete -c yarn -n "__fish_seen_subcommand_from team" -l non-interactive -d 'do not show interactive prompts'
-complete -c yarn -n "__fish_seen_subcommand_from team" -l scripts-prepend-node-path -d 'prepend the node executable dir to the PATH in scripts' -x
+complete -c yarn -n "__fish_seen_subcommand_from team" -l scripts-prepend-node-path -d 'prepend the node executable dir to the PATH in scripts' -r
 complete -c yarn -n "__fish_seen_subcommand_from team" -l no-node-version-check -d 'do not warn when using a potentially unsupported Node version'
 complete -c yarn -n "__fish_seen_subcommand_from team" -l focus -d 'Focus on a single workspace by installing remote copies of its sibling workspaces.'
 complete -c yarn -n "__fish_seen_subcommand_from team" -l otp -d 'one-time password for two factor authentication' -x
@@ -1696,14 +1696,14 @@ complete -c yarn -n "__fish_seen_subcommand_from unlink" -l cache-folder -d 'spe
 complete -c yarn -n "__fish_seen_subcommand_from unlink" -l mutex -d 'use a mutex to ensure only one yarn instance is executing' -x
 complete -c yarn -n "__fish_seen_subcommand_from unlink" -l emoji -d 'enable emoji in output (default: false)' -x
 complete -c yarn -n "__fish_seen_subcommand_from unlink" -s s -l silent -d 'skip Yarn console logs, other types of logs (script output) will be printed'
-complete -c yarn -n "__fish_seen_subcommand_from unlink" -l cwd -d 'working directory to use (default: ~/repos/h2o-curated-data/general)' -x
+complete -c yarn -n "__fish_seen_subcommand_from unlink" -l cwd -d 'working directory to use (default: ~/repos/h2o-curated-data/general)' -r
 complete -c yarn -n "__fish_seen_subcommand_from unlink" -l proxy -l https-proxy -d 'proxy' -x
 complete -c yarn -n "__fish_seen_subcommand_from unlink" -l registry -d 'override configuration registry' -x
 complete -c yarn -n "__fish_seen_subcommand_from unlink" -l no-progress -d 'disable progress bar'
 complete -c yarn -n "__fish_seen_subcommand_from unlink" -l network-concurrency -d 'maximum number of concurrent network requests' -x
 complete -c yarn -n "__fish_seen_subcommand_from unlink" -l network-timeout -d 'TCP timeout for network requests' -x
 complete -c yarn -n "__fish_seen_subcommand_from unlink" -l non-interactive -d 'do not show interactive prompts'
-complete -c yarn -n "__fish_seen_subcommand_from unlink" -l scripts-prepend-node-path -d 'prepend the node executable dir to the PATH in scripts' -x
+complete -c yarn -n "__fish_seen_subcommand_from unlink" -l scripts-prepend-node-path -d 'prepend the node executable dir to the PATH in scripts' -r
 complete -c yarn -n "__fish_seen_subcommand_from unlink" -l no-node-version-check -d 'do not warn when using a potentially unsupported Node version'
 complete -c yarn -n "__fish_seen_subcommand_from unlink" -l focus -d 'Focus on a single workspace by installing remote copies of its sibling workspaces.'
 complete -c yarn -n "__fish_seen_subcommand_from unlink" -l otp -d 'one-time password for two factor authentication' -x
@@ -1745,14 +1745,14 @@ complete -c yarn -n "__fish_seen_subcommand_from unplug" -l cache-folder -d 'spe
 complete -c yarn -n "__fish_seen_subcommand_from unplug" -l mutex -d 'use a mutex to ensure only one yarn instance is executing' -x
 complete -c yarn -n "__fish_seen_subcommand_from unplug" -l emoji -d 'enable emoji in output (default: false)' -x
 complete -c yarn -n "__fish_seen_subcommand_from unplug" -s s -l silent -d 'skip Yarn console logs, other types of logs (script output) will be printed'
-complete -c yarn -n "__fish_seen_subcommand_from unplug" -l cwd -d 'working directory to use (default: ~/repos/h2o-curated-data/general)' -x
+complete -c yarn -n "__fish_seen_subcommand_from unplug" -l cwd -d 'working directory to use (default: ~/repos/h2o-curated-data/general)' -r
 complete -c yarn -n "__fish_seen_subcommand_from unplug" -l proxy -l https-proxy -d 'proxy' -x
 complete -c yarn -n "__fish_seen_subcommand_from unplug" -l registry -d 'override configuration registry' -x
 complete -c yarn -n "__fish_seen_subcommand_from unplug" -l no-progress -d 'disable progress bar'
 complete -c yarn -n "__fish_seen_subcommand_from unplug" -l network-concurrency -d 'maximum number of concurrent network requests' -x
 complete -c yarn -n "__fish_seen_subcommand_from unplug" -l network-timeout -d 'TCP timeout for network requests' -x
 complete -c yarn -n "__fish_seen_subcommand_from unplug" -l non-interactive -d 'do not show interactive prompts'
-complete -c yarn -n "__fish_seen_subcommand_from unplug" -l scripts-prepend-node-path -d 'prepend the node executable dir to the PATH in scripts' -x
+complete -c yarn -n "__fish_seen_subcommand_from unplug" -l scripts-prepend-node-path -d 'prepend the node executable dir to the PATH in scripts' -r
 complete -c yarn -n "__fish_seen_subcommand_from unplug" -l no-node-version-check -d 'do not warn when using a potentially unsupported Node version'
 complete -c yarn -n "__fish_seen_subcommand_from unplug" -l focus -d 'Focus on a single workspace by installing remote copies of its sibling workspaces.'
 complete -c yarn -n "__fish_seen_subcommand_from unplug" -l otp -d 'one-time password for two factor authentication' -x
@@ -1796,14 +1796,14 @@ complete -c yarn -n "__fish_seen_subcommand_from upgrade" -l cache-folder -d 'sp
 complete -c yarn -n "__fish_seen_subcommand_from upgrade" -l mutex -d 'use a mutex to ensure only one yarn instance is executing' -x
 complete -c yarn -n "__fish_seen_subcommand_from upgrade" -l emoji -d 'enable emoji in output (default: false)' -x
 complete -c yarn -n "__fish_seen_subcommand_from upgrade" -s s -l silent -d 'skip Yarn console logs, other types of logs (script output) will be printed'
-complete -c yarn -n "__fish_seen_subcommand_from upgrade" -l cwd -d 'working directory to use (default: ~/repos/h2o-curated-data/general)' -x
+complete -c yarn -n "__fish_seen_subcommand_from upgrade" -l cwd -d 'working directory to use (default: ~/repos/h2o-curated-data/general)' -r
 complete -c yarn -n "__fish_seen_subcommand_from upgrade" -l proxy -l https-proxy -d 'proxy' -x
 complete -c yarn -n "__fish_seen_subcommand_from upgrade" -l registry -d 'override configuration registry' -x
 complete -c yarn -n "__fish_seen_subcommand_from upgrade" -l no-progress -d 'disable progress bar'
 complete -c yarn -n "__fish_seen_subcommand_from upgrade" -l network-concurrency -d 'maximum number of concurrent network requests' -x
 complete -c yarn -n "__fish_seen_subcommand_from upgrade" -l network-timeout -d 'TCP timeout for network requests' -x
 complete -c yarn -n "__fish_seen_subcommand_from upgrade" -l non-interactive -d 'do not show interactive prompts'
-complete -c yarn -n "__fish_seen_subcommand_from upgrade" -l scripts-prepend-node-path -d 'prepend the node executable dir to the PATH in scripts' -x
+complete -c yarn -n "__fish_seen_subcommand_from upgrade" -l scripts-prepend-node-path -d 'prepend the node executable dir to the PATH in scripts' -r
 complete -c yarn -n "__fish_seen_subcommand_from upgrade" -l no-node-version-check -d 'do not warn when using a potentially unsupported Node version'
 complete -c yarn -n "__fish_seen_subcommand_from upgrade" -l focus -d 'Focus on a single workspace by installing remote copies of its sibling workspaces.'
 complete -c yarn -n "__fish_seen_subcommand_from upgrade" -l otp -d 'one-time password for two factor authentication' -x
@@ -1852,14 +1852,14 @@ complete -c yarn -n "__fish_seen_subcommand_from upgrade-interactive" -l cache-f
 complete -c yarn -n "__fish_seen_subcommand_from upgrade-interactive" -l mutex -d 'use a mutex to ensure only one yarn instance is executing' -x
 complete -c yarn -n "__fish_seen_subcommand_from upgrade-interactive" -l emoji -d 'enable emoji in output (default: false)' -x
 complete -c yarn -n "__fish_seen_subcommand_from upgrade-interactive" -s s -l silent -d 'skip Yarn console logs, other types of logs (script output) will be printed'
-complete -c yarn -n "__fish_seen_subcommand_from upgrade-interactive" -l cwd -d 'working directory to use (default: ~/repos/h2o-curated-data/general)' -x
+complete -c yarn -n "__fish_seen_subcommand_from upgrade-interactive" -l cwd -d 'working directory to use (default: ~/repos/h2o-curated-data/general)' -r
 complete -c yarn -n "__fish_seen_subcommand_from upgrade-interactive" -l proxy -l https-proxy -d 'proxy' -x
 complete -c yarn -n "__fish_seen_subcommand_from upgrade-interactive" -l registry -d 'override configuration registry' -x
 complete -c yarn -n "__fish_seen_subcommand_from upgrade-interactive" -l no-progress -d 'disable progress bar'
 complete -c yarn -n "__fish_seen_subcommand_from upgrade-interactive" -l network-concurrency -d 'maximum number of concurrent network requests' -x
 complete -c yarn -n "__fish_seen_subcommand_from upgrade-interactive" -l network-timeout -d 'TCP timeout for network requests' -x
 complete -c yarn -n "__fish_seen_subcommand_from upgrade-interactive" -l non-interactive -d 'do not show interactive prompts'
-complete -c yarn -n "__fish_seen_subcommand_from upgrade-interactive" -l scripts-prepend-node-path -d 'prepend the node executable dir to the PATH in scripts' -x
+complete -c yarn -n "__fish_seen_subcommand_from upgrade-interactive" -l scripts-prepend-node-path -d 'prepend the node executable dir to the PATH in scripts' -r
 complete -c yarn -n "__fish_seen_subcommand_from upgrade-interactive" -l no-node-version-check -d 'do not warn when using a potentially unsupported Node version'
 complete -c yarn -n "__fish_seen_subcommand_from upgrade-interactive" -l focus -d 'Focus on a single workspace by installing remote copies of its sibling workspaces.'
 complete -c yarn -n "__fish_seen_subcommand_from upgrade-interactive" -l otp -d 'one-time password for two factor authentication' -x
@@ -1906,14 +1906,14 @@ complete -c yarn -n "__fish_seen_subcommand_from version" -l cache-folder -d 'sp
 complete -c yarn -n "__fish_seen_subcommand_from version" -l mutex -d 'use a mutex to ensure only one yarn instance is executing' -x
 complete -c yarn -n "__fish_seen_subcommand_from version" -l emoji -d 'enable emoji in output (default: false)' -x
 complete -c yarn -n "__fish_seen_subcommand_from version" -s s -l silent -d 'skip Yarn console logs, other types of logs (script output) will be printed'
-complete -c yarn -n "__fish_seen_subcommand_from version" -l cwd -d 'working directory to use (default: ~/repos/h2o-curated-data/general)' -x
+complete -c yarn -n "__fish_seen_subcommand_from version" -l cwd -d 'working directory to use (default: ~/repos/h2o-curated-data/general)' -r
 complete -c yarn -n "__fish_seen_subcommand_from version" -l proxy -l https-proxy -d 'proxy' -x
 complete -c yarn -n "__fish_seen_subcommand_from version" -l registry -d 'override configuration registry' -x
 complete -c yarn -n "__fish_seen_subcommand_from version" -l no-progress -d 'disable progress bar'
 complete -c yarn -n "__fish_seen_subcommand_from version" -l network-concurrency -d 'maximum number of concurrent network requests' -x
 complete -c yarn -n "__fish_seen_subcommand_from version" -l network-timeout -d 'TCP timeout for network requests' -x
 complete -c yarn -n "__fish_seen_subcommand_from version" -l non-interactive -d 'do not show interactive prompts'
-complete -c yarn -n "__fish_seen_subcommand_from version" -l scripts-prepend-node-path -d 'prepend the node executable dir to the PATH in scripts' -x
+complete -c yarn -n "__fish_seen_subcommand_from version" -l scripts-prepend-node-path -d 'prepend the node executable dir to the PATH in scripts' -r
 complete -c yarn -n "__fish_seen_subcommand_from version" -l no-node-version-check -d 'do not warn when using a potentially unsupported Node version'
 complete -c yarn -n "__fish_seen_subcommand_from version" -l focus -d 'Focus on a single workspace by installing remote copies of its sibling workspaces.'
 complete -c yarn -n "__fish_seen_subcommand_from version" -l otp -d 'one-time password for two factor authentication' -x
@@ -1967,14 +1967,14 @@ complete -c yarn -n "__fish_seen_subcommand_from versions" -l cache-folder -d 's
 complete -c yarn -n "__fish_seen_subcommand_from versions" -l mutex -d 'use a mutex to ensure only one yarn instance is executing' -x
 complete -c yarn -n "__fish_seen_subcommand_from versions" -l emoji -d 'enable emoji in output (default: false)' -x
 complete -c yarn -n "__fish_seen_subcommand_from versions" -s s -l silent -d 'skip Yarn console logs, other types of logs (script output) will be printed'
-complete -c yarn -n "__fish_seen_subcommand_from versions" -l cwd -d 'working directory to use (default: ~/repos/h2o-curated-data/general)' -x
+complete -c yarn -n "__fish_seen_subcommand_from versions" -l cwd -d 'working directory to use (default: ~/repos/h2o-curated-data/general)' -r
 complete -c yarn -n "__fish_seen_subcommand_from versions" -l proxy -l https-proxy -d 'proxy' -x
 complete -c yarn -n "__fish_seen_subcommand_from versions" -l registry -d 'override configuration registry' -x
 complete -c yarn -n "__fish_seen_subcommand_from versions" -l no-progress -d 'disable progress bar'
 complete -c yarn -n "__fish_seen_subcommand_from versions" -l network-concurrency -d 'maximum number of concurrent network requests' -x
 complete -c yarn -n "__fish_seen_subcommand_from versions" -l network-timeout -d 'TCP timeout for network requests' -x
 complete -c yarn -n "__fish_seen_subcommand_from versions" -l non-interactive -d 'do not show interactive prompts'
-complete -c yarn -n "__fish_seen_subcommand_from versions" -l scripts-prepend-node-path -d 'prepend the node executable dir to the PATH in scripts' -x
+complete -c yarn -n "__fish_seen_subcommand_from versions" -l scripts-prepend-node-path -d 'prepend the node executable dir to the PATH in scripts' -r
 complete -c yarn -n "__fish_seen_subcommand_from versions" -l no-node-version-check -d 'do not warn when using a potentially unsupported Node version'
 complete -c yarn -n "__fish_seen_subcommand_from versions" -l focus -d 'Focus on a single workspace by installing remote copies of its sibling workspaces.'
 complete -c yarn -n "__fish_seen_subcommand_from versions" -l otp -d 'one-time password for two factor authentication' -x
@@ -2016,14 +2016,14 @@ complete -c yarn -n "__fish_seen_subcommand_from why" -l cache-folder -d 'specif
 complete -c yarn -n "__fish_seen_subcommand_from why" -l mutex -d 'use a mutex to ensure only one yarn instance is executing' -x
 complete -c yarn -n "__fish_seen_subcommand_from why" -l emoji -d 'enable emoji in output (default: false)' -x
 complete -c yarn -n "__fish_seen_subcommand_from why" -s s -l silent -d 'skip Yarn console logs, other types of logs (script output) will be printed'
-complete -c yarn -n "__fish_seen_subcommand_from why" -l cwd -d 'working directory to use (default: ~/repos/h2o-curated-data/general)' -x
+complete -c yarn -n "__fish_seen_subcommand_from why" -l cwd -d 'working directory to use (default: ~/repos/h2o-curated-data/general)' -r
 complete -c yarn -n "__fish_seen_subcommand_from why" -l proxy -l https-proxy -d 'proxy' -x
 complete -c yarn -n "__fish_seen_subcommand_from why" -l registry -d 'override configuration registry' -x
 complete -c yarn -n "__fish_seen_subcommand_from why" -l no-progress -d 'disable progress bar'
 complete -c yarn -n "__fish_seen_subcommand_from why" -l network-concurrency -d 'maximum number of concurrent network requests' -x
 complete -c yarn -n "__fish_seen_subcommand_from why" -l network-timeout -d 'TCP timeout for network requests' -x
 complete -c yarn -n "__fish_seen_subcommand_from why" -l non-interactive -d 'do not show interactive prompts'
-complete -c yarn -n "__fish_seen_subcommand_from why" -l scripts-prepend-node-path -d 'prepend the node executable dir to the PATH in scripts' -x
+complete -c yarn -n "__fish_seen_subcommand_from why" -l scripts-prepend-node-path -d 'prepend the node executable dir to the PATH in scripts' -r
 complete -c yarn -n "__fish_seen_subcommand_from why" -l no-node-version-check -d 'do not warn when using a potentially unsupported Node version'
 complete -c yarn -n "__fish_seen_subcommand_from why" -l focus -d 'Focus on a single workspace by installing remote copies of its sibling workspaces.'
 complete -c yarn -n "__fish_seen_subcommand_from why" -l otp -d 'one-time password for two factor authentication' -x
@@ -2065,14 +2065,14 @@ complete -c yarn -n "__fish_seen_subcommand_from workspace" -l cache-folder -d '
 complete -c yarn -n "__fish_seen_subcommand_from workspace" -l mutex -d 'use a mutex to ensure only one yarn instance is executing' -x
 complete -c yarn -n "__fish_seen_subcommand_from workspace" -l emoji -d 'enable emoji in output (default: false)' -x
 complete -c yarn -n "__fish_seen_subcommand_from workspace" -s s -l silent -d 'skip Yarn console logs, other types of logs (script output) will be printed'
-complete -c yarn -n "__fish_seen_subcommand_from workspace" -l cwd -d 'working directory to use (default: ~/repos/h2o-curated-data/general)' -x
+complete -c yarn -n "__fish_seen_subcommand_from workspace" -l cwd -d 'working directory to use (default: ~/repos/h2o-curated-data/general)' -r
 complete -c yarn -n "__fish_seen_subcommand_from workspace" -l proxy -l https-proxy -d 'proxy' -x
 complete -c yarn -n "__fish_seen_subcommand_from workspace" -l registry -d 'override configuration registry' -x
 complete -c yarn -n "__fish_seen_subcommand_from workspace" -l no-progress -d 'disable progress bar'
 complete -c yarn -n "__fish_seen_subcommand_from workspace" -l network-concurrency -d 'maximum number of concurrent network requests' -x
 complete -c yarn -n "__fish_seen_subcommand_from workspace" -l network-timeout -d 'TCP timeout for network requests' -x
 complete -c yarn -n "__fish_seen_subcommand_from workspace" -l non-interactive -d 'do not show interactive prompts'
-complete -c yarn -n "__fish_seen_subcommand_from workspace" -l scripts-prepend-node-path -d 'prepend the node executable dir to the PATH in scripts' -x
+complete -c yarn -n "__fish_seen_subcommand_from workspace" -l scripts-prepend-node-path -d 'prepend the node executable dir to the PATH in scripts' -r
 complete -c yarn -n "__fish_seen_subcommand_from workspace" -l no-node-version-check -d 'do not warn when using a potentially unsupported Node version'
 complete -c yarn -n "__fish_seen_subcommand_from workspace" -l focus -d 'Focus on a single workspace by installing remote copies of its sibling workspaces.'
 complete -c yarn -n "__fish_seen_subcommand_from workspace" -l otp -d 'one-time password for two factor authentication' -x
@@ -2114,14 +2114,14 @@ complete -c yarn -n "__fish_seen_subcommand_from workspaces" -l cache-folder -d 
 complete -c yarn -n "__fish_seen_subcommand_from workspaces" -l mutex -d 'use a mutex to ensure only one yarn instance is executing' -x
 complete -c yarn -n "__fish_seen_subcommand_from workspaces" -l emoji -d 'enable emoji in output (default: false)' -x
 complete -c yarn -n "__fish_seen_subcommand_from workspaces" -s s -l silent -d 'skip Yarn console logs, other types of logs (script output) will be printed'
-complete -c yarn -n "__fish_seen_subcommand_from workspaces" -l cwd -d 'working directory to use (default: ~/repos/h2o-curated-data/general)' -x
+complete -c yarn -n "__fish_seen_subcommand_from workspaces" -l cwd -d 'working directory to use (default: ~/repos/h2o-curated-data/general)' -r
 complete -c yarn -n "__fish_seen_subcommand_from workspaces" -l proxy -l https-proxy -d 'proxy' -x
 complete -c yarn -n "__fish_seen_subcommand_from workspaces" -l registry -d 'override configuration registry' -x
 complete -c yarn -n "__fish_seen_subcommand_from workspaces" -l no-progress -d 'disable progress bar'
 complete -c yarn -n "__fish_seen_subcommand_from workspaces" -l network-concurrency -d 'maximum number of concurrent network requests' -x
 complete -c yarn -n "__fish_seen_subcommand_from workspaces" -l network-timeout -d 'TCP timeout for network requests' -x
 complete -c yarn -n "__fish_seen_subcommand_from workspaces" -l non-interactive -d 'do not show interactive prompts'
-complete -c yarn -n "__fish_seen_subcommand_from workspaces" -l scripts-prepend-node-path -d 'prepend the node executable dir to the PATH in scripts' -x
+complete -c yarn -n "__fish_seen_subcommand_from workspaces" -l scripts-prepend-node-path -d 'prepend the node executable dir to the PATH in scripts' -r
 complete -c yarn -n "__fish_seen_subcommand_from workspaces" -l no-node-version-check -d 'do not warn when using a potentially unsupported Node version'
 complete -c yarn -n "__fish_seen_subcommand_from workspaces" -l focus -d 'Focus on a single workspace by installing remote copies of its sibling workspaces.'
 complete -c yarn -n "__fish_seen_subcommand_from workspaces" -l otp -d 'one-time password for two factor authentication' -x

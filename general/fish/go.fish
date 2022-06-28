@@ -35,17 +35,17 @@ complete -c go -n "__fish_seen_subcommand_from build" -o buildmode -d 'build mod
 complete -c go -n "__fish_seen_subcommand_from build" -o compiler -d 'name of compiler to use, as in runtime.Compiler (gccgo or gc).' -x
 complete -c go -n "__fish_seen_subcommand_from build" -o gccgoflags -d 'arguments to pass on each gccgo compiler/linker invocation.' -x
 complete -c go -n "__fish_seen_subcommand_from build" -o gcflags -d 'arguments to pass on each go tool compile invocation.' -x
-complete -c go -n "__fish_seen_subcommand_from build" -o installsuffix -d 'a suffix to use in the name of the package installation directory, in order to keep output separate from default builds.' -x
+complete -c go -n "__fish_seen_subcommand_from build" -o installsuffix -d 'a suffix to use in the name of the package installation directory, in order to keep output separate from default builds.' -r
 complete -c go -n "__fish_seen_subcommand_from build" -o ldflags -d 'arguments to pass on each go tool link invocation.' -x
 complete -c go -n "__fish_seen_subcommand_from build" -o linkshared -d 'build code that will be linked against shared libraries previously created with -buildmode=shared.'
-complete -c go -n "__fish_seen_subcommand_from build" -o mod -d 'module download mode to use: readonly, vendor, or mod.' -x
+complete -c go -n "__fish_seen_subcommand_from build" -o mod -d 'module download mode to use: readonly, vendor, or mod.' -r
 complete -c go -n "__fish_seen_subcommand_from build" -o modcacherw -d 'leave newly-created directories in the module cache read-write instead of making them read-only.'
 complete -c go -n "__fish_seen_subcommand_from build" -o modfile -d 'in module aware mode, read (and possibly write) an alternate go.mod file instead of the one in the module root directory.' -r
 complete -c go -n "__fish_seen_subcommand_from build" -o overlay -d 'read a JSON config file that provides an overlay for build operations.' -r
 complete -c go -n "__fish_seen_subcommand_from build" -o pkgdir -d 'install and load all packages from dir instead of the usual locations.' -r
 complete -c go -n "__fish_seen_subcommand_from build" -o tags -d 'a comma-separated list of build tags to consider satisfied during the build.' -x
 complete -c go -n "__fish_seen_subcommand_from build" -o trimpath -d 'remove all file system paths from the resulting executable.'
-complete -c go -n "__fish_seen_subcommand_from build" -o toolexec -d 'a program to use to invoke toolchain programs like vet and asm.' -x
+complete -c go -n "__fish_seen_subcommand_from build" -o toolexec -d 'a program to use to invoke toolchain programs like vet and asm.' -r
 
 
 
@@ -58,7 +58,7 @@ complete -c go -n "__fish_seen_subcommand_from doc" -s u -d 'show unexported sym
 
 
 
-complete -c go -n "__fish_seen_subcommand_from generate" -o run -d 'if non-empty, specifies a regular expression to select directives whose full original source text (excluding any trailing spaces and final newline) matches the expression.' -x
+complete -c go -n "__fish_seen_subcommand_from generate" -o run -d 'if non-empty, specifies a regular expression to select directives whose full original source text (excluding any trailing spaces and final newline) matches the expression.' -r
 
 
 
@@ -80,10 +80,10 @@ complete -c go -n "__fish_seen_subcommand_from buildconstraint"  -d 'any additio
 
 
 
-complete -c go -n "__fish_seen_subcommand_from buildmode" -o buildmode -d 'Build the listed non-main packages into .a files.' -x
-complete -c go -n "__fish_seen_subcommand_from buildmode" -o buildmode -d 'Build the listed main package, plus all packages it imports, into a C archive file.' -x
+complete -c go -n "__fish_seen_subcommand_from buildmode" -o buildmode -d 'Build the listed non-main packages into .a files.' -r
+complete -c go -n "__fish_seen_subcommand_from buildmode" -o buildmode -d 'Build the listed main package, plus all packages it imports, into a C archive file.' -r
 complete -c go -n "__fish_seen_subcommand_from buildmode" -o buildmode -d 'Build the listed main package, plus all packages it imports, into a C shared library.' -x
-complete -c go -n "__fish_seen_subcommand_from buildmode" -o buildmode -d 'Listed main packages are built into executables and listed non-main packages are built into .a files (the default behavior).' -x
+complete -c go -n "__fish_seen_subcommand_from buildmode" -o buildmode -d 'Listed main packages are built into executables and listed non-main packages are built into .a files (the default behavior).' -r
 complete -c go -n "__fish_seen_subcommand_from buildmode" -o buildmode -d 'Combine all the listed non-main packages into a single shared library that will be used when building with the -linkshared option.' -x
 complete -c go -n "__fish_seen_subcommand_from buildmode" -o buildmode -d 'Build the listed main packages and everything they import into executables.' -x
 complete -c go -n "__fish_seen_subcommand_from buildmode" -o buildmode -d 'Build the listed main packages and everything they import into position independent executables (PIE).' -x
@@ -107,13 +107,13 @@ complete -c go -n "__fish_seen_subcommand_from testflag" -o timeout -d 'If a tes
 complete -c go -n "__fish_seen_subcommand_from testflag" -s v -d 'Verbose output: log all tests as they are run.'
 complete -c go -n "__fish_seen_subcommand_from testflag" -o vet -d 'Configure the invocation of "go vet" during "go test" to use the comma-separated list of vet checks.' -x
 complete -c go -n "__fish_seen_subcommand_from testflag" -o benchmem -d 'Print memory allocation statistics for benchmarks.'
-complete -c go -n "__fish_seen_subcommand_from testflag" -o blockprofile -d 'Write a goroutine blocking profile to the specified file when all tests are complete.' -x
-complete -c go -n "__fish_seen_subcommand_from testflag" -o blockprofilerate -d 'Control the detail provided in goroutine blocking profiles by calling runtime.SetBlockProfileRate with n.' -x
-complete -c go -n "__fish_seen_subcommand_from testflag" -o coverprofile -d 'Write a coverage profile to the file after all tests have passed.' -x
-complete -c go -n "__fish_seen_subcommand_from testflag" -o cpuprofile -d 'Write a CPU profile to the specified file before exiting.' -x
-complete -c go -n "__fish_seen_subcommand_from testflag" -o memprofile -d 'Write an allocation profile to the file after all tests have passed.' -x
-complete -c go -n "__fish_seen_subcommand_from testflag" -o memprofilerate -d 'Enable more precise (and expensive) memory allocation profiles by setting runtime.MemProfileRate.' -x
-complete -c go -n "__fish_seen_subcommand_from testflag" -o mutexprofile -d 'Write a mutex contention profile to the specified file when all tests are complete.' -x
+complete -c go -n "__fish_seen_subcommand_from testflag" -o blockprofile -d 'Write a goroutine blocking profile to the specified file when all tests are complete.' -r
+complete -c go -n "__fish_seen_subcommand_from testflag" -o blockprofilerate -d 'Control the detail provided in goroutine blocking profiles by calling runtime.SetBlockProfileRate with n.' -r
+complete -c go -n "__fish_seen_subcommand_from testflag" -o coverprofile -d 'Write a coverage profile to the file after all tests have passed.' -r
+complete -c go -n "__fish_seen_subcommand_from testflag" -o cpuprofile -d 'Write a CPU profile to the specified file before exiting.' -r
+complete -c go -n "__fish_seen_subcommand_from testflag" -o memprofile -d 'Write an allocation profile to the file after all tests have passed.' -r
+complete -c go -n "__fish_seen_subcommand_from testflag" -o memprofilerate -d 'Enable more precise (and expensive) memory allocation profiles by setting runtime.MemProfileRate.' -r
+complete -c go -n "__fish_seen_subcommand_from testflag" -o mutexprofile -d 'Write a mutex contention profile to the specified file when all tests are complete.' -r
 complete -c go -n "__fish_seen_subcommand_from testflag" -o mutexprofilefraction -d 'Sample 1 in n stack traces of goroutines holding a contended mutex.' -x
 complete -c go -n "__fish_seen_subcommand_from testflag" -o outputdir -d 'Place output files from profiling in the specified directory, by default the directory in which "go test" is running.' -r
-complete -c go -n "__fish_seen_subcommand_from testflag" -o trace -d 'Write an execution trace to the specified file before exiting.' -x
+complete -c go -n "__fish_seen_subcommand_from testflag" -o trace -d 'Write an execution trace to the specified file before exiting.' -r

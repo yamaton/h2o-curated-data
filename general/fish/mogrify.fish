@@ -111,7 +111,7 @@ complete -c mogrify -o chop -d 'remove pixels from the image interior' -x
 complete -c mogrify -o clamp -d 'keep pixel values in range (0-QuantumRange)'
 complete -c mogrify -o clip -d 'clip along the first path from the 8BIM profile'
 complete -c mogrify -o clip-mask -d 'associate a clip mask with the image' -r
-complete -c mogrify -o clip-path -d 'clip along a named path from the 8BIM profile' -x
+complete -c mogrify -o clip-path -d 'clip along a named path from the 8BIM profile' -r
 complete -c mogrify -o colorize -d 'colorize the image with the fill color' -x
 complete -c mogrify -o connected-components -d 'connected-components uniquely labeled' -x
 complete -c mogrify -o contrast -d 'enhance or reduce the image contrast'

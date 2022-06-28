@@ -2,7 +2,7 @@
 
 complete -c tar -l add-file -d 'add given FILE to the archive (useful if its name starts with a dash)' -r
 complete -c tar -s C -l directory -d 'change to directory DIR' -r
-complete -c tar -l exclude -d 'exclude files, given as a PATTERN' -x
+complete -c tar -l exclude -d 'exclude files, given as a PATTERN' -r
 complete -c tar -l exclude-backups -d 'exclude backup and lock files'
 complete -c tar -l exclude-caches -d 'exclude contents of directories containing CACHEDIR.TAG, except for the tag file itself'
 complete -c tar -l exclude-caches-all -d 'exclude directories containing CACHEDIR.TAG'
@@ -50,7 +50,7 @@ complete -c tar -l level -d 'dump level for created listed-incremental archive' 
 complete -c tar -s n -l seek -d 'archive is seekable'
 complete -c tar -l no-check-device -d 'do not check device numbers when creating incremental archives'
 complete -c tar -l no-seek -d 'archive is not seekable'
-complete -c tar -l occurrence -d 'process only the NUMBERth occurrence of each file in the archive; this option is valid only in conjunction with one of the subcommands --delete, --diff, --extract or --list and when a list of files is given either on the command line or via the -T option; NUMBER defaults to 1' -x
+complete -c tar -l occurrence -d 'process only the NUMBERth occurrence of each file in the archive; this option is valid only in conjunction with one of the subcommands --delete, --diff, --extract or --list and when a list of files is given either on the command line or via the -T option; NUMBER defaults to 1' -r
 complete -c tar -l sparse-version -d 'set version of the sparse format to use (implies --sparse)' -x
 complete -c tar -s S -l sparse -d 'handle sparse files efficiently'
 complete -c tar -s k -l keep-old-files -d 'don\'t replace existing files when extracting, treat them as errors'
@@ -68,25 +68,25 @@ complete -c tar -s W -l verify -d 'attempt to verify the archive after writing i
 complete -c tar -l ignore-command-error -d 'ignore exit codes of children'
 complete -c tar -l no-ignore-command-error -d 'treat non-zero exit codes of children as error'
 complete -c tar -s O -l to-stdout -d 'extract files to standard output'
-complete -c tar -l to-command -d 'pipe extracted files to another program' -x
-complete -c tar -l atime-preserve -d 'preserve access times on dumped files, either by restoring the times after reading (METHOD=\'replace\'; default) or by not setting the times in the first place (METHOD=\'system\')' -x
+complete -c tar -l to-command -d 'pipe extracted files to another program' -r
+complete -c tar -l atime-preserve -d 'preserve access times on dumped files, either by restoring the times after reading (METHOD=\'replace\'; default) or by not setting the times in the first place (METHOD=\'system\')' -r
 complete -c tar -l clamp-mtime -d 'only set time when the file is more recent than what was given with --mtime'
 complete -c tar -l delay-directory-restore -d 'delay setting modification times and permissions of extracted directories until the end of extraction'
-complete -c tar -l group -d 'force NAME as group for added files' -x
+complete -c tar -l group -d 'force NAME as group for added files' -r
 complete -c tar -l group-map -d 'use FILE to map file owner GIDs and names' -r
-complete -c tar -l mode -d 'force (symbolic) mode CHANGES for added files' -x
+complete -c tar -l mode -d 'force (symbolic) mode CHANGES for added files' -r
 complete -c tar -l mtime -d 'set mtime for added files from DATE-OR-FILE' -r
 complete -c tar -s m -l touch -d 'don\'t extract file modified time'
 complete -c tar -l no-delay-directory-restore -d 'cancel the effect of --delay-directory-restore option'
 complete -c tar -l no-same-owner -d 'extract files as yourself (default for ordinary users)'
 complete -c tar -l no-same-permissions -d 'apply the user\'s umask when extracting permissions from the archive (default for ordinary users)'
 complete -c tar -l numeric-owner -d 'always use numbers for user/group names'
-complete -c tar -l owner -d 'force NAME as owner for added files' -x
+complete -c tar -l owner -d 'force NAME as owner for added files' -r
 complete -c tar -l owner-map -d 'use FILE to map file owner UIDs and names' -r
 complete -c tar -s p -l preserve-permissions -l same-permissions -d 'extract information about file permissions (default for superuser)'
 complete -c tar -l same-owner -d 'try extracting files with the same ownership as exists in the archive (default for superuser)'
 complete -c tar -s s -l preserve-order -l same-order -d 'member arguments are listed in the same order as the files in the archive'
-complete -c tar -l sort -d 'directory sorting order: none (default), name or inode' -x
+complete -c tar -l sort -d 'directory sorting order: none (default), name or inode' -r
 complete -c tar -l acls -d 'Enable the POSIX ACLs support'
 complete -c tar -l no-acls -d 'Disable the POSIX ACLs support'
 complete -c tar -l no-selinux -d 'Disable the SELinux context support'
@@ -132,8 +132,8 @@ complete -c tar -s N -l newer -l after-date -d 'only store files newer than DATE
 complete -c tar -l one-file-system -d 'stay in local file system when creating archive'
 complete -c tar -s P -l absolute-names -d 'don\'t strip leading \'/\'s from file names'
 complete -c tar -l suffix -d 'backup before removal, override usual suffix (\'~\' unless overridden by environment variable SIMPLE_BACKUP_SUFFIX)' -x
-complete -c tar -l strip-components -d 'strip NUMBER leading components from file names on extraction' -x
-complete -c tar -l transform -l xform -d 'use sed replace EXPRESSION to transform file names' -x
+complete -c tar -l strip-components -d 'strip NUMBER leading components from file names on extraction' -r
+complete -c tar -l transform -l xform -d 'use sed replace EXPRESSION to transform file names' -r
 complete -c tar -l checkpoint -d 'display progress messages every NUMBERth record (default 10)' -x
 complete -c tar -l checkpoint-action -d 'execute ACTION on each checkpoint' -x
 complete -c tar -l full-time -d 'print file time to its full resolution'

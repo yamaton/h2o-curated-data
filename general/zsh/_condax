@@ -1,0 +1,83 @@
+#compdef _condax condax
+
+# Auto-generated with h2o
+
+    function _condax_ensure-path {
+        _arguments \
+            '--help[Show this message and exit.]' \
+            "*: :_files"
+
+    }
+
+    function _condax_install {
+        _arguments \
+            {-c,--channel}'[Use the channels specified to install. If not specified condax will default to using \['\''conda-forge'\'', '\''defaults'\''\].]' \
+            '--help[Show this message and exit.]' \
+            "*: :_files"
+
+    }
+
+    function _condax_remove {
+        _arguments \
+            '--help[Show this message and exit.]' \
+            "*: :_files"
+
+    }
+
+    function _condax_update {
+        _arguments \
+            '--all[Set to update all packages installed by condax]' \
+            '--help[Show this message and exit.]' \
+            "*: :_files"
+
+    }
+
+
+function _condax {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'ensure-path:Ensure the condax links directory is on $PATH.'
+            'install:Install a package with condax.'
+            'remove:Ensure the condax links directory is on $PATH.'
+            'update:Update package(s) installed by condax.'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        '--help[Show this message and exit.]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (ensure-path)
+            _condax_ensure-path
+            ;;
+
+        (install)
+            _condax_install
+            ;;
+
+        (remove)
+            _condax_remove
+            ;;
+
+        (update)
+            _condax_update
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+

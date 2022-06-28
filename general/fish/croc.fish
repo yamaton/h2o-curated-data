@@ -14,7 +14,7 @@ complete -c croc -n "not __fish_seen_subcommand_from send relay" -l curve -d 'ch
 complete -c croc -n "not __fish_seen_subcommand_from send relay" -l ip -d 'set sender ip if known e.g. 10.0.0.1:9009, [::1]:9009' -x
 complete -c croc -n "not __fish_seen_subcommand_from send relay" -l relay -d 'address of the relay (default: "5.161.69.143:9009") [$CROC_RELAY]' -x
 complete -c croc -n "not __fish_seen_subcommand_from send relay" -l relay6 -d 'ipv6 address of the relay (default: "[2a01:4ff:f0:23c2::14c:1]:9009") [$CROC_RELAY6]' -x
-complete -c croc -n "not __fish_seen_subcommand_from send relay" -l out -d 'specify an output folder to receive the file (default: ".")' -x
+complete -c croc -n "not __fish_seen_subcommand_from send relay" -l out -d 'specify an output folder to receive the file (default: ".")' -r
 complete -c croc -n "not __fish_seen_subcommand_from send relay" -l pass -d 'password for the relay (default: "pass123") [$CROC_PASS]' -x
 complete -c croc -n "not __fish_seen_subcommand_from send relay" -l socks5 -d 'add a socks5 proxy [$SOCKS5_PROXY]' -x
 complete -c croc -n "not __fish_seen_subcommand_from send relay" -l throttleUpload -d 'Throttle the upload speed e.g. 500k' -x

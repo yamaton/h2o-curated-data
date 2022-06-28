@@ -106,7 +106,7 @@ complete -c convert -o charcoal -d 'simulate a charcoal drawing' -x
 complete -c convert -o chop -d 'remove pixels from the image interior' -x
 complete -c convert -o clamp -d 'keep pixel values in range (0-QuantumRange)'
 complete -c convert -o clip -d 'clip along the first path from the 8BIM profile'
-complete -c convert -o clip-path -d 'clip along a named path from the 8BIM profile' -x
+complete -c convert -o clip-path -d 'clip along a named path from the 8BIM profile' -r
 complete -c convert -o colorize -d 'colorize the image with the fill color' -x
 complete -c convert -o connected-components -d 'connected-components uniquely labeled' -x
 complete -c convert -o contrast -d 'enhance or reduce the image contrast'

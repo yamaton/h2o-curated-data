@@ -13,7 +13,7 @@ complete -c tcpdump -s e -d 'Print the link-level header on each dump line.'
 complete -c tcpdump -s E -d 'Use spi@ipaddr algo:secret for decrypting IPsec ESP packets that are addressed to addr and contain Security Parameter Index value spi.'
 complete -c tcpdump -s f -d 'Print `foreign\' IPv4 addresses numerically rather than symbolically (this option is intended to get around serious brain damage in Sun\'s NIS  server  —  usually  it hangs forever translating non-local internet numbers).'
 complete -c tcpdump -s F -d 'Use file as input for the filter expression.' -r
-complete -c tcpdump -s G -d 'If specified, rotates the dump file specified with the -w option every rotate_seconds seconds.' -x
+complete -c tcpdump -s G -d 'If specified, rotates the dump file specified with the -w option every rotate_seconds seconds.' -r
 complete -c tcpdump -s h -l help -d 'Print the tcpdump and libpcap version strings, print a usage message, and exit.'
 complete -c tcpdump -l version -d 'Print the tcpdump and libpcap version strings and exit.'
 complete -c tcpdump -s H -d 'Attempt to detect 802.11s draft mesh headers.'
@@ -22,11 +22,11 @@ complete -c tcpdump -s I -l monitor-mode -d 'Put the interface in "monitor mode"
 complete -c tcpdump -l immediate-mode -d 'Capture in "immediate mode".'
 complete -c tcpdump -s j -l time-stamp-type -d 'Set the time stamp type for the capture to tstamp_type.' -x
 complete -c tcpdump -s J -l list-time-stamp-types -d 'List the supported time stamp types for the interface and exit.'
-complete -c tcpdump -l time-stamp-precision -d 'When capturing, set the time stamp precision for the capture to tstamp_precision.' -x
+complete -c tcpdump -l time-stamp-precision -d 'When capturing, set the time stamp precision for the capture to tstamp_precision.' -r
 complete -c tcpdump -s K -l dont-verify-checksums -d 'Don\'t attempt to verify IP, TCP, or UDP checksums.'
 complete -c tcpdump -s l -d 'Make stdout line buffered.'
 complete -c tcpdump -s L -l list-data-link-types -d 'List the known data link types for the interface, in the specified mode, and exit.'
-complete -c tcpdump -s m -d 'Load SMI MIB module definitions from file module.' -x
+complete -c tcpdump -s m -d 'Load SMI MIB module definitions from file module.' -r
 complete -c tcpdump -s M -d 'Use secret as a shared secret for validating the digests found in TCP segments with the TCP-MD5 option (RFC 2385), if present.' -x
 complete -c tcpdump -s n -d 'Don\'t convert addresses (i.e., host addresses, port numbers, etc.) to names.'
 complete -c tcpdump -s N -d 'Don\'t print domain name qualification of host names.'
@@ -38,7 +38,7 @@ complete -c tcpdump -s q -d 'Quick (quiet?) output.'
 complete -c tcpdump -s r -d 'Read packets from file (which was created with the -w option or by other tools that write pcap or pcap-ng files).' -r
 complete -c tcpdump -s S -l absolute-tcp-sequence-numbers -d 'Print absolute, rather than relative, TCP sequence numbers.'
 complete -c tcpdump -s s -l snapshot-length -d 'Snarf snaplen bytes of data from each packet rather than the default of 262144 bytes.' -x
-complete -c tcpdump -s T -d 'Force packets selected by "expression" to be interpreted the specified type.' -x
+complete -c tcpdump -s T -d 'Force packets selected by "expression" to be interpreted the specified type.' -r
 complete -c tcpdump -s t -d 'Don\'t print a timestamp on each dump line.'
 complete -c tcpdump -o tt -d 'Print the timestamp, as seconds since January 1, 1970, 00:00:00, UTC, and fractions of a second since that time, on each dump line.'
 complete -c tcpdump -o ttt -d 'Print a delta (micro-second resolution) between current and previous line on each dump line.'
@@ -57,5 +57,5 @@ complete -c tcpdump -o xx -d 'When parsing and printing, in addition to printing
 complete -c tcpdump -s X -d 'When parsing and printing, in addition to printing the headers of each packet, print the data of each packet (minus its link level header) in hex and ASCII.'
 complete -c tcpdump -o XX -d 'When parsing and printing, in addition to printing the headers of each packet, print the data of each packet, including its link level header, in hex and ASCII.'
 complete -c tcpdump -s y -l linktype -d 'Set the data link type to use while capturing packets to datalinktype.' -x
-complete -c tcpdump -s z -d 'Used in conjunction with the -C or -G options, this will make tcpdump run " postrotate-command file " where file is the savefile being closed after each rotation.' -x
-complete -c tcpdump -s Z -l relinquish-privileges -d 'If tcpdump is running as root, after opening the capture device or input savefile, change the user ID to user and the group ID to the primary group of user.' -x
+complete -c tcpdump -s z -d 'Used in conjunction with the -C or -G options, this will make tcpdump run " postrotate-command file " where file is the savefile being closed after each rotation.' -r
+complete -c tcpdump -s Z -l relinquish-privileges -d 'If tcpdump is running as root, after opening the capture device or input savefile, change the user ID to user and the group ID to the primary group of user.' -r

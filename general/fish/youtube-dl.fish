@@ -16,7 +16,7 @@ complete -c youtube-dl -l flat-playlist -d 'Do not extract the videos of a playl
 complete -c youtube-dl -l mark-watched -d 'Mark videos watched (YouTube only)'
 complete -c youtube-dl -l no-mark-watched -d 'Do not mark videos watched (YouTube only)'
 complete -c youtube-dl -l no-color -d 'Do not emit color codes in output'
-complete -c youtube-dl -l proxy -d 'Use the specified HTTP/HTTPS/SOCKS proxy.' -x
+complete -c youtube-dl -l proxy -d 'Use the specified HTTP/HTTPS/SOCKS proxy.' -r
 complete -c youtube-dl -l socket-timeout -d 'Time to wait before giving up, in seconds' -x
 complete -c youtube-dl -l source-address -d 'Client-side IP address to bind to' -x
 complete -c youtube-dl -s 4 -l force-ipv4 -d 'Make all connections via IPv4'
@@ -31,7 +31,7 @@ complete -c youtube-dl -l playlist-end -d 'Playlist video to end at (default is 
 complete -c youtube-dl -l playlist-items -d 'Playlist video items to download.' -x
 complete -c youtube-dl -l match-title -d 'Download only matching titles (regex or caseless sub-string)' -x
 complete -c youtube-dl -l reject-title -d 'Skip download for matching titles (regex or caseless sub-string)' -x
-complete -c youtube-dl -l max-downloads -d 'Abort after downloading NUMBER files' -x
+complete -c youtube-dl -l max-downloads -d 'Abort after downloading NUMBER files' -r
 complete -c youtube-dl -l min-filesize -d 'Do not download any videos smaller than SIZE (e.g. 50k or 44.6m)' -x
 complete -c youtube-dl -l max-filesize -d 'Do not download any videos larger than SIZE (e.g. 50k or 44.6m)' -x
 complete -c youtube-dl -l date -d 'Download only videos uploaded in this date' -x
@@ -64,8 +64,8 @@ complete -c youtube-dl -l external-downloader -d 'Use the specified external dow
 complete -c youtube-dl -l external-downloader-args -d 'Give these arguments to the external downloader' -x
 complete -c youtube-dl -s a -l batch-file -d 'File containing URLs to download (\'-\' for stdin), one URL per line.' -r
 complete -c youtube-dl -l id -d 'Use only video ID in file name'
-complete -c youtube-dl -s o -l output -d 'Output filename template, see the "OUTPUT TEMPLATE" for all the info' -x
-complete -c youtube-dl -l output-na-placeholder -d 'Placeholder value for unavailable meta fields in output filename template (default is "NA")' -x
+complete -c youtube-dl -s o -l output -d 'Output filename template, see the "OUTPUT TEMPLATE" for all the info' -r
+complete -c youtube-dl -l output-na-placeholder -d 'Placeholder value for unavailable meta fields in output filename template (default is "NA")' -r
 complete -c youtube-dl -l autonumber-start -d 'Specify the start value for %(autonumber)s (default is 1)' -x
 complete -c youtube-dl -l restrict-filenames -d 'Restrict filenames to only ASCII characters, and avoid "&" and spaces in filenames'
 complete -c youtube-dl -s w -l no-overwrites -d 'Do not overwrite files'
@@ -150,9 +150,9 @@ complete -c youtube-dl -l embed-thumbnail -d 'Embed thumbnail in the audio as co
 complete -c youtube-dl -l add-metadata -d 'Write metadata to the video file'
 complete -c youtube-dl -l metadata-from-title -d 'Parse additional metadata like song title / artist from the video title.' -x
 complete -c youtube-dl -l xattrs -d 'Write metadata to the video file\'s xattrs (using dublin core and xdg standards)'
-complete -c youtube-dl -l fixup -d 'Automatically correct known faults of the file.' -x
+complete -c youtube-dl -l fixup -d 'Automatically correct known faults of the file.' -r
 complete -c youtube-dl -l prefer-avconv -d 'Prefer avconv over ffmpeg for running the postprocessors'
 complete -c youtube-dl -l prefer-ffmpeg -d 'Prefer ffmpeg over avconv for running the postprocessors (default)'
 complete -c youtube-dl -l ffmpeg-location -d 'Location of the ffmpeg/avconv binary; either the path to the binary or its containing directory.' -r
-complete -c youtube-dl -l exec -d 'Execute a command on the file after downloading and post-processing, similar to find\'s -exec syntax.' -x
+complete -c youtube-dl -l exec -d 'Execute a command on the file after downloading and post-processing, similar to find\'s -exec syntax.' -r
 complete -c youtube-dl -l convert-subs -d 'Convert the subtitles to other format (currently supported: srt|ass|vtt|lrc)' -x

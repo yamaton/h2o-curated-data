@@ -9,5 +9,5 @@ complete -c read -s N -d 'return only after reading exactly NCHARS characters, u
 complete -c read -s p -d 'output the string PROMPT without a trailing newline before attempting to read' -x
 complete -c read -s r -d 'do not allow backslashes to escape any characters'
 complete -c read -s s -d 'do not echo input coming from a terminal'
-complete -c read -s t -d 'time out and return failure if a complete line of input is not read within TIMEOUT seconds.' -x
-complete -c read -s u -d 'read from file descriptor FD instead of the standard input' -x
+complete -c read -s t -d 'time out and return failure if a complete line of input is not read within TIMEOUT seconds.' -r
+complete -c read -s u -d 'read from file descriptor FD instead of the standard input' -r

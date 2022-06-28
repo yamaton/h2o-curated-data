@@ -45,7 +45,7 @@ complete -c dotnet -n "__fish_seen_subcommand_from add" -s h -l help -d 'Show co
 
 complete -c dotnet -n "__fish_seen_subcommand_from build" -s h -l help -d 'Show command line help.'
 complete -c dotnet -n "__fish_seen_subcommand_from build" -s o -l output -d 'The output directory to place built artifacts in.' -r
-complete -c dotnet -n "__fish_seen_subcommand_from build" -s f -l framework -d 'The target framework to build for.' -x
+complete -c dotnet -n "__fish_seen_subcommand_from build" -s f -l framework -d 'The target framework to build for.' -r
 complete -c dotnet -n "__fish_seen_subcommand_from build" -s c -l configuration -d 'The configuration to use for building the project.' -x
 complete -c dotnet -n "__fish_seen_subcommand_from build" -s r -l runtime -d 'The target runtime to build for.' -x
 complete -c dotnet -n "__fish_seen_subcommand_from build" -l version-suffix -d 'Set the value of the $(VersionSuffix) property to use when building the project.' -x
@@ -66,7 +66,7 @@ complete -c dotnet -n "__fish_seen_subcommand_from build-server" -s h -l help -d
 complete -c dotnet -n "__fish_seen_subcommand_from clean" -s h -l help -d 'Show command line help.'
 complete -c dotnet -n "__fish_seen_subcommand_from clean" -s o -l output -d 'The directory containing the build artifacts to clean.' -r
 complete -c dotnet -n "__fish_seen_subcommand_from clean" -l nologo -d 'Do not display the startup banner or the copyright message.'
-complete -c dotnet -n "__fish_seen_subcommand_from clean" -s f -l framework -d 'The target framework to clean for.' -x
+complete -c dotnet -n "__fish_seen_subcommand_from clean" -s f -l framework -d 'The target framework to clean for.' -r
 complete -c dotnet -n "__fish_seen_subcommand_from clean" -s r -l runtime -d 'The target runtime to clean for.' -x
 complete -c dotnet -n "__fish_seen_subcommand_from clean" -s c -l configuration -d 'The configuration to clean for.' -x
 complete -c dotnet -n "__fish_seen_subcommand_from clean" -l interactive -d 'Allows the command to stop and wait for user input or action (for example to complete authentication).'
@@ -102,11 +102,11 @@ complete -c dotnet -n "__fish_seen_subcommand_from pack" -l force -d 'Force all 
 
 complete -c dotnet -n "__fish_seen_subcommand_from publish" -s h -l help -d 'Show command line help.'
 complete -c dotnet -n "__fish_seen_subcommand_from publish" -s o -l output -d 'The output directory to place the published artifacts in.' -r
-complete -c dotnet -n "__fish_seen_subcommand_from publish" -s f -l framework -d 'The target framework to publish for.' -x
+complete -c dotnet -n "__fish_seen_subcommand_from publish" -s f -l framework -d 'The target framework to publish for.' -r
 complete -c dotnet -n "__fish_seen_subcommand_from publish" -s r -l runtime -d 'The target runtime to publish for.' -x
 complete -c dotnet -n "__fish_seen_subcommand_from publish" -s c -l configuration -d 'The configuration to publish for.' -x
 complete -c dotnet -n "__fish_seen_subcommand_from publish" -l version-suffix -d 'Set the value of the $(VersionSuffix) property to use when building the project.' -x
-complete -c dotnet -n "__fish_seen_subcommand_from publish" -l manifest -d 'The path to a target manifest file that contains the list of packages to be excluded from the publish step.' -x
+complete -c dotnet -n "__fish_seen_subcommand_from publish" -l manifest -d 'The path to a target manifest file that contains the list of packages to be excluded from the publish step.' -r
 complete -c dotnet -n "__fish_seen_subcommand_from publish" -l no-build -d 'Do not build the project before publishing.'
 complete -c dotnet -n "__fish_seen_subcommand_from publish" -l self-contained -d 'Publish the .NET runtime with your application so the runtime doesn\'t need to be installed on the target machine.'
 complete -c dotnet -n "__fish_seen_subcommand_from publish" -l no-self-contained -d 'Publish your application as a framework dependent application without the .NET runtime.'
@@ -144,7 +144,7 @@ complete -c dotnet -n "__fish_seen_subcommand_from restore" -l force-evaluate -d
 
 complete -c dotnet -n "__fish_seen_subcommand_from run" -s h -l help -d 'Show command line help.'
 complete -c dotnet -n "__fish_seen_subcommand_from run" -s c -l configuration -d 'The configuration to run for.' -x
-complete -c dotnet -n "__fish_seen_subcommand_from run" -s f -l framework -d 'The target framework to run for.' -x
+complete -c dotnet -n "__fish_seen_subcommand_from run" -s f -l framework -d 'The target framework to run for.' -r
 complete -c dotnet -n "__fish_seen_subcommand_from run" -s r -l runtime -d 'The target runtime to run for.' -x
 complete -c dotnet -n "__fish_seen_subcommand_from run" -s p -l project -d 'The path to the project file to run (defaults to the current directory if there is only one project).'
 complete -c dotnet -n "__fish_seen_subcommand_from run" -l launch-profile -d 'The name of the launch profile (if any) to use when launching the application.'
@@ -163,8 +163,8 @@ complete -c dotnet -n "__fish_seen_subcommand_from sln" -s h -l help -d 'Show co
 
 
 complete -c dotnet -n "__fish_seen_subcommand_from store" -s h -l help -d 'Show command line help.'
-complete -c dotnet -n "__fish_seen_subcommand_from store" -s m -l manifest -d 'The XML file that contains the list of packages to be stored.' -x
-complete -c dotnet -n "__fish_seen_subcommand_from store" -s f -l framework -d 'The target framework to store packages for.' -x
+complete -c dotnet -n "__fish_seen_subcommand_from store" -s m -l manifest -d 'The XML file that contains the list of packages to be stored.' -r
+complete -c dotnet -n "__fish_seen_subcommand_from store" -s f -l framework -d 'The target framework to store packages for.' -r
 complete -c dotnet -n "__fish_seen_subcommand_from store" -l framework-version -d 'The Microsoft.NETCore.App package version that will be used to run the assemblies.' -x
 complete -c dotnet -n "__fish_seen_subcommand_from store" -s r -l runtime -d 'The target runtime to store packages for.' -x
 complete -c dotnet -n "__fish_seen_subcommand_from store" -s o -l output -d 'The output directory to store the given assemblies in.' -r
@@ -180,9 +180,9 @@ complete -c dotnet -n "__fish_seen_subcommand_from test" -s s -l settings -d 'Th
 complete -c dotnet -n "__fish_seen_subcommand_from test" -s t -l list-tests -d 'List the discovered tests instead of running the tests.'
 complete -c dotnet -n "__fish_seen_subcommand_from test" -l filter -d 'Run tests that match the given expression.' -x
 complete -c dotnet -n "__fish_seen_subcommand_from test" -s a -l test-adapter-path -d 'The path to the custom adapters to use for the test run.' -r
-complete -c dotnet -n "__fish_seen_subcommand_from test" -s l -l logger -d 'The logger to use for test results.' -x
+complete -c dotnet -n "__fish_seen_subcommand_from test" -s l -l logger -d 'The logger to use for test results.' -r
 complete -c dotnet -n "__fish_seen_subcommand_from test" -s c -l configuration -d 'The configuration to use for running tests.' -x
-complete -c dotnet -n "__fish_seen_subcommand_from test" -s f -l framework -d 'The target framework to run tests for.' -x
+complete -c dotnet -n "__fish_seen_subcommand_from test" -s f -l framework -d 'The target framework to run tests for.' -r
 complete -c dotnet -n "__fish_seen_subcommand_from test" -l runtime -d 'The target runtime to test for.' -x
 complete -c dotnet -n "__fish_seen_subcommand_from test" -s o -l output -d 'The output directory to place built artifacts in.' -r
 complete -c dotnet -n "__fish_seen_subcommand_from test" -s d -l diag -d 'Enable verbose logging to the specified file.' -r

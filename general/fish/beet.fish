@@ -2,10 +2,10 @@
 
 complete -c beet -n "not __fish_seen_subcommand_from config import list modify move remove stats update write" -l format-item -d 'print with custom format' -x
 complete -c beet -n "not __fish_seen_subcommand_from config import list modify move remove stats update write" -l format-album -d 'print with custom format' -x
-complete -c beet -n "not __fish_seen_subcommand_from config import list modify move remove stats update write" -s l -l library -d 'library database file to use' -x
+complete -c beet -n "not __fish_seen_subcommand_from config import list modify move remove stats update write" -s l -l library -d 'library database file to use' -r
 complete -c beet -n "not __fish_seen_subcommand_from config import list modify move remove stats update write" -s d -l directory -d 'destination music directory' -r
 complete -c beet -n "not __fish_seen_subcommand_from config import list modify move remove stats update write" -s v -l verbose -d 'log more details'
-complete -c beet -n "not __fish_seen_subcommand_from config import list modify move remove stats update write" -s c -l config -d 'path to configuration file' -x
+complete -c beet -n "not __fish_seen_subcommand_from config import list modify move remove stats update write" -s c -l config -d 'path to configuration file' -r
 complete -c beet -n "not __fish_seen_subcommand_from config import list modify move remove stats update write" -s p -l plugins -d 'a comma-separated list of plugins to load' -x
 complete -c beet -n "not __fish_seen_subcommand_from config import list modify move remove stats update write" -s h -l help -d 'show this help message and exit'
 
@@ -42,7 +42,7 @@ complete -c beet -n "__fish_seen_subcommand_from import" -s A -l noautotag -d 'd
 complete -c beet -n "__fish_seen_subcommand_from import" -s p -l resume -d 'resume importing if interrupted'
 complete -c beet -n "__fish_seen_subcommand_from import" -s P -l noresume -d 'do not try to resume importing'
 complete -c beet -n "__fish_seen_subcommand_from import" -s q -l quiet -d 'never prompt for input: skip albums instead'
-complete -c beet -n "__fish_seen_subcommand_from import" -s l -l log -d 'file to log untaggable albums for later review' -x
+complete -c beet -n "__fish_seen_subcommand_from import" -s l -l log -d 'file to log untaggable albums for later review' -r
 complete -c beet -n "__fish_seen_subcommand_from import" -s s -l singletons -d 'import individual tracks instead of full albums'
 complete -c beet -n "__fish_seen_subcommand_from import" -s t -l timid -d 'always confirm all actions'
 complete -c beet -n "__fish_seen_subcommand_from import" -s L -l library -d 'retag items matching a query'

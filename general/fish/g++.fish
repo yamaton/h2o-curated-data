@@ -130,7 +130,7 @@ complete -c g++ -o fanalyzer-state-purge -d 'Purge unneeded state during analysi
 complete -c g++ -o fanalyzer-transitivity -d 'Enable transitivity of constraints during analysis.'
 complete -c g++ -o fanalyzer-verbose-edges -d 'Emit more verbose descriptions of control flow in diagnostics.'
 complete -c g++ -o fanalyzer-verbose-state-changes -d 'Emit more verbose descriptions of state changes in diagnostics.'
-complete -c g++ -o fanalyzer-verbosity -d 'Control which events are displayed in diagnostic paths.' -x
+complete -c g++ -o fanalyzer-verbosity -d 'Control which events are displayed in diagnostic paths.' -r
 complete -c g++ -o fargument-alias -d 'Does nothing.'
 complete -c g++ -o fargument-noalias -d 'Does nothing.'
 complete -c g++ -o fargument-noalias-anything -d 'Does nothing.'
@@ -140,7 +140,7 @@ complete -c g++ -o fassociative-math -d 'Allow optimization for floating-point a
 complete -c g++ -o fasynchronous-unwind-tables -d 'Generate unwind tables that are exact at each instruction boundary.'
 complete -c g++ -o fauto-inc-dec -d 'Generate auto-inc/dec instructions.'
 complete -c g++ -o fauto-profile -d 'Use sample profile information for call graph node weights.'
-complete -c g++ -o fauto-profile -d 'Use sample profile information for call graph node weights.' -x
+complete -c g++ -o fauto-profile -d 'Use sample profile information for call graph node weights.' -r
 complete -c g++ -o fbranch-count-reg -d 'Replace add, compare, branch with branch on count register.'
 complete -c g++ -o fbranch-probabilities -d 'Use profiling information for branch probabilities.'
 complete -c g++ -o fbranch-target-load-optimize -d 'Does nothing.'
@@ -150,7 +150,7 @@ complete -c g++ -o fcall-saved- -d 'Mark <register> as being preserved across fu
 complete -c g++ -o fcall-used- -d 'Mark <register> as being corrupted by function calls.' -x
 complete -c g++ -o fcaller-saves -d 'Save registers around function calls.'
 complete -c g++ -o fcallgraph-info -d 'Output callgraph information on a per-file basis.'
-complete -c g++ -o fcallgraph-info -d 'Output callgraph information on a per-file basis with decorations.' -x
+complete -c g++ -o fcallgraph-info -d 'Output callgraph information on a per-file basis with decorations.' -r
 complete -c g++ -o fcf-protection -d 'Same as -fcf-protection=full.'
 complete -c g++ -o fcf-protection -d 'Instrument functions with checks to verify jump/call/return control-flow transfer instructions have valid targets.' -x
 complete -c g++ -o fcheck-data-deps -d 'This switch is deprecated; do not use.'
@@ -174,7 +174,7 @@ complete -c g++ -o fdata-sections -d 'Place data items into their own section.'
 complete -c g++ -o fdbg-cnt-list -d 'List all available debugging counters with their limits and counts.'
 complete -c g++ -o fdbg-cnt -d 'Set the debug counter limit.' -x
 complete -c g++ -o fdce -d 'Use the RTL dead code elimination pass.'
-complete -c g++ -o fdebug-prefix-map -d 'Map one directory name to another in debug information.' -x
+complete -c g++ -o fdebug-prefix-map -d 'Map one directory name to another in debug information.' -r
 complete -c g++ -o fdebug-types-section -d 'Output .debug_types section when using DWARF v4 debuginfo.'
 complete -c g++ -o fdefer-pop -d 'Defer popping functions args from stack until later.'
 complete -c g++ -o fdelayed-branch -d 'Attempt to fill delay slots of branch instructions.'
@@ -189,18 +189,18 @@ complete -c g++ -o fdiagnostics-format -d 'Select output format.' -x
 complete -c g++ -o fdiagnostics-generate-patch -d 'Print fix-it hints to stderr in unified diff format.'
 complete -c g++ -o fdiagnostics-minimum-margin-width -d 'Set minimum width of left margin of source code when showing source.' -x
 complete -c g++ -o fdiagnostics-parseable-fixits -d 'Print fix-it hints in machine-readable form.'
-complete -c g++ -o fdiagnostics-path-format -d 'Specify how to print any control-flow path associated with a diagnostic.' -x
+complete -c g++ -o fdiagnostics-path-format -d 'Specify how to print any control-flow path associated with a diagnostic.' -r
 complete -c g++ -o fdiagnostics-show-caret -d 'Show the source line with a caret indicating the column.'
 complete -c g++ -o fdiagnostics-show-cwe -d 'Print CWE identifiers for diagnostic messages, where available.'
 complete -c g++ -o fdiagnostics-show-labels -d 'Show labels annotating ranges of source code when showing source.'
 complete -c g++ -o fdiagnostics-show-line-numbers -d 'Show line numbers in the left margin when showing source.'
 complete -c g++ -o fdiagnostics-show-location -d 'How often to emit source location at the beginning of line-wrapped diagnostics.' -x
 complete -c g++ -o fdiagnostics-show-option -d 'Amend appropriate diagnostic messages with the command line option that controls them.'
-complete -c g++ -o fdiagnostics-show-path-depths -d 'how stack depths of events in paths.' -x
+complete -c g++ -o fdiagnostics-show-path-depths -d 'how stack depths of events in paths.' -r
 complete -c g++ -o fdiagnostics-urls -d 'Embed URLs in diagnostics.' -x
 complete -c g++ -o fdisable- -d 'Disable an optimization pass.' -x
 complete -c g++ -o fdse -d 'Use the RTL dead store elimination pass.'
-complete -c g++ -o fdump- -d 'Dump various compiler internals to a file.' -x
+complete -c g++ -o fdump- -d 'Dump various compiler internals to a file.' -r
 complete -c g++ -o fdump-analyzer -d 'Dump various analyzer internals to SRCFILE.analyzer.txt.'
 complete -c g++ -o fdump-analyzer-callgraph -d 'Dump analyzer-specific call graph information to a SRCFILE.callgraph.dot file.'
 complete -c g++ -o fdump-analyzer-exploded-graph -d 'Dump the analyzer exploded graph to a SRCFILE.eg.dot file.'
@@ -228,7 +228,7 @@ complete -c g++ -o fexcess-precision -d 'Specify handling of excess floating-poi
 complete -c g++ -o fexpensive-optimizations -d 'Perform a number of minor, expensive optimizations.'
 complete -c g++ -o ffast-math -d 'This option lacks documentation.'
 complete -c g++ -o ffat-lto-objects -d 'Output lto objects containing both the intermediate language and binary output.'
-complete -c g++ -o ffile-prefix-map -d 'Map one directory name to another in compilation result.' -x
+complete -c g++ -o ffile-prefix-map -d 'Map one directory name to another in compilation result.' -r
 complete -c g++ -o ffinite-loops -d 'Assume that loops with an exit will terminate and not loop indefinitely.'
 complete -c g++ -o ffinite-math-only -d 'Assume no NaNs or infinities are generated.'
 complete -c g++ -o ffixed- -d 'Mark <register> as being unavailable to the compiler.' -x
@@ -366,20 +366,20 @@ complete -c g++ -o fprofile -d 'Enable basic program profiling code.'
 complete -c g++ -o fprofile-abs-path -d 'Generate absolute source path names for gcov.'
 complete -c g++ -o fprofile-arcs -d 'Insert arc-based program profiling code.'
 complete -c g++ -o fprofile-correction -d 'Enable correction of flow inconsistent profile data input.'
-complete -c g++ -o fprofile-dir -d 'Set the top-level directory for storing the profile data.' -x
-complete -c g++ -o fprofile-exclude-files -d 'Instrument only functions from files where names do not match all the regular expressions (separated by a semi-colon).' -x
-complete -c g++ -o fprofile-filter-files -d 'Instrument only functions from files where names match any regular expression (separated by a semi-colon).' -x
+complete -c g++ -o fprofile-dir -d 'Set the top-level directory for storing the profile data.' -r
+complete -c g++ -o fprofile-exclude-files -d 'Instrument only functions from files where names do not match all the regular expressions (separated by a semi-colon).' -r
+complete -c g++ -o fprofile-filter-files -d 'Instrument only functions from files where names match any regular expression (separated by a semi-colon).' -r
 complete -c g++ -o fprofile-generate -d 'Enable common options for generating profile info for profile feedback directed optimizations.'
-complete -c g++ -o fprofile-generate -d 'Enable common options for generating profile info for profile feedback directed optimizations, and set -fprofile-dir=.' -x
-complete -c g++ -o fprofile-note -d 'Select the name for storing the profile note file.' -x
+complete -c g++ -o fprofile-generate -d 'Enable common options for generating profile info for profile feedback directed optimizations, and set -fprofile-dir=.' -r
+complete -c g++ -o fprofile-note -d 'Select the name for storing the profile note file.' -r
 complete -c g++ -o fprofile-partial-training -d 'Do not assume that functions never executed during the train run are cold.'
-complete -c g++ -o fprofile-prefix-path -d 'Remove prefix from absolute path before mangling name for -fprofile-generate= and -fprofile-use=.' -x
+complete -c g++ -o fprofile-prefix-path -d 'Remove prefix from absolute path before mangling name for -fprofile-generate= and -fprofile-use=.' -r
 complete -c g++ -o fprofile-reorder-functions -d 'Enable function reordering that improves code placement.'
 complete -c g++ -o fprofile-report -d 'Report on consistency of profile.'
-complete -c g++ -o fprofile-reproducible -d 'Control level of reproducibility of profile gathered by -fprofilegenerate.' -x
-complete -c g++ -o fprofile-update -d 'Set the profile update method.' -x
+complete -c g++ -o fprofile-reproducible -d 'Control level of reproducibility of profile gathered by -fprofilegenerate.' -r
+complete -c g++ -o fprofile-update -d 'Set the profile update method.' -r
 complete -c g++ -o fprofile-use -d 'Enable common options for performing profile feedback directed optimizations.'
-complete -c g++ -o fprofile-use -d 'Enable common options for performing profile feedback directed optimizations, and set -fprofile-dir=.' -x
+complete -c g++ -o fprofile-use -d 'Enable common options for performing profile feedback directed optimizations, and set -fprofile-dir=.' -r
 complete -c g++ -o fprofile-values -d 'Insert code to profile values of expressions.'
 complete -c g++ -o frandom-seed -d 'This option lacks documentation.'
 complete -c g++ -o frandom-seed -d 'Make compile reproducible using <string>.' -x
@@ -434,14 +434,14 @@ complete -c g++ -o fsel-sched-pipelining-outer-loops -d 'Perform software pipeli
 complete -c g++ -o fsel-sched-reschedule-pipelined -d 'Reschedule pipelined regions without pipelining.'
 complete -c g++ -o fselective-scheduling -d 'Schedule instructions using selective scheduling algorithm.'
 complete -c g++ -o fselective-scheduling2 -d 'Run selective scheduling after reload.'
-complete -c g++ -o fself-test -d 'Run self-tests, using the given path to locate test files.' -x
+complete -c g++ -o fself-test -d 'Run self-tests, using the given path to locate test files.' -r
 complete -c g++ -o fsemantic-interposition -d 'Allow interposing function (or variables) by ones with different semantics (or initializer) respectively by dynamic linker.'
 complete -c g++ -o fshow-column -d 'Show column numbers in diagnostics, when available.'
 complete -c g++ -o fshrink-wrap -d 'Emit function prologues only before parts of the function that need it, rather than at the top of the function.'
 complete -c g++ -o fshrink-wrap-separate -d 'Shrink-wrap parts of the prologue and epilogue separately.'
 complete -c g++ -o fsignaling-nans -d 'Disable optimizations observable by IEEE signaling NaNs.'
 complete -c g++ -o fsigned-zeros -d 'Disable floating point optimizations that ignore the IEEE signedness of zero.'
-complete -c g++ -o fsimd-cost-model -d 'Specifies the vectorization cost model for code marked with a simd directive.' -x
+complete -c g++ -o fsimd-cost-model -d 'Specifies the vectorization cost model for code marked with a simd directive.' -r
 complete -c g++ -o fsingle-precision-constant -d 'Convert floating point constants to single precision constants.'
 complete -c g++ -o fsplit-ivs-in-unroller -d 'Split lifetimes of induction variables when loops are unrolled.'
 complete -c g++ -o fsplit-loops -d 'Perform loop splitting.'

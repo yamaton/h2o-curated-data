@@ -6,7 +6,7 @@ complete -c identify -o authenticate -d 'decipher image with this password' -x
 complete -c identify -o channel -d 'apply option to select image channels' -x
 complete -c identify -o clip -d 'clip along the first path from the 8BIM profile'
 complete -c identify -o clip-mask -d 'associate a clip mask with the image' -r
-complete -c identify -o clip-path -d 'clip along a named path from the 8BIM profile' -x
+complete -c identify -o clip-path -d 'clip along a named path from the 8BIM profile' -r
 complete -c identify -o colorspace -d 'alternate image colorspace' -x
 complete -c identify -o crop -d 'cut out a rectangular region of the image' -x
 complete -c identify -o define -d 'define one or more image format options' -x

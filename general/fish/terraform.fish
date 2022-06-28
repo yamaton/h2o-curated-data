@@ -35,7 +35,7 @@ complete -k -c terraform -n __fish_use_subcommand -x -a init -d 'Prepare your wo
 complete -c terraform -n "__fish_seen_subcommand_from init" -o backend -d 'Configure the backend for this configuration.' -x
 complete -c terraform -n "__fish_seen_subcommand_from init" -o backend-config -d 'This can be either a path to an HCL file with key/value assignments (same format as terraform.tfvars) or a \'key=value\' format.' -r
 complete -c terraform -n "__fish_seen_subcommand_from init" -o force-copy -d 'Suppress prompts about copying state data.'
-complete -c terraform -n "__fish_seen_subcommand_from init" -o from-module -d 'Copy the contents of the given module into the target directory before initialization.' -x
+complete -c terraform -n "__fish_seen_subcommand_from init" -o from-module -d 'Copy the contents of the given module into the target directory before initialization.' -r
 complete -c terraform -n "__fish_seen_subcommand_from init" -o get -d 'Download any modules for this configuration.' -x
 complete -c terraform -n "__fish_seen_subcommand_from init" -o input -d 'Ask for input if necessary.' -x
 complete -c terraform -n "__fish_seen_subcommand_from init" -o no-color -d 'If specified, output won\'t contain any color.'
@@ -43,7 +43,7 @@ complete -c terraform -n "__fish_seen_subcommand_from init" -o plugin-dir -d 'Di
 complete -c terraform -n "__fish_seen_subcommand_from init" -o reconfigure -d 'Reconfigure the backend, ignoring any saved configuration.'
 complete -c terraform -n "__fish_seen_subcommand_from init" -o migrate-state -d 'Reconfigure the backend, and attempt to migrate any existing state.'
 complete -c terraform -n "__fish_seen_subcommand_from init" -o upgrade -d 'If installing modules (-get) or plugins, ignore previously-downloaded objects and install the latest version allowed within configured constraints.' -x
-complete -c terraform -n "__fish_seen_subcommand_from init" -o lockfile -d 'Set a dependency lockfile mode.' -x
+complete -c terraform -n "__fish_seen_subcommand_from init" -o lockfile -d 'Set a dependency lockfile mode.' -r
 complete -c terraform -n "__fish_seen_subcommand_from init" -o ignore-remote-version -d 'A rare option used for the remote backend only.'
 
 
@@ -62,7 +62,7 @@ complete -c terraform -n "__fish_seen_subcommand_from plan" -o var -d 'Set a val
 complete -c terraform -n "__fish_seen_subcommand_from plan" -o var-file -d 'Load variable values from the given file, in addition to the default files terraform.tfvars and *.auto.tfvars.' -r
 complete -c terraform -n "__fish_seen_subcommand_from plan" -o compact-warnings -d 'If Terraform produces any warnings that are not accompanied by errors, shows them in a more compact form that includes only the summary messages.'
 complete -c terraform -n "__fish_seen_subcommand_from plan" -o detailed-exitcode -d 'Return detailed exit codes when the command exits.'
-complete -c terraform -n "__fish_seen_subcommand_from plan" -o input -d 'Ask for input for variables if not directly set.' -x
+complete -c terraform -n "__fish_seen_subcommand_from plan" -o input -d 'Ask for input for variables if not directly set.' -r
 complete -c terraform -n "__fish_seen_subcommand_from plan" -o lock -d 'Don\'t hold a state lock during the operation.' -x
 complete -c terraform -n "__fish_seen_subcommand_from plan" -o lock-timeout -d 'Duration to retry a state lock.' -x
 complete -c terraform -n "__fish_seen_subcommand_from plan" -o no-color -d 'If specified, output won\'t contain any color.'
@@ -77,7 +77,7 @@ complete -c terraform -n "__fish_seen_subcommand_from apply" -o backup -d 'Path 
 complete -c terraform -n "__fish_seen_subcommand_from apply" -o compact-warnings -d 'If Terraform produces any warnings that are not accompanied by errors, show them in a more compact form that includes only the summary messages.'
 complete -c terraform -n "__fish_seen_subcommand_from apply" -o lock -d 'Don\'t hold a state lock during the operation.' -x
 complete -c terraform -n "__fish_seen_subcommand_from apply" -o lock-timeout -d 'Duration to retry a state lock.' -x
-complete -c terraform -n "__fish_seen_subcommand_from apply" -o input -d 'Ask for input for variables if not directly set.' -x
+complete -c terraform -n "__fish_seen_subcommand_from apply" -o input -d 'Ask for input for variables if not directly set.' -r
 complete -c terraform -n "__fish_seen_subcommand_from apply" -o no-color -d 'If specified, output won\'t contain any color.'
 complete -c terraform -n "__fish_seen_subcommand_from apply" -o parallelism -d 'Limit the number of parallel resource operations.' -x
 complete -c terraform -n "__fish_seen_subcommand_from apply" -o state -d 'Path to read and save state (unless state-out is specified).' -r
@@ -87,12 +87,12 @@ complete -c terraform -n "__fish_seen_subcommand_from apply" -o state-out -d 'Pa
 
 complete -c terraform -n "__fish_seen_subcommand_from console" -o state -d 'Legacy option for the local backend only.' -r
 complete -c terraform -n "__fish_seen_subcommand_from console" -o var -d 'Set a variable in the Terraform configuration.' -x
-complete -c terraform -n "__fish_seen_subcommand_from console" -o var-file -d 'Set variables in the Terraform configuration from a file.' -x
+complete -c terraform -n "__fish_seen_subcommand_from console" -o var-file -d 'Set variables in the Terraform configuration from a file.' -r
 
 
 
-complete -c terraform -n "__fish_seen_subcommand_from fmt" -o list -d 'Don\'t list files whose formatting differs (always disabled if using STDIN)' -x
-complete -c terraform -n "__fish_seen_subcommand_from fmt" -o write -d 'Don\'t write to source files (always disabled if using STDIN or -check)' -x
+complete -c terraform -n "__fish_seen_subcommand_from fmt" -o list -d 'Don\'t list files whose formatting differs (always disabled if using STDIN)' -r
+complete -c terraform -n "__fish_seen_subcommand_from fmt" -o write -d 'Don\'t write to source files (always disabled if using STDIN or -check)' -r
 complete -c terraform -n "__fish_seen_subcommand_from fmt" -o diff -d 'Display diffs of formatting changes'
 complete -c terraform -n "__fish_seen_subcommand_from fmt" -o check -d 'Check if the input is formatted.'
 complete -c terraform -n "__fish_seen_subcommand_from fmt" -o no-color -d 'If specified, output won\'t contain any color.'
@@ -109,7 +109,7 @@ complete -c terraform -n "__fish_seen_subcommand_from get" -o no-color -d 'Disab
 
 
 
-complete -c terraform -n "__fish_seen_subcommand_from graph" -o plan -d 'Render graph using the specified plan file instead of the configuration in the current directory.' -x
+complete -c terraform -n "__fish_seen_subcommand_from graph" -o plan -d 'Render graph using the specified plan file instead of the configuration in the current directory.' -r
 complete -c terraform -n "__fish_seen_subcommand_from graph" -o draw-cycles -d 'Highlight any cycles in the graph with colored edges.'
 complete -c terraform -n "__fish_seen_subcommand_from graph" -o type -d 'Type of graph to output.' -x
 complete -c terraform -n "__fish_seen_subcommand_from graph" -o module-depth -d '(deprecated) In prior versions of Terraform, specified the' -x
@@ -123,7 +123,7 @@ complete -c terraform -n "__fish_seen_subcommand_from import" -o lock -d 'Don\'t
 complete -c terraform -n "__fish_seen_subcommand_from import" -o lock-timeout -d 'Duration to retry a state lock.' -x
 complete -c terraform -n "__fish_seen_subcommand_from import" -o no-color -d 'If specified, output won\'t contain any color.'
 complete -c terraform -n "__fish_seen_subcommand_from import" -o var -d 'Set a variable in the Terraform configuration.' -x
-complete -c terraform -n "__fish_seen_subcommand_from import" -o var-file -d 'Set variables in the Terraform configuration from a file.' -x
+complete -c terraform -n "__fish_seen_subcommand_from import" -o var-file -d 'Set variables in the Terraform configuration from a file.' -r
 complete -c terraform -n "__fish_seen_subcommand_from import" -o ignore-remote-version -d 'A rare option used for the remote backend only.'
 
 
@@ -136,13 +136,13 @@ complete -c terraform -n "__fish_seen_subcommand_from output" -o raw -d 'For val
 
 
 complete -c terraform -n "__fish_seen_subcommand_from refresh" -o compact-warnings -d 'If Terraform produces any warnings that are not accompanied by errors, show them in a more compact form that includes only the summary messages.'
-complete -c terraform -n "__fish_seen_subcommand_from refresh" -o input -d 'Ask for input for variables if not directly set.' -x
+complete -c terraform -n "__fish_seen_subcommand_from refresh" -o input -d 'Ask for input for variables if not directly set.' -r
 complete -c terraform -n "__fish_seen_subcommand_from refresh" -o lock -d 'Don\'t hold a state lock during the operation.' -x
 complete -c terraform -n "__fish_seen_subcommand_from refresh" -o lock-timeout -d 'Duration to retry a state lock.' -x
 complete -c terraform -n "__fish_seen_subcommand_from refresh" -o no-color -d 'If specified, output won\'t contain any color.'
 complete -c terraform -n "__fish_seen_subcommand_from refresh" -o target -d 'Resource to target.' -x
 complete -c terraform -n "__fish_seen_subcommand_from refresh" -o var -d 'Set a variable in the Terraform configuration.' -x
-complete -c terraform -n "__fish_seen_subcommand_from refresh" -o var-file -d 'Set variables in the Terraform configuration from a file.' -x
+complete -c terraform -n "__fish_seen_subcommand_from refresh" -o var-file -d 'Set variables in the Terraform configuration from a file.' -r
 
 
 

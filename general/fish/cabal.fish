@@ -115,8 +115,8 @@ complete -c cabal -n "__fish_seen_subcommand_from update" -l disable-library-str
 complete -c cabal -n "__fish_seen_subcommand_from update" -l configure-option -d 'Extra option for configure' -x
 complete -c cabal -n "__fish_seen_subcommand_from update" -l user -d 'Enable doing a per-user installation'
 complete -c cabal -n "__fish_seen_subcommand_from update" -l global -d 'Disable doing a per-user installation'
-complete -c cabal -n "__fish_seen_subcommand_from update" -l package-db -d 'Append the given package database to the list of package databases used (to satisfy dependencies and register into).' -x
-complete -c cabal -n "__fish_seen_subcommand_from update" -s f -l flags -d 'Force values for the given flags in Cabal conditionals in the .cabal file.' -x
+complete -c cabal -n "__fish_seen_subcommand_from update" -l package-db -d 'Append the given package database to the list of package databases used (to satisfy dependencies and register into).' -r
+complete -c cabal -n "__fish_seen_subcommand_from update" -s f -l flags -d 'Force values for the given flags in Cabal conditionals in the .cabal file.' -r
 complete -c cabal -n "__fish_seen_subcommand_from update" -l extra-include-dirs -d 'A list of directories to search for header files' -r
 complete -c cabal -n "__fish_seen_subcommand_from update" -l enable-deterministic -d 'Enable Try to be as deterministic as possible (used by the test suite)'
 complete -c cabal -n "__fish_seen_subcommand_from update" -l disable-deterministic -d 'Disable Try to be as deterministic as possible (used by the test suite)'
@@ -147,7 +147,7 @@ complete -c cabal -n "__fish_seen_subcommand_from update" -l preference -d 'Spec
 complete -c cabal -n "__fish_seen_subcommand_from update" -l solver -d 'Select dependency solver to use (default: modular).' -x
 complete -c cabal -n "__fish_seen_subcommand_from update" -l allow-older -d 'Ignore lower bounds in all dependencies or DEPS' -x
 complete -c cabal -n "__fish_seen_subcommand_from update" -l allow-newer -d 'Ignore upper bounds in all dependencies or DEPS' -x
-complete -c cabal -n "__fish_seen_subcommand_from update" -l write-ghc-environment-files -d 'Whether to create a .ghc.environment file after a successful build (v2-build only)' -x
+complete -c cabal -n "__fish_seen_subcommand_from update" -l write-ghc-environment-files -d 'Whether to create a .ghc.environment file after a successful build (v2-build only)' -r
 complete -c cabal -n "__fish_seen_subcommand_from update" -l enable-documentation -d 'Enable building of documentation'
 complete -c cabal -n "__fish_seen_subcommand_from update" -l disable-documentation -d 'Disable building of documentation'
 complete -c cabal -n "__fish_seen_subcommand_from update" -l doc-index-file -d 'A central index of haddock API documentation (template cannot use $pkgid)' -x
@@ -171,8 +171,8 @@ complete -c cabal -n "__fish_seen_subcommand_from update" -l only-dependencies -
 complete -c cabal -n "__fish_seen_subcommand_from update" -l dependencies-only -d 'A synonym for --only-dependencies'
 complete -c cabal -n "__fish_seen_subcommand_from update" -l index-state -d 'Use source package index state as it existed at a previous time.' -x
 complete -c cabal -n "__fish_seen_subcommand_from update" -l root-cmd -d '(No longer supported, do not use.)' -x
-complete -c cabal -n "__fish_seen_subcommand_from update" -l build-summary -d 'Save build summaries to file (name template can use $pkgid, $compiler, $os, $arch)' -x
-complete -c cabal -n "__fish_seen_subcommand_from update" -l build-log -d 'Log all builds to file (name template can use $pkgid, $compiler, $os, $arch)' -x
+complete -c cabal -n "__fish_seen_subcommand_from update" -l build-summary -d 'Save build summaries to file (name template can use $pkgid, $compiler, $os, $arch)' -r
+complete -c cabal -n "__fish_seen_subcommand_from update" -l build-log -d 'Log all builds to file (name template can use $pkgid, $compiler, $os, $arch)' -r
 complete -c cabal -n "__fish_seen_subcommand_from update" -l remote-build-reporting -d 'Generate build reports to send to a remote server (none, anonymous or detailed).' -x
 complete -c cabal -n "__fish_seen_subcommand_from update" -l report-planning-failure -d 'Generate build reports when the dependency solver fails.'
 complete -c cabal -n "__fish_seen_subcommand_from update" -l enable-per-component -d 'Enable Per-component builds when possible'
@@ -196,9 +196,9 @@ complete -c cabal -n "__fish_seen_subcommand_from update" -l haddock-hyperlink-s
 complete -c cabal -n "__fish_seen_subcommand_from update" -l haddock-quickjump -d 'Generate an index for interactive documentation navigation'
 complete -c cabal -n "__fish_seen_subcommand_from update" -l haddock-hscolour-css -d 'Use PATH as the HsColour stylesheet' -r
 complete -c cabal -n "__fish_seen_subcommand_from update" -l haddock-contents-location -d 'Bake URL in as the location for the contents page' -x
-complete -c cabal -n "__fish_seen_subcommand_from update" -l test-log -d 'Log all test suite results to file (name template can use $pkgid, $compiler, $os, $arch, $test-suite, $result)' -x
-complete -c cabal -n "__fish_seen_subcommand_from update" -l test-machine-log -d 'Produce a machine-readable log file (name template can use $pkgid, $compiler, $os, $arch, $result)' -x
-complete -c cabal -n "__fish_seen_subcommand_from update" -l test-show-details -d '\'always\': always show results of individual test cases.' -x
+complete -c cabal -n "__fish_seen_subcommand_from update" -l test-log -d 'Log all test suite results to file (name template can use $pkgid, $compiler, $os, $arch, $test-suite, $result)' -r
+complete -c cabal -n "__fish_seen_subcommand_from update" -l test-machine-log -d 'Produce a machine-readable log file (name template can use $pkgid, $compiler, $os, $arch, $result)' -r
+complete -c cabal -n "__fish_seen_subcommand_from update" -l test-show-details -d '\'always\': always show results of individual test cases.' -r
 complete -c cabal -n "__fish_seen_subcommand_from update" -l test-keep-tix-files -d 'keep .tix files for HPC between test runs'
 complete -c cabal -n "__fish_seen_subcommand_from update" -l test-wrapper -d 'Run test through a wrapper.' -r
 complete -c cabal -n "__fish_seen_subcommand_from update" -l test-fail-when-no-test-suites -d 'Exit with failure when no test suites are found.'
@@ -271,8 +271,8 @@ complete -c cabal -n "__fish_seen_subcommand_from install" -l disable-library-st
 complete -c cabal -n "__fish_seen_subcommand_from install" -l configure-option -d 'Extra option for configure' -x
 complete -c cabal -n "__fish_seen_subcommand_from install" -l user -d 'Enable doing a per-user installation'
 complete -c cabal -n "__fish_seen_subcommand_from install" -l global -d 'Disable doing a per-user installation'
-complete -c cabal -n "__fish_seen_subcommand_from install" -l package-db -d 'Append the given package database to the list of package databases used (to satisfy dependencies and register into).' -x
-complete -c cabal -n "__fish_seen_subcommand_from install" -s f -l flags -d 'Force values for the given flags in Cabal conditionals in the .cabal file.' -x
+complete -c cabal -n "__fish_seen_subcommand_from install" -l package-db -d 'Append the given package database to the list of package databases used (to satisfy dependencies and register into).' -r
+complete -c cabal -n "__fish_seen_subcommand_from install" -s f -l flags -d 'Force values for the given flags in Cabal conditionals in the .cabal file.' -r
 complete -c cabal -n "__fish_seen_subcommand_from install" -l extra-include-dirs -d 'A list of directories to search for header files' -r
 complete -c cabal -n "__fish_seen_subcommand_from install" -l enable-deterministic -d 'Enable Try to be as deterministic as possible (used by the test suite)'
 complete -c cabal -n "__fish_seen_subcommand_from install" -l disable-deterministic -d 'Disable Try to be as deterministic as possible (used by the test suite)'
@@ -303,7 +303,7 @@ complete -c cabal -n "__fish_seen_subcommand_from install" -l preference -d 'Spe
 complete -c cabal -n "__fish_seen_subcommand_from install" -l solver -d 'Select dependency solver to use (default: modular).' -x
 complete -c cabal -n "__fish_seen_subcommand_from install" -l allow-older -d 'Ignore lower bounds in all dependencies or DEPS' -x
 complete -c cabal -n "__fish_seen_subcommand_from install" -l allow-newer -d 'Ignore upper bounds in all dependencies or DEPS' -x
-complete -c cabal -n "__fish_seen_subcommand_from install" -l write-ghc-environment-files -d 'Whether to create a .ghc.environment file after a successful build (v2-build only)' -x
+complete -c cabal -n "__fish_seen_subcommand_from install" -l write-ghc-environment-files -d 'Whether to create a .ghc.environment file after a successful build (v2-build only)' -r
 complete -c cabal -n "__fish_seen_subcommand_from install" -l enable-documentation -d 'Enable building of documentation'
 complete -c cabal -n "__fish_seen_subcommand_from install" -l disable-documentation -d 'Disable building of documentation'
 complete -c cabal -n "__fish_seen_subcommand_from install" -l doc-index-file -d 'A central index of haddock API documentation (template cannot use $pkgid)' -x
@@ -327,8 +327,8 @@ complete -c cabal -n "__fish_seen_subcommand_from install" -l only-dependencies 
 complete -c cabal -n "__fish_seen_subcommand_from install" -l dependencies-only -d 'A synonym for --only-dependencies'
 complete -c cabal -n "__fish_seen_subcommand_from install" -l index-state -d 'Use source package index state as it existed at a previous time.' -x
 complete -c cabal -n "__fish_seen_subcommand_from install" -l root-cmd -d '(No longer supported, do not use.)' -x
-complete -c cabal -n "__fish_seen_subcommand_from install" -l build-summary -d 'Save build summaries to file (name template can use $pkgid, $compiler, $os, $arch)' -x
-complete -c cabal -n "__fish_seen_subcommand_from install" -l build-log -d 'Log all builds to file (name template can use $pkgid, $compiler, $os, $arch)' -x
+complete -c cabal -n "__fish_seen_subcommand_from install" -l build-summary -d 'Save build summaries to file (name template can use $pkgid, $compiler, $os, $arch)' -r
+complete -c cabal -n "__fish_seen_subcommand_from install" -l build-log -d 'Log all builds to file (name template can use $pkgid, $compiler, $os, $arch)' -r
 complete -c cabal -n "__fish_seen_subcommand_from install" -l remote-build-reporting -d 'Generate build reports to send to a remote server (none, anonymous or detailed).' -x
 complete -c cabal -n "__fish_seen_subcommand_from install" -l report-planning-failure -d 'Generate build reports when the dependency solver fails.'
 complete -c cabal -n "__fish_seen_subcommand_from install" -l enable-per-component -d 'Enable Per-component builds when possible'
@@ -352,9 +352,9 @@ complete -c cabal -n "__fish_seen_subcommand_from install" -l haddock-hyperlink-
 complete -c cabal -n "__fish_seen_subcommand_from install" -l haddock-quickjump -d 'Generate an index for interactive documentation navigation'
 complete -c cabal -n "__fish_seen_subcommand_from install" -l haddock-hscolour-css -d 'Use PATH as the HsColour stylesheet' -r
 complete -c cabal -n "__fish_seen_subcommand_from install" -l haddock-contents-location -d 'Bake URL in as the location for the contents page' -x
-complete -c cabal -n "__fish_seen_subcommand_from install" -l test-log -d 'Log all test suite results to file (name template can use $pkgid, $compiler, $os, $arch, $test-suite, $result)' -x
-complete -c cabal -n "__fish_seen_subcommand_from install" -l test-machine-log -d 'Produce a machine-readable log file (name template can use $pkgid, $compiler, $os, $arch, $result)' -x
-complete -c cabal -n "__fish_seen_subcommand_from install" -l test-show-details -d '\'always\': always show results of individual test cases.' -x
+complete -c cabal -n "__fish_seen_subcommand_from install" -l test-log -d 'Log all test suite results to file (name template can use $pkgid, $compiler, $os, $arch, $test-suite, $result)' -r
+complete -c cabal -n "__fish_seen_subcommand_from install" -l test-machine-log -d 'Produce a machine-readable log file (name template can use $pkgid, $compiler, $os, $arch, $result)' -r
+complete -c cabal -n "__fish_seen_subcommand_from install" -l test-show-details -d '\'always\': always show results of individual test cases.' -r
 complete -c cabal -n "__fish_seen_subcommand_from install" -l test-keep-tix-files -d 'keep .tix files for HPC between test runs'
 complete -c cabal -n "__fish_seen_subcommand_from install" -l test-wrapper -d 'Run test through a wrapper.' -r
 complete -c cabal -n "__fish_seen_subcommand_from install" -l test-fail-when-no-test-suites -d 'Exit with failure when no test suites are found.'
@@ -365,7 +365,7 @@ complete -c cabal -n "__fish_seen_subcommand_from install" -l benchmark-option -
 complete -c cabal -n "__fish_seen_subcommand_from install" -l project-file -d 'Set the name of the cabal.project file to search for in parent directories' -r
 complete -c cabal -n "__fish_seen_subcommand_from install" -s z -l ignore-project -d 'Ignore local project configuration'
 complete -c cabal -n "__fish_seen_subcommand_from install" -l lib -d 'Install libraries rather than executables from the target package (provisional, see https://github.com/haskell/cabal/issues/6481 for more information).'
-complete -c cabal -n "__fish_seen_subcommand_from install" -l package-env -d 'Set the environment file that may be modified.' -x
+complete -c cabal -n "__fish_seen_subcommand_from install" -l package-env -d 'Set the environment file that may be modified.' -r
 complete -c cabal -n "__fish_seen_subcommand_from install" -l overwrite-policy -d 'How to handle already existing symlinks.' -x
 complete -c cabal -n "__fish_seen_subcommand_from install" -l install-method -d 'How to install the executables.' -x
 complete -c cabal -n "__fish_seen_subcommand_from install" -l installdir -d 'Where to install (by symlinking or copying) the executables in.' -r
@@ -374,7 +374,7 @@ complete -c cabal -n "__fish_seen_subcommand_from install" -l installdir -d 'Whe
 
 complete -c cabal -n "__fish_seen_subcommand_from info" -s h -l help -d 'Show this help text'
 complete -c cabal -n "__fish_seen_subcommand_from info" -s v -l verbose -d 'Control verbosity (n is 0--3, default verbosity level is 1)' -x
-complete -c cabal -n "__fish_seen_subcommand_from info" -l package-db -d 'Append the given package database to the list of package databases used (to satisfy dependencies and register into).' -x
+complete -c cabal -n "__fish_seen_subcommand_from info" -l package-db -d 'Append the given package database to the list of package databases used (to satisfy dependencies and register into).' -r
 
 
 
@@ -384,7 +384,7 @@ complete -c cabal -n "__fish_seen_subcommand_from list" -l installed -d 'Only pr
 complete -c cabal -n "__fish_seen_subcommand_from list" -l simple-output -d 'Print in a easy-to-parse format'
 complete -c cabal -n "__fish_seen_subcommand_from list" -s i -l ignore-case -d 'Enable Ignore case destictions'
 complete -c cabal -n "__fish_seen_subcommand_from list" -s I -l strict-case -d 'Disable Ignore case destictions'
-complete -c cabal -n "__fish_seen_subcommand_from list" -l package-db -d 'Append the given package database to the list of package databases used (to satisfy dependencies and register into).' -x
+complete -c cabal -n "__fish_seen_subcommand_from list" -l package-db -d 'Append the given package database to the list of package databases used (to satisfy dependencies and register into).' -r
 complete -c cabal -n "__fish_seen_subcommand_from list" -s w -l with-compiler -d 'give the path to a particular compiler' -r
 
 
@@ -415,7 +415,7 @@ complete -c cabal -n "__fish_seen_subcommand_from fetch" -l reject-unconstrained
 complete -c cabal -n "__fish_seen_subcommand_from user-config" -s h -l help -d 'Show this help text'
 complete -c cabal -n "__fish_seen_subcommand_from user-config" -s v -l verbose -d 'Control verbosity (n is 0--3, default verbosity level is 1)' -x
 complete -c cabal -n "__fish_seen_subcommand_from user-config" -s f -l force -d 'Overwrite the config file if it already exists.'
-complete -c cabal -n "__fish_seen_subcommand_from user-config" -s a -l augment -d 'Additional setting to augment the config file (replacing a previous setting if it existed).' -x
+complete -c cabal -n "__fish_seen_subcommand_from user-config" -s a -l augment -d 'Additional setting to augment the config file (replacing a previous setting if it existed).' -r
 
 
 
@@ -423,7 +423,7 @@ complete -c cabal -n "__fish_seen_subcommand_from get" -s h -l help -d 'Show thi
 complete -c cabal -n "__fish_seen_subcommand_from get" -s v -l verbose -d 'Control verbosity (n is 0--3, default verbosity level is 1)' -x
 complete -c cabal -n "__fish_seen_subcommand_from get" -s d -l destdir -d 'Where to place the package source, defaults to the current directory.' -r
 complete -c cabal -n "__fish_seen_subcommand_from get" -s s -l source-repository -d 'Copy the package\'s source repository (ie git clone, darcs get, etc as appropriate).' -x
-complete -c cabal -n "__fish_seen_subcommand_from get" -l index-state -d 'Use source package index state as it existed at a previous time.' -x
+complete -c cabal -n "__fish_seen_subcommand_from get" -l index-state -d 'Use source package index state as it existed at a previous time.' -r
 complete -c cabal -n "__fish_seen_subcommand_from get" -l pristine -d 'Unpack the original pristine tarball, rather than updating the .cabal file with the latest revision from the package archive.'
 
 
@@ -525,8 +525,8 @@ complete -c cabal -n "__fish_seen_subcommand_from configure" -l disable-library-
 complete -c cabal -n "__fish_seen_subcommand_from configure" -l configure-option -d 'Extra option for configure' -x
 complete -c cabal -n "__fish_seen_subcommand_from configure" -l user -d 'Enable doing a per-user installation'
 complete -c cabal -n "__fish_seen_subcommand_from configure" -l global -d 'Disable doing a per-user installation'
-complete -c cabal -n "__fish_seen_subcommand_from configure" -l package-db -d 'Append the given package database to the list of package databases used (to satisfy dependencies and register into).' -x
-complete -c cabal -n "__fish_seen_subcommand_from configure" -s f -l flags -d 'Force values for the given flags in Cabal conditionals in the .cabal file.' -x
+complete -c cabal -n "__fish_seen_subcommand_from configure" -l package-db -d 'Append the given package database to the list of package databases used (to satisfy dependencies and register into).' -r
+complete -c cabal -n "__fish_seen_subcommand_from configure" -s f -l flags -d 'Force values for the given flags in Cabal conditionals in the .cabal file.' -r
 complete -c cabal -n "__fish_seen_subcommand_from configure" -l extra-include-dirs -d 'A list of directories to search for header files' -r
 complete -c cabal -n "__fish_seen_subcommand_from configure" -l enable-deterministic -d 'Enable Try to be as deterministic as possible (used by the test suite)'
 complete -c cabal -n "__fish_seen_subcommand_from configure" -l disable-deterministic -d 'Disable Try to be as deterministic as possible (used by the test suite)'
@@ -557,7 +557,7 @@ complete -c cabal -n "__fish_seen_subcommand_from configure" -l preference -d 'S
 complete -c cabal -n "__fish_seen_subcommand_from configure" -l solver -d 'Select dependency solver to use (default: modular).' -x
 complete -c cabal -n "__fish_seen_subcommand_from configure" -l allow-older -d 'Ignore lower bounds in all dependencies or DEPS' -x
 complete -c cabal -n "__fish_seen_subcommand_from configure" -l allow-newer -d 'Ignore upper bounds in all dependencies or DEPS' -x
-complete -c cabal -n "__fish_seen_subcommand_from configure" -l write-ghc-environment-files -d 'Whether to create a .ghc.environment file after a successful build (v2-build only)' -x
+complete -c cabal -n "__fish_seen_subcommand_from configure" -l write-ghc-environment-files -d 'Whether to create a .ghc.environment file after a successful build (v2-build only)' -r
 complete -c cabal -n "__fish_seen_subcommand_from configure" -l enable-documentation -d 'Enable building of documentation'
 complete -c cabal -n "__fish_seen_subcommand_from configure" -l disable-documentation -d 'Disable building of documentation'
 complete -c cabal -n "__fish_seen_subcommand_from configure" -l doc-index-file -d 'A central index of haddock API documentation (template cannot use $pkgid)' -x
@@ -581,8 +581,8 @@ complete -c cabal -n "__fish_seen_subcommand_from configure" -l only-dependencie
 complete -c cabal -n "__fish_seen_subcommand_from configure" -l dependencies-only -d 'A synonym for --only-dependencies'
 complete -c cabal -n "__fish_seen_subcommand_from configure" -l index-state -d 'Use source package index state as it existed at a previous time.' -x
 complete -c cabal -n "__fish_seen_subcommand_from configure" -l root-cmd -d '(No longer supported, do not use.)' -x
-complete -c cabal -n "__fish_seen_subcommand_from configure" -l build-summary -d 'Save build summaries to file (name template can use $pkgid, $compiler, $os, $arch)' -x
-complete -c cabal -n "__fish_seen_subcommand_from configure" -l build-log -d 'Log all builds to file (name template can use $pkgid, $compiler, $os, $arch)' -x
+complete -c cabal -n "__fish_seen_subcommand_from configure" -l build-summary -d 'Save build summaries to file (name template can use $pkgid, $compiler, $os, $arch)' -r
+complete -c cabal -n "__fish_seen_subcommand_from configure" -l build-log -d 'Log all builds to file (name template can use $pkgid, $compiler, $os, $arch)' -r
 complete -c cabal -n "__fish_seen_subcommand_from configure" -l remote-build-reporting -d 'Generate build reports to send to a remote server (none, anonymous or detailed).' -x
 complete -c cabal -n "__fish_seen_subcommand_from configure" -l report-planning-failure -d 'Generate build reports when the dependency solver fails.'
 complete -c cabal -n "__fish_seen_subcommand_from configure" -l enable-per-component -d 'Enable Per-component builds when possible'
@@ -606,9 +606,9 @@ complete -c cabal -n "__fish_seen_subcommand_from configure" -l haddock-hyperlin
 complete -c cabal -n "__fish_seen_subcommand_from configure" -l haddock-quickjump -d 'Generate an index for interactive documentation navigation'
 complete -c cabal -n "__fish_seen_subcommand_from configure" -l haddock-hscolour-css -d 'Use PATH as the HsColour stylesheet' -r
 complete -c cabal -n "__fish_seen_subcommand_from configure" -l haddock-contents-location -d 'Bake URL in as the location for the contents page' -x
-complete -c cabal -n "__fish_seen_subcommand_from configure" -l test-log -d 'Log all test suite results to file (name template can use $pkgid, $compiler, $os, $arch, $test-suite, $result)' -x
-complete -c cabal -n "__fish_seen_subcommand_from configure" -l test-machine-log -d 'Produce a machine-readable log file (name template can use $pkgid, $compiler, $os, $arch, $result)' -x
-complete -c cabal -n "__fish_seen_subcommand_from configure" -l test-show-details -d '\'always\': always show results of individual test cases.' -x
+complete -c cabal -n "__fish_seen_subcommand_from configure" -l test-log -d 'Log all test suite results to file (name template can use $pkgid, $compiler, $os, $arch, $test-suite, $result)' -r
+complete -c cabal -n "__fish_seen_subcommand_from configure" -l test-machine-log -d 'Produce a machine-readable log file (name template can use $pkgid, $compiler, $os, $arch, $result)' -r
+complete -c cabal -n "__fish_seen_subcommand_from configure" -l test-show-details -d '\'always\': always show results of individual test cases.' -r
 complete -c cabal -n "__fish_seen_subcommand_from configure" -l test-keep-tix-files -d 'keep .tix files for HPC between test runs'
 complete -c cabal -n "__fish_seen_subcommand_from configure" -l test-wrapper -d 'Run test through a wrapper.' -r
 complete -c cabal -n "__fish_seen_subcommand_from configure" -l test-fail-when-no-test-suites -d 'Exit with failure when no test suites are found.'
@@ -680,8 +680,8 @@ complete -c cabal -n "__fish_seen_subcommand_from build" -l disable-library-stri
 complete -c cabal -n "__fish_seen_subcommand_from build" -l configure-option -d 'Extra option for configure' -x
 complete -c cabal -n "__fish_seen_subcommand_from build" -l user -d 'Enable doing a per-user installation'
 complete -c cabal -n "__fish_seen_subcommand_from build" -l global -d 'Disable doing a per-user installation'
-complete -c cabal -n "__fish_seen_subcommand_from build" -l package-db -d 'Append the given package database to the list of package databases used (to satisfy dependencies and register into).' -x
-complete -c cabal -n "__fish_seen_subcommand_from build" -s f -l flags -d 'Force values for the given flags in Cabal conditionals in the .cabal file.' -x
+complete -c cabal -n "__fish_seen_subcommand_from build" -l package-db -d 'Append the given package database to the list of package databases used (to satisfy dependencies and register into).' -r
+complete -c cabal -n "__fish_seen_subcommand_from build" -s f -l flags -d 'Force values for the given flags in Cabal conditionals in the .cabal file.' -r
 complete -c cabal -n "__fish_seen_subcommand_from build" -l extra-include-dirs -d 'A list of directories to search for header files' -r
 complete -c cabal -n "__fish_seen_subcommand_from build" -l enable-deterministic -d 'Enable Try to be as deterministic as possible (used by the test suite)'
 complete -c cabal -n "__fish_seen_subcommand_from build" -l disable-deterministic -d 'Disable Try to be as deterministic as possible (used by the test suite)'
@@ -712,7 +712,7 @@ complete -c cabal -n "__fish_seen_subcommand_from build" -l preference -d 'Speci
 complete -c cabal -n "__fish_seen_subcommand_from build" -l solver -d 'Select dependency solver to use (default: modular).' -x
 complete -c cabal -n "__fish_seen_subcommand_from build" -l allow-older -d 'Ignore lower bounds in all dependencies or DEPS' -x
 complete -c cabal -n "__fish_seen_subcommand_from build" -l allow-newer -d 'Ignore upper bounds in all dependencies or DEPS' -x
-complete -c cabal -n "__fish_seen_subcommand_from build" -l write-ghc-environment-files -d 'Whether to create a .ghc.environment file after a successful build (v2-build only)' -x
+complete -c cabal -n "__fish_seen_subcommand_from build" -l write-ghc-environment-files -d 'Whether to create a .ghc.environment file after a successful build (v2-build only)' -r
 complete -c cabal -n "__fish_seen_subcommand_from build" -l enable-documentation -d 'Enable building of documentation'
 complete -c cabal -n "__fish_seen_subcommand_from build" -l disable-documentation -d 'Disable building of documentation'
 complete -c cabal -n "__fish_seen_subcommand_from build" -l doc-index-file -d 'A central index of haddock API documentation (template cannot use $pkgid)' -x
@@ -736,8 +736,8 @@ complete -c cabal -n "__fish_seen_subcommand_from build" -l only-dependencies -d
 complete -c cabal -n "__fish_seen_subcommand_from build" -l dependencies-only -d 'A synonym for --only-dependencies'
 complete -c cabal -n "__fish_seen_subcommand_from build" -l index-state -d 'Use source package index state as it existed at a previous time.' -x
 complete -c cabal -n "__fish_seen_subcommand_from build" -l root-cmd -d '(No longer supported, do not use.)' -x
-complete -c cabal -n "__fish_seen_subcommand_from build" -l build-summary -d 'Save build summaries to file (name template can use $pkgid, $compiler, $os, $arch)' -x
-complete -c cabal -n "__fish_seen_subcommand_from build" -l build-log -d 'Log all builds to file (name template can use $pkgid, $compiler, $os, $arch)' -x
+complete -c cabal -n "__fish_seen_subcommand_from build" -l build-summary -d 'Save build summaries to file (name template can use $pkgid, $compiler, $os, $arch)' -r
+complete -c cabal -n "__fish_seen_subcommand_from build" -l build-log -d 'Log all builds to file (name template can use $pkgid, $compiler, $os, $arch)' -r
 complete -c cabal -n "__fish_seen_subcommand_from build" -l remote-build-reporting -d 'Generate build reports to send to a remote server (none, anonymous or detailed).' -x
 complete -c cabal -n "__fish_seen_subcommand_from build" -l report-planning-failure -d 'Generate build reports when the dependency solver fails.'
 complete -c cabal -n "__fish_seen_subcommand_from build" -l enable-per-component -d 'Enable Per-component builds when possible'
@@ -761,9 +761,9 @@ complete -c cabal -n "__fish_seen_subcommand_from build" -l haddock-hyperlink-so
 complete -c cabal -n "__fish_seen_subcommand_from build" -l haddock-quickjump -d 'Generate an index for interactive documentation navigation'
 complete -c cabal -n "__fish_seen_subcommand_from build" -l haddock-hscolour-css -d 'Use PATH as the HsColour stylesheet' -r
 complete -c cabal -n "__fish_seen_subcommand_from build" -l haddock-contents-location -d 'Bake URL in as the location for the contents page' -x
-complete -c cabal -n "__fish_seen_subcommand_from build" -l test-log -d 'Log all test suite results to file (name template can use $pkgid, $compiler, $os, $arch, $test-suite, $result)' -x
-complete -c cabal -n "__fish_seen_subcommand_from build" -l test-machine-log -d 'Produce a machine-readable log file (name template can use $pkgid, $compiler, $os, $arch, $result)' -x
-complete -c cabal -n "__fish_seen_subcommand_from build" -l test-show-details -d '\'always\': always show results of individual test cases.' -x
+complete -c cabal -n "__fish_seen_subcommand_from build" -l test-log -d 'Log all test suite results to file (name template can use $pkgid, $compiler, $os, $arch, $test-suite, $result)' -r
+complete -c cabal -n "__fish_seen_subcommand_from build" -l test-machine-log -d 'Produce a machine-readable log file (name template can use $pkgid, $compiler, $os, $arch, $result)' -r
+complete -c cabal -n "__fish_seen_subcommand_from build" -l test-show-details -d '\'always\': always show results of individual test cases.' -r
 complete -c cabal -n "__fish_seen_subcommand_from build" -l test-keep-tix-files -d 'keep .tix files for HPC between test runs'
 complete -c cabal -n "__fish_seen_subcommand_from build" -l test-wrapper -d 'Run test through a wrapper.' -r
 complete -c cabal -n "__fish_seen_subcommand_from build" -l test-fail-when-no-test-suites -d 'Exit with failure when no test suites are found.'
@@ -844,8 +844,8 @@ complete -c cabal -n "__fish_seen_subcommand_from run" -l disable-library-stripp
 complete -c cabal -n "__fish_seen_subcommand_from run" -l configure-option -d 'Extra option for configure' -x
 complete -c cabal -n "__fish_seen_subcommand_from run" -l user -d 'Enable doing a per-user installation'
 complete -c cabal -n "__fish_seen_subcommand_from run" -l global -d 'Disable doing a per-user installation'
-complete -c cabal -n "__fish_seen_subcommand_from run" -l package-db -d 'Append the given package database to the list of package databases used (to satisfy dependencies and register into).' -x
-complete -c cabal -n "__fish_seen_subcommand_from run" -s f -l flags -d 'Force values for the given flags in Cabal conditionals in the .cabal file.' -x
+complete -c cabal -n "__fish_seen_subcommand_from run" -l package-db -d 'Append the given package database to the list of package databases used (to satisfy dependencies and register into).' -r
+complete -c cabal -n "__fish_seen_subcommand_from run" -s f -l flags -d 'Force values for the given flags in Cabal conditionals in the .cabal file.' -r
 complete -c cabal -n "__fish_seen_subcommand_from run" -l extra-include-dirs -d 'A list of directories to search for header files' -r
 complete -c cabal -n "__fish_seen_subcommand_from run" -l enable-deterministic -d 'Enable Try to be as deterministic as possible (used by the test suite)'
 complete -c cabal -n "__fish_seen_subcommand_from run" -l disable-deterministic -d 'Disable Try to be as deterministic as possible (used by the test suite)'
@@ -876,7 +876,7 @@ complete -c cabal -n "__fish_seen_subcommand_from run" -l preference -d 'Specify
 complete -c cabal -n "__fish_seen_subcommand_from run" -l solver -d 'Select dependency solver to use (default: modular).' -x
 complete -c cabal -n "__fish_seen_subcommand_from run" -l allow-older -d 'Ignore lower bounds in all dependencies or DEPS' -x
 complete -c cabal -n "__fish_seen_subcommand_from run" -l allow-newer -d 'Ignore upper bounds in all dependencies or DEPS' -x
-complete -c cabal -n "__fish_seen_subcommand_from run" -l write-ghc-environment-files -d 'Whether to create a .ghc.environment file after a successful build (v2-build only)' -x
+complete -c cabal -n "__fish_seen_subcommand_from run" -l write-ghc-environment-files -d 'Whether to create a .ghc.environment file after a successful build (v2-build only)' -r
 complete -c cabal -n "__fish_seen_subcommand_from run" -l enable-documentation -d 'Enable building of documentation'
 complete -c cabal -n "__fish_seen_subcommand_from run" -l disable-documentation -d 'Disable building of documentation'
 complete -c cabal -n "__fish_seen_subcommand_from run" -l doc-index-file -d 'A central index of haddock API documentation (template cannot use $pkgid)' -x
@@ -900,8 +900,8 @@ complete -c cabal -n "__fish_seen_subcommand_from run" -l only-dependencies -d '
 complete -c cabal -n "__fish_seen_subcommand_from run" -l dependencies-only -d 'A synonym for --only-dependencies'
 complete -c cabal -n "__fish_seen_subcommand_from run" -l index-state -d 'Use source package index state as it existed at a previous time.' -x
 complete -c cabal -n "__fish_seen_subcommand_from run" -l root-cmd -d '(No longer supported, do not use.)' -x
-complete -c cabal -n "__fish_seen_subcommand_from run" -l build-summary -d 'Save build summaries to file (name template can use $pkgid, $compiler, $os, $arch)' -x
-complete -c cabal -n "__fish_seen_subcommand_from run" -l build-log -d 'Log all builds to file (name template can use $pkgid, $compiler, $os, $arch)' -x
+complete -c cabal -n "__fish_seen_subcommand_from run" -l build-summary -d 'Save build summaries to file (name template can use $pkgid, $compiler, $os, $arch)' -r
+complete -c cabal -n "__fish_seen_subcommand_from run" -l build-log -d 'Log all builds to file (name template can use $pkgid, $compiler, $os, $arch)' -r
 complete -c cabal -n "__fish_seen_subcommand_from run" -l remote-build-reporting -d 'Generate build reports to send to a remote server (none, anonymous or detailed).' -x
 complete -c cabal -n "__fish_seen_subcommand_from run" -l report-planning-failure -d 'Generate build reports when the dependency solver fails.'
 complete -c cabal -n "__fish_seen_subcommand_from run" -l enable-per-component -d 'Enable Per-component builds when possible'
@@ -925,9 +925,9 @@ complete -c cabal -n "__fish_seen_subcommand_from run" -l haddock-hyperlink-sour
 complete -c cabal -n "__fish_seen_subcommand_from run" -l haddock-quickjump -d 'Generate an index for interactive documentation navigation'
 complete -c cabal -n "__fish_seen_subcommand_from run" -l haddock-hscolour-css -d 'Use PATH as the HsColour stylesheet' -r
 complete -c cabal -n "__fish_seen_subcommand_from run" -l haddock-contents-location -d 'Bake URL in as the location for the contents page' -x
-complete -c cabal -n "__fish_seen_subcommand_from run" -l test-log -d 'Log all test suite results to file (name template can use $pkgid, $compiler, $os, $arch, $test-suite, $result)' -x
-complete -c cabal -n "__fish_seen_subcommand_from run" -l test-machine-log -d 'Produce a machine-readable log file (name template can use $pkgid, $compiler, $os, $arch, $result)' -x
-complete -c cabal -n "__fish_seen_subcommand_from run" -l test-show-details -d '\'always\': always show results of individual test cases.' -x
+complete -c cabal -n "__fish_seen_subcommand_from run" -l test-log -d 'Log all test suite results to file (name template can use $pkgid, $compiler, $os, $arch, $test-suite, $result)' -r
+complete -c cabal -n "__fish_seen_subcommand_from run" -l test-machine-log -d 'Produce a machine-readable log file (name template can use $pkgid, $compiler, $os, $arch, $result)' -r
+complete -c cabal -n "__fish_seen_subcommand_from run" -l test-show-details -d '\'always\': always show results of individual test cases.' -r
 complete -c cabal -n "__fish_seen_subcommand_from run" -l test-keep-tix-files -d 'keep .tix files for HPC between test runs'
 complete -c cabal -n "__fish_seen_subcommand_from run" -l test-wrapper -d 'Run test through a wrapper.' -r
 complete -c cabal -n "__fish_seen_subcommand_from run" -l test-fail-when-no-test-suites -d 'Exit with failure when no test suites are found.'
@@ -1000,8 +1000,8 @@ complete -c cabal -n "__fish_seen_subcommand_from repl" -l disable-library-strip
 complete -c cabal -n "__fish_seen_subcommand_from repl" -l configure-option -d 'Extra option for configure' -x
 complete -c cabal -n "__fish_seen_subcommand_from repl" -l user -d 'Enable doing a per-user installation'
 complete -c cabal -n "__fish_seen_subcommand_from repl" -l global -d 'Disable doing a per-user installation'
-complete -c cabal -n "__fish_seen_subcommand_from repl" -l package-db -d 'Append the given package database to the list of package databases used (to satisfy dependencies and register into).' -x
-complete -c cabal -n "__fish_seen_subcommand_from repl" -s f -l flags -d 'Force values for the given flags in Cabal conditionals in the .cabal file.' -x
+complete -c cabal -n "__fish_seen_subcommand_from repl" -l package-db -d 'Append the given package database to the list of package databases used (to satisfy dependencies and register into).' -r
+complete -c cabal -n "__fish_seen_subcommand_from repl" -s f -l flags -d 'Force values for the given flags in Cabal conditionals in the .cabal file.' -r
 complete -c cabal -n "__fish_seen_subcommand_from repl" -l extra-include-dirs -d 'A list of directories to search for header files' -r
 complete -c cabal -n "__fish_seen_subcommand_from repl" -l enable-deterministic -d 'Enable Try to be as deterministic as possible (used by the test suite)'
 complete -c cabal -n "__fish_seen_subcommand_from repl" -l disable-deterministic -d 'Disable Try to be as deterministic as possible (used by the test suite)'
@@ -1032,7 +1032,7 @@ complete -c cabal -n "__fish_seen_subcommand_from repl" -l preference -d 'Specif
 complete -c cabal -n "__fish_seen_subcommand_from repl" -l solver -d 'Select dependency solver to use (default: modular).' -x
 complete -c cabal -n "__fish_seen_subcommand_from repl" -l allow-older -d 'Ignore lower bounds in all dependencies or DEPS' -x
 complete -c cabal -n "__fish_seen_subcommand_from repl" -l allow-newer -d 'Ignore upper bounds in all dependencies or DEPS' -x
-complete -c cabal -n "__fish_seen_subcommand_from repl" -l write-ghc-environment-files -d 'Whether to create a .ghc.environment file after a successful build (v2-build only)' -x
+complete -c cabal -n "__fish_seen_subcommand_from repl" -l write-ghc-environment-files -d 'Whether to create a .ghc.environment file after a successful build (v2-build only)' -r
 complete -c cabal -n "__fish_seen_subcommand_from repl" -l enable-documentation -d 'Enable building of documentation'
 complete -c cabal -n "__fish_seen_subcommand_from repl" -l disable-documentation -d 'Disable building of documentation'
 complete -c cabal -n "__fish_seen_subcommand_from repl" -l doc-index-file -d 'A central index of haddock API documentation (template cannot use $pkgid)' -x
@@ -1056,8 +1056,8 @@ complete -c cabal -n "__fish_seen_subcommand_from repl" -l only-dependencies -d 
 complete -c cabal -n "__fish_seen_subcommand_from repl" -l dependencies-only -d 'A synonym for --only-dependencies'
 complete -c cabal -n "__fish_seen_subcommand_from repl" -l index-state -d 'Use source package index state as it existed at a previous time.' -x
 complete -c cabal -n "__fish_seen_subcommand_from repl" -l root-cmd -d '(No longer supported, do not use.)' -x
-complete -c cabal -n "__fish_seen_subcommand_from repl" -l build-summary -d 'Save build summaries to file (name template can use $pkgid, $compiler, $os, $arch)' -x
-complete -c cabal -n "__fish_seen_subcommand_from repl" -l build-log -d 'Log all builds to file (name template can use $pkgid, $compiler, $os, $arch)' -x
+complete -c cabal -n "__fish_seen_subcommand_from repl" -l build-summary -d 'Save build summaries to file (name template can use $pkgid, $compiler, $os, $arch)' -r
+complete -c cabal -n "__fish_seen_subcommand_from repl" -l build-log -d 'Log all builds to file (name template can use $pkgid, $compiler, $os, $arch)' -r
 complete -c cabal -n "__fish_seen_subcommand_from repl" -l remote-build-reporting -d 'Generate build reports to send to a remote server (none, anonymous or detailed).' -x
 complete -c cabal -n "__fish_seen_subcommand_from repl" -l report-planning-failure -d 'Generate build reports when the dependency solver fails.'
 complete -c cabal -n "__fish_seen_subcommand_from repl" -l enable-per-component -d 'Enable Per-component builds when possible'
@@ -1081,9 +1081,9 @@ complete -c cabal -n "__fish_seen_subcommand_from repl" -l haddock-hyperlink-sou
 complete -c cabal -n "__fish_seen_subcommand_from repl" -l haddock-quickjump -d 'Generate an index for interactive documentation navigation'
 complete -c cabal -n "__fish_seen_subcommand_from repl" -l haddock-hscolour-css -d 'Use PATH as the HsColour stylesheet' -r
 complete -c cabal -n "__fish_seen_subcommand_from repl" -l haddock-contents-location -d 'Bake URL in as the location for the contents page' -x
-complete -c cabal -n "__fish_seen_subcommand_from repl" -l test-log -d 'Log all test suite results to file (name template can use $pkgid, $compiler, $os, $arch, $test-suite, $result)' -x
-complete -c cabal -n "__fish_seen_subcommand_from repl" -l test-machine-log -d 'Produce a machine-readable log file (name template can use $pkgid, $compiler, $os, $arch, $result)' -x
-complete -c cabal -n "__fish_seen_subcommand_from repl" -l test-show-details -d '\'always\': always show results of individual test cases.' -x
+complete -c cabal -n "__fish_seen_subcommand_from repl" -l test-log -d 'Log all test suite results to file (name template can use $pkgid, $compiler, $os, $arch, $test-suite, $result)' -r
+complete -c cabal -n "__fish_seen_subcommand_from repl" -l test-machine-log -d 'Produce a machine-readable log file (name template can use $pkgid, $compiler, $os, $arch, $result)' -r
+complete -c cabal -n "__fish_seen_subcommand_from repl" -l test-show-details -d '\'always\': always show results of individual test cases.' -r
 complete -c cabal -n "__fish_seen_subcommand_from repl" -l test-keep-tix-files -d 'keep .tix files for HPC between test runs'
 complete -c cabal -n "__fish_seen_subcommand_from repl" -l test-wrapper -d 'Run test through a wrapper.' -r
 complete -c cabal -n "__fish_seen_subcommand_from repl" -l test-fail-when-no-test-suites -d 'Exit with failure when no test suites are found.'
@@ -1159,8 +1159,8 @@ complete -c cabal -n "__fish_seen_subcommand_from test" -l disable-library-strip
 complete -c cabal -n "__fish_seen_subcommand_from test" -l configure-option -d 'Extra option for configure' -x
 complete -c cabal -n "__fish_seen_subcommand_from test" -l user -d 'Enable doing a per-user installation'
 complete -c cabal -n "__fish_seen_subcommand_from test" -l global -d 'Disable doing a per-user installation'
-complete -c cabal -n "__fish_seen_subcommand_from test" -l package-db -d 'Append the given package database to the list of package databases used (to satisfy dependencies and register into).' -x
-complete -c cabal -n "__fish_seen_subcommand_from test" -s f -l flags -d 'Force values for the given flags in Cabal conditionals in the .cabal file.' -x
+complete -c cabal -n "__fish_seen_subcommand_from test" -l package-db -d 'Append the given package database to the list of package databases used (to satisfy dependencies and register into).' -r
+complete -c cabal -n "__fish_seen_subcommand_from test" -s f -l flags -d 'Force values for the given flags in Cabal conditionals in the .cabal file.' -r
 complete -c cabal -n "__fish_seen_subcommand_from test" -l extra-include-dirs -d 'A list of directories to search for header files' -r
 complete -c cabal -n "__fish_seen_subcommand_from test" -l enable-deterministic -d 'Enable Try to be as deterministic as possible (used by the test suite)'
 complete -c cabal -n "__fish_seen_subcommand_from test" -l disable-deterministic -d 'Disable Try to be as deterministic as possible (used by the test suite)'
@@ -1191,7 +1191,7 @@ complete -c cabal -n "__fish_seen_subcommand_from test" -l preference -d 'Specif
 complete -c cabal -n "__fish_seen_subcommand_from test" -l solver -d 'Select dependency solver to use (default: modular).' -x
 complete -c cabal -n "__fish_seen_subcommand_from test" -l allow-older -d 'Ignore lower bounds in all dependencies or DEPS' -x
 complete -c cabal -n "__fish_seen_subcommand_from test" -l allow-newer -d 'Ignore upper bounds in all dependencies or DEPS' -x
-complete -c cabal -n "__fish_seen_subcommand_from test" -l write-ghc-environment-files -d 'Whether to create a .ghc.environment file after a successful build (v2-build only)' -x
+complete -c cabal -n "__fish_seen_subcommand_from test" -l write-ghc-environment-files -d 'Whether to create a .ghc.environment file after a successful build (v2-build only)' -r
 complete -c cabal -n "__fish_seen_subcommand_from test" -l enable-documentation -d 'Enable building of documentation'
 complete -c cabal -n "__fish_seen_subcommand_from test" -l disable-documentation -d 'Disable building of documentation'
 complete -c cabal -n "__fish_seen_subcommand_from test" -l doc-index-file -d 'A central index of haddock API documentation (template cannot use $pkgid)' -x
@@ -1215,8 +1215,8 @@ complete -c cabal -n "__fish_seen_subcommand_from test" -l only-dependencies -d 
 complete -c cabal -n "__fish_seen_subcommand_from test" -l dependencies-only -d 'A synonym for --only-dependencies'
 complete -c cabal -n "__fish_seen_subcommand_from test" -l index-state -d 'Use source package index state as it existed at a previous time.' -x
 complete -c cabal -n "__fish_seen_subcommand_from test" -l root-cmd -d '(No longer supported, do not use.)' -x
-complete -c cabal -n "__fish_seen_subcommand_from test" -l build-summary -d 'Save build summaries to file (name template can use $pkgid, $compiler, $os, $arch)' -x
-complete -c cabal -n "__fish_seen_subcommand_from test" -l build-log -d 'Log all builds to file (name template can use $pkgid, $compiler, $os, $arch)' -x
+complete -c cabal -n "__fish_seen_subcommand_from test" -l build-summary -d 'Save build summaries to file (name template can use $pkgid, $compiler, $os, $arch)' -r
+complete -c cabal -n "__fish_seen_subcommand_from test" -l build-log -d 'Log all builds to file (name template can use $pkgid, $compiler, $os, $arch)' -r
 complete -c cabal -n "__fish_seen_subcommand_from test" -l remote-build-reporting -d 'Generate build reports to send to a remote server (none, anonymous or detailed).' -x
 complete -c cabal -n "__fish_seen_subcommand_from test" -l report-planning-failure -d 'Generate build reports when the dependency solver fails.'
 complete -c cabal -n "__fish_seen_subcommand_from test" -l enable-per-component -d 'Enable Per-component builds when possible'
@@ -1240,9 +1240,9 @@ complete -c cabal -n "__fish_seen_subcommand_from test" -l haddock-hyperlink-sou
 complete -c cabal -n "__fish_seen_subcommand_from test" -l haddock-quickjump -d 'Generate an index for interactive documentation navigation'
 complete -c cabal -n "__fish_seen_subcommand_from test" -l haddock-hscolour-css -d 'Use PATH as the HsColour stylesheet' -r
 complete -c cabal -n "__fish_seen_subcommand_from test" -l haddock-contents-location -d 'Bake URL in as the location for the contents page' -x
-complete -c cabal -n "__fish_seen_subcommand_from test" -l test-log -d 'Log all test suite results to file (name template can use $pkgid, $compiler, $os, $arch, $test-suite, $result)' -x
-complete -c cabal -n "__fish_seen_subcommand_from test" -l test-machine-log -d 'Produce a machine-readable log file (name template can use $pkgid, $compiler, $os, $arch, $result)' -x
-complete -c cabal -n "__fish_seen_subcommand_from test" -l test-show-details -d '\'always\': always show results of individual test cases.' -x
+complete -c cabal -n "__fish_seen_subcommand_from test" -l test-log -d 'Log all test suite results to file (name template can use $pkgid, $compiler, $os, $arch, $test-suite, $result)' -r
+complete -c cabal -n "__fish_seen_subcommand_from test" -l test-machine-log -d 'Produce a machine-readable log file (name template can use $pkgid, $compiler, $os, $arch, $result)' -r
+complete -c cabal -n "__fish_seen_subcommand_from test" -l test-show-details -d '\'always\': always show results of individual test cases.' -r
 complete -c cabal -n "__fish_seen_subcommand_from test" -l test-keep-tix-files -d 'keep .tix files for HPC between test runs'
 complete -c cabal -n "__fish_seen_subcommand_from test" -l test-wrapper -d 'Run test through a wrapper.' -r
 complete -c cabal -n "__fish_seen_subcommand_from test" -l test-fail-when-no-test-suites -d 'Exit with failure when no test suites are found.'
@@ -1315,8 +1315,8 @@ complete -c cabal -n "__fish_seen_subcommand_from bench" -l disable-library-stri
 complete -c cabal -n "__fish_seen_subcommand_from bench" -l configure-option -d 'Extra option for configure' -x
 complete -c cabal -n "__fish_seen_subcommand_from bench" -l user -d 'Enable doing a per-user installation'
 complete -c cabal -n "__fish_seen_subcommand_from bench" -l global -d 'Disable doing a per-user installation'
-complete -c cabal -n "__fish_seen_subcommand_from bench" -l package-db -d 'Append the given package database to the list of package databases used (to satisfy dependencies and register into).' -x
-complete -c cabal -n "__fish_seen_subcommand_from bench" -s f -l flags -d 'Force values for the given flags in Cabal conditionals in the .cabal file.' -x
+complete -c cabal -n "__fish_seen_subcommand_from bench" -l package-db -d 'Append the given package database to the list of package databases used (to satisfy dependencies and register into).' -r
+complete -c cabal -n "__fish_seen_subcommand_from bench" -s f -l flags -d 'Force values for the given flags in Cabal conditionals in the .cabal file.' -r
 complete -c cabal -n "__fish_seen_subcommand_from bench" -l extra-include-dirs -d 'A list of directories to search for header files' -r
 complete -c cabal -n "__fish_seen_subcommand_from bench" -l enable-deterministic -d 'Enable Try to be as deterministic as possible (used by the test suite)'
 complete -c cabal -n "__fish_seen_subcommand_from bench" -l disable-deterministic -d 'Disable Try to be as deterministic as possible (used by the test suite)'
@@ -1347,7 +1347,7 @@ complete -c cabal -n "__fish_seen_subcommand_from bench" -l preference -d 'Speci
 complete -c cabal -n "__fish_seen_subcommand_from bench" -l solver -d 'Select dependency solver to use (default: modular).' -x
 complete -c cabal -n "__fish_seen_subcommand_from bench" -l allow-older -d 'Ignore lower bounds in all dependencies or DEPS' -x
 complete -c cabal -n "__fish_seen_subcommand_from bench" -l allow-newer -d 'Ignore upper bounds in all dependencies or DEPS' -x
-complete -c cabal -n "__fish_seen_subcommand_from bench" -l write-ghc-environment-files -d 'Whether to create a .ghc.environment file after a successful build (v2-build only)' -x
+complete -c cabal -n "__fish_seen_subcommand_from bench" -l write-ghc-environment-files -d 'Whether to create a .ghc.environment file after a successful build (v2-build only)' -r
 complete -c cabal -n "__fish_seen_subcommand_from bench" -l enable-documentation -d 'Enable building of documentation'
 complete -c cabal -n "__fish_seen_subcommand_from bench" -l disable-documentation -d 'Disable building of documentation'
 complete -c cabal -n "__fish_seen_subcommand_from bench" -l doc-index-file -d 'A central index of haddock API documentation (template cannot use $pkgid)' -x
@@ -1371,8 +1371,8 @@ complete -c cabal -n "__fish_seen_subcommand_from bench" -l only-dependencies -d
 complete -c cabal -n "__fish_seen_subcommand_from bench" -l dependencies-only -d 'A synonym for --only-dependencies'
 complete -c cabal -n "__fish_seen_subcommand_from bench" -l index-state -d 'Use source package index state as it existed at a previous time.' -x
 complete -c cabal -n "__fish_seen_subcommand_from bench" -l root-cmd -d '(No longer supported, do not use.)' -x
-complete -c cabal -n "__fish_seen_subcommand_from bench" -l build-summary -d 'Save build summaries to file (name template can use $pkgid, $compiler, $os, $arch)' -x
-complete -c cabal -n "__fish_seen_subcommand_from bench" -l build-log -d 'Log all builds to file (name template can use $pkgid, $compiler, $os, $arch)' -x
+complete -c cabal -n "__fish_seen_subcommand_from bench" -l build-summary -d 'Save build summaries to file (name template can use $pkgid, $compiler, $os, $arch)' -r
+complete -c cabal -n "__fish_seen_subcommand_from bench" -l build-log -d 'Log all builds to file (name template can use $pkgid, $compiler, $os, $arch)' -r
 complete -c cabal -n "__fish_seen_subcommand_from bench" -l remote-build-reporting -d 'Generate build reports to send to a remote server (none, anonymous or detailed).' -x
 complete -c cabal -n "__fish_seen_subcommand_from bench" -l report-planning-failure -d 'Generate build reports when the dependency solver fails.'
 complete -c cabal -n "__fish_seen_subcommand_from bench" -l enable-per-component -d 'Enable Per-component builds when possible'
@@ -1396,9 +1396,9 @@ complete -c cabal -n "__fish_seen_subcommand_from bench" -l haddock-hyperlink-so
 complete -c cabal -n "__fish_seen_subcommand_from bench" -l haddock-quickjump -d 'Generate an index for interactive documentation navigation'
 complete -c cabal -n "__fish_seen_subcommand_from bench" -l haddock-hscolour-css -d 'Use PATH as the HsColour stylesheet' -r
 complete -c cabal -n "__fish_seen_subcommand_from bench" -l haddock-contents-location -d 'Bake URL in as the location for the contents page' -x
-complete -c cabal -n "__fish_seen_subcommand_from bench" -l test-log -d 'Log all test suite results to file (name template can use $pkgid, $compiler, $os, $arch, $test-suite, $result)' -x
-complete -c cabal -n "__fish_seen_subcommand_from bench" -l test-machine-log -d 'Produce a machine-readable log file (name template can use $pkgid, $compiler, $os, $arch, $result)' -x
-complete -c cabal -n "__fish_seen_subcommand_from bench" -l test-show-details -d '\'always\': always show results of individual test cases.' -x
+complete -c cabal -n "__fish_seen_subcommand_from bench" -l test-log -d 'Log all test suite results to file (name template can use $pkgid, $compiler, $os, $arch, $test-suite, $result)' -r
+complete -c cabal -n "__fish_seen_subcommand_from bench" -l test-machine-log -d 'Produce a machine-readable log file (name template can use $pkgid, $compiler, $os, $arch, $result)' -r
+complete -c cabal -n "__fish_seen_subcommand_from bench" -l test-show-details -d '\'always\': always show results of individual test cases.' -r
 complete -c cabal -n "__fish_seen_subcommand_from bench" -l test-keep-tix-files -d 'keep .tix files for HPC between test runs'
 complete -c cabal -n "__fish_seen_subcommand_from bench" -l test-wrapper -d 'Run test through a wrapper.' -r
 complete -c cabal -n "__fish_seen_subcommand_from bench" -l test-fail-when-no-test-suites -d 'Exit with failure when no test suites are found.'
@@ -1504,8 +1504,8 @@ complete -c cabal -n "__fish_seen_subcommand_from freeze" -l disable-library-str
 complete -c cabal -n "__fish_seen_subcommand_from freeze" -l configure-option -d 'Extra option for configure' -x
 complete -c cabal -n "__fish_seen_subcommand_from freeze" -l user -d 'Enable doing a per-user installation'
 complete -c cabal -n "__fish_seen_subcommand_from freeze" -l global -d 'Disable doing a per-user installation'
-complete -c cabal -n "__fish_seen_subcommand_from freeze" -l package-db -d 'Append the given package database to the list of package databases used (to satisfy dependencies and register into).' -x
-complete -c cabal -n "__fish_seen_subcommand_from freeze" -s f -l flags -d 'Force values for the given flags in Cabal conditionals in the .cabal file.' -x
+complete -c cabal -n "__fish_seen_subcommand_from freeze" -l package-db -d 'Append the given package database to the list of package databases used (to satisfy dependencies and register into).' -r
+complete -c cabal -n "__fish_seen_subcommand_from freeze" -s f -l flags -d 'Force values for the given flags in Cabal conditionals in the .cabal file.' -r
 complete -c cabal -n "__fish_seen_subcommand_from freeze" -l extra-include-dirs -d 'A list of directories to search for header files' -r
 complete -c cabal -n "__fish_seen_subcommand_from freeze" -l enable-deterministic -d 'Enable Try to be as deterministic as possible (used by the test suite)'
 complete -c cabal -n "__fish_seen_subcommand_from freeze" -l disable-deterministic -d 'Disable Try to be as deterministic as possible (used by the test suite)'
@@ -1536,7 +1536,7 @@ complete -c cabal -n "__fish_seen_subcommand_from freeze" -l preference -d 'Spec
 complete -c cabal -n "__fish_seen_subcommand_from freeze" -l solver -d 'Select dependency solver to use (default: modular).' -x
 complete -c cabal -n "__fish_seen_subcommand_from freeze" -l allow-older -d 'Ignore lower bounds in all dependencies or DEPS' -x
 complete -c cabal -n "__fish_seen_subcommand_from freeze" -l allow-newer -d 'Ignore upper bounds in all dependencies or DEPS' -x
-complete -c cabal -n "__fish_seen_subcommand_from freeze" -l write-ghc-environment-files -d 'Whether to create a .ghc.environment file after a successful build (v2-build only)' -x
+complete -c cabal -n "__fish_seen_subcommand_from freeze" -l write-ghc-environment-files -d 'Whether to create a .ghc.environment file after a successful build (v2-build only)' -r
 complete -c cabal -n "__fish_seen_subcommand_from freeze" -l enable-documentation -d 'Enable building of documentation'
 complete -c cabal -n "__fish_seen_subcommand_from freeze" -l disable-documentation -d 'Disable building of documentation'
 complete -c cabal -n "__fish_seen_subcommand_from freeze" -l doc-index-file -d 'A central index of haddock API documentation (template cannot use $pkgid)' -x
@@ -1560,8 +1560,8 @@ complete -c cabal -n "__fish_seen_subcommand_from freeze" -l only-dependencies -
 complete -c cabal -n "__fish_seen_subcommand_from freeze" -l dependencies-only -d 'A synonym for --only-dependencies'
 complete -c cabal -n "__fish_seen_subcommand_from freeze" -l index-state -d 'Use source package index state as it existed at a previous time.' -x
 complete -c cabal -n "__fish_seen_subcommand_from freeze" -l root-cmd -d '(No longer supported, do not use.)' -x
-complete -c cabal -n "__fish_seen_subcommand_from freeze" -l build-summary -d 'Save build summaries to file (name template can use $pkgid, $compiler, $os, $arch)' -x
-complete -c cabal -n "__fish_seen_subcommand_from freeze" -l build-log -d 'Log all builds to file (name template can use $pkgid, $compiler, $os, $arch)' -x
+complete -c cabal -n "__fish_seen_subcommand_from freeze" -l build-summary -d 'Save build summaries to file (name template can use $pkgid, $compiler, $os, $arch)' -r
+complete -c cabal -n "__fish_seen_subcommand_from freeze" -l build-log -d 'Log all builds to file (name template can use $pkgid, $compiler, $os, $arch)' -r
 complete -c cabal -n "__fish_seen_subcommand_from freeze" -l remote-build-reporting -d 'Generate build reports to send to a remote server (none, anonymous or detailed).' -x
 complete -c cabal -n "__fish_seen_subcommand_from freeze" -l report-planning-failure -d 'Generate build reports when the dependency solver fails.'
 complete -c cabal -n "__fish_seen_subcommand_from freeze" -l enable-per-component -d 'Enable Per-component builds when possible'
@@ -1585,9 +1585,9 @@ complete -c cabal -n "__fish_seen_subcommand_from freeze" -l haddock-hyperlink-s
 complete -c cabal -n "__fish_seen_subcommand_from freeze" -l haddock-quickjump -d 'Generate an index for interactive documentation navigation'
 complete -c cabal -n "__fish_seen_subcommand_from freeze" -l haddock-hscolour-css -d 'Use PATH as the HsColour stylesheet' -r
 complete -c cabal -n "__fish_seen_subcommand_from freeze" -l haddock-contents-location -d 'Bake URL in as the location for the contents page' -x
-complete -c cabal -n "__fish_seen_subcommand_from freeze" -l test-log -d 'Log all test suite results to file (name template can use $pkgid, $compiler, $os, $arch, $test-suite, $result)' -x
-complete -c cabal -n "__fish_seen_subcommand_from freeze" -l test-machine-log -d 'Produce a machine-readable log file (name template can use $pkgid, $compiler, $os, $arch, $result)' -x
-complete -c cabal -n "__fish_seen_subcommand_from freeze" -l test-show-details -d '\'always\': always show results of individual test cases.' -x
+complete -c cabal -n "__fish_seen_subcommand_from freeze" -l test-log -d 'Log all test suite results to file (name template can use $pkgid, $compiler, $os, $arch, $test-suite, $result)' -r
+complete -c cabal -n "__fish_seen_subcommand_from freeze" -l test-machine-log -d 'Produce a machine-readable log file (name template can use $pkgid, $compiler, $os, $arch, $result)' -r
+complete -c cabal -n "__fish_seen_subcommand_from freeze" -l test-show-details -d '\'always\': always show results of individual test cases.' -r
 complete -c cabal -n "__fish_seen_subcommand_from freeze" -l test-keep-tix-files -d 'keep .tix files for HPC between test runs'
 complete -c cabal -n "__fish_seen_subcommand_from freeze" -l test-wrapper -d 'Run test through a wrapper.' -r
 complete -c cabal -n "__fish_seen_subcommand_from freeze" -l test-fail-when-no-test-suites -d 'Exit with failure when no test suites are found.'
@@ -1678,8 +1678,8 @@ complete -c cabal -n "__fish_seen_subcommand_from haddock" -l disable-library-st
 complete -c cabal -n "__fish_seen_subcommand_from haddock" -l configure-option -d 'Extra option for configure' -x
 complete -c cabal -n "__fish_seen_subcommand_from haddock" -l user -d 'Enable doing a per-user installation'
 complete -c cabal -n "__fish_seen_subcommand_from haddock" -l global -d 'Disable doing a per-user installation'
-complete -c cabal -n "__fish_seen_subcommand_from haddock" -l package-db -d 'Append the given package database to the list of package databases used (to satisfy dependencies and register into).' -x
-complete -c cabal -n "__fish_seen_subcommand_from haddock" -s f -l flags -d 'Force values for the given flags in Cabal conditionals in the .cabal file.' -x
+complete -c cabal -n "__fish_seen_subcommand_from haddock" -l package-db -d 'Append the given package database to the list of package databases used (to satisfy dependencies and register into).' -r
+complete -c cabal -n "__fish_seen_subcommand_from haddock" -s f -l flags -d 'Force values for the given flags in Cabal conditionals in the .cabal file.' -r
 complete -c cabal -n "__fish_seen_subcommand_from haddock" -l extra-include-dirs -d 'A list of directories to search for header files' -r
 complete -c cabal -n "__fish_seen_subcommand_from haddock" -l enable-deterministic -d 'Enable Try to be as deterministic as possible (used by the test suite)'
 complete -c cabal -n "__fish_seen_subcommand_from haddock" -l disable-deterministic -d 'Disable Try to be as deterministic as possible (used by the test suite)'
@@ -1710,7 +1710,7 @@ complete -c cabal -n "__fish_seen_subcommand_from haddock" -l preference -d 'Spe
 complete -c cabal -n "__fish_seen_subcommand_from haddock" -l solver -d 'Select dependency solver to use (default: modular).' -x
 complete -c cabal -n "__fish_seen_subcommand_from haddock" -l allow-older -d 'Ignore lower bounds in all dependencies or DEPS' -x
 complete -c cabal -n "__fish_seen_subcommand_from haddock" -l allow-newer -d 'Ignore upper bounds in all dependencies or DEPS' -x
-complete -c cabal -n "__fish_seen_subcommand_from haddock" -l write-ghc-environment-files -d 'Whether to create a .ghc.environment file after a successful build (v2-build only)' -x
+complete -c cabal -n "__fish_seen_subcommand_from haddock" -l write-ghc-environment-files -d 'Whether to create a .ghc.environment file after a successful build (v2-build only)' -r
 complete -c cabal -n "__fish_seen_subcommand_from haddock" -l enable-documentation -d 'Enable building of documentation'
 complete -c cabal -n "__fish_seen_subcommand_from haddock" -l disable-documentation -d 'Disable building of documentation'
 complete -c cabal -n "__fish_seen_subcommand_from haddock" -l doc-index-file -d 'A central index of haddock API documentation (template cannot use $pkgid)' -x
@@ -1734,8 +1734,8 @@ complete -c cabal -n "__fish_seen_subcommand_from haddock" -l only-dependencies 
 complete -c cabal -n "__fish_seen_subcommand_from haddock" -l dependencies-only -d 'A synonym for --only-dependencies'
 complete -c cabal -n "__fish_seen_subcommand_from haddock" -l index-state -d 'Use source package index state as it existed at a previous time.' -x
 complete -c cabal -n "__fish_seen_subcommand_from haddock" -l root-cmd -d '(No longer supported, do not use.)' -x
-complete -c cabal -n "__fish_seen_subcommand_from haddock" -l build-summary -d 'Save build summaries to file (name template can use $pkgid, $compiler, $os, $arch)' -x
-complete -c cabal -n "__fish_seen_subcommand_from haddock" -l build-log -d 'Log all builds to file (name template can use $pkgid, $compiler, $os, $arch)' -x
+complete -c cabal -n "__fish_seen_subcommand_from haddock" -l build-summary -d 'Save build summaries to file (name template can use $pkgid, $compiler, $os, $arch)' -r
+complete -c cabal -n "__fish_seen_subcommand_from haddock" -l build-log -d 'Log all builds to file (name template can use $pkgid, $compiler, $os, $arch)' -r
 complete -c cabal -n "__fish_seen_subcommand_from haddock" -l remote-build-reporting -d 'Generate build reports to send to a remote server (none, anonymous or detailed).' -x
 complete -c cabal -n "__fish_seen_subcommand_from haddock" -l report-planning-failure -d 'Generate build reports when the dependency solver fails.'
 complete -c cabal -n "__fish_seen_subcommand_from haddock" -l enable-per-component -d 'Enable Per-component builds when possible'
@@ -1759,9 +1759,9 @@ complete -c cabal -n "__fish_seen_subcommand_from haddock" -l haddock-hyperlink-
 complete -c cabal -n "__fish_seen_subcommand_from haddock" -l haddock-quickjump -d 'Generate an index for interactive documentation navigation'
 complete -c cabal -n "__fish_seen_subcommand_from haddock" -l haddock-hscolour-css -d 'Use PATH as the HsColour stylesheet' -r
 complete -c cabal -n "__fish_seen_subcommand_from haddock" -l haddock-contents-location -d 'Bake URL in as the location for the contents page' -x
-complete -c cabal -n "__fish_seen_subcommand_from haddock" -l test-log -d 'Log all test suite results to file (name template can use $pkgid, $compiler, $os, $arch, $test-suite, $result)' -x
-complete -c cabal -n "__fish_seen_subcommand_from haddock" -l test-machine-log -d 'Produce a machine-readable log file (name template can use $pkgid, $compiler, $os, $arch, $result)' -x
-complete -c cabal -n "__fish_seen_subcommand_from haddock" -l test-show-details -d '\'always\': always show results of individual test cases.' -x
+complete -c cabal -n "__fish_seen_subcommand_from haddock" -l test-log -d 'Log all test suite results to file (name template can use $pkgid, $compiler, $os, $arch, $test-suite, $result)' -r
+complete -c cabal -n "__fish_seen_subcommand_from haddock" -l test-machine-log -d 'Produce a machine-readable log file (name template can use $pkgid, $compiler, $os, $arch, $result)' -r
+complete -c cabal -n "__fish_seen_subcommand_from haddock" -l test-show-details -d '\'always\': always show results of individual test cases.' -r
 complete -c cabal -n "__fish_seen_subcommand_from haddock" -l test-keep-tix-files -d 'keep .tix files for HPC between test runs'
 complete -c cabal -n "__fish_seen_subcommand_from haddock" -l test-wrapper -d 'Run test through a wrapper.' -r
 complete -c cabal -n "__fish_seen_subcommand_from haddock" -l test-fail-when-no-test-suites -d 'Exit with failure when no test suites are found.'
@@ -1846,8 +1846,8 @@ complete -c cabal -n "__fish_seen_subcommand_from exec" -l disable-library-strip
 complete -c cabal -n "__fish_seen_subcommand_from exec" -l configure-option -d 'Extra option for configure' -x
 complete -c cabal -n "__fish_seen_subcommand_from exec" -l user -d 'Enable doing a per-user installation'
 complete -c cabal -n "__fish_seen_subcommand_from exec" -l global -d 'Disable doing a per-user installation'
-complete -c cabal -n "__fish_seen_subcommand_from exec" -l package-db -d 'Append the given package database to the list of package databases used (to satisfy dependencies and register into).' -x
-complete -c cabal -n "__fish_seen_subcommand_from exec" -s f -l flags -d 'Force values for the given flags in Cabal conditionals in the .cabal file.' -x
+complete -c cabal -n "__fish_seen_subcommand_from exec" -l package-db -d 'Append the given package database to the list of package databases used (to satisfy dependencies and register into).' -r
+complete -c cabal -n "__fish_seen_subcommand_from exec" -s f -l flags -d 'Force values for the given flags in Cabal conditionals in the .cabal file.' -r
 complete -c cabal -n "__fish_seen_subcommand_from exec" -l extra-include-dirs -d 'A list of directories to search for header files' -r
 complete -c cabal -n "__fish_seen_subcommand_from exec" -l enable-deterministic -d 'Enable Try to be as deterministic as possible (used by the test suite)'
 complete -c cabal -n "__fish_seen_subcommand_from exec" -l disable-deterministic -d 'Disable Try to be as deterministic as possible (used by the test suite)'
@@ -1878,7 +1878,7 @@ complete -c cabal -n "__fish_seen_subcommand_from exec" -l preference -d 'Specif
 complete -c cabal -n "__fish_seen_subcommand_from exec" -l solver -d 'Select dependency solver to use (default: modular).' -x
 complete -c cabal -n "__fish_seen_subcommand_from exec" -l allow-older -d 'Ignore lower bounds in all dependencies or DEPS' -x
 complete -c cabal -n "__fish_seen_subcommand_from exec" -l allow-newer -d 'Ignore upper bounds in all dependencies or DEPS' -x
-complete -c cabal -n "__fish_seen_subcommand_from exec" -l write-ghc-environment-files -d 'Whether to create a .ghc.environment file after a successful build (v2-build only)' -x
+complete -c cabal -n "__fish_seen_subcommand_from exec" -l write-ghc-environment-files -d 'Whether to create a .ghc.environment file after a successful build (v2-build only)' -r
 complete -c cabal -n "__fish_seen_subcommand_from exec" -l enable-documentation -d 'Enable building of documentation'
 complete -c cabal -n "__fish_seen_subcommand_from exec" -l disable-documentation -d 'Disable building of documentation'
 complete -c cabal -n "__fish_seen_subcommand_from exec" -l doc-index-file -d 'A central index of haddock API documentation (template cannot use $pkgid)' -x
@@ -1902,8 +1902,8 @@ complete -c cabal -n "__fish_seen_subcommand_from exec" -l only-dependencies -d 
 complete -c cabal -n "__fish_seen_subcommand_from exec" -l dependencies-only -d 'A synonym for --only-dependencies'
 complete -c cabal -n "__fish_seen_subcommand_from exec" -l index-state -d 'Use source package index state as it existed at a previous time.' -x
 complete -c cabal -n "__fish_seen_subcommand_from exec" -l root-cmd -d '(No longer supported, do not use.)' -x
-complete -c cabal -n "__fish_seen_subcommand_from exec" -l build-summary -d 'Save build summaries to file (name template can use $pkgid, $compiler, $os, $arch)' -x
-complete -c cabal -n "__fish_seen_subcommand_from exec" -l build-log -d 'Log all builds to file (name template can use $pkgid, $compiler, $os, $arch)' -x
+complete -c cabal -n "__fish_seen_subcommand_from exec" -l build-summary -d 'Save build summaries to file (name template can use $pkgid, $compiler, $os, $arch)' -r
+complete -c cabal -n "__fish_seen_subcommand_from exec" -l build-log -d 'Log all builds to file (name template can use $pkgid, $compiler, $os, $arch)' -r
 complete -c cabal -n "__fish_seen_subcommand_from exec" -l remote-build-reporting -d 'Generate build reports to send to a remote server (none, anonymous or detailed).' -x
 complete -c cabal -n "__fish_seen_subcommand_from exec" -l report-planning-failure -d 'Generate build reports when the dependency solver fails.'
 complete -c cabal -n "__fish_seen_subcommand_from exec" -l enable-per-component -d 'Enable Per-component builds when possible'
@@ -1927,9 +1927,9 @@ complete -c cabal -n "__fish_seen_subcommand_from exec" -l haddock-hyperlink-sou
 complete -c cabal -n "__fish_seen_subcommand_from exec" -l haddock-quickjump -d 'Generate an index for interactive documentation navigation'
 complete -c cabal -n "__fish_seen_subcommand_from exec" -l haddock-hscolour-css -d 'Use PATH as the HsColour stylesheet' -r
 complete -c cabal -n "__fish_seen_subcommand_from exec" -l haddock-contents-location -d 'Bake URL in as the location for the contents page' -x
-complete -c cabal -n "__fish_seen_subcommand_from exec" -l test-log -d 'Log all test suite results to file (name template can use $pkgid, $compiler, $os, $arch, $test-suite, $result)' -x
-complete -c cabal -n "__fish_seen_subcommand_from exec" -l test-machine-log -d 'Produce a machine-readable log file (name template can use $pkgid, $compiler, $os, $arch, $result)' -x
-complete -c cabal -n "__fish_seen_subcommand_from exec" -l test-show-details -d '\'always\': always show results of individual test cases.' -x
+complete -c cabal -n "__fish_seen_subcommand_from exec" -l test-log -d 'Log all test suite results to file (name template can use $pkgid, $compiler, $os, $arch, $test-suite, $result)' -r
+complete -c cabal -n "__fish_seen_subcommand_from exec" -l test-machine-log -d 'Produce a machine-readable log file (name template can use $pkgid, $compiler, $os, $arch, $result)' -r
+complete -c cabal -n "__fish_seen_subcommand_from exec" -l test-show-details -d '\'always\': always show results of individual test cases.' -r
 complete -c cabal -n "__fish_seen_subcommand_from exec" -l test-keep-tix-files -d 'keep .tix files for HPC between test runs'
 complete -c cabal -n "__fish_seen_subcommand_from exec" -l test-wrapper -d 'Run test through a wrapper.' -r
 complete -c cabal -n "__fish_seen_subcommand_from exec" -l test-fail-when-no-test-suites -d 'Exit with failure when no test suites are found.'
@@ -2001,8 +2001,8 @@ complete -c cabal -n "__fish_seen_subcommand_from list-bin" -l disable-library-s
 complete -c cabal -n "__fish_seen_subcommand_from list-bin" -l configure-option -d 'Extra option for configure' -x
 complete -c cabal -n "__fish_seen_subcommand_from list-bin" -l user -d 'Enable doing a per-user installation'
 complete -c cabal -n "__fish_seen_subcommand_from list-bin" -l global -d 'Disable doing a per-user installation'
-complete -c cabal -n "__fish_seen_subcommand_from list-bin" -l package-db -d 'Append the given package database to the list of package databases used (to satisfy dependencies and register into).' -x
-complete -c cabal -n "__fish_seen_subcommand_from list-bin" -s f -l flags -d 'Force values for the given flags in Cabal conditionals in the .cabal file.' -x
+complete -c cabal -n "__fish_seen_subcommand_from list-bin" -l package-db -d 'Append the given package database to the list of package databases used (to satisfy dependencies and register into).' -r
+complete -c cabal -n "__fish_seen_subcommand_from list-bin" -s f -l flags -d 'Force values for the given flags in Cabal conditionals in the .cabal file.' -r
 complete -c cabal -n "__fish_seen_subcommand_from list-bin" -l extra-include-dirs -d 'A list of directories to search for header files' -r
 complete -c cabal -n "__fish_seen_subcommand_from list-bin" -l enable-deterministic -d 'Enable Try to be as deterministic as possible (used by the test suite)'
 complete -c cabal -n "__fish_seen_subcommand_from list-bin" -l disable-deterministic -d 'Disable Try to be as deterministic as possible (used by the test suite)'
@@ -2033,7 +2033,7 @@ complete -c cabal -n "__fish_seen_subcommand_from list-bin" -l preference -d 'Sp
 complete -c cabal -n "__fish_seen_subcommand_from list-bin" -l solver -d 'Select dependency solver to use (default: modular).' -x
 complete -c cabal -n "__fish_seen_subcommand_from list-bin" -l allow-older -d 'Ignore lower bounds in all dependencies or DEPS' -x
 complete -c cabal -n "__fish_seen_subcommand_from list-bin" -l allow-newer -d 'Ignore upper bounds in all dependencies or DEPS' -x
-complete -c cabal -n "__fish_seen_subcommand_from list-bin" -l write-ghc-environment-files -d 'Whether to create a .ghc.environment file after a successful build (v2-build only)' -x
+complete -c cabal -n "__fish_seen_subcommand_from list-bin" -l write-ghc-environment-files -d 'Whether to create a .ghc.environment file after a successful build (v2-build only)' -r
 complete -c cabal -n "__fish_seen_subcommand_from list-bin" -l enable-documentation -d 'Enable building of documentation'
 complete -c cabal -n "__fish_seen_subcommand_from list-bin" -l disable-documentation -d 'Disable building of documentation'
 complete -c cabal -n "__fish_seen_subcommand_from list-bin" -l doc-index-file -d 'A central index of haddock API documentation (template cannot use $pkgid)' -x
@@ -2057,8 +2057,8 @@ complete -c cabal -n "__fish_seen_subcommand_from list-bin" -l only-dependencies
 complete -c cabal -n "__fish_seen_subcommand_from list-bin" -l dependencies-only -d 'A synonym for --only-dependencies'
 complete -c cabal -n "__fish_seen_subcommand_from list-bin" -l index-state -d 'Use source package index state as it existed at a previous time.' -x
 complete -c cabal -n "__fish_seen_subcommand_from list-bin" -l root-cmd -d '(No longer supported, do not use.)' -x
-complete -c cabal -n "__fish_seen_subcommand_from list-bin" -l build-summary -d 'Save build summaries to file (name template can use $pkgid, $compiler, $os, $arch)' -x
-complete -c cabal -n "__fish_seen_subcommand_from list-bin" -l build-log -d 'Log all builds to file (name template can use $pkgid, $compiler, $os, $arch)' -x
+complete -c cabal -n "__fish_seen_subcommand_from list-bin" -l build-summary -d 'Save build summaries to file (name template can use $pkgid, $compiler, $os, $arch)' -r
+complete -c cabal -n "__fish_seen_subcommand_from list-bin" -l build-log -d 'Log all builds to file (name template can use $pkgid, $compiler, $os, $arch)' -r
 complete -c cabal -n "__fish_seen_subcommand_from list-bin" -l remote-build-reporting -d 'Generate build reports to send to a remote server (none, anonymous or detailed).' -x
 complete -c cabal -n "__fish_seen_subcommand_from list-bin" -l report-planning-failure -d 'Generate build reports when the dependency solver fails.'
 complete -c cabal -n "__fish_seen_subcommand_from list-bin" -l enable-per-component -d 'Enable Per-component builds when possible'
@@ -2082,9 +2082,9 @@ complete -c cabal -n "__fish_seen_subcommand_from list-bin" -l haddock-hyperlink
 complete -c cabal -n "__fish_seen_subcommand_from list-bin" -l haddock-quickjump -d 'Generate an index for interactive documentation navigation'
 complete -c cabal -n "__fish_seen_subcommand_from list-bin" -l haddock-hscolour-css -d 'Use PATH as the HsColour stylesheet' -r
 complete -c cabal -n "__fish_seen_subcommand_from list-bin" -l haddock-contents-location -d 'Bake URL in as the location for the contents page' -x
-complete -c cabal -n "__fish_seen_subcommand_from list-bin" -l test-log -d 'Log all test suite results to file (name template can use $pkgid, $compiler, $os, $arch, $test-suite, $result)' -x
-complete -c cabal -n "__fish_seen_subcommand_from list-bin" -l test-machine-log -d 'Produce a machine-readable log file (name template can use $pkgid, $compiler, $os, $arch, $result)' -x
-complete -c cabal -n "__fish_seen_subcommand_from list-bin" -l test-show-details -d '\'always\': always show results of individual test cases.' -x
+complete -c cabal -n "__fish_seen_subcommand_from list-bin" -l test-log -d 'Log all test suite results to file (name template can use $pkgid, $compiler, $os, $arch, $test-suite, $result)' -r
+complete -c cabal -n "__fish_seen_subcommand_from list-bin" -l test-machine-log -d 'Produce a machine-readable log file (name template can use $pkgid, $compiler, $os, $arch, $result)' -r
+complete -c cabal -n "__fish_seen_subcommand_from list-bin" -l test-show-details -d '\'always\': always show results of individual test cases.' -r
 complete -c cabal -n "__fish_seen_subcommand_from list-bin" -l test-keep-tix-files -d 'keep .tix files for HPC between test runs'
 complete -c cabal -n "__fish_seen_subcommand_from list-bin" -l test-wrapper -d 'Run test through a wrapper.' -r
 complete -c cabal -n "__fish_seen_subcommand_from list-bin" -l test-fail-when-no-test-suites -d 'Exit with failure when no test suites are found.'
@@ -2157,8 +2157,8 @@ complete -c cabal -n "__fish_seen_subcommand_from v2-build" -l disable-library-s
 complete -c cabal -n "__fish_seen_subcommand_from v2-build" -l configure-option -d 'Extra option for configure' -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-build" -l user -d 'Enable doing a per-user installation'
 complete -c cabal -n "__fish_seen_subcommand_from v2-build" -l global -d 'Disable doing a per-user installation'
-complete -c cabal -n "__fish_seen_subcommand_from v2-build" -l package-db -d 'Append the given package database to the list of package databases used (to satisfy dependencies and register into).' -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-build" -s f -l flags -d 'Force values for the given flags in Cabal conditionals in the .cabal file.' -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-build" -l package-db -d 'Append the given package database to the list of package databases used (to satisfy dependencies and register into).' -r
+complete -c cabal -n "__fish_seen_subcommand_from v2-build" -s f -l flags -d 'Force values for the given flags in Cabal conditionals in the .cabal file.' -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-build" -l extra-include-dirs -d 'A list of directories to search for header files' -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-build" -l enable-deterministic -d 'Enable Try to be as deterministic as possible (used by the test suite)'
 complete -c cabal -n "__fish_seen_subcommand_from v2-build" -l disable-deterministic -d 'Disable Try to be as deterministic as possible (used by the test suite)'
@@ -2189,7 +2189,7 @@ complete -c cabal -n "__fish_seen_subcommand_from v2-build" -l preference -d 'Sp
 complete -c cabal -n "__fish_seen_subcommand_from v2-build" -l solver -d 'Select dependency solver to use (default: modular).' -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-build" -l allow-older -d 'Ignore lower bounds in all dependencies or DEPS' -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-build" -l allow-newer -d 'Ignore upper bounds in all dependencies or DEPS' -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-build" -l write-ghc-environment-files -d 'Whether to create a .ghc.environment file after a successful build (v2-build only)' -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-build" -l write-ghc-environment-files -d 'Whether to create a .ghc.environment file after a successful build (v2-build only)' -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-build" -l enable-documentation -d 'Enable building of documentation'
 complete -c cabal -n "__fish_seen_subcommand_from v2-build" -l disable-documentation -d 'Disable building of documentation'
 complete -c cabal -n "__fish_seen_subcommand_from v2-build" -l doc-index-file -d 'A central index of haddock API documentation (template cannot use $pkgid)' -x
@@ -2213,8 +2213,8 @@ complete -c cabal -n "__fish_seen_subcommand_from v2-build" -l only-dependencies
 complete -c cabal -n "__fish_seen_subcommand_from v2-build" -l dependencies-only -d 'A synonym for --only-dependencies'
 complete -c cabal -n "__fish_seen_subcommand_from v2-build" -l index-state -d 'Use source package index state as it existed at a previous time.' -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-build" -l root-cmd -d '(No longer supported, do not use.)' -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-build" -l build-summary -d 'Save build summaries to file (name template can use $pkgid, $compiler, $os, $arch)' -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-build" -l build-log -d 'Log all builds to file (name template can use $pkgid, $compiler, $os, $arch)' -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-build" -l build-summary -d 'Save build summaries to file (name template can use $pkgid, $compiler, $os, $arch)' -r
+complete -c cabal -n "__fish_seen_subcommand_from v2-build" -l build-log -d 'Log all builds to file (name template can use $pkgid, $compiler, $os, $arch)' -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-build" -l remote-build-reporting -d 'Generate build reports to send to a remote server (none, anonymous or detailed).' -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-build" -l report-planning-failure -d 'Generate build reports when the dependency solver fails.'
 complete -c cabal -n "__fish_seen_subcommand_from v2-build" -l enable-per-component -d 'Enable Per-component builds when possible'
@@ -2238,9 +2238,9 @@ complete -c cabal -n "__fish_seen_subcommand_from v2-build" -l haddock-hyperlink
 complete -c cabal -n "__fish_seen_subcommand_from v2-build" -l haddock-quickjump -d 'Generate an index for interactive documentation navigation'
 complete -c cabal -n "__fish_seen_subcommand_from v2-build" -l haddock-hscolour-css -d 'Use PATH as the HsColour stylesheet' -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-build" -l haddock-contents-location -d 'Bake URL in as the location for the contents page' -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-build" -l test-log -d 'Log all test suite results to file (name template can use $pkgid, $compiler, $os, $arch, $test-suite, $result)' -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-build" -l test-machine-log -d 'Produce a machine-readable log file (name template can use $pkgid, $compiler, $os, $arch, $result)' -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-build" -l test-show-details -d '\'always\': always show results of individual test cases.' -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-build" -l test-log -d 'Log all test suite results to file (name template can use $pkgid, $compiler, $os, $arch, $test-suite, $result)' -r
+complete -c cabal -n "__fish_seen_subcommand_from v2-build" -l test-machine-log -d 'Produce a machine-readable log file (name template can use $pkgid, $compiler, $os, $arch, $result)' -r
+complete -c cabal -n "__fish_seen_subcommand_from v2-build" -l test-show-details -d '\'always\': always show results of individual test cases.' -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-build" -l test-keep-tix-files -d 'keep .tix files for HPC between test runs'
 complete -c cabal -n "__fish_seen_subcommand_from v2-build" -l test-wrapper -d 'Run test through a wrapper.' -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-build" -l test-fail-when-no-test-suites -d 'Exit with failure when no test suites are found.'
@@ -2313,8 +2313,8 @@ complete -c cabal -n "__fish_seen_subcommand_from v2-configure" -l disable-libra
 complete -c cabal -n "__fish_seen_subcommand_from v2-configure" -l configure-option -d 'Extra option for configure' -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-configure" -l user -d 'Enable doing a per-user installation'
 complete -c cabal -n "__fish_seen_subcommand_from v2-configure" -l global -d 'Disable doing a per-user installation'
-complete -c cabal -n "__fish_seen_subcommand_from v2-configure" -l package-db -d 'Append the given package database to the list of package databases used (to satisfy dependencies and register into).' -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-configure" -s f -l flags -d 'Force values for the given flags in Cabal conditionals in the .cabal file.' -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-configure" -l package-db -d 'Append the given package database to the list of package databases used (to satisfy dependencies and register into).' -r
+complete -c cabal -n "__fish_seen_subcommand_from v2-configure" -s f -l flags -d 'Force values for the given flags in Cabal conditionals in the .cabal file.' -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-configure" -l extra-include-dirs -d 'A list of directories to search for header files' -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-configure" -l enable-deterministic -d 'Enable Try to be as deterministic as possible (used by the test suite)'
 complete -c cabal -n "__fish_seen_subcommand_from v2-configure" -l disable-deterministic -d 'Disable Try to be as deterministic as possible (used by the test suite)'
@@ -2345,7 +2345,7 @@ complete -c cabal -n "__fish_seen_subcommand_from v2-configure" -l preference -d
 complete -c cabal -n "__fish_seen_subcommand_from v2-configure" -l solver -d 'Select dependency solver to use (default: modular).' -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-configure" -l allow-older -d 'Ignore lower bounds in all dependencies or DEPS' -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-configure" -l allow-newer -d 'Ignore upper bounds in all dependencies or DEPS' -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-configure" -l write-ghc-environment-files -d 'Whether to create a .ghc.environment file after a successful build (v2-build only)' -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-configure" -l write-ghc-environment-files -d 'Whether to create a .ghc.environment file after a successful build (v2-build only)' -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-configure" -l enable-documentation -d 'Enable building of documentation'
 complete -c cabal -n "__fish_seen_subcommand_from v2-configure" -l disable-documentation -d 'Disable building of documentation'
 complete -c cabal -n "__fish_seen_subcommand_from v2-configure" -l doc-index-file -d 'A central index of haddock API documentation (template cannot use $pkgid)' -x
@@ -2369,8 +2369,8 @@ complete -c cabal -n "__fish_seen_subcommand_from v2-configure" -l only-dependen
 complete -c cabal -n "__fish_seen_subcommand_from v2-configure" -l dependencies-only -d 'A synonym for --only-dependencies'
 complete -c cabal -n "__fish_seen_subcommand_from v2-configure" -l index-state -d 'Use source package index state as it existed at a previous time.' -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-configure" -l root-cmd -d '(No longer supported, do not use.)' -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-configure" -l build-summary -d 'Save build summaries to file (name template can use $pkgid, $compiler, $os, $arch)' -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-configure" -l build-log -d 'Log all builds to file (name template can use $pkgid, $compiler, $os, $arch)' -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-configure" -l build-summary -d 'Save build summaries to file (name template can use $pkgid, $compiler, $os, $arch)' -r
+complete -c cabal -n "__fish_seen_subcommand_from v2-configure" -l build-log -d 'Log all builds to file (name template can use $pkgid, $compiler, $os, $arch)' -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-configure" -l remote-build-reporting -d 'Generate build reports to send to a remote server (none, anonymous or detailed).' -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-configure" -l report-planning-failure -d 'Generate build reports when the dependency solver fails.'
 complete -c cabal -n "__fish_seen_subcommand_from v2-configure" -l enable-per-component -d 'Enable Per-component builds when possible'
@@ -2394,9 +2394,9 @@ complete -c cabal -n "__fish_seen_subcommand_from v2-configure" -l haddock-hyper
 complete -c cabal -n "__fish_seen_subcommand_from v2-configure" -l haddock-quickjump -d 'Generate an index for interactive documentation navigation'
 complete -c cabal -n "__fish_seen_subcommand_from v2-configure" -l haddock-hscolour-css -d 'Use PATH as the HsColour stylesheet' -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-configure" -l haddock-contents-location -d 'Bake URL in as the location for the contents page' -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-configure" -l test-log -d 'Log all test suite results to file (name template can use $pkgid, $compiler, $os, $arch, $test-suite, $result)' -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-configure" -l test-machine-log -d 'Produce a machine-readable log file (name template can use $pkgid, $compiler, $os, $arch, $result)' -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-configure" -l test-show-details -d '\'always\': always show results of individual test cases.' -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-configure" -l test-log -d 'Log all test suite results to file (name template can use $pkgid, $compiler, $os, $arch, $test-suite, $result)' -r
+complete -c cabal -n "__fish_seen_subcommand_from v2-configure" -l test-machine-log -d 'Produce a machine-readable log file (name template can use $pkgid, $compiler, $os, $arch, $result)' -r
+complete -c cabal -n "__fish_seen_subcommand_from v2-configure" -l test-show-details -d '\'always\': always show results of individual test cases.' -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-configure" -l test-keep-tix-files -d 'keep .tix files for HPC between test runs'
 complete -c cabal -n "__fish_seen_subcommand_from v2-configure" -l test-wrapper -d 'Run test through a wrapper.' -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-configure" -l test-fail-when-no-test-suites -d 'Exit with failure when no test suites are found.'
@@ -2468,8 +2468,8 @@ complete -c cabal -n "__fish_seen_subcommand_from v2-repl" -l disable-library-st
 complete -c cabal -n "__fish_seen_subcommand_from v2-repl" -l configure-option -d 'Extra option for configure' -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-repl" -l user -d 'Enable doing a per-user installation'
 complete -c cabal -n "__fish_seen_subcommand_from v2-repl" -l global -d 'Disable doing a per-user installation'
-complete -c cabal -n "__fish_seen_subcommand_from v2-repl" -l package-db -d 'Append the given package database to the list of package databases used (to satisfy dependencies and register into).' -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-repl" -s f -l flags -d 'Force values for the given flags in Cabal conditionals in the .cabal file.' -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-repl" -l package-db -d 'Append the given package database to the list of package databases used (to satisfy dependencies and register into).' -r
+complete -c cabal -n "__fish_seen_subcommand_from v2-repl" -s f -l flags -d 'Force values for the given flags in Cabal conditionals in the .cabal file.' -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-repl" -l extra-include-dirs -d 'A list of directories to search for header files' -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-repl" -l enable-deterministic -d 'Enable Try to be as deterministic as possible (used by the test suite)'
 complete -c cabal -n "__fish_seen_subcommand_from v2-repl" -l disable-deterministic -d 'Disable Try to be as deterministic as possible (used by the test suite)'
@@ -2500,7 +2500,7 @@ complete -c cabal -n "__fish_seen_subcommand_from v2-repl" -l preference -d 'Spe
 complete -c cabal -n "__fish_seen_subcommand_from v2-repl" -l solver -d 'Select dependency solver to use (default: modular).' -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-repl" -l allow-older -d 'Ignore lower bounds in all dependencies or DEPS' -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-repl" -l allow-newer -d 'Ignore upper bounds in all dependencies or DEPS' -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-repl" -l write-ghc-environment-files -d 'Whether to create a .ghc.environment file after a successful build (v2-build only)' -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-repl" -l write-ghc-environment-files -d 'Whether to create a .ghc.environment file after a successful build (v2-build only)' -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-repl" -l enable-documentation -d 'Enable building of documentation'
 complete -c cabal -n "__fish_seen_subcommand_from v2-repl" -l disable-documentation -d 'Disable building of documentation'
 complete -c cabal -n "__fish_seen_subcommand_from v2-repl" -l doc-index-file -d 'A central index of haddock API documentation (template cannot use $pkgid)' -x
@@ -2524,8 +2524,8 @@ complete -c cabal -n "__fish_seen_subcommand_from v2-repl" -l only-dependencies 
 complete -c cabal -n "__fish_seen_subcommand_from v2-repl" -l dependencies-only -d 'A synonym for --only-dependencies'
 complete -c cabal -n "__fish_seen_subcommand_from v2-repl" -l index-state -d 'Use source package index state as it existed at a previous time.' -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-repl" -l root-cmd -d '(No longer supported, do not use.)' -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-repl" -l build-summary -d 'Save build summaries to file (name template can use $pkgid, $compiler, $os, $arch)' -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-repl" -l build-log -d 'Log all builds to file (name template can use $pkgid, $compiler, $os, $arch)' -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-repl" -l build-summary -d 'Save build summaries to file (name template can use $pkgid, $compiler, $os, $arch)' -r
+complete -c cabal -n "__fish_seen_subcommand_from v2-repl" -l build-log -d 'Log all builds to file (name template can use $pkgid, $compiler, $os, $arch)' -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-repl" -l remote-build-reporting -d 'Generate build reports to send to a remote server (none, anonymous or detailed).' -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-repl" -l report-planning-failure -d 'Generate build reports when the dependency solver fails.'
 complete -c cabal -n "__fish_seen_subcommand_from v2-repl" -l enable-per-component -d 'Enable Per-component builds when possible'
@@ -2549,9 +2549,9 @@ complete -c cabal -n "__fish_seen_subcommand_from v2-repl" -l haddock-hyperlink-
 complete -c cabal -n "__fish_seen_subcommand_from v2-repl" -l haddock-quickjump -d 'Generate an index for interactive documentation navigation'
 complete -c cabal -n "__fish_seen_subcommand_from v2-repl" -l haddock-hscolour-css -d 'Use PATH as the HsColour stylesheet' -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-repl" -l haddock-contents-location -d 'Bake URL in as the location for the contents page' -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-repl" -l test-log -d 'Log all test suite results to file (name template can use $pkgid, $compiler, $os, $arch, $test-suite, $result)' -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-repl" -l test-machine-log -d 'Produce a machine-readable log file (name template can use $pkgid, $compiler, $os, $arch, $result)' -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-repl" -l test-show-details -d '\'always\': always show results of individual test cases.' -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-repl" -l test-log -d 'Log all test suite results to file (name template can use $pkgid, $compiler, $os, $arch, $test-suite, $result)' -r
+complete -c cabal -n "__fish_seen_subcommand_from v2-repl" -l test-machine-log -d 'Produce a machine-readable log file (name template can use $pkgid, $compiler, $os, $arch, $result)' -r
+complete -c cabal -n "__fish_seen_subcommand_from v2-repl" -l test-show-details -d '\'always\': always show results of individual test cases.' -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-repl" -l test-keep-tix-files -d 'keep .tix files for HPC between test runs'
 complete -c cabal -n "__fish_seen_subcommand_from v2-repl" -l test-wrapper -d 'Run test through a wrapper.' -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-repl" -l test-fail-when-no-test-suites -d 'Exit with failure when no test suites are found.'
@@ -2627,8 +2627,8 @@ complete -c cabal -n "__fish_seen_subcommand_from v2-run" -l disable-library-str
 complete -c cabal -n "__fish_seen_subcommand_from v2-run" -l configure-option -d 'Extra option for configure' -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-run" -l user -d 'Enable doing a per-user installation'
 complete -c cabal -n "__fish_seen_subcommand_from v2-run" -l global -d 'Disable doing a per-user installation'
-complete -c cabal -n "__fish_seen_subcommand_from v2-run" -l package-db -d 'Append the given package database to the list of package databases used (to satisfy dependencies and register into).' -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-run" -s f -l flags -d 'Force values for the given flags in Cabal conditionals in the .cabal file.' -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-run" -l package-db -d 'Append the given package database to the list of package databases used (to satisfy dependencies and register into).' -r
+complete -c cabal -n "__fish_seen_subcommand_from v2-run" -s f -l flags -d 'Force values for the given flags in Cabal conditionals in the .cabal file.' -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-run" -l extra-include-dirs -d 'A list of directories to search for header files' -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-run" -l enable-deterministic -d 'Enable Try to be as deterministic as possible (used by the test suite)'
 complete -c cabal -n "__fish_seen_subcommand_from v2-run" -l disable-deterministic -d 'Disable Try to be as deterministic as possible (used by the test suite)'
@@ -2659,7 +2659,7 @@ complete -c cabal -n "__fish_seen_subcommand_from v2-run" -l preference -d 'Spec
 complete -c cabal -n "__fish_seen_subcommand_from v2-run" -l solver -d 'Select dependency solver to use (default: modular).' -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-run" -l allow-older -d 'Ignore lower bounds in all dependencies or DEPS' -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-run" -l allow-newer -d 'Ignore upper bounds in all dependencies or DEPS' -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-run" -l write-ghc-environment-files -d 'Whether to create a .ghc.environment file after a successful build (v2-build only)' -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-run" -l write-ghc-environment-files -d 'Whether to create a .ghc.environment file after a successful build (v2-build only)' -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-run" -l enable-documentation -d 'Enable building of documentation'
 complete -c cabal -n "__fish_seen_subcommand_from v2-run" -l disable-documentation -d 'Disable building of documentation'
 complete -c cabal -n "__fish_seen_subcommand_from v2-run" -l doc-index-file -d 'A central index of haddock API documentation (template cannot use $pkgid)' -x
@@ -2683,8 +2683,8 @@ complete -c cabal -n "__fish_seen_subcommand_from v2-run" -l only-dependencies -
 complete -c cabal -n "__fish_seen_subcommand_from v2-run" -l dependencies-only -d 'A synonym for --only-dependencies'
 complete -c cabal -n "__fish_seen_subcommand_from v2-run" -l index-state -d 'Use source package index state as it existed at a previous time.' -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-run" -l root-cmd -d '(No longer supported, do not use.)' -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-run" -l build-summary -d 'Save build summaries to file (name template can use $pkgid, $compiler, $os, $arch)' -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-run" -l build-log -d 'Log all builds to file (name template can use $pkgid, $compiler, $os, $arch)' -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-run" -l build-summary -d 'Save build summaries to file (name template can use $pkgid, $compiler, $os, $arch)' -r
+complete -c cabal -n "__fish_seen_subcommand_from v2-run" -l build-log -d 'Log all builds to file (name template can use $pkgid, $compiler, $os, $arch)' -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-run" -l remote-build-reporting -d 'Generate build reports to send to a remote server (none, anonymous or detailed).' -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-run" -l report-planning-failure -d 'Generate build reports when the dependency solver fails.'
 complete -c cabal -n "__fish_seen_subcommand_from v2-run" -l enable-per-component -d 'Enable Per-component builds when possible'
@@ -2708,9 +2708,9 @@ complete -c cabal -n "__fish_seen_subcommand_from v2-run" -l haddock-hyperlink-s
 complete -c cabal -n "__fish_seen_subcommand_from v2-run" -l haddock-quickjump -d 'Generate an index for interactive documentation navigation'
 complete -c cabal -n "__fish_seen_subcommand_from v2-run" -l haddock-hscolour-css -d 'Use PATH as the HsColour stylesheet' -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-run" -l haddock-contents-location -d 'Bake URL in as the location for the contents page' -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-run" -l test-log -d 'Log all test suite results to file (name template can use $pkgid, $compiler, $os, $arch, $test-suite, $result)' -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-run" -l test-machine-log -d 'Produce a machine-readable log file (name template can use $pkgid, $compiler, $os, $arch, $result)' -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-run" -l test-show-details -d '\'always\': always show results of individual test cases.' -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-run" -l test-log -d 'Log all test suite results to file (name template can use $pkgid, $compiler, $os, $arch, $test-suite, $result)' -r
+complete -c cabal -n "__fish_seen_subcommand_from v2-run" -l test-machine-log -d 'Produce a machine-readable log file (name template can use $pkgid, $compiler, $os, $arch, $result)' -r
+complete -c cabal -n "__fish_seen_subcommand_from v2-run" -l test-show-details -d '\'always\': always show results of individual test cases.' -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-run" -l test-keep-tix-files -d 'keep .tix files for HPC between test runs'
 complete -c cabal -n "__fish_seen_subcommand_from v2-run" -l test-wrapper -d 'Run test through a wrapper.' -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-run" -l test-fail-when-no-test-suites -d 'Exit with failure when no test suites are found.'
@@ -2783,8 +2783,8 @@ complete -c cabal -n "__fish_seen_subcommand_from v2-test" -l disable-library-st
 complete -c cabal -n "__fish_seen_subcommand_from v2-test" -l configure-option -d 'Extra option for configure' -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-test" -l user -d 'Enable doing a per-user installation'
 complete -c cabal -n "__fish_seen_subcommand_from v2-test" -l global -d 'Disable doing a per-user installation'
-complete -c cabal -n "__fish_seen_subcommand_from v2-test" -l package-db -d 'Append the given package database to the list of package databases used (to satisfy dependencies and register into).' -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-test" -s f -l flags -d 'Force values for the given flags in Cabal conditionals in the .cabal file.' -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-test" -l package-db -d 'Append the given package database to the list of package databases used (to satisfy dependencies and register into).' -r
+complete -c cabal -n "__fish_seen_subcommand_from v2-test" -s f -l flags -d 'Force values for the given flags in Cabal conditionals in the .cabal file.' -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-test" -l extra-include-dirs -d 'A list of directories to search for header files' -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-test" -l enable-deterministic -d 'Enable Try to be as deterministic as possible (used by the test suite)'
 complete -c cabal -n "__fish_seen_subcommand_from v2-test" -l disable-deterministic -d 'Disable Try to be as deterministic as possible (used by the test suite)'
@@ -2815,7 +2815,7 @@ complete -c cabal -n "__fish_seen_subcommand_from v2-test" -l preference -d 'Spe
 complete -c cabal -n "__fish_seen_subcommand_from v2-test" -l solver -d 'Select dependency solver to use (default: modular).' -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-test" -l allow-older -d 'Ignore lower bounds in all dependencies or DEPS' -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-test" -l allow-newer -d 'Ignore upper bounds in all dependencies or DEPS' -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-test" -l write-ghc-environment-files -d 'Whether to create a .ghc.environment file after a successful build (v2-build only)' -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-test" -l write-ghc-environment-files -d 'Whether to create a .ghc.environment file after a successful build (v2-build only)' -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-test" -l enable-documentation -d 'Enable building of documentation'
 complete -c cabal -n "__fish_seen_subcommand_from v2-test" -l disable-documentation -d 'Disable building of documentation'
 complete -c cabal -n "__fish_seen_subcommand_from v2-test" -l doc-index-file -d 'A central index of haddock API documentation (template cannot use $pkgid)' -x
@@ -2839,8 +2839,8 @@ complete -c cabal -n "__fish_seen_subcommand_from v2-test" -l only-dependencies 
 complete -c cabal -n "__fish_seen_subcommand_from v2-test" -l dependencies-only -d 'A synonym for --only-dependencies'
 complete -c cabal -n "__fish_seen_subcommand_from v2-test" -l index-state -d 'Use source package index state as it existed at a previous time.' -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-test" -l root-cmd -d '(No longer supported, do not use.)' -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-test" -l build-summary -d 'Save build summaries to file (name template can use $pkgid, $compiler, $os, $arch)' -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-test" -l build-log -d 'Log all builds to file (name template can use $pkgid, $compiler, $os, $arch)' -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-test" -l build-summary -d 'Save build summaries to file (name template can use $pkgid, $compiler, $os, $arch)' -r
+complete -c cabal -n "__fish_seen_subcommand_from v2-test" -l build-log -d 'Log all builds to file (name template can use $pkgid, $compiler, $os, $arch)' -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-test" -l remote-build-reporting -d 'Generate build reports to send to a remote server (none, anonymous or detailed).' -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-test" -l report-planning-failure -d 'Generate build reports when the dependency solver fails.'
 complete -c cabal -n "__fish_seen_subcommand_from v2-test" -l enable-per-component -d 'Enable Per-component builds when possible'
@@ -2864,9 +2864,9 @@ complete -c cabal -n "__fish_seen_subcommand_from v2-test" -l haddock-hyperlink-
 complete -c cabal -n "__fish_seen_subcommand_from v2-test" -l haddock-quickjump -d 'Generate an index for interactive documentation navigation'
 complete -c cabal -n "__fish_seen_subcommand_from v2-test" -l haddock-hscolour-css -d 'Use PATH as the HsColour stylesheet' -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-test" -l haddock-contents-location -d 'Bake URL in as the location for the contents page' -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-test" -l test-log -d 'Log all test suite results to file (name template can use $pkgid, $compiler, $os, $arch, $test-suite, $result)' -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-test" -l test-machine-log -d 'Produce a machine-readable log file (name template can use $pkgid, $compiler, $os, $arch, $result)' -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-test" -l test-show-details -d '\'always\': always show results of individual test cases.' -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-test" -l test-log -d 'Log all test suite results to file (name template can use $pkgid, $compiler, $os, $arch, $test-suite, $result)' -r
+complete -c cabal -n "__fish_seen_subcommand_from v2-test" -l test-machine-log -d 'Produce a machine-readable log file (name template can use $pkgid, $compiler, $os, $arch, $result)' -r
+complete -c cabal -n "__fish_seen_subcommand_from v2-test" -l test-show-details -d '\'always\': always show results of individual test cases.' -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-test" -l test-keep-tix-files -d 'keep .tix files for HPC between test runs'
 complete -c cabal -n "__fish_seen_subcommand_from v2-test" -l test-wrapper -d 'Run test through a wrapper.' -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-test" -l test-fail-when-no-test-suites -d 'Exit with failure when no test suites are found.'
@@ -2939,8 +2939,8 @@ complete -c cabal -n "__fish_seen_subcommand_from v2-bench" -l disable-library-s
 complete -c cabal -n "__fish_seen_subcommand_from v2-bench" -l configure-option -d 'Extra option for configure' -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-bench" -l user -d 'Enable doing a per-user installation'
 complete -c cabal -n "__fish_seen_subcommand_from v2-bench" -l global -d 'Disable doing a per-user installation'
-complete -c cabal -n "__fish_seen_subcommand_from v2-bench" -l package-db -d 'Append the given package database to the list of package databases used (to satisfy dependencies and register into).' -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-bench" -s f -l flags -d 'Force values for the given flags in Cabal conditionals in the .cabal file.' -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-bench" -l package-db -d 'Append the given package database to the list of package databases used (to satisfy dependencies and register into).' -r
+complete -c cabal -n "__fish_seen_subcommand_from v2-bench" -s f -l flags -d 'Force values for the given flags in Cabal conditionals in the .cabal file.' -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-bench" -l extra-include-dirs -d 'A list of directories to search for header files' -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-bench" -l enable-deterministic -d 'Enable Try to be as deterministic as possible (used by the test suite)'
 complete -c cabal -n "__fish_seen_subcommand_from v2-bench" -l disable-deterministic -d 'Disable Try to be as deterministic as possible (used by the test suite)'
@@ -2971,7 +2971,7 @@ complete -c cabal -n "__fish_seen_subcommand_from v2-bench" -l preference -d 'Sp
 complete -c cabal -n "__fish_seen_subcommand_from v2-bench" -l solver -d 'Select dependency solver to use (default: modular).' -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-bench" -l allow-older -d 'Ignore lower bounds in all dependencies or DEPS' -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-bench" -l allow-newer -d 'Ignore upper bounds in all dependencies or DEPS' -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-bench" -l write-ghc-environment-files -d 'Whether to create a .ghc.environment file after a successful build (v2-build only)' -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-bench" -l write-ghc-environment-files -d 'Whether to create a .ghc.environment file after a successful build (v2-build only)' -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-bench" -l enable-documentation -d 'Enable building of documentation'
 complete -c cabal -n "__fish_seen_subcommand_from v2-bench" -l disable-documentation -d 'Disable building of documentation'
 complete -c cabal -n "__fish_seen_subcommand_from v2-bench" -l doc-index-file -d 'A central index of haddock API documentation (template cannot use $pkgid)' -x
@@ -2995,8 +2995,8 @@ complete -c cabal -n "__fish_seen_subcommand_from v2-bench" -l only-dependencies
 complete -c cabal -n "__fish_seen_subcommand_from v2-bench" -l dependencies-only -d 'A synonym for --only-dependencies'
 complete -c cabal -n "__fish_seen_subcommand_from v2-bench" -l index-state -d 'Use source package index state as it existed at a previous time.' -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-bench" -l root-cmd -d '(No longer supported, do not use.)' -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-bench" -l build-summary -d 'Save build summaries to file (name template can use $pkgid, $compiler, $os, $arch)' -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-bench" -l build-log -d 'Log all builds to file (name template can use $pkgid, $compiler, $os, $arch)' -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-bench" -l build-summary -d 'Save build summaries to file (name template can use $pkgid, $compiler, $os, $arch)' -r
+complete -c cabal -n "__fish_seen_subcommand_from v2-bench" -l build-log -d 'Log all builds to file (name template can use $pkgid, $compiler, $os, $arch)' -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-bench" -l remote-build-reporting -d 'Generate build reports to send to a remote server (none, anonymous or detailed).' -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-bench" -l report-planning-failure -d 'Generate build reports when the dependency solver fails.'
 complete -c cabal -n "__fish_seen_subcommand_from v2-bench" -l enable-per-component -d 'Enable Per-component builds when possible'
@@ -3020,9 +3020,9 @@ complete -c cabal -n "__fish_seen_subcommand_from v2-bench" -l haddock-hyperlink
 complete -c cabal -n "__fish_seen_subcommand_from v2-bench" -l haddock-quickjump -d 'Generate an index for interactive documentation navigation'
 complete -c cabal -n "__fish_seen_subcommand_from v2-bench" -l haddock-hscolour-css -d 'Use PATH as the HsColour stylesheet' -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-bench" -l haddock-contents-location -d 'Bake URL in as the location for the contents page' -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-bench" -l test-log -d 'Log all test suite results to file (name template can use $pkgid, $compiler, $os, $arch, $test-suite, $result)' -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-bench" -l test-machine-log -d 'Produce a machine-readable log file (name template can use $pkgid, $compiler, $os, $arch, $result)' -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-bench" -l test-show-details -d '\'always\': always show results of individual test cases.' -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-bench" -l test-log -d 'Log all test suite results to file (name template can use $pkgid, $compiler, $os, $arch, $test-suite, $result)' -r
+complete -c cabal -n "__fish_seen_subcommand_from v2-bench" -l test-machine-log -d 'Produce a machine-readable log file (name template can use $pkgid, $compiler, $os, $arch, $result)' -r
+complete -c cabal -n "__fish_seen_subcommand_from v2-bench" -l test-show-details -d '\'always\': always show results of individual test cases.' -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-bench" -l test-keep-tix-files -d 'keep .tix files for HPC between test runs'
 complete -c cabal -n "__fish_seen_subcommand_from v2-bench" -l test-wrapper -d 'Run test through a wrapper.' -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-bench" -l test-fail-when-no-test-suites -d 'Exit with failure when no test suites are found.'
@@ -3095,8 +3095,8 @@ complete -c cabal -n "__fish_seen_subcommand_from v2-freeze" -l disable-library-
 complete -c cabal -n "__fish_seen_subcommand_from v2-freeze" -l configure-option -d 'Extra option for configure' -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-freeze" -l user -d 'Enable doing a per-user installation'
 complete -c cabal -n "__fish_seen_subcommand_from v2-freeze" -l global -d 'Disable doing a per-user installation'
-complete -c cabal -n "__fish_seen_subcommand_from v2-freeze" -l package-db -d 'Append the given package database to the list of package databases used (to satisfy dependencies and register into).' -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-freeze" -s f -l flags -d 'Force values for the given flags in Cabal conditionals in the .cabal file.' -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-freeze" -l package-db -d 'Append the given package database to the list of package databases used (to satisfy dependencies and register into).' -r
+complete -c cabal -n "__fish_seen_subcommand_from v2-freeze" -s f -l flags -d 'Force values for the given flags in Cabal conditionals in the .cabal file.' -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-freeze" -l extra-include-dirs -d 'A list of directories to search for header files' -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-freeze" -l enable-deterministic -d 'Enable Try to be as deterministic as possible (used by the test suite)'
 complete -c cabal -n "__fish_seen_subcommand_from v2-freeze" -l disable-deterministic -d 'Disable Try to be as deterministic as possible (used by the test suite)'
@@ -3127,7 +3127,7 @@ complete -c cabal -n "__fish_seen_subcommand_from v2-freeze" -l preference -d 'S
 complete -c cabal -n "__fish_seen_subcommand_from v2-freeze" -l solver -d 'Select dependency solver to use (default: modular).' -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-freeze" -l allow-older -d 'Ignore lower bounds in all dependencies or DEPS' -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-freeze" -l allow-newer -d 'Ignore upper bounds in all dependencies or DEPS' -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-freeze" -l write-ghc-environment-files -d 'Whether to create a .ghc.environment file after a successful build (v2-build only)' -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-freeze" -l write-ghc-environment-files -d 'Whether to create a .ghc.environment file after a successful build (v2-build only)' -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-freeze" -l enable-documentation -d 'Enable building of documentation'
 complete -c cabal -n "__fish_seen_subcommand_from v2-freeze" -l disable-documentation -d 'Disable building of documentation'
 complete -c cabal -n "__fish_seen_subcommand_from v2-freeze" -l doc-index-file -d 'A central index of haddock API documentation (template cannot use $pkgid)' -x
@@ -3151,8 +3151,8 @@ complete -c cabal -n "__fish_seen_subcommand_from v2-freeze" -l only-dependencie
 complete -c cabal -n "__fish_seen_subcommand_from v2-freeze" -l dependencies-only -d 'A synonym for --only-dependencies'
 complete -c cabal -n "__fish_seen_subcommand_from v2-freeze" -l index-state -d 'Use source package index state as it existed at a previous time.' -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-freeze" -l root-cmd -d '(No longer supported, do not use.)' -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-freeze" -l build-summary -d 'Save build summaries to file (name template can use $pkgid, $compiler, $os, $arch)' -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-freeze" -l build-log -d 'Log all builds to file (name template can use $pkgid, $compiler, $os, $arch)' -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-freeze" -l build-summary -d 'Save build summaries to file (name template can use $pkgid, $compiler, $os, $arch)' -r
+complete -c cabal -n "__fish_seen_subcommand_from v2-freeze" -l build-log -d 'Log all builds to file (name template can use $pkgid, $compiler, $os, $arch)' -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-freeze" -l remote-build-reporting -d 'Generate build reports to send to a remote server (none, anonymous or detailed).' -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-freeze" -l report-planning-failure -d 'Generate build reports when the dependency solver fails.'
 complete -c cabal -n "__fish_seen_subcommand_from v2-freeze" -l enable-per-component -d 'Enable Per-component builds when possible'
@@ -3176,9 +3176,9 @@ complete -c cabal -n "__fish_seen_subcommand_from v2-freeze" -l haddock-hyperlin
 complete -c cabal -n "__fish_seen_subcommand_from v2-freeze" -l haddock-quickjump -d 'Generate an index for interactive documentation navigation'
 complete -c cabal -n "__fish_seen_subcommand_from v2-freeze" -l haddock-hscolour-css -d 'Use PATH as the HsColour stylesheet' -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-freeze" -l haddock-contents-location -d 'Bake URL in as the location for the contents page' -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-freeze" -l test-log -d 'Log all test suite results to file (name template can use $pkgid, $compiler, $os, $arch, $test-suite, $result)' -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-freeze" -l test-machine-log -d 'Produce a machine-readable log file (name template can use $pkgid, $compiler, $os, $arch, $result)' -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-freeze" -l test-show-details -d '\'always\': always show results of individual test cases.' -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-freeze" -l test-log -d 'Log all test suite results to file (name template can use $pkgid, $compiler, $os, $arch, $test-suite, $result)' -r
+complete -c cabal -n "__fish_seen_subcommand_from v2-freeze" -l test-machine-log -d 'Produce a machine-readable log file (name template can use $pkgid, $compiler, $os, $arch, $result)' -r
+complete -c cabal -n "__fish_seen_subcommand_from v2-freeze" -l test-show-details -d '\'always\': always show results of individual test cases.' -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-freeze" -l test-keep-tix-files -d 'keep .tix files for HPC between test runs'
 complete -c cabal -n "__fish_seen_subcommand_from v2-freeze" -l test-wrapper -d 'Run test through a wrapper.' -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-freeze" -l test-fail-when-no-test-suites -d 'Exit with failure when no test suites are found.'
@@ -3251,8 +3251,8 @@ complete -c cabal -n "__fish_seen_subcommand_from v2-haddock" -l disable-library
 complete -c cabal -n "__fish_seen_subcommand_from v2-haddock" -l configure-option -d 'Extra option for configure' -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-haddock" -l user -d 'Enable doing a per-user installation'
 complete -c cabal -n "__fish_seen_subcommand_from v2-haddock" -l global -d 'Disable doing a per-user installation'
-complete -c cabal -n "__fish_seen_subcommand_from v2-haddock" -l package-db -d 'Append the given package database to the list of package databases used (to satisfy dependencies and register into).' -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-haddock" -s f -l flags -d 'Force values for the given flags in Cabal conditionals in the .cabal file.' -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-haddock" -l package-db -d 'Append the given package database to the list of package databases used (to satisfy dependencies and register into).' -r
+complete -c cabal -n "__fish_seen_subcommand_from v2-haddock" -s f -l flags -d 'Force values for the given flags in Cabal conditionals in the .cabal file.' -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-haddock" -l extra-include-dirs -d 'A list of directories to search for header files' -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-haddock" -l enable-deterministic -d 'Enable Try to be as deterministic as possible (used by the test suite)'
 complete -c cabal -n "__fish_seen_subcommand_from v2-haddock" -l disable-deterministic -d 'Disable Try to be as deterministic as possible (used by the test suite)'
@@ -3283,7 +3283,7 @@ complete -c cabal -n "__fish_seen_subcommand_from v2-haddock" -l preference -d '
 complete -c cabal -n "__fish_seen_subcommand_from v2-haddock" -l solver -d 'Select dependency solver to use (default: modular).' -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-haddock" -l allow-older -d 'Ignore lower bounds in all dependencies or DEPS' -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-haddock" -l allow-newer -d 'Ignore upper bounds in all dependencies or DEPS' -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-haddock" -l write-ghc-environment-files -d 'Whether to create a .ghc.environment file after a successful build (v2-build only)' -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-haddock" -l write-ghc-environment-files -d 'Whether to create a .ghc.environment file after a successful build (v2-build only)' -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-haddock" -l enable-documentation -d 'Enable building of documentation'
 complete -c cabal -n "__fish_seen_subcommand_from v2-haddock" -l disable-documentation -d 'Disable building of documentation'
 complete -c cabal -n "__fish_seen_subcommand_from v2-haddock" -l doc-index-file -d 'A central index of haddock API documentation (template cannot use $pkgid)' -x
@@ -3307,8 +3307,8 @@ complete -c cabal -n "__fish_seen_subcommand_from v2-haddock" -l only-dependenci
 complete -c cabal -n "__fish_seen_subcommand_from v2-haddock" -l dependencies-only -d 'A synonym for --only-dependencies'
 complete -c cabal -n "__fish_seen_subcommand_from v2-haddock" -l index-state -d 'Use source package index state as it existed at a previous time.' -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-haddock" -l root-cmd -d '(No longer supported, do not use.)' -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-haddock" -l build-summary -d 'Save build summaries to file (name template can use $pkgid, $compiler, $os, $arch)' -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-haddock" -l build-log -d 'Log all builds to file (name template can use $pkgid, $compiler, $os, $arch)' -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-haddock" -l build-summary -d 'Save build summaries to file (name template can use $pkgid, $compiler, $os, $arch)' -r
+complete -c cabal -n "__fish_seen_subcommand_from v2-haddock" -l build-log -d 'Log all builds to file (name template can use $pkgid, $compiler, $os, $arch)' -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-haddock" -l remote-build-reporting -d 'Generate build reports to send to a remote server (none, anonymous or detailed).' -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-haddock" -l report-planning-failure -d 'Generate build reports when the dependency solver fails.'
 complete -c cabal -n "__fish_seen_subcommand_from v2-haddock" -l enable-per-component -d 'Enable Per-component builds when possible'
@@ -3332,9 +3332,9 @@ complete -c cabal -n "__fish_seen_subcommand_from v2-haddock" -l haddock-hyperli
 complete -c cabal -n "__fish_seen_subcommand_from v2-haddock" -l haddock-quickjump -d 'Generate an index for interactive documentation navigation'
 complete -c cabal -n "__fish_seen_subcommand_from v2-haddock" -l haddock-hscolour-css -d 'Use PATH as the HsColour stylesheet' -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-haddock" -l haddock-contents-location -d 'Bake URL in as the location for the contents page' -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-haddock" -l test-log -d 'Log all test suite results to file (name template can use $pkgid, $compiler, $os, $arch, $test-suite, $result)' -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-haddock" -l test-machine-log -d 'Produce a machine-readable log file (name template can use $pkgid, $compiler, $os, $arch, $result)' -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-haddock" -l test-show-details -d '\'always\': always show results of individual test cases.' -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-haddock" -l test-log -d 'Log all test suite results to file (name template can use $pkgid, $compiler, $os, $arch, $test-suite, $result)' -r
+complete -c cabal -n "__fish_seen_subcommand_from v2-haddock" -l test-machine-log -d 'Produce a machine-readable log file (name template can use $pkgid, $compiler, $os, $arch, $result)' -r
+complete -c cabal -n "__fish_seen_subcommand_from v2-haddock" -l test-show-details -d '\'always\': always show results of individual test cases.' -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-haddock" -l test-keep-tix-files -d 'keep .tix files for HPC between test runs'
 complete -c cabal -n "__fish_seen_subcommand_from v2-haddock" -l test-wrapper -d 'Run test through a wrapper.' -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-haddock" -l test-fail-when-no-test-suites -d 'Exit with failure when no test suites are found.'
@@ -3407,8 +3407,8 @@ complete -c cabal -n "__fish_seen_subcommand_from v2-exec" -l disable-library-st
 complete -c cabal -n "__fish_seen_subcommand_from v2-exec" -l configure-option -d 'Extra option for configure' -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-exec" -l user -d 'Enable doing a per-user installation'
 complete -c cabal -n "__fish_seen_subcommand_from v2-exec" -l global -d 'Disable doing a per-user installation'
-complete -c cabal -n "__fish_seen_subcommand_from v2-exec" -l package-db -d 'Append the given package database to the list of package databases used (to satisfy dependencies and register into).' -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-exec" -s f -l flags -d 'Force values for the given flags in Cabal conditionals in the .cabal file.' -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-exec" -l package-db -d 'Append the given package database to the list of package databases used (to satisfy dependencies and register into).' -r
+complete -c cabal -n "__fish_seen_subcommand_from v2-exec" -s f -l flags -d 'Force values for the given flags in Cabal conditionals in the .cabal file.' -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-exec" -l extra-include-dirs -d 'A list of directories to search for header files' -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-exec" -l enable-deterministic -d 'Enable Try to be as deterministic as possible (used by the test suite)'
 complete -c cabal -n "__fish_seen_subcommand_from v2-exec" -l disable-deterministic -d 'Disable Try to be as deterministic as possible (used by the test suite)'
@@ -3439,7 +3439,7 @@ complete -c cabal -n "__fish_seen_subcommand_from v2-exec" -l preference -d 'Spe
 complete -c cabal -n "__fish_seen_subcommand_from v2-exec" -l solver -d 'Select dependency solver to use (default: modular).' -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-exec" -l allow-older -d 'Ignore lower bounds in all dependencies or DEPS' -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-exec" -l allow-newer -d 'Ignore upper bounds in all dependencies or DEPS' -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-exec" -l write-ghc-environment-files -d 'Whether to create a .ghc.environment file after a successful build (v2-build only)' -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-exec" -l write-ghc-environment-files -d 'Whether to create a .ghc.environment file after a successful build (v2-build only)' -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-exec" -l enable-documentation -d 'Enable building of documentation'
 complete -c cabal -n "__fish_seen_subcommand_from v2-exec" -l disable-documentation -d 'Disable building of documentation'
 complete -c cabal -n "__fish_seen_subcommand_from v2-exec" -l doc-index-file -d 'A central index of haddock API documentation (template cannot use $pkgid)' -x
@@ -3463,8 +3463,8 @@ complete -c cabal -n "__fish_seen_subcommand_from v2-exec" -l only-dependencies 
 complete -c cabal -n "__fish_seen_subcommand_from v2-exec" -l dependencies-only -d 'A synonym for --only-dependencies'
 complete -c cabal -n "__fish_seen_subcommand_from v2-exec" -l index-state -d 'Use source package index state as it existed at a previous time.' -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-exec" -l root-cmd -d '(No longer supported, do not use.)' -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-exec" -l build-summary -d 'Save build summaries to file (name template can use $pkgid, $compiler, $os, $arch)' -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-exec" -l build-log -d 'Log all builds to file (name template can use $pkgid, $compiler, $os, $arch)' -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-exec" -l build-summary -d 'Save build summaries to file (name template can use $pkgid, $compiler, $os, $arch)' -r
+complete -c cabal -n "__fish_seen_subcommand_from v2-exec" -l build-log -d 'Log all builds to file (name template can use $pkgid, $compiler, $os, $arch)' -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-exec" -l remote-build-reporting -d 'Generate build reports to send to a remote server (none, anonymous or detailed).' -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-exec" -l report-planning-failure -d 'Generate build reports when the dependency solver fails.'
 complete -c cabal -n "__fish_seen_subcommand_from v2-exec" -l enable-per-component -d 'Enable Per-component builds when possible'
@@ -3488,9 +3488,9 @@ complete -c cabal -n "__fish_seen_subcommand_from v2-exec" -l haddock-hyperlink-
 complete -c cabal -n "__fish_seen_subcommand_from v2-exec" -l haddock-quickjump -d 'Generate an index for interactive documentation navigation'
 complete -c cabal -n "__fish_seen_subcommand_from v2-exec" -l haddock-hscolour-css -d 'Use PATH as the HsColour stylesheet' -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-exec" -l haddock-contents-location -d 'Bake URL in as the location for the contents page' -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-exec" -l test-log -d 'Log all test suite results to file (name template can use $pkgid, $compiler, $os, $arch, $test-suite, $result)' -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-exec" -l test-machine-log -d 'Produce a machine-readable log file (name template can use $pkgid, $compiler, $os, $arch, $result)' -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-exec" -l test-show-details -d '\'always\': always show results of individual test cases.' -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-exec" -l test-log -d 'Log all test suite results to file (name template can use $pkgid, $compiler, $os, $arch, $test-suite, $result)' -r
+complete -c cabal -n "__fish_seen_subcommand_from v2-exec" -l test-machine-log -d 'Produce a machine-readable log file (name template can use $pkgid, $compiler, $os, $arch, $result)' -r
+complete -c cabal -n "__fish_seen_subcommand_from v2-exec" -l test-show-details -d '\'always\': always show results of individual test cases.' -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-exec" -l test-keep-tix-files -d 'keep .tix files for HPC between test runs'
 complete -c cabal -n "__fish_seen_subcommand_from v2-exec" -l test-wrapper -d 'Run test through a wrapper.' -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-exec" -l test-fail-when-no-test-suites -d 'Exit with failure when no test suites are found.'
@@ -3562,8 +3562,8 @@ complete -c cabal -n "__fish_seen_subcommand_from v2-update" -l disable-library-
 complete -c cabal -n "__fish_seen_subcommand_from v2-update" -l configure-option -d 'Extra option for configure' -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-update" -l user -d 'Enable doing a per-user installation'
 complete -c cabal -n "__fish_seen_subcommand_from v2-update" -l global -d 'Disable doing a per-user installation'
-complete -c cabal -n "__fish_seen_subcommand_from v2-update" -l package-db -d 'Append the given package database to the list of package databases used (to satisfy dependencies and register into).' -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-update" -s f -l flags -d 'Force values for the given flags in Cabal conditionals in the .cabal file.' -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-update" -l package-db -d 'Append the given package database to the list of package databases used (to satisfy dependencies and register into).' -r
+complete -c cabal -n "__fish_seen_subcommand_from v2-update" -s f -l flags -d 'Force values for the given flags in Cabal conditionals in the .cabal file.' -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-update" -l extra-include-dirs -d 'A list of directories to search for header files' -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-update" -l enable-deterministic -d 'Enable Try to be as deterministic as possible (used by the test suite)'
 complete -c cabal -n "__fish_seen_subcommand_from v2-update" -l disable-deterministic -d 'Disable Try to be as deterministic as possible (used by the test suite)'
@@ -3594,7 +3594,7 @@ complete -c cabal -n "__fish_seen_subcommand_from v2-update" -l preference -d 'S
 complete -c cabal -n "__fish_seen_subcommand_from v2-update" -l solver -d 'Select dependency solver to use (default: modular).' -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-update" -l allow-older -d 'Ignore lower bounds in all dependencies or DEPS' -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-update" -l allow-newer -d 'Ignore upper bounds in all dependencies or DEPS' -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-update" -l write-ghc-environment-files -d 'Whether to create a .ghc.environment file after a successful build (v2-build only)' -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-update" -l write-ghc-environment-files -d 'Whether to create a .ghc.environment file after a successful build (v2-build only)' -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-update" -l enable-documentation -d 'Enable building of documentation'
 complete -c cabal -n "__fish_seen_subcommand_from v2-update" -l disable-documentation -d 'Disable building of documentation'
 complete -c cabal -n "__fish_seen_subcommand_from v2-update" -l doc-index-file -d 'A central index of haddock API documentation (template cannot use $pkgid)' -x
@@ -3618,8 +3618,8 @@ complete -c cabal -n "__fish_seen_subcommand_from v2-update" -l only-dependencie
 complete -c cabal -n "__fish_seen_subcommand_from v2-update" -l dependencies-only -d 'A synonym for --only-dependencies'
 complete -c cabal -n "__fish_seen_subcommand_from v2-update" -l index-state -d 'Use source package index state as it existed at a previous time.' -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-update" -l root-cmd -d '(No longer supported, do not use.)' -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-update" -l build-summary -d 'Save build summaries to file (name template can use $pkgid, $compiler, $os, $arch)' -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-update" -l build-log -d 'Log all builds to file (name template can use $pkgid, $compiler, $os, $arch)' -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-update" -l build-summary -d 'Save build summaries to file (name template can use $pkgid, $compiler, $os, $arch)' -r
+complete -c cabal -n "__fish_seen_subcommand_from v2-update" -l build-log -d 'Log all builds to file (name template can use $pkgid, $compiler, $os, $arch)' -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-update" -l remote-build-reporting -d 'Generate build reports to send to a remote server (none, anonymous or detailed).' -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-update" -l report-planning-failure -d 'Generate build reports when the dependency solver fails.'
 complete -c cabal -n "__fish_seen_subcommand_from v2-update" -l enable-per-component -d 'Enable Per-component builds when possible'
@@ -3643,9 +3643,9 @@ complete -c cabal -n "__fish_seen_subcommand_from v2-update" -l haddock-hyperlin
 complete -c cabal -n "__fish_seen_subcommand_from v2-update" -l haddock-quickjump -d 'Generate an index for interactive documentation navigation'
 complete -c cabal -n "__fish_seen_subcommand_from v2-update" -l haddock-hscolour-css -d 'Use PATH as the HsColour stylesheet' -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-update" -l haddock-contents-location -d 'Bake URL in as the location for the contents page' -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-update" -l test-log -d 'Log all test suite results to file (name template can use $pkgid, $compiler, $os, $arch, $test-suite, $result)' -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-update" -l test-machine-log -d 'Produce a machine-readable log file (name template can use $pkgid, $compiler, $os, $arch, $result)' -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-update" -l test-show-details -d '\'always\': always show results of individual test cases.' -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-update" -l test-log -d 'Log all test suite results to file (name template can use $pkgid, $compiler, $os, $arch, $test-suite, $result)' -r
+complete -c cabal -n "__fish_seen_subcommand_from v2-update" -l test-machine-log -d 'Produce a machine-readable log file (name template can use $pkgid, $compiler, $os, $arch, $result)' -r
+complete -c cabal -n "__fish_seen_subcommand_from v2-update" -l test-show-details -d '\'always\': always show results of individual test cases.' -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-update" -l test-keep-tix-files -d 'keep .tix files for HPC between test runs'
 complete -c cabal -n "__fish_seen_subcommand_from v2-update" -l test-wrapper -d 'Run test through a wrapper.' -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-update" -l test-fail-when-no-test-suites -d 'Exit with failure when no test suites are found.'
@@ -3718,8 +3718,8 @@ complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l disable-library
 complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l configure-option -d 'Extra option for configure' -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l user -d 'Enable doing a per-user installation'
 complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l global -d 'Disable doing a per-user installation'
-complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l package-db -d 'Append the given package database to the list of package databases used (to satisfy dependencies and register into).' -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-install" -s f -l flags -d 'Force values for the given flags in Cabal conditionals in the .cabal file.' -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l package-db -d 'Append the given package database to the list of package databases used (to satisfy dependencies and register into).' -r
+complete -c cabal -n "__fish_seen_subcommand_from v2-install" -s f -l flags -d 'Force values for the given flags in Cabal conditionals in the .cabal file.' -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l extra-include-dirs -d 'A list of directories to search for header files' -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l enable-deterministic -d 'Enable Try to be as deterministic as possible (used by the test suite)'
 complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l disable-deterministic -d 'Disable Try to be as deterministic as possible (used by the test suite)'
@@ -3750,7 +3750,7 @@ complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l preference -d '
 complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l solver -d 'Select dependency solver to use (default: modular).' -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l allow-older -d 'Ignore lower bounds in all dependencies or DEPS' -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l allow-newer -d 'Ignore upper bounds in all dependencies or DEPS' -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l write-ghc-environment-files -d 'Whether to create a .ghc.environment file after a successful build (v2-build only)' -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l write-ghc-environment-files -d 'Whether to create a .ghc.environment file after a successful build (v2-build only)' -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l enable-documentation -d 'Enable building of documentation'
 complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l disable-documentation -d 'Disable building of documentation'
 complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l doc-index-file -d 'A central index of haddock API documentation (template cannot use $pkgid)' -x
@@ -3774,8 +3774,8 @@ complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l only-dependenci
 complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l dependencies-only -d 'A synonym for --only-dependencies'
 complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l index-state -d 'Use source package index state as it existed at a previous time.' -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l root-cmd -d '(No longer supported, do not use.)' -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l build-summary -d 'Save build summaries to file (name template can use $pkgid, $compiler, $os, $arch)' -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l build-log -d 'Log all builds to file (name template can use $pkgid, $compiler, $os, $arch)' -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l build-summary -d 'Save build summaries to file (name template can use $pkgid, $compiler, $os, $arch)' -r
+complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l build-log -d 'Log all builds to file (name template can use $pkgid, $compiler, $os, $arch)' -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l remote-build-reporting -d 'Generate build reports to send to a remote server (none, anonymous or detailed).' -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l report-planning-failure -d 'Generate build reports when the dependency solver fails.'
 complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l enable-per-component -d 'Enable Per-component builds when possible'
@@ -3799,9 +3799,9 @@ complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l haddock-hyperli
 complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l haddock-quickjump -d 'Generate an index for interactive documentation navigation'
 complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l haddock-hscolour-css -d 'Use PATH as the HsColour stylesheet' -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l haddock-contents-location -d 'Bake URL in as the location for the contents page' -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l test-log -d 'Log all test suite results to file (name template can use $pkgid, $compiler, $os, $arch, $test-suite, $result)' -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l test-machine-log -d 'Produce a machine-readable log file (name template can use $pkgid, $compiler, $os, $arch, $result)' -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l test-show-details -d '\'always\': always show results of individual test cases.' -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l test-log -d 'Log all test suite results to file (name template can use $pkgid, $compiler, $os, $arch, $test-suite, $result)' -r
+complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l test-machine-log -d 'Produce a machine-readable log file (name template can use $pkgid, $compiler, $os, $arch, $result)' -r
+complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l test-show-details -d '\'always\': always show results of individual test cases.' -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l test-keep-tix-files -d 'keep .tix files for HPC between test runs'
 complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l test-wrapper -d 'Run test through a wrapper.' -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l test-fail-when-no-test-suites -d 'Exit with failure when no test suites are found.'
@@ -3812,7 +3812,7 @@ complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l benchmark-optio
 complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l project-file -d 'Set the name of the cabal.project file to search for in parent directories' -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-install" -s z -l ignore-project -d 'Ignore local project configuration'
 complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l lib -d 'Install libraries rather than executables from the target package (provisional, see https://github.com/haskell/cabal/issues/6481 for more information).'
-complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l package-env -d 'Set the environment file that may be modified.' -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l package-env -d 'Set the environment file that may be modified.' -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l overwrite-policy -d 'How to handle already existing symlinks.' -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l install-method -d 'How to install the executables.' -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l installdir -d 'Where to install (by symlinking or copying) the executables in.' -r
@@ -3908,8 +3908,8 @@ complete -c cabal -n "__fish_seen_subcommand_from v1-configure" -l disable-libra
 complete -c cabal -n "__fish_seen_subcommand_from v1-configure" -l configure-option -d 'Extra option for configure' -x
 complete -c cabal -n "__fish_seen_subcommand_from v1-configure" -l user -d 'Enable doing a per-user installation'
 complete -c cabal -n "__fish_seen_subcommand_from v1-configure" -l global -d 'Disable doing a per-user installation'
-complete -c cabal -n "__fish_seen_subcommand_from v1-configure" -l package-db -d 'Append the given package database to the list of package databases used (to satisfy dependencies and register into).' -x
-complete -c cabal -n "__fish_seen_subcommand_from v1-configure" -s f -l flags -d 'Force values for the given flags in Cabal conditionals in the .cabal file.' -x
+complete -c cabal -n "__fish_seen_subcommand_from v1-configure" -l package-db -d 'Append the given package database to the list of package databases used (to satisfy dependencies and register into).' -r
+complete -c cabal -n "__fish_seen_subcommand_from v1-configure" -s f -l flags -d 'Force values for the given flags in Cabal conditionals in the .cabal file.' -r
 complete -c cabal -n "__fish_seen_subcommand_from v1-configure" -l extra-include-dirs -d 'A list of directories to search for header files' -r
 complete -c cabal -n "__fish_seen_subcommand_from v1-configure" -l enable-deterministic -d 'Enable Try to be as deterministic as possible (used by the test suite)'
 complete -c cabal -n "__fish_seen_subcommand_from v1-configure" -l disable-deterministic -d 'Disable Try to be as deterministic as possible (used by the test suite)'
@@ -3940,7 +3940,7 @@ complete -c cabal -n "__fish_seen_subcommand_from v1-configure" -l preference -d
 complete -c cabal -n "__fish_seen_subcommand_from v1-configure" -l solver -d 'Select dependency solver to use (default: modular).' -x
 complete -c cabal -n "__fish_seen_subcommand_from v1-configure" -l allow-older -d 'Ignore lower bounds in all dependencies or DEPS' -x
 complete -c cabal -n "__fish_seen_subcommand_from v1-configure" -l allow-newer -d 'Ignore upper bounds in all dependencies or DEPS' -x
-complete -c cabal -n "__fish_seen_subcommand_from v1-configure" -l write-ghc-environment-files -d 'Whether to create a .ghc.environment file after a successful build (v2-build only)' -x
+complete -c cabal -n "__fish_seen_subcommand_from v1-configure" -l write-ghc-environment-files -d 'Whether to create a .ghc.environment file after a successful build (v2-build only)' -r
 
 
 
@@ -3971,9 +3971,9 @@ complete -c cabal -n "__fish_seen_subcommand_from v1-test" -l PROG-option -d 'gi
 complete -c cabal -n "__fish_seen_subcommand_from v1-test" -l PROG-options -d 'give extra options to PROG' -x
 complete -c cabal -n "__fish_seen_subcommand_from v1-test" -s v -l verbose -d 'Control verbosity (n is 0--3, default verbosity level is 1)' -x
 complete -c cabal -n "__fish_seen_subcommand_from v1-test" -l builddir -d 'The directory where Cabal puts generated build files (default dist)' -r
-complete -c cabal -n "__fish_seen_subcommand_from v1-test" -l log -d 'Log all test suite results to file (name template can use $pkgid, $compiler, $os, $arch, $test-suite, $result)' -x
-complete -c cabal -n "__fish_seen_subcommand_from v1-test" -l machine-log -d 'Produce a machine-readable log file (name template can use $pkgid, $compiler, $os, $arch, $result)' -x
-complete -c cabal -n "__fish_seen_subcommand_from v1-test" -l show-details -d '\'always\': always show results of individual test cases.' -x
+complete -c cabal -n "__fish_seen_subcommand_from v1-test" -l log -d 'Log all test suite results to file (name template can use $pkgid, $compiler, $os, $arch, $test-suite, $result)' -r
+complete -c cabal -n "__fish_seen_subcommand_from v1-test" -l machine-log -d 'Produce a machine-readable log file (name template can use $pkgid, $compiler, $os, $arch, $result)' -r
+complete -c cabal -n "__fish_seen_subcommand_from v1-test" -l show-details -d '\'always\': always show results of individual test cases.' -r
 complete -c cabal -n "__fish_seen_subcommand_from v1-test" -l keep-tix-files -d 'keep .tix files for HPC between test runs'
 complete -c cabal -n "__fish_seen_subcommand_from v1-test" -l test-wrapper -d 'Run test through a wrapper.' -r
 complete -c cabal -n "__fish_seen_subcommand_from v1-test" -l fail-when-no-test-suites -d 'Exit with failure when no test suites are found.'
@@ -4102,8 +4102,8 @@ complete -c cabal -n "__fish_seen_subcommand_from v1-install" -l disable-library
 complete -c cabal -n "__fish_seen_subcommand_from v1-install" -l configure-option -d 'Extra option for configure' -x
 complete -c cabal -n "__fish_seen_subcommand_from v1-install" -l user -d 'Enable doing a per-user installation'
 complete -c cabal -n "__fish_seen_subcommand_from v1-install" -l global -d 'Disable doing a per-user installation'
-complete -c cabal -n "__fish_seen_subcommand_from v1-install" -l package-db -d 'Append the given package database to the list of package databases used (to satisfy dependencies and register into).' -x
-complete -c cabal -n "__fish_seen_subcommand_from v1-install" -s f -l flags -d 'Force values for the given flags in Cabal conditionals in the .cabal file.' -x
+complete -c cabal -n "__fish_seen_subcommand_from v1-install" -l package-db -d 'Append the given package database to the list of package databases used (to satisfy dependencies and register into).' -r
+complete -c cabal -n "__fish_seen_subcommand_from v1-install" -s f -l flags -d 'Force values for the given flags in Cabal conditionals in the .cabal file.' -r
 complete -c cabal -n "__fish_seen_subcommand_from v1-install" -l extra-include-dirs -d 'A list of directories to search for header files' -r
 complete -c cabal -n "__fish_seen_subcommand_from v1-install" -l enable-deterministic -d 'Enable Try to be as deterministic as possible (used by the test suite)'
 complete -c cabal -n "__fish_seen_subcommand_from v1-install" -l disable-deterministic -d 'Disable Try to be as deterministic as possible (used by the test suite)'
@@ -4134,7 +4134,7 @@ complete -c cabal -n "__fish_seen_subcommand_from v1-install" -l preference -d '
 complete -c cabal -n "__fish_seen_subcommand_from v1-install" -l solver -d 'Select dependency solver to use (default: modular).' -x
 complete -c cabal -n "__fish_seen_subcommand_from v1-install" -l allow-older -d 'Ignore lower bounds in all dependencies or DEPS' -x
 complete -c cabal -n "__fish_seen_subcommand_from v1-install" -l allow-newer -d 'Ignore upper bounds in all dependencies or DEPS' -x
-complete -c cabal -n "__fish_seen_subcommand_from v1-install" -l write-ghc-environment-files -d 'Whether to create a .ghc.environment file after a successful build (v2-build only)' -x
+complete -c cabal -n "__fish_seen_subcommand_from v1-install" -l write-ghc-environment-files -d 'Whether to create a .ghc.environment file after a successful build (v2-build only)' -r
 complete -c cabal -n "__fish_seen_subcommand_from v1-install" -l enable-documentation -d 'Enable building of documentation'
 complete -c cabal -n "__fish_seen_subcommand_from v1-install" -l disable-documentation -d 'Disable building of documentation'
 complete -c cabal -n "__fish_seen_subcommand_from v1-install" -l doc-index-file -d 'A central index of haddock API documentation (template cannot use $pkgid)' -x
@@ -4159,8 +4159,8 @@ complete -c cabal -n "__fish_seen_subcommand_from v1-install" -l dependencies-on
 complete -c cabal -n "__fish_seen_subcommand_from v1-install" -l index-state -d 'Use source package index state as it existed at a previous time.' -x
 complete -c cabal -n "__fish_seen_subcommand_from v1-install" -l root-cmd -d '(No longer supported, do not use.)' -x
 complete -c cabal -n "__fish_seen_subcommand_from v1-install" -l symlink-bindir -d 'Add symlinks to installed executables into this directory.' -r
-complete -c cabal -n "__fish_seen_subcommand_from v1-install" -l build-summary -d 'Save build summaries to file (name template can use $pkgid, $compiler, $os, $arch)' -x
-complete -c cabal -n "__fish_seen_subcommand_from v1-install" -l build-log -d 'Log all builds to file (name template can use $pkgid, $compiler, $os, $arch)' -x
+complete -c cabal -n "__fish_seen_subcommand_from v1-install" -l build-summary -d 'Save build summaries to file (name template can use $pkgid, $compiler, $os, $arch)' -r
+complete -c cabal -n "__fish_seen_subcommand_from v1-install" -l build-log -d 'Log all builds to file (name template can use $pkgid, $compiler, $os, $arch)' -r
 complete -c cabal -n "__fish_seen_subcommand_from v1-install" -l remote-build-reporting -d 'Generate build reports to send to a remote server (none, anonymous or detailed).' -x
 complete -c cabal -n "__fish_seen_subcommand_from v1-install" -l report-planning-failure -d 'Generate build reports when the dependency solver fails.'
 complete -c cabal -n "__fish_seen_subcommand_from v1-install" -l enable-per-component -d 'Enable Per-component builds when possible'
@@ -4184,9 +4184,9 @@ complete -c cabal -n "__fish_seen_subcommand_from v1-install" -l haddock-hyperli
 complete -c cabal -n "__fish_seen_subcommand_from v1-install" -l haddock-quickjump -d 'Generate an index for interactive documentation navigation'
 complete -c cabal -n "__fish_seen_subcommand_from v1-install" -l haddock-hscolour-css -d 'Use PATH as the HsColour stylesheet' -r
 complete -c cabal -n "__fish_seen_subcommand_from v1-install" -l haddock-contents-location -d 'Bake URL in as the location for the contents page' -x
-complete -c cabal -n "__fish_seen_subcommand_from v1-install" -l test-log -d 'Log all test suite results to file (name template can use $pkgid, $compiler, $os, $arch, $test-suite, $result)' -x
-complete -c cabal -n "__fish_seen_subcommand_from v1-install" -l test-machine-log -d 'Produce a machine-readable log file (name template can use $pkgid, $compiler, $os, $arch, $result)' -x
-complete -c cabal -n "__fish_seen_subcommand_from v1-install" -l test-show-details -d '\'always\': always show results of individual test cases.' -x
+complete -c cabal -n "__fish_seen_subcommand_from v1-install" -l test-log -d 'Log all test suite results to file (name template can use $pkgid, $compiler, $os, $arch, $test-suite, $result)' -r
+complete -c cabal -n "__fish_seen_subcommand_from v1-install" -l test-machine-log -d 'Produce a machine-readable log file (name template can use $pkgid, $compiler, $os, $arch, $result)' -r
+complete -c cabal -n "__fish_seen_subcommand_from v1-install" -l test-show-details -d '\'always\': always show results of individual test cases.' -r
 complete -c cabal -n "__fish_seen_subcommand_from v1-install" -l test-keep-tix-files -d 'keep .tix files for HPC between test runs'
 complete -c cabal -n "__fish_seen_subcommand_from v1-install" -l test-wrapper -d 'Run test through a wrapper.' -r
 complete -c cabal -n "__fish_seen_subcommand_from v1-install" -l test-fail-when-no-test-suites -d 'Exit with failure when no test suites are found.'
@@ -4218,7 +4218,7 @@ complete -c cabal -n "__fish_seen_subcommand_from v1-register" -l user -d 'upon 
 complete -c cabal -n "__fish_seen_subcommand_from v1-register" -l global -d '(default)upon registration, register this package in the system-wide package database'
 complete -c cabal -n "__fish_seen_subcommand_from v1-register" -l inplace -d 'register the package in the build location, so it can be used without being installed'
 complete -c cabal -n "__fish_seen_subcommand_from v1-register" -l gen-script -d 'instead of registering, generate a script to register later'
-complete -c cabal -n "__fish_seen_subcommand_from v1-register" -l gen-pkg-config -d 'instead of registering, generate a package registration file/directory' -x
+complete -c cabal -n "__fish_seen_subcommand_from v1-register" -l gen-pkg-config -d 'instead of registering, generate a package registration file/directory' -r
 complete -c cabal -n "__fish_seen_subcommand_from v1-register" -l print-ipid -d 'print the installed package ID calculated for this package'
 
 
@@ -4283,8 +4283,8 @@ complete -c cabal -n "__fish_seen_subcommand_from v1-reconfigure" -l disable-lib
 complete -c cabal -n "__fish_seen_subcommand_from v1-reconfigure" -l configure-option -d 'Extra option for configure' -x
 complete -c cabal -n "__fish_seen_subcommand_from v1-reconfigure" -l user -d 'Enable doing a per-user installation'
 complete -c cabal -n "__fish_seen_subcommand_from v1-reconfigure" -l global -d 'Disable doing a per-user installation'
-complete -c cabal -n "__fish_seen_subcommand_from v1-reconfigure" -l package-db -d 'Append the given package database to the list of package databases used (to satisfy dependencies and register into).' -x
-complete -c cabal -n "__fish_seen_subcommand_from v1-reconfigure" -s f -l flags -d 'Force values for the given flags in Cabal conditionals in the .cabal file.' -x
+complete -c cabal -n "__fish_seen_subcommand_from v1-reconfigure" -l package-db -d 'Append the given package database to the list of package databases used (to satisfy dependencies and register into).' -r
+complete -c cabal -n "__fish_seen_subcommand_from v1-reconfigure" -s f -l flags -d 'Force values for the given flags in Cabal conditionals in the .cabal file.' -r
 complete -c cabal -n "__fish_seen_subcommand_from v1-reconfigure" -l extra-include-dirs -d 'A list of directories to search for header files' -r
 complete -c cabal -n "__fish_seen_subcommand_from v1-reconfigure" -l enable-deterministic -d 'Enable Try to be as deterministic as possible (used by the test suite)'
 complete -c cabal -n "__fish_seen_subcommand_from v1-reconfigure" -l disable-deterministic -d 'Disable Try to be as deterministic as possible (used by the test suite)'
@@ -4315,4 +4315,4 @@ complete -c cabal -n "__fish_seen_subcommand_from v1-reconfigure" -l preference 
 complete -c cabal -n "__fish_seen_subcommand_from v1-reconfigure" -l solver -d 'Select dependency solver to use (default: modular).' -x
 complete -c cabal -n "__fish_seen_subcommand_from v1-reconfigure" -l allow-older -d 'Ignore lower bounds in all dependencies or DEPS' -x
 complete -c cabal -n "__fish_seen_subcommand_from v1-reconfigure" -l allow-newer -d 'Ignore upper bounds in all dependencies or DEPS' -x
-complete -c cabal -n "__fish_seen_subcommand_from v1-reconfigure" -l write-ghc-environment-files -d 'Whether to create a .ghc.environment file after a successful build (v2-build only)' -x
+complete -c cabal -n "__fish_seen_subcommand_from v1-reconfigure" -l write-ghc-environment-files -d 'Whether to create a .ghc.environment file after a successful build (v2-build only)' -r

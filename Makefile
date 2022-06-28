@@ -8,6 +8,7 @@
 
 makelist_src := scripts/make-list
 
+.PHONY: all
 all: general.txt bio.txt general.json.gz bio.json.gz
 
 json_general := $(wildcard general/json/*.json)
@@ -27,3 +28,7 @@ bio.txt: $(makelist_src) $(json_bio)
 bio.json.gz: $(json_bio)
 	@echo "Creating $@"
 	@echo $^ | tr ' ' '\n' | sort -V | tr '\n' ' ' | xargs jq -cs . | gzip > $@
+
+.PHONY: clean
+clean:
+	rm -f general.txt bio.txt general.json.gz bio.json.gz

@@ -1,28 +1,47 @@
 # Create a list and gzipped single JSON file for each in groups
 #
 # Usage:
-#   $ make
+#   $ group=bio make
 #
 
-## We have two categories for now
-groups := general bio
+# -----------------------
+# Variable
+group ?= general
+# -----------------------
 
-outputs_list := $(groups:%=%.txt)
-outputs_gzip := $(groups:%=%.json.gz)
-outputs := $(outputs_list) $(outputs_gzip)
+yaml := $(wildcard $(group)/yaml/*.yaml)
+json := $(yaml:$(group)/yaml/%.yaml=$(group)/json/%.json)
+
+output_list := $(group).txt
+output_gzip := $(group).json.gz
+outputs := $(output_list) $(output_gzip)
+
+yaml2json_src := scripts/run
 makelist_src := scripts/make-list
 
 .PHONY: all
-all: $(outputs)
+all: $(outputs) $(json)
 
-%.txt: $(makelist_src) $(wildcard $*/json/*.json)
-	$(makelist_src) $* > $@
+$(group)/json/%.json: $(yaml2json_src) $(group)/yaml/%.yaml
+	$(yaml2json_src) $*
 
-# $^ does not work in this case
-%.json.gz: $(wildcard $*/json/*.json)
+## Use $(makelist_src) instead to be be consistent with make-gzip
+##
+# cmds := $(yaml:$(group)/yaml/%.yaml=%)
+# $(output_list): $(json)
+#	 echo $(cmds) | tr ' ' '\n' | sort -V > $@
+
+$(output_list): $(makelist_src) $(json)
+	$(makelist_src) $(group) > $@
+
+$(output_gzip): $(json)
 	@echo "Creating $@"
-	@echo $*/json/*.json | tr ' ' '\n' | sort -V | tr '\n' ' ' | xargs jq -cs . | gzip > $@
+	@echo $(json) | tr ' ' '\n' | sort -V | tr '\n' ' ' | xargs jq -cs . | gzip > $@
 
 .PHONY: clean
 clean:
 	rm -f $(outputs)
+
+.PHONY: cleanall
+cleanall:
+	rm -f $(outputs) $(json)

@@ -1,34 +1,28 @@
-# Create
-#   - general.json.gz  from  general/yaml/*.json
-#   - bio.json.gz      from  bio/yaml/*.json
+# Create a list and gzipped single JSON file for each in groups
 #
 # Usage:
 #   $ make
 #
 
+## We have two categories for now
+groups := general bio
+
+outputs_list := $(groups:%=%.txt)
+outputs_gzip := $(groups:%=%.json.gz)
+outputs := $(outputs_list) $(outputs_gzip)
 makelist_src := scripts/make-list
 
 .PHONY: all
-all: general.txt bio.txt general.json.gz bio.json.gz
+all: $(outputs)
 
-json_general := $(wildcard general/json/*.json)
+%.txt: $(makelist_src) $(wildcard $*/json/*.json)
+	$(makelist_src) $* > $@
 
-general.txt: $(makelist_src) $(json_general)
-	$(makelist_src) general > $@
-
-general.json.gz: $(json_general)
+# $^ does not work in this case
+%.json.gz: $(wildcard $*/json/*.json)
 	@echo "Creating $@"
-	@echo $^ | tr ' ' '\n' | sort -V | tr '\n' ' ' | xargs jq -cs . | gzip > $@
-
-json_bio := $(wildcard bio/json/*.json)
-
-bio.txt: $(makelist_src) $(json_bio)
-	$(makelist_src) bio > $@
-
-bio.json.gz: $(json_bio)
-	@echo "Creating $@"
-	@echo $^ | tr ' ' '\n' | sort -V | tr '\n' ' ' | xargs jq -cs . | gzip > $@
+	@echo $*/json/*.json | tr ' ' '\n' | sort -V | tr '\n' ' ' | xargs jq -cs . | gzip > $@
 
 .PHONY: clean
 clean:
-	rm -f general.txt bio.txt general.json.gz bio.json.gz
+	rm -f $(outputs)

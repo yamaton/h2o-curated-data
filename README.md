@@ -111,7 +111,7 @@ As you can see,  an entry has following key-values:
   * names (list of strings)
   * argument (string)
   * description (string)
-* [optional] positionalArgument
+* [optional] positionalArguments
   * name (string)
   * description (string)
 * **[optional]** subcommands:

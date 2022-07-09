@@ -1,6 +1,36 @@
 # Auto-generated with h2o
 
 complete -c ajv -n "not __fish_seen_subcommand_from validate compile migrate test help" -l spec -d 'JSON schema specification to use'
+complete -c ajv -n "not __fish_seen_subcommand_from validate compile migrate test help" -s s -d 'JSON schema to validate against (required)' -r
+complete -c ajv -n "not __fish_seen_subcommand_from validate compile migrate test help" -s d -d 'to be validated (required)' -r
+complete -c ajv -n "not __fish_seen_subcommand_from validate compile migrate test help" -s r -d 'referenced schema(s)' -r
+complete -c ajv -n "not __fish_seen_subcommand_from validate compile migrate test help" -s m -d 'meta schema(s)' -r
+complete -c ajv -n "not __fish_seen_subcommand_from validate compile migrate test help" -s c -d 'custom keywords/formats definitions' -r
+complete -c ajv -n "not __fish_seen_subcommand_from validate compile migrate test help" -l spec -d 'JSON schema specification to use' -x
+complete -c ajv -n "not __fish_seen_subcommand_from validate compile migrate test help" -l errors -d 'error reporting format ("js" by default)' -x
+complete -c ajv -n "not __fish_seen_subcommand_from validate compile migrate test help" -l changes -d 'log changes in data after validation ("no" by default)' -x
+complete -c ajv -n "not __fish_seen_subcommand_from validate compile migrate test help" -l strict -d 'disable strict mode' -x
+complete -c ajv -n "not __fish_seen_subcommand_from validate compile migrate test help" -l strict-tuples -d 'unconstrained tuples' -x
+complete -c ajv -n "not __fish_seen_subcommand_from validate compile migrate test help" -l strict-types -d 'union or unspecified types' -x
+complete -c ajv -n "not __fish_seen_subcommand_from validate compile migrate test help" -l allow-matching-properties -d 'allow "properties" matching patterns in "patternProperties"'
+complete -c ajv -n "not __fish_seen_subcommand_from validate compile migrate test help" -l allow-union-types -d 'allow union type keyword'
+complete -c ajv -n "not __fish_seen_subcommand_from validate compile migrate test help" -l validate-formats -d 'disable format validation' -x
+complete -c ajv -n "not __fish_seen_subcommand_from validate compile migrate test help" -l data -d 'use $data references'
+complete -c ajv -n "not __fish_seen_subcommand_from validate compile migrate test help" -l all-errors -d 'collect all errors'
+complete -c ajv -n "not __fish_seen_subcommand_from validate compile migrate test help" -l verbose -d 'include schema and data in errors'
+complete -c ajv -n "not __fish_seen_subcommand_from validate compile migrate test help" -l comment -d 'log schema "$comment"s'
+complete -c ajv -n "not __fish_seen_subcommand_from validate compile migrate test help" -l inline-refs -d 'referenced schemas compilation mode' -x
+complete -c ajv -n "not __fish_seen_subcommand_from validate compile migrate test help" -l remove-additional -d 'remove additional properties' -x
+complete -c ajv -n "not __fish_seen_subcommand_from validate compile migrate test help" -l use-defaults -d 'replace missing properties/items with the values from default keyword'
+complete -c ajv -n "not __fish_seen_subcommand_from validate compile migrate test help" -l coerce-types -d 'change type of data to match type keyword'
+complete -c ajv -n "not __fish_seen_subcommand_from validate compile migrate test help" -l multiple-of-precision -d 'pass integer number' -x
+complete -c ajv -n "not __fish_seen_subcommand_from validate compile migrate test help" -l messages -d 'do not include text messages in errors' -x
+complete -c ajv -n "not __fish_seen_subcommand_from validate compile migrate test help" -l loop-required -d 'max size of "required to compile to expression (rather than to loop)' -x
+complete -c ajv -n "not __fish_seen_subcommand_from validate compile migrate test help" -l loop-enum -d 'max size of "enum" to compile to expression (rather than to loop)' -x
+complete -c ajv -n "not __fish_seen_subcommand_from validate compile migrate test help" -l own-properties -d 'only validate own properties (not relevant for JSON, but can have effect for JavaScript objects)'
+complete -c ajv -n "not __fish_seen_subcommand_from validate compile migrate test help" -l code.es5 -d 'generate ES5 code'
+complete -c ajv -n "not __fish_seen_subcommand_from validate compile migrate test help" -l code.lines -d 'generate multi-line code'
+complete -c ajv -n "not __fish_seen_subcommand_from validate compile migrate test help" -l code.optimize -d 'code optimization' -x
 
 
 
@@ -79,7 +109,7 @@ complete -c ajv -n "__fish_seen_subcommand_from compile" -l code.optimize -d 'co
 complete -c ajv -n "__fish_seen_subcommand_from migrate" -s s -d 'JSON schema(s) to migrate to draft-07 or draft-2019-09' -r
 complete -c ajv -n "__fish_seen_subcommand_from migrate" -s o -d 'output file for migrated schema (only allowed for a single schema)' -r
 complete -c ajv -n "__fish_seen_subcommand_from migrate" -l spec -d 'JSON schema specification to use' -x
-complete -c ajv -n "__fish_seen_subcommand_from migrate" -l indent -d 'indentation in migrated schema JSON file, 4 by default' -x
+complete -c ajv -n "__fish_seen_subcommand_from migrate" -l indent -d 'indentation in migrated schema JSON file, 4 by default' -r
 complete -c ajv -n "__fish_seen_subcommand_from migrate" -l validate-schema -d 'skip schema validation' -x
 
 

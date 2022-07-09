@@ -9,7 +9,8 @@ basedir="$(dirname "$(readlink -f "$0")")"
 
 name="$1"
 json=$(find "$basedir/.." -type f -name "$name".json)
-validator=./validate-json
+validator="$basedir"/validate-json
+
 
 if [[ ! "$(command -v ajv)" ]]; then
     echo "[error] ajv is missing. Install ajv-cli via"
@@ -19,5 +20,4 @@ fi
 
 for f in $json; do
     "$validator" "$f"
-    ajv -s "$1" -d "$2"
 done

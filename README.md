@@ -71,10 +71,14 @@ $ medaka --help > medaka.txt
 $ h2o --file medaka.txt --format json | yq eval -P > bio/yaml/medaka.yaml
 
 # Add TLDR to the YAML, then convert it to JSON and bash/zsh/fish scripts
-$ ./scripts/run medaka
+# group=bio sets the environment variable and run make
+# The makefile calls multiple scripts including
+#    - Add TLDR to YAML
+#    - Convert YAML to JSON
+#    - Create bash/zsh/fish scripts
+#    - Take the entire JSON as an array, create a gzipped JSON file
+$ group=bio make
 
-# Update bio.json.gz and bio.txt
-$ ./scripts/make-gzip
 ```
 
 

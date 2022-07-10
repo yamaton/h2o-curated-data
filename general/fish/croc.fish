@@ -10,7 +10,7 @@ complete -c croc -n "not __fish_seen_subcommand_from send relay" -l ask -d 'make
 complete -c croc -n "not __fish_seen_subcommand_from send relay" -l local -d 'force to use only local connections (default: false)'
 complete -c croc -n "not __fish_seen_subcommand_from send relay" -l ignore-stdin -d 'ignore piped stdin (default: false)'
 complete -c croc -n "not __fish_seen_subcommand_from send relay" -l overwrite -d 'do not prompt to overwrite (default: false)'
-complete -c croc -n "not __fish_seen_subcommand_from send relay" -l curve -d 'choose an encryption curve (p521, p256, p384, siec) (default: "siec")' -x
+complete -c croc -n "not __fish_seen_subcommand_from send relay" -l curve -d 'choose an encryption curve (p521, p256, p384, siec) (default: "p256")' -x
 complete -c croc -n "not __fish_seen_subcommand_from send relay" -l ip -d 'set sender ip if known e.g. 10.0.0.1:9009, [::1]:9009' -x
 complete -c croc -n "not __fish_seen_subcommand_from send relay" -l relay -d 'address of the relay (default: "5.161.69.143:9009") [$CROC_RELAY]' -x
 complete -c croc -n "not __fish_seen_subcommand_from send relay" -l relay6 -d 'ipv6 address of the relay (default: "[2a01:4ff:f0:23c2::14c:1]:9009") [$CROC_RELAY6]' -x
@@ -28,6 +28,7 @@ complete -k -c croc -n __fish_use_subcommand -x -a send -d 'send file(s), or fol
 
 
 
+complete -c croc -n "__fish_seen_subcommand_from send" -l zip -d 'zip folder before sending (default: false)'
 complete -c croc -n "__fish_seen_subcommand_from send" -l code -s c -d 'codephrase used to connect to relay' -x
 complete -c croc -n "__fish_seen_subcommand_from send" -l hash -d 'hash algorithm (xxhash, imohash, md5) (default: "xxhash")' -x
 complete -c croc -n "__fish_seen_subcommand_from send" -l text -s t -d 'send some text' -x

@@ -9,8 +9,7 @@ complete -c find -o daystart -d 'Measure times (for -amin, -atime, -cmin, -ctime
 complete -c find -o follow -d 'Deprecated; use the -L option instead.'
 complete -c find -o regextype -d 'Changes the regular expression syntax understood by -regex and -iregex tests which occur later on the command line.' -x
 complete -c find -o warn -o nowarn -d 'Turn warning messages on or off.'
-complete -c find -s d -d 'A synonym for -depth, for compatibility with FreeBSD, NetBSD, MacOS X and OpenBSD.'
-complete -c find -o depth -d 'Process each directory\'s contents before the directory itself.'
+complete -c find -s d -o depth -d 'Process each directory\'s contents before the directory itself.'
 complete -c find -o help -l help -d 'Print a summary of the command-line usage of find and exit.'
 complete -c find -o ignore_readdir_race -d 'Normally, find will emit an error message when it fails to stat a file.'
 complete -c find -o maxdepth -d 'Descend at most levels (a non-negative integer) levels of directories below the starting-points.' -r

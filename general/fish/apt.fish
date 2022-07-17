@@ -4,6 +4,7 @@ complete -c apt -n "not __fish_seen_subcommand_from list search show install rei
 complete -c apt -n "not __fish_seen_subcommand_from list search show install reinstall remove autoremove update upgrade full-upgrade edit-sources satisfy" -s v -l version -d 'Show the program version.'
 complete -c apt -n "not __fish_seen_subcommand_from list search show install reinstall remove autoremove update upgrade full-upgrade edit-sources satisfy" -s c -l config-file -d 'Configuration File; Specify a configuration file to use.' -r
 complete -c apt -n "not __fish_seen_subcommand_from list search show install reinstall remove autoremove update upgrade full-upgrade edit-sources satisfy" -s o -l option -d 'Set a Configuration Option; This will set an arbitrary configuration option.' -x
+complete -c apt -n "not __fish_seen_subcommand_from list search show install reinstall remove autoremove update upgrade full-upgrade edit-sources satisfy" -s t -l target-release -d 'Install from specific repository' -x
 
 
 

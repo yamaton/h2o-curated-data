@@ -16,8 +16,8 @@ complete -c pkg-config -l libs -d 'This option is identical to "--cflags", only 
 complete -c pkg-config -l libs-only-L -d 'This prints the -L/-R part of "--libs".'
 complete -c pkg-config -l libs-only-l -d 'This prints the -l part of "--libs" for the libraries specified on the command line.'
 complete -c pkg-config -l libs-only-other -d 'This prints the parts of "--libs" not covered by "--libs-only-L" and "--libs-only-l", such as "--pthread".'
-complete -c pkg-config -l variable -d 'This returns the value of a variable defined in a package\'s .pc file.' -x
-complete -c pkg-config -l define-variable -d 'This sets a global value for a variable, overriding the value in any .pc files.' -x
+complete -c pkg-config -l variable -d 'This returns the value of a variable defined in a package\'s .pc file.' -r
+complete -c pkg-config -l define-variable -d 'This sets a global value for a variable, overriding the value in any .pc files.' -r
 complete -c pkg-config -l print-variables -d 'Returns a list of all variables defined in the package.'
 complete -c pkg-config -l uninstalled -d 'Normally if you request the package "foo" and the package "foo-uninstalled" exists, pkg-config will prefer the "-uninstalled" variant.'
 complete -c pkg-config -l max-version -d 'These options test whether the package or list of packages on the command line are known to pkg-config, and optionally whether the version number of a package meets certain constraints.' -x

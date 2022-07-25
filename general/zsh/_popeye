@@ -1,0 +1,90 @@
+#compdef _popeye popeye
+
+# Auto-generated with h2o
+
+    function _popeye_completion {
+        _arguments \
+            {-h,--help}'[help for completion]' \
+            {-c,--clear}'[Clears the screen before a run]' \
+            "*: :_files"
+
+    }
+
+    function _popeye_version {
+        _arguments \
+            {-h,--help}'[help for version]' \
+            {-c,--clear}'[Clears the screen before a run]' \
+            "*: :_files"
+
+    }
+
+
+function _popeye {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'completion:generate the autocompletion script for the specified shell'
+            'version:Prints version/build info'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        {-A,--all-namespaces}'[Sanitize all namespaces]' \
+        '--as[Username to impersonate for the operation]' \
+        '--as-group[Group to impersonate for the operation]' \
+        '--certificate-authority[Path to a cert file for the certificate authority]':file:_files \
+        {-c,--clear}'[Clears the screen before a run]' \
+        '--client-certificate[Path to a client certificate file for TLS]':file:_files \
+        '--client-key[Path to a client key file for TLS]':file:_files \
+        '--cluster[The name of the kubeconfig cluster to use]' \
+        '--cluster-name[Specificy a cluster name when running popeye in cluster]' \
+        '--context[The name of the kubeconfig context to use]' \
+        {-f,--file}'[Use a spinach YAML configuration file]':file:_files \
+        '--force-exit-zero[Force zero exit status when report errors are present]' \
+        {-h,--help}'[help for popeye]' \
+        '--insecure-skip-tls-verify[If true, the server'\''s caCertFile will not be checked for validity]' \
+        '--kubeconfig[Path to the kubeconfig file to use for CLI requests]':file:_files \
+        {-l,--lint}'[Specify a lint level (ok, info, warn, error) (default "ok")]' \
+        '--min-score[Force non-zero exit if the cluster score is below that threshold (default 50)]' \
+        {-n,--namespace}'[If present, the namespace scope for this CLI request]' \
+        {-o,--out}'[Specify the output type (standard, jurassic, yaml, json, html, junit, prometheus, score) (default "standard")]' \
+        '--output-file[Specify the name of the saved output file]':file:_files \
+        '--over-allocs[Check for cpu/memory over allocations]' \
+        '--pushgateway-address[Address of pushgateway e.g. http://localhost:9091]' \
+        '--pushgateway-password[BasicAuth password for pushgateway]' \
+        '--pushgateway-user[BasicAuth username for pushgateway]' \
+        '--request-timeout[The length of time to wait before giving up on a single server request]' \
+        '--s3-bucket[Specify to which S3 bucket you want to save the output file]' \
+        '--s3-endpoint[Specify an s3 compatible endpoint when the s3-bucket option is enabled]' \
+        '--s3-region[Specify an s3 compatible region when the s3-bucket option is enabled]' \
+        '--save[Specify if you want Popeye to persist the output to a file]' \
+        {-s,--sections}'[Specifies which resources to include in the scan ie -s po,svc]' \
+        '--token[Bearer token for authentication to the API server]' \
+        '--user[The name of the kubeconfig user to use]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (completion)
+            _popeye_completion
+            ;;
+
+        (version)
+            _popeye_version
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+

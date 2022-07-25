@@ -1,0 +1,124 @@
+# Auto-generated with h2o
+
+_popeye()
+{
+    local i=1 cmd cur word_list
+    cur="${COMP_WORDS[COMP_CWORD]}"
+
+    # take the last word that's NOT starting with -
+    while [[ ( "$i" < "$COMP_CWORD" ) ]]; do
+        local s="${COMP_WORDS[i]}"
+        case "$s" in
+          -*) ;;
+          *)
+            cmd="$s"
+            ;;
+        esac
+        (( i++ ))
+    done
+
+    case "$cmd" in
+          completion) _popeye_completion
+            return
+            ;;
+
+          version) _popeye_version
+            return
+            ;;
+
+      *)
+          word_list=" completion version -A --all-namespaces --as --as-group --certificate-authority -c --clear --client-certificate --client-key --cluster --cluster-name --context -f --file --force-exit-zero -h --help --insecure-skip-tls-verify --kubeconfig -l --lint --min-score -n --namespace -o --out --output-file --over-allocs --pushgateway-address --pushgateway-password --pushgateway-user --request-timeout --s3-bucket --s3-endpoint --s3-region --save -s --sections --token --user"
+          COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+          ;;
+    esac
+
+}
+
+_popeye_completion ()
+{
+    local cur word_list
+    local i=1 subcommand_index
+
+    # take the last word that's NOT starting with -
+    while [[ ( $i < $COMP_CWORD ) ]]; do
+        local s="${COMP_WORDS[i]}"
+        case "$s" in
+          completion)
+            subcommand_index=$i
+            break
+            ;;
+        esac
+        (( i++ ))
+    done
+
+    while [[ ( $subcommand_index < $COMP_CWORD ) ]]; do
+        local s="${COMP_WORDS[subcommand_index}"
+        case "$s" in
+          bash) _popeye_bash
+            return
+            ;;
+
+          fish) _popeye_fish
+            return
+            ;;
+
+          powershell) _popeye_powershell
+            return
+            ;;
+
+          zsh) _popeye_zsh
+            return
+            ;;
+
+          *)  ;; 
+        esac
+        (( subcommand_index++ ))
+    done
+
+    word_list=" bash fish powershell zsh -h --help -c --clear" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_completion_bash ()
+{
+    local cur word_list
+    word_list=" -h --help --no-descriptions -c --clear" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_completion_fish ()
+{
+    local cur word_list
+    word_list=" -h --help --no-descriptions -c --clear" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_completion_powershell ()
+{
+    local cur word_list
+    word_list=" -h --help --no-descriptions -c --clear" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_completion_zsh ()
+{
+    local cur word_list
+    word_list=" -h --help --no-descriptions -c --clear" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_popeye_version ()
+{
+    local cur word_list
+    word_list=" -h --help -c --clear" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+## -o bashdefault and -o default are fallback
+complete -o bashdefault -o default -F _popeye popeye

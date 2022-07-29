@@ -1,0 +1,1249 @@
+name: foldseek
+description: foldseek
+options: []
+subcommands:
+  - name: easy-search
+    description: Sensitive homology search
+    usage: foldseek easy-search <i:PDB|mmCIF[.gz]> ... <i:PDB|mmCIF[.gz]>|<i:stdin> <i:targetFastaFile[.gz]>|<i:targetDB> <o:alignmentFile> <tmpDir> [options]
+    options:
+      - names:
+          - --comp-bias-corr
+        argument: INT
+        description: Correct for locally biased amino acid composition (range 0-1) [1]
+      - names:
+          - --comp-bias-corr-scale
+        argument: FLOAT
+        description: Correct for locally biased amino acid composition (range 0-1) [1.000]
+      - names:
+          - --seed-sub-mat
+        argument: TWIN
+        description: Substitution matrix file for k-mer generation [aa:3di.out,nucl:3di.out]
+      - names:
+          - -s
+        argument: FLOAT
+        description: 'Sensitivity: 1.0 faster; 4.0 fast; 7.5 sensitive [9.500]'
+      - names:
+          - -k
+        argument: INT
+        description: 'k-mer length (0: automatically set to optimum) [0]'
+      - names:
+          - --k-score
+        argument: TWIN
+        description: k-mer threshold for generating similar k-mer lists [seq:2147483647,prof:2147483647]
+      - names:
+          - --max-seqs
+        argument: INT
+        description: Maximum results per query sequence allowed to pass the prefilter (affects sensitivity) [300]
+      - names:
+          - --split
+        argument: INT
+        description: 'Split input into N equally distributed chunks. 0: set the best split automatically [0]'
+      - names:
+          - --split-mode
+        argument: INT
+        description: '0: split target db; 1: split query db; 2: auto, depending on main memory [2]'
+      - names:
+          - --split-memory-limit
+        argument: BYTE
+        description: Set max memory per split. E.g. 800B, 5K, 10M, 1G. Default (0) to all available system memory [0]
+      - names:
+          - --diag-score
+        argument: BOOL
+        description: Use ungapped diagonal scoring during prefilter [1]
+      - names:
+          - --exact-kmer-matching
+        argument: INT
+        description: Extract only exact k-mers for matching (range 0-1) [0]
+      - names:
+          - --mask
+        argument: INT
+        description: 'Mask sequences in k-mer stage: 0: w/o low complexity masking, 1: with low complexity masking [1]'
+      - names:
+          - --mask-prob
+        argument: FLOAT
+        description: Mask sequences is probablity is above threshold [0.900]
+      - names:
+          - --mask-lower-case
+        argument: INT
+        description: 'Lowercase letters will be excluded from k-mer search 0: include region, 1: exclude region [0]'
+      - names:
+          - --min-ungapped-score
+        argument: INT
+        description: Accept only matches with ungapped alignment score above threshold [15]
+      - names:
+          - --spaced-kmer-mode
+        argument: INT
+        description: '0: use consecutive positions in k-mers; 1: use spaced k-mers [1]'
+      - names:
+          - --spaced-kmer-pattern
+        argument: STR
+        description: User-specified spaced k-mer pattern []
+      - names:
+          - --local-tmp
+        argument: STR
+        description: Path where some of the temporary files will be created []
+      - names:
+          - --min-seq-id
+        argument: FLOAT
+        description: List matches above this sequence identity (for clustering) (range 0.0-1.0) [0.000]
+      - names:
+          - -c
+        argument: FLOAT
+        description: List matches above this fraction of aligned (covered) residues (see --cov-mode) [0.000]
+      - names:
+          - --cov-mode
+        argument: INT
+        description: '0: coverage of query and target   1: coverage of target 2: coverage of query 3: target seq. length has to be at least x% of query length 4: query seq. length has to be at least x% of target length 5: short seq. needs to be at least x% of the other seq. length [0]'
+      - names:
+          - --max-rejected
+        argument: INT
+        description: Maximum rejected alignments before alignment calculation for a query is stopped [2147483647]
+      - names:
+          - --max-accept
+        argument: INT
+        description: Maximum accepted alignments before alignment calculation for a query is stopped [2147483647]
+      - names:
+          - -a
+        argument: BOOL
+        description: Add backtrace string (convert to alignments with mmseqs convertalis module) [0]
+      - names:
+          - --alignment-mode
+        argument: INT
+        description: 'How to compute the alignment:   0: automatic 1: only score and end_pos 2: also start_pos and cov 3: also seq.id [3]'
+      - names:
+          - --alignment-output-mode
+        argument: INT
+        description: 'How to compute the alignment:   0: automatic 1: only score and end_pos 2: also start_pos and cov 3: also seq.id 4: only ungapped alignment 5: score only (output) cluster format [0]'
+      - names:
+          - -e
+        argument: DOUBLE
+        description: List matches below this E-value (range 0.0-inf) [1.000E-03]
+      - names:
+          - --min-aln-len
+        argument: INT
+        description: Minimum alignment length (range 0-INT_MAX) [0]
+      - names:
+          - --seq-id-mode
+        argument: INT
+        description: '0: alignment length 1: shorter, 2: longer sequence [0]'
+      - names:
+          - --alt-ali
+        argument: INT
+        description: Show up to this many alternative alignments [0]
+      - names:
+          - --gap-open
+        argument: TWIN
+        description: Gap open cost [aa:7,nucl:7]
+      - names:
+          - --gap-extend
+        argument: TWIN
+        description: Gap extension cost [aa:2,nucl:2]
+      - names:
+          - --tmscore-threshold
+        argument: FLOAT
+        description: accept alignments with a tmsore > thr [0.0,1.0] [0.500]
+      - names:
+          - --tmalign-fast
+        argument: INT
+        description: turn on fast search in TM-align [1]
+      - names:
+          - --alignment-type
+        argument: INT
+        description: 'How to compute the alignment:   0: 3di alignment 1: TM alignment 2: 3Di+AA [2]'
+      - names:
+          - --tar-include
+        argument: STR
+        description: Include file names based on this regex [.*]
+      - names:
+          - --tar-exclude
+        argument: STR
+        description: Exclude file names based on this regex [^$]
+      - names:
+          - --format-mode
+        argument: 'INT             Output format:'
+        description: '0: BLAST-TAB 1: SAM 2: BLAST-TAB + query/db length 3: Pretty HTML 4: BLAST-TAB + column headers BLAST-TAB (0) and BLAST-TAB + column headers (4) support custom output formats (--format-output) [0]'
+      - names:
+          - --format-output
+        argument: STR
+        description: 'Choose comma separated list of output columns from: query,target,evalue,gapopen,pident,fident,nident,qstart,qend,qlen tstart,tend,tlen,alnlen,raw,bits,cigar,qseq,tseq,qheader,theader,qaln,taln,mismatch,qcov,tcov qset,qsetid,tset,tsetid,taxid,taxname,taxlineagebla,qca,tca,t,u,alntmscore'
+      - names:
+          - --db-load-mode
+        argument: INT
+        description: 'Database preload mode 0: auto, 1: fread, 2: mmap, 3: mmap+touch [0]'
+      - names:
+          - --threads
+        argument: INT
+        description: Number of CPU-cores used (all by default) [4]
+      - names:
+          - -v
+        argument: INT
+        description: 'Verbosity level: 0: quiet, 1: +errors, 2: +warnings, 3: +info [3]'
+      - names:
+          - --sub-mat
+        argument: TWIN
+        description: Substitution matrix file [aa:3di.out,nucl:3di.out]
+      - names:
+          - --max-seq-len
+        argument: INT
+        description: Maximum sequence length [65535]
+      - names:
+          - --compressed
+        argument: INT
+        description: Write compressed output [0]
+      - names:
+          - --remove-tmp-files
+        argument: BOOL
+        description: Delete temporary files [1]
+      - names:
+          - --mpi-runner
+        argument: STR
+        description: Use MPI on compute cluster with this MPI command (e.g. "mpirun -np 42") []
+      - names:
+          - --force-reuse
+        argument: BOOL
+        description: Reuse tmp filse in tmp/latest folder ignoring parameters and version changes [0]
+      - names:
+          - --zdrop
+        argument: INT
+        description: Maximal allowed difference between score values before alignment is truncated (nucleotide alignment only) [40]
+      - names:
+          - --chain-name-mode
+        argument: INT
+        description: 'Add chain to name: 0: auto 1: always add'
+      - names:
+          - --write-lookup
+        argument: INT
+        description: write .lookup file containing mapping from internal id, fasta id and file number [1]
+      - names:
+          - --db-output
+        argument: BOOL
+        description: Return a result DB instead of a text file [0]
+  - name: easy-rbh
+    description: Find reciprocal best hit
+    usage: foldseek easy-rbh <i:queryFastaFile1[.gz|.bz2]> <i:targetFastaFile[.gz|.bz2]>|<i:targetDB> <o:alignmentFile> <tmpDir> [options]
+    options:
+      - names:
+          - --comp-bias-corr
+        argument: INT
+        description: Correct for locally biased amino acid composition (range 0-1) [1]
+      - names:
+          - --comp-bias-corr-scale
+        argument: FLOAT
+        description: Correct for locally biased amino acid composition (range 0-1) [1.000]
+      - names:
+          - --seed-sub-mat
+        argument: TWIN
+        description: Substitution matrix file for k-mer generation [aa:3di.out,nucl:3di.out]
+      - names:
+          - -s
+        argument: FLOAT
+        description: 'Sensitivity: 1.0 faster; 4.0 fast; 7.5 sensitive [4.000]'
+      - names:
+          - -k
+        argument: INT
+        description: 'k-mer length (0: automatically set to optimum) [0]'
+      - names:
+          - --k-score
+        argument: TWIN
+        description: k-mer threshold for generating similar k-mer lists [seq:2147483647,prof:2147483647]
+      - names:
+          - --max-seqs
+        argument: INT
+        description: Maximum results per query sequence allowed to pass the prefilter (affects sensitivity) [300]
+      - names:
+          - --split
+        argument: INT
+        description: 'Split input into N equally distributed chunks. 0: set the best split automatically [0]'
+      - names:
+          - --split-mode
+        argument: INT
+        description: '0: split target db; 1: split query db; 2: auto, depending on main memory [2]'
+      - names:
+          - --split-memory-limit
+        argument: BYTE
+        description: Set max memory per split. E.g. 800B, 5K, 10M, 1G. Default (0) to all available system memory [0]
+      - names:
+          - --diag-score
+        argument: BOOL
+        description: Use ungapped diagonal scoring during prefilter [1]
+      - names:
+          - --exact-kmer-matching
+        argument: INT
+        description: Extract only exact k-mers for matching (range 0-1) [0]
+      - names:
+          - --mask
+        argument: INT
+        description: 'Mask sequences in k-mer stage: 0: w/o low complexity masking, 1: with low complexity masking [1]'
+      - names:
+          - --mask-prob
+        argument: FLOAT
+        description: Mask sequences is probablity is above threshold [0.900]
+      - names:
+          - --mask-lower-case
+        argument: INT
+        description: 'Lowercase letters will be excluded from k-mer search 0: include region, 1: exclude region [0]'
+      - names:
+          - --min-ungapped-score
+        argument: INT
+        description: Accept only matches with ungapped alignment score above threshold [15]
+      - names:
+          - --spaced-kmer-mode
+        argument: INT
+        description: '0: use consecutive positions in k-mers; 1: use spaced k-mers [1]'
+      - names:
+          - --spaced-kmer-pattern
+        argument: STR
+        description: User-specified spaced k-mer pattern []
+      - names:
+          - --local-tmp
+        argument: STR
+        description: Path where some of the temporary files will be created []
+      - names:
+          - --min-seq-id
+        argument: FLOAT
+        description: List matches above this sequence identity (for clustering) (range 0.0-1.0) [0.000]
+      - names:
+          - -c
+        argument: FLOAT
+        description: List matches above this fraction of aligned (covered) residues (see --cov-mode) [0.000]
+      - names:
+          - --cov-mode
+        argument: INT
+        description: '0: coverage of query and target   1: coverage of target 2: coverage of query 3: target seq. length has to be at least x% of query length 4: query seq. length has to be at least x% of target length 5: short seq. needs to be at least x% of the other seq. length [0]'
+      - names:
+          - --max-rejected
+        argument: INT
+        description: Maximum rejected alignments before alignment calculation for a query is stopped [2147483647]
+      - names:
+          - --max-accept
+        argument: INT
+        description: Maximum accepted alignments before alignment calculation for a query is stopped [2147483647]
+      - names:
+          - -a
+        argument: BOOL
+        description: Add backtrace string (convert to alignments with mmseqs convertalis module) [0]
+      - names:
+          - --alignment-mode
+        argument: INT
+        description: 'How to compute the alignment:   0: automatic 1: only score and end_pos 2: also start_pos and cov 3: also seq.id [3]'
+      - names:
+          - --alignment-output-mode
+        argument: INT
+        description: 'How to compute the alignment:   0: automatic 1: only score and end_pos 2: also start_pos and cov 3: also seq.id 4: only ungapped alignment 5: score only (output) cluster format [0]'
+      - names:
+          - -e
+        argument: DOUBLE
+        description: List matches below this E-value (range 0.0-inf) [1.000E-03]
+      - names:
+          - --min-aln-len
+        argument: INT
+        description: Minimum alignment length (range 0-INT_MAX) [0]
+      - names:
+          - --seq-id-mode
+        argument: INT
+        description: '0: alignment length 1: shorter, 2: longer sequence [0]'
+      - names:
+          - --alt-ali
+        argument: INT
+        description: Show up to this many alternative alignments [0]
+      - names:
+          - --gap-open
+        argument: TWIN
+        description: Gap open cost [aa:11,nucl:5]
+      - names:
+          - --gap-extend
+        argument: TWIN
+        description: Gap extension cost [aa:1,nucl:2]
+      - names:
+          - --tmscore-threshold
+        argument: FLOAT
+        description: accept alignments with a tmsore > thr [0.0,1.0] [0.500]
+      - names:
+          - --tmalign-fast
+        argument: INT
+        description: turn on fast search in TM-align [1]
+      - names:
+          - --alignment-type
+        argument: INT
+        description: 'How to compute the alignment:   0: 3di alignment 1: TM alignment 2: 3Di+AA [2]'
+      - names:
+          - --tar-include
+        argument: STR
+        description: Include file names based on this regex [.*]
+      - names:
+          - --tar-exclude
+        argument: STR
+        description: Exclude file names based on this regex [^$]
+      - names:
+          - --format-mode
+        argument: 'INT             Output format:'
+        description: '0: BLAST-TAB 1: SAM 2: BLAST-TAB + query/db length 3: Pretty HTML 4: BLAST-TAB + column headers BLAST-TAB (0) and BLAST-TAB + column headers (4) support custom output formats (--format-output) [0]'
+      - names:
+          - --format-output
+        argument: STR
+        description: 'Choose comma separated list of output columns from: query,target,evalue,gapopen,pident,fident,nident,qstart,qend,qlen tstart,tend,tlen,alnlen,raw,bits,cigar,qseq,tseq,qheader,theader,qaln,taln,mismatch,qcov,tcov qset,qsetid,tset,tsetid,taxid,taxname,taxlineagebla,qca,tca,t,u,alntmscore'
+      - names:
+          - --db-load-mode
+        argument: INT
+        description: 'Database preload mode 0: auto, 1: fread, 2: mmap, 3: mmap+touch [0]'
+      - names:
+          - --threads
+        argument: INT
+        description: Number of CPU-cores used (all by default) [4]
+      - names:
+          - -v
+        argument: INT
+        description: 'Verbosity level: 0: quiet, 1: +errors, 2: +warnings, 3: +info [3]'
+      - names:
+          - --sub-mat
+        argument: TWIN
+        description: Substitution matrix file [aa:3di.out,nucl:3di.out]
+      - names:
+          - --max-seq-len
+        argument: INT
+        description: Maximum sequence length [65535]
+      - names:
+          - --compressed
+        argument: INT
+        description: Write compressed output [0]
+      - names:
+          - --remove-tmp-files
+        argument: BOOL
+        description: Delete temporary files [1]
+      - names:
+          - --mpi-runner
+        argument: STR
+        description: Use MPI on compute cluster with this MPI command (e.g. "mpirun -np 42") []
+      - names:
+          - --force-reuse
+        argument: BOOL
+        description: Reuse tmp filse in tmp/latest folder ignoring parameters and version changes [0]
+      - names:
+          - --pca
+        argument: ""
+        description: Pseudo count admixture strength []
+      - names:
+          - --pcb
+        argument: ""
+        description: 'Pseudo counts: Neff at half of maximum admixture (range 0.0-inf) []'
+      - names:
+          - --zdrop
+        argument: INT
+        description: Maximal allowed difference between score values before alignment is truncated (nucleotide alignment only) [40]
+      - names:
+          - --chain-name-mode
+        argument: INT
+        description: 'Add chain to name:   0: auto 1: always add'
+      - names:
+          - --write-lookup
+        argument: INT
+        description: write .lookup file containing mapping from internal id, fasta id and file number [0]
+      - names:
+          - --translation-table
+        argument: INT
+        description: 1) CANONICAL, 2) VERT_MITOCHONDRIAL, 3) YEAST_MITOCHONDRIAL, 4) MOLD_MITOCHONDRIAL, 5) INVERT_MITOCHONDRIAL, 6) CILIATE 9) FLATWORM_MITOCHONDRIAL, 10) EUPLOTID, 11) PROKARYOTE, 12) ALT_YEAST, 13) ASCIDIAN_MITOCHONDRIAL, 14) ALT_FLATWORM_MITOCHONDRIAL 15) BLEPHARISMA, 16) CHLOROPHYCEAN_MITOCHONDRIAL, 21) TREMATODE_MITOCHONDRIAL, 22) SCENEDESMUS_MITOCHONDRIAL 23) THRAUSTOCHYTRIUM_MITOCHONDRIAL, 24) PTEROBRANCHIA_MITOCHONDRIAL, 25) GRACILIBACTERIA, 26) PACHYSOLEN, 27) KARYORELICT, 28) CONDYLOSTOMA
+      - names:
+          - --db-output
+        argument: BOOL
+        description: Return a result DB instead of a text file [0]
+  - name: createdb
+    description: Convert PDB/mmCIF/tar[.gz] files to an db.
+    usage: foldseek createdb <i:PDB|mmCIF[.gz]> ... <i:PDB|mmCIF[.gz]> <o:sequenceDB> [options]
+    options:
+      - names:
+          - --tar-include
+        argument: STR
+        description: Include file names based on this regex [.*]
+      - names:
+          - --tar-exclude
+        argument: STR
+        description: Exclude file names based on this regex [^$]
+      - names:
+          - --threads
+        argument: INT
+        description: Number of CPU-cores used (all by default) [4]
+      - names:
+          - -v
+        argument: INT
+        description: 'Verbosity level: 0: quiet, 1: +errors, 2: +warnings, 3: +info [3]'
+      - names:
+          - --chain-name-mode
+        argument: INT
+        description: 'Add chain to name: 0: auto 1: always add'
+      - names:
+          - --write-lookup
+        argument: INT
+        description: write .lookup file containing mapping from internal id, fasta id and file number [1]
+  - name: search
+    description: Sensitive homology search
+    usage: foldseek search <i:queryDB> <i:targetDB> <o:alignmentDB> <tmpDir> [options]
+    options:
+      - names:
+          - --comp-bias-corr
+        argument: INT
+        description: Correct for locally biased amino acid composition (range 0-1) [1]
+      - names:
+          - --comp-bias-corr-scale
+        argument: FLOAT
+        description: Correct for locally biased amino acid composition (range 0-1) [1.000]
+      - names:
+          - --seed-sub-mat
+        argument: TWIN
+        description: Substitution matrix file for k-mer generation [aa:3di.out,nucl:3di.out]
+      - names:
+          - -s
+        argument: FLOAT
+        description: 'Sensitivity: 1.0 faster; 4.0 fast; 7.5 sensitive [9.500]'
+      - names:
+          - -k
+        argument: INT
+        description: 'k-mer length (0: automatically set to optimum) [0]'
+      - names:
+          - --k-score
+        argument: TWIN
+        description: k-mer threshold for generating similar k-mer lists [seq:2147483647,prof:2147483647]
+      - names:
+          - --max-seqs
+        argument: INT
+        description: Maximum results per query sequence allowed to pass the prefilter (affects sensitivity) [1000]
+      - names:
+          - --split
+        argument: INT
+        description: 'Split input into N equally distributed chunks. 0: set the best split automatically [0]'
+      - names:
+          - --split-mode
+        argument: INT
+        description: '0: split target db; 1: split query db; 2: auto, depending on main memory [2]'
+      - names:
+          - --split-memory-limit
+        argument: BYTE
+        description: Set max memory per split. E.g. 800B, 5K, 10M, 1G. Default (0) to all available system memory [0]
+      - names:
+          - --diag-score
+        argument: BOOL
+        description: Use ungapped diagonal scoring during prefilter [1]
+      - names:
+          - --exact-kmer-matching
+        argument: INT
+        description: Extract only exact k-mers for matching (range 0-1) [0]
+      - names:
+          - --mask
+        argument: INT
+        description: 'Mask sequences in k-mer stage: 0: w/o low complexity masking, 1: with low complexity masking [0]'
+      - names:
+          - --mask-prob
+        argument: FLOAT
+        description: Mask sequences is probablity is above threshold [1.000]
+      - names:
+          - --mask-lower-case
+        argument: INT
+        description: 'Lowercase letters will be excluded from k-mer search 0: include region, 1: exclude region [0]'
+      - names:
+          - --min-ungapped-score
+        argument: INT
+        description: Accept only matches with ungapped alignment score above threshold [15]
+      - names:
+          - --spaced-kmer-mode
+        argument: INT
+        description: '0: use consecutive positions in k-mers; 1: use spaced k-mers [1]'
+      - names:
+          - --spaced-kmer-pattern
+        argument: STR
+        description: User-specified spaced k-mer pattern []
+      - names:
+          - --local-tmp
+        argument: STR
+        description: Path where some of the temporary files will be created []
+      - names:
+          - --min-seq-id
+        argument: FLOAT
+        description: List matches above this sequence identity (for clustering) (range 0.0-1.0) [0.000]
+      - names:
+          - -c
+        argument: FLOAT
+        description: List matches above this fraction of aligned (covered) residues (see --cov-mode) [0.000]
+      - names:
+          - --cov-mode
+        argument: INT
+        description: '0: coverage of query and target   1: coverage of target 2: coverage of query 3: target seq. length has to be at least x% of query length 4: query seq. length has to be at least x% of target length 5: short seq. needs to be at least x% of the other seq. length [0]'
+      - names:
+          - --max-rejected
+        argument: INT
+        description: Maximum rejected alignments before alignment calculation for a query is stopped [2147483647]
+      - names:
+          - --max-accept
+        argument: INT
+        description: Maximum accepted alignments before alignment calculation for a query is stopped [2147483647]
+      - names:
+          - -a
+        argument: BOOL
+        description: Add backtrace string (convert to alignments with mmseqs convertalis module) [0]
+      - names:
+          - --alignment-mode
+        argument: INT
+        description: 'How to compute the alignment:   0: automatic 1: only score and end_pos 2: also start_pos and cov 3: also seq.id [3]'
+      - names:
+          - --alignment-output-mode
+        argument: INT
+        description: 'How to compute the alignment:   0: automatic 1: only score and end_pos 2: also start_pos and cov 3: also seq.id 4: only ungapped alignment 5: score only (output) cluster format [0]'
+      - names:
+          - -e
+        argument: DOUBLE
+        description: List matches below this E-value (range 0.0-inf) [1.000E-03]
+      - names:
+          - --min-aln-len
+        argument: INT
+        description: Minimum alignment length (range 0-INT_MAX) [0]
+      - names:
+          - --seq-id-mode
+        argument: INT
+        description: '0: alignment length 1: shorter, 2: longer sequence [0]'
+      - names:
+          - --alt-ali
+        argument: INT
+        description: Show up to this many alternative alignments [0]
+      - names:
+          - --gap-open
+        argument: TWIN
+        description: Gap open cost [aa:10,nucl:10]
+      - names:
+          - --gap-extend
+        argument: TWIN
+        description: Gap extension cost [aa:1,nucl:1]
+      - names:
+          - --tmscore-threshold
+        argument: FLOAT
+        description: accept alignments with a tmsore > thr [0.0,1.0] [0.500]
+      - names:
+          - --tmalign-fast
+        argument: INT
+        description: turn on fast search in TM-align [1]
+      - names:
+          - --alignment-type
+        argument: INT
+        description: 'How to compute the alignment: 0: 3di alignment 1: TM alignment 2: 3Di+AA [2]'
+      - names:
+          - --db-load-mode
+        argument: INT
+        description: 'Database preload mode 0: auto, 1: fread, 2: mmap, 3: mmap+touch [0]'
+      - names:
+          - --threads
+        argument: INT
+        description: Number of CPU-cores used (all by default) [4]
+      - names:
+          - -v
+        argument: INT
+        description: 'Verbosity level: 0: quiet, 1: +errors, 2: +warnings, 3: +info [3]'
+      - names:
+          - --sub-mat
+        argument: TWIN
+        description: Substitution matrix file [aa:3di.out,nucl:3di.out]
+      - names:
+          - --max-seq-len
+        argument: INT
+        description: Maximum sequence length [65535]
+      - names:
+          - --compressed
+        argument: INT
+        description: Write compressed output [0]
+      - names:
+          - --remove-tmp-files
+        argument: BOOL
+        description: Delete temporary files [1]
+      - names:
+          - --mpi-runner
+        argument: STR
+        description: Use MPI on compute cluster with this MPI command (e.g. "mpirun -np 42") []
+      - names:
+          - --force-reuse
+        argument: BOOL
+        description: Reuse tmp filse in tmp/latest folder ignoring parameters and version changes [0]
+  - name: rbh
+    description: Reciprocal best hit search
+    usage: foldseek rbh <i:queryDB> <i:targetDB> <o:alignmentDB> <tmpDir> [options]
+    options:
+      - names:
+          - --comp-bias-corr
+        argument: INT
+        description: Correct for locally biased amino acid composition (range 0-1) [1]
+      - names:
+          - --comp-bias-corr-scale
+        argument: FLOAT
+        description: Correct for locally biased amino acid composition (range 0-1) [1.000]
+      - names:
+          - --seed-sub-mat
+        argument: TWIN
+        description: Substitution matrix file for k-mer generation [aa:3di.out,nucl:3di.out]
+      - names:
+          - -s
+        argument: FLOAT
+        description: 'Sensitivity: 1.0 faster; 4.0 fast; 7.5 sensitive [9.500]'
+      - names:
+          - -k
+        argument: INT
+        description: 'k-mer length (0: automatically set to optimum) [0]'
+      - names:
+          - --k-score
+        argument: TWIN
+        description: k-mer threshold for generating similar k-mer lists [seq:2147483647,prof:2147483647]
+      - names:
+          - --max-seqs
+        argument: INT
+        description: Maximum results per query sequence allowed to pass the prefilter (affects sensitivity) [1000]
+      - names:
+          - --split
+        argument: INT
+        description: 'Split input into N equally distributed chunks. 0: set the best split automatically [0]'
+      - names:
+          - --split-mode
+        argument: INT
+        description: '0: split target db; 1: split query db; 2: auto, depending on main memory [2]'
+      - names:
+          - --split-memory-limit
+        argument: BYTE
+        description: Set max memory per split. E.g. 800B, 5K, 10M, 1G. Default (0) to all available system memory [0]
+      - names:
+          - --diag-score
+        argument: BOOL
+        description: Use ungapped diagonal scoring during prefilter [1]
+      - names:
+          - --exact-kmer-matching
+        argument: INT
+        description: Extract only exact k-mers for matching (range 0-1) [0]
+      - names:
+          - --mask
+        argument: INT
+        description: 'Mask sequences in k-mer stage: 0: w/o low complexity masking, 1: with low complexity masking [0]'
+      - names:
+          - --mask-prob
+        argument: FLOAT
+        description: Mask sequences is probablity is above threshold [1.000]
+      - names:
+          - --mask-lower-case
+        argument: INT
+        description: 'Lowercase letters will be excluded from k-mer search 0: include region, 1: exclude region [0]'
+      - names:
+          - --min-ungapped-score
+        argument: INT
+        description: Accept only matches with ungapped alignment score above threshold [15]
+      - names:
+          - --spaced-kmer-mode
+        argument: INT
+        description: '0: use consecutive positions in k-mers; 1: use spaced k-mers [1]'
+      - names:
+          - --spaced-kmer-pattern
+        argument: STR
+        description: User-specified spaced k-mer pattern []
+      - names:
+          - --local-tmp
+        argument: STR
+        description: Path where some of the temporary files will be created []
+      - names:
+          - --min-seq-id
+        argument: FLOAT
+        description: List matches above this sequence identity (for clustering) (range 0.0-1.0) [0.000]
+      - names:
+          - -c
+        argument: FLOAT
+        description: List matches above this fraction of aligned (covered) residues (see --cov-mode) [0.000]
+      - names:
+          - --cov-mode
+        argument: INT
+        description: '0: coverage of query and target   1: coverage of target 2: coverage of query 3: target seq. length has to be at least x% of query length 4: query seq. length has to be at least x% of target length 5: short seq. needs to be at least x% of the other seq. length [0]'
+      - names:
+          - --max-rejected
+        argument: INT
+        description: Maximum rejected alignments before alignment calculation for a query is stopped [2147483647]
+      - names:
+          - --max-accept
+        argument: INT
+        description: Maximum accepted alignments before alignment calculation for a query is stopped [2147483647]
+      - names:
+          - -a
+        argument: BOOL
+        description: Add backtrace string (convert to alignments with mmseqs convertalis module) [0]
+      - names:
+          - --alignment-mode
+        argument: INT
+        description: 'How to compute the alignment:   0: automatic 1: only score and end_pos 2: also start_pos and cov 3: also seq.id [3]'
+      - names:
+          - --alignment-output-mode
+        argument: INT
+        description: 'How to compute the alignment:   0: automatic 1: only score and end_pos 2: also start_pos and cov 3: also seq.id 4: only ungapped alignment 5: score only (output) cluster format [0]'
+      - names:
+          - -e
+        argument: DOUBLE
+        description: List matches below this E-value (range 0.0-inf) [1.000E-03]
+      - names:
+          - --min-aln-len
+        argument: INT
+        description: Minimum alignment length (range 0-INT_MAX) [0]
+      - names:
+          - --seq-id-mode
+        argument: INT
+        description: '0: alignment length 1: shorter, 2: longer sequence [0]'
+      - names:
+          - --alt-ali
+        argument: INT
+        description: Show up to this many alternative alignments [0]
+      - names:
+          - --gap-open
+        argument: TWIN
+        description: Gap open cost [aa:10,nucl:10]
+      - names:
+          - --gap-extend
+        argument: TWIN
+        description: Gap extension cost [aa:1,nucl:1]
+      - names:
+          - --tmscore-threshold
+        argument: FLOAT
+        description: accept alignments with a tmsore > thr [0.0,1.0] [0.500]
+      - names:
+          - --tmalign-fast
+        argument: INT
+        description: turn on fast search in TM-align [1]
+      - names:
+          - --alignment-type
+        argument: INT
+        description: 'How to compute the alignment: 0: 3di alignment 1: TM alignment 2: 3Di+AA [2]'
+      - names:
+          - --db-load-mode
+        argument: INT
+        description: 'Database preload mode 0: auto, 1: fread, 2: mmap, 3: mmap+touch [0]'
+      - names:
+          - --threads
+        argument: INT
+        description: Number of CPU-cores used (all by default) [4]
+      - names:
+          - -v
+        argument: INT
+        description: 'Verbosity level: 0: quiet, 1: +errors, 2: +warnings, 3: +info [3]'
+      - names:
+          - --sub-mat
+        argument: TWIN
+        description: Substitution matrix file [aa:3di.out,nucl:3di.out]
+      - names:
+          - --max-seq-len
+        argument: INT
+        description: Maximum sequence length [65535]
+      - names:
+          - --compressed
+        argument: INT
+        description: Write compressed output [0]
+      - names:
+          - --remove-tmp-files
+        argument: BOOL
+        description: Delete temporary files [1]
+      - names:
+          - --mpi-runner
+        argument: STR
+        description: Use MPI on compute cluster with this MPI command (e.g. "mpirun -np 42") []
+      - names:
+          - --force-reuse
+        argument: BOOL
+        description: Reuse tmp filse in tmp/latest folder ignoring parameters and version changes [0]
+  - name: databases
+    description: List and download databases
+    usage: foldseek databases <name> <o:sequenceDB> <tmpDir> [options]
+    options:
+      - names:
+          - --force-reuse
+        argument: BOOL
+        description: Reuse tmp filse in tmp/latest folder ignoring parameters and version changes [0]
+      - names:
+          - --remove-tmp-files
+        argument: BOOL
+        description: Delete temporary files [0]
+      - names:
+          - --compressed
+        argument: INT
+        description: Write compressed output [0]
+      - names:
+          - --threads
+        argument: INT
+        description: Number of CPU-cores used (all by default) [4]
+      - names:
+          - -v
+        argument: INT
+        description: 'Verbosity level: 0: quiet, 1: +errors, 2: +warnings, 3: +info [3]'
+  - name: createindex
+    description: Store precomputed index on disk to reduce search overhead
+    usage: foldseek createindex <i:sequenceDB> <tmpDir> [options]
+    options:
+      - names:
+          - --seed-sub-mat
+        argument: TWIN
+        description: Substitution matrix file for k-mer generation [aa:3di.out,nucl:3di.out]
+      - names:
+          - -k
+        argument: INT
+        description: 'k-mer length (0: automatically set to optimum) [0]'
+      - names:
+          - --comp-bias-corr
+        argument: INT
+        description: Correct for locally biased amino acid composition (range 0-1) [1]
+      - names:
+          - --comp-bias-corr-scale
+        argument: FLOAT
+        description: Correct for locally biased amino acid composition (range 0-1) [1.000]
+      - names:
+          - --max-seqs
+        argument: INT
+        description: Maximum results per query sequence allowed to pass the prefilter (affects sensitivity) [1000]
+      - names:
+          - --mask
+        argument: INT
+        description: 'Mask sequences in k-mer stage: 0: w/o low complexity masking, 1: with low complexity masking [0]'
+      - names:
+          - --mask-prob
+        argument: FLOAT
+        description: Mask sequences is probablity is above threshold [1.000]
+      - names:
+          - --mask-lower-case
+        argument: INT
+        description: 'Lowercase letters will be excluded from k-mer search 0: include region, 1: exclude region [0]'
+      - names:
+          - --spaced-kmer-mode
+        argument: INT
+        description: '0: use consecutive positions in k-mers; 1: use spaced k-mers [1]'
+      - names:
+          - --spaced-kmer-pattern
+        argument: STR
+        description: User-specified spaced k-mer pattern []
+      - names:
+          - -s
+        argument: FLOAT
+        description: 'Sensitivity: 1.0 faster; 4.0 fast; 7.5 sensitive [9.500]'
+      - names:
+          - --k-score
+        argument: TWIN
+        description: k-mer threshold for generating similar k-mer lists [seq:2147483647,prof:2147483647]
+      - names:
+          - --split
+        argument: INT
+        description: 'Split input into N equally distributed chunks. 0: set the best split automatically [0]'
+      - names:
+          - --split-memory-limit
+        argument: BYTE
+        description: Set max memory per split. E.g. 800B, 5K, 10M, 1G. Default (0) to all available system memory [0]
+      - names:
+          - --check-compatible
+        argument: INT
+        description: '0: Always recreate index, 1: Check if recreating index is needed, 2: Fail if index is incompatible [0]'
+      - names:
+          - --min-length
+        argument: INT
+        description: Minimum codon number in open reading frames [30]
+      - names:
+          - --max-length
+        argument: INT
+        description: Maximum codon number in open reading frames [32734]
+      - names:
+          - --max-gaps
+        argument: INT
+        description: Maximum number of codons with gaps or unknown residues before an open reading frame is rejected [2147483647]
+      - names:
+          - --contig-start-mode
+        argument: INT
+        description: 'Contig start can be 0: incomplete, 1: complete, 2: both [2]'
+      - names:
+          - --contig-end-mode
+        argument: INT
+        description: 'Contig end can be 0: incomplete, 1: complete, 2: both [2]'
+      - names:
+          - --orf-start-mode
+        argument: INT
+        description: 'Orf fragment can be 0: from start to stop, 1: from any to stop, 2: from last encountered start to stop (no start in the middle) [1]'
+      - names:
+          - --forward-frames
+        argument: STR
+        description: Comma-separated list of frames on the forward strand to be extracted [1,2,3]
+      - names:
+          - --reverse-frames
+        argument: STR
+        description: Comma-separated list of frames on the reverse strand to be extracted [1,2,3]
+      - names:
+          - --translate
+        argument: INT
+        description: Translate ORF to amino acid [0]
+      - names:
+          - --use-all-table-starts
+        argument: BOOL
+        description: Use all alternatives for a start codon in the genetic table, if false - only ATG (AUG) [0]
+      - names:
+          - --id-offset
+        argument: INT
+        description: Numeric ids in index file are offset by this value [0]
+      - names:
+          - --add-orf-stop
+        argument: BOOL
+        description: Add stop codon '*' at complete start and end [0]
+      - names:
+          - --sequence-overlap
+        argument: INT
+        description: Overlap between sequences [0]
+      - names:
+          - --sequence-split-mode
+        argument: INT
+        description: 'Sequence split mode 0: copy data, 1: soft link data and write new index, [1]'
+      - names:
+          - --headers-split-mode
+        argument: INT
+        description: 'Header split mode: 0: split position, 1: original header [0]'
+      - names:
+          - --max-seq-len
+        argument: INT
+        description: Maximum sequence length [65535]
+      - names:
+          - -v
+        argument: INT
+        description: 'Verbosity level: 0: quiet, 1: +errors, 2: +warnings, 3: +info [3]'
+      - names:
+          - --threads
+        argument: INT
+        description: Number of CPU-cores used (all by default) [4]
+      - names:
+          - --compressed
+        argument: INT
+        description: Write compressed output [0]
+      - names:
+          - --remove-tmp-files
+        argument: BOOL
+        description: Delete temporary files [1]
+      - names:
+          - --translation-table
+        argument: INT
+        description: 1) CANONICAL, 2) VERT_MITOCHONDRIAL, 3) YEAST_MITOCHONDRIAL, 4) MOLD_MITOCHONDRIAL, 5) INVERT_MITOCHONDRIAL, 6) CILIATE 9) FLATWORM_MITOCHONDRIAL, 10) EUPLOTID, 11) PROKARYOTE, 12) ALT_YEAST, 13) ASCIDIAN_MITOCHONDRIAL, 14) ALT_FLATWORM_MITOCHONDRIAL 15) BLEPHARISMA, 16) CHLOROPHYCEAN_MITOCHONDRIAL, 21) TREMATODE_MITOCHONDRIAL, 22) SCENEDESMUS_MITOCHONDRIAL 23) THRAUSTOCHYTRIUM_MITOCHONDRIAL, 24) PTEROBRANCHIA_MITOCHONDRIAL, 25) GRACILIBACTERIA, 26) PACHYSOLEN, 27) KARYORELICT, 28) CONDYLOSTOMA
+      - names:
+          - --create-lookup
+        argument: INT
+        description: Create database lookup file (can be very large) [0]
+      - names:
+          - --strand
+        argument: INT
+        description: 'Strand selection only works for DNA/DNA search 0: reverse, 1: forward, 2: both [1]'
+  - name: convertalis
+    description: Convert alignment DB to BLAST-tab, SAM or custom format
+    usage: foldseek convertalis <i:queryDb> <i:targetDb> <i:alignmentDB> <o:alignmentFile> [options]
+    options:
+      - names:
+          - --gap-open
+        argument: TWIN
+        description: Gap open cost [aa:11,nucl:5]
+      - names:
+          - --gap-extend
+        argument: TWIN
+        description: Gap extension cost [aa:1,nucl:2]
+      - names:
+          - --format-mode
+        argument: 'INT     Output format:'
+        description: '0: BLAST-TAB 1: SAM 2: BLAST-TAB + query/db length 3: Pretty HTML 4: BLAST-TAB + column headers BLAST-TAB (0) and BLAST-TAB + column headers (4) support custom output formats (--format-output) [0]'
+      - names:
+          - --format-output
+        argument: STR
+        description: 'Choose comma separated list of output columns from: query,target,evalue,gapopen,pident,fident,nident,qstart,qend,qlen tstart,tend,tlen,alnlen,raw,bits,cigar,qseq,tseq,qheader,theader,qaln,taln,mismatch,qcov,tcov qset,qsetid,tset,tsetid,taxid,taxname,taxlineagebla,qca,tca,t,u,alntmscore'
+      - names:
+          - --sub-mat
+        argument: TWIN
+        description: Substitution matrix file [aa:3di.out,nucl:3di.out]
+      - names:
+          - --db-load-mode
+        argument: INT
+        description: 'Database preload mode 0: auto, 1: fread, 2: mmap, 3: mmap+touch [0]'
+      - names:
+          - --threads
+        argument: INT
+        description: Number of CPU-cores used (all by default) [4]
+      - names:
+          - --compressed
+        argument: INT
+        description: Write compressed output [0]
+      - names:
+          - -v
+        argument: INT
+        description: 'Verbosity level: 0: quiet, 1: +errors, 2: +warnings, 3: +info [3]'
+      - names:
+          - --db-output
+        argument: BOOL
+        description: Return a result DB instead of a text file [0]
+  - name: tmalign
+    description: Compute tm-score
+    usage: foldseek tmalign <i:queryDB> <i:targetDB> <i:prefilterDB> <o:resultDB> [options]
+    options:
+      - names:
+          - --min-seq-id
+        argument: FLOAT
+        description: List matches above this sequence identity (for clustering) (range 0.0-1.0) [0.000]
+      - names:
+          - -c
+        argument: FLOAT
+        description: List matches above this fraction of aligned (covered) residues (see --cov-mode) [0.000]
+      - names:
+          - --cov-mode
+        argument: INT
+        description: '0: coverage of query and target   1: coverage of target 2: coverage of query 3: target seq. length has to be at least x% of query length 4: query seq. length has to be at least x% of target length 5: short seq. needs to be at least x% of the other seq. length [0]'
+      - names:
+          - --max-rejected
+        argument: INT
+        description: Maximum rejected alignments before alignment calculation for a query is stopped [2147483647]
+      - names:
+          - --max-accept
+        argument: INT
+        description: Maximum accepted alignments before alignment calculation for a query is stopped [2147483647]
+      - names:
+          - -a
+        argument: BOOL
+        description: Add backtrace string (convert to alignments with mmseqs convertalis module) [0]
+      - names:
+          - --tmalign-fast
+        argument: INT
+        description: turn on fast search in TM-align [1]
+      - names:
+          - --db-load-mode
+        argument: INT
+        description: 'Database preload mode 0: auto, 1: fread, 2: mmap, 3: mmap+touch [0]'
+      - names:
+          - --threads
+        argument: INT
+        description: Number of CPU-cores used (all by default) [4]
+      - names:
+          - -v
+        argument: INT
+        description: 'Verbosity level: 0: quiet, 1: +errors, 2: +warnings, 3: +info [3]'
+  - name: structurealign
+    description: Compute structural alignment using 3Di alphabet, amino acids and neighborhood information
+    usage: foldseek structurealign <i:queryDB> <i:targetDB> <i:prefilterDB> <o:resultDB> [options]
+    options:
+      - names:
+          - --comp-bias-corr
+        argument: INT
+        description: Correct for locally biased amino acid composition (range 0-1) [1]
+      - names:
+          - --comp-bias-corr-scale
+        argument: FLOAT
+        description: Correct for locally biased amino acid composition (range 0-1) [1.000]
+      - names:
+          - -a
+        argument: BOOL
+        description: Add backtrace string (convert to alignments with mmseqs convertalis module) [0]
+      - names:
+          - --alignment-mode
+        argument: INT
+        description: 'How to compute the alignment:   0: automatic 1: only score and end_pos 2: also start_pos and cov 3: also seq.id [0]'
+      - names:
+          - --alignment-output-mode
+        argument: INT
+        description: 'How to compute the alignment:   0: automatic 1: only score and end_pos 2: also start_pos and cov 3: also seq.id 4: only ungapped alignment 5: score only (output) cluster format [0]'
+      - names:
+          - -e
+        argument: DOUBLE
+        description: List matches below this E-value (range 0.0-inf) [1.000E-03]
+      - names:
+          - --min-seq-id
+        argument: FLOAT
+        description: List matches above this sequence identity (for clustering) (range 0.0-1.0) [0.000]
+      - names:
+          - --min-aln-len
+        argument: INT
+        description: Minimum alignment length (range 0-INT_MAX) [0]
+      - names:
+          - --seq-id-mode
+        argument: INT
+        description: '0: alignment length 1: shorter, 2: longer sequence [0]'
+      - names:
+          - --alt-ali
+        argument: INT
+        description: Show up to this many alternative alignments [0]
+      - names:
+          - -c
+        argument: FLOAT
+        description: List matches above this fraction of aligned (covered) residues (see --cov-mode) [0.000]
+      - names:
+          - --cov-mode
+        argument: INT
+        description: '0: coverage of query and target   1: coverage of target 2: coverage of query 3: target seq. length has to be at least x% of query length 4: query seq. length has to be at least x% of target length 5: short seq. needs to be at least x% of the other seq. length [0]'
+      - names:
+          - --max-rejected
+        argument: INT
+        description: Maximum rejected alignments before alignment calculation for a query is stopped [2147483647]
+      - names:
+          - --max-accept
+        argument: INT
+        description: Maximum accepted alignments before alignment calculation for a query is stopped [2147483647]
+      - names:
+          - --gap-open
+        argument: TWIN
+        description: Gap open cost [aa:11,nucl:5]
+      - names:
+          - --gap-extend
+        argument: TWIN
+        description: Gap extension cost [aa:1,nucl:2]
+      - names:
+          - --sub-mat
+        argument: TWIN
+        description: Substitution matrix file [aa:3di.out,nucl:3di.out]
+      - names:
+          - --max-seq-len
+        argument: INT
+        description: Maximum sequence length [65535]
+      - names:
+          - --db-load-mode
+        argument: INT
+        description: 'Database preload mode 0: auto, 1: fread, 2: mmap, 3: mmap+touch [0]'
+      - names:
+          - --threads
+        argument: INT
+        description: Number of CPU-cores used (all by default) [4]
+      - names:
+          - --compressed
+        argument: INT
+        description: Write compressed output [0]
+      - names:
+          - -v
+        argument: INT
+        description: 'Verbosity level: 0: quiet, 1: +errors, 2: +warnings, 3: +info [3]'
+  - name: aln2tmscore
+    description: Compute tmscore of an alignment database
+    usage: foldseek aln2tmscore <i:queryDB> <i:targetDB> <i:alnDB> <o:resultDB> [options]
+    options:
+      - names:
+          - --threads
+        argument: INT
+        description: Number of CPU-cores used (all by default) [4]
+      - names:
+          - --compressed
+        argument: INT
+        description: Write compressed output [0]
+      - names:
+          - -v
+        argument: INT
+        description: 'Verbosity level: 0: quiet, 1: +errors, 2: +warnings, 3: +info [3]'
+  - name: clust
+    description: Cluster result by Set-Cover/Connected-Component/Greedy-Incremental
+    usage: foldseek clust <i:sequenceDB> <i:resultDB> <o:clusterDB> [options]
+    options:
+      - names:
+          - --cluster-mode
+        argument: INT
+        description: '0: Set-Cover (greedy) 1: Connected component (BLASTclust) 2,3: Greedy clustering by sequence length (CDHIT) [0]'
+      - names:
+          - --max-iterations
+        argument: INT
+        description: Maximum depth of breadth first search in connected component clustering [1000]
+      - names:
+          - --similarity-type
+        argument: INT
+        description: 'Type of score used for clustering. 1: alignment score 2: sequence identity [2]'
+      - names:
+          - --threads
+        argument: INT
+        description: Number of CPU-cores used (all by default) [4]
+      - names:
+          - --compressed
+        argument: INT
+        description: Write compressed output [0]
+      - names:
+          - -v
+        argument: INT
+        description: 'Verbosity level: 0: quiet, 1: +errors, 2: +warnings, 3: +info [3]'
+version: 2.8bd520

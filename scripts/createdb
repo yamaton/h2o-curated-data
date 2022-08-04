@@ -11,20 +11,24 @@
 
 import json
 import logging
-import pathlib
 import sqlite3
-import sys
-from typing import Iterable
+import subprocess
+
+from pathlib import Path
+from typing import Iterable, List
 
 DBNAME = "commandspecs.db"
-
-def get_json_paths() -> Iterable[pathlib.Path]:
-    rootdir = pathlib.Path(__file__).parent.parent.absolute()
-    return [p for p in rootdir.glob("**/*.json") if "schema" not in p.parent.name]
+CATEGORIES = ("general", "bio")
 
 
-def create_db():
-    p = pathlib.Path(DBNAME)
+def get_json_paths() -> List[Path]:
+    rootdir = Path(__file__).parent.parent.absolute()
+    return [p for p in rootdir.glob("**/*.json") if p.parent.parent.name in CATEGORIES]
+
+
+def create_db(paths: Iterable[Path]) -> None:
+    """Create sqlite database"""
+    p = Path(DBNAME)
     p.unlink(missing_ok=True)  # remove existing db file
 
     db = sqlite3.connect(p)
@@ -33,7 +37,6 @@ def create_db():
 
     cnt = 0
     names = set()
-    paths = get_json_paths()
     for path in paths:
         with open(path) as f:
             raw = f.read()
@@ -54,5 +57,17 @@ def create_db():
     db.close()
 
 
+def validate(paths: Iterable[Path]) -> None:
+    """Validate JSON files"""
+    validator = Path(__file__).parent / "validate-json"
+    for p in paths:
+        res = subprocess.run([str(validator), str(p)])
+        if res.returncode != 0:
+            logging.error(f"Failed to validate: {p}")
+            exit(1)
+
+
 if __name__ == "__main__":
-    create_db()
+    paths = get_json_paths()
+    validate(paths)
+    create_db(paths)

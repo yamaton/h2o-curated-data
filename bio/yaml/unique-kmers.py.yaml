@@ -1,8 +1,5 @@
-name: trim-low-abund.py
-description: Estimate number of unique k-mers, with precision <= ERROR_RATE.
-positionalArguments:
-  - name: input_sequence_filename
-    description: Input FAST[AQ] sequence filename(s).
+name: unique-kmers.py
+description: unique-kmers.py
 options:
   - names:
       - --version
@@ -18,93 +15,29 @@ options:
     argument: ""
     description: show this help message and exit
   - names:
+      - -q
+      - --quiet
       - -k
       - --ksize
     argument: KSIZE
     description: 'k-mer size to use (default: 32)'
   - names:
-      - -U
-      - --unique-kmers
-    argument: UNIQUE_KMERS
-    description: 'approximate number of unique kmers in the input set (default: 0)'
+      - -e
+      - --error-rate
+    argument: ERROR_RATE
+    description: 'Acceptable error rate (default: 0.01)'
   - names:
-      - --fp-rate
-    argument: FP_RATE
-    description: 'Override the automatic FP rate setting for the current script (default: None)'
-  - names:
-      - -M
-      - --max-memory-usage
-    argument: MAX_MEMORY_USAGE
-    description: 'maximum amount of memory to use for data structure (default: None)'
-  - names:
-      - --small-count
-    argument: ""
-    description: 'Reduce memory usage by using a smaller counter for individual kmers. (default: False)'
-  - names:
-      - -C
-      - --cutoff
-    argument: CUTOFF
-    description: 'remove k-mers below this abundance (default: 2)'
-  - names:
-      - -Z
-      - --trim-at-coverage
-      - --normalize-to
-    argument: TRIM_AT_COVERAGE
-    description: 'trim reads when entire read above this coverage (default: 20)'
-  - names:
-      - -o
-      - --output
-    argument: output_filename
-    description: 'only output a single file with the specified filename; use a single dash "-" to specify that output should go to STDOUT (the terminal) (default: None)'
-  - names:
-      - -V
-      - --variable-coverage
-    argument: ""
-    description: 'Only trim low-abundance k-mers from sequences that have high coverage. (default: False)'
-  - names:
-      - -l
-      - --loadgraph
+      - -R
+      - --report
     argument: filename
-    description: 'load a precomputed k-mer graph from disk (default: None)'
+    description: 'generate informational report and write to filename (default: None)'
   - names:
-      - -s
-      - --savegraph
-    argument: filename
-    description: 'save the k-mer countgraph to disk after allreads are loaded. (default: )'
-  - names:
-      - -q
-      - --quiet
-      - --summary-info
-    argument: FORMAT
-    description: 'What format should the machine readable run summary be in? (`json` or `tsv`, disabled by default) (default: None)'
-  - names:
-      - --force
-      - --ignore-pairs
+      - -S
+      - --stream-records
     argument: ""
-    description: 'treat all reads as if they were singletons (default: False)'
+    description: 'write input sequences to STDOUT (default: False)'
   - names:
-      - -T
-      - --tempdir
-    argument: TEMPDIR
-    description: 'Set location of temporary directory for second pass (default: ./)'
-  - names:
-      - --gzip
+      - --diagnostics
     argument: ""
-    description: 'Compress output using gzip (default: False)'
-  - names:
-      - --bzip
-    argument: ""
-    description: 'Compress output using bzip2 (default: False)'
-  - names:
-      - --diginorm
-    argument: ""
-    description: 'Eliminate high-coverage reads altogether (digital normalization). (default: False)'
-  - names:
-      - --diginorm-coverage
-    argument: DIGINORM_COVERAGE
-    description: 'Coverage threshold for --diginorm (default: 20)'
-  - names:
-      - --single-pass
-    argument: ""
-    description: 'Do not do a second pass across the low coverage data (default: False)'
+    description: 'print out recommended tablesize arguments and restrictions (default: False)'
 version: khmer version 2.1.1

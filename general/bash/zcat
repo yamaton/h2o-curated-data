@@ -1,0 +1,30 @@
+# Auto-generated with h2o
+
+_zcat()
+{
+    local i=1 cmd cur word_list
+    cur="${COMP_WORDS[COMP_CWORD]}"
+
+    # take the last word that's NOT starting with -
+    while [[ ( "$i" < "$COMP_CWORD" ) ]]; do
+        local s="${COMP_WORDS[i]}"
+        case "$s" in
+          -*) ;;
+          *)
+            cmd="$s"
+            ;;
+        esac
+        (( i++ ))
+    done
+
+    case "$cmd" in
+      *)
+          word_list="  -a --ascii -c --stdout --to-stdout -d --decompress --uncompress -f --force -h --help -k --keep -l --list -L --license -n --no-name -N --name -q --quiet -r --recursive -S --suffix --synchronous -t --test -v --verbose -V --version -# --fast --best --rsyncable"
+          COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+          ;;
+    esac
+
+}
+
+## -o bashdefault and -o default are fallback
+complete -o bashdefault -o default -F _zcat zcat

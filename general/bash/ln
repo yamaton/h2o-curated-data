@@ -1,0 +1,30 @@
+# Auto-generated with h2o
+
+_ln()
+{
+    local i=1 cmd cur word_list
+    cur="${COMP_WORDS[COMP_CWORD]}"
+
+    # take the last word that's NOT starting with -
+    while [[ ( "$i" < "$COMP_CWORD" ) ]]; do
+        local s="${COMP_WORDS[i]}"
+        case "$s" in
+          -*) ;;
+          *)
+            cmd="$s"
+            ;;
+        esac
+        (( i++ ))
+    done
+
+    case "$cmd" in
+      *)
+          word_list="  --backup -b -d -F --directory -f --force -i --interactive -L --logical -n --no-dereference -P --physical -r --relative -s --symbolic -S --suffix -t --target-directory -T --no-target-directory -v --verbose --help --version"
+          COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+          ;;
+    esac
+
+}
+
+## -o bashdefault and -o default are fallback
+complete -o bashdefault -o default -F _ln ln

@@ -25,12 +25,6 @@ all: $(outputs) $(json)
 $(group)/json/%.json: $(yaml2json_src) $(group)/yaml/%.yaml
 	$(yaml2json_src) $*
 
-## Use $(makelist_src) instead to be be consistent with make-gzip
-##
-# cmds := $(yaml:$(group)/yaml/%.yaml=%)
-# $(output_list): $(json)
-#	 echo $(cmds) | tr ' ' '\n' | sort -V > $@
-
 $(output_list): $(makelist_src) $(json)
 	$(makelist_src) $(group) > $@
 

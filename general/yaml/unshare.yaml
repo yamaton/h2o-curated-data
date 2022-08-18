@@ -1,0 +1,137 @@
+name: unshare
+description: unshare
+usage: unshare [options] [<program> [<argument>...]]
+options:
+  - names:
+      - -m
+      - --mount
+    argument: '[=<file>]'
+    description: unshare mounts namespace
+  - names:
+      - -u
+      - --uts
+    argument: '[=<file>]'
+    description: unshare UTS namespace (hostname etc)
+  - names:
+      - -i
+      - --ipc
+    argument: '[=<file>]'
+    description: unshare System V IPC namespace
+  - names:
+      - -n
+      - --net
+    argument: '[=<file>]'
+    description: unshare network namespace
+  - names:
+      - -p
+      - --pid
+    argument: '[=<file>]'
+    description: unshare pid namespace
+  - names:
+      - -U
+      - --user
+    argument: '[=<file>]'
+    description: unshare user namespace
+  - names:
+      - -C
+      - --cgroup
+    argument: '[=<file>]'
+    description: unshare cgroup namespace
+  - names:
+      - -T
+      - --time
+    argument: '[=<file>]'
+    description: unshare time namespace
+  - names:
+      - -f
+      - --fork
+    argument: ""
+    description: fork before launching <program>
+  - names:
+      - --map-user
+    argument: <uid>|<name>
+    description: map current user to uid (implies --user)
+  - names:
+      - --map-group
+    argument: <gid>|<name>
+    description: map current group to gid (implies --user)
+  - names:
+      - -r
+      - --map-root-user
+    argument: ""
+    description: map current user to root (implies --user)
+  - names:
+      - -c
+      - --map-current-user
+    argument: ""
+    description: map current user to itself (implies --user)
+  - names:
+      - --kill-child
+    argument: '[=<signame>]'
+    description: when dying, kill the forked child (implies --fork) defaults to SIGKILL
+  - names:
+      - --mount-proc
+    argument: '[=<dir>]'
+    description: mount proc filesystem first (implies --mount)
+  - names:
+      - --propagation
+    argument: slave|shared|private|unchanged
+    description: modify mount propagation in mount namespace
+  - names:
+      - --setgroups
+    argument: allow|deny
+    description: control the setgroups syscall in user namespaces
+  - names:
+      - --keep-caps
+    argument: ""
+    description: retain capabilities granted in user namespaces
+  - names:
+      - -R
+      - --root
+    argument: <dir>
+    description: run the command with root directory set to <dir>
+  - names:
+      - -w
+      - --wd
+    argument: <dir>
+    description: change working directory to <dir>
+  - names:
+      - -S
+      - --setuid
+    argument: <uid>
+    description: set uid in entered namespace
+  - names:
+      - -G
+      - --setgid
+    argument: <gid>
+    description: set gid in entered namespace
+  - names:
+      - --monotonic
+    argument: <offset>
+    description: set clock monotonic offset (seconds) in time namespaces
+  - names:
+      - --boottime
+    argument: <offset>
+    description: set clock boottime offset (seconds) in time namespaces
+  - names:
+      - -h
+      - --help
+    argument: ""
+    description: display this help
+  - names:
+      - -V
+      - --version
+    argument: ""
+    description: display version
+version: unshare from util-linux 2.37.2
+tldr: |
+  > Execute a command in new user-defined namespaces.
+  > More information: <https://www.kernel.org/doc/html/latest/userspace-api/unshare.html>.
+
+  - Execute a command without sharing access to connected networks:
+
+  `unshare --net {{command}} {{command_arguments}}`
+
+  - Execute a command as a child process without sharing mounts, processes, or networks:
+
+  `unshare --mount --pid --net --fork {{command}} {{command_arguments}}`

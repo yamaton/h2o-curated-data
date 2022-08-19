@@ -1,0 +1,98 @@
+#compdef _ansible-config ansible-config
+
+# Auto-generated with h2o
+
+    function _ansible-config_list {
+        _arguments \
+            {-h,--help}'[show this help message and exit]' \
+            {-v,--verbose}'[verbose mode (-vvv for more, -vvvv to enable connection debugging)]' \
+            {-c,--config}'[path to configuration file, defaults to first file found in precedence.]':file:_files \
+            {-t,--type}'[Filter down to a specific plugin type.]' \
+            "*: :_files"
+
+    }
+
+    function _ansible-config_dump {
+        _arguments \
+            {-h,--help}'[show this help message and exit]' \
+            {-v,--verbose}'[verbose mode (-vvv for more, -vvvv to enable connection debugging)]' \
+            {-c,--config}'[path to configuration file, defaults to first file found in precedence.]':file:_files \
+            {-t,--type}'[Filter down to a specific plugin type.]' \
+            {--only-changed,--changed-only}'[Only show configurations that have changed from the default]' \
+            "*: :_files"
+
+    }
+
+    function _ansible-config_view {
+        _arguments \
+            {-h,--help}'[show this help message and exit]' \
+            {-v,--verbose}'[verbose mode (-vvv for more, -vvvv to enable connection debugging)]' \
+            {-c,--config}'[path to configuration file, defaults to first file found in precedence.]':file:_files \
+            {-t,--type}'[Filter down to a specific plugin type.]' \
+            "*: :_files"
+
+    }
+
+    function _ansible-config_init {
+        _arguments \
+            {-h,--help}'[show this help message and exit]' \
+            {-v,--verbose}'[verbose mode (-vvv for more, -vvvv to enable connection debugging)]' \
+            {-c,--config}'[path to configuration file, defaults to first file found in precedence.]':file:_files \
+            {-t,--type}'[Filter down to a specific plugin type.]' \
+            {--format,-f}'[Output format for init]' \
+            '--disabled[Prefixes all entries with a comment character to disable them]' \
+            "*: :_files"
+
+    }
+
+
+function _ansible-config {
+    local line state
+
+    function _commands {
+        local -a commands
+        commands=(
+            'list:Print all config options'
+            'dump:Dump configuration'
+            'view:View configuration file'
+            'init:Create initial configuration'
+        )
+        _describe 'command' commands
+    }
+ 
+
+    _arguments -C \
+        '--version[show program'\''s version number, config file location, configured module search path, module location, executable location and exit]' \
+        {-h,--help}'[show this help message and exit]' \
+        {-v,--verbose}'[verbose mode (-vvv for more, -vvvv to enable connection debugging)]' \
+        ': :->cmd' \
+        '*:: :->subcmd'
+
+    case $state in
+    (cmd)
+        _commands
+        ;;
+    (subcmd)
+        case $line[1] in
+        (list)
+            _ansible-config_list
+            ;;
+
+        (dump)
+            _ansible-config_dump
+            ;;
+
+        (view)
+            _ansible-config_view
+            ;;
+
+        (init)
+            _ansible-config_init
+            ;;
+
+        esac
+        ;;
+     esac
+
+}
+

@@ -1,0 +1,78 @@
+# Auto-generated with h2o
+
+_ansibleconfig()
+{
+    local i=1 cmd cur word_list
+    cur="${COMP_WORDS[COMP_CWORD]}"
+
+    # take the last word that's NOT starting with -
+    while [[ ( "$i" < "$COMP_CWORD" ) ]]; do
+        local s="${COMP_WORDS[i]}"
+        case "$s" in
+          -*) ;;
+          *)
+            cmd="$s"
+            ;;
+        esac
+        (( i++ ))
+    done
+
+    case "$cmd" in
+          list) _ansibleconfig_list
+            return
+            ;;
+
+          dump) _ansibleconfig_dump
+            return
+            ;;
+
+          view) _ansibleconfig_view
+            return
+            ;;
+
+          init) _ansibleconfig_init
+            return
+            ;;
+
+      *)
+          word_list=" list dump view init --version -h --help -v --verbose"
+          COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+          ;;
+    esac
+
+}
+
+_ansibleconfig_list ()
+{
+    local cur word_list
+    word_list=" -h --help -v --verbose -c --config -t --type" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_ansibleconfig_dump ()
+{
+    local cur word_list
+    word_list=" -h --help -v --verbose -c --config -t --type --only-changed --changed-only" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_ansibleconfig_view ()
+{
+    local cur word_list
+    word_list=" -h --help -v --verbose -c --config -t --type" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_ansibleconfig_init ()
+{
+    local cur word_list
+    word_list=" -h --help -v --verbose -c --config -t --type --format -f --disabled" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+## -o bashdefault and -o default are fallback
+complete -o bashdefault -o default -F _ansibleconfig ansible-config

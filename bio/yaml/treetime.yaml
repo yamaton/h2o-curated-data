@@ -1,0 +1,161 @@
+name: treetime
+description: treetime
+options:
+  - names:
+      - -h
+      - --help
+    argument: ""
+    description: show this help message and exit
+  - names:
+      - --tree
+    argument: TREE
+    description: Name of file containing the tree in newick, nexus, or phylip format, the branch length of the tree should be in units of average number of nucleotide or protein substitutions per site. If no file is provided, treetime will attempt to build a tree from the alignment using fasttree, iqtree, or raxml (assuming they are installed).
+  - names:
+      - --sequence-length
+    argument: SEQUENCE_LENGTH
+    description: length of the sequence, used to calculate expected variation in branch length. Not required if alignment is provided.
+  - names:
+      - --aln
+    argument: ALN
+    description: alignment file (fasta)
+  - names:
+      - --vcf-reference
+    argument: VCF_REFERENCE
+    description: 'only for vcf input: fasta file of the sequence the VCF was mapped to.'
+  - names:
+      - --dates
+    argument: DATES
+    description: csv file with dates for nodes with 'node_name, date' where date is float (as in 2012.15)
+  - names:
+      - --name-column
+    argument: NAME_COLUMN
+    description: label of the column to be used as taxon name
+  - names:
+      - --date-column
+    argument: DATE_COLUMN
+    description: label of the column to be used as sampling date
+  - names:
+      - --clock-rate
+    argument: CLOCK_RATE
+    description: if specified, the rate of the molecular clock won't be optimized.
+  - names:
+      - --clock-std-dev
+    argument: CLOCK_STD_DEV
+    description: standard deviation of the provided clock rate estimate
+  - names:
+      - --branch-length-mode
+    argument: '{auto,input,joint,marginal}'
+    description: If set to 'input', the provided branch length will be used without modification. Note that branch lengths optimized by treetime are only accurate at short evolutionary distances.
+  - names:
+      - --confidence
+    argument: ""
+    description: estimate confidence intervals of divergence times using the marginal posterior distribution, if `--time-marginal` is False (default) inferred divergence times will still be calculated using the jointly most likely tree configuration.
+  - names:
+      - --time-marginal
+    argument: '{false,true,assign,always,only-final,never}'
+    description: For 'false' or 'never', TreeTime uses the jointly most likely values for the divergence times. For 'true' and 'always', it uses the marginal inference mode at every round of optimization, for 'only-final' (or 'assign' for compatibility with previous versions) only uses the marginal distribution in the final round.
+  - names:
+      - --keep-polytomies
+    argument: ""
+    description: Don't resolve polytomies using temporal information.
+  - names:
+      - --relax
+    argument: RELAX RELAX
+    description: use an autocorrelated molecular clock. Strength of the gaussian priors on branch specific rate deviation and the coupling of parent and offspring rates can be specified e.g. as --relax 1.0 0.5. Values around 1.0 correspond to weak priors, larger values constrain rate deviations more strongly. Coupling 0 (--relax 1.0 0) corresponds to an un-correlated clock.
+  - names:
+      - --max-iter
+    argument: MAX_ITER
+    description: maximal number of iterations the inference cycle is run. Note that for polytomy resolution and coalescence models max_iter should be at least 2
+  - names:
+      - --coalescent
+    argument: COALESCENT
+    description: coalescent time scale -- sensible values are on the order of the average hamming distance of contemporaneous sequences. In addition, 'opt' 'skyline' are valid options and estimate a constant coalescent rate or a piecewise linear coalescent rate history
+  - names:
+      - --n-skyline
+    argument: N_SKYLINE
+    description: number of grid points in skyline coalescent model
+  - names:
+      - --n-branches-posterior
+    argument: ""
+    description: 'add posterior LH to coalescent model: use the posterior probability distributions of divergence times for estimating the number of branches when calculating the coalescent mergerrate or use inferred time before present (default).'
+  - names:
+      - --plot-tree
+    argument: PLOT_TREE
+    description: filename to save the plot to. Suffix will determine format (choices pdf, png, svg, default=pdf)
+  - names:
+      - --plot-rtt
+    argument: PLOT_RTT
+    description: filename to save the plot to. Suffix will determine format (choices pdf, png, svg, default=pdf)
+  - names:
+      - --tip-labels
+    argument: ""
+    description: add tip labels (default for small trees with <30 leaves)
+  - names:
+      - --no-tip-labels
+    argument: ""
+    description: don't show tip labels (default for small trees with >=30 leaves)
+  - names:
+      - --clock-filter
+    argument: CLOCK_FILTER
+    description: ignore tips that don't follow a loose clock, 'clock-filter=number of interquartile ranges from regression'. Default=3.0, set to 0 to switch off.
+  - names:
+      - --reroot
+    argument: REROOT [REROOT ...]
+    description: Reroot the tree using root-to-tip regression. Valid choices are 'min_dev', 'least-squares', and 'oldest'. 'least-squares' adjusts the root to minimize residuals of the root-to-tip vs sampling time regression, 'min_dev' minimizes variance of root-to-tip distances. 'least-squares' can be combined with --covariation to account for shared ancestry. Alternatively, you can specify a node name or a list of node names to be used as outgroup or use 'oldest' to reroot to the oldest node. By default, TreeTime will reroot using 'least-squares'. Use --keep-root to keep the current root.
+  - names:
+      - --keep-root
+    argument: ""
+    description: don't reroot the tree. Otherwise, reroot to minimize the the residual of the regression of root-to-tip distance and sampling time
+  - names:
+      - --tip-slack
+    argument: TIP_SLACK
+    description: excess variance associated with terminal nodes accounting for overdispersion of the molecular clock
+  - names:
+      - --covariation
+    argument: ""
+    description: Account for covariation when estimating rates or rerooting using root-to-tip regression, default False.
+  - names:
+      - --gtr
+    argument: GTR
+    description: GTR model to use. '--gtr infer' will infer a model from the data. Alternatively, specify the model type. If the specified model requires additional options, use '--gtr-params' to specify those.
+  - names:
+      - --gtr-params
+    argument: GTR_PARAMS [GTR_PARAMS ...]
+    description: 'GTR parameters for the model specified by the --gtr argument. The parameters should be feed as ''key=value'' list of parameters. Example: ''--gtr K80 --gtr-params kappa=0.2 pis=0.25,0.25,0.25,0.25''. See the exact definitions of the parameters in the GTR creation methods in treetime/nuc_models.py or treetime/aa_models.py'
+  - names:
+      - --aa
+    argument: ""
+    description: use aminoacid alphabet
+  - names:
+      - --keep-overhangs
+    argument: ""
+    description: do not fill terminal gaps
+  - names:
+      - --zero-based
+    argument: ""
+    description: zero based mutation indexing
+  - names:
+      - --reconstruct-tip-states
+    argument: ""
+    description: overwrite ambiguous states on tips with the most likely inferred state
+  - names:
+      - --report-ambiguous
+    argument: ""
+    description: include transitions involving ambiguous states
+  - names:
+      - --method-anc
+    argument: '{parsimony,fitch,probabilistic,ml}'
+    description: method used for reconstructing ancestral sequences, default is 'probabilistic'
+  - names:
+      - --verbose
+    argument: VERBOSE
+    description: verbosity of output 0-6
+  - names:
+      - --outdir
+    argument: OUTDIR
+    description: directory to write the output to
+  - names:
+      - --version
+    argument: ""
+    description: show program's version number and exit
+version: treetime 0.9.4

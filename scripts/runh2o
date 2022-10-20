@@ -12,11 +12,21 @@ basedir="$(dirname "$(readlink -f "$0")")"
 dir="$1"
 name="$2"
 
-if [[ "$#" != 2 ]]; then
+function usage() {
     echo "Usage:"
     echo "    $ ./runh2o {general|bio|experimental} <command-name>"
     exit 1
+}
+
+if [[ "$#" != 2 ]]; then
+    usage
 fi
+
+
+if [[ "$dir" != "general" ]] && [[ "$dir" != "bio" ]] && [[ "$dir" != "experimental" ]]; then
+    usage
+fi
+
 
 yaml="$basedir/../$dir/yaml/$name.yaml"
 h2o --command "$name" --format json | yq eval -P > "$yaml"

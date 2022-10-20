@@ -1,0 +1,140 @@
+name: column
+description: columnate lists
+usage: column [options] [file ...]
+options:
+  - names:
+      - -J
+      - --json
+    argument: ""
+    description: Use JSON output format to print the table, the option --table-columns is required and the option --table-name is recommended.
+  - names:
+      - -c
+      - --output-width
+    argument: width
+    description: Output is formatted to a width specified as number of characters. The original name of this option is --columns; this name is deprecated since v2.30. Note that input longer than width is not truncated by default.
+  - names:
+      - -d
+      - --table-noheadings
+    argument: ""
+    description: Do not print header. This option allows the use of logical column names on the command line, but keeps the header hidden when printing the table.
+  - names:
+      - -o
+      - --output-separator
+    argument: string
+    description: Specify the columns delimiter for table output (default is two spaces).
+  - names:
+      - -s
+      - --separator
+    argument: separators
+    description: Specify the possible input item delimiters (default is whitespace).
+  - names:
+      - -t
+      - --table
+    argument: ""
+    description: Determine the number of columns the input contains and create a table. Columns are delimited with whitespace, by default, or with the characters supplied using the --output-separator option. Table output is useful for pretty-printing.
+  - names:
+      - -N
+      - --table-columns
+    argument: names
+    description: Specify the columns names by comma separated list of names. The names are used for the table header or to address column in option arguments.
+  - names:
+      - -l
+      - --table-columns-limit
+    argument: number
+    description: Specify maximal number of the input columns. The last column will contain all remaining line data if the limit is smaller than the number of the columns in the input data.
+  - names:
+      - -R
+      - --table-right
+    argument: columns
+    description: Right align text in the specified columns.
+  - names:
+      - -T
+      - --table-truncate
+    argument: columns
+    description: Specify columns where text can be truncated when necessary, otherwise very long table entries may be printed on multiple lines.
+  - names:
+      - -E
+      - --table-noextreme
+    argument: columns
+    description: Specify columns where is possible to ignore unusually long (longer than average) cells when calculate column width. The option has impact to the width calculation and table formatting, but the printed text is not affected.
+  - names:
+      - -e
+      - --table-header-repeat
+    argument: ""
+    description: Print header line for each page.
+  - names:
+      - -W
+      - --table-wrap
+    argument: columns
+    description: Specify columns where is possible to use multi-line cell for long text when necessary.
+  - names:
+      - -H
+      - --table-hide
+    argument: columns
+    description: Don’t print specified columns. The special placeholder '-' may be used to hide all unnamed columns (see --table-columns).
+  - names:
+      - -O
+      - --table-order
+    argument: columns
+    description: Specify columns order on output.
+  - names:
+      - -n
+      - --table-name
+    argument: name
+    description: Specify the table name used for JSON output. The default is "table".
+  - names:
+      - -L
+      - --keep-empty-lines
+    argument: ""
+    description: Preserve whitespace-only lines in the input. The default is ignore empty lines at all. This option’s original name was --table-empty-lines but is now deprecated because it gives the false impression that the option only applies to table mode.
+  - names:
+      - -r
+      - --tree
+    argument: column
+    description: Specify column to use tree-like output. Note that the circular dependencies and other anomalies in child and parent relation are silently ignored.
+  - names:
+      - -i
+      - --tree-id
+    argument: column
+    description: Specify column with line ID to create child-parent relation.
+  - names:
+      - -p
+      - --tree-parent
+    argument: column
+    description: Specify column with parent ID to create child-parent relation.
+  - names:
+      - -x
+      - --fillrows
+    argument: ""
+    description: Fill rows before filling columns.
+  - names:
+      - -V
+      - --version
+    argument: ""
+    description: Display version information and exit.
+  - names:
+      - -h
+      - --help
+    argument: ""
+    description: Display help text and exit.
+version: column from util-linux 2.37.2
+tldr: |
+  > Format standard input or a file into multiple columns.
+  > Columns are filled before rows; the default separator is a whitespace.
+  > More information: <https://manned.org/column>.
+
+  - Format the output of a command for a 30 characters wide display:
+
+  `printf "header1 header2\nbar foo\n" | column --output-width {{30}}`
+
+  - Split columns automatically and auto-align them in a tabular format:
+
+  `printf "header1 header2\nbar foo\n" | column --table`
+
+  - Specify the column delimiter character for the `--table` option (e.g. "," for CSV) (defaults to whitespace):
+
+  `printf "header1,header2\nbar,foo\n" | column --table --separator {{,}}`
+
+  - Fill rows before filling columns:
+
+  `printf "header1\nbar\nfoobar\n" | column --output-width {{30}} --fillrows`

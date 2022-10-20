@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+# Find local condax-installed executables that do NOT have
+# corresponding specs as in general.txt and bio.txt
+
+if [[ -x condax ]]; then
+    echo "condax is missing."
+    return 1
+fi
+
+basedir="$(dirname "$(readlink -f "$0")")"
+
+# Get a list of condax-installed commands that do not have specs
+#   [NOTE] Exclude condax executables starting with . - _
+comm -23 \
+  <(condax list 2> /dev/null | grep "  - " | cut -c 7- | grep -v '^[\.\-_]' | sort) \
+  <(cat "$basedir/../general.txt" "$basedir/../bio.txt" | sort)

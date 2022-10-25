@@ -1,600 +1,600 @@
 # Auto-generated with h2o
 
-complete -c g++ -l completion -d 'Provide bash completion for options starting with provided string.' -x
-complete -c g++ -l debug -d 'Same as -g.'
-complete -c g++ -l dumpbase -d 'Same as -dumpbase.'
-complete -c g++ -l dumpdir -d 'Same as -dumpdir.'
-complete -c g++ -l extra-warnings -d 'Same as -Wextra.'
-complete -c g++ -l help -d 'Display this information.'
-complete -c g++ -l help -d 'Display descriptions of a specific class of options.' -x
-complete -c g++ -l optimize -d 'Same as -O.'
-complete -c g++ -l output -d 'Same as -o.'
-complete -c g++ -l output -d 'Same as -o.' -x
-complete -c g++ -l pedantic-errors -d 'Same as -pedantic-errors.'
-complete -c g++ -l profile -d 'Same as -p.'
-complete -c g++ -l target-help -d 'Alias for --help=target.'
-complete -c g++ -l verbose -d 'Same as -v.'
-complete -c g++ -l version -d 'This option lacks documentation.'
-complete -c g++ -o Ofast -d 'Optimize for speed disregarding exact standards compliance.'
-complete -c g++ -o Og -d 'Optimize for debugging experience rather than speed or size.'
-complete -c g++ -o Os -d 'Optimize for space rather than speed.'
-complete -c g++ -s W -d 'This switch is deprecated; use -Wextra instead.'
-complete -c g++ -o Waggregate-return -d 'Warn about returning structures, unions or arrays.'
-complete -c g++ -o Waggressive-loop-optimizations -d 'Warn if a loop with constant number of iterations triggers undefined behavior.'
-complete -c g++ -o Wanalyzer-double-fclose -d 'Warn about code paths in which a stdio FILE can be closed more than once.'
-complete -c g++ -o Wanalyzer-double-free -d 'Warn about code paths in which a pointer can be freed more than once.'
-complete -c g++ -o Wanalyzer-exposure-through-output-file -d 'Warn about code paths in which sensitive data is written to a file.'
-complete -c g++ -o Wanalyzer-file-leak -d 'Warn about code paths in which a stdio FILE is not closed.'
-complete -c g++ -o Wanalyzer-free-of-non-heap -d 'Warn about code paths in which a non-heap pointer is freed.'
-complete -c g++ -o Wanalyzer-malloc-leak -d 'Warn about code paths in which a heap-allocated pointer leaks.'
-complete -c g++ -o Wanalyzer-null-argument -d 'Warn about code paths in which NULL is passed to a must-not-be-NULL function argument.'
-complete -c g++ -o Wanalyzer-null-dereference -d 'Warn about code paths in which a NULL pointer is dereferenced.'
-complete -c g++ -o Wanalyzer-possible-null-argument -d 'Warn about code paths in which a possibly-NULL value is passed to a must-not-be-NULL function argument.'
-complete -c g++ -o Wanalyzer-possible-null-dereference -d 'Warn about code paths in which a possibly-NULL pointer is dereferenced.'
-complete -c g++ -o Wanalyzer-stale-setjmp-buffer -d 'Warn about code paths in which a longjmp rewinds to a jmp_buf saved in a stack frame that has returned.'
-complete -c g++ -o Wanalyzer-tainted-array-index -d 'Warn about code paths in which an unsanitized value is used as an array index.'
-complete -c g++ -o Wanalyzer-too-complex -d 'Warn if the code is too complicated for the analyzer to fully explore.'
-complete -c g++ -o Wanalyzer-unsafe-call-within-signal-handler -d 'Warn about code paths in which an async-signal-unsafe function is called from a signal handler.'
-complete -c g++ -o Wanalyzer-use-after-free -d 'Warn about code paths in which a freed value is used.'
-complete -c g++ -o Wanalyzer-use-of-pointer-in-stale-stack-frame -d 'Warn about code paths in which a pointer to a stale stack frame is used.'
-complete -c g++ -o Warray-bounds -d 'Warn if an array is accessed out of bounds.'
-complete -c g++ -o Warray-bounds -d 'Warn if an array is accessed out of bounds.' -x
-complete -c g++ -o Wattribute-alias -d 'Warn about type safety and similar errors and mismatches in declarations with alias attributes.'
-complete -c g++ -o Wattribute-alias -d 'Warn about type safety and similar errors and mismatches in declarations with alias attributes.' -x
-complete -c g++ -o Wattribute-warning -d 'Warn about uses of __attribute__((warning)) declarations.'
-complete -c g++ -o Wattributes -d 'Warn about inappropriate attribute usage.'
-complete -c g++ -o Wcannot-profile -d 'Warn when profiling instrumentation was requested, but could not be applied to a certain function.'
-complete -c g++ -o Wcast-align -d 'Warn about pointer casts which increase alignment.'
-complete -c g++ -o Wcast-align -d 'Warn about pointer casts which increase alignment.' -x
-complete -c g++ -o Wcoverage-mismatch -d 'Warn in case profiles in -fprofile-use do not match.'
-complete -c g++ -o Wdeprecated-declarations -d 'Warn about uses of __attribute__((deprecated)) declarations.'
-complete -c g++ -o Wdisabled-optimization -d 'Warn when an optimization pass is disabled.'
-complete -c g++ -o Werror -d 'Treat specified warning as error.' -x
-complete -c g++ -o Wfatal-errors -d 'Exit on the first error occurred.'
-complete -c g++ -o Wframe-larger-than -d 'Warn if a function\'s stack frame requires in excess of <byte-size>.' -x
-complete -c g++ -o Wfree-nonheap-object -d 'Warn when attempting to free a non-heap object.'
-complete -c g++ -o Whsa -d 'Warn when a function cannot be expanded to HSAIL.'
-complete -c g++ -o Wimplicit-fallthrough -d 'Same as -Wimplicit-fallthrough=3 (or, in negated form, -Wimplicit-fallthrough=0).'
-complete -c g++ -o Wimplicit-fallthrough -d 'Warn when a switch case falls through.' -x
-complete -c g++ -o Winline -d 'Warn when an inlined function cannot be inlined.'
-complete -c g++ -o Winvalid-memory-model -d 'Warn when an atomic memory model parameter is known to be outside the valid range.'
-complete -c g++ -o Wlarger-than- -d 'Same as -Wlarger-than=.'
-complete -c g++ -o Wlarger-than -d 'Warn if an object\'s size exceeds <byte-size>.' -x
-complete -c g++ -o Wlto-type-mismatch -d 'During link time optimization warn about mismatched types of global declarations.'
-complete -c g++ -o Wmissing-noreturn -d 'Same as -Wsuggest-attribute=noreturn.'
-complete -c g++ -o Wmissing-profile -d 'Warn in case profiles in -fprofile-use do not exist.'
-complete -c g++ -o Wno-frame-larger-than -d 'Disable -Wframe-larger-than= warning.'
-complete -c g++ -o Wno-larger-than -d 'Disable -Wlarger-than= warning.'
-complete -c g++ -o Wno-stack-usage -d 'Disable Wstack-usage= warning.'
-complete -c g++ -o Wnull-dereference -d 'Warn if dereferencing a NULL pointer may lead to erroneous or undefined behavior.'
-complete -c g++ -o Wodr -d 'Warn about some C++ One Definition Rule violations during link time optimization.'
-complete -c g++ -o Woverflow -d 'Warn about overflow in arithmetic expressions.'
-complete -c g++ -o Wpacked -d 'Warn when the packed attribute has no effect on struct layout.'
-complete -c g++ -o Wpadded -d 'Warn when padding is required to align structure members.'
-complete -c g++ -o Wreturn-local-addr -d 'Warn about returning a pointer/reference to a local or temporary variable.'
-complete -c g++ -o Wshadow -d 'Warn when one variable shadows another.'
-complete -c g++ -o Wshadow-compatible-local -d 'Same as -Wshadow=compatible-local.'
-complete -c g++ -o Wshadow-local -d 'Same as -Wshadow=local.'
-complete -c g++ -o Wshadow -d 'Warn when one local variable shadows another local variable or parameter of compatible type.' -x
-complete -c g++ -o Wshadow -d 'Warn when one variable shadows another (globally).' -x
-complete -c g++ -o Wshadow -d 'Warn when one local variable shadows another local variable or parameter.' -x
-complete -c g++ -o Wstack-protector -d 'Warn when not issuing stack smashing protection for some reason.'
-complete -c g++ -o Wstack-usage -d 'Warn if stack usage might exceed <byte-size>.' -x
-complete -c g++ -o Wstrict-aliasing -d 'Warn about code which might break strict aliasing rules.'
-complete -c g++ -o Wstrict-overflow -d 'Warn about optimizations that assume that signed overflow is undefined.'
-complete -c g++ -o Wsuggest-attribute -d 'Warn about functions which might be candidates for __attribute__((cold)).' -x
-complete -c g++ -o Wsuggest-attribute -d 'Warn about functions which might be candidates for __attribute__((const)).' -x
-complete -c g++ -o Wsuggest-attribute -d 'Warn about functions which might be candidates for __attribute__((malloc)).' -x
-complete -c g++ -o Wsuggest-attribute -d 'Warn about functions which might be candidates for __attribute__((noreturn)).' -x
-complete -c g++ -o Wsuggest-attribute -d 'Warn about functions which might be candidates for __attribute__((pure)).' -x
-complete -c g++ -o Wsuggest-final-methods -d 'Warn about C++ virtual methods where adding final keyword would improve code quality.'
-complete -c g++ -o Wsuggest-final-types -d 'Warn about C++ polymorphic types where adding final keyword would improve code quality.'
-complete -c g++ -o Wswitch-unreachable -d 'Warn about statements between switch\'s controlling expression and the first case.'
-complete -c g++ -o Wtrampolines -d 'Warn whenever a trampoline is generated.'
-complete -c g++ -o Wtype-limits -d 'Warn if a comparison is always true or always false due to the limited range of the data type.'
-complete -c g++ -o Wunreachable-code -d 'Does nothing.'
-complete -c g++ -o Wunsafe-loop-optimizations -d 'Does nothing.'
-complete -c g++ -o Wunused-but-set-parameter -d 'Warn when a function parameter is only set, otherwise unused.'
-complete -c g++ -o Wunused-but-set-variable -d 'Warn when a variable is only set, otherwise unused.'
-complete -c g++ -o Wunused-function -d 'Warn when a function is unused.'
-complete -c g++ -o Wunused-label -d 'Warn when a label is unused.'
-complete -c g++ -o Wunused-value -d 'Warn when an expression value is unused.'
-complete -c g++ -o Wvector-operation-performance -d 'Warn when a vector operation is compiled outside the SIMD.'
-complete -c g++ -o aux-info -d 'Emit declaration information into <file>.' -r
-complete -c g++ -o aux-info -d 'Same as -aux-info.' -x
-complete -c g++ -o auxbase -d 'This option lacks documentation.'
-complete -c g++ -o auxbase-strip -d 'This option lacks documentation.'
-complete -c g++ -o dumpbase -d 'Set the file basename to be used for dumps.' -r
-complete -c g++ -o dumpdir -d 'Set the directory name to be used for dumps.' -r
-complete -c g++ -o fPIC -d 'Generate position-independent code if possible (large mode).'
-complete -c g++ -o fPIE -d 'Generate position-independent code for executables if possible (large mode).'
-complete -c g++ -o fabi-version -d 'The version of the C++ ABI in use.' -x
-complete -c g++ -o faggressive-loop-optimizations -d 'Aggressively optimize loops using language constraints.'
-complete -c g++ -o falign-functions -d 'Align the start of functions.'
-complete -c g++ -o falign-functions -d 'This option lacks documentation.' -x
-complete -c g++ -o falign-jumps -d 'Align labels which are only reached by jumping.'
-complete -c g++ -o falign-jumps -d 'This option lacks documentation.' -x
-complete -c g++ -o falign-labels -d 'Align all labels.'
-complete -c g++ -o falign-labels -d 'This option lacks documentation.' -x
-complete -c g++ -o falign-loops -d 'Align the start of loops.'
-complete -c g++ -o falign-loops -d 'This option lacks documentation.' -x
-complete -c g++ -o fallocation-dce -d 'Tell DCE to remove unused C++ allocations.'
-complete -c g++ -o fallow-store-data-races -d 'Allow the compiler to introduce new data races on stores.'
-complete -c g++ -o fanalyzer -d 'Enable static analysis pass.'
-complete -c g++ -o fanalyzer-call-summaries -d 'Approximate the effect of function calls to simplify analysis.'
-complete -c g++ -o fanalyzer-checker -d 'Restrict the analyzer to run just the named checker.' -x
-complete -c g++ -o fanalyzer-fine-grained -d 'Avoid combining multiple statements into one exploded edge.'
-complete -c g++ -o fanalyzer-show-duplicate-count -d 'Issue a note when diagnostics are deduplicated.'
-complete -c g++ -o fanalyzer-state-merge -d 'Merge similar-enough states during analysis.'
-complete -c g++ -o fanalyzer-state-purge -d 'Purge unneeded state during analysis.'
-complete -c g++ -o fanalyzer-transitivity -d 'Enable transitivity of constraints during analysis.'
-complete -c g++ -o fanalyzer-verbose-edges -d 'Emit more verbose descriptions of control flow in diagnostics.'
-complete -c g++ -o fanalyzer-verbose-state-changes -d 'Emit more verbose descriptions of state changes in diagnostics.'
-complete -c g++ -o fanalyzer-verbosity -d 'Control which events are displayed in diagnostic paths.' -r
-complete -c g++ -o fargument-alias -d 'Does nothing.'
-complete -c g++ -o fargument-noalias -d 'Does nothing.'
-complete -c g++ -o fargument-noalias-anything -d 'Does nothing.'
-complete -c g++ -o fargument-noalias-global -d 'Does nothing.'
-complete -c g++ -o fasan-shadow-offset -d 'Use custom shadow memory offset.' -x
-complete -c g++ -o fassociative-math -d 'Allow optimization for floating-point arithmetic which may change the result of the operation due to rounding.'
-complete -c g++ -o fasynchronous-unwind-tables -d 'Generate unwind tables that are exact at each instruction boundary.'
-complete -c g++ -o fauto-inc-dec -d 'Generate auto-inc/dec instructions.'
-complete -c g++ -o fauto-profile -d 'Use sample profile information for call graph node weights.'
-complete -c g++ -o fauto-profile -d 'Use sample profile information for call graph node weights.' -r
-complete -c g++ -o fbranch-count-reg -d 'Replace add, compare, branch with branch on count register.'
-complete -c g++ -o fbranch-probabilities -d 'Use profiling information for branch probabilities.'
-complete -c g++ -o fbranch-target-load-optimize -d 'Does nothing.'
-complete -c g++ -o fbranch-target-load-optimize2 -d 'Does nothing.'
-complete -c g++ -o fbtr-bb-exclusive -d 'Does nothing.'
-complete -c g++ -o fcall-saved- -d 'Mark <register> as being preserved across functions.' -x
-complete -c g++ -o fcall-used- -d 'Mark <register> as being corrupted by function calls.' -x
-complete -c g++ -o fcaller-saves -d 'Save registers around function calls.'
-complete -c g++ -o fcallgraph-info -d 'Output callgraph information on a per-file basis.'
-complete -c g++ -o fcallgraph-info -d 'Output callgraph information on a per-file basis with decorations.' -r
-complete -c g++ -o fcf-protection -d 'Same as -fcf-protection=full.'
-complete -c g++ -o fcf-protection -d 'Instrument functions with checks to verify jump/call/return control-flow transfer instructions have valid targets.' -x
-complete -c g++ -o fcheck-data-deps -d 'This switch is deprecated; do not use.'
-complete -c g++ -o fcheck-new -d 'Check the return value of new in C++.'
-complete -c g++ -o fchecking -d 'Perform internal consistency checkings.'
-complete -c g++ -o fchecking -d 'Perform internal consistency checkings.' -x
-complete -c g++ -o fcode-hoisting -d 'Enable code hoisting.'
-complete -c g++ -o fcombine-stack-adjustments -d 'Looks for opportunities to reduce stack adjustments and stack references.'
-complete -c g++ -o fcommon -d 'Put uninitialized globals in the common section.'
-complete -c g++ -o fcompare-debug-second -d 'Run only the second compilation of -fcompare-debug.'
-complete -c g++ -o fcompare-debug -d 'Compile with and without e.g. -gtoggle, and compare the final-insns dump.' -x
-complete -c g++ -o fcompare-elim -d 'Perform comparison elimination after register allocation has finished.'
-complete -c g++ -o fconserve-stack -d 'Do not perform optimizations increasing noticeably stack usage.'
-complete -c g++ -o fcprop-registers -d 'Perform a register copy-propagation optimization pass.'
-complete -c g++ -o fcrossjumping -d 'Perform cross-jumping optimization.'
-complete -c g++ -o fcse-follow-jumps -d 'When running CSE, follow jumps to their targets.'
-complete -c g++ -o fcse-skip-blocks -d 'Does nothing.'
-complete -c g++ -o fcx-fortran-rules -d 'Complex multiplication and division follow Fortran rules.'
-complete -c g++ -o fcx-limited-range -d 'Omit range reduction step when performing complex division.'
-complete -c g++ -o fdata-sections -d 'Place data items into their own section.'
-complete -c g++ -o fdbg-cnt-list -d 'List all available debugging counters with their limits and counts.'
-complete -c g++ -o fdbg-cnt -d 'Set the debug counter limit.' -x
-complete -c g++ -o fdce -d 'Use the RTL dead code elimination pass.'
-complete -c g++ -o fdebug-prefix-map -d 'Map one directory name to another in debug information.' -r
-complete -c g++ -o fdebug-types-section -d 'Output .debug_types section when using DWARF v4 debuginfo.'
-complete -c g++ -o fdefer-pop -d 'Defer popping functions args from stack until later.'
-complete -c g++ -o fdelayed-branch -d 'Attempt to fill delay slots of branch instructions.'
-complete -c g++ -o fdelete-dead-exceptions -d 'Delete dead instructions that may throw exceptions.'
-complete -c g++ -o fdelete-null-pointer-checks -d 'Delete useless null pointer checks.'
-complete -c g++ -o fdevirtualize -d 'Try to convert virtual calls to direct ones.'
-complete -c g++ -o fdevirtualize-at-ltrans -d 'Stream extra data to support more aggressive devirtualization in LTO local transformation mode.'
-complete -c g++ -o fdevirtualize-speculatively -d 'Perform speculative devirtualization.'
-complete -c g++ -o fdiagnostics-color -d 'Same as -fdiagnostics-color=always (or, in negated form, -fdiagnostics-color=never).'
-complete -c g++ -o fdiagnostics-color -d 'Colorize diagnostics.' -x
-complete -c g++ -o fdiagnostics-format -d 'Select output format.' -x
-complete -c g++ -o fdiagnostics-generate-patch -d 'Print fix-it hints to stderr in unified diff format.'
-complete -c g++ -o fdiagnostics-minimum-margin-width -d 'Set minimum width of left margin of source code when showing source.' -x
-complete -c g++ -o fdiagnostics-parseable-fixits -d 'Print fix-it hints in machine-readable form.'
-complete -c g++ -o fdiagnostics-path-format -d 'Specify how to print any control-flow path associated with a diagnostic.' -r
-complete -c g++ -o fdiagnostics-show-caret -d 'Show the source line with a caret indicating the column.'
-complete -c g++ -o fdiagnostics-show-cwe -d 'Print CWE identifiers for diagnostic messages, where available.'
-complete -c g++ -o fdiagnostics-show-labels -d 'Show labels annotating ranges of source code when showing source.'
-complete -c g++ -o fdiagnostics-show-line-numbers -d 'Show line numbers in the left margin when showing source.'
-complete -c g++ -o fdiagnostics-show-location -d 'How often to emit source location at the beginning of line-wrapped diagnostics.' -x
-complete -c g++ -o fdiagnostics-show-option -d 'Amend appropriate diagnostic messages with the command line option that controls them.'
-complete -c g++ -o fdiagnostics-show-path-depths -d 'how stack depths of events in paths.' -r
-complete -c g++ -o fdiagnostics-urls -d 'Embed URLs in diagnostics.' -x
-complete -c g++ -o fdisable- -d 'Disable an optimization pass.' -x
-complete -c g++ -o fdse -d 'Use the RTL dead store elimination pass.'
-complete -c g++ -o fdump- -d 'Dump various compiler internals to a file.' -r
-complete -c g++ -o fdump-analyzer -d 'Dump various analyzer internals to SRCFILE.analyzer.txt.'
-complete -c g++ -o fdump-analyzer-callgraph -d 'Dump analyzer-specific call graph information to a SRCFILE.callgraph.dot file.'
-complete -c g++ -o fdump-analyzer-exploded-graph -d 'Dump the analyzer exploded graph to a SRCFILE.eg.dot file.'
-complete -c g++ -o fdump-analyzer-exploded-nodes -d 'Emit diagnostics showing the location of nodes in the exploded graph.'
-complete -c g++ -o fdump-analyzer-exploded-nodes-2 -d 'Dump a textual representation of the exploded graph to SRCFILE.eg.txt.'
-complete -c g++ -o fdump-analyzer-exploded-nodes-3 -d 'Dump a textual representation of the exploded graph to SRCFILE.eg-ID.txt.'
-complete -c g++ -o fdump-analyzer-state-purge -d 'Dump state-purging information to a SRCFILE.state-purge.dot file.'
-complete -c g++ -o fdump-analyzer-stderr -d 'Dump various analyzer internals to stderr.'
-complete -c g++ -o fdump-analyzer-supergraph -d 'Dump the analyzer supergraph to a SRCFILE.supergraph.dot file.'
-complete -c g++ -o fdump-final-insns -d 'Dump to filename the insns at the end of translation.' -r
-complete -c g++ -o fdump-go-spec -d 'Write all declarations to file as Go code.' -r
-complete -c g++ -o fdump-internal-locations -d 'Dump detailed information on GCC\'s internal representation of source code locations.'
-complete -c g++ -o fdump-noaddr -d 'Suppress output of addresses in debugging dumps.'
-complete -c g++ -o fdump-passes -d 'Dump optimization passes.'
-complete -c g++ -o fdump-unnumbered -d 'Suppress output of instruction numbers, line number notes and addresses in debugging dumps.'
-complete -c g++ -o fdump-unnumbered-links -d 'Suppress output of previous and next insn numbers in debugging dumps.'
-complete -c g++ -o fdwarf2-cfi-asm -d 'Enable CFI tables via GAS assembler directives.'
-complete -c g++ -o fearly-inlining -d 'Perform early inlining.'
-complete -c g++ -o feliminate-dwarf2-dups -d 'Does nothing.'
-complete -c g++ -o feliminate-unused-debug-symbols -d 'Perform unused symbol elimination in debug info.'
-complete -c g++ -o feliminate-unused-debug-types -d 'Perform unused type elimination in debug info.'
-complete -c g++ -o femit-class-debug-always -d 'Do not suppress C++ class debug information.'
-complete -c g++ -o fenable- -d 'Enable an optimization pass.' -x
-complete -c g++ -o fexcess-precision -d 'Specify handling of excess floating-point precision.' -x
-complete -c g++ -o fexpensive-optimizations -d 'Perform a number of minor, expensive optimizations.'
-complete -c g++ -o ffast-math -d 'This option lacks documentation.'
-complete -c g++ -o ffat-lto-objects -d 'Output lto objects containing both the intermediate language and binary output.'
-complete -c g++ -o ffile-prefix-map -d 'Map one directory name to another in compilation result.' -r
-complete -c g++ -o ffinite-loops -d 'Assume that loops with an exit will terminate and not loop indefinitely.'
-complete -c g++ -o ffinite-math-only -d 'Assume no NaNs or infinities are generated.'
-complete -c g++ -o ffixed- -d 'Mark <register> as being unavailable to the compiler.' -x
-complete -c g++ -o ffloat-store -d 'Don\'t allocate floats and doubles in extended-precision registers.'
-complete -c g++ -o fforce-addr -d 'Does nothing.'
-complete -c g++ -o fforward-propagate -d 'Perform a forward propagation pass on RTL.'
-complete -c g++ -o ffp-contract -d 'Perform floating-point expression contraction.' -x
-complete -c g++ -o ffp-int-builtin-inexact -d 'Allow built-in functions ceil, floor, round, trunc to raise "inexact" exceptions.'
-complete -c g++ -o ffunction-cse -d 'Allow function addresses to be held in registers.'
-complete -c g++ -o ffunction-sections -d 'Place each function into its own section.'
-complete -c g++ -o fgcse -d 'Perform global common subexpression elimination.'
-complete -c g++ -o fgcse-after-reload -d 'Perform global common subexpression elimination after register allocation has finished.'
-complete -c g++ -o fgcse-las -d 'Perform redundant load after store elimination in global common subexpression elimination.'
-complete -c g++ -o fgcse-lm -d 'Perform enhanced load motion during global common subexpression elimination.'
-complete -c g++ -o fgcse-sm -d 'Perform store motion after global common subexpression elimination.'
-complete -c g++ -o fgnat-encodings -d 'Select the balance between GNAT encodings and standard DWARF emitted in the debug information.' -x
-complete -c g++ -o fgnu-tm -d 'Enable support for GNU transactional memory.'
-complete -c g++ -o fgnu-unique -d 'Use STB_GNU_UNIQUE if supported by the assembler.'
-complete -c g++ -o fgraphite -d 'Enable in and out of Graphite representation.'
-complete -c g++ -o fgraphite-identity -d 'Enable Graphite Identity transformation.'
-complete -c g++ -o fguess-branch-probability -d 'Enable guessing of branch probabilities.'
-complete -c g++ -o fhelp -d 'Same as --help.'
-complete -c g++ -o fhelp -d 'Same as --help=.' -x
-complete -c g++ -o fhoist-adjacent-loads -d 'Enable hoisting adjacent loads to encourage generating conditional move instructions.'
-complete -c g++ -o fident -d 'Process #ident directives.'
-complete -c g++ -o fif-conversion -d 'Perform conversion of conditional jumps to branchless equivalents.'
-complete -c g++ -o fif-conversion2 -d 'Perform conversion of conditional jumps to conditional execution.'
-complete -c g++ -o findirect-inlining -d 'Perform indirect inlining.'
-complete -c g++ -o finhibit-size-directive -d 'Do not generate .size directives.'
-complete -c g++ -o finline -d 'Enable inlining of function declared "inline", disabling disables all inlining.'
-complete -c g++ -o finline-atomics -d 'Inline __atomic operations when a lock free instruction sequence is available.'
-complete -c g++ -o finline-functions -d 'Integrate functions not declared "inline" into their callers when profitable.'
-complete -c g++ -o finline-functions-called-once -d 'Integrate functions only required by their single caller.'
-complete -c g++ -o finline-limit- -d 'Same as -finline-limit=.'
-complete -c g++ -o finline-limit -d 'Limit the size of inlined functions to <number>.' -x
-complete -c g++ -o finline-small-functions -d 'Integrate functions into their callers when code size is known not to grow.'
-complete -c g++ -o finstrument-functions -d 'Instrument function entry and exit with profiling calls.'
-complete -c g++ -o finstrument-functions-exclude-file-list -d 'Do not instrument functions listed in files.' -r
-complete -c g++ -o finstrument-functions-exclude-function-list -d 'Do not instrument listed functions.' -x
-complete -c g++ -o fipa-bit-cp -d 'Perform interprocedural bitwise constant propagation.'
-complete -c g++ -o fipa-cp -d 'Perform interprocedural constant propagation.'
-complete -c g++ -o fipa-cp-alignment -d 'Does nothing.'
-complete -c g++ -o fipa-cp-clone -d 'Perform cloning to make Interprocedural constant propagation stronger.'
-complete -c g++ -o fipa-icf -d 'Perform Identical Code Folding for functions and read-only variables.'
-complete -c g++ -o fipa-icf-functions -d 'Perform Identical Code Folding for functions.'
-complete -c g++ -o fipa-icf-variables -d 'Perform Identical Code Folding for variables.'
-complete -c g++ -o fipa-matrix-reorg -d 'Does nothing.'
-complete -c g++ -o fipa-profile -d 'Perform interprocedural profile propagation.'
-complete -c g++ -o fipa-pta -d 'Perform interprocedural points-to analysis.'
-complete -c g++ -o fipa-pure-const -d 'Discover pure and const functions.'
-complete -c g++ -o fipa-ra -d 'Use caller save register across calls if possible.'
-complete -c g++ -o fipa-reference -d 'Discover read-only and non addressable static variables.'
-complete -c g++ -o fipa-reference-addressable -d 'Discover read-only, write-only and non-addressable static variables.'
-complete -c g++ -o fipa-sra -d 'Perform interprocedural reduction of aggregates.'
-complete -c g++ -o fipa-stack-alignment -d 'Reduce stack alignment on call sites if possible.'
-complete -c g++ -o fipa-struct-reorg -d 'Does nothing.'
-complete -c g++ -o fipa-vrp -d 'Perform IPA Value Range Propagation.'
-complete -c g++ -o fira-algorithm -d 'Set the used IRA algorithm.' -x
-complete -c g++ -o fira-hoist-pressure -d 'Use IRA based register pressure calculation in RTL hoist optimizations.'
-complete -c g++ -o fira-loop-pressure -d 'Use IRA based register pressure calculation in RTL loop optimizations.'
-complete -c g++ -o fira-region -d 'Set regions for IRA.' -x
-complete -c g++ -o fira-share-save-slots -d 'Share slots for saving different hard registers.'
-complete -c g++ -o fira-share-spill-slots -d 'Share stack slots for spilled pseudo-registers.'
-complete -c g++ -o fira-verbose -d 'Control IRA\'s level of diagnostic messages.' -x
-complete -c g++ -o fisolate-erroneous-paths-attribute -d 'Detect paths that trigger erroneous or undefined behavior due to a null value being used in a way forbidden by a returns_nonnull or nonnull attribute.'
-complete -c g++ -o fisolate-erroneous-paths-dereference -d 'Detect paths that trigger erroneous or undefined behavior due to dereferencing a null pointer.'
-complete -c g++ -o fivopts -d 'Optimize induction variables on trees.'
-complete -c g++ -o fjump-tables -d 'Use jump tables for sufficiently large switch statements.'
-complete -c g++ -o fkeep-gc-roots-live -d 'This option lacks documentation.'
-complete -c g++ -o fkeep-inline-functions -d 'Generate code for functions even if they are fully inlined.'
-complete -c g++ -o fkeep-static-consts -d 'Emit static const variables even if they are not used.'
-complete -c g++ -o fkeep-static-functions -d 'Generate code for static functions even if they are never called.'
-complete -c g++ -o fleading-underscore -d 'Give external symbols a leading underscore.'
-complete -c g++ -o flifetime-dse -d 'Tell DSE that the storage for a C++ object is dead when the constructor starts and when the destructor finishes.'
-complete -c g++ -o flifetime-dse -d 'This option lacks documentation.' -x
-complete -c g++ -o flimit-function-alignment -d 'This option lacks documentation.'
-complete -c g++ -o flive-patching -d 'Same as -flive-patching=inline-clone.'
-complete -c g++ -o flive-patching -d 'Control IPA optimizations to provide a safe compilation for live-patching.' -x
-complete -c g++ -o flive-range-shrinkage -d 'Relief of register pressure through live range shrinkage.'
-complete -c g++ -o floop-block -d 'Enable loop nest transforms.'
-complete -c g++ -o floop-flatten -d 'Does nothing.'
-complete -c g++ -o floop-interchange -d 'Enable loop interchange on trees.'
-complete -c g++ -o floop-nest-optimize -d 'Enable the loop nest optimizer.'
-complete -c g++ -o floop-optimize -d 'Does nothing.'
-complete -c g++ -o floop-parallelize-all -d 'Mark all loops as parallel.'
-complete -c g++ -o floop-strip-mine -d 'Enable loop nest transforms.'
-complete -c g++ -o floop-unroll-and-jam -d 'Perform unroll-and-jam on loops.'
-complete -c g++ -o flra-remat -d 'Do CFG-sensitive rematerialization in LRA.'
-complete -c g++ -o flto -d 'Enable link-time optimization.'
-complete -c g++ -o flto-compression-level -d 'Use z Use zlib/zstd compression level <number> for IL.' -x
-complete -c g++ -o flto-odr-type-merging -d 'Does nothing.'
-complete -c g++ -o flto-partition -d 'Specify the algorithm to partition symbols and vars at linktime.' -x
-complete -c g++ -o flto-report -d 'Report various link-time optimization statistics.'
-complete -c g++ -o flto-report-wpa -d 'Report various link-time optimization statistics for WPA only.'
-complete -c g++ -o flto -d 'Link-time optimization with number of parallel jobs or jobserver.' -x
-complete -c g++ -o fmath-errno -d 'Set errno after built-in math functions.'
-complete -c g++ -o fmax-errors -d 'Maximum number of errors to report.' -x
-complete -c g++ -o fmem-report -d 'Report on permanent memory allocation.'
-complete -c g++ -o fmem-report-wpa -d 'Report on permanent memory allocation in WPA only.'
-complete -c g++ -o fmerge-all-constants -d 'Attempt to merge identical constants and constant variables.'
-complete -c g++ -o fmerge-constants -d 'Attempt to merge identical constants across compilation units.'
-complete -c g++ -o fmerge-debug-strings -d 'Attempt to merge identical debug strings across compilation units.'
-complete -c g++ -o fmessage-length -d 'Limit diagnostics to <number> characters per line.' -x
-complete -c g++ -o fmodulo-sched -d 'Perform SMS based modulo scheduling before the first scheduling pass.'
-complete -c g++ -o fmodulo-sched-allow-regmoves -d 'Perform SMS based modulo scheduling with register moves allowed.'
-complete -c g++ -o fmove-loop-invariants -d 'Move loop invariant computations out of loops.'
-complete -c g++ -o fnon-call-exceptions -d 'Support synchronous non-call exceptions.'
-complete -c g++ -o foffload-abi -d 'Set the ABI to use in an offload compiler.' -x
-complete -c g++ -o foffload -d 'Specify offloading targets and options for them.' -x
-complete -c g++ -o fomit-frame-pointer -d 'When possible do not generate stack frames.'
-complete -c g++ -o fopt-info -d 'Enable all optimization info dumps on stderr.'
-complete -c g++ -o fopt-info -d 'Dump compiler optimization details.' -r
-complete -c g++ -o foptimize-register-move -d 'Does nothing.'
-complete -c g++ -o foptimize-sibling-calls -d 'Optimize sibling and tail recursive calls.'
-complete -c g++ -o foptimize-strlen -d 'Enable string length optimizations on trees.'
-complete -c g++ -o fpack-struct -d 'Pack structure members together without holes.'
-complete -c g++ -o fpack-struct -d 'Set initial maximum structure member alignment.' -x
-complete -c g++ -o fpartial-inlining -d 'Perform partial inlining.'
-complete -c g++ -o fpatchable-function-entry -d 'Insert NOP instructions at each function entry.' -x
-complete -c g++ -o fpcc-struct-return -d 'Return small aggregates in memory, not registers.'
-complete -c g++ -o fpeel-loops -d 'Perform loop peeling.'
-complete -c g++ -o fpeephole -d 'Enable machine specific peephole optimizations.'
-complete -c g++ -o fpeephole2 -d 'Enable an RTL peephole pass before sched2.'
-complete -c g++ -o fpermitted-flt-eval-methods -d 'Specify which values of FLT_EVAL_METHOD are permitted.' -x
-complete -c g++ -o fpic -d 'Generate position-independent code if possible (small mode).'
-complete -c g++ -o fpie -d 'Generate position-independent code for executables if possible (small mode).'
-complete -c g++ -o fplt -d 'Use PLT for PIC calls (-fno-plt: load the address from GOT at call site).'
-complete -c g++ -o fplugin-arg- -d 'Specify argument <key>=<value> for plugin <name>.' -x
-complete -c g++ -o fplugin -d 'Specify a plugin to load.' -x
-complete -c g++ -o fpost-ipa-mem-report -d 'Report on memory allocation before interprocedural optimization.'
-complete -c g++ -o fpre-ipa-mem-report -d 'Report on memory allocation before interprocedural optimization.'
-complete -c g++ -o fpredictive-commoning -d 'Run predictive commoning optimization.'
-complete -c g++ -o fprefetch-loop-arrays -d 'Generate prefetch instructions, if available, for arrays in loops.'
-complete -c g++ -o fprofile -d 'Enable basic program profiling code.'
-complete -c g++ -o fprofile-abs-path -d 'Generate absolute source path names for gcov.'
-complete -c g++ -o fprofile-arcs -d 'Insert arc-based program profiling code.'
-complete -c g++ -o fprofile-correction -d 'Enable correction of flow inconsistent profile data input.'
-complete -c g++ -o fprofile-dir -d 'Set the top-level directory for storing the profile data.' -r
-complete -c g++ -o fprofile-exclude-files -d 'Instrument only functions from files where names do not match all the regular expressions (separated by a semi-colon).' -r
-complete -c g++ -o fprofile-filter-files -d 'Instrument only functions from files where names match any regular expression (separated by a semi-colon).' -r
-complete -c g++ -o fprofile-generate -d 'Enable common options for generating profile info for profile feedback directed optimizations.'
-complete -c g++ -o fprofile-generate -d 'Enable common options for generating profile info for profile feedback directed optimizations, and set -fprofile-dir=.' -r
-complete -c g++ -o fprofile-note -d 'Select the name for storing the profile note file.' -r
-complete -c g++ -o fprofile-partial-training -d 'Do not assume that functions never executed during the train run are cold.'
-complete -c g++ -o fprofile-prefix-path -d 'Remove prefix from absolute path before mangling name for -fprofile-generate= and -fprofile-use=.' -r
-complete -c g++ -o fprofile-reorder-functions -d 'Enable function reordering that improves code placement.'
-complete -c g++ -o fprofile-report -d 'Report on consistency of profile.'
-complete -c g++ -o fprofile-reproducible -d 'Control level of reproducibility of profile gathered by -fprofilegenerate.' -r
-complete -c g++ -o fprofile-update -d 'Set the profile update method.' -r
-complete -c g++ -o fprofile-use -d 'Enable common options for performing profile feedback directed optimizations.'
-complete -c g++ -o fprofile-use -d 'Enable common options for performing profile feedback directed optimizations, and set -fprofile-dir=.' -r
-complete -c g++ -o fprofile-values -d 'Insert code to profile values of expressions.'
-complete -c g++ -o frandom-seed -d 'This option lacks documentation.'
-complete -c g++ -o frandom-seed -d 'Make compile reproducible using <string>.' -x
-complete -c g++ -o freciprocal-math -d 'Same as -fassociative-math for expressions which include division.'
-complete -c g++ -o frecord-gcc-switches -d 'Record gcc command line switches in the object file.'
-complete -c g++ -o free -d 'Turn on Redundant Extensions Elimination pass.'
-complete -c g++ -o freg-struct-return -d 'Return small aggregates in registers.'
-complete -c g++ -o fregmove -d 'Does nothing.'
-complete -c g++ -o frename-registers -d 'Perform a register renaming optimization pass.'
-complete -c g++ -o freorder-blocks -d 'Reorder basic blocks to improve code placement.'
-complete -c g++ -o freorder-blocks-algorithm -d 'Set the used basic block reordering algorithm.' -x
-complete -c g++ -o freorder-blocks-and-partition -d 'Reorder basic blocks and partition into hot and cold sections.'
-complete -c g++ -o freorder-functions -d 'Reorder functions to improve code placement.'
-complete -c g++ -o freport-bug -d 'Collect and dump debug information into temporary file if ICE in C/C++ compiler occurred.'
-complete -c g++ -o frerun-cse-after-loop -d 'Add a common subexpression elimination pass after loop optimizations.'
-complete -c g++ -o frerun-loop-opt -d 'Does nothing.'
-complete -c g++ -o freschedule-modulo-scheduled-loops -d 'Enable/Disable the traditional scheduling in loops that already passed modulo scheduling.'
-complete -c g++ -o frounding-math -d 'Disable optimizations that assume default FP rounding behavior.'
-complete -c g++ -o fsanitize-address-use-after-scope -d 'This option lacks documentation.'
-complete -c g++ -o fsanitize-coverage -d 'Select type of coverage sanitization.' -x
-complete -c g++ -o fsanitize-recover -d 'This switch is deprecated; use -fsanitize-recover= instead.'
-complete -c g++ -o fsanitize-recover -d 'After diagnosing undefined behavior attempt to continue execution.' -x
-complete -c g++ -o fsanitize-sections -d 'Sanitize global variables in user-defined sections.' -x
-complete -c g++ -o fsanitize-undefined-trap-on-error -d 'Use trap instead of a library function for undefined behavior sanitization.'
-complete -c g++ -o fsanitize -d 'Select what to sanitize.' -x
-complete -c g++ -o fsave-optimization-record -d 'Write a SRCFILE.opt-record.json file detailing what optimizations were performed.'
-complete -c g++ -o fsched-critical-path-heuristic -d 'Enable the critical path heuristic in the scheduler.'
-complete -c g++ -o fsched-dep-count-heuristic -d 'Enable the dependent count heuristic in the scheduler.'
-complete -c g++ -o fsched-group-heuristic -d 'Enable the group heuristic in the scheduler.'
-complete -c g++ -o fsched-interblock -d 'Enable scheduling across basic blocks.'
-complete -c g++ -o fsched-last-insn-heuristic -d 'Enable the last instruction heuristic in the scheduler.'
-complete -c g++ -o fsched-pressure -d 'Enable register pressure sensitive insn scheduling.'
-complete -c g++ -o fsched-rank-heuristic -d 'Enable the rank heuristic in the scheduler.'
-complete -c g++ -o fsched-spec -d 'Allow speculative motion of non-loads.'
-complete -c g++ -o fsched-spec-insn-heuristic -d 'Enable the speculative instruction heuristic in the scheduler.'
-complete -c g++ -o fsched-spec-load -d 'Allow speculative motion of some loads.'
-complete -c g++ -o fsched-spec-load-dangerous -d 'Allow speculative motion of more loads.'
-complete -c g++ -o fsched-stalled-insns -d 'Allow premature scheduling of queued insns.'
-complete -c g++ -o fsched-stalled-insns-dep -d 'Set dependence distance checking in premature scheduling of queued insns.'
-complete -c g++ -o fsched-stalled-insns-dep -d 'Set dependence distance checking in premature scheduling of queued insns.' -x
-complete -c g++ -o fsched-stalled-insns -d 'Set number of queued insns that can be prematurely scheduled.' -x
-complete -c g++ -o fsched-verbose -d 'Set the verbosity level of the scheduler.' -x
-complete -c g++ -o fsched2-use-superblocks -d 'If scheduling post reload, do superblock scheduling.'
-complete -c g++ -o fsched2-use-traces -d 'Does nothing.'
-complete -c g++ -o fschedule-fusion -d 'Perform a target dependent instruction fusion optimization pass.'
-complete -c g++ -o fschedule-insns -d 'Reschedule instructions before register allocation.'
-complete -c g++ -o fschedule-insns2 -d 'Reschedule instructions after register allocation.'
-complete -c g++ -o fsection-anchors -d 'Access data in the same section from shared anchor points.'
-complete -c g++ -o fsee -d 'Does nothing.'
-complete -c g++ -o fsel-sched-pipelining -d 'Perform software pipelining of inner loops during selective scheduling.'
-complete -c g++ -o fsel-sched-pipelining-outer-loops -d 'Perform software pipelining of outer loops during selective scheduling.'
-complete -c g++ -o fsel-sched-reschedule-pipelined -d 'Reschedule pipelined regions without pipelining.'
-complete -c g++ -o fselective-scheduling -d 'Schedule instructions using selective scheduling algorithm.'
-complete -c g++ -o fselective-scheduling2 -d 'Run selective scheduling after reload.'
-complete -c g++ -o fself-test -d 'Run self-tests, using the given path to locate test files.' -r
-complete -c g++ -o fsemantic-interposition -d 'Allow interposing function (or variables) by ones with different semantics (or initializer) respectively by dynamic linker.'
-complete -c g++ -o fshow-column -d 'Show column numbers in diagnostics, when available.'
-complete -c g++ -o fshrink-wrap -d 'Emit function prologues only before parts of the function that need it, rather than at the top of the function.'
-complete -c g++ -o fshrink-wrap-separate -d 'Shrink-wrap parts of the prologue and epilogue separately.'
-complete -c g++ -o fsignaling-nans -d 'Disable optimizations observable by IEEE signaling NaNs.'
-complete -c g++ -o fsigned-zeros -d 'Disable floating point optimizations that ignore the IEEE signedness of zero.'
-complete -c g++ -o fsimd-cost-model -d 'Specifies the vectorization cost model for code marked with a simd directive.' -r
-complete -c g++ -o fsingle-precision-constant -d 'Convert floating point constants to single precision constants.'
-complete -c g++ -o fsplit-ivs-in-unroller -d 'Split lifetimes of induction variables when loops are unrolled.'
-complete -c g++ -o fsplit-loops -d 'Perform loop splitting.'
-complete -c g++ -o fsplit-paths -d 'Split paths leading to loop backedges.'
-complete -c g++ -o fsplit-stack -d 'Generate discontiguous stack frames.'
-complete -c g++ -o fsplit-wide-types -d 'Split wide types into independent registers.'
-complete -c g++ -o fsplit-wide-types-early -d 'Split wide types into independent registers earlier.'
-complete -c g++ -o fssa-backprop -d 'Enable backward propagation of use properties at the SSA level.'
-complete -c g++ -o fssa-phiopt -d 'Optimize conditional patterns using SSA PHI nodes.'
-complete -c g++ -o fstack-check -d 'Insert stack checking code into the program.'
-complete -c g++ -o fstack-check -d 'Insert stack checking code into the program.' -x
-complete -c g++ -o fstack-clash-protection -d 'Insert code to probe each page of stack space as it is allocated to protect from stack-clash style attacks.'
-complete -c g++ -o fstack-limit -d 'This option lacks documentation.'
-complete -c g++ -o fstack-limit-register -d 'Trap if the stack goes past <register>.' -x
-complete -c g++ -o fstack-limit-symbol -d 'Trap if the stack goes past symbol <name>.' -x
-complete -c g++ -o fstack-protector -d 'Use propolice as a stack protection method.'
-complete -c g++ -o fstack-protector-all -d 'Use a stack protection method for every function.'
-complete -c g++ -o fstack-protector-explicit -d 'Use stack protection method only for functions with the stack_protect attribute.'
-complete -c g++ -o fstack-protector-strong -d 'Use a smart stack protection method for certain functions.'
-complete -c g++ -o fstack-reuse -d 'Set stack reuse level for local variables.' -x
-complete -c g++ -o fstack-usage -d 'Output stack usage information on a per-function basis.'
-complete -c g++ -o fstdarg-opt -d 'Optimize amount of stdarg registers saved to stack at start of function.'
-complete -c g++ -o fstore-merging -d 'Merge adjacent stores.'
-complete -c g++ -o fstrength-reduce -d 'Does nothing.'
-complete -c g++ -o fstrict-aliasing -d 'Assume strict aliasing rules apply.'
-complete -c g++ -o fstrict-overflow -d 'Treat signed overflow as undefined.'
-complete -c g++ -o fstrict-volatile-bitfields -d 'Force bitfield accesses to match their type width.'
-complete -c g++ -o fsync-libcalls -d 'Implement __atomic operations via libcalls to legacy __sync functions.'
-complete -c g++ -o fsyntax-only -d 'Check for syntax errors, then stop.'
-complete -c g++ -o ftarget-help -d 'Same as --target-help.'
-complete -c g++ -o ftest-coverage -d 'Create data files needed by "gcov".'
-complete -c g++ -o fthread-jumps -d 'Perform jump threading optimizations.'
-complete -c g++ -o ftime-report -d 'Report the time taken by each compiler pass.'
-complete -c g++ -o ftime-report-details -d 'Record times taken by sub-phases separately.'
-complete -c g++ -o ftls-model -d 'Set the default thread-local storage code generation model.' -x
-complete -c g++ -o ftoplevel-reorder -d 'Reorder top level functions, variables, and asms.'
-complete -c g++ -o ftracer -d 'Perform superblock formation via tail duplication.'
-complete -c g++ -o ftrampolines -d 'For targets that normally need trampolines for nested functions, always generate them instead of using descriptors.'
-complete -c g++ -o ftrapping-math -d 'Assume floating-point operations can trap.'
-complete -c g++ -o ftrapv -d 'Trap for signed overflow in addition, subtraction and multiplication.'
-complete -c g++ -o ftree-bit-ccp -d 'Enable SSA-BIT-CCP optimization on trees.'
-complete -c g++ -o ftree-builtin-call-dce -d 'Enable conditional dead code elimination for builtin calls.'
-complete -c g++ -o ftree-ccp -d 'Enable SSA-CCP optimization on trees.'
-complete -c g++ -o ftree-ch -d 'Enable loop header copying on trees.'
-complete -c g++ -o ftree-coalesce-inlined-vars -d 'Does nothing.'
-complete -c g++ -o ftree-coalesce-vars -d 'Enable SSA coalescing of user variables.'
-complete -c g++ -o ftree-copy-prop -d 'Enable copy propagation on trees.'
-complete -c g++ -o ftree-copyrename -d 'Does nothing.'
-complete -c g++ -o ftree-cselim -d 'Transform condition stores into unconditional ones.'
-complete -c g++ -o ftree-dce -d 'Enable SSA dead code elimination optimization on trees.'
-complete -c g++ -o ftree-dominator-opts -d 'Enable dominator optimizations.'
-complete -c g++ -o ftree-dse -d 'Enable dead store elimination.'
-complete -c g++ -o ftree-forwprop -d 'Enable forward propagation on trees.'
-complete -c g++ -o ftree-fre -d 'Enable Full Redundancy Elimination (FRE) on trees.'
-complete -c g++ -o ftree-loop-distribute-patterns -d 'Enable loop distribution for patterns transformed into a library call.'
-complete -c g++ -o ftree-loop-distribution -d 'Enable loop distribution on trees.'
-complete -c g++ -o ftree-loop-if-convert -d 'Convert conditional jumps in innermost loops to branchless equivalents.'
-complete -c g++ -o ftree-loop-if-convert-stores -d 'Does nothing.'
-complete -c g++ -o ftree-loop-im -d 'Enable loop invariant motion on trees.'
-complete -c g++ -o ftree-loop-ivcanon -d 'Create canonical induction variables in loops.'
-complete -c g++ -o ftree-loop-linear -d 'Enable loop nest transforms.'
-complete -c g++ -o ftree-loop-optimize -d 'Enable loop optimizations on tree level.'
-complete -c g++ -o ftree-loop-vectorize -d 'Enable loop vectorization on trees.'
-complete -c g++ -o ftree-lrs -d 'Perform live range splitting during the SSA->normal pass.'
-complete -c g++ -o ftree-parallelize-loops -d 'Enable automatic parallelization of loops.' -x
-complete -c g++ -o ftree-partial-pre -d 'In SSA-PRE optimization on trees, enable partial-partial redundancy elimination.'
-complete -c g++ -o ftree-phiprop -d 'Enable hoisting loads from conditional pointers.'
-complete -c g++ -o ftree-pre -d 'Enable SSA-PRE optimization on trees.'
-complete -c g++ -o ftree-pta -d 'Perform function-local points-to analysis on trees.'
-complete -c g++ -o ftree-reassoc -d 'Enable reassociation on tree level.'
-complete -c g++ -o ftree-salias -d 'Does nothing.'
-complete -c g++ -o ftree-scev-cprop -d 'Enable copy propagation of scalar-evolution information.'
-complete -c g++ -o ftree-sink -d 'Enable SSA code sinking on trees.'
-complete -c g++ -o ftree-slp-vectorize -d 'Enable basic block vectorization (SLP) on trees.'
-complete -c g++ -o ftree-slsr -d 'Perform straight-line strength reduction.'
-complete -c g++ -o ftree-sra -d 'Perform scalar replacement of aggregates.'
-complete -c g++ -o ftree-store-ccp -d 'Does nothing.'
-complete -c g++ -o ftree-store-copy-prop -d 'Does nothing.'
-complete -c g++ -o ftree-switch-conversion -d 'Perform conversions of switch initializations.'
-complete -c g++ -o ftree-tail-merge -d 'Enable tail merging on trees.'
-complete -c g++ -o ftree-ter -d 'Replace temporary expressions in the SSA->normal pass.'
-complete -c g++ -o ftree-vect-loop-version -d 'Does nothing.'
-complete -c g++ -o ftree-vectorize -d 'Enable vectorization on trees.'
-complete -c g++ -o ftree-vectorizer-verbose -d 'Does nothing.' -x
-complete -c g++ -o ftree-vrp -d 'Perform Value Range Propagation on trees.'
-complete -c g++ -o funconstrained-commons -d 'Assume common declarations may be overridden with ones with a larger trailing array.'
-complete -c g++ -o funit-at-a-time -d 'Compile whole compilation unit at a time.'
-complete -c g++ -o funroll-all-loops -d 'Perform loop unrolling for all loops.'
-complete -c g++ -o funroll-loops -d 'Perform loop unrolling when iteration count is known.'
-complete -c g++ -o funsafe-loop-optimizations -d 'Does nothing.'
-complete -c g++ -o funsafe-math-optimizations -d 'Allow math optimizations that may violate IEEE or ISO standards.'
-complete -c g++ -o funswitch-loops -d 'Perform loop unswitching.'
-complete -c g++ -o funwind-tables -d 'Just generate unwind tables for exception handling.'
-complete -c g++ -o fuse-ld -d 'Use the bfd linker instead of the default linker.' -x
-complete -c g++ -o fuse-ld -d 'Use the gold linker instead of the default linker.' -x
-complete -c g++ -o fuse-ld -d 'Use the lld LLVM linker instead of the default linker.' -x
-complete -c g++ -o fuse-linker-plugin -d 'This option lacks documentation.'
-complete -c g++ -o fvar-tracking -d 'Perform variable tracking.'
-complete -c g++ -o fvar-tracking-assignments -d 'Perform variable tracking by annotating assignments.'
-complete -c g++ -o fvar-tracking-assignments-toggle -d 'Toggle -fvar-tracking-assignments.'
-complete -c g++ -o fvar-tracking-uninit -d 'Perform variable tracking and also tag variables that are uninitialized.'
-complete -c g++ -o fvariable-expansion-in-unroller -d 'Apply variable expansion when loops are unrolled.'
-complete -c g++ -o fvect-cost-model -d 'Enables the dynamic vectorizer cost model.'
-complete -c g++ -o fvect-cost-model -d 'Specifies the cost model for vectorization.' -x
-complete -c g++ -o fverbose-asm -d 'Add extra commentary to assembler output.'
-complete -c g++ -o fversion -d 'display the GNU Modula-2 version'
-complete -c g++ -o fversion-loops-for-strides -d 'Version loops based on whether indices have a stride of one.'
-complete -c g++ -o fvisibility -d 'Set the default symbol visibility.' -x
-complete -c g++ -o fvpt -d 'Use expression value profiles in optimizations.'
-complete -c g++ -o fvtable-verify -d 'Validate vtable pointers before using them.' -x
-complete -c g++ -o fvtv-counts -d 'Output vtable verification counters.'
-complete -c g++ -o fvtv-debug -d 'Output vtable verification pointer sets information.'
-complete -c g++ -o fweb -d 'Construct webs and split unrelated uses of single variable.'
-complete -c g++ -o fwhole-program -d 'Perform whole program optimizations.'
-complete -c g++ -o fwrapv -d 'Assume signed arithmetic overflow wraps around.'
-complete -c g++ -o fwrapv-pointer -d 'Assume pointer overflow wraps around.'
-complete -c g++ -o fzee -d 'Does nothing.'
-complete -c g++ -o fzero-initialized-in-bss -d 'Put zero initialized data in the bss section.'
-complete -c g++ -s g -d 'Generate debug information in default format.'
-complete -c g++ -o gas-loc-support -d 'Assume assembler support for (DWARF2+) .loc directives.'
-complete -c g++ -o gas-locview-support -d 'Assume assembler support for view in (DWARF2+) .loc directives.'
-complete -c g++ -o gcoff -d 'Does nothing.'
-complete -c g++ -o gcoff1 -d 'Does nothing.'
-complete -c g++ -o gcoff2 -d 'Does nothing.'
-complete -c g++ -o gcoff3 -d 'Does nothing.'
-complete -c g++ -o gcolumn-info -d 'Record DW_AT_decl_column and DW_AT_call_column in DWARF.'
-complete -c g++ -o gdescribe-dies -d 'Add description attributes to some DWARF DIEs that have no name attribute.'
-complete -c g++ -o gdwarf -d 'Generate debug information in default version of DWARF format.'
-complete -c g++ -o gdwarf- -d 'Generate debug information in DWARF v2 (or later) format.'
-complete -c g++ -o ggdb -d 'Generate debug information in default extended format.'
-complete -c g++ -o ggnu-pubnames -d 'Generate DWARF pubnames and pubtypes sections with GNU extensions.'
-complete -c g++ -o ginline-points -d 'Generate extended entry point information for inlined functions.'
-complete -c g++ -o ginternal-reset-location-views -d 'Compute locview reset points based on insn length estimates.'
-complete -c g++ -o gno-pubnames -d 'Don\'t generate DWARF pubnames and pubtypes sections.'
-complete -c g++ -o gpubnames -d 'Generate DWARF pubnames and pubtypes sections.'
-complete -c g++ -o grecord-gcc-switches -d 'Record gcc command line switches in DWARF DW_AT_producer.'
-complete -c g++ -o gsplit-dwarf -d 'Generate debug information in separate .dwo files.'
-complete -c g++ -o gstabs -d 'Generate debug information in STABS format.'
-complete -c g++ -o gstabs+ -d 'Generate debug information in extended STABS format.'
-complete -c g++ -o gstatement-frontiers -d 'Emit progressive recommended breakpoint locations.'
-complete -c g++ -o gstrict-dwarf -d 'Don\'t emit DWARF additions beyond selected version.'
-complete -c g++ -o gtoggle -d 'Toggle debug information generation.'
-complete -c g++ -o gvariable-location-views -d 'Augment variable location lists with progressive views.'
-complete -c g++ -o gvariable-location-views -d 'This option lacks documentation.' -x
-complete -c g++ -o gvms -d 'Generate debug information in VMS format.'
-complete -c g++ -o gxcoff -d 'Generate debug information in XCOFF format.'
-complete -c g++ -o gxcoff+ -d 'Generate debug information in extended XCOFF format.'
-complete -c g++ -o gz -d 'Generate compressed debug sections.'
-complete -c g++ -o gz -d 'Generate compressed debug sections in format <format>.' -x
-complete -c g++ -o imultiarch -d 'Set <dir> to be the multiarch include subdirectory.' -r
-complete -c g++ -o iplugindir -d 'Set <dir> to be the default plugin directory.' -r
-complete -c g++ -s o -d 'Place output into <file>.' -r
-complete -c g++ -s p -d 'Enable function profiling.'
-complete -c g++ -o pedantic-errors -d 'Like -pedantic but issue them as errors.'
-complete -c g++ -o quiet -d 'Do not display functions compiled or elapsed time.'
-complete -c g++ -s v -d 'Enable verbose output.'
+complete -c g++ -l "completion" -d "Provide bash completion for options starting with provided string." -x
+complete -c g++ -l "debug" -d "Same as -g."
+complete -c g++ -l "dumpbase" -d "Same as -dumpbase."
+complete -c g++ -l "dumpdir" -d "Same as -dumpdir."
+complete -c g++ -l "extra-warnings" -d "Same as -Wextra."
+complete -c g++ -l "help" -d "Display this information."
+complete -c g++ -l "help" -d "Display descriptions of a specific class of options." -x
+complete -c g++ -l "optimize" -d "Same as -O."
+complete -c g++ -l "output" -d "Same as -o."
+complete -c g++ -l "output" -d "Same as -o." -x
+complete -c g++ -l "pedantic-errors" -d "Same as -pedantic-errors."
+complete -c g++ -l "profile" -d "Same as -p."
+complete -c g++ -l "target-help" -d "Alias for --help=target."
+complete -c g++ -l "verbose" -d "Same as -v."
+complete -c g++ -l "version" -d "This option lacks documentation."
+complete -c g++ -o "Ofast" -d "Optimize for speed disregarding exact standards compliance."
+complete -c g++ -o "Og" -d "Optimize for debugging experience rather than speed or size."
+complete -c g++ -o "Os" -d "Optimize for space rather than speed."
+complete -c g++ -s "W" -d "This switch is deprecated; use -Wextra instead."
+complete -c g++ -o "Waggregate-return" -d "Warn about returning structures, unions or arrays."
+complete -c g++ -o "Waggressive-loop-optimizations" -d "Warn if a loop with constant number of iterations triggers undefined behavior."
+complete -c g++ -o "Wanalyzer-double-fclose" -d "Warn about code paths in which a stdio FILE can be closed more than once."
+complete -c g++ -o "Wanalyzer-double-free" -d "Warn about code paths in which a pointer can be freed more than once."
+complete -c g++ -o "Wanalyzer-exposure-through-output-file" -d "Warn about code paths in which sensitive data is written to a file."
+complete -c g++ -o "Wanalyzer-file-leak" -d "Warn about code paths in which a stdio FILE is not closed."
+complete -c g++ -o "Wanalyzer-free-of-non-heap" -d "Warn about code paths in which a non-heap pointer is freed."
+complete -c g++ -o "Wanalyzer-malloc-leak" -d "Warn about code paths in which a heap-allocated pointer leaks."
+complete -c g++ -o "Wanalyzer-null-argument" -d "Warn about code paths in which NULL is passed to a must-not-be-NULL function argument."
+complete -c g++ -o "Wanalyzer-null-dereference" -d "Warn about code paths in which a NULL pointer is dereferenced."
+complete -c g++ -o "Wanalyzer-possible-null-argument" -d "Warn about code paths in which a possibly-NULL value is passed to a must-not-be-NULL function argument."
+complete -c g++ -o "Wanalyzer-possible-null-dereference" -d "Warn about code paths in which a possibly-NULL pointer is dereferenced."
+complete -c g++ -o "Wanalyzer-stale-setjmp-buffer" -d "Warn about code paths in which a longjmp rewinds to a jmp_buf saved in a stack frame that has returned."
+complete -c g++ -o "Wanalyzer-tainted-array-index" -d "Warn about code paths in which an unsanitized value is used as an array index."
+complete -c g++ -o "Wanalyzer-too-complex" -d "Warn if the code is too complicated for the analyzer to fully explore."
+complete -c g++ -o "Wanalyzer-unsafe-call-within-signal-handler" -d "Warn about code paths in which an async-signal-unsafe function is called from a signal handler."
+complete -c g++ -o "Wanalyzer-use-after-free" -d "Warn about code paths in which a freed value is used."
+complete -c g++ -o "Wanalyzer-use-of-pointer-in-stale-stack-frame" -d "Warn about code paths in which a pointer to a stale stack frame is used."
+complete -c g++ -o "Warray-bounds" -d "Warn if an array is accessed out of bounds."
+complete -c g++ -o "Warray-bounds" -d "Warn if an array is accessed out of bounds." -x
+complete -c g++ -o "Wattribute-alias" -d "Warn about type safety and similar errors and mismatches in declarations with alias attributes."
+complete -c g++ -o "Wattribute-alias" -d "Warn about type safety and similar errors and mismatches in declarations with alias attributes." -x
+complete -c g++ -o "Wattribute-warning" -d "Warn about uses of __attribute__((warning)) declarations."
+complete -c g++ -o "Wattributes" -d "Warn about inappropriate attribute usage."
+complete -c g++ -o "Wcannot-profile" -d "Warn when profiling instrumentation was requested, but could not be applied to a certain function."
+complete -c g++ -o "Wcast-align" -d "Warn about pointer casts which increase alignment."
+complete -c g++ -o "Wcast-align" -d "Warn about pointer casts which increase alignment." -x
+complete -c g++ -o "Wcoverage-mismatch" -d "Warn in case profiles in -fprofile-use do not match."
+complete -c g++ -o "Wdeprecated-declarations" -d "Warn about uses of __attribute__((deprecated)) declarations."
+complete -c g++ -o "Wdisabled-optimization" -d "Warn when an optimization pass is disabled."
+complete -c g++ -o "Werror" -d "Treat specified warning as error." -x
+complete -c g++ -o "Wfatal-errors" -d "Exit on the first error occurred."
+complete -c g++ -o "Wframe-larger-than" -d "Warn if a function's stack frame requires in excess of <byte-size>." -x
+complete -c g++ -o "Wfree-nonheap-object" -d "Warn when attempting to free a non-heap object."
+complete -c g++ -o "Whsa" -d "Warn when a function cannot be expanded to HSAIL."
+complete -c g++ -o "Wimplicit-fallthrough" -d "Same as -Wimplicit-fallthrough=3 (or, in negated form, -Wimplicit-fallthrough=0)."
+complete -c g++ -o "Wimplicit-fallthrough" -d "Warn when a switch case falls through." -x
+complete -c g++ -o "Winline" -d "Warn when an inlined function cannot be inlined."
+complete -c g++ -o "Winvalid-memory-model" -d "Warn when an atomic memory model parameter is known to be outside the valid range."
+complete -c g++ -o "Wlarger-than-" -d "Same as -Wlarger-than=."
+complete -c g++ -o "Wlarger-than" -d "Warn if an object's size exceeds <byte-size>." -x
+complete -c g++ -o "Wlto-type-mismatch" -d "During link time optimization warn about mismatched types of global declarations."
+complete -c g++ -o "Wmissing-noreturn" -d "Same as -Wsuggest-attribute=noreturn."
+complete -c g++ -o "Wmissing-profile" -d "Warn in case profiles in -fprofile-use do not exist."
+complete -c g++ -o "Wno-frame-larger-than" -d "Disable -Wframe-larger-than= warning."
+complete -c g++ -o "Wno-larger-than" -d "Disable -Wlarger-than= warning."
+complete -c g++ -o "Wno-stack-usage" -d "Disable Wstack-usage= warning."
+complete -c g++ -o "Wnull-dereference" -d "Warn if dereferencing a NULL pointer may lead to erroneous or undefined behavior."
+complete -c g++ -o "Wodr" -d "Warn about some C++ One Definition Rule violations during link time optimization."
+complete -c g++ -o "Woverflow" -d "Warn about overflow in arithmetic expressions."
+complete -c g++ -o "Wpacked" -d "Warn when the packed attribute has no effect on struct layout."
+complete -c g++ -o "Wpadded" -d "Warn when padding is required to align structure members."
+complete -c g++ -o "Wreturn-local-addr" -d "Warn about returning a pointer/reference to a local or temporary variable."
+complete -c g++ -o "Wshadow" -d "Warn when one variable shadows another."
+complete -c g++ -o "Wshadow-compatible-local" -d "Same as -Wshadow=compatible-local."
+complete -c g++ -o "Wshadow-local" -d "Same as -Wshadow=local."
+complete -c g++ -o "Wshadow" -d "Warn when one local variable shadows another local variable or parameter of compatible type." -x
+complete -c g++ -o "Wshadow" -d "Warn when one variable shadows another (globally)." -x
+complete -c g++ -o "Wshadow" -d "Warn when one local variable shadows another local variable or parameter." -x
+complete -c g++ -o "Wstack-protector" -d "Warn when not issuing stack smashing protection for some reason."
+complete -c g++ -o "Wstack-usage" -d "Warn if stack usage might exceed <byte-size>." -x
+complete -c g++ -o "Wstrict-aliasing" -d "Warn about code which might break strict aliasing rules."
+complete -c g++ -o "Wstrict-overflow" -d "Warn about optimizations that assume that signed overflow is undefined."
+complete -c g++ -o "Wsuggest-attribute" -d "Warn about functions which might be candidates for __attribute__((cold))." -x
+complete -c g++ -o "Wsuggest-attribute" -d "Warn about functions which might be candidates for __attribute__((const))." -x
+complete -c g++ -o "Wsuggest-attribute" -d "Warn about functions which might be candidates for __attribute__((malloc))." -x
+complete -c g++ -o "Wsuggest-attribute" -d "Warn about functions which might be candidates for __attribute__((noreturn))." -x
+complete -c g++ -o "Wsuggest-attribute" -d "Warn about functions which might be candidates for __attribute__((pure))." -x
+complete -c g++ -o "Wsuggest-final-methods" -d "Warn about C++ virtual methods where adding final keyword would improve code quality."
+complete -c g++ -o "Wsuggest-final-types" -d "Warn about C++ polymorphic types where adding final keyword would improve code quality."
+complete -c g++ -o "Wswitch-unreachable" -d "Warn about statements between switch's controlling expression and the first case."
+complete -c g++ -o "Wtrampolines" -d "Warn whenever a trampoline is generated."
+complete -c g++ -o "Wtype-limits" -d "Warn if a comparison is always true or always false due to the limited range of the data type."
+complete -c g++ -o "Wunreachable-code" -d "Does nothing."
+complete -c g++ -o "Wunsafe-loop-optimizations" -d "Does nothing."
+complete -c g++ -o "Wunused-but-set-parameter" -d "Warn when a function parameter is only set, otherwise unused."
+complete -c g++ -o "Wunused-but-set-variable" -d "Warn when a variable is only set, otherwise unused."
+complete -c g++ -o "Wunused-function" -d "Warn when a function is unused."
+complete -c g++ -o "Wunused-label" -d "Warn when a label is unused."
+complete -c g++ -o "Wunused-value" -d "Warn when an expression value is unused."
+complete -c g++ -o "Wvector-operation-performance" -d "Warn when a vector operation is compiled outside the SIMD."
+complete -c g++ -o "aux-info" -d "Emit declaration information into <file>." -r
+complete -c g++ -o "aux-info" -d "Same as -aux-info." -x
+complete -c g++ -o "auxbase" -d "This option lacks documentation."
+complete -c g++ -o "auxbase-strip" -d "This option lacks documentation."
+complete -c g++ -o "dumpbase" -d "Set the file basename to be used for dumps." -r
+complete -c g++ -o "dumpdir" -d "Set the directory name to be used for dumps." -r
+complete -c g++ -o "fPIC" -d "Generate position-independent code if possible (large mode)."
+complete -c g++ -o "fPIE" -d "Generate position-independent code for executables if possible (large mode)."
+complete -c g++ -o "fabi-version" -d "The version of the C++ ABI in use." -x
+complete -c g++ -o "faggressive-loop-optimizations" -d "Aggressively optimize loops using language constraints."
+complete -c g++ -o "falign-functions" -d "Align the start of functions."
+complete -c g++ -o "falign-functions" -d "This option lacks documentation." -x
+complete -c g++ -o "falign-jumps" -d "Align labels which are only reached by jumping."
+complete -c g++ -o "falign-jumps" -d "This option lacks documentation." -x
+complete -c g++ -o "falign-labels" -d "Align all labels."
+complete -c g++ -o "falign-labels" -d "This option lacks documentation." -x
+complete -c g++ -o "falign-loops" -d "Align the start of loops."
+complete -c g++ -o "falign-loops" -d "This option lacks documentation." -x
+complete -c g++ -o "fallocation-dce" -d "Tell DCE to remove unused C++ allocations."
+complete -c g++ -o "fallow-store-data-races" -d "Allow the compiler to introduce new data races on stores."
+complete -c g++ -o "fanalyzer" -d "Enable static analysis pass."
+complete -c g++ -o "fanalyzer-call-summaries" -d "Approximate the effect of function calls to simplify analysis."
+complete -c g++ -o "fanalyzer-checker" -d "Restrict the analyzer to run just the named checker." -x
+complete -c g++ -o "fanalyzer-fine-grained" -d "Avoid combining multiple statements into one exploded edge."
+complete -c g++ -o "fanalyzer-show-duplicate-count" -d "Issue a note when diagnostics are deduplicated."
+complete -c g++ -o "fanalyzer-state-merge" -d "Merge similar-enough states during analysis."
+complete -c g++ -o "fanalyzer-state-purge" -d "Purge unneeded state during analysis."
+complete -c g++ -o "fanalyzer-transitivity" -d "Enable transitivity of constraints during analysis."
+complete -c g++ -o "fanalyzer-verbose-edges" -d "Emit more verbose descriptions of control flow in diagnostics."
+complete -c g++ -o "fanalyzer-verbose-state-changes" -d "Emit more verbose descriptions of state changes in diagnostics."
+complete -c g++ -o "fanalyzer-verbosity" -d "Control which events are displayed in diagnostic paths." -r
+complete -c g++ -o "fargument-alias" -d "Does nothing."
+complete -c g++ -o "fargument-noalias" -d "Does nothing."
+complete -c g++ -o "fargument-noalias-anything" -d "Does nothing."
+complete -c g++ -o "fargument-noalias-global" -d "Does nothing."
+complete -c g++ -o "fasan-shadow-offset" -d "Use custom shadow memory offset." -x
+complete -c g++ -o "fassociative-math" -d "Allow optimization for floating-point arithmetic which may change the result of the operation due to rounding."
+complete -c g++ -o "fasynchronous-unwind-tables" -d "Generate unwind tables that are exact at each instruction boundary."
+complete -c g++ -o "fauto-inc-dec" -d "Generate auto-inc/dec instructions."
+complete -c g++ -o "fauto-profile" -d "Use sample profile information for call graph node weights."
+complete -c g++ -o "fauto-profile" -d "Use sample profile information for call graph node weights." -r
+complete -c g++ -o "fbranch-count-reg" -d "Replace add, compare, branch with branch on count register."
+complete -c g++ -o "fbranch-probabilities" -d "Use profiling information for branch probabilities."
+complete -c g++ -o "fbranch-target-load-optimize" -d "Does nothing."
+complete -c g++ -o "fbranch-target-load-optimize2" -d "Does nothing."
+complete -c g++ -o "fbtr-bb-exclusive" -d "Does nothing."
+complete -c g++ -o "fcall-saved-" -d "Mark <register> as being preserved across functions." -x
+complete -c g++ -o "fcall-used-" -d "Mark <register> as being corrupted by function calls." -x
+complete -c g++ -o "fcaller-saves" -d "Save registers around function calls."
+complete -c g++ -o "fcallgraph-info" -d "Output callgraph information on a per-file basis."
+complete -c g++ -o "fcallgraph-info" -d "Output callgraph information on a per-file basis with decorations." -r
+complete -c g++ -o "fcf-protection" -d "Same as -fcf-protection=full."
+complete -c g++ -o "fcf-protection" -d "Instrument functions with checks to verify jump/call/return control-flow transfer instructions have valid targets." -x
+complete -c g++ -o "fcheck-data-deps" -d "This switch is deprecated; do not use."
+complete -c g++ -o "fcheck-new" -d "Check the return value of new in C++."
+complete -c g++ -o "fchecking" -d "Perform internal consistency checkings."
+complete -c g++ -o "fchecking" -d "Perform internal consistency checkings." -x
+complete -c g++ -o "fcode-hoisting" -d "Enable code hoisting."
+complete -c g++ -o "fcombine-stack-adjustments" -d "Looks for opportunities to reduce stack adjustments and stack references."
+complete -c g++ -o "fcommon" -d "Put uninitialized globals in the common section."
+complete -c g++ -o "fcompare-debug-second" -d "Run only the second compilation of -fcompare-debug."
+complete -c g++ -o "fcompare-debug" -d "Compile with and without e.g. -gtoggle, and compare the final-insns dump." -x
+complete -c g++ -o "fcompare-elim" -d "Perform comparison elimination after register allocation has finished."
+complete -c g++ -o "fconserve-stack" -d "Do not perform optimizations increasing noticeably stack usage."
+complete -c g++ -o "fcprop-registers" -d "Perform a register copy-propagation optimization pass."
+complete -c g++ -o "fcrossjumping" -d "Perform cross-jumping optimization."
+complete -c g++ -o "fcse-follow-jumps" -d "When running CSE, follow jumps to their targets."
+complete -c g++ -o "fcse-skip-blocks" -d "Does nothing."
+complete -c g++ -o "fcx-fortran-rules" -d "Complex multiplication and division follow Fortran rules."
+complete -c g++ -o "fcx-limited-range" -d "Omit range reduction step when performing complex division."
+complete -c g++ -o "fdata-sections" -d "Place data items into their own section."
+complete -c g++ -o "fdbg-cnt-list" -d "List all available debugging counters with their limits and counts."
+complete -c g++ -o "fdbg-cnt" -d "Set the debug counter limit." -x
+complete -c g++ -o "fdce" -d "Use the RTL dead code elimination pass."
+complete -c g++ -o "fdebug-prefix-map" -d "Map one directory name to another in debug information." -r
+complete -c g++ -o "fdebug-types-section" -d "Output .debug_types section when using DWARF v4 debuginfo."
+complete -c g++ -o "fdefer-pop" -d "Defer popping functions args from stack until later."
+complete -c g++ -o "fdelayed-branch" -d "Attempt to fill delay slots of branch instructions."
+complete -c g++ -o "fdelete-dead-exceptions" -d "Delete dead instructions that may throw exceptions."
+complete -c g++ -o "fdelete-null-pointer-checks" -d "Delete useless null pointer checks."
+complete -c g++ -o "fdevirtualize" -d "Try to convert virtual calls to direct ones."
+complete -c g++ -o "fdevirtualize-at-ltrans" -d "Stream extra data to support more aggressive devirtualization in LTO local transformation mode."
+complete -c g++ -o "fdevirtualize-speculatively" -d "Perform speculative devirtualization."
+complete -c g++ -o "fdiagnostics-color" -d "Same as -fdiagnostics-color=always (or, in negated form, -fdiagnostics-color=never)."
+complete -c g++ -o "fdiagnostics-color" -d "Colorize diagnostics." -x
+complete -c g++ -o "fdiagnostics-format" -d "Select output format." -x
+complete -c g++ -o "fdiagnostics-generate-patch" -d "Print fix-it hints to stderr in unified diff format."
+complete -c g++ -o "fdiagnostics-minimum-margin-width" -d "Set minimum width of left margin of source code when showing source." -x
+complete -c g++ -o "fdiagnostics-parseable-fixits" -d "Print fix-it hints in machine-readable form."
+complete -c g++ -o "fdiagnostics-path-format" -d "Specify how to print any control-flow path associated with a diagnostic." -r
+complete -c g++ -o "fdiagnostics-show-caret" -d "Show the source line with a caret indicating the column."
+complete -c g++ -o "fdiagnostics-show-cwe" -d "Print CWE identifiers for diagnostic messages, where available."
+complete -c g++ -o "fdiagnostics-show-labels" -d "Show labels annotating ranges of source code when showing source."
+complete -c g++ -o "fdiagnostics-show-line-numbers" -d "Show line numbers in the left margin when showing source."
+complete -c g++ -o "fdiagnostics-show-location" -d "How often to emit source location at the beginning of line-wrapped diagnostics." -x
+complete -c g++ -o "fdiagnostics-show-option" -d "Amend appropriate diagnostic messages with the command line option that controls them."
+complete -c g++ -o "fdiagnostics-show-path-depths" -d "how stack depths of events in paths." -r
+complete -c g++ -o "fdiagnostics-urls" -d "Embed URLs in diagnostics." -x
+complete -c g++ -o "fdisable-" -d "Disable an optimization pass." -x
+complete -c g++ -o "fdse" -d "Use the RTL dead store elimination pass."
+complete -c g++ -o "fdump-" -d "Dump various compiler internals to a file." -r
+complete -c g++ -o "fdump-analyzer" -d "Dump various analyzer internals to SRCFILE.analyzer.txt."
+complete -c g++ -o "fdump-analyzer-callgraph" -d "Dump analyzer-specific call graph information to a SRCFILE.callgraph.dot file."
+complete -c g++ -o "fdump-analyzer-exploded-graph" -d "Dump the analyzer exploded graph to a SRCFILE.eg.dot file."
+complete -c g++ -o "fdump-analyzer-exploded-nodes" -d "Emit diagnostics showing the location of nodes in the exploded graph."
+complete -c g++ -o "fdump-analyzer-exploded-nodes-2" -d "Dump a textual representation of the exploded graph to SRCFILE.eg.txt."
+complete -c g++ -o "fdump-analyzer-exploded-nodes-3" -d "Dump a textual representation of the exploded graph to SRCFILE.eg-ID.txt."
+complete -c g++ -o "fdump-analyzer-state-purge" -d "Dump state-purging information to a SRCFILE.state-purge.dot file."
+complete -c g++ -o "fdump-analyzer-stderr" -d "Dump various analyzer internals to stderr."
+complete -c g++ -o "fdump-analyzer-supergraph" -d "Dump the analyzer supergraph to a SRCFILE.supergraph.dot file."
+complete -c g++ -o "fdump-final-insns" -d "Dump to filename the insns at the end of translation." -r
+complete -c g++ -o "fdump-go-spec" -d "Write all declarations to file as Go code." -r
+complete -c g++ -o "fdump-internal-locations" -d "Dump detailed information on GCC's internal representation of source code locations."
+complete -c g++ -o "fdump-noaddr" -d "Suppress output of addresses in debugging dumps."
+complete -c g++ -o "fdump-passes" -d "Dump optimization passes."
+complete -c g++ -o "fdump-unnumbered" -d "Suppress output of instruction numbers, line number notes and addresses in debugging dumps."
+complete -c g++ -o "fdump-unnumbered-links" -d "Suppress output of previous and next insn numbers in debugging dumps."
+complete -c g++ -o "fdwarf2-cfi-asm" -d "Enable CFI tables via GAS assembler directives."
+complete -c g++ -o "fearly-inlining" -d "Perform early inlining."
+complete -c g++ -o "feliminate-dwarf2-dups" -d "Does nothing."
+complete -c g++ -o "feliminate-unused-debug-symbols" -d "Perform unused symbol elimination in debug info."
+complete -c g++ -o "feliminate-unused-debug-types" -d "Perform unused type elimination in debug info."
+complete -c g++ -o "femit-class-debug-always" -d "Do not suppress C++ class debug information."
+complete -c g++ -o "fenable-" -d "Enable an optimization pass." -x
+complete -c g++ -o "fexcess-precision" -d "Specify handling of excess floating-point precision." -x
+complete -c g++ -o "fexpensive-optimizations" -d "Perform a number of minor, expensive optimizations."
+complete -c g++ -o "ffast-math" -d "This option lacks documentation."
+complete -c g++ -o "ffat-lto-objects" -d "Output lto objects containing both the intermediate language and binary output."
+complete -c g++ -o "ffile-prefix-map" -d "Map one directory name to another in compilation result." -r
+complete -c g++ -o "ffinite-loops" -d "Assume that loops with an exit will terminate and not loop indefinitely."
+complete -c g++ -o "ffinite-math-only" -d "Assume no NaNs or infinities are generated."
+complete -c g++ -o "ffixed-" -d "Mark <register> as being unavailable to the compiler." -x
+complete -c g++ -o "ffloat-store" -d "Don't allocate floats and doubles in extended-precision registers."
+complete -c g++ -o "fforce-addr" -d "Does nothing."
+complete -c g++ -o "fforward-propagate" -d "Perform a forward propagation pass on RTL."
+complete -c g++ -o "ffp-contract" -d "Perform floating-point expression contraction." -x
+complete -c g++ -o "ffp-int-builtin-inexact" -d "Allow built-in functions ceil, floor, round, trunc to raise \"inexact\" exceptions."
+complete -c g++ -o "ffunction-cse" -d "Allow function addresses to be held in registers."
+complete -c g++ -o "ffunction-sections" -d "Place each function into its own section."
+complete -c g++ -o "fgcse" -d "Perform global common subexpression elimination."
+complete -c g++ -o "fgcse-after-reload" -d "Perform global common subexpression elimination after register allocation has finished."
+complete -c g++ -o "fgcse-las" -d "Perform redundant load after store elimination in global common subexpression elimination."
+complete -c g++ -o "fgcse-lm" -d "Perform enhanced load motion during global common subexpression elimination."
+complete -c g++ -o "fgcse-sm" -d "Perform store motion after global common subexpression elimination."
+complete -c g++ -o "fgnat-encodings" -d "Select the balance between GNAT encodings and standard DWARF emitted in the debug information." -x
+complete -c g++ -o "fgnu-tm" -d "Enable support for GNU transactional memory."
+complete -c g++ -o "fgnu-unique" -d "Use STB_GNU_UNIQUE if supported by the assembler."
+complete -c g++ -o "fgraphite" -d "Enable in and out of Graphite representation."
+complete -c g++ -o "fgraphite-identity" -d "Enable Graphite Identity transformation."
+complete -c g++ -o "fguess-branch-probability" -d "Enable guessing of branch probabilities."
+complete -c g++ -o "fhelp" -d "Same as --help."
+complete -c g++ -o "fhelp" -d "Same as --help=." -x
+complete -c g++ -o "fhoist-adjacent-loads" -d "Enable hoisting adjacent loads to encourage generating conditional move instructions."
+complete -c g++ -o "fident" -d "Process #ident directives."
+complete -c g++ -o "fif-conversion" -d "Perform conversion of conditional jumps to branchless equivalents."
+complete -c g++ -o "fif-conversion2" -d "Perform conversion of conditional jumps to conditional execution."
+complete -c g++ -o "findirect-inlining" -d "Perform indirect inlining."
+complete -c g++ -o "finhibit-size-directive" -d "Do not generate .size directives."
+complete -c g++ -o "finline" -d "Enable inlining of function declared \"inline\", disabling disables all inlining."
+complete -c g++ -o "finline-atomics" -d "Inline __atomic operations when a lock free instruction sequence is available."
+complete -c g++ -o "finline-functions" -d "Integrate functions not declared \"inline\" into their callers when profitable."
+complete -c g++ -o "finline-functions-called-once" -d "Integrate functions only required by their single caller."
+complete -c g++ -o "finline-limit-" -d "Same as -finline-limit=."
+complete -c g++ -o "finline-limit" -d "Limit the size of inlined functions to <number>." -x
+complete -c g++ -o "finline-small-functions" -d "Integrate functions into their callers when code size is known not to grow."
+complete -c g++ -o "finstrument-functions" -d "Instrument function entry and exit with profiling calls."
+complete -c g++ -o "finstrument-functions-exclude-file-list" -d "Do not instrument functions listed in files." -r
+complete -c g++ -o "finstrument-functions-exclude-function-list" -d "Do not instrument listed functions." -x
+complete -c g++ -o "fipa-bit-cp" -d "Perform interprocedural bitwise constant propagation."
+complete -c g++ -o "fipa-cp" -d "Perform interprocedural constant propagation."
+complete -c g++ -o "fipa-cp-alignment" -d "Does nothing."
+complete -c g++ -o "fipa-cp-clone" -d "Perform cloning to make Interprocedural constant propagation stronger."
+complete -c g++ -o "fipa-icf" -d "Perform Identical Code Folding for functions and read-only variables."
+complete -c g++ -o "fipa-icf-functions" -d "Perform Identical Code Folding for functions."
+complete -c g++ -o "fipa-icf-variables" -d "Perform Identical Code Folding for variables."
+complete -c g++ -o "fipa-matrix-reorg" -d "Does nothing."
+complete -c g++ -o "fipa-profile" -d "Perform interprocedural profile propagation."
+complete -c g++ -o "fipa-pta" -d "Perform interprocedural points-to analysis."
+complete -c g++ -o "fipa-pure-const" -d "Discover pure and const functions."
+complete -c g++ -o "fipa-ra" -d "Use caller save register across calls if possible."
+complete -c g++ -o "fipa-reference" -d "Discover read-only and non addressable static variables."
+complete -c g++ -o "fipa-reference-addressable" -d "Discover read-only, write-only and non-addressable static variables."
+complete -c g++ -o "fipa-sra" -d "Perform interprocedural reduction of aggregates."
+complete -c g++ -o "fipa-stack-alignment" -d "Reduce stack alignment on call sites if possible."
+complete -c g++ -o "fipa-struct-reorg" -d "Does nothing."
+complete -c g++ -o "fipa-vrp" -d "Perform IPA Value Range Propagation."
+complete -c g++ -o "fira-algorithm" -d "Set the used IRA algorithm." -x
+complete -c g++ -o "fira-hoist-pressure" -d "Use IRA based register pressure calculation in RTL hoist optimizations."
+complete -c g++ -o "fira-loop-pressure" -d "Use IRA based register pressure calculation in RTL loop optimizations."
+complete -c g++ -o "fira-region" -d "Set regions for IRA." -x
+complete -c g++ -o "fira-share-save-slots" -d "Share slots for saving different hard registers."
+complete -c g++ -o "fira-share-spill-slots" -d "Share stack slots for spilled pseudo-registers."
+complete -c g++ -o "fira-verbose" -d "Control IRA's level of diagnostic messages." -x
+complete -c g++ -o "fisolate-erroneous-paths-attribute" -d "Detect paths that trigger erroneous or undefined behavior due to a null value being used in a way forbidden by a returns_nonnull or nonnull attribute."
+complete -c g++ -o "fisolate-erroneous-paths-dereference" -d "Detect paths that trigger erroneous or undefined behavior due to dereferencing a null pointer."
+complete -c g++ -o "fivopts" -d "Optimize induction variables on trees."
+complete -c g++ -o "fjump-tables" -d "Use jump tables for sufficiently large switch statements."
+complete -c g++ -o "fkeep-gc-roots-live" -d "This option lacks documentation."
+complete -c g++ -o "fkeep-inline-functions" -d "Generate code for functions even if they are fully inlined."
+complete -c g++ -o "fkeep-static-consts" -d "Emit static const variables even if they are not used."
+complete -c g++ -o "fkeep-static-functions" -d "Generate code for static functions even if they are never called."
+complete -c g++ -o "fleading-underscore" -d "Give external symbols a leading underscore."
+complete -c g++ -o "flifetime-dse" -d "Tell DSE that the storage for a C++ object is dead when the constructor starts and when the destructor finishes."
+complete -c g++ -o "flifetime-dse" -d "This option lacks documentation." -x
+complete -c g++ -o "flimit-function-alignment" -d "This option lacks documentation."
+complete -c g++ -o "flive-patching" -d "Same as -flive-patching=inline-clone."
+complete -c g++ -o "flive-patching" -d "Control IPA optimizations to provide a safe compilation for live-patching." -x
+complete -c g++ -o "flive-range-shrinkage" -d "Relief of register pressure through live range shrinkage."
+complete -c g++ -o "floop-block" -d "Enable loop nest transforms."
+complete -c g++ -o "floop-flatten" -d "Does nothing."
+complete -c g++ -o "floop-interchange" -d "Enable loop interchange on trees."
+complete -c g++ -o "floop-nest-optimize" -d "Enable the loop nest optimizer."
+complete -c g++ -o "floop-optimize" -d "Does nothing."
+complete -c g++ -o "floop-parallelize-all" -d "Mark all loops as parallel."
+complete -c g++ -o "floop-strip-mine" -d "Enable loop nest transforms."
+complete -c g++ -o "floop-unroll-and-jam" -d "Perform unroll-and-jam on loops."
+complete -c g++ -o "flra-remat" -d "Do CFG-sensitive rematerialization in LRA."
+complete -c g++ -o "flto" -d "Enable link-time optimization."
+complete -c g++ -o "flto-compression-level" -d "Use z Use zlib/zstd compression level <number> for IL." -x
+complete -c g++ -o "flto-odr-type-merging" -d "Does nothing."
+complete -c g++ -o "flto-partition" -d "Specify the algorithm to partition symbols and vars at linktime." -x
+complete -c g++ -o "flto-report" -d "Report various link-time optimization statistics."
+complete -c g++ -o "flto-report-wpa" -d "Report various link-time optimization statistics for WPA only."
+complete -c g++ -o "flto" -d "Link-time optimization with number of parallel jobs or jobserver." -x
+complete -c g++ -o "fmath-errno" -d "Set errno after built-in math functions."
+complete -c g++ -o "fmax-errors" -d "Maximum number of errors to report." -x
+complete -c g++ -o "fmem-report" -d "Report on permanent memory allocation."
+complete -c g++ -o "fmem-report-wpa" -d "Report on permanent memory allocation in WPA only."
+complete -c g++ -o "fmerge-all-constants" -d "Attempt to merge identical constants and constant variables."
+complete -c g++ -o "fmerge-constants" -d "Attempt to merge identical constants across compilation units."
+complete -c g++ -o "fmerge-debug-strings" -d "Attempt to merge identical debug strings across compilation units."
+complete -c g++ -o "fmessage-length" -d "Limit diagnostics to <number> characters per line." -x
+complete -c g++ -o "fmodulo-sched" -d "Perform SMS based modulo scheduling before the first scheduling pass."
+complete -c g++ -o "fmodulo-sched-allow-regmoves" -d "Perform SMS based modulo scheduling with register moves allowed."
+complete -c g++ -o "fmove-loop-invariants" -d "Move loop invariant computations out of loops."
+complete -c g++ -o "fnon-call-exceptions" -d "Support synchronous non-call exceptions."
+complete -c g++ -o "foffload-abi" -d "Set the ABI to use in an offload compiler." -x
+complete -c g++ -o "foffload" -d "Specify offloading targets and options for them." -x
+complete -c g++ -o "fomit-frame-pointer" -d "When possible do not generate stack frames."
+complete -c g++ -o "fopt-info" -d "Enable all optimization info dumps on stderr."
+complete -c g++ -o "fopt-info" -d "Dump compiler optimization details." -r
+complete -c g++ -o "foptimize-register-move" -d "Does nothing."
+complete -c g++ -o "foptimize-sibling-calls" -d "Optimize sibling and tail recursive calls."
+complete -c g++ -o "foptimize-strlen" -d "Enable string length optimizations on trees."
+complete -c g++ -o "fpack-struct" -d "Pack structure members together without holes."
+complete -c g++ -o "fpack-struct" -d "Set initial maximum structure member alignment." -x
+complete -c g++ -o "fpartial-inlining" -d "Perform partial inlining."
+complete -c g++ -o "fpatchable-function-entry" -d "Insert NOP instructions at each function entry." -x
+complete -c g++ -o "fpcc-struct-return" -d "Return small aggregates in memory, not registers."
+complete -c g++ -o "fpeel-loops" -d "Perform loop peeling."
+complete -c g++ -o "fpeephole" -d "Enable machine specific peephole optimizations."
+complete -c g++ -o "fpeephole2" -d "Enable an RTL peephole pass before sched2."
+complete -c g++ -o "fpermitted-flt-eval-methods" -d "Specify which values of FLT_EVAL_METHOD are permitted." -x
+complete -c g++ -o "fpic" -d "Generate position-independent code if possible (small mode)."
+complete -c g++ -o "fpie" -d "Generate position-independent code for executables if possible (small mode)."
+complete -c g++ -o "fplt" -d "Use PLT for PIC calls (-fno-plt: load the address from GOT at call site)."
+complete -c g++ -o "fplugin-arg-" -d "Specify argument <key>=<value> for plugin <name>." -x
+complete -c g++ -o "fplugin" -d "Specify a plugin to load." -x
+complete -c g++ -o "fpost-ipa-mem-report" -d "Report on memory allocation before interprocedural optimization."
+complete -c g++ -o "fpre-ipa-mem-report" -d "Report on memory allocation before interprocedural optimization."
+complete -c g++ -o "fpredictive-commoning" -d "Run predictive commoning optimization."
+complete -c g++ -o "fprefetch-loop-arrays" -d "Generate prefetch instructions, if available, for arrays in loops."
+complete -c g++ -o "fprofile" -d "Enable basic program profiling code."
+complete -c g++ -o "fprofile-abs-path" -d "Generate absolute source path names for gcov."
+complete -c g++ -o "fprofile-arcs" -d "Insert arc-based program profiling code."
+complete -c g++ -o "fprofile-correction" -d "Enable correction of flow inconsistent profile data input."
+complete -c g++ -o "fprofile-dir" -d "Set the top-level directory for storing the profile data." -r
+complete -c g++ -o "fprofile-exclude-files" -d "Instrument only functions from files where names do not match all the regular expressions (separated by a semi-colon)." -r
+complete -c g++ -o "fprofile-filter-files" -d "Instrument only functions from files where names match any regular expression (separated by a semi-colon)." -r
+complete -c g++ -o "fprofile-generate" -d "Enable common options for generating profile info for profile feedback directed optimizations."
+complete -c g++ -o "fprofile-generate" -d "Enable common options for generating profile info for profile feedback directed optimizations, and set -fprofile-dir=." -r
+complete -c g++ -o "fprofile-note" -d "Select the name for storing the profile note file." -r
+complete -c g++ -o "fprofile-partial-training" -d "Do not assume that functions never executed during the train run are cold."
+complete -c g++ -o "fprofile-prefix-path" -d "Remove prefix from absolute path before mangling name for -fprofile-generate= and -fprofile-use=." -r
+complete -c g++ -o "fprofile-reorder-functions" -d "Enable function reordering that improves code placement."
+complete -c g++ -o "fprofile-report" -d "Report on consistency of profile."
+complete -c g++ -o "fprofile-reproducible" -d "Control level of reproducibility of profile gathered by -fprofilegenerate." -r
+complete -c g++ -o "fprofile-update" -d "Set the profile update method." -r
+complete -c g++ -o "fprofile-use" -d "Enable common options for performing profile feedback directed optimizations."
+complete -c g++ -o "fprofile-use" -d "Enable common options for performing profile feedback directed optimizations, and set -fprofile-dir=." -r
+complete -c g++ -o "fprofile-values" -d "Insert code to profile values of expressions."
+complete -c g++ -o "frandom-seed" -d "This option lacks documentation."
+complete -c g++ -o "frandom-seed" -d "Make compile reproducible using <string>." -x
+complete -c g++ -o "freciprocal-math" -d "Same as -fassociative-math for expressions which include division."
+complete -c g++ -o "frecord-gcc-switches" -d "Record gcc command line switches in the object file."
+complete -c g++ -o "free" -d "Turn on Redundant Extensions Elimination pass."
+complete -c g++ -o "freg-struct-return" -d "Return small aggregates in registers."
+complete -c g++ -o "fregmove" -d "Does nothing."
+complete -c g++ -o "frename-registers" -d "Perform a register renaming optimization pass."
+complete -c g++ -o "freorder-blocks" -d "Reorder basic blocks to improve code placement."
+complete -c g++ -o "freorder-blocks-algorithm" -d "Set the used basic block reordering algorithm." -x
+complete -c g++ -o "freorder-blocks-and-partition" -d "Reorder basic blocks and partition into hot and cold sections."
+complete -c g++ -o "freorder-functions" -d "Reorder functions to improve code placement."
+complete -c g++ -o "freport-bug" -d "Collect and dump debug information into temporary file if ICE in C/C++ compiler occurred."
+complete -c g++ -o "frerun-cse-after-loop" -d "Add a common subexpression elimination pass after loop optimizations."
+complete -c g++ -o "frerun-loop-opt" -d "Does nothing."
+complete -c g++ -o "freschedule-modulo-scheduled-loops" -d "Enable/Disable the traditional scheduling in loops that already passed modulo scheduling."
+complete -c g++ -o "frounding-math" -d "Disable optimizations that assume default FP rounding behavior."
+complete -c g++ -o "fsanitize-address-use-after-scope" -d "This option lacks documentation."
+complete -c g++ -o "fsanitize-coverage" -d "Select type of coverage sanitization." -x
+complete -c g++ -o "fsanitize-recover" -d "This switch is deprecated; use -fsanitize-recover= instead."
+complete -c g++ -o "fsanitize-recover" -d "After diagnosing undefined behavior attempt to continue execution." -x
+complete -c g++ -o "fsanitize-sections" -d "Sanitize global variables in user-defined sections." -x
+complete -c g++ -o "fsanitize-undefined-trap-on-error" -d "Use trap instead of a library function for undefined behavior sanitization."
+complete -c g++ -o "fsanitize" -d "Select what to sanitize." -x
+complete -c g++ -o "fsave-optimization-record" -d "Write a SRCFILE.opt-record.json file detailing what optimizations were performed."
+complete -c g++ -o "fsched-critical-path-heuristic" -d "Enable the critical path heuristic in the scheduler."
+complete -c g++ -o "fsched-dep-count-heuristic" -d "Enable the dependent count heuristic in the scheduler."
+complete -c g++ -o "fsched-group-heuristic" -d "Enable the group heuristic in the scheduler."
+complete -c g++ -o "fsched-interblock" -d "Enable scheduling across basic blocks."
+complete -c g++ -o "fsched-last-insn-heuristic" -d "Enable the last instruction heuristic in the scheduler."
+complete -c g++ -o "fsched-pressure" -d "Enable register pressure sensitive insn scheduling."
+complete -c g++ -o "fsched-rank-heuristic" -d "Enable the rank heuristic in the scheduler."
+complete -c g++ -o "fsched-spec" -d "Allow speculative motion of non-loads."
+complete -c g++ -o "fsched-spec-insn-heuristic" -d "Enable the speculative instruction heuristic in the scheduler."
+complete -c g++ -o "fsched-spec-load" -d "Allow speculative motion of some loads."
+complete -c g++ -o "fsched-spec-load-dangerous" -d "Allow speculative motion of more loads."
+complete -c g++ -o "fsched-stalled-insns" -d "Allow premature scheduling of queued insns."
+complete -c g++ -o "fsched-stalled-insns-dep" -d "Set dependence distance checking in premature scheduling of queued insns."
+complete -c g++ -o "fsched-stalled-insns-dep" -d "Set dependence distance checking in premature scheduling of queued insns." -x
+complete -c g++ -o "fsched-stalled-insns" -d "Set number of queued insns that can be prematurely scheduled." -x
+complete -c g++ -o "fsched-verbose" -d "Set the verbosity level of the scheduler." -x
+complete -c g++ -o "fsched2-use-superblocks" -d "If scheduling post reload, do superblock scheduling."
+complete -c g++ -o "fsched2-use-traces" -d "Does nothing."
+complete -c g++ -o "fschedule-fusion" -d "Perform a target dependent instruction fusion optimization pass."
+complete -c g++ -o "fschedule-insns" -d "Reschedule instructions before register allocation."
+complete -c g++ -o "fschedule-insns2" -d "Reschedule instructions after register allocation."
+complete -c g++ -o "fsection-anchors" -d "Access data in the same section from shared anchor points."
+complete -c g++ -o "fsee" -d "Does nothing."
+complete -c g++ -o "fsel-sched-pipelining" -d "Perform software pipelining of inner loops during selective scheduling."
+complete -c g++ -o "fsel-sched-pipelining-outer-loops" -d "Perform software pipelining of outer loops during selective scheduling."
+complete -c g++ -o "fsel-sched-reschedule-pipelined" -d "Reschedule pipelined regions without pipelining."
+complete -c g++ -o "fselective-scheduling" -d "Schedule instructions using selective scheduling algorithm."
+complete -c g++ -o "fselective-scheduling2" -d "Run selective scheduling after reload."
+complete -c g++ -o "fself-test" -d "Run self-tests, using the given path to locate test files." -r
+complete -c g++ -o "fsemantic-interposition" -d "Allow interposing function (or variables) by ones with different semantics (or initializer) respectively by dynamic linker."
+complete -c g++ -o "fshow-column" -d "Show column numbers in diagnostics, when available."
+complete -c g++ -o "fshrink-wrap" -d "Emit function prologues only before parts of the function that need it, rather than at the top of the function."
+complete -c g++ -o "fshrink-wrap-separate" -d "Shrink-wrap parts of the prologue and epilogue separately."
+complete -c g++ -o "fsignaling-nans" -d "Disable optimizations observable by IEEE signaling NaNs."
+complete -c g++ -o "fsigned-zeros" -d "Disable floating point optimizations that ignore the IEEE signedness of zero."
+complete -c g++ -o "fsimd-cost-model" -d "Specifies the vectorization cost model for code marked with a simd directive." -r
+complete -c g++ -o "fsingle-precision-constant" -d "Convert floating point constants to single precision constants."
+complete -c g++ -o "fsplit-ivs-in-unroller" -d "Split lifetimes of induction variables when loops are unrolled."
+complete -c g++ -o "fsplit-loops" -d "Perform loop splitting."
+complete -c g++ -o "fsplit-paths" -d "Split paths leading to loop backedges."
+complete -c g++ -o "fsplit-stack" -d "Generate discontiguous stack frames."
+complete -c g++ -o "fsplit-wide-types" -d "Split wide types into independent registers."
+complete -c g++ -o "fsplit-wide-types-early" -d "Split wide types into independent registers earlier."
+complete -c g++ -o "fssa-backprop" -d "Enable backward propagation of use properties at the SSA level."
+complete -c g++ -o "fssa-phiopt" -d "Optimize conditional patterns using SSA PHI nodes."
+complete -c g++ -o "fstack-check" -d "Insert stack checking code into the program."
+complete -c g++ -o "fstack-check" -d "Insert stack checking code into the program." -x
+complete -c g++ -o "fstack-clash-protection" -d "Insert code to probe each page of stack space as it is allocated to protect from stack-clash style attacks."
+complete -c g++ -o "fstack-limit" -d "This option lacks documentation."
+complete -c g++ -o "fstack-limit-register" -d "Trap if the stack goes past <register>." -x
+complete -c g++ -o "fstack-limit-symbol" -d "Trap if the stack goes past symbol <name>." -x
+complete -c g++ -o "fstack-protector" -d "Use propolice as a stack protection method."
+complete -c g++ -o "fstack-protector-all" -d "Use a stack protection method for every function."
+complete -c g++ -o "fstack-protector-explicit" -d "Use stack protection method only for functions with the stack_protect attribute."
+complete -c g++ -o "fstack-protector-strong" -d "Use a smart stack protection method for certain functions."
+complete -c g++ -o "fstack-reuse" -d "Set stack reuse level for local variables." -x
+complete -c g++ -o "fstack-usage" -d "Output stack usage information on a per-function basis."
+complete -c g++ -o "fstdarg-opt" -d "Optimize amount of stdarg registers saved to stack at start of function."
+complete -c g++ -o "fstore-merging" -d "Merge adjacent stores."
+complete -c g++ -o "fstrength-reduce" -d "Does nothing."
+complete -c g++ -o "fstrict-aliasing" -d "Assume strict aliasing rules apply."
+complete -c g++ -o "fstrict-overflow" -d "Treat signed overflow as undefined."
+complete -c g++ -o "fstrict-volatile-bitfields" -d "Force bitfield accesses to match their type width."
+complete -c g++ -o "fsync-libcalls" -d "Implement __atomic operations via libcalls to legacy __sync functions."
+complete -c g++ -o "fsyntax-only" -d "Check for syntax errors, then stop."
+complete -c g++ -o "ftarget-help" -d "Same as --target-help."
+complete -c g++ -o "ftest-coverage" -d "Create data files needed by \"gcov\"."
+complete -c g++ -o "fthread-jumps" -d "Perform jump threading optimizations."
+complete -c g++ -o "ftime-report" -d "Report the time taken by each compiler pass."
+complete -c g++ -o "ftime-report-details" -d "Record times taken by sub-phases separately."
+complete -c g++ -o "ftls-model" -d "Set the default thread-local storage code generation model." -x
+complete -c g++ -o "ftoplevel-reorder" -d "Reorder top level functions, variables, and asms."
+complete -c g++ -o "ftracer" -d "Perform superblock formation via tail duplication."
+complete -c g++ -o "ftrampolines" -d "For targets that normally need trampolines for nested functions, always generate them instead of using descriptors."
+complete -c g++ -o "ftrapping-math" -d "Assume floating-point operations can trap."
+complete -c g++ -o "ftrapv" -d "Trap for signed overflow in addition, subtraction and multiplication."
+complete -c g++ -o "ftree-bit-ccp" -d "Enable SSA-BIT-CCP optimization on trees."
+complete -c g++ -o "ftree-builtin-call-dce" -d "Enable conditional dead code elimination for builtin calls."
+complete -c g++ -o "ftree-ccp" -d "Enable SSA-CCP optimization on trees."
+complete -c g++ -o "ftree-ch" -d "Enable loop header copying on trees."
+complete -c g++ -o "ftree-coalesce-inlined-vars" -d "Does nothing."
+complete -c g++ -o "ftree-coalesce-vars" -d "Enable SSA coalescing of user variables."
+complete -c g++ -o "ftree-copy-prop" -d "Enable copy propagation on trees."
+complete -c g++ -o "ftree-copyrename" -d "Does nothing."
+complete -c g++ -o "ftree-cselim" -d "Transform condition stores into unconditional ones."
+complete -c g++ -o "ftree-dce" -d "Enable SSA dead code elimination optimization on trees."
+complete -c g++ -o "ftree-dominator-opts" -d "Enable dominator optimizations."
+complete -c g++ -o "ftree-dse" -d "Enable dead store elimination."
+complete -c g++ -o "ftree-forwprop" -d "Enable forward propagation on trees."
+complete -c g++ -o "ftree-fre" -d "Enable Full Redundancy Elimination (FRE) on trees."
+complete -c g++ -o "ftree-loop-distribute-patterns" -d "Enable loop distribution for patterns transformed into a library call."
+complete -c g++ -o "ftree-loop-distribution" -d "Enable loop distribution on trees."
+complete -c g++ -o "ftree-loop-if-convert" -d "Convert conditional jumps in innermost loops to branchless equivalents."
+complete -c g++ -o "ftree-loop-if-convert-stores" -d "Does nothing."
+complete -c g++ -o "ftree-loop-im" -d "Enable loop invariant motion on trees."
+complete -c g++ -o "ftree-loop-ivcanon" -d "Create canonical induction variables in loops."
+complete -c g++ -o "ftree-loop-linear" -d "Enable loop nest transforms."
+complete -c g++ -o "ftree-loop-optimize" -d "Enable loop optimizations on tree level."
+complete -c g++ -o "ftree-loop-vectorize" -d "Enable loop vectorization on trees."
+complete -c g++ -o "ftree-lrs" -d "Perform live range splitting during the SSA->normal pass."
+complete -c g++ -o "ftree-parallelize-loops" -d "Enable automatic parallelization of loops." -x
+complete -c g++ -o "ftree-partial-pre" -d "In SSA-PRE optimization on trees, enable partial-partial redundancy elimination."
+complete -c g++ -o "ftree-phiprop" -d "Enable hoisting loads from conditional pointers."
+complete -c g++ -o "ftree-pre" -d "Enable SSA-PRE optimization on trees."
+complete -c g++ -o "ftree-pta" -d "Perform function-local points-to analysis on trees."
+complete -c g++ -o "ftree-reassoc" -d "Enable reassociation on tree level."
+complete -c g++ -o "ftree-salias" -d "Does nothing."
+complete -c g++ -o "ftree-scev-cprop" -d "Enable copy propagation of scalar-evolution information."
+complete -c g++ -o "ftree-sink" -d "Enable SSA code sinking on trees."
+complete -c g++ -o "ftree-slp-vectorize" -d "Enable basic block vectorization (SLP) on trees."
+complete -c g++ -o "ftree-slsr" -d "Perform straight-line strength reduction."
+complete -c g++ -o "ftree-sra" -d "Perform scalar replacement of aggregates."
+complete -c g++ -o "ftree-store-ccp" -d "Does nothing."
+complete -c g++ -o "ftree-store-copy-prop" -d "Does nothing."
+complete -c g++ -o "ftree-switch-conversion" -d "Perform conversions of switch initializations."
+complete -c g++ -o "ftree-tail-merge" -d "Enable tail merging on trees."
+complete -c g++ -o "ftree-ter" -d "Replace temporary expressions in the SSA->normal pass."
+complete -c g++ -o "ftree-vect-loop-version" -d "Does nothing."
+complete -c g++ -o "ftree-vectorize" -d "Enable vectorization on trees."
+complete -c g++ -o "ftree-vectorizer-verbose" -d "Does nothing." -x
+complete -c g++ -o "ftree-vrp" -d "Perform Value Range Propagation on trees."
+complete -c g++ -o "funconstrained-commons" -d "Assume common declarations may be overridden with ones with a larger trailing array."
+complete -c g++ -o "funit-at-a-time" -d "Compile whole compilation unit at a time."
+complete -c g++ -o "funroll-all-loops" -d "Perform loop unrolling for all loops."
+complete -c g++ -o "funroll-loops" -d "Perform loop unrolling when iteration count is known."
+complete -c g++ -o "funsafe-loop-optimizations" -d "Does nothing."
+complete -c g++ -o "funsafe-math-optimizations" -d "Allow math optimizations that may violate IEEE or ISO standards."
+complete -c g++ -o "funswitch-loops" -d "Perform loop unswitching."
+complete -c g++ -o "funwind-tables" -d "Just generate unwind tables for exception handling."
+complete -c g++ -o "fuse-ld" -d "Use the bfd linker instead of the default linker." -x
+complete -c g++ -o "fuse-ld" -d "Use the gold linker instead of the default linker." -x
+complete -c g++ -o "fuse-ld" -d "Use the lld LLVM linker instead of the default linker." -x
+complete -c g++ -o "fuse-linker-plugin" -d "This option lacks documentation."
+complete -c g++ -o "fvar-tracking" -d "Perform variable tracking."
+complete -c g++ -o "fvar-tracking-assignments" -d "Perform variable tracking by annotating assignments."
+complete -c g++ -o "fvar-tracking-assignments-toggle" -d "Toggle -fvar-tracking-assignments."
+complete -c g++ -o "fvar-tracking-uninit" -d "Perform variable tracking and also tag variables that are uninitialized."
+complete -c g++ -o "fvariable-expansion-in-unroller" -d "Apply variable expansion when loops are unrolled."
+complete -c g++ -o "fvect-cost-model" -d "Enables the dynamic vectorizer cost model."
+complete -c g++ -o "fvect-cost-model" -d "Specifies the cost model for vectorization." -x
+complete -c g++ -o "fverbose-asm" -d "Add extra commentary to assembler output."
+complete -c g++ -o "fversion" -d "display the GNU Modula-2 version"
+complete -c g++ -o "fversion-loops-for-strides" -d "Version loops based on whether indices have a stride of one."
+complete -c g++ -o "fvisibility" -d "Set the default symbol visibility." -x
+complete -c g++ -o "fvpt" -d "Use expression value profiles in optimizations."
+complete -c g++ -o "fvtable-verify" -d "Validate vtable pointers before using them." -x
+complete -c g++ -o "fvtv-counts" -d "Output vtable verification counters."
+complete -c g++ -o "fvtv-debug" -d "Output vtable verification pointer sets information."
+complete -c g++ -o "fweb" -d "Construct webs and split unrelated uses of single variable."
+complete -c g++ -o "fwhole-program" -d "Perform whole program optimizations."
+complete -c g++ -o "fwrapv" -d "Assume signed arithmetic overflow wraps around."
+complete -c g++ -o "fwrapv-pointer" -d "Assume pointer overflow wraps around."
+complete -c g++ -o "fzee" -d "Does nothing."
+complete -c g++ -o "fzero-initialized-in-bss" -d "Put zero initialized data in the bss section."
+complete -c g++ -s "g" -d "Generate debug information in default format."
+complete -c g++ -o "gas-loc-support" -d "Assume assembler support for (DWARF2+) .loc directives."
+complete -c g++ -o "gas-locview-support" -d "Assume assembler support for view in (DWARF2+) .loc directives."
+complete -c g++ -o "gcoff" -d "Does nothing."
+complete -c g++ -o "gcoff1" -d "Does nothing."
+complete -c g++ -o "gcoff2" -d "Does nothing."
+complete -c g++ -o "gcoff3" -d "Does nothing."
+complete -c g++ -o "gcolumn-info" -d "Record DW_AT_decl_column and DW_AT_call_column in DWARF."
+complete -c g++ -o "gdescribe-dies" -d "Add description attributes to some DWARF DIEs that have no name attribute."
+complete -c g++ -o "gdwarf" -d "Generate debug information in default version of DWARF format."
+complete -c g++ -o "gdwarf-" -d "Generate debug information in DWARF v2 (or later) format."
+complete -c g++ -o "ggdb" -d "Generate debug information in default extended format."
+complete -c g++ -o "ggnu-pubnames" -d "Generate DWARF pubnames and pubtypes sections with GNU extensions."
+complete -c g++ -o "ginline-points" -d "Generate extended entry point information for inlined functions."
+complete -c g++ -o "ginternal-reset-location-views" -d "Compute locview reset points based on insn length estimates."
+complete -c g++ -o "gno-pubnames" -d "Don't generate DWARF pubnames and pubtypes sections."
+complete -c g++ -o "gpubnames" -d "Generate DWARF pubnames and pubtypes sections."
+complete -c g++ -o "grecord-gcc-switches" -d "Record gcc command line switches in DWARF DW_AT_producer."
+complete -c g++ -o "gsplit-dwarf" -d "Generate debug information in separate .dwo files."
+complete -c g++ -o "gstabs" -d "Generate debug information in STABS format."
+complete -c g++ -o "gstabs+" -d "Generate debug information in extended STABS format."
+complete -c g++ -o "gstatement-frontiers" -d "Emit progressive recommended breakpoint locations."
+complete -c g++ -o "gstrict-dwarf" -d "Don't emit DWARF additions beyond selected version."
+complete -c g++ -o "gtoggle" -d "Toggle debug information generation."
+complete -c g++ -o "gvariable-location-views" -d "Augment variable location lists with progressive views."
+complete -c g++ -o "gvariable-location-views" -d "This option lacks documentation." -x
+complete -c g++ -o "gvms" -d "Generate debug information in VMS format."
+complete -c g++ -o "gxcoff" -d "Generate debug information in XCOFF format."
+complete -c g++ -o "gxcoff+" -d "Generate debug information in extended XCOFF format."
+complete -c g++ -o "gz" -d "Generate compressed debug sections."
+complete -c g++ -o "gz" -d "Generate compressed debug sections in format <format>." -x
+complete -c g++ -o "imultiarch" -d "Set <dir> to be the multiarch include subdirectory." -r
+complete -c g++ -o "iplugindir" -d "Set <dir> to be the default plugin directory." -r
+complete -c g++ -s "o" -d "Place output into <file>." -r
+complete -c g++ -s "p" -d "Enable function profiling."
+complete -c g++ -o "pedantic-errors" -d "Like -pedantic but issue them as errors."
+complete -c g++ -o "quiet" -d "Do not display functions compiled or elapsed time."
+complete -c g++ -s "v" -d "Enable verbose output."

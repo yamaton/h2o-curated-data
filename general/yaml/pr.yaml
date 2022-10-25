@@ -1,0 +1,156 @@
+name: pr
+description: convert text files for printing
+usage: pr [OPTION]... [FILE]...
+options:
+  - names:
+      - -COLUMN
+      - --columns
+    argument: COLUMN
+    description: output COLUMN columns and print columns down, unless -a is used. Balance number of lines in the columns on each page
+  - names:
+      - -a
+      - --across
+    argument: ""
+    description: print columns across rather than down, used together with -COLUMN
+  - names:
+      - -c
+      - --show-control-chars
+    argument: ""
+    description: use hat notation (^G) and octal backslash notation
+  - names:
+      - -d
+      - --double-space
+    argument: ""
+    description: double space the output
+  - names:
+      - -D
+      - --date-format
+    argument: FORMAT
+    description: use FORMAT for the header date
+  - names:
+      - -e
+      - --expand-tabs
+    argument: '[CHAR[WIDTH]]'
+    description: expand input CHARs (TABs) to tab WIDTH (8)
+  - names:
+      - -F
+      - -f
+      - --form-feed
+    argument: ""
+    description: use form feeds instead of newlines to separate pages (by a 3-line page header with -F or a 5-line header and trailer without -F)
+  - names:
+      - -h
+      - --header
+    argument: HEADER
+    description: use a centered HEADER instead of filename in page header, -h "" prints a blank line, don't use -h""
+  - names:
+      - -i
+      - --output-tabs
+    argument: '[CHAR[WIDTH]]'
+    description: replace spaces with CHARs (TABs) to tab WIDTH (8)
+  - names:
+      - -J
+      - --join-lines
+    argument: ""
+    description: merge full lines, turns off -W line truncation, no column alignment, --sep-string[=STRING] sets separators
+  - names:
+      - -l
+      - --length
+    argument: PAGE_LENGTH
+    description: set the page length to PAGE_LENGTH (66) lines (default number of lines of text 56, and with -F 63). implies -t if PAGE_LENGTH <= 10
+  - names:
+      - -m
+      - --merge
+    argument: ""
+    description: print all files in parallel, one in each column, truncate lines, but join lines of full length with -J
+  - names:
+      - -n
+      - --number-lines
+    argument: '[SEP[DIGITS]]'
+    description: number lines, use DIGITS (5) digits, then SEP (TAB), default counting starts with 1st line of input file
+  - names:
+      - -N
+      - --first-line-number
+    argument: NUMBER
+    description: start counting with NUMBER at 1st line of first page printed (see +FIRST_PAGE)
+  - names:
+      - -o
+      - --indent
+    argument: MARGIN
+    description: offset each line with MARGIN (zero) spaces, do not affect -w or -W, MARGIN will be added to PAGE_WIDTH
+  - names:
+      - -r
+      - --no-file-warnings
+    argument: ""
+    description: omit warning when a file cannot be opened
+  - names:
+      - -s
+      - --separator
+    argument: '[CHAR]'
+    description: separate columns by a single character, default for CHAR is the <TAB> character without -w and 'no char' with -w. -s[CHAR] turns off line truncation of all 3 column options (-COLUMN|-a -COLUMN|-m) except -w is set
+  - names:
+      - -S
+      - --sep-string
+    argument: '[STRING]'
+    description: 'separate columns by STRING, without -S: Default separator <TAB> with -J and <space> otherwise (same as -S" "), no effect on column options'
+  - names:
+      - -t
+      - --omit-header
+    argument: ""
+    description: omit page headers and trailers; implied if PAGE_LENGTH <= 10
+  - names:
+      - -T
+      - --omit-pagination
+    argument: ""
+    description: omit page headers and trailers, eliminate any pagination by form feeds set in input files
+  - names:
+      - -v
+      - --show-nonprinting
+    argument: ""
+    description: use octal backslash notation
+  - names:
+      - -w
+      - --width
+    argument: PAGE_WIDTH
+    description: set page width to PAGE_WIDTH (72) characters for multiple text-column output only, -s[char] turns off (72)
+  - names:
+      - -W
+      - --page-width
+    argument: PAGE_WIDTH
+    description: set page width to PAGE_WIDTH (72) characters always, truncate lines, except -J option is set, no interference with -S or -s
+  - names:
+      - --help
+    argument: ""
+    description: display this help and exit
+  - names:
+      - --version
+    argument: ""
+    description: output version information and exit
+version: pr (GNU coreutils) 8.32
+tldr: |
+  > Paginate or columnate files for printing.
+  > More information: <https://www.gnu.org/software/coreutils/pr>.
+
+  - Print multiple files with a default header and footer:
+
+  `pr {{file1}} {{file2}} {{file3}}`
+
+  - Print with a custom centered header:
+
+  `pr -h "{{header}}" {{file1}} {{file2}} {{file3}}`
+
+  - Print with numbered lines and a custom date format:
+
+  `pr -n -D "{{format}}" {{file1}} {{file2}} {{file3}}`
+
+  - Print all files together, one in each column, without a header or footer:
+
+  `pr -m -T {{file1}} {{file2}} {{file3}}`
+
+  - Print, beginning at page 2 up to page 5, with a given page length (including header and footer):
+
+  `pr +{{2}}:{{5}} -l {{page_length}} {{file1}} {{file2}} {{file3}}`
+
+  - Print with an offset for each line and a truncating custom page width:
+
+  `pr -o {{offset}} -W {{width}} {{file1}} {{file2}} {{file3}}`

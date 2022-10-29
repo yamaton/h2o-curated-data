@@ -6,9 +6,12 @@
 #
 # Require jq, ajv, parallel
 #
-
-# exit immediately if any command returns non-zero exit code
-set -e
+set -o errexit
+set -o nounset
+set -o pipefail
+if [[ "${TRACE-0}" == "1" ]]; then
+    set -o xtrace
+fi
 
 basedir="$(dirname "$(readlink -f "$0")")"
 name="$1"
@@ -47,6 +50,13 @@ if [[ ! "$(command -v parallel)" ]]; then
     echo "[error] parallel is missing. Install parallel to run this script."
     exit 1
 fi
+
+
+if [[ "${1-}" =~ ^-*h(elp)?$ ]]; then
+    echo "Usage: ./run <command-name>"
+    exit
+fi
+
 
 echo "🚀 Fix replace explicit home directory with ~"
 ./fix-homedir "$name"

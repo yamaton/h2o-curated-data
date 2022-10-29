@@ -9,11 +9,18 @@
 #     $ ./tojson-batch general
 #
 
+set -o errexit
+set -o nounset
+set -o pipefail
+if [[ "${TRACE-0}" == "1" ]]; then
+    set -o xtrace
+fi
+
 basedir="$(dirname "$(readlink -f "$0")")"
 dir="$1"
 
 
-if [[ -z "$dir" ]]; then
+if [[ -z "$dir" ]] || [[ "${1-}" =~ ^-*h(elp)?$ ]]; then
     echo "Set directory as the argument."
     echo "Usage: ./tojson-batch {general|bio|experimental}"
     exit 1

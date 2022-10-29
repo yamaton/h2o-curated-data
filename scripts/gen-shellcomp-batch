@@ -13,6 +13,18 @@
 #     $ parallel ./gen-shellcomp-batch {1} {2} ::: bash zsh fish ::: general bio
 #
 
+set -o errexit
+set -o nounset
+set -o pipefail
+if [[ "${TRACE-0}" == "1" ]]; then
+    set -o xtrace
+fi
+
+if [[ "${1-}" =~ ^-*h(elp)?$ ]]; then
+    echo "Usage: ./gen-shellcomp-batch {bash|zsh|fish} {general|bio}"
+    exit
+fi
+
 basedir="$(dirname "$(readlink -f "$0")")"
 shellname=$1
 dir="$2"

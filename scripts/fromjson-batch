@@ -11,10 +11,17 @@
 #  <dir> can be either general or bioinformatics
 #
 
+set -o errexit
+set -o nounset
+set -o pipefail
+if [[ "${TRACE-0}" == "1" ]]; then
+    set -o xtrace
+fi
+
 basedir="$(dirname "$(readlink -f "$0")")"
 dir="$1"
 
-if [[ -z "$dir" ]]; then
+if [[ -z "$dir" ]] || [[ "${1-}" =~ ^-*h(elp)?$ ]]; then
     echo "Set directory as the argument."
     echo "Usage: ./fromjson-batch {general|bio|experimental}"
     exit 1
@@ -25,6 +32,6 @@ mkdir -p "$basedir"/../"$dir"/yaml
 for f in "$basedir"/../"$dir"/json/*.json; do
     file="$(basename "$f")"
     name="${file%.*}"
-    echo " ... creating ${name}.yaml in "$dir"/yaml"
+    echo " ... creating ${name}.yaml in ""$dir""/yaml"
     "$basedir"/fromjson "$name"
 done

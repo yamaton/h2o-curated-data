@@ -7,11 +7,19 @@
 #
 #     $ ./fromjson conda
 #
+
+set -o errexit
+set -o nounset
+set -o pipefail
+if [[ "${TRACE-0}" == "1" ]]; then
+    set -o xtrace
+fi
+
 basedir="$(dirname "$(readlink -f "$0")")"
 name="$1"
 
 
-if [[ -z "$name" ]]; then
+if [[ -z "$name" ]] || [[ "${1-}" =~ ^-*h(elp)?$ ]]; then
     echo "Set command name as the argument."
     echo "Usage: ./fromjson <command-name>"
     exit 1

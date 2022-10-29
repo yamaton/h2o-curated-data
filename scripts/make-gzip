@@ -10,11 +10,16 @@
 # Requires jq
 #
 
-# -u  Treat unset variables as an error when substituting.
-# -e  Exit immediately if a command exits with a non-zero status.
-# -x  Print commands and their arguments as they are executed.
+# nounset:   Treat unset variables as an error when substituting.
+# errexit:   Exit immediately if a command exits with a non-zero status.
+# pipefail:  Print commands and their arguments as they are executed.
 # See `help set` in bash for more information.
-set -ue
+set -o errexit
+set -o nounset
+set -o pipefail
+if [[ "${TRACE-0}" == "1" ]]; then
+    set -o xtrace
+fi
 
 if [[ ! "$(command -v jq)" ]]; then
     echo "[error] jq is missing. Install jq to run this script."

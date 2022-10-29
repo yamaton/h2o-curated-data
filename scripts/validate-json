@@ -6,11 +6,23 @@
 #   $ ./validate-json ../general/json/jq.json
 #
 
+set -o errexit
+set -o nounset
+set -o pipefail
+if [[ "${TRACE-0}" == "1" ]]; then
+    set -o xtrace
+fi
+
 # Require ajv
 if [[ ! "$(command -v ajv)" ]]; then
     echo "[error] ajv is missing. Install ajv-cli via"
     echo "npm install -g ajv-cli"
     exit 1
+fi
+
+if [[ "${1-}" =~ ^-*h(elp)?$ ]]; then
+    echo 'Usage: ./validate-json <some.json>'
+    exit
 fi
 
 basedir="$(dirname "$(readlink -f "$0")")"

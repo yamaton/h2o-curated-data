@@ -5,12 +5,24 @@
 # Example:
 #   $ ./validate-json-simple jq
 #
+
+set -o errexit
+set -o nounset
+set -o pipefail
+if [[ "${TRACE-0}" == "1" ]]; then
+    set -o xtrace
+fi
+
 basedir="$(dirname "$(readlink -f "$0")")"
 
 name="$1"
 json=$(find "$basedir/.." -type f -name "$name".json)
 validator="$basedir"/validate-json
 
+if [[ "${1-}" =~ ^-*h(elp)?$ ]]; then
+    echo 'Usage: ./validate-json-simple <command-name>'
+    exit
+fi
 
 if [[ ! "$(command -v ajv)" ]]; then
     echo "[error] ajv is missing. Install ajv-cli via"

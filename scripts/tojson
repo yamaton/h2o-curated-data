@@ -6,6 +6,14 @@
 #   yaml/conda.yaml  -->  json/conda.json
 #     $ ./tojson conda
 #
+
+set -o errexit
+set -o nounset
+set -o pipefail
+if [[ "${TRACE-0}" == "1" ]]; then
+    set -o xtrace
+fi
+
 basedir="$(dirname "$(readlink -f "$0")")"
 name="$1"
 validator="$basedir"/validate-json
@@ -26,7 +34,7 @@ if [[ ! "$(command -v yq)" ]]; then
     exit 1
 fi
 
-if [[ -z "$name" ]]; then
+if [[ -z "$name" ]] || [[ "${1-}" =~ ^-*h(elp)?$ ]]; then
     echo "Set command name as the argument."
     echo "Usage: ./tojson <command-name>"
     exit 1

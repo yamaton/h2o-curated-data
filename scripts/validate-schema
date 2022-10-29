@@ -5,4 +5,17 @@
 # Example:
 #   $ ./validate-schema ../json-schema/command-2022-03-14.schema.json
 #
+
+set -o errexit
+set -o nounset
+set -o pipefail
+if [[ "${TRACE-0}" == "1" ]]; then
+    set -o xtrace
+fi
+
+if [[ "${1-}" =~ ^-*h(elp)?$ ]]; then
+    echo 'Usage: ./validate-schema <path/to/some.schema.json>'
+    exit
+fi
+
 ajv compile -s "$1"

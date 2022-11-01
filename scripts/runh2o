@@ -16,8 +16,6 @@ if [[ "${TRACE-0}" == "1" ]]; then
 fi
 
 basedir="$(dirname "$(readlink -f "$0")")"
-dir="$1"
-name="$2"
 
 function usage() {
     echo "Usage:"
@@ -29,11 +27,12 @@ if (( "$#" != 2 )) || [[ "${1-}" =~ ^-*h(elp)?$ ]]; then
     usage
 fi
 
+dir="$1"
+name="$2"
 
 if [[ "$dir" != "general" ]] && [[ "$dir" != "bio" ]] && [[ "$dir" != "experimental" ]]; then
     usage
 fi
-
 
 yaml="$basedir/../$dir/yaml/$name.yaml"
 h2o --command "$name" --format json | yq eval -P > "$yaml"

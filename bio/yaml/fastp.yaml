@@ -1,5 +1,6 @@
 name: fastp
 description: fastp
+usage: fastp [options] ...
 options:
   - names:
       - -i
@@ -29,6 +30,10 @@ options:
       - --unpaired2
     argument: <string>
     description: for PE input, if read2 passed QC but read1 not, it will be written to unpaired2. If --unpaired2 is same as --unpaired1 (default mode), both unpaired reads will be written to this same file. (string [=])
+  - names:
+      - --overlapped_out
+    argument: ""
+    description: for each read pair, output the overlapped region if it has no any mismatched base. (string [=])
   - names:
       - --failed_out
     argument: <file>
@@ -137,6 +142,19 @@ options:
       - --max_len2
     argument: <int>
     description: if read2 is longer than max_len2, then trim read2 at its tail to make it as long as max_len2. Default 0 means no limitation. If it's not specified, it will follow read1's settings (int [=0])
+  - names:
+      - -D
+      - --dedup
+    argument: ""
+    description: enable deduplication to drop the duplicated reads/pairs
+  - names:
+      - --dup_calc_accuracy
+    argument: ""
+    description: accuracy level to calculate duplication (1~6), higher level uses more memory (1G, 2G, 4G, 8G, 16G, 24G). Default 1 for no-dedup mode, and 3 for dedup mode. (int [=0])
+  - names:
+      - --dont_eval_duplication
+    argument: ""
+    description: don't evaluate duplication rate to save time and use less memory.
   - names:
       - -g
       - --trim_poly_g
@@ -337,7 +355,7 @@ options:
       - -w
       - --thread
     argument: <int>
-    description: worker thread number, default is 2 (int [=2])
+    description: worker thread number, default is 3 (int [=3])
   - names:
       - -s
       - --split
@@ -374,3 +392,4 @@ options:
       - --help
     argument: ""
     description: print this message
+version: fastp 0.23.2

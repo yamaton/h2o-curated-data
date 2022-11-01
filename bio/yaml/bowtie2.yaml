@@ -1,5 +1,23 @@
 name: bowtie2
 description: bowtie2
+usage: |-
+  bowtie2 [options]* -x <bt2-idx> {-1 <m1> -2 <m2> | -U <r> | --interleaved <i> | -b <bam>} [-S <sam>]
+
+    <bt2-idx>  Index filename prefix (minus trailing .X.bt2).
+              NOTE: Bowtie 1 and Bowtie 2 indexes are not compatible.
+    <m1>       Files with #1 mates, paired with files in <m2>.
+              Could be gzip'ed (extension: .gz) or bzip2'ed (extension: .bz2).
+    <m2>       Files with #2 mates, paired with files in <m1>.
+              Could be gzip'ed (extension: .gz) or bzip2'ed (extension: .bz2).
+    <r>        Files with unpaired reads.
+              Could be gzip'ed (extension: .gz) or bzip2'ed (extension: .bz2).
+    <i>        Files with interleaved paired-end FASTQ/FASTA reads
+              Could be gzip'ed (extension: .gz) or bzip2'ed (extension: .bz2).
+    <bam>      Files are unaligned BAM sorted by read name.
+    <sam>      File for SAM output (default: stdout)
+
+    <m1>, <m2>, <r> can be comma-separated lists (no whitespace) and can be
+    specified many times.  E.g. '-U file1.fq,file2.fq -U file3.fq'.
 options:
   - names:
       - -x
@@ -84,7 +102,7 @@ options:
   - names:
       - --trim-to
     argument: '[3:|5:]<int>'
-    description: trim reads exceeding <int> bases from either 3' or 5' end   If the read end is not specified then it defaults to 3 (0)
+    description: trim reads exceeding <int> bases from either 3' or 5' end If the read end is not specified then it defaults to 3 (0)
   - names:
       - --phred33
     argument: ""
@@ -97,6 +115,38 @@ options:
       - --int-quals
     argument: ""
     description: qualities encoded as space-delimited integers
+  - names:
+      - --very-fast
+    argument: ""
+    description: (For --end-to-end) Same as -D 5 -R 1 -N 0 -L 22 -i S,0,2.50
+  - names:
+      - --fast
+    argument: ""
+    description: (For --end-to-end) Same as -D 10 -R 2 -N 0 -L 22 -i S,0,2.50
+  - names:
+      - --sensitive
+    argument: ""
+    description: (For --end-to-end) Same as -D 15 -R 2 -N 0 -L 22 -i S,1,1.15 (default)
+  - names:
+      - --very-sensitive
+    argument: ""
+    description: (For --end-to-end) Same as -D 20 -R 3 -N 0 -L 20 -i S,1,0.50
+  - names:
+      - --very-fast-local
+    argument: ""
+    description: (For --local) Same as -D 5 -R 1 -N 0 -L 25 -i S,1,2.00
+  - names:
+      - --fast-local
+    argument: ""
+    description: (For --local) Same as -D 10 -R 2 -N 0 -L 22 -i S,1,1.75
+  - names:
+      - --sensitive-local
+    argument: ""
+    description: (For --local) Same as -D 15 -R 2 -N 0 -L 20 -i S,1,0.75 (default)
+  - names:
+      - --very-sensitive-local
+    argument: ""
+    description: (For --local) Same as -D 20 -R 3 -N 0 -L 20 -i S,1,0.50
   - names:
       - -N
     argument: <int>
@@ -341,8 +391,7 @@ options:
       - --help
     argument: ""
     description: print this usage message
-usage: bowtie2 [options]* -x <bt2-idx> {-1 <m1> -2 <m2> | -U <r> | --interleaved <i> | -b <bam>} [-S <sam>]
-version: version 2.4.5
+version: version 2.5.0
 tldr: |
   > A fast and sensitive gapped read aligner
   > More information: <https://github.com/BenLangmead/bowtie2>

@@ -1,36 +1,37 @@
 name: fasterq-dump
 description: fasterq-dump
+usage: fasterq-dump [ options ] [ accessions(s)... ]
 options:
   - names:
       - -o
       - --outfile
     argument: <path>
-    description: full path of outputfile (overrides usage
+    description: full path of outputfile (overrides usage of current directory and given accession)
   - names:
       - -O
       - --outdir
     argument: <path>
-    description: path for outputfile (overrides usage of
+    description: path for outputfile (overrides usage of current directory, but uses given accession)
   - names:
       - -b
       - --bufsize
     argument: <size>
-    description: size of file-buffer (dflt=1MB, takes
+    description: size of file-buffer (dflt=1MB, takes number or number and unit where unit is one of (K|M|G) case-insensitive)
   - names:
       - -c
       - --curcache
     argument: <size>
-    description: size of cursor-cache (dflt=10MB, takes
+    description: size of cursor-cache (dflt=10MB, takes number or number and unit where unit is one of (K|M|G) case-insensitive)
   - names:
       - -m
       - --mem
     argument: <size>
-    description: memory limit for sorting (dflt=100MB,
+    description: memory limit for sorting (dflt=100MB, takes number or number and unit where unit is one of (K|M|G) case-insensitive)
   - names:
       - -t
       - --temp
     argument: <path>
-    description: path to directory for temp. files
+    description: path to directory for temp. files (dflt=current dir.)
   - names:
       - -e
       - --threads
@@ -79,7 +80,7 @@ options:
       - -N
       - --rowid-as-name
     argument: ""
-    description: use rowid as name (avoids using the name
+    description: use rowid as name (avoids using the name column)
   - names:
       - --skip-technical
     argument: ""
@@ -110,12 +111,50 @@ options:
       - -B
       - --bases
     argument: <bases>
-    description: filter output by matching against given
+    description: filter output by matching against given bases
   - names:
       - -A
       - --append
     argument: ""
-    description: append to output-file, instead of
+    description: append to output-file, instead of overwriting it
+  - names:
+      - --fasta
+    argument: ""
+    description: produce FASTA output
+  - names:
+      - --fasta-unsorted
+    argument: ""
+    description: produce FASTA output, unsorted
+  - names:
+      - --seq-defline
+    argument: ""
+    description: 'custom defline for sequence: $ac=accession, $sn=spot-name, $sg=spot-group, $si=spot-id, $ri=read-id, $rl=read-length'
+  - names:
+      - --qual-defline
+    argument: ""
+    description: custom defline for qualities (see seq-defline)
+  - names:
+      - -U
+      - --only-unaligned
+    argument: ""
+    description: process only unaligned reads
+  - names:
+      - -a
+      - --only-aligned
+    argument: ""
+    description: process only aligned reads
+  - names:
+      - --size-check
+    argument: ""
+    description: 'switch to control: on=perform size-check (default), off=do not perform size-check, only=perform size-check only'
+  - names:
+      - --disk-limit
+    argument: ""
+    description: explicitly set disk limit
+  - names:
+      - --disk-limit-tmp
+    argument: ""
+    description: explicitly set disk limit for temp. files
   - names:
       - --ngc
     argument: <path>
@@ -141,22 +180,22 @@ options:
       - -v
       - --verbose
     argument: ""
-    description: Increase the verbosity of the program
+    description: Increase the verbosity of the program status messages. Use multiple times for more verbosity.
   - names:
       - -L
       - --log-level
     argument: <level>
-    description: Logging level as number or enum string.
+    description: Logging level as number or enum string. One of (fatal|sys|int|err|warn|info|debug) or (0-6) Current/default is warn
   - names:
       - --option-file
     argument: file
-    description: Read more options and parameters from the
+    description: Read more options and parameters from the file.
   - names:
       - -h
       - --help
     argument: ""
     description: print this message
-version: '"fasterq-dump" version 2.11.0'
+version: '"fasterq-dump" version 3.0.0'
 tldr: |
   > Extracts data in FASTQ- or FASTA-format from SRA accessions.
   > More information: <https://github.com/ncbi/sra-tools/wiki/HowTo:-fasterq-dump>

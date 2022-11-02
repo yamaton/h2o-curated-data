@@ -1,11 +1,105 @@
 name: seqfu
 description: seqfu
+usage: ""
 options: []
 subcommands:
+  - name: bases
+    description: count bases in FASTA/FASTQ files
+    usage: seqfu bases [options] [<inputfile> ...]
+    options:
+      - names:
+          - -c
+          - --raw-counts
+        argument: ""
+        description: Print counts and not ratios
+      - names:
+          - -t
+          - --thousands
+        argument: ""
+        description: Print thousands separator
+      - names:
+          - -a
+          - --abspath
+        argument: ""
+        description: Print absolute path
+      - names:
+          - -b
+          - --basename
+        argument: ""
+        description: Print the basename of the file
+      - names:
+          - -n
+          - --nice
+        argument: ""
+        description: Print terminal table
+      - names:
+          - -d
+          - --digits
+        argument: INT
+        description: 'Number of digits to print [default: 2]'
+      - names:
+          - -H
+          - --header
+        argument: ""
+        description: Print header
+      - names:
+          - -v
+          - --verbose
+        argument: ""
+        description: Verbose output
+      - names:
+          - --debug
+        argument: ""
+        description: Debug output
+      - names:
+          - --help
+        argument: ""
+        description: Show this help
+  - name: check
+    description: check FASTQ file for errors
+    usage: |-
+      seqfu check [options] <FQFILE> [<REV>]
+      seqfu check [options] --dir <FQDIR>
+    options:
+      - names:
+          - -n
+          - --no-paired
+        argument: ""
+        description: Disable autodetection of second pair
+      - names:
+          - -s
+          - --safe-exit
+        argument: ""
+        description: Exit with 0 even if errors are found
+      - names:
+          - -q
+          - --quiet
+        argument: ""
+        description: Do not print infos, just exit status
+      - names:
+          - -v
+          - --verbose
+        argument: ""
+        description: Verbose output
+      - names:
+          - -t
+          - --thousands
+        argument: ""
+        description: Print numbers with thousands separator
+      - names:
+          - --debug
+        argument: ""
+        description: Debug output
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: Show this help
   - name: count
-    description: count FASTA/FASTQ reads, pair-end aware
     aliases:
       - cnt
+    description: count FASTA/FASTQ reads, pair-end aware
+    usage: seqfu count [options] [<inputfile> ...]
     options:
       - names:
           - -a
@@ -51,6 +145,7 @@ subcommands:
     aliases:
       - dei
     description: deinterleave FASTQ
+    usage: seqfu dei [options] -o basename <interleaved-fastq>
     options:
       - names:
           - -o
@@ -91,6 +186,7 @@ subcommands:
     aliases:
       - der
     description: feature-rich dereplication of FASTA/FASTQ files
+    usage: seqfu derep [options] [<inputfile> ...]
     options:
       - names:
           - -k
@@ -165,6 +261,7 @@ subcommands:
     aliases:
       - ilv
     description: interleave FASTQ pair ends
+    usage: seqfu ilv [options] -1 <forward-pair> [-2 <reverse-pair>]
     options:
       - names:
           - -f
@@ -205,6 +302,7 @@ subcommands:
     aliases:
       - mrl
     description: merge Illumina lanes
+    usage: seqfu lanes [options] -o <outdir> <input_directory>
     options:
       - names:
           - -o
@@ -239,6 +337,7 @@ subcommands:
     aliases:
       - lst
     description: print sequences from a list of names
+    usage: seqfu list [options] <LIST> <FASTQ>...
     options:
       - names:
           - -c
@@ -273,6 +372,7 @@ subcommands:
     aliases:
       - met
     description: print a table of FASTQ reads (mapping files)
+    usage: seqfu metadata [options] [<dir>...]
     options:
       - names:
           - "-1"
@@ -348,6 +448,9 @@ subcommands:
     aliases:
       - rot
     description: rotate a sequence with a new start position
+    usage: |-
+      seqfu rotate [options] -i POS [<fastq-file>...]
+      seqfu rotate [options] -m STR [<fastq-file>...]
     options:
       - names:
           - -i
@@ -383,6 +486,7 @@ subcommands:
     aliases:
       - srt
     description: sort sequences by size (uniques)
+    usage: seqfu sort [options] [<inputfile> ...]
     options:
       - names:
           - -p
@@ -412,6 +516,7 @@ subcommands:
     aliases:
       - st
     description: statistics on sequence lengths
+    usage: seqfu stats [options] [<inputfile> ...]
     options:
       - names:
           - -a
@@ -432,7 +537,7 @@ subcommands:
           - -j
           - --json
         argument: ""
-        description: Print json (experimental)
+        description: Print json (EXPERIMENTAL)
       - names:
           - -s
           - --sort-by
@@ -447,7 +552,7 @@ subcommands:
           - -t
           - --thousands
         argument: ""
-        description: Add thousands separator
+        description: Add thousands separator (only tabbed/nice output)
       - names:
           - --csv
         argument: ""
@@ -476,12 +581,25 @@ subcommands:
         description: Show this help
   - name: cat
     description: concatenate FASTA/FASTQ files
+    usage: seqfu cat [options] [<inputfile> ...]
     options:
       - names:
           - -k
           - --skip
-        argument: SKIP
-        description: 'Print one sequence every SKIP [default: 0]'
+        argument: STEP
+        description: 'Print one sequence every STEP [default: 0]'
+      - names:
+          - --skip-first
+        argument: INT
+        description: 'Skip the first INT records [default: -1]'
+      - names:
+          - --jump-to
+        argument: STR
+        description: Start from the record after the one named STR (overrides --skip-first)
+      - names:
+          - --print-last
+        argument: ""
+        description: Print the name of the last sequence to STDERR (Last:NAME)
       - names:
           - -p
           - --prefix
@@ -587,6 +705,10 @@ subcommands:
         argument: INT
         description: 'Keep only the first INT bases, 0 to ignore [default: 0] Negative values to print the last INT bases'
       - names:
+          - --max-bp
+        argument: INT
+        description: 'Stop printing after INT bases [default: 0]'
+      - names:
           - --fasta
         argument: ""
         description: Force FASTA output
@@ -609,18 +731,23 @@ subcommands:
         argument: ""
         description: Verbose output
       - names:
+          - --debug
+        argument: ""
+        description: Debug output
+      - names:
           - -h
           - --help
         argument: ""
         description: Show this help
   - name: grep
     description: select sequences with patterns
+    usage: seqfu grep [options] [<inputfile> ...]
     options:
       - names:
           - -n
           - --name
         argument: STRING
-        description: String required in the sequence name
+        description: String required inside the sequence name (see -f)
       - names:
           - -r
           - --regex
@@ -666,6 +793,10 @@ subcommands:
         description: 'Minimum number of matches [default: oligo-length]'
       - names:
           - -v
+          - --invert-match
+        argument: ""
+        description: Invert match (print sequences that do not match)
+      - names:
           - --verbose
         argument: ""
         description: Verbose output
@@ -675,6 +806,7 @@ subcommands:
         description: Show this help
   - name: head
     description: print first sequences
+    usage: seqfu head [options] [<inputfile> ...]
     options:
       - names:
           - -n
@@ -706,6 +838,14 @@ subcommands:
           - --verbose
         argument: ""
         description: Verbose output
+      - names:
+          - --print-last
+        argument: ""
+        description: Print the name of the last sequence to STDERR (Last:NAME)
+      - names:
+          - --fatal
+        argument: ""
+        description: Exit with error if less than NUM sequences are found
       - names:
           - --quiet
         argument: ""
@@ -733,6 +873,7 @@ subcommands:
         description: 'FASTQ default quality [default: 33]'
   - name: rc
     description: reverse complement strings or files
+    usage: seqfu rc [options] [<strings-or-files>...]
     options:
       - names:
           - -s
@@ -759,6 +900,7 @@ subcommands:
         description: Show this help
   - name: tab
     description: tabulate reads to TSV (and viceversa)
+    usage: seqfu tab [options] [<file>]
     options:
       - names:
           - -i
@@ -779,7 +921,7 @@ subcommands:
           - -s
           - --field-sep
         argument: CHAR
-        description: 'Field separator (default: tab)'
+        description: 'Field separator when deinterleaving (default: tab)'
       - names:
           - -v
           - --verbose
@@ -792,6 +934,7 @@ subcommands:
         description: Show this help
   - name: tail
     description: view last sequences
+    usage: seqfu tail [options] [<inputfile> ...]
     options:
       - names:
           - -n
@@ -829,7 +972,12 @@ subcommands:
       - names:
           - --sep
         argument: STRING
-        description: 'Sequence name fields separator [default: _],-q, --fastq-qual INT   FASTQ default quality [default: 33]'
+        description: 'Sequence name fields separator [default: _]'
+      - names:
+          - -q
+          - --fastq-qual
+        argument: INT
+        description: 'FASTQ default quality [default: 33]'
       - names:
           - -v
           - --verbose
@@ -842,6 +990,7 @@ subcommands:
         description: Show this help
   - name: view
     description: view sequences with colored quality and oligo matches
+    usage: seqfu view [options] <inputfile> [<input_reverse>]
     options:
       - names:
           - -o
@@ -893,4 +1042,4 @@ subcommands:
           - --help
         argument: ""
         description: Show this help
-version: 1.11.0
+version: 1.16.0

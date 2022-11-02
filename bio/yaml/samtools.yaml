@@ -1,9 +1,11 @@
 name: samtools
 description: samtools
+usage: samtools <command> [options]
 options: []
 subcommands:
   - name: dict
     description: create a sequence dictionary file
+    usage: samtools dict ref.fasta|ref.fasta.gz
     options:
       - names:
           - -a
@@ -22,6 +24,11 @@ subcommands:
         argument: ""
         description: Do not print the @HD header line.
       - names:
+          - -l
+          - --alt
+        argument: FILE
+        description: Add an AH tag to each sequence listed in the specified bwa(1)-style .alt file. These files use SAM records to represent alternate locus sequences (as named in the QNAME field) and their mappings to the primary assembly.
+      - names:
           - -o
           - --output
         argument: FILE
@@ -38,6 +45,7 @@ subcommands:
         description: Specify the URI for the UR tag. Defaults to the absolute path of ref.fasta unless reading from stdin.
   - name: faidx
     description: index/extract FASTA
+    usage: samtools faidx ref.fasta [region1 [...]]
     options:
       - names:
           - -o
@@ -48,7 +56,7 @@ subcommands:
           - -n
           - --length
         argument: INT
-        description: Length of FASTA sequence line. [60]
+        description: Length for FASTA sequence line wrapping. If zero, this means do not line wrap. Defaults to the line length in the input file.
       - names:
           - -c
           - --continue
@@ -88,6 +96,7 @@ subcommands:
         description: Print help message and exit.
   - name: fqidx
     description: index/extract FASTQ
+    usage: samtools fqidx ref.fastq [region1 [...]]
     options:
       - names:
           - -o
@@ -98,7 +107,7 @@ subcommands:
           - -n
           - --length
         argument: INT
-        description: Length of FASTQ sequence line. [60]
+        description: Length for FASTQ sequence line wrapping. If zero, this means do not line wrap. Defaults to the line length in the input file.
       - names:
           - -c
           - --continue
@@ -133,6 +142,10 @@ subcommands:
         description: Print help message and exit.
   - name: index
     description: index alignment
+    usage: |-
+      samtools index -M [-bc] [-m INT] FILE FILE [FILE...]
+
+      samtools index [-bc] [-m INT] aln.sam|aln.bam|aln.cram [out.index]
     options:
       - names:
           - -b
@@ -147,12 +160,21 @@ subcommands:
         argument: INT
         description: Create a CSI index, with a minimum interval size of 2^INT.
       - names:
+          - -M
+        argument: ""
+        description: Interpret all filename arguments as alignment files to be indexed individually. (Without -M, filename arguments are interpreted solely as per the second synopsis.)
+      - names:
+          - -o
+        argument: FILE
+        description: Write the output index to FILE. (Currently may only be used when exactly one alignment file is being indexed.)
+      - names:
           - -@
           - --threads
         argument: INT
         description: Number of input/output compression threads to use in addition to main thread [0].
   - name: calmd
     description: recalculate MD/NM tags and '=' bases
+    usage: samtools calmd [-Eeubr] [-C capQcoef] aln.bam ref.fasta
     options:
       - names:
           - -A
@@ -193,6 +215,7 @@ subcommands:
         description: Number of input/output compression threads to use in addition to main thread [0].
   - name: fixmate
     description: fix mate information
+    usage: samtools fixmate [-rpcmu] [-O format] in.nameSrt.bam out.bam
     options:
       - names:
           - -r
@@ -227,8 +250,14 @@ subcommands:
           - --threads
         argument: INT
         description: Number of input/output compression threads to use in addition to main thread [0].
+      - names:
+          - -z
+          - --sanitize
+        argument: FLAGs
+        description: Perform basic sanitizing of records. FLAGs is a comma-separated list of keywords, defined in the samtools-view(1) man page. By default all FLAGs are enabled. Use -z off to disable this.
   - name: reheader
     description: replace BAM header
+    usage: samtools reheader [-iP] [-c CMD | in.header.sam ] in.bam
     options:
       - names:
           - -P
@@ -247,6 +276,7 @@ subcommands:
         description: Allow the header from in.bam to be processed by external CMD and read back the result. When used in this manner, the external header file in.header.sam has to be omitted.
   - name: targetcut
     description: cut fosmid regions (for fosmid pool only)
+    usage: samtools targetcut [-Q minBaseQ] [-i inPenalty] [-0 em0] [-1 em1] [-2 em2] [-f ref] in.bam
     options:
       - names:
           - -Q
@@ -274,6 +304,7 @@ subcommands:
         description: Reference FASTA file.
   - name: addreplacerg
     description: adds or replaces RG tags
+    usage: samtools addreplacerg [-r rg-line | -R rg-ID] [-m mode] [-u] [-o out.bam] in.bam
     options:
       - names:
           - -r
@@ -310,6 +341,7 @@ subcommands:
         description: Number of input/output compression threads to use in addition to main thread [0].
   - name: markdup
     description: mark duplicates
+    usage: samtools markdup [-l length] [-r] [-T] [-S] [-s] [-f file] [--json] [-d distance] [-c] [-t] [-m] [--mode] [--include-fails] [--no-PG] [-u] [--no-multi-dup] [--read-coords] [--coords-order] [--barcode-tag] [--barcode-name] [--barcode-rgx] [--use-read-groups] in.algsort.bam out.bam
     options:
       - names:
           - -l
@@ -320,10 +352,6 @@ subcommands:
         argument: ""
         description: Remove duplicate reads.
       - names:
-          - -s
-        argument: ""
-        description: Print some basic stats. See STATISTICS.
-      - names:
           - -T
         argument: PREFIX
         description: Write temporary files to PREFIX.samtools.nnnn.mmmm.tmp
@@ -332,9 +360,17 @@ subcommands:
         argument: ""
         description: Mark supplementary reads of duplicates as duplicates.
       - names:
+          - -s
+        argument: ""
+        description: Print some basic stats. See STATISTICS.
+      - names:
           - -f
         argument: file
         description: Write stats to named file.
+      - names:
+          - --json
+        argument: ""
+        description: Output stats in JSON format.
       - names:
           - -d
         argument: distance
@@ -373,6 +409,22 @@ subcommands:
         argument: ORDER
         description: 'The order of the elements captured in the regular expression. Default is txy where t is a part of the read name selected for string comparison and x/y the coordinates used for optical duplicate detection. Valid orders are: txy, tyx, xyt, yxt, xty, ytx, xy and yx.'
       - names:
+          - --barcode-tag
+        argument: TAG
+        description: Duplicates must now also match the barcode tag.
+      - names:
+          - --barcode-name
+        argument: ""
+        description: Use the UMI/barcode embedded in the read name (eigth colon delimited part).
+      - names:
+          - --barcode-rgx
+        argument: REGEX
+        description: Regex for barcode in the readname (alternative to --barcode-name).
+      - names:
+          - --use-read-groups
+        argument: ""
+        description: The @RG tags must now also match to be a duplicate.
+      - names:
           - --no-PG
         argument: ""
         description: Do not add a PG line to the output file.
@@ -388,9 +440,10 @@ subcommands:
       - names:
           - --coords-order
         argument: xy
-        description: It is possible that complex regular expressions may slow the running of the program. It would be best to keep them simple.
+        description: 'To use a barcode from the read name matching the Illumina example of NDX550136:7:H2MTNBDXX:1:13302:3141:10799:AAGGATG+TCGGAGA use:'
   - name: ampliconclip
     description: clip oligos from the end of reads
+    usage: samtools ampliconclip [-o out.file] [-f stat.file] [--soft-clip] [--hard-clip] [--both-ends] [--strand] [--clipped] [--fail] [--filter-len INT] [--fail-len INT] [--no-excluded] [--rejects-file rejects.file] [--original] [--keep-tag] [--tolerance] [--no-PG] [-u] -b bed.file in.file
     options:
       - names:
           - -b
@@ -466,6 +519,7 @@ subcommands:
         description: Do not at a PG line to the header.
   - name: collate
     description: shuffle and group alignments by name
+    usage: samtools collate [options] in.sam|in.bam|in.cram [<prefix>]
     options:
       - names:
           - -O
@@ -506,6 +560,7 @@ subcommands:
         description: Number of input/output compression threads to use in addition to main thread [0].
   - name: cat
     description: concatenate BAMs
+    usage: samtools cat [-b list] [-h header.sam] [-o out.bam] in1.bam in2.bam [ ... ]
     options:
       - names:
           - -b
@@ -530,6 +585,7 @@ subcommands:
         description: Number of input/output compression threads to use in addition to main thread [0].
   - name: consensus
     description: produce a consensus Pileup/FASTA/FASTQ
+    usage: samtools consensus [-saAMq] [-r region] [-f format] [-l line-len] [-d min-depth] [-C cutoff] [-c call-fract] [-H het-fract] in.bam
     options:
       - names:
           - -r
@@ -575,6 +631,10 @@ subcommands:
         argument: INT
         description: Filters out reads with a mapping quality below INT. This defaults to zero.
       - names:
+          - --min-BQ
+        argument: INT
+        description: Filters out bases with a base quality below INT. This defaults to zero.
+      - names:
           - --show-del
         argument: yes/no
         description: Whether to show deletions as "*" (no) or to omit from the output (yes). Defaults to no.
@@ -596,7 +656,7 @@ subcommands:
           - -d
           - --min-depth
         argument: D
-        description: The minimum depth required to make a call. Defaults to 1. Failing this depth check will produce consensus "N", or absent if it is an insertion.
+        description: The minimum depth required to make a call. Defaults to 1. Failing this depth check will produce consensus "N", or absent if it is an insertion. Note this check is performed after filtering by flags and mapping/base quality.
       - names:
           - -H
           - --het-fract
@@ -606,7 +666,7 @@ subcommands:
           - -c
           - --call-fract
         argument: C
-        description: Only used for the simple consensus algorithm. Require at least C fraction of bases agreeing with the most likely consensus call to omit that base type. This defaults to 0.75. Failing this check will output "N".
+        description: Only used for the simple consensus algorithm. Require at least C fraction of bases agreeing with the most likely consensus call to emit that base type. This defaults to 0.75. Failing this check will output "N".
       - names:
           - "-5"
         argument: ""
@@ -644,11 +704,20 @@ subcommands:
         argument: FLOAT
         description: Controls the likelihood of any position being a heterozygous site. Defaults to 1e-4. Smaller numbers makes the algorithm more likely to call a pure base type. Note the algorithm will always compute the probability of the base being homozygous vs heterozygous, irrespective of whether the output is reported as ambiguous (it will be "N" if deemed to be heterozygous without --ambig mode enabled).
       - names:
+          - -p
+          - --homopoly-fix
+        argument: ""
+        description: Some technologies that call runs of the same base type together always put the lowest quality calls at one end. This can cause problems when reverse complementing and comparing alignments with indels. This option averages the qualities at both ends to avoid orientation biases. Recommended for old 454 or PacBio HiFi data sets.
+      - names:
           - '-'
         argument: ""
         description: Create a FASTQ file for the contigs with aligned data, including insertions.
   - name: merge
     description: merge sorted alignments
+    usage: |-
+      samtools merge [options] -o out.bam [options] in1.bam ... inN.bam
+
+      samtools merge [options] out.bam in1.bam ... inN.bam
     options:
       - names:
           - "-1"
@@ -717,6 +786,7 @@ subcommands:
         description: Number of input/output compression threads to use in addition to main thread [0].
   - name: mpileup
     description: multi-way pileup
+    usage: samtools mpileup [-EB] [-C capQcoef] [-r reg] [-f in.fa] [-l list] [-Q minBaseQ] [-q minMapQ] in.bam [in2.bam [...]]
     options:
       - names:
           - "-6"
@@ -800,9 +870,10 @@ subcommands:
         description: 'Filter flags: skip reads with any of the mask bits set [UNMAP,SECONDARY,QCFAIL,DUP]'
       - names:
           - -x
-          - --ignore-overlaps
+          - --ignore-overlaps-removal
+          - --disable-overlap-removal
         argument: ""
-        description: Disable read-pair overlap detection.
+        description: Overlap detection and removal is enabled by default. This option turns it off.
       - names:
           - -X
         argument: ""
@@ -878,6 +949,7 @@ subcommands:
         description: Output absolutely all positions, including unused reference sequences. Note that when used in conjunction with a BED file the -a option may sometimes operate as if -aa was specified if the reference sequence has coverage outside of the region specified in the BED file.
   - name: sort
     description: sort alignment file
+    usage: samtools sort [-l level] [-u] [-m maxMem] [-o out.bam] [-O format] [-M] [-K kmerLen] [-n] [-t tag] [-T tmpprefix] [-@ threads] [in.sam|in.bam|in.cram]
     options:
       - names:
           - -K
@@ -927,8 +999,13 @@ subcommands:
           - --no-PG
         argument: ""
         description: Do not add a @PG line to the header of the output file.
+      - names:
+          - --template-coordinate
+        argument: ""
+        description: Sorts by template-coordinate, whereby the sort order (@HD SO) is unsorted, the group order (GO) is query, and the sub-sort (SS) is template-coordinate.
   - name: split
     description: splits a file by read group
+    usage: samtools split [options] merged.sam|merged.bam|merged.cram
     options:
       - names:
           - -u
@@ -957,6 +1034,7 @@ subcommands:
         description: INT
   - name: quickcheck
     description: quickly check if SAM/BAM/CRAM file appears intact
+    usage: samtools quickcheck [options] in.sam|in.bam|in.cram [ ... ]
     options:
       - names:
           - -v
@@ -972,6 +1050,9 @@ subcommands:
         description: Expect unmapped input data, so do not require targets in the header.
   - name: fastq
     description: converts a BAM to a FASTQ
+    usage: |-
+      samtools fastq [options] in.bam
+      samtools fasta [options] in.bam
     options:
       - names:
           - -n
@@ -996,7 +1077,7 @@ subcommands:
       - names:
           - -T
         argument: TAGLIST
-        description: Specify a comma-separated list of tags to copy to the FASTQ header line, if they exist.
+        description: Specify a comma-separated list of tags to copy to the FASTQ header line, if they exist. TAGLIST can be blank or * to indicate all tags should be copied to the output. If using *, be careful to quote it to avoid unwanted shell expansion.
       - names:
           - "-1"
         argument: FILE
@@ -1060,6 +1141,9 @@ subcommands:
         description: 'string to describe how to parse the barcode and quality tags. For example:'
   - name: fasta
     description: converts a BAM to a FASTA
+    usage: |-
+      samtools fastq [options] in.bam
+      samtools fasta [options] in.bam
     options:
       - names:
           - -n
@@ -1084,7 +1168,7 @@ subcommands:
       - names:
           - -T
         argument: TAGLIST
-        description: Specify a comma-separated list of tags to copy to the FASTQ header line, if they exist.
+        description: Specify a comma-separated list of tags to copy to the FASTQ header line, if they exist. TAGLIST can be blank or * to indicate all tags should be copied to the output. If using *, be careful to quote it to avoid unwanted shell expansion.
       - names:
           - "-1"
         argument: FILE
@@ -1148,6 +1232,7 @@ subcommands:
         description: 'string to describe how to parse the barcode and quality tags. For example:'
   - name: import
     description: Converts FASTA or FASTQ files to SAM/BAM/CRAM
+    usage: samtools import [options] [ fastq_file ... ]
     options:
       - names:
           - -s
@@ -1210,8 +1295,33 @@ subcommands:
           - -T
         argument: TAGLIST
         description: This looks for any SAM-format auxiliary tags in the comment field of a fastq read name. These must match the <alpha-num><alpha-num>:<type>:<data> pattern as specified in the SAM specification. TAGLIST can be blank or * to indicate all tags should be copied to the output, otherwise it is a comma-separated list of tag types to include with all others being discarded.
+  - name: reference
+    description: Generates a reference from aligned data
+    usage: samtools reference [-q] [-r region] [-o out.fa] in.cram
+    options:
+      - names:
+          - -e
+        argument: ""
+        description: Enable CRAM embedded reference mode.
+      - names:
+          - -q
+        argument: ""
+        description: Enables quiet mode and will produce no output. By default a line per reference is reporting describing the percentage with non-N bases.
+      - names:
+          - -r
+        argument: region
+        description: Specifies a single region to produce the reference from. If specified, an index file must be present.
+      - names:
+          - -o
+        argument: FILE
+        description: Write the FASTA records to FILE. By default this is sent to stdout.
+      - names:
+          - -@
+        argument: INT
+        description: The number of BAM/CRAM decompression threads to use in addition to the main thread [0].
   - name: bedcov
     description: read depth per BED region
+    usage: samtools bedcov [options] region.bed in1.sam|in1.bam|in1.cram[...]
     options:
       - names:
           - -Q
@@ -1235,11 +1345,16 @@ subcommands:
         argument: INT
         description: Print an additional column, for each file, containing the number of bases having a depth above and including the given threshold. If the option is not used, the extra column is not displayed. The option value must be an integer >= 0.
       - names:
+          - -c
+        argument: ""
+        description: Print an additional column with the read count for this region. This will be +1 for every read covering the region, not just starting within in. The whole read filtering options -Q, -g and -G options will also have an affect on this count, but -d will not.
+      - names:
           - -X
         argument: ""
         description: 'If this option is set, it will allows user to specify customized index file location(s) if the data folder does not contain any index file. Example usage: samtools bedcov [options] -X <in.bed> </data_folder/in1.bam> [...] </index_folder/index1.bai> [...]'
   - name: coverage
     description: alignment depth and percent coverage
+    usage: samtools coverage [options] [in1.sam|in1.bam|in1.cram [in2.sam|in2.bam|in2.cram] [...]]
     options:
       - names:
           - -b
@@ -1313,6 +1428,7 @@ subcommands:
         description: Shows command help.
   - name: depth
     description: compute the depth
+    usage: samtools depth [options] [in1.sam|in1.bam|in1.cram [in2.sam|in2.bam|in2.cram] [...]]
     options:
       - names:
           - -a
@@ -1372,8 +1488,17 @@ subcommands:
         description: By default, reads that have any of the flags UNMAP, SECONDARY, QCFAIL, or DUP set are skipped. To include these reads back in the analysis, use this option together with the desired flag or flag combination. FLAGS can be specified in hex by beginning with `0x' (i.e. /^0x[0-9A-F]+/), in octal by beginning with `0' (i.e. /^0[0-7]+/), as a decimal number not beginning with '0' or as a comma-separated list of flag names. [0]
       - names:
           - -G
+          - --excl-flags
         argument: FLAGS
-        description: Discard any read that has any of the flags specified by FLAGS set. FLAGS are specified as for the -g option. [UNMAP,SECONDARY,QCFAIL,DUP]
+        description: Discard reads that have any of the flags specified by FLAGS set. FLAGS are specified as for the -g option. [UNMAP,SECONDARY,QCFAIL,DUP]
+      - names:
+          - --incl-flags
+        argument: FLAGS
+        description: Only include reads with at least one bit set in FLAGS present in the FLAG field. FLAGS are specified as for the -g option. [0]
+      - names:
+          - --require-flags
+        argument: FLAGS
+        description: Only include reads with all bits set in FLAGS present in the FLAG field. FLAGS are specified as for the -g option. [0]
       - names:
           - -J
         argument: ""
@@ -1384,20 +1509,19 @@ subcommands:
         description: For the overlapping section of a read pair, count only the bases of the first read. Note this algorithm changed in 1.13 so the results may differ slightly to older releases.
   - name: flagstat
     description: simple stats
+    usage: samtools flagstat in.sam|in.bam|in.cram
     options:
       - names:
           - -@
         argument: INT
         description: Set number of additional threads to use when reading the file.
-      - names:
-          - -O
-        argument: FORMAT
-        description: Set the output format. FORMAT can be set to `default', `json' or `tsv' to select the default, JSON or tab-separated values output format. If this option is not used, the default format will be selected.
   - name: idxstats
     description: BAM index stats
+    usage: samtools idxstats in.sam|in.bam|in.cram
     options: []
   - name: phase
     description: phase heterozygotes
+    usage: samtools phase [-AF] [-k len] [-b prefix] [-q minLOD] [-Q minBaseQ] in.bam
     options:
       - names:
           - -A
@@ -1430,6 +1554,7 @@ subcommands:
         description: Do not add a @PG line to the header of the output file.
   - name: stats
     description: generate stats (former bamcheck)
+    usage: samtools stats [options] in.sam|in.bam|in.cram [region...]
     options:
       - names:
           - -c
@@ -1531,6 +1656,7 @@ subcommands:
         description: Number of input/output compression threads to use in addition to main thread [0].
   - name: ampliconstats
     description: generate amplicon specific stats
+    usage: samtools ampliconstats [options] primers.bed in.sam|in.bam|in.cram...
     options:
       - names:
           - -f
@@ -1602,9 +1728,11 @@ subcommands:
         description: Number of BAM/CRAM (de)compression threads to use in addition to main thread [0].
   - name: flags
     description: explain BAM flags
+    usage: samtools flags FLAGS...
     options: []
   - name: head
     description: header viewer
+    usage: samtools head [-h INT] [-n INT] [FILE]
     options:
       - names:
           - -h
@@ -1618,6 +1746,7 @@ subcommands:
         description: Also display the first INT alignment records. By default, no alignment records are displayed.
   - name: tview
     description: text alignment viewer
+    usage: samtools tview [-p chr:pos] [-s STR] [-d display] in.sorted.bam [ref.fasta]
     options:
       - names:
           - -d
@@ -1637,6 +1766,7 @@ subcommands:
         description: 'If this option is set, it will allows user to specify customized index file location(s) if the data folder does not contain any index file. Example usage: samtools tview [options] -X </data_folder/data.bam> [/index_folder/index.bai] [ref.fasta]'
   - name: view
     description: SAM<->BAM<->CRAM conversion
+    usage: samtools view [options] in.sam|in.bam|in.cram [region...]
     options:
       - names:
           - -b
@@ -1676,7 +1806,7 @@ subcommands:
           - -c
           - --count
         argument: ""
-        description: Instead of printing the alignments, only count them and print the total number. All filter options, such as -f, -F, and -q, are taken into account.
+        description: Instead of printing the alignments, only count them and print the total number. All filter options, such as -f, -F, and -q, are taken into account. The -p option is ignored in this mode.
       - names:
           - -?
           - --help
@@ -1844,11 +1974,17 @@ subcommands:
         argument: ""
         description: Include customized index file as a part of arguments. See EXAMPLES section for sample of usage.
       - names:
+          - -z
+          - --sanitize
+        argument: FLAGs
+        description: Perform some sanity checks on the state of SAM record fields, fixing up common mistakes made by aligners. These include soft-clipping alignments when they extend beyond the end of the reference, marking records as unmapped when they have reference * or position 0, and ensuring unmapped alignments have no CIGAR or mapping quality for unmapped alignments and no MD, NM, CG or SM tags.
+      - names:
           - --no-PG
         argument: ""
         description: Do not add a @PG line to the header of the output file.
   - name: depad
     description: convert padded BAM to unpadded BAM
+    usage: samtools depad [-SsCu1] [-T ref.fa] [-o output] in.bam
     options:
       - names:
           - -S
@@ -1884,6 +2020,10 @@ subcommands:
         description: Do not add a @PG line to the header of the output file.
   - name: samples
     description: list the samples in a set of SAM/BAM/CRAM files
+    usage: |-
+      samtools samples [options] (<input>|stdin)
+
+      samtools samples [options] -X f1.bam f2.bam ... f1.bam.bai f2.bam.bai ...
     options:
       - names:
           - -?
@@ -1909,39 +2049,40 @@ subcommands:
           - -o
         argument: FILE output file stdout.
         description: -f FILE load an indexed fasta file in the collection of references. Can be used multiple times. Add an extra column with the path to the reference file.
-version: '1.15'
+version: samtools 1.16.1
 tldr: |
-  > Manipulate sequencing data in SAM/BAM/CRAM.
+  > Tools for handling high-throughput sequencing (genomics) data.
+  > Used for reading/writing/editing/indexing/viewing of data in SAM/BAM/CRAM format.
+  > More information: <https://www.htslib.org>.
 
-  - Quick look at a SAM file:
+  - Convert a SAM input file to BAM stream and save to file:
 
-  `samtools view {{sample.sam}} | head -5`
+  `samtools view -S -b {{input.sam}} > {{output.bam}}`
 
-  - Get a subset of a BAM file that overlaps with a region on chromosome 3:
+  - Take input from stdin (-) and print the SAM header and any reads overlapping a specific region to stdout:
 
-  `samtools view -b {{in.bam}} 3:120,000,000-121,000,000 > {{subset.bam}}`
+  `{{other_command}} | samtools view -h - chromosome:start-end`
 
-  - Convert a SAM file to a BAM file (if @SQ lines are absent):
+  - Sort file and save to BAM (the output format is automatically determined from the output file's extension):
 
-  `samtools faidx {{ref.fa}} && samtools view -bt {{ref.fa.fai}} {{aln.sam}} > {{sample.bam}}`
+  `samtools sort {{input}} -o {{output.bam}}`
 
-  - Convert a BAM file to a CRAM file using a local reference sequence:
+  - Index a sorted BAM file (creates {{sorted_input.bam.bai}}):
 
-  `samtools view -C -T {{ref.fa}} -o {{aln.cram}} {{aln.bam}}`
+  `samtools index {{sorted_input.bam}}`
 
-  - Run a sanity check:
+  - Print alignment statistics about a file:
 
-  `samtools quickcheck {{in.sam}}`
+  `samtools flagstat {{sorted_input}}`
 
-  - View file headers:
+  - Count alignments to each index (chromosome / contig):
 
-  `samtools head {{in.sam}}`
+  `samtools idxstats {{sorted_indexed_input}}`
 
-  - Index a BAM file:
+  - Merge multiple files:
 
-  `samtools index {{in.bam}}`
+  `samtools merge {{output}} {{input1 input2 …}}`
 
-  - Index a FASTA file:
+  - Split input file according to read groups:
 
-  `samtools faidx {{sample.fa}}`
-
+  `samtools split {{merged_input}}`

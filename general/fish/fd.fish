@@ -3,7 +3,7 @@
 complete -c fd -s "H" -l "hidden" -d "Include hidden files and directories in the search results (default: hidden files and directories are skipped)."
 complete -c fd -s "I" -l "no-ignore" -d "Show search results from files and directories that would otherwise be ignored by '.gitignore', '.ignore', '.fdignore', or the global ignore file."
 complete -c fd -s "u" -l "unrestricted" -d "Perform an unrestricted search, including ignored and hidden files."
-complete -c fd -l "no-ignore-vcs" -d "Show search results from files and directories that would otherwise be ignored by gitignore files including .gitignore, .git/info/exclude, and the global gitignore configuration (core.excludesFile git setting, which defaults to $HOME/.config/git/ignore)."
+complete -c fd -l "no-ignore-vcs" -d "Show search results from files and directories that would otherwise be ignored by gitignore files including .gitignore, .git/info/exclude, and the global gitignore configuration (core.excludesFile git setting, which defaults to \$HOME/.config/git/ignore)."
 complete -c fd -l "no-ignore-parent" -d "Show search results from files and directories that would otherwise be ignored by gitignore files in parent directories."
 complete -c fd -s "s" -l "case-sensitive" -d "Perform a case-sensitive search."
 complete -c fd -s "i" -l "ignore-case" -d "Perform a case-insensitive search."

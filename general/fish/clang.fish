@@ -104,7 +104,7 @@ complete -c clang -o "fdiagnostics-show-option" -d "Print option name with mappa
 complete -c clang -o "fdiagnostics-show-template-tree" -d "Print a template comparison tree for differing templates"
 complete -c clang -o "fdigraphs" -d "Enable alternative token representations '<:', ':>', '<%', '%>', '%:', '%:%:' (default)"
 complete -c clang -o "fdiscard-value-names" -d "Discard value names in LLVM IR"
-complete -c clang -o "fdollars-in-identifiers" -d "Allow '$' in identifiers"
+complete -c clang -o "fdollars-in-identifiers" -d "Allow '\$' in identifiers"
 complete -c clang -o "fdouble-square-bracket-attributes" -d "Enable '[[]]' attributes in all C and C++ language modes"
 complete -c clang -o "fdwarf-exceptions" -d "Use DWARF style exceptions"
 complete -c clang -o "fembed-bitcode-marker" -d "Embed placeholder LLVM IR data as a marker"
@@ -228,7 +228,7 @@ complete -c clang -o "fno-delete-null-pointer-checks" -d "Do not treat usage of 
 complete -c clang -o "fno-diagnostics-fixit-info" -d "Do not include fixit information in diagnostics"
 complete -c clang -o "fno-digraphs" -d "Disallow alternative token representations '<:', ':>', '<%', '%>', '%:', '%:%:'"
 complete -c clang -o "fno-discard-value-names" -d "Do not discard value names in LLVM IR"
-complete -c clang -o "fno-dollars-in-identifiers" -d "Disallow '$' in identifiers"
+complete -c clang -o "fno-dollars-in-identifiers" -d "Disallow '\$' in identifiers"
 complete -c clang -o "fno-double-square-bracket-attributes" -d "Disable '[[]]' attributes in all C and C++ language modes"
 complete -c clang -o "fno-elide-constructors" -d "Disable C++ copy constructor elision"
 complete -c clang -o "fno-elide-type" -d "Do not elide types when printing diagnostics"
@@ -404,7 +404,7 @@ complete -c clang -o "fxray-never-instrument" -d "DEPRECATED: Filename defining 
 complete -c clang -o "fzvector" -d "Enable System z vector language extension"
 complete -c clang -s "F" -d "Add directory to framework include search path" -r
 complete -c clang -l "gcc-toolchain" -d "Use the gcc toolchain at the given directory" -r
-complete -c clang -o "gcodeview-ghash" -d "Emit type record hashes in a .debug$H section"
+complete -c clang -o "gcodeview-ghash" -d "Emit type record hashes in a .debug\$H section"
 complete -c clang -o "gcodeview" -d "Generate CodeView debug information"
 complete -c clang -o "gdwarf-2" -d "Generate source-level debug information with dwarf version 2"
 complete -c clang -o "gdwarf-3" -d "Generate source-level debug information with dwarf version 3"

@@ -66,7 +66,7 @@ complete -c git -n "__fish_seen_subcommand_from init" -s "q" -l "quiet" -d "Only
 complete -c git -n "__fish_seen_subcommand_from init" -l "bare" -d "Create a bare repository."
 complete -c git -n "__fish_seen_subcommand_from init" -l "object-format" -d "Specify the given object format (hash algorithm) for the repository." -x
 complete -c git -n "__fish_seen_subcommand_from init" -l "template" -d "Specify the directory from which templates will be used." -r
-complete -c git -n "__fish_seen_subcommand_from init" -l "separate-git-dir" -d "Instead of initializing the repository as a directory to either $GIT_DIR or ./.git/, create a text file there containing the path to the actual repository." -r
+complete -c git -n "__fish_seen_subcommand_from init" -l "separate-git-dir" -d "Instead of initializing the repository as a directory to either \$GIT_DIR or ./.git/, create a text file there containing the path to the actual repository." -r
 complete -c git -n "__fish_seen_subcommand_from init" -s "b" -l "initial-branch" -d "Use the specified name for the initial branch in the newly created repository." -x
 complete -c git -n "__fish_seen_subcommand_from init" -l "shared" -d "Specify that the Git repository is to be shared amongst several users." -r
 
@@ -111,7 +111,7 @@ complete -c git -n "__fish_seen_subcommand_from restore" -l "ours" -l "theirs" -
 complete -c git -n "__fish_seen_subcommand_from restore" -s "m" -l "merge" -d "When restoring files on the working tree from the index, recreate the conflicted merge in the unmerged paths."
 complete -c git -n "__fish_seen_subcommand_from restore" -l "conflict" -d "The same as --merge option above, but changes the way the conflicting hunks are presented, overriding the merge.conflictStyle configuration variable." -x
 complete -c git -n "__fish_seen_subcommand_from restore" -l "ignore-unmerged" -d "When restoring files on the working tree from the index, do not abort the operation if there are unmerged entries and neither --ours, --theirs, --merge or --conflict is specified."
-complete -c git -n "__fish_seen_subcommand_from restore" -l "ignore-skip-worktree-bits" -d "In sparse checkout mode, by default is to only update entries matched by <pathspec> and sparse patterns in $GIT_DIR/info/sparse-checkout."
+complete -c git -n "__fish_seen_subcommand_from restore" -l "ignore-skip-worktree-bits" -d "In sparse checkout mode, by default is to only update entries matched by <pathspec> and sparse patterns in \$GIT_DIR/info/sparse-checkout."
 complete -c git -n "__fish_seen_subcommand_from restore" -l "recurse-submodules" -l "no-recurse-submodules" -d "If <pathspec> names an active submodule and the restore location includes the working tree, the submodule will only be updated if this option is given, in which case its working tree will be restored to the commit recorded in the superproject, and any local modifications overwritten."
 complete -c git -n "__fish_seen_subcommand_from restore" -l "overlay" -l "no-overlay" -d "In overlay mode, the command never removes files when restoring."
 complete -c git -n "__fish_seen_subcommand_from restore" -l "pathspec-from-file" -d "Pathspec is passed in <file> instead of commandline args." -r
@@ -629,7 +629,7 @@ complete -c git -n "__fish_seen_subcommand_from merge" -s "S" -l "gpg-sign" -l "
 complete -c git -n "__fish_seen_subcommand_from merge" -l "log" -l "no-log" -d "In addition to branch names, populate the log message with one-line descriptions from at most <n> actual commits that are being merged." -x
 complete -c git -n "__fish_seen_subcommand_from merge" -l "signoff" -l "no-signoff" -d "Add a Signed-off-by trailer by the committer at the end of the commit log message."
 complete -c git -n "__fish_seen_subcommand_from merge" -l "stat" -s "n" -l "no-stat" -d "Show a diffstat at the end of the merge."
-complete -c git -n "__fish_seen_subcommand_from merge" -l "squash" -l "no-squash" -d "Produce the working tree and index state as if a real merge happened (except for the merge information), but do not actually make a commit, move the HEAD, or record $GIT_DIR/MERGE_HEAD (to cause the next git commit command to create a merge commit)."
+complete -c git -n "__fish_seen_subcommand_from merge" -l "squash" -l "no-squash" -d "Produce the working tree and index state as if a real merge happened (except for the merge information), but do not actually make a commit, move the HEAD, or record \$GIT_DIR/MERGE_HEAD (to cause the next git commit command to create a merge commit)."
 complete -c git -n "__fish_seen_subcommand_from merge" -l "verify" -d "By default, the pre-merge and commit-msg hooks are run."
 complete -c git -n "__fish_seen_subcommand_from merge" -l "no-verify" -d "By default, the pre-merge and commit-msg hooks are run."
 complete -c git -n "__fish_seen_subcommand_from merge" -s "s" -l "strategy" -d "Use the given merge strategy; can be supplied more than once to specify them in the order they should be tried." -x
@@ -765,8 +765,8 @@ complete -c git -n "__fish_seen_subcommand_from fetch" -l "update-shallow" -d "B
 complete -c git -n "__fish_seen_subcommand_from fetch" -l "negotiation-tip" -d "By default, Git will report, to the server, commits reachable from all local refs to find common commits in an attempt to reduce the size of the to-be-received packfile." -r
 complete -c git -n "__fish_seen_subcommand_from fetch" -l "negotiate-only" -d "Do not fetch anything from the server, and instead print the ancestors of the provided --negotiation-tip=* arguments, which we have in common with the server."
 complete -c git -n "__fish_seen_subcommand_from fetch" -l "dry-run" -d "Show what would be done, without making any changes."
-complete -c git -n "__fish_seen_subcommand_from fetch" -l "write-fetch-head" -d "Write the list of remote refs fetched in the FETCH_HEAD file directly under $GIT_DIR."
-complete -c git -n "__fish_seen_subcommand_from fetch" -l "no-write-fetch-head" -d "Write the list of remote refs fetched in the FETCH_HEAD file directly under $GIT_DIR."
+complete -c git -n "__fish_seen_subcommand_from fetch" -l "write-fetch-head" -d "Write the list of remote refs fetched in the FETCH_HEAD file directly under \$GIT_DIR."
+complete -c git -n "__fish_seen_subcommand_from fetch" -l "no-write-fetch-head" -d "Write the list of remote refs fetched in the FETCH_HEAD file directly under \$GIT_DIR."
 complete -c git -n "__fish_seen_subcommand_from fetch" -s "f" -l "force" -d "When git fetch is used with <src>:<dst> refspec it may refuse to update the local branch as discussed in the <refspec> part below."
 complete -c git -n "__fish_seen_subcommand_from fetch" -s "k" -l "keep" -d "Keep downloaded pack."
 complete -c git -n "__fish_seen_subcommand_from fetch" -l "multiple" -d "Allow several <repository> and <group> arguments to be specified."
@@ -809,7 +809,7 @@ complete -c git -n "__fish_seen_subcommand_from pull" -s "S" -l "gpg-sign" -l "n
 complete -c git -n "__fish_seen_subcommand_from pull" -l "log" -l "no-log" -d "In addition to branch names, populate the log message with one-line descriptions from at most <n> actual commits that are being merged." -x
 complete -c git -n "__fish_seen_subcommand_from pull" -l "signoff" -l "no-signoff" -d "Add a Signed-off-by trailer by the committer at the end of the commit log message."
 complete -c git -n "__fish_seen_subcommand_from pull" -l "stat" -s "n" -l "no-stat" -d "Show a diffstat at the end of the merge."
-complete -c git -n "__fish_seen_subcommand_from pull" -l "squash" -l "no-squash" -d "Produce the working tree and index state as if a real merge happened (except for the merge information), but do not actually make a commit, move the HEAD, or record $GIT_DIR/MERGE_HEAD (to cause the next git commit command to create a merge commit)."
+complete -c git -n "__fish_seen_subcommand_from pull" -l "squash" -l "no-squash" -d "Produce the working tree and index state as if a real merge happened (except for the merge information), but do not actually make a commit, move the HEAD, or record \$GIT_DIR/MERGE_HEAD (to cause the next git commit command to create a merge commit)."
 complete -c git -n "__fish_seen_subcommand_from pull" -l "verify" -d "By default, the pre-merge and commit-msg hooks are run."
 complete -c git -n "__fish_seen_subcommand_from pull" -l "no-verify" -d "By default, the pre-merge and commit-msg hooks are run."
 complete -c git -n "__fish_seen_subcommand_from pull" -s "s" -l "strategy" -d "Use the given merge strategy; can be supplied more than once to specify them in the order they should be tried." -x

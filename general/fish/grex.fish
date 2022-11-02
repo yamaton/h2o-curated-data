@@ -13,7 +13,7 @@ complete -c grex -s "r" -l "repetitions" -d "Detects repeated non-overlapping su
 complete -c grex -l "min-repetitions" -d "Specifies the minimum quantity of substring repetitions to be converted if --repetitions is set" -x
 complete -c grex -l "min-substring-length" -d "Specifies the minimum length a repeated substring must have in order to be converted if --repetitions is set" -x
 complete -c grex -l "no-anchors" -d "Removes the caret and dollar sign anchors from the resulting regular expression."
-complete -c grex -l "no-end-anchor" -d "Removes the dollar sign anchor `$` from the resulting regular expression."
+complete -c grex -l "no-end-anchor" -d "Removes the dollar sign anchor `\$` from the resulting regular expression."
 complete -c grex -l "no-start-anchor" -d "Removes the caret anchor `^` from the resulting regular expression."
 complete -c grex -s "x" -l "verbose" -d "Produces a nicer-looking regular expression in verbose mode"
 complete -c grex -s "c" -l "colorize" -d "Provides syntax highlighting for the resulting regular expression"

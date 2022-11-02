@@ -1,0 +1,16 @@
+# Auto-generated with h2o
+
+complete -c shasum -s "a" -l "algorithm" -d "1 (default), 224, 256, 384, 512, 512224, 512256"
+complete -c shasum -s "b" -l "binary" -d "read in binary mode"
+complete -c shasum -s "c" -l "check" -d "read SHA sums from the FILEs and check them"
+complete -c shasum -l "tag" -d "create a BSD-style checksum"
+complete -c shasum -s "t" -l "text" -d "read in text mode (default)"
+complete -c shasum -s "U" -l "UNIVERSAL" -d "read in Universal Newlines mode"
+complete -c shasum -s "0" -l "01" -d "read in BITS mode"
+complete -c shasum -l "ignore-missing" -d "don't fail or report status for missing files"
+complete -c shasum -s "q" -l "quiet" -d "don't print OK for each successfully verified file"
+complete -c shasum -s "s" -l "status" -d "don't output anything, status code shows success"
+complete -c shasum -l "strict" -d "exit non-zero for improperly formatted checksum lines"
+complete -c shasum -s "w" -l "warn" -d "warn about improperly formatted checksum lines"
+complete -c shasum -s "h" -l "help" -d "display this help and exit"
+complete -c shasum -s "v" -l "version" -d "output version information and exit"

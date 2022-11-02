@@ -83,7 +83,7 @@ complete -c node -l "tls-min-v1.3" -d "set default TLS minimum to TLSv1.3 (defau
 complete -c node -l "trace-atomics-wait" -d "trace Atomics.wait() operations"
 complete -c node -l "trace-deprecation" -d "show stack traces on deprecations"
 complete -c node -l "trace-event-categories" -d "comma separated list of trace event categories to record" -x
-complete -c node -l "trace-event-file-pattern" -d "Template string specifying the filepath for the trace-events data, it supports ${rotation} and ${pid}." -r
+complete -c node -l "trace-event-file-pattern" -d "Template string specifying the filepath for the trace-events data, it supports \${rotation} and \${pid}." -r
 complete -c node -l "trace-exit" -d "show stack trace when an environment exits"
 complete -c node -l "trace-sigint" -d "enable printing JavaScript stacktrace on SIGINT"
 complete -c node -l "trace-sync-io" -d "show stack trace when use of sync IO is detected after the first tick"

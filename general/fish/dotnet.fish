@@ -48,7 +48,7 @@ complete -c dotnet -n "__fish_seen_subcommand_from build" -s "o" -l "output" -d 
 complete -c dotnet -n "__fish_seen_subcommand_from build" -s "f" -l "framework" -d "The target framework to build for." -r
 complete -c dotnet -n "__fish_seen_subcommand_from build" -s "c" -l "configuration" -d "The configuration to use for building the project." -x
 complete -c dotnet -n "__fish_seen_subcommand_from build" -s "r" -l "runtime" -d "The target runtime to build for." -x
-complete -c dotnet -n "__fish_seen_subcommand_from build" -l "version-suffix" -d "Set the value of the $(VersionSuffix) property to use when building the project." -x
+complete -c dotnet -n "__fish_seen_subcommand_from build" -l "version-suffix" -d "Set the value of the \$(VersionSuffix) property to use when building the project." -x
 complete -c dotnet -n "__fish_seen_subcommand_from build" -l "no-incremental" -d "Do not use incremental building."
 complete -c dotnet -n "__fish_seen_subcommand_from build" -l "no-dependencies" -d "Do not build project-to-project references and only build the specified project."
 complete -c dotnet -n "__fish_seen_subcommand_from build" -l "nologo" -d "Do not display the startup banner or the copyright message."
@@ -88,7 +88,7 @@ complete -c dotnet -n "__fish_seen_subcommand_from pack" -l "no-build" -d "Do no
 complete -c dotnet -n "__fish_seen_subcommand_from pack" -l "include-symbols" -d "Include packages with symbols in addition to regular packages in output directory."
 complete -c dotnet -n "__fish_seen_subcommand_from pack" -l "include-source" -d "Include PDBs and source files."
 complete -c dotnet -n "__fish_seen_subcommand_from pack" -s "c" -l "configuration" -d "The configuration to use for building the package." -x
-complete -c dotnet -n "__fish_seen_subcommand_from pack" -l "version-suffix" -d "Set the value of the $(VersionSuffix) property to use when building the project." -x
+complete -c dotnet -n "__fish_seen_subcommand_from pack" -l "version-suffix" -d "Set the value of the \$(VersionSuffix) property to use when building the project." -x
 complete -c dotnet -n "__fish_seen_subcommand_from pack" -s "s" -l "serviceable" -d "Set the serviceable flag in the package."
 complete -c dotnet -n "__fish_seen_subcommand_from pack" -l "nologo" -d "Do not display the startup banner or the copyright message."
 complete -c dotnet -n "__fish_seen_subcommand_from pack" -l "interactive" -d "Allows the command to stop and wait for user input or action (for example to complete authentication)."
@@ -105,7 +105,7 @@ complete -c dotnet -n "__fish_seen_subcommand_from publish" -s "o" -l "output" -
 complete -c dotnet -n "__fish_seen_subcommand_from publish" -s "f" -l "framework" -d "The target framework to publish for." -r
 complete -c dotnet -n "__fish_seen_subcommand_from publish" -s "r" -l "runtime" -d "The target runtime to publish for." -x
 complete -c dotnet -n "__fish_seen_subcommand_from publish" -s "c" -l "configuration" -d "The configuration to publish for." -x
-complete -c dotnet -n "__fish_seen_subcommand_from publish" -l "version-suffix" -d "Set the value of the $(VersionSuffix) property to use when building the project." -x
+complete -c dotnet -n "__fish_seen_subcommand_from publish" -l "version-suffix" -d "Set the value of the \$(VersionSuffix) property to use when building the project." -x
 complete -c dotnet -n "__fish_seen_subcommand_from publish" -l "manifest" -d "The path to a target manifest file that contains the list of packages to be excluded from the publish step." -r
 complete -c dotnet -n "__fish_seen_subcommand_from publish" -l "no-build" -d "Do not build the project before publishing."
 complete -c dotnet -n "__fish_seen_subcommand_from publish" -l "self-contained" -d "Publish the .NET runtime with your application so the runtime doesn't need to be installed on the target machine."

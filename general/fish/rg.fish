@@ -54,7 +54,7 @@ complete -c rg -l "no-ignore" -d "Don\8217t respect ignore files (.gitignore, .i
 complete -c rg -l "no-ignore-dot" -d "Don\8217t respect .ignore files."
 complete -c rg -l "no-ignore-exclude" -d "Don\8217t respect ignore files that are manually configured for the repository such as git\8217s .git/info/exclude."
 complete -c rg -l "no-ignore-files" -d "When set, any --ignore-file flags, even ones that come after this flag, are ignored."
-complete -c rg -l "no-ignore-global" -d "Don\8217t respect ignore files that come from \"global\" sources such as git\8217s core.excludesFile configuration option (which defaults to $HOME/.config/git/ignore)."
+complete -c rg -l "no-ignore-global" -d "Don\8217t respect ignore files that come from \"global\" sources such as git\8217s core.excludesFile configuration option (which defaults to \$HOME/.config/git/ignore)."
 complete -c rg -l "no-ignore-messages" -d "Suppresses all error messages related to parsing ignore files such as .ignore or .gitignore."
 complete -c rg -l "no-ignore-parent" -d "Don\8217t respect ignore files (.gitignore, .ignore, etc.) in parent directories."
 complete -c rg -l "no-ignore-vcs" -d "Don\8217t respect version control ignore files (.gitignore, etc.). This implies --no-ignore-parent for VCS files."

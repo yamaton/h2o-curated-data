@@ -169,7 +169,7 @@ complete -c mamba -n "__fish_seen_subcommand_from install" -l "show-channel-urls
 complete -c mamba -n "__fish_seen_subcommand_from list" -s "h" -l "help" -d "Show this help message and exit."
 complete -c mamba -n "__fish_seen_subcommand_from list" -l "show-channel-urls" -d "Show channel urls."
 complete -c mamba -n "__fish_seen_subcommand_from list" -s "c" -l "canonical" -d "Output canonical names of packages only."
-complete -c mamba -n "__fish_seen_subcommand_from list" -s "f" -l "full-name" -d "Only search for full names, i.e., ^<regex>$."
+complete -c mamba -n "__fish_seen_subcommand_from list" -s "f" -l "full-name" -d "Only search for full names, i.e., ^<regex>\$."
 complete -c mamba -n "__fish_seen_subcommand_from list" -l "explicit" -d "List explicitly all installed conda packaged with URL (output may be used by conda create --file)."
 complete -c mamba -n "__fish_seen_subcommand_from list" -l "md5" -d "Add MD5 hashsum when using --explicit"
 complete -c mamba -n "__fish_seen_subcommand_from list" -s "e" -l "export" -d "Output requirement string only (output may be used by conda create --file)."

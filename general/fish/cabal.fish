@@ -150,7 +150,7 @@ complete -c cabal -n "__fish_seen_subcommand_from update" -l "allow-newer" -d "I
 complete -c cabal -n "__fish_seen_subcommand_from update" -l "write-ghc-environment-files" -d "Whether to create a .ghc.environment file after a successful build (v2-build only)" -r
 complete -c cabal -n "__fish_seen_subcommand_from update" -l "enable-documentation" -d "Enable building of documentation"
 complete -c cabal -n "__fish_seen_subcommand_from update" -l "disable-documentation" -d "Disable building of documentation"
-complete -c cabal -n "__fish_seen_subcommand_from update" -l "doc-index-file" -d "A central index of haddock API documentation (template cannot use $pkgid)" -x
+complete -c cabal -n "__fish_seen_subcommand_from update" -l "doc-index-file" -d "A central index of haddock API documentation (template cannot use \$pkgid)" -x
 complete -c cabal -n "__fish_seen_subcommand_from update" -l "dry-run" -d "Do not install anything, only print what would be installed."
 complete -c cabal -n "__fish_seen_subcommand_from update" -l "only-download" -d "Do not build anything, only fetch the packages."
 complete -c cabal -n "__fish_seen_subcommand_from update" -l "max-backjumps" -d "Maximum number of backjumps allowed while solving (default: 4000)." -x
@@ -171,15 +171,15 @@ complete -c cabal -n "__fish_seen_subcommand_from update" -l "only-dependencies"
 complete -c cabal -n "__fish_seen_subcommand_from update" -l "dependencies-only" -d "A synonym for --only-dependencies"
 complete -c cabal -n "__fish_seen_subcommand_from update" -l "index-state" -d "Use source package index state as it existed at a previous time." -x
 complete -c cabal -n "__fish_seen_subcommand_from update" -l "root-cmd" -d "(No longer supported, do not use.)" -x
-complete -c cabal -n "__fish_seen_subcommand_from update" -l "build-summary" -d "Save build summaries to file (name template can use $pkgid, $compiler, $os, $arch)" -r
-complete -c cabal -n "__fish_seen_subcommand_from update" -l "build-log" -d "Log all builds to file (name template can use $pkgid, $compiler, $os, $arch)" -r
+complete -c cabal -n "__fish_seen_subcommand_from update" -l "build-summary" -d "Save build summaries to file (name template can use \$pkgid, \$compiler, \$os, \$arch)" -r
+complete -c cabal -n "__fish_seen_subcommand_from update" -l "build-log" -d "Log all builds to file (name template can use \$pkgid, \$compiler, \$os, \$arch)" -r
 complete -c cabal -n "__fish_seen_subcommand_from update" -l "remote-build-reporting" -d "Generate build reports to send to a remote server (none, anonymous or detailed)." -x
 complete -c cabal -n "__fish_seen_subcommand_from update" -l "report-planning-failure" -d "Generate build reports when the dependency solver fails."
 complete -c cabal -n "__fish_seen_subcommand_from update" -l "enable-per-component" -d "Enable Per-component builds when possible"
 complete -c cabal -n "__fish_seen_subcommand_from update" -l "disable-per-component" -d "Disable Per-component builds when possible"
 complete -c cabal -n "__fish_seen_subcommand_from update" -l "one-shot" -d "Do not record the packages in the world file."
 complete -c cabal -n "__fish_seen_subcommand_from update" -l "run-tests" -d "Run package test suites during installation."
-complete -c cabal -n "__fish_seen_subcommand_from update" -s "j" -l "jobs" -d "Run NUM jobs simultaneously (or '$ncpus' if no NUM is given)." -x
+complete -c cabal -n "__fish_seen_subcommand_from update" -s "j" -l "jobs" -d "Run NUM jobs simultaneously (or '\$ncpus' if no NUM is given)." -x
 complete -c cabal -n "__fish_seen_subcommand_from update" -l "keep-going" -d "After a build failure, continue to build other unaffected packages."
 complete -c cabal -n "__fish_seen_subcommand_from update" -l "offline" -d "Don't download packages from the Internet."
 complete -c cabal -n "__fish_seen_subcommand_from update" -l "haddock-hoogle" -d "Generate a hoogle database"
@@ -196,16 +196,16 @@ complete -c cabal -n "__fish_seen_subcommand_from update" -l "haddock-hyperlink-
 complete -c cabal -n "__fish_seen_subcommand_from update" -l "haddock-quickjump" -d "Generate an index for interactive documentation navigation"
 complete -c cabal -n "__fish_seen_subcommand_from update" -l "haddock-hscolour-css" -d "Use PATH as the HsColour stylesheet" -r
 complete -c cabal -n "__fish_seen_subcommand_from update" -l "haddock-contents-location" -d "Bake URL in as the location for the contents page" -x
-complete -c cabal -n "__fish_seen_subcommand_from update" -l "test-log" -d "Log all test suite results to file (name template can use $pkgid, $compiler, $os, $arch, $test-suite, $result)" -r
-complete -c cabal -n "__fish_seen_subcommand_from update" -l "test-machine-log" -d "Produce a machine-readable log file (name template can use $pkgid, $compiler, $os, $arch, $result)" -r
+complete -c cabal -n "__fish_seen_subcommand_from update" -l "test-log" -d "Log all test suite results to file (name template can use \$pkgid, \$compiler, \$os, \$arch, \$test-suite, \$result)" -r
+complete -c cabal -n "__fish_seen_subcommand_from update" -l "test-machine-log" -d "Produce a machine-readable log file (name template can use \$pkgid, \$compiler, \$os, \$arch, \$result)" -r
 complete -c cabal -n "__fish_seen_subcommand_from update" -l "test-show-details" -d "'always': always show results of individual test cases." -r
 complete -c cabal -n "__fish_seen_subcommand_from update" -l "test-keep-tix-files" -d "keep .tix files for HPC between test runs"
 complete -c cabal -n "__fish_seen_subcommand_from update" -l "test-wrapper" -d "Run test through a wrapper." -r
 complete -c cabal -n "__fish_seen_subcommand_from update" -l "test-fail-when-no-test-suites" -d "Exit with failure when no test suites are found."
-complete -c cabal -n "__fish_seen_subcommand_from update" -l "test-options" -d "give extra options to test executables (name templates can use $pkgid, $compiler, $os, $arch, $test-suite)" -x
-complete -c cabal -n "__fish_seen_subcommand_from update" -l "test-option" -d "give extra option to test executables (no need to quote options containing spaces, name template can use $pkgid, $compiler, $os, $arch, $test-suite)" -x
-complete -c cabal -n "__fish_seen_subcommand_from update" -l "benchmark-options" -d "give extra options to benchmark executables (name templates can use $pkgid, $compiler, $os, $arch, $benchmark)" -x
-complete -c cabal -n "__fish_seen_subcommand_from update" -l "benchmark-option" -d "give extra option to benchmark executables (no need to quote options containing spaces, name template can use $pkgid, $compiler, $os, $arch, $benchmark)" -x
+complete -c cabal -n "__fish_seen_subcommand_from update" -l "test-options" -d "give extra options to test executables (name templates can use \$pkgid, \$compiler, \$os, \$arch, \$test-suite)" -x
+complete -c cabal -n "__fish_seen_subcommand_from update" -l "test-option" -d "give extra option to test executables (no need to quote options containing spaces, name template can use \$pkgid, \$compiler, \$os, \$arch, \$test-suite)" -x
+complete -c cabal -n "__fish_seen_subcommand_from update" -l "benchmark-options" -d "give extra options to benchmark executables (name templates can use \$pkgid, \$compiler, \$os, \$arch, \$benchmark)" -x
+complete -c cabal -n "__fish_seen_subcommand_from update" -l "benchmark-option" -d "give extra option to benchmark executables (no need to quote options containing spaces, name template can use \$pkgid, \$compiler, \$os, \$arch, \$benchmark)" -x
 complete -c cabal -n "__fish_seen_subcommand_from update" -l "project-file" -d "Set the name of the cabal.project file to search for in parent directories" -r
 complete -c cabal -n "__fish_seen_subcommand_from update" -s "z" -l "ignore-project" -d "Ignore local project configuration"
 
@@ -306,7 +306,7 @@ complete -c cabal -n "__fish_seen_subcommand_from install" -l "allow-newer" -d "
 complete -c cabal -n "__fish_seen_subcommand_from install" -l "write-ghc-environment-files" -d "Whether to create a .ghc.environment file after a successful build (v2-build only)" -r
 complete -c cabal -n "__fish_seen_subcommand_from install" -l "enable-documentation" -d "Enable building of documentation"
 complete -c cabal -n "__fish_seen_subcommand_from install" -l "disable-documentation" -d "Disable building of documentation"
-complete -c cabal -n "__fish_seen_subcommand_from install" -l "doc-index-file" -d "A central index of haddock API documentation (template cannot use $pkgid)" -x
+complete -c cabal -n "__fish_seen_subcommand_from install" -l "doc-index-file" -d "A central index of haddock API documentation (template cannot use \$pkgid)" -x
 complete -c cabal -n "__fish_seen_subcommand_from install" -l "dry-run" -d "Do not install anything, only print what would be installed."
 complete -c cabal -n "__fish_seen_subcommand_from install" -l "only-download" -d "Do not build anything, only fetch the packages."
 complete -c cabal -n "__fish_seen_subcommand_from install" -l "max-backjumps" -d "Maximum number of backjumps allowed while solving (default: 4000)." -x
@@ -327,15 +327,15 @@ complete -c cabal -n "__fish_seen_subcommand_from install" -l "only-dependencies
 complete -c cabal -n "__fish_seen_subcommand_from install" -l "dependencies-only" -d "A synonym for --only-dependencies"
 complete -c cabal -n "__fish_seen_subcommand_from install" -l "index-state" -d "Use source package index state as it existed at a previous time." -x
 complete -c cabal -n "__fish_seen_subcommand_from install" -l "root-cmd" -d "(No longer supported, do not use.)" -x
-complete -c cabal -n "__fish_seen_subcommand_from install" -l "build-summary" -d "Save build summaries to file (name template can use $pkgid, $compiler, $os, $arch)" -r
-complete -c cabal -n "__fish_seen_subcommand_from install" -l "build-log" -d "Log all builds to file (name template can use $pkgid, $compiler, $os, $arch)" -r
+complete -c cabal -n "__fish_seen_subcommand_from install" -l "build-summary" -d "Save build summaries to file (name template can use \$pkgid, \$compiler, \$os, \$arch)" -r
+complete -c cabal -n "__fish_seen_subcommand_from install" -l "build-log" -d "Log all builds to file (name template can use \$pkgid, \$compiler, \$os, \$arch)" -r
 complete -c cabal -n "__fish_seen_subcommand_from install" -l "remote-build-reporting" -d "Generate build reports to send to a remote server (none, anonymous or detailed)." -x
 complete -c cabal -n "__fish_seen_subcommand_from install" -l "report-planning-failure" -d "Generate build reports when the dependency solver fails."
 complete -c cabal -n "__fish_seen_subcommand_from install" -l "enable-per-component" -d "Enable Per-component builds when possible"
 complete -c cabal -n "__fish_seen_subcommand_from install" -l "disable-per-component" -d "Disable Per-component builds when possible"
 complete -c cabal -n "__fish_seen_subcommand_from install" -l "one-shot" -d "Do not record the packages in the world file."
 complete -c cabal -n "__fish_seen_subcommand_from install" -l "run-tests" -d "Run package test suites during installation."
-complete -c cabal -n "__fish_seen_subcommand_from install" -s "j" -l "jobs" -d "Run NUM jobs simultaneously (or '$ncpus' if no NUM is given)." -x
+complete -c cabal -n "__fish_seen_subcommand_from install" -s "j" -l "jobs" -d "Run NUM jobs simultaneously (or '\$ncpus' if no NUM is given)." -x
 complete -c cabal -n "__fish_seen_subcommand_from install" -l "keep-going" -d "After a build failure, continue to build other unaffected packages."
 complete -c cabal -n "__fish_seen_subcommand_from install" -l "offline" -d "Don't download packages from the Internet."
 complete -c cabal -n "__fish_seen_subcommand_from install" -l "haddock-hoogle" -d "Generate a hoogle database"
@@ -352,16 +352,16 @@ complete -c cabal -n "__fish_seen_subcommand_from install" -l "haddock-hyperlink
 complete -c cabal -n "__fish_seen_subcommand_from install" -l "haddock-quickjump" -d "Generate an index for interactive documentation navigation"
 complete -c cabal -n "__fish_seen_subcommand_from install" -l "haddock-hscolour-css" -d "Use PATH as the HsColour stylesheet" -r
 complete -c cabal -n "__fish_seen_subcommand_from install" -l "haddock-contents-location" -d "Bake URL in as the location for the contents page" -x
-complete -c cabal -n "__fish_seen_subcommand_from install" -l "test-log" -d "Log all test suite results to file (name template can use $pkgid, $compiler, $os, $arch, $test-suite, $result)" -r
-complete -c cabal -n "__fish_seen_subcommand_from install" -l "test-machine-log" -d "Produce a machine-readable log file (name template can use $pkgid, $compiler, $os, $arch, $result)" -r
+complete -c cabal -n "__fish_seen_subcommand_from install" -l "test-log" -d "Log all test suite results to file (name template can use \$pkgid, \$compiler, \$os, \$arch, \$test-suite, \$result)" -r
+complete -c cabal -n "__fish_seen_subcommand_from install" -l "test-machine-log" -d "Produce a machine-readable log file (name template can use \$pkgid, \$compiler, \$os, \$arch, \$result)" -r
 complete -c cabal -n "__fish_seen_subcommand_from install" -l "test-show-details" -d "'always': always show results of individual test cases." -r
 complete -c cabal -n "__fish_seen_subcommand_from install" -l "test-keep-tix-files" -d "keep .tix files for HPC between test runs"
 complete -c cabal -n "__fish_seen_subcommand_from install" -l "test-wrapper" -d "Run test through a wrapper." -r
 complete -c cabal -n "__fish_seen_subcommand_from install" -l "test-fail-when-no-test-suites" -d "Exit with failure when no test suites are found."
-complete -c cabal -n "__fish_seen_subcommand_from install" -l "test-options" -d "give extra options to test executables (name templates can use $pkgid, $compiler, $os, $arch, $test-suite)" -x
-complete -c cabal -n "__fish_seen_subcommand_from install" -l "test-option" -d "give extra option to test executables (no need to quote options containing spaces, name template can use $pkgid, $compiler, $os, $arch, $test-suite)" -x
-complete -c cabal -n "__fish_seen_subcommand_from install" -l "benchmark-options" -d "give extra options to benchmark executables (name templates can use $pkgid, $compiler, $os, $arch, $benchmark)" -x
-complete -c cabal -n "__fish_seen_subcommand_from install" -l "benchmark-option" -d "give extra option to benchmark executables (no need to quote options containing spaces, name template can use $pkgid, $compiler, $os, $arch, $benchmark)" -x
+complete -c cabal -n "__fish_seen_subcommand_from install" -l "test-options" -d "give extra options to test executables (name templates can use \$pkgid, \$compiler, \$os, \$arch, \$test-suite)" -x
+complete -c cabal -n "__fish_seen_subcommand_from install" -l "test-option" -d "give extra option to test executables (no need to quote options containing spaces, name template can use \$pkgid, \$compiler, \$os, \$arch, \$test-suite)" -x
+complete -c cabal -n "__fish_seen_subcommand_from install" -l "benchmark-options" -d "give extra options to benchmark executables (name templates can use \$pkgid, \$compiler, \$os, \$arch, \$benchmark)" -x
+complete -c cabal -n "__fish_seen_subcommand_from install" -l "benchmark-option" -d "give extra option to benchmark executables (no need to quote options containing spaces, name template can use \$pkgid, \$compiler, \$os, \$arch, \$benchmark)" -x
 complete -c cabal -n "__fish_seen_subcommand_from install" -l "project-file" -d "Set the name of the cabal.project file to search for in parent directories" -r
 complete -c cabal -n "__fish_seen_subcommand_from install" -s "z" -l "ignore-project" -d "Ignore local project configuration"
 complete -c cabal -n "__fish_seen_subcommand_from install" -l "lib" -d "Install libraries rather than executables from the target package (provisional, see https://github.com/haskell/cabal/issues/6481 for more information)."
@@ -560,7 +560,7 @@ complete -c cabal -n "__fish_seen_subcommand_from configure" -l "allow-newer" -d
 complete -c cabal -n "__fish_seen_subcommand_from configure" -l "write-ghc-environment-files" -d "Whether to create a .ghc.environment file after a successful build (v2-build only)" -r
 complete -c cabal -n "__fish_seen_subcommand_from configure" -l "enable-documentation" -d "Enable building of documentation"
 complete -c cabal -n "__fish_seen_subcommand_from configure" -l "disable-documentation" -d "Disable building of documentation"
-complete -c cabal -n "__fish_seen_subcommand_from configure" -l "doc-index-file" -d "A central index of haddock API documentation (template cannot use $pkgid)" -x
+complete -c cabal -n "__fish_seen_subcommand_from configure" -l "doc-index-file" -d "A central index of haddock API documentation (template cannot use \$pkgid)" -x
 complete -c cabal -n "__fish_seen_subcommand_from configure" -l "dry-run" -d "Do not install anything, only print what would be installed."
 complete -c cabal -n "__fish_seen_subcommand_from configure" -l "only-download" -d "Do not build anything, only fetch the packages."
 complete -c cabal -n "__fish_seen_subcommand_from configure" -l "max-backjumps" -d "Maximum number of backjumps allowed while solving (default: 4000)." -x
@@ -581,15 +581,15 @@ complete -c cabal -n "__fish_seen_subcommand_from configure" -l "only-dependenci
 complete -c cabal -n "__fish_seen_subcommand_from configure" -l "dependencies-only" -d "A synonym for --only-dependencies"
 complete -c cabal -n "__fish_seen_subcommand_from configure" -l "index-state" -d "Use source package index state as it existed at a previous time." -x
 complete -c cabal -n "__fish_seen_subcommand_from configure" -l "root-cmd" -d "(No longer supported, do not use.)" -x
-complete -c cabal -n "__fish_seen_subcommand_from configure" -l "build-summary" -d "Save build summaries to file (name template can use $pkgid, $compiler, $os, $arch)" -r
-complete -c cabal -n "__fish_seen_subcommand_from configure" -l "build-log" -d "Log all builds to file (name template can use $pkgid, $compiler, $os, $arch)" -r
+complete -c cabal -n "__fish_seen_subcommand_from configure" -l "build-summary" -d "Save build summaries to file (name template can use \$pkgid, \$compiler, \$os, \$arch)" -r
+complete -c cabal -n "__fish_seen_subcommand_from configure" -l "build-log" -d "Log all builds to file (name template can use \$pkgid, \$compiler, \$os, \$arch)" -r
 complete -c cabal -n "__fish_seen_subcommand_from configure" -l "remote-build-reporting" -d "Generate build reports to send to a remote server (none, anonymous or detailed)." -x
 complete -c cabal -n "__fish_seen_subcommand_from configure" -l "report-planning-failure" -d "Generate build reports when the dependency solver fails."
 complete -c cabal -n "__fish_seen_subcommand_from configure" -l "enable-per-component" -d "Enable Per-component builds when possible"
 complete -c cabal -n "__fish_seen_subcommand_from configure" -l "disable-per-component" -d "Disable Per-component builds when possible"
 complete -c cabal -n "__fish_seen_subcommand_from configure" -l "one-shot" -d "Do not record the packages in the world file."
 complete -c cabal -n "__fish_seen_subcommand_from configure" -l "run-tests" -d "Run package test suites during installation."
-complete -c cabal -n "__fish_seen_subcommand_from configure" -s "j" -l "jobs" -d "Run NUM jobs simultaneously (or '$ncpus' if no NUM is given)." -x
+complete -c cabal -n "__fish_seen_subcommand_from configure" -s "j" -l "jobs" -d "Run NUM jobs simultaneously (or '\$ncpus' if no NUM is given)." -x
 complete -c cabal -n "__fish_seen_subcommand_from configure" -l "keep-going" -d "After a build failure, continue to build other unaffected packages."
 complete -c cabal -n "__fish_seen_subcommand_from configure" -l "offline" -d "Don't download packages from the Internet."
 complete -c cabal -n "__fish_seen_subcommand_from configure" -l "haddock-hoogle" -d "Generate a hoogle database"
@@ -606,16 +606,16 @@ complete -c cabal -n "__fish_seen_subcommand_from configure" -l "haddock-hyperli
 complete -c cabal -n "__fish_seen_subcommand_from configure" -l "haddock-quickjump" -d "Generate an index for interactive documentation navigation"
 complete -c cabal -n "__fish_seen_subcommand_from configure" -l "haddock-hscolour-css" -d "Use PATH as the HsColour stylesheet" -r
 complete -c cabal -n "__fish_seen_subcommand_from configure" -l "haddock-contents-location" -d "Bake URL in as the location for the contents page" -x
-complete -c cabal -n "__fish_seen_subcommand_from configure" -l "test-log" -d "Log all test suite results to file (name template can use $pkgid, $compiler, $os, $arch, $test-suite, $result)" -r
-complete -c cabal -n "__fish_seen_subcommand_from configure" -l "test-machine-log" -d "Produce a machine-readable log file (name template can use $pkgid, $compiler, $os, $arch, $result)" -r
+complete -c cabal -n "__fish_seen_subcommand_from configure" -l "test-log" -d "Log all test suite results to file (name template can use \$pkgid, \$compiler, \$os, \$arch, \$test-suite, \$result)" -r
+complete -c cabal -n "__fish_seen_subcommand_from configure" -l "test-machine-log" -d "Produce a machine-readable log file (name template can use \$pkgid, \$compiler, \$os, \$arch, \$result)" -r
 complete -c cabal -n "__fish_seen_subcommand_from configure" -l "test-show-details" -d "'always': always show results of individual test cases." -r
 complete -c cabal -n "__fish_seen_subcommand_from configure" -l "test-keep-tix-files" -d "keep .tix files for HPC between test runs"
 complete -c cabal -n "__fish_seen_subcommand_from configure" -l "test-wrapper" -d "Run test through a wrapper." -r
 complete -c cabal -n "__fish_seen_subcommand_from configure" -l "test-fail-when-no-test-suites" -d "Exit with failure when no test suites are found."
-complete -c cabal -n "__fish_seen_subcommand_from configure" -l "test-options" -d "give extra options to test executables (name templates can use $pkgid, $compiler, $os, $arch, $test-suite)" -x
-complete -c cabal -n "__fish_seen_subcommand_from configure" -l "test-option" -d "give extra option to test executables (no need to quote options containing spaces, name template can use $pkgid, $compiler, $os, $arch, $test-suite)" -x
-complete -c cabal -n "__fish_seen_subcommand_from configure" -l "benchmark-options" -d "give extra options to benchmark executables (name templates can use $pkgid, $compiler, $os, $arch, $benchmark)" -x
-complete -c cabal -n "__fish_seen_subcommand_from configure" -l "benchmark-option" -d "give extra option to benchmark executables (no need to quote options containing spaces, name template can use $pkgid, $compiler, $os, $arch, $benchmark)" -x
+complete -c cabal -n "__fish_seen_subcommand_from configure" -l "test-options" -d "give extra options to test executables (name templates can use \$pkgid, \$compiler, \$os, \$arch, \$test-suite)" -x
+complete -c cabal -n "__fish_seen_subcommand_from configure" -l "test-option" -d "give extra option to test executables (no need to quote options containing spaces, name template can use \$pkgid, \$compiler, \$os, \$arch, \$test-suite)" -x
+complete -c cabal -n "__fish_seen_subcommand_from configure" -l "benchmark-options" -d "give extra options to benchmark executables (name templates can use \$pkgid, \$compiler, \$os, \$arch, \$benchmark)" -x
+complete -c cabal -n "__fish_seen_subcommand_from configure" -l "benchmark-option" -d "give extra option to benchmark executables (no need to quote options containing spaces, name template can use \$pkgid, \$compiler, \$os, \$arch, \$benchmark)" -x
 complete -c cabal -n "__fish_seen_subcommand_from configure" -l "project-file" -d "Set the name of the cabal.project file to search for in parent directories" -r
 
 
@@ -715,7 +715,7 @@ complete -c cabal -n "__fish_seen_subcommand_from build" -l "allow-newer" -d "Ig
 complete -c cabal -n "__fish_seen_subcommand_from build" -l "write-ghc-environment-files" -d "Whether to create a .ghc.environment file after a successful build (v2-build only)" -r
 complete -c cabal -n "__fish_seen_subcommand_from build" -l "enable-documentation" -d "Enable building of documentation"
 complete -c cabal -n "__fish_seen_subcommand_from build" -l "disable-documentation" -d "Disable building of documentation"
-complete -c cabal -n "__fish_seen_subcommand_from build" -l "doc-index-file" -d "A central index of haddock API documentation (template cannot use $pkgid)" -x
+complete -c cabal -n "__fish_seen_subcommand_from build" -l "doc-index-file" -d "A central index of haddock API documentation (template cannot use \$pkgid)" -x
 complete -c cabal -n "__fish_seen_subcommand_from build" -l "dry-run" -d "Do not install anything, only print what would be installed."
 complete -c cabal -n "__fish_seen_subcommand_from build" -l "only-download" -d "Do not build anything, only fetch the packages."
 complete -c cabal -n "__fish_seen_subcommand_from build" -l "max-backjumps" -d "Maximum number of backjumps allowed while solving (default: 4000)." -x
@@ -736,15 +736,15 @@ complete -c cabal -n "__fish_seen_subcommand_from build" -l "only-dependencies" 
 complete -c cabal -n "__fish_seen_subcommand_from build" -l "dependencies-only" -d "A synonym for --only-dependencies"
 complete -c cabal -n "__fish_seen_subcommand_from build" -l "index-state" -d "Use source package index state as it existed at a previous time." -x
 complete -c cabal -n "__fish_seen_subcommand_from build" -l "root-cmd" -d "(No longer supported, do not use.)" -x
-complete -c cabal -n "__fish_seen_subcommand_from build" -l "build-summary" -d "Save build summaries to file (name template can use $pkgid, $compiler, $os, $arch)" -r
-complete -c cabal -n "__fish_seen_subcommand_from build" -l "build-log" -d "Log all builds to file (name template can use $pkgid, $compiler, $os, $arch)" -r
+complete -c cabal -n "__fish_seen_subcommand_from build" -l "build-summary" -d "Save build summaries to file (name template can use \$pkgid, \$compiler, \$os, \$arch)" -r
+complete -c cabal -n "__fish_seen_subcommand_from build" -l "build-log" -d "Log all builds to file (name template can use \$pkgid, \$compiler, \$os, \$arch)" -r
 complete -c cabal -n "__fish_seen_subcommand_from build" -l "remote-build-reporting" -d "Generate build reports to send to a remote server (none, anonymous or detailed)." -x
 complete -c cabal -n "__fish_seen_subcommand_from build" -l "report-planning-failure" -d "Generate build reports when the dependency solver fails."
 complete -c cabal -n "__fish_seen_subcommand_from build" -l "enable-per-component" -d "Enable Per-component builds when possible"
 complete -c cabal -n "__fish_seen_subcommand_from build" -l "disable-per-component" -d "Disable Per-component builds when possible"
 complete -c cabal -n "__fish_seen_subcommand_from build" -l "one-shot" -d "Do not record the packages in the world file."
 complete -c cabal -n "__fish_seen_subcommand_from build" -l "run-tests" -d "Run package test suites during installation."
-complete -c cabal -n "__fish_seen_subcommand_from build" -s "j" -l "jobs" -d "Run NUM jobs simultaneously (or '$ncpus' if no NUM is given)." -x
+complete -c cabal -n "__fish_seen_subcommand_from build" -s "j" -l "jobs" -d "Run NUM jobs simultaneously (or '\$ncpus' if no NUM is given)." -x
 complete -c cabal -n "__fish_seen_subcommand_from build" -l "keep-going" -d "After a build failure, continue to build other unaffected packages."
 complete -c cabal -n "__fish_seen_subcommand_from build" -l "offline" -d "Don't download packages from the Internet."
 complete -c cabal -n "__fish_seen_subcommand_from build" -l "haddock-hoogle" -d "Generate a hoogle database"
@@ -761,16 +761,16 @@ complete -c cabal -n "__fish_seen_subcommand_from build" -l "haddock-hyperlink-s
 complete -c cabal -n "__fish_seen_subcommand_from build" -l "haddock-quickjump" -d "Generate an index for interactive documentation navigation"
 complete -c cabal -n "__fish_seen_subcommand_from build" -l "haddock-hscolour-css" -d "Use PATH as the HsColour stylesheet" -r
 complete -c cabal -n "__fish_seen_subcommand_from build" -l "haddock-contents-location" -d "Bake URL in as the location for the contents page" -x
-complete -c cabal -n "__fish_seen_subcommand_from build" -l "test-log" -d "Log all test suite results to file (name template can use $pkgid, $compiler, $os, $arch, $test-suite, $result)" -r
-complete -c cabal -n "__fish_seen_subcommand_from build" -l "test-machine-log" -d "Produce a machine-readable log file (name template can use $pkgid, $compiler, $os, $arch, $result)" -r
+complete -c cabal -n "__fish_seen_subcommand_from build" -l "test-log" -d "Log all test suite results to file (name template can use \$pkgid, \$compiler, \$os, \$arch, \$test-suite, \$result)" -r
+complete -c cabal -n "__fish_seen_subcommand_from build" -l "test-machine-log" -d "Produce a machine-readable log file (name template can use \$pkgid, \$compiler, \$os, \$arch, \$result)" -r
 complete -c cabal -n "__fish_seen_subcommand_from build" -l "test-show-details" -d "'always': always show results of individual test cases." -r
 complete -c cabal -n "__fish_seen_subcommand_from build" -l "test-keep-tix-files" -d "keep .tix files for HPC between test runs"
 complete -c cabal -n "__fish_seen_subcommand_from build" -l "test-wrapper" -d "Run test through a wrapper." -r
 complete -c cabal -n "__fish_seen_subcommand_from build" -l "test-fail-when-no-test-suites" -d "Exit with failure when no test suites are found."
-complete -c cabal -n "__fish_seen_subcommand_from build" -l "test-options" -d "give extra options to test executables (name templates can use $pkgid, $compiler, $os, $arch, $test-suite)" -x
-complete -c cabal -n "__fish_seen_subcommand_from build" -l "test-option" -d "give extra option to test executables (no need to quote options containing spaces, name template can use $pkgid, $compiler, $os, $arch, $test-suite)" -x
-complete -c cabal -n "__fish_seen_subcommand_from build" -l "benchmark-options" -d "give extra options to benchmark executables (name templates can use $pkgid, $compiler, $os, $arch, $benchmark)" -x
-complete -c cabal -n "__fish_seen_subcommand_from build" -l "benchmark-option" -d "give extra option to benchmark executables (no need to quote options containing spaces, name template can use $pkgid, $compiler, $os, $arch, $benchmark)" -x
+complete -c cabal -n "__fish_seen_subcommand_from build" -l "test-options" -d "give extra options to test executables (name templates can use \$pkgid, \$compiler, \$os, \$arch, \$test-suite)" -x
+complete -c cabal -n "__fish_seen_subcommand_from build" -l "test-option" -d "give extra option to test executables (no need to quote options containing spaces, name template can use \$pkgid, \$compiler, \$os, \$arch, \$test-suite)" -x
+complete -c cabal -n "__fish_seen_subcommand_from build" -l "benchmark-options" -d "give extra options to benchmark executables (name templates can use \$pkgid, \$compiler, \$os, \$arch, \$benchmark)" -x
+complete -c cabal -n "__fish_seen_subcommand_from build" -l "benchmark-option" -d "give extra option to benchmark executables (no need to quote options containing spaces, name template can use \$pkgid, \$compiler, \$os, \$arch, \$benchmark)" -x
 complete -c cabal -n "__fish_seen_subcommand_from build" -l "project-file" -d "Set the name of the cabal.project file to search for in parent directories" -r
 complete -c cabal -n "__fish_seen_subcommand_from build" -l "only-configure" -d "Instead of performing a full build just run the configure step"
 
@@ -879,7 +879,7 @@ complete -c cabal -n "__fish_seen_subcommand_from run" -l "allow-newer" -d "Igno
 complete -c cabal -n "__fish_seen_subcommand_from run" -l "write-ghc-environment-files" -d "Whether to create a .ghc.environment file after a successful build (v2-build only)" -r
 complete -c cabal -n "__fish_seen_subcommand_from run" -l "enable-documentation" -d "Enable building of documentation"
 complete -c cabal -n "__fish_seen_subcommand_from run" -l "disable-documentation" -d "Disable building of documentation"
-complete -c cabal -n "__fish_seen_subcommand_from run" -l "doc-index-file" -d "A central index of haddock API documentation (template cannot use $pkgid)" -x
+complete -c cabal -n "__fish_seen_subcommand_from run" -l "doc-index-file" -d "A central index of haddock API documentation (template cannot use \$pkgid)" -x
 complete -c cabal -n "__fish_seen_subcommand_from run" -l "dry-run" -d "Do not install anything, only print what would be installed."
 complete -c cabal -n "__fish_seen_subcommand_from run" -l "only-download" -d "Do not build anything, only fetch the packages."
 complete -c cabal -n "__fish_seen_subcommand_from run" -l "max-backjumps" -d "Maximum number of backjumps allowed while solving (default: 4000)." -x
@@ -900,15 +900,15 @@ complete -c cabal -n "__fish_seen_subcommand_from run" -l "only-dependencies" -d
 complete -c cabal -n "__fish_seen_subcommand_from run" -l "dependencies-only" -d "A synonym for --only-dependencies"
 complete -c cabal -n "__fish_seen_subcommand_from run" -l "index-state" -d "Use source package index state as it existed at a previous time." -x
 complete -c cabal -n "__fish_seen_subcommand_from run" -l "root-cmd" -d "(No longer supported, do not use.)" -x
-complete -c cabal -n "__fish_seen_subcommand_from run" -l "build-summary" -d "Save build summaries to file (name template can use $pkgid, $compiler, $os, $arch)" -r
-complete -c cabal -n "__fish_seen_subcommand_from run" -l "build-log" -d "Log all builds to file (name template can use $pkgid, $compiler, $os, $arch)" -r
+complete -c cabal -n "__fish_seen_subcommand_from run" -l "build-summary" -d "Save build summaries to file (name template can use \$pkgid, \$compiler, \$os, \$arch)" -r
+complete -c cabal -n "__fish_seen_subcommand_from run" -l "build-log" -d "Log all builds to file (name template can use \$pkgid, \$compiler, \$os, \$arch)" -r
 complete -c cabal -n "__fish_seen_subcommand_from run" -l "remote-build-reporting" -d "Generate build reports to send to a remote server (none, anonymous or detailed)." -x
 complete -c cabal -n "__fish_seen_subcommand_from run" -l "report-planning-failure" -d "Generate build reports when the dependency solver fails."
 complete -c cabal -n "__fish_seen_subcommand_from run" -l "enable-per-component" -d "Enable Per-component builds when possible"
 complete -c cabal -n "__fish_seen_subcommand_from run" -l "disable-per-component" -d "Disable Per-component builds when possible"
 complete -c cabal -n "__fish_seen_subcommand_from run" -l "one-shot" -d "Do not record the packages in the world file."
 complete -c cabal -n "__fish_seen_subcommand_from run" -l "run-tests" -d "Run package test suites during installation."
-complete -c cabal -n "__fish_seen_subcommand_from run" -s "j" -l "jobs" -d "Run NUM jobs simultaneously (or '$ncpus' if no NUM is given)." -x
+complete -c cabal -n "__fish_seen_subcommand_from run" -s "j" -l "jobs" -d "Run NUM jobs simultaneously (or '\$ncpus' if no NUM is given)." -x
 complete -c cabal -n "__fish_seen_subcommand_from run" -l "keep-going" -d "After a build failure, continue to build other unaffected packages."
 complete -c cabal -n "__fish_seen_subcommand_from run" -l "offline" -d "Don't download packages from the Internet."
 complete -c cabal -n "__fish_seen_subcommand_from run" -l "haddock-hoogle" -d "Generate a hoogle database"
@@ -925,16 +925,16 @@ complete -c cabal -n "__fish_seen_subcommand_from run" -l "haddock-hyperlink-sou
 complete -c cabal -n "__fish_seen_subcommand_from run" -l "haddock-quickjump" -d "Generate an index for interactive documentation navigation"
 complete -c cabal -n "__fish_seen_subcommand_from run" -l "haddock-hscolour-css" -d "Use PATH as the HsColour stylesheet" -r
 complete -c cabal -n "__fish_seen_subcommand_from run" -l "haddock-contents-location" -d "Bake URL in as the location for the contents page" -x
-complete -c cabal -n "__fish_seen_subcommand_from run" -l "test-log" -d "Log all test suite results to file (name template can use $pkgid, $compiler, $os, $arch, $test-suite, $result)" -r
-complete -c cabal -n "__fish_seen_subcommand_from run" -l "test-machine-log" -d "Produce a machine-readable log file (name template can use $pkgid, $compiler, $os, $arch, $result)" -r
+complete -c cabal -n "__fish_seen_subcommand_from run" -l "test-log" -d "Log all test suite results to file (name template can use \$pkgid, \$compiler, \$os, \$arch, \$test-suite, \$result)" -r
+complete -c cabal -n "__fish_seen_subcommand_from run" -l "test-machine-log" -d "Produce a machine-readable log file (name template can use \$pkgid, \$compiler, \$os, \$arch, \$result)" -r
 complete -c cabal -n "__fish_seen_subcommand_from run" -l "test-show-details" -d "'always': always show results of individual test cases." -r
 complete -c cabal -n "__fish_seen_subcommand_from run" -l "test-keep-tix-files" -d "keep .tix files for HPC between test runs"
 complete -c cabal -n "__fish_seen_subcommand_from run" -l "test-wrapper" -d "Run test through a wrapper." -r
 complete -c cabal -n "__fish_seen_subcommand_from run" -l "test-fail-when-no-test-suites" -d "Exit with failure when no test suites are found."
-complete -c cabal -n "__fish_seen_subcommand_from run" -l "test-options" -d "give extra options to test executables (name templates can use $pkgid, $compiler, $os, $arch, $test-suite)" -x
-complete -c cabal -n "__fish_seen_subcommand_from run" -l "test-option" -d "give extra option to test executables (no need to quote options containing spaces, name template can use $pkgid, $compiler, $os, $arch, $test-suite)" -x
-complete -c cabal -n "__fish_seen_subcommand_from run" -l "benchmark-options" -d "give extra options to benchmark executables (name templates can use $pkgid, $compiler, $os, $arch, $benchmark)" -x
-complete -c cabal -n "__fish_seen_subcommand_from run" -l "benchmark-option" -d "give extra option to benchmark executables (no need to quote options containing spaces, name template can use $pkgid, $compiler, $os, $arch, $benchmark)" -x
+complete -c cabal -n "__fish_seen_subcommand_from run" -l "test-options" -d "give extra options to test executables (name templates can use \$pkgid, \$compiler, \$os, \$arch, \$test-suite)" -x
+complete -c cabal -n "__fish_seen_subcommand_from run" -l "test-option" -d "give extra option to test executables (no need to quote options containing spaces, name template can use \$pkgid, \$compiler, \$os, \$arch, \$test-suite)" -x
+complete -c cabal -n "__fish_seen_subcommand_from run" -l "benchmark-options" -d "give extra options to benchmark executables (name templates can use \$pkgid, \$compiler, \$os, \$arch, \$benchmark)" -x
+complete -c cabal -n "__fish_seen_subcommand_from run" -l "benchmark-option" -d "give extra option to benchmark executables (no need to quote options containing spaces, name template can use \$pkgid, \$compiler, \$os, \$arch, \$benchmark)" -x
 complete -c cabal -n "__fish_seen_subcommand_from run" -l "project-file" -d "Set the name of the cabal.project file to search for in parent directories" -r
 complete -c cabal -n "__fish_seen_subcommand_from run" -s "z" -l "ignore-project" -d "Ignore local project configuration"
 
@@ -1035,7 +1035,7 @@ complete -c cabal -n "__fish_seen_subcommand_from repl" -l "allow-newer" -d "Ign
 complete -c cabal -n "__fish_seen_subcommand_from repl" -l "write-ghc-environment-files" -d "Whether to create a .ghc.environment file after a successful build (v2-build only)" -r
 complete -c cabal -n "__fish_seen_subcommand_from repl" -l "enable-documentation" -d "Enable building of documentation"
 complete -c cabal -n "__fish_seen_subcommand_from repl" -l "disable-documentation" -d "Disable building of documentation"
-complete -c cabal -n "__fish_seen_subcommand_from repl" -l "doc-index-file" -d "A central index of haddock API documentation (template cannot use $pkgid)" -x
+complete -c cabal -n "__fish_seen_subcommand_from repl" -l "doc-index-file" -d "A central index of haddock API documentation (template cannot use \$pkgid)" -x
 complete -c cabal -n "__fish_seen_subcommand_from repl" -l "dry-run" -d "Do not install anything, only print what would be installed."
 complete -c cabal -n "__fish_seen_subcommand_from repl" -l "only-download" -d "Do not build anything, only fetch the packages."
 complete -c cabal -n "__fish_seen_subcommand_from repl" -l "max-backjumps" -d "Maximum number of backjumps allowed while solving (default: 4000)." -x
@@ -1056,15 +1056,15 @@ complete -c cabal -n "__fish_seen_subcommand_from repl" -l "only-dependencies" -
 complete -c cabal -n "__fish_seen_subcommand_from repl" -l "dependencies-only" -d "A synonym for --only-dependencies"
 complete -c cabal -n "__fish_seen_subcommand_from repl" -l "index-state" -d "Use source package index state as it existed at a previous time." -x
 complete -c cabal -n "__fish_seen_subcommand_from repl" -l "root-cmd" -d "(No longer supported, do not use.)" -x
-complete -c cabal -n "__fish_seen_subcommand_from repl" -l "build-summary" -d "Save build summaries to file (name template can use $pkgid, $compiler, $os, $arch)" -r
-complete -c cabal -n "__fish_seen_subcommand_from repl" -l "build-log" -d "Log all builds to file (name template can use $pkgid, $compiler, $os, $arch)" -r
+complete -c cabal -n "__fish_seen_subcommand_from repl" -l "build-summary" -d "Save build summaries to file (name template can use \$pkgid, \$compiler, \$os, \$arch)" -r
+complete -c cabal -n "__fish_seen_subcommand_from repl" -l "build-log" -d "Log all builds to file (name template can use \$pkgid, \$compiler, \$os, \$arch)" -r
 complete -c cabal -n "__fish_seen_subcommand_from repl" -l "remote-build-reporting" -d "Generate build reports to send to a remote server (none, anonymous or detailed)." -x
 complete -c cabal -n "__fish_seen_subcommand_from repl" -l "report-planning-failure" -d "Generate build reports when the dependency solver fails."
 complete -c cabal -n "__fish_seen_subcommand_from repl" -l "enable-per-component" -d "Enable Per-component builds when possible"
 complete -c cabal -n "__fish_seen_subcommand_from repl" -l "disable-per-component" -d "Disable Per-component builds when possible"
 complete -c cabal -n "__fish_seen_subcommand_from repl" -l "one-shot" -d "Do not record the packages in the world file."
 complete -c cabal -n "__fish_seen_subcommand_from repl" -l "run-tests" -d "Run package test suites during installation."
-complete -c cabal -n "__fish_seen_subcommand_from repl" -s "j" -l "jobs" -d "Run NUM jobs simultaneously (or '$ncpus' if no NUM is given)." -x
+complete -c cabal -n "__fish_seen_subcommand_from repl" -s "j" -l "jobs" -d "Run NUM jobs simultaneously (or '\$ncpus' if no NUM is given)." -x
 complete -c cabal -n "__fish_seen_subcommand_from repl" -l "keep-going" -d "After a build failure, continue to build other unaffected packages."
 complete -c cabal -n "__fish_seen_subcommand_from repl" -l "offline" -d "Don't download packages from the Internet."
 complete -c cabal -n "__fish_seen_subcommand_from repl" -l "haddock-hoogle" -d "Generate a hoogle database"
@@ -1081,16 +1081,16 @@ complete -c cabal -n "__fish_seen_subcommand_from repl" -l "haddock-hyperlink-so
 complete -c cabal -n "__fish_seen_subcommand_from repl" -l "haddock-quickjump" -d "Generate an index for interactive documentation navigation"
 complete -c cabal -n "__fish_seen_subcommand_from repl" -l "haddock-hscolour-css" -d "Use PATH as the HsColour stylesheet" -r
 complete -c cabal -n "__fish_seen_subcommand_from repl" -l "haddock-contents-location" -d "Bake URL in as the location for the contents page" -x
-complete -c cabal -n "__fish_seen_subcommand_from repl" -l "test-log" -d "Log all test suite results to file (name template can use $pkgid, $compiler, $os, $arch, $test-suite, $result)" -r
-complete -c cabal -n "__fish_seen_subcommand_from repl" -l "test-machine-log" -d "Produce a machine-readable log file (name template can use $pkgid, $compiler, $os, $arch, $result)" -r
+complete -c cabal -n "__fish_seen_subcommand_from repl" -l "test-log" -d "Log all test suite results to file (name template can use \$pkgid, \$compiler, \$os, \$arch, \$test-suite, \$result)" -r
+complete -c cabal -n "__fish_seen_subcommand_from repl" -l "test-machine-log" -d "Produce a machine-readable log file (name template can use \$pkgid, \$compiler, \$os, \$arch, \$result)" -r
 complete -c cabal -n "__fish_seen_subcommand_from repl" -l "test-show-details" -d "'always': always show results of individual test cases." -r
 complete -c cabal -n "__fish_seen_subcommand_from repl" -l "test-keep-tix-files" -d "keep .tix files for HPC between test runs"
 complete -c cabal -n "__fish_seen_subcommand_from repl" -l "test-wrapper" -d "Run test through a wrapper." -r
 complete -c cabal -n "__fish_seen_subcommand_from repl" -l "test-fail-when-no-test-suites" -d "Exit with failure when no test suites are found."
-complete -c cabal -n "__fish_seen_subcommand_from repl" -l "test-options" -d "give extra options to test executables (name templates can use $pkgid, $compiler, $os, $arch, $test-suite)" -x
-complete -c cabal -n "__fish_seen_subcommand_from repl" -l "test-option" -d "give extra option to test executables (no need to quote options containing spaces, name template can use $pkgid, $compiler, $os, $arch, $test-suite)" -x
-complete -c cabal -n "__fish_seen_subcommand_from repl" -l "benchmark-options" -d "give extra options to benchmark executables (name templates can use $pkgid, $compiler, $os, $arch, $benchmark)" -x
-complete -c cabal -n "__fish_seen_subcommand_from repl" -l "benchmark-option" -d "give extra option to benchmark executables (no need to quote options containing spaces, name template can use $pkgid, $compiler, $os, $arch, $benchmark)" -x
+complete -c cabal -n "__fish_seen_subcommand_from repl" -l "test-options" -d "give extra options to test executables (name templates can use \$pkgid, \$compiler, \$os, \$arch, \$test-suite)" -x
+complete -c cabal -n "__fish_seen_subcommand_from repl" -l "test-option" -d "give extra option to test executables (no need to quote options containing spaces, name template can use \$pkgid, \$compiler, \$os, \$arch, \$test-suite)" -x
+complete -c cabal -n "__fish_seen_subcommand_from repl" -l "benchmark-options" -d "give extra options to benchmark executables (name templates can use \$pkgid, \$compiler, \$os, \$arch, \$benchmark)" -x
+complete -c cabal -n "__fish_seen_subcommand_from repl" -l "benchmark-option" -d "give extra option to benchmark executables (no need to quote options containing spaces, name template can use \$pkgid, \$compiler, \$os, \$arch, \$benchmark)" -x
 complete -c cabal -n "__fish_seen_subcommand_from repl" -l "project-file" -d "Set the name of the cabal.project file to search for in parent directories" -r
 complete -c cabal -n "__fish_seen_subcommand_from repl" -s "z" -l "ignore-project" -d "Ignore local project configuration"
 complete -c cabal -n "__fish_seen_subcommand_from repl" -l "repl-options" -d "use this option for the repl" -x
@@ -1194,7 +1194,7 @@ complete -c cabal -n "__fish_seen_subcommand_from test" -l "allow-newer" -d "Ign
 complete -c cabal -n "__fish_seen_subcommand_from test" -l "write-ghc-environment-files" -d "Whether to create a .ghc.environment file after a successful build (v2-build only)" -r
 complete -c cabal -n "__fish_seen_subcommand_from test" -l "enable-documentation" -d "Enable building of documentation"
 complete -c cabal -n "__fish_seen_subcommand_from test" -l "disable-documentation" -d "Disable building of documentation"
-complete -c cabal -n "__fish_seen_subcommand_from test" -l "doc-index-file" -d "A central index of haddock API documentation (template cannot use $pkgid)" -x
+complete -c cabal -n "__fish_seen_subcommand_from test" -l "doc-index-file" -d "A central index of haddock API documentation (template cannot use \$pkgid)" -x
 complete -c cabal -n "__fish_seen_subcommand_from test" -l "dry-run" -d "Do not install anything, only print what would be installed."
 complete -c cabal -n "__fish_seen_subcommand_from test" -l "only-download" -d "Do not build anything, only fetch the packages."
 complete -c cabal -n "__fish_seen_subcommand_from test" -l "max-backjumps" -d "Maximum number of backjumps allowed while solving (default: 4000)." -x
@@ -1215,15 +1215,15 @@ complete -c cabal -n "__fish_seen_subcommand_from test" -l "only-dependencies" -
 complete -c cabal -n "__fish_seen_subcommand_from test" -l "dependencies-only" -d "A synonym for --only-dependencies"
 complete -c cabal -n "__fish_seen_subcommand_from test" -l "index-state" -d "Use source package index state as it existed at a previous time." -x
 complete -c cabal -n "__fish_seen_subcommand_from test" -l "root-cmd" -d "(No longer supported, do not use.)" -x
-complete -c cabal -n "__fish_seen_subcommand_from test" -l "build-summary" -d "Save build summaries to file (name template can use $pkgid, $compiler, $os, $arch)" -r
-complete -c cabal -n "__fish_seen_subcommand_from test" -l "build-log" -d "Log all builds to file (name template can use $pkgid, $compiler, $os, $arch)" -r
+complete -c cabal -n "__fish_seen_subcommand_from test" -l "build-summary" -d "Save build summaries to file (name template can use \$pkgid, \$compiler, \$os, \$arch)" -r
+complete -c cabal -n "__fish_seen_subcommand_from test" -l "build-log" -d "Log all builds to file (name template can use \$pkgid, \$compiler, \$os, \$arch)" -r
 complete -c cabal -n "__fish_seen_subcommand_from test" -l "remote-build-reporting" -d "Generate build reports to send to a remote server (none, anonymous or detailed)." -x
 complete -c cabal -n "__fish_seen_subcommand_from test" -l "report-planning-failure" -d "Generate build reports when the dependency solver fails."
 complete -c cabal -n "__fish_seen_subcommand_from test" -l "enable-per-component" -d "Enable Per-component builds when possible"
 complete -c cabal -n "__fish_seen_subcommand_from test" -l "disable-per-component" -d "Disable Per-component builds when possible"
 complete -c cabal -n "__fish_seen_subcommand_from test" -l "one-shot" -d "Do not record the packages in the world file."
 complete -c cabal -n "__fish_seen_subcommand_from test" -l "run-tests" -d "Run package test suites during installation."
-complete -c cabal -n "__fish_seen_subcommand_from test" -s "j" -l "jobs" -d "Run NUM jobs simultaneously (or '$ncpus' if no NUM is given)." -x
+complete -c cabal -n "__fish_seen_subcommand_from test" -s "j" -l "jobs" -d "Run NUM jobs simultaneously (or '\$ncpus' if no NUM is given)." -x
 complete -c cabal -n "__fish_seen_subcommand_from test" -l "keep-going" -d "After a build failure, continue to build other unaffected packages."
 complete -c cabal -n "__fish_seen_subcommand_from test" -l "offline" -d "Don't download packages from the Internet."
 complete -c cabal -n "__fish_seen_subcommand_from test" -l "haddock-hoogle" -d "Generate a hoogle database"
@@ -1240,16 +1240,16 @@ complete -c cabal -n "__fish_seen_subcommand_from test" -l "haddock-hyperlink-so
 complete -c cabal -n "__fish_seen_subcommand_from test" -l "haddock-quickjump" -d "Generate an index for interactive documentation navigation"
 complete -c cabal -n "__fish_seen_subcommand_from test" -l "haddock-hscolour-css" -d "Use PATH as the HsColour stylesheet" -r
 complete -c cabal -n "__fish_seen_subcommand_from test" -l "haddock-contents-location" -d "Bake URL in as the location for the contents page" -x
-complete -c cabal -n "__fish_seen_subcommand_from test" -l "test-log" -d "Log all test suite results to file (name template can use $pkgid, $compiler, $os, $arch, $test-suite, $result)" -r
-complete -c cabal -n "__fish_seen_subcommand_from test" -l "test-machine-log" -d "Produce a machine-readable log file (name template can use $pkgid, $compiler, $os, $arch, $result)" -r
+complete -c cabal -n "__fish_seen_subcommand_from test" -l "test-log" -d "Log all test suite results to file (name template can use \$pkgid, \$compiler, \$os, \$arch, \$test-suite, \$result)" -r
+complete -c cabal -n "__fish_seen_subcommand_from test" -l "test-machine-log" -d "Produce a machine-readable log file (name template can use \$pkgid, \$compiler, \$os, \$arch, \$result)" -r
 complete -c cabal -n "__fish_seen_subcommand_from test" -l "test-show-details" -d "'always': always show results of individual test cases." -r
 complete -c cabal -n "__fish_seen_subcommand_from test" -l "test-keep-tix-files" -d "keep .tix files for HPC between test runs"
 complete -c cabal -n "__fish_seen_subcommand_from test" -l "test-wrapper" -d "Run test through a wrapper." -r
 complete -c cabal -n "__fish_seen_subcommand_from test" -l "test-fail-when-no-test-suites" -d "Exit with failure when no test suites are found."
-complete -c cabal -n "__fish_seen_subcommand_from test" -l "test-options" -d "give extra options to test executables (name templates can use $pkgid, $compiler, $os, $arch, $test-suite)" -x
-complete -c cabal -n "__fish_seen_subcommand_from test" -l "test-option" -d "give extra option to test executables (no need to quote options containing spaces, name template can use $pkgid, $compiler, $os, $arch, $test-suite)" -x
-complete -c cabal -n "__fish_seen_subcommand_from test" -l "benchmark-options" -d "give extra options to benchmark executables (name templates can use $pkgid, $compiler, $os, $arch, $benchmark)" -x
-complete -c cabal -n "__fish_seen_subcommand_from test" -l "benchmark-option" -d "give extra option to benchmark executables (no need to quote options containing spaces, name template can use $pkgid, $compiler, $os, $arch, $benchmark)" -x
+complete -c cabal -n "__fish_seen_subcommand_from test" -l "test-options" -d "give extra options to test executables (name templates can use \$pkgid, \$compiler, \$os, \$arch, \$test-suite)" -x
+complete -c cabal -n "__fish_seen_subcommand_from test" -l "test-option" -d "give extra option to test executables (no need to quote options containing spaces, name template can use \$pkgid, \$compiler, \$os, \$arch, \$test-suite)" -x
+complete -c cabal -n "__fish_seen_subcommand_from test" -l "benchmark-options" -d "give extra options to benchmark executables (name templates can use \$pkgid, \$compiler, \$os, \$arch, \$benchmark)" -x
+complete -c cabal -n "__fish_seen_subcommand_from test" -l "benchmark-option" -d "give extra option to benchmark executables (no need to quote options containing spaces, name template can use \$pkgid, \$compiler, \$os, \$arch, \$benchmark)" -x
 complete -c cabal -n "__fish_seen_subcommand_from test" -l "project-file" -d "Set the name of the cabal.project file to search for in parent directories" -r
 complete -c cabal -n "__fish_seen_subcommand_from test" -s "z" -l "ignore-project" -d "Ignore local project configuration"
 
@@ -1350,7 +1350,7 @@ complete -c cabal -n "__fish_seen_subcommand_from bench" -l "allow-newer" -d "Ig
 complete -c cabal -n "__fish_seen_subcommand_from bench" -l "write-ghc-environment-files" -d "Whether to create a .ghc.environment file after a successful build (v2-build only)" -r
 complete -c cabal -n "__fish_seen_subcommand_from bench" -l "enable-documentation" -d "Enable building of documentation"
 complete -c cabal -n "__fish_seen_subcommand_from bench" -l "disable-documentation" -d "Disable building of documentation"
-complete -c cabal -n "__fish_seen_subcommand_from bench" -l "doc-index-file" -d "A central index of haddock API documentation (template cannot use $pkgid)" -x
+complete -c cabal -n "__fish_seen_subcommand_from bench" -l "doc-index-file" -d "A central index of haddock API documentation (template cannot use \$pkgid)" -x
 complete -c cabal -n "__fish_seen_subcommand_from bench" -l "dry-run" -d "Do not install anything, only print what would be installed."
 complete -c cabal -n "__fish_seen_subcommand_from bench" -l "only-download" -d "Do not build anything, only fetch the packages."
 complete -c cabal -n "__fish_seen_subcommand_from bench" -l "max-backjumps" -d "Maximum number of backjumps allowed while solving (default: 4000)." -x
@@ -1371,15 +1371,15 @@ complete -c cabal -n "__fish_seen_subcommand_from bench" -l "only-dependencies" 
 complete -c cabal -n "__fish_seen_subcommand_from bench" -l "dependencies-only" -d "A synonym for --only-dependencies"
 complete -c cabal -n "__fish_seen_subcommand_from bench" -l "index-state" -d "Use source package index state as it existed at a previous time." -x
 complete -c cabal -n "__fish_seen_subcommand_from bench" -l "root-cmd" -d "(No longer supported, do not use.)" -x
-complete -c cabal -n "__fish_seen_subcommand_from bench" -l "build-summary" -d "Save build summaries to file (name template can use $pkgid, $compiler, $os, $arch)" -r
-complete -c cabal -n "__fish_seen_subcommand_from bench" -l "build-log" -d "Log all builds to file (name template can use $pkgid, $compiler, $os, $arch)" -r
+complete -c cabal -n "__fish_seen_subcommand_from bench" -l "build-summary" -d "Save build summaries to file (name template can use \$pkgid, \$compiler, \$os, \$arch)" -r
+complete -c cabal -n "__fish_seen_subcommand_from bench" -l "build-log" -d "Log all builds to file (name template can use \$pkgid, \$compiler, \$os, \$arch)" -r
 complete -c cabal -n "__fish_seen_subcommand_from bench" -l "remote-build-reporting" -d "Generate build reports to send to a remote server (none, anonymous or detailed)." -x
 complete -c cabal -n "__fish_seen_subcommand_from bench" -l "report-planning-failure" -d "Generate build reports when the dependency solver fails."
 complete -c cabal -n "__fish_seen_subcommand_from bench" -l "enable-per-component" -d "Enable Per-component builds when possible"
 complete -c cabal -n "__fish_seen_subcommand_from bench" -l "disable-per-component" -d "Disable Per-component builds when possible"
 complete -c cabal -n "__fish_seen_subcommand_from bench" -l "one-shot" -d "Do not record the packages in the world file."
 complete -c cabal -n "__fish_seen_subcommand_from bench" -l "run-tests" -d "Run package test suites during installation."
-complete -c cabal -n "__fish_seen_subcommand_from bench" -s "j" -l "jobs" -d "Run NUM jobs simultaneously (or '$ncpus' if no NUM is given)." -x
+complete -c cabal -n "__fish_seen_subcommand_from bench" -s "j" -l "jobs" -d "Run NUM jobs simultaneously (or '\$ncpus' if no NUM is given)." -x
 complete -c cabal -n "__fish_seen_subcommand_from bench" -l "keep-going" -d "After a build failure, continue to build other unaffected packages."
 complete -c cabal -n "__fish_seen_subcommand_from bench" -l "offline" -d "Don't download packages from the Internet."
 complete -c cabal -n "__fish_seen_subcommand_from bench" -l "haddock-hoogle" -d "Generate a hoogle database"
@@ -1396,16 +1396,16 @@ complete -c cabal -n "__fish_seen_subcommand_from bench" -l "haddock-hyperlink-s
 complete -c cabal -n "__fish_seen_subcommand_from bench" -l "haddock-quickjump" -d "Generate an index for interactive documentation navigation"
 complete -c cabal -n "__fish_seen_subcommand_from bench" -l "haddock-hscolour-css" -d "Use PATH as the HsColour stylesheet" -r
 complete -c cabal -n "__fish_seen_subcommand_from bench" -l "haddock-contents-location" -d "Bake URL in as the location for the contents page" -x
-complete -c cabal -n "__fish_seen_subcommand_from bench" -l "test-log" -d "Log all test suite results to file (name template can use $pkgid, $compiler, $os, $arch, $test-suite, $result)" -r
-complete -c cabal -n "__fish_seen_subcommand_from bench" -l "test-machine-log" -d "Produce a machine-readable log file (name template can use $pkgid, $compiler, $os, $arch, $result)" -r
+complete -c cabal -n "__fish_seen_subcommand_from bench" -l "test-log" -d "Log all test suite results to file (name template can use \$pkgid, \$compiler, \$os, \$arch, \$test-suite, \$result)" -r
+complete -c cabal -n "__fish_seen_subcommand_from bench" -l "test-machine-log" -d "Produce a machine-readable log file (name template can use \$pkgid, \$compiler, \$os, \$arch, \$result)" -r
 complete -c cabal -n "__fish_seen_subcommand_from bench" -l "test-show-details" -d "'always': always show results of individual test cases." -r
 complete -c cabal -n "__fish_seen_subcommand_from bench" -l "test-keep-tix-files" -d "keep .tix files for HPC between test runs"
 complete -c cabal -n "__fish_seen_subcommand_from bench" -l "test-wrapper" -d "Run test through a wrapper." -r
 complete -c cabal -n "__fish_seen_subcommand_from bench" -l "test-fail-when-no-test-suites" -d "Exit with failure when no test suites are found."
-complete -c cabal -n "__fish_seen_subcommand_from bench" -l "test-options" -d "give extra options to test executables (name templates can use $pkgid, $compiler, $os, $arch, $test-suite)" -x
-complete -c cabal -n "__fish_seen_subcommand_from bench" -l "test-option" -d "give extra option to test executables (no need to quote options containing spaces, name template can use $pkgid, $compiler, $os, $arch, $test-suite)" -x
-complete -c cabal -n "__fish_seen_subcommand_from bench" -l "benchmark-options" -d "give extra options to benchmark executables (name templates can use $pkgid, $compiler, $os, $arch, $benchmark)" -x
-complete -c cabal -n "__fish_seen_subcommand_from bench" -l "benchmark-option" -d "give extra option to benchmark executables (no need to quote options containing spaces, name template can use $pkgid, $compiler, $os, $arch, $benchmark)" -x
+complete -c cabal -n "__fish_seen_subcommand_from bench" -l "test-options" -d "give extra options to test executables (name templates can use \$pkgid, \$compiler, \$os, \$arch, \$test-suite)" -x
+complete -c cabal -n "__fish_seen_subcommand_from bench" -l "test-option" -d "give extra option to test executables (no need to quote options containing spaces, name template can use \$pkgid, \$compiler, \$os, \$arch, \$test-suite)" -x
+complete -c cabal -n "__fish_seen_subcommand_from bench" -l "benchmark-options" -d "give extra options to benchmark executables (name templates can use \$pkgid, \$compiler, \$os, \$arch, \$benchmark)" -x
+complete -c cabal -n "__fish_seen_subcommand_from bench" -l "benchmark-option" -d "give extra option to benchmark executables (no need to quote options containing spaces, name template can use \$pkgid, \$compiler, \$os, \$arch, \$benchmark)" -x
 complete -c cabal -n "__fish_seen_subcommand_from bench" -l "project-file" -d "Set the name of the cabal.project file to search for in parent directories" -r
 complete -c cabal -n "__fish_seen_subcommand_from bench" -s "z" -l "ignore-project" -d "Ignore local project configuration"
 
@@ -1539,7 +1539,7 @@ complete -c cabal -n "__fish_seen_subcommand_from freeze" -l "allow-newer" -d "I
 complete -c cabal -n "__fish_seen_subcommand_from freeze" -l "write-ghc-environment-files" -d "Whether to create a .ghc.environment file after a successful build (v2-build only)" -r
 complete -c cabal -n "__fish_seen_subcommand_from freeze" -l "enable-documentation" -d "Enable building of documentation"
 complete -c cabal -n "__fish_seen_subcommand_from freeze" -l "disable-documentation" -d "Disable building of documentation"
-complete -c cabal -n "__fish_seen_subcommand_from freeze" -l "doc-index-file" -d "A central index of haddock API documentation (template cannot use $pkgid)" -x
+complete -c cabal -n "__fish_seen_subcommand_from freeze" -l "doc-index-file" -d "A central index of haddock API documentation (template cannot use \$pkgid)" -x
 complete -c cabal -n "__fish_seen_subcommand_from freeze" -l "dry-run" -d "Do not install anything, only print what would be installed."
 complete -c cabal -n "__fish_seen_subcommand_from freeze" -l "only-download" -d "Do not build anything, only fetch the packages."
 complete -c cabal -n "__fish_seen_subcommand_from freeze" -l "max-backjumps" -d "Maximum number of backjumps allowed while solving (default: 4000)." -x
@@ -1560,15 +1560,15 @@ complete -c cabal -n "__fish_seen_subcommand_from freeze" -l "only-dependencies"
 complete -c cabal -n "__fish_seen_subcommand_from freeze" -l "dependencies-only" -d "A synonym for --only-dependencies"
 complete -c cabal -n "__fish_seen_subcommand_from freeze" -l "index-state" -d "Use source package index state as it existed at a previous time." -x
 complete -c cabal -n "__fish_seen_subcommand_from freeze" -l "root-cmd" -d "(No longer supported, do not use.)" -x
-complete -c cabal -n "__fish_seen_subcommand_from freeze" -l "build-summary" -d "Save build summaries to file (name template can use $pkgid, $compiler, $os, $arch)" -r
-complete -c cabal -n "__fish_seen_subcommand_from freeze" -l "build-log" -d "Log all builds to file (name template can use $pkgid, $compiler, $os, $arch)" -r
+complete -c cabal -n "__fish_seen_subcommand_from freeze" -l "build-summary" -d "Save build summaries to file (name template can use \$pkgid, \$compiler, \$os, \$arch)" -r
+complete -c cabal -n "__fish_seen_subcommand_from freeze" -l "build-log" -d "Log all builds to file (name template can use \$pkgid, \$compiler, \$os, \$arch)" -r
 complete -c cabal -n "__fish_seen_subcommand_from freeze" -l "remote-build-reporting" -d "Generate build reports to send to a remote server (none, anonymous or detailed)." -x
 complete -c cabal -n "__fish_seen_subcommand_from freeze" -l "report-planning-failure" -d "Generate build reports when the dependency solver fails."
 complete -c cabal -n "__fish_seen_subcommand_from freeze" -l "enable-per-component" -d "Enable Per-component builds when possible"
 complete -c cabal -n "__fish_seen_subcommand_from freeze" -l "disable-per-component" -d "Disable Per-component builds when possible"
 complete -c cabal -n "__fish_seen_subcommand_from freeze" -l "one-shot" -d "Do not record the packages in the world file."
 complete -c cabal -n "__fish_seen_subcommand_from freeze" -l "run-tests" -d "Run package test suites during installation."
-complete -c cabal -n "__fish_seen_subcommand_from freeze" -s "j" -l "jobs" -d "Run NUM jobs simultaneously (or '$ncpus' if no NUM is given)." -x
+complete -c cabal -n "__fish_seen_subcommand_from freeze" -s "j" -l "jobs" -d "Run NUM jobs simultaneously (or '\$ncpus' if no NUM is given)." -x
 complete -c cabal -n "__fish_seen_subcommand_from freeze" -l "keep-going" -d "After a build failure, continue to build other unaffected packages."
 complete -c cabal -n "__fish_seen_subcommand_from freeze" -l "offline" -d "Don't download packages from the Internet."
 complete -c cabal -n "__fish_seen_subcommand_from freeze" -l "haddock-hoogle" -d "Generate a hoogle database"
@@ -1585,16 +1585,16 @@ complete -c cabal -n "__fish_seen_subcommand_from freeze" -l "haddock-hyperlink-
 complete -c cabal -n "__fish_seen_subcommand_from freeze" -l "haddock-quickjump" -d "Generate an index for interactive documentation navigation"
 complete -c cabal -n "__fish_seen_subcommand_from freeze" -l "haddock-hscolour-css" -d "Use PATH as the HsColour stylesheet" -r
 complete -c cabal -n "__fish_seen_subcommand_from freeze" -l "haddock-contents-location" -d "Bake URL in as the location for the contents page" -x
-complete -c cabal -n "__fish_seen_subcommand_from freeze" -l "test-log" -d "Log all test suite results to file (name template can use $pkgid, $compiler, $os, $arch, $test-suite, $result)" -r
-complete -c cabal -n "__fish_seen_subcommand_from freeze" -l "test-machine-log" -d "Produce a machine-readable log file (name template can use $pkgid, $compiler, $os, $arch, $result)" -r
+complete -c cabal -n "__fish_seen_subcommand_from freeze" -l "test-log" -d "Log all test suite results to file (name template can use \$pkgid, \$compiler, \$os, \$arch, \$test-suite, \$result)" -r
+complete -c cabal -n "__fish_seen_subcommand_from freeze" -l "test-machine-log" -d "Produce a machine-readable log file (name template can use \$pkgid, \$compiler, \$os, \$arch, \$result)" -r
 complete -c cabal -n "__fish_seen_subcommand_from freeze" -l "test-show-details" -d "'always': always show results of individual test cases." -r
 complete -c cabal -n "__fish_seen_subcommand_from freeze" -l "test-keep-tix-files" -d "keep .tix files for HPC between test runs"
 complete -c cabal -n "__fish_seen_subcommand_from freeze" -l "test-wrapper" -d "Run test through a wrapper." -r
 complete -c cabal -n "__fish_seen_subcommand_from freeze" -l "test-fail-when-no-test-suites" -d "Exit with failure when no test suites are found."
-complete -c cabal -n "__fish_seen_subcommand_from freeze" -l "test-options" -d "give extra options to test executables (name templates can use $pkgid, $compiler, $os, $arch, $test-suite)" -x
-complete -c cabal -n "__fish_seen_subcommand_from freeze" -l "test-option" -d "give extra option to test executables (no need to quote options containing spaces, name template can use $pkgid, $compiler, $os, $arch, $test-suite)" -x
-complete -c cabal -n "__fish_seen_subcommand_from freeze" -l "benchmark-options" -d "give extra options to benchmark executables (name templates can use $pkgid, $compiler, $os, $arch, $benchmark)" -x
-complete -c cabal -n "__fish_seen_subcommand_from freeze" -l "benchmark-option" -d "give extra option to benchmark executables (no need to quote options containing spaces, name template can use $pkgid, $compiler, $os, $arch, $benchmark)" -x
+complete -c cabal -n "__fish_seen_subcommand_from freeze" -l "test-options" -d "give extra options to test executables (name templates can use \$pkgid, \$compiler, \$os, \$arch, \$test-suite)" -x
+complete -c cabal -n "__fish_seen_subcommand_from freeze" -l "test-option" -d "give extra option to test executables (no need to quote options containing spaces, name template can use \$pkgid, \$compiler, \$os, \$arch, \$test-suite)" -x
+complete -c cabal -n "__fish_seen_subcommand_from freeze" -l "benchmark-options" -d "give extra options to benchmark executables (name templates can use \$pkgid, \$compiler, \$os, \$arch, \$benchmark)" -x
+complete -c cabal -n "__fish_seen_subcommand_from freeze" -l "benchmark-option" -d "give extra option to benchmark executables (no need to quote options containing spaces, name template can use \$pkgid, \$compiler, \$os, \$arch, \$benchmark)" -x
 complete -c cabal -n "__fish_seen_subcommand_from freeze" -l "project-file" -d "Set the name of the cabal.project file to search for in parent directories" -r
 complete -c cabal -n "__fish_seen_subcommand_from freeze" -s "z" -l "ignore-project" -d "Ignore local project configuration"
 
@@ -1713,7 +1713,7 @@ complete -c cabal -n "__fish_seen_subcommand_from haddock" -l "allow-newer" -d "
 complete -c cabal -n "__fish_seen_subcommand_from haddock" -l "write-ghc-environment-files" -d "Whether to create a .ghc.environment file after a successful build (v2-build only)" -r
 complete -c cabal -n "__fish_seen_subcommand_from haddock" -l "enable-documentation" -d "Enable building of documentation"
 complete -c cabal -n "__fish_seen_subcommand_from haddock" -l "disable-documentation" -d "Disable building of documentation"
-complete -c cabal -n "__fish_seen_subcommand_from haddock" -l "doc-index-file" -d "A central index of haddock API documentation (template cannot use $pkgid)" -x
+complete -c cabal -n "__fish_seen_subcommand_from haddock" -l "doc-index-file" -d "A central index of haddock API documentation (template cannot use \$pkgid)" -x
 complete -c cabal -n "__fish_seen_subcommand_from haddock" -l "dry-run" -d "Do not install anything, only print what would be installed."
 complete -c cabal -n "__fish_seen_subcommand_from haddock" -l "only-download" -d "Do not build anything, only fetch the packages."
 complete -c cabal -n "__fish_seen_subcommand_from haddock" -l "max-backjumps" -d "Maximum number of backjumps allowed while solving (default: 4000)." -x
@@ -1734,15 +1734,15 @@ complete -c cabal -n "__fish_seen_subcommand_from haddock" -l "only-dependencies
 complete -c cabal -n "__fish_seen_subcommand_from haddock" -l "dependencies-only" -d "A synonym for --only-dependencies"
 complete -c cabal -n "__fish_seen_subcommand_from haddock" -l "index-state" -d "Use source package index state as it existed at a previous time." -x
 complete -c cabal -n "__fish_seen_subcommand_from haddock" -l "root-cmd" -d "(No longer supported, do not use.)" -x
-complete -c cabal -n "__fish_seen_subcommand_from haddock" -l "build-summary" -d "Save build summaries to file (name template can use $pkgid, $compiler, $os, $arch)" -r
-complete -c cabal -n "__fish_seen_subcommand_from haddock" -l "build-log" -d "Log all builds to file (name template can use $pkgid, $compiler, $os, $arch)" -r
+complete -c cabal -n "__fish_seen_subcommand_from haddock" -l "build-summary" -d "Save build summaries to file (name template can use \$pkgid, \$compiler, \$os, \$arch)" -r
+complete -c cabal -n "__fish_seen_subcommand_from haddock" -l "build-log" -d "Log all builds to file (name template can use \$pkgid, \$compiler, \$os, \$arch)" -r
 complete -c cabal -n "__fish_seen_subcommand_from haddock" -l "remote-build-reporting" -d "Generate build reports to send to a remote server (none, anonymous or detailed)." -x
 complete -c cabal -n "__fish_seen_subcommand_from haddock" -l "report-planning-failure" -d "Generate build reports when the dependency solver fails."
 complete -c cabal -n "__fish_seen_subcommand_from haddock" -l "enable-per-component" -d "Enable Per-component builds when possible"
 complete -c cabal -n "__fish_seen_subcommand_from haddock" -l "disable-per-component" -d "Disable Per-component builds when possible"
 complete -c cabal -n "__fish_seen_subcommand_from haddock" -l "one-shot" -d "Do not record the packages in the world file."
 complete -c cabal -n "__fish_seen_subcommand_from haddock" -l "run-tests" -d "Run package test suites during installation."
-complete -c cabal -n "__fish_seen_subcommand_from haddock" -s "j" -l "jobs" -d "Run NUM jobs simultaneously (or '$ncpus' if no NUM is given)." -x
+complete -c cabal -n "__fish_seen_subcommand_from haddock" -s "j" -l "jobs" -d "Run NUM jobs simultaneously (or '\$ncpus' if no NUM is given)." -x
 complete -c cabal -n "__fish_seen_subcommand_from haddock" -l "keep-going" -d "After a build failure, continue to build other unaffected packages."
 complete -c cabal -n "__fish_seen_subcommand_from haddock" -l "offline" -d "Don't download packages from the Internet."
 complete -c cabal -n "__fish_seen_subcommand_from haddock" -l "haddock-hoogle" -d "Generate a hoogle database"
@@ -1759,16 +1759,16 @@ complete -c cabal -n "__fish_seen_subcommand_from haddock" -l "haddock-hyperlink
 complete -c cabal -n "__fish_seen_subcommand_from haddock" -l "haddock-quickjump" -d "Generate an index for interactive documentation navigation"
 complete -c cabal -n "__fish_seen_subcommand_from haddock" -l "haddock-hscolour-css" -d "Use PATH as the HsColour stylesheet" -r
 complete -c cabal -n "__fish_seen_subcommand_from haddock" -l "haddock-contents-location" -d "Bake URL in as the location for the contents page" -x
-complete -c cabal -n "__fish_seen_subcommand_from haddock" -l "test-log" -d "Log all test suite results to file (name template can use $pkgid, $compiler, $os, $arch, $test-suite, $result)" -r
-complete -c cabal -n "__fish_seen_subcommand_from haddock" -l "test-machine-log" -d "Produce a machine-readable log file (name template can use $pkgid, $compiler, $os, $arch, $result)" -r
+complete -c cabal -n "__fish_seen_subcommand_from haddock" -l "test-log" -d "Log all test suite results to file (name template can use \$pkgid, \$compiler, \$os, \$arch, \$test-suite, \$result)" -r
+complete -c cabal -n "__fish_seen_subcommand_from haddock" -l "test-machine-log" -d "Produce a machine-readable log file (name template can use \$pkgid, \$compiler, \$os, \$arch, \$result)" -r
 complete -c cabal -n "__fish_seen_subcommand_from haddock" -l "test-show-details" -d "'always': always show results of individual test cases." -r
 complete -c cabal -n "__fish_seen_subcommand_from haddock" -l "test-keep-tix-files" -d "keep .tix files for HPC between test runs"
 complete -c cabal -n "__fish_seen_subcommand_from haddock" -l "test-wrapper" -d "Run test through a wrapper." -r
 complete -c cabal -n "__fish_seen_subcommand_from haddock" -l "test-fail-when-no-test-suites" -d "Exit with failure when no test suites are found."
-complete -c cabal -n "__fish_seen_subcommand_from haddock" -l "test-options" -d "give extra options to test executables (name templates can use $pkgid, $compiler, $os, $arch, $test-suite)" -x
-complete -c cabal -n "__fish_seen_subcommand_from haddock" -l "test-option" -d "give extra option to test executables (no need to quote options containing spaces, name template can use $pkgid, $compiler, $os, $arch, $test-suite)" -x
-complete -c cabal -n "__fish_seen_subcommand_from haddock" -l "benchmark-options" -d "give extra options to benchmark executables (name templates can use $pkgid, $compiler, $os, $arch, $benchmark)" -x
-complete -c cabal -n "__fish_seen_subcommand_from haddock" -l "benchmark-option" -d "give extra option to benchmark executables (no need to quote options containing spaces, name template can use $pkgid, $compiler, $os, $arch, $benchmark)" -x
+complete -c cabal -n "__fish_seen_subcommand_from haddock" -l "test-options" -d "give extra options to test executables (name templates can use \$pkgid, \$compiler, \$os, \$arch, \$test-suite)" -x
+complete -c cabal -n "__fish_seen_subcommand_from haddock" -l "test-option" -d "give extra option to test executables (no need to quote options containing spaces, name template can use \$pkgid, \$compiler, \$os, \$arch, \$test-suite)" -x
+complete -c cabal -n "__fish_seen_subcommand_from haddock" -l "benchmark-options" -d "give extra options to benchmark executables (name templates can use \$pkgid, \$compiler, \$os, \$arch, \$benchmark)" -x
+complete -c cabal -n "__fish_seen_subcommand_from haddock" -l "benchmark-option" -d "give extra option to benchmark executables (no need to quote options containing spaces, name template can use \$pkgid, \$compiler, \$os, \$arch, \$benchmark)" -x
 complete -c cabal -n "__fish_seen_subcommand_from haddock" -l "project-file" -d "Set the name of the cabal.project file to search for in parent directories" -r
 complete -c cabal -n "__fish_seen_subcommand_from haddock" -s "z" -l "ignore-project" -d "Ignore local project configuration"
 
@@ -1881,7 +1881,7 @@ complete -c cabal -n "__fish_seen_subcommand_from exec" -l "allow-newer" -d "Ign
 complete -c cabal -n "__fish_seen_subcommand_from exec" -l "write-ghc-environment-files" -d "Whether to create a .ghc.environment file after a successful build (v2-build only)" -r
 complete -c cabal -n "__fish_seen_subcommand_from exec" -l "enable-documentation" -d "Enable building of documentation"
 complete -c cabal -n "__fish_seen_subcommand_from exec" -l "disable-documentation" -d "Disable building of documentation"
-complete -c cabal -n "__fish_seen_subcommand_from exec" -l "doc-index-file" -d "A central index of haddock API documentation (template cannot use $pkgid)" -x
+complete -c cabal -n "__fish_seen_subcommand_from exec" -l "doc-index-file" -d "A central index of haddock API documentation (template cannot use \$pkgid)" -x
 complete -c cabal -n "__fish_seen_subcommand_from exec" -l "dry-run" -d "Do not install anything, only print what would be installed."
 complete -c cabal -n "__fish_seen_subcommand_from exec" -l "only-download" -d "Do not build anything, only fetch the packages."
 complete -c cabal -n "__fish_seen_subcommand_from exec" -l "max-backjumps" -d "Maximum number of backjumps allowed while solving (default: 4000)." -x
@@ -1902,15 +1902,15 @@ complete -c cabal -n "__fish_seen_subcommand_from exec" -l "only-dependencies" -
 complete -c cabal -n "__fish_seen_subcommand_from exec" -l "dependencies-only" -d "A synonym for --only-dependencies"
 complete -c cabal -n "__fish_seen_subcommand_from exec" -l "index-state" -d "Use source package index state as it existed at a previous time." -x
 complete -c cabal -n "__fish_seen_subcommand_from exec" -l "root-cmd" -d "(No longer supported, do not use.)" -x
-complete -c cabal -n "__fish_seen_subcommand_from exec" -l "build-summary" -d "Save build summaries to file (name template can use $pkgid, $compiler, $os, $arch)" -r
-complete -c cabal -n "__fish_seen_subcommand_from exec" -l "build-log" -d "Log all builds to file (name template can use $pkgid, $compiler, $os, $arch)" -r
+complete -c cabal -n "__fish_seen_subcommand_from exec" -l "build-summary" -d "Save build summaries to file (name template can use \$pkgid, \$compiler, \$os, \$arch)" -r
+complete -c cabal -n "__fish_seen_subcommand_from exec" -l "build-log" -d "Log all builds to file (name template can use \$pkgid, \$compiler, \$os, \$arch)" -r
 complete -c cabal -n "__fish_seen_subcommand_from exec" -l "remote-build-reporting" -d "Generate build reports to send to a remote server (none, anonymous or detailed)." -x
 complete -c cabal -n "__fish_seen_subcommand_from exec" -l "report-planning-failure" -d "Generate build reports when the dependency solver fails."
 complete -c cabal -n "__fish_seen_subcommand_from exec" -l "enable-per-component" -d "Enable Per-component builds when possible"
 complete -c cabal -n "__fish_seen_subcommand_from exec" -l "disable-per-component" -d "Disable Per-component builds when possible"
 complete -c cabal -n "__fish_seen_subcommand_from exec" -l "one-shot" -d "Do not record the packages in the world file."
 complete -c cabal -n "__fish_seen_subcommand_from exec" -l "run-tests" -d "Run package test suites during installation."
-complete -c cabal -n "__fish_seen_subcommand_from exec" -s "j" -l "jobs" -d "Run NUM jobs simultaneously (or '$ncpus' if no NUM is given)." -x
+complete -c cabal -n "__fish_seen_subcommand_from exec" -s "j" -l "jobs" -d "Run NUM jobs simultaneously (or '\$ncpus' if no NUM is given)." -x
 complete -c cabal -n "__fish_seen_subcommand_from exec" -l "keep-going" -d "After a build failure, continue to build other unaffected packages."
 complete -c cabal -n "__fish_seen_subcommand_from exec" -l "offline" -d "Don't download packages from the Internet."
 complete -c cabal -n "__fish_seen_subcommand_from exec" -l "haddock-hoogle" -d "Generate a hoogle database"
@@ -1927,16 +1927,16 @@ complete -c cabal -n "__fish_seen_subcommand_from exec" -l "haddock-hyperlink-so
 complete -c cabal -n "__fish_seen_subcommand_from exec" -l "haddock-quickjump" -d "Generate an index for interactive documentation navigation"
 complete -c cabal -n "__fish_seen_subcommand_from exec" -l "haddock-hscolour-css" -d "Use PATH as the HsColour stylesheet" -r
 complete -c cabal -n "__fish_seen_subcommand_from exec" -l "haddock-contents-location" -d "Bake URL in as the location for the contents page" -x
-complete -c cabal -n "__fish_seen_subcommand_from exec" -l "test-log" -d "Log all test suite results to file (name template can use $pkgid, $compiler, $os, $arch, $test-suite, $result)" -r
-complete -c cabal -n "__fish_seen_subcommand_from exec" -l "test-machine-log" -d "Produce a machine-readable log file (name template can use $pkgid, $compiler, $os, $arch, $result)" -r
+complete -c cabal -n "__fish_seen_subcommand_from exec" -l "test-log" -d "Log all test suite results to file (name template can use \$pkgid, \$compiler, \$os, \$arch, \$test-suite, \$result)" -r
+complete -c cabal -n "__fish_seen_subcommand_from exec" -l "test-machine-log" -d "Produce a machine-readable log file (name template can use \$pkgid, \$compiler, \$os, \$arch, \$result)" -r
 complete -c cabal -n "__fish_seen_subcommand_from exec" -l "test-show-details" -d "'always': always show results of individual test cases." -r
 complete -c cabal -n "__fish_seen_subcommand_from exec" -l "test-keep-tix-files" -d "keep .tix files for HPC between test runs"
 complete -c cabal -n "__fish_seen_subcommand_from exec" -l "test-wrapper" -d "Run test through a wrapper." -r
 complete -c cabal -n "__fish_seen_subcommand_from exec" -l "test-fail-when-no-test-suites" -d "Exit with failure when no test suites are found."
-complete -c cabal -n "__fish_seen_subcommand_from exec" -l "test-options" -d "give extra options to test executables (name templates can use $pkgid, $compiler, $os, $arch, $test-suite)" -x
-complete -c cabal -n "__fish_seen_subcommand_from exec" -l "test-option" -d "give extra option to test executables (no need to quote options containing spaces, name template can use $pkgid, $compiler, $os, $arch, $test-suite)" -x
-complete -c cabal -n "__fish_seen_subcommand_from exec" -l "benchmark-options" -d "give extra options to benchmark executables (name templates can use $pkgid, $compiler, $os, $arch, $benchmark)" -x
-complete -c cabal -n "__fish_seen_subcommand_from exec" -l "benchmark-option" -d "give extra option to benchmark executables (no need to quote options containing spaces, name template can use $pkgid, $compiler, $os, $arch, $benchmark)" -x
+complete -c cabal -n "__fish_seen_subcommand_from exec" -l "test-options" -d "give extra options to test executables (name templates can use \$pkgid, \$compiler, \$os, \$arch, \$test-suite)" -x
+complete -c cabal -n "__fish_seen_subcommand_from exec" -l "test-option" -d "give extra option to test executables (no need to quote options containing spaces, name template can use \$pkgid, \$compiler, \$os, \$arch, \$test-suite)" -x
+complete -c cabal -n "__fish_seen_subcommand_from exec" -l "benchmark-options" -d "give extra options to benchmark executables (name templates can use \$pkgid, \$compiler, \$os, \$arch, \$benchmark)" -x
+complete -c cabal -n "__fish_seen_subcommand_from exec" -l "benchmark-option" -d "give extra option to benchmark executables (no need to quote options containing spaces, name template can use \$pkgid, \$compiler, \$os, \$arch, \$benchmark)" -x
 complete -c cabal -n "__fish_seen_subcommand_from exec" -l "project-file" -d "Set the name of the cabal.project file to search for in parent directories" -r
 
 
@@ -2036,7 +2036,7 @@ complete -c cabal -n "__fish_seen_subcommand_from list-bin" -l "allow-newer" -d 
 complete -c cabal -n "__fish_seen_subcommand_from list-bin" -l "write-ghc-environment-files" -d "Whether to create a .ghc.environment file after a successful build (v2-build only)" -r
 complete -c cabal -n "__fish_seen_subcommand_from list-bin" -l "enable-documentation" -d "Enable building of documentation"
 complete -c cabal -n "__fish_seen_subcommand_from list-bin" -l "disable-documentation" -d "Disable building of documentation"
-complete -c cabal -n "__fish_seen_subcommand_from list-bin" -l "doc-index-file" -d "A central index of haddock API documentation (template cannot use $pkgid)" -x
+complete -c cabal -n "__fish_seen_subcommand_from list-bin" -l "doc-index-file" -d "A central index of haddock API documentation (template cannot use \$pkgid)" -x
 complete -c cabal -n "__fish_seen_subcommand_from list-bin" -l "dry-run" -d "Do not install anything, only print what would be installed."
 complete -c cabal -n "__fish_seen_subcommand_from list-bin" -l "only-download" -d "Do not build anything, only fetch the packages."
 complete -c cabal -n "__fish_seen_subcommand_from list-bin" -l "max-backjumps" -d "Maximum number of backjumps allowed while solving (default: 4000)." -x
@@ -2057,15 +2057,15 @@ complete -c cabal -n "__fish_seen_subcommand_from list-bin" -l "only-dependencie
 complete -c cabal -n "__fish_seen_subcommand_from list-bin" -l "dependencies-only" -d "A synonym for --only-dependencies"
 complete -c cabal -n "__fish_seen_subcommand_from list-bin" -l "index-state" -d "Use source package index state as it existed at a previous time." -x
 complete -c cabal -n "__fish_seen_subcommand_from list-bin" -l "root-cmd" -d "(No longer supported, do not use.)" -x
-complete -c cabal -n "__fish_seen_subcommand_from list-bin" -l "build-summary" -d "Save build summaries to file (name template can use $pkgid, $compiler, $os, $arch)" -r
-complete -c cabal -n "__fish_seen_subcommand_from list-bin" -l "build-log" -d "Log all builds to file (name template can use $pkgid, $compiler, $os, $arch)" -r
+complete -c cabal -n "__fish_seen_subcommand_from list-bin" -l "build-summary" -d "Save build summaries to file (name template can use \$pkgid, \$compiler, \$os, \$arch)" -r
+complete -c cabal -n "__fish_seen_subcommand_from list-bin" -l "build-log" -d "Log all builds to file (name template can use \$pkgid, \$compiler, \$os, \$arch)" -r
 complete -c cabal -n "__fish_seen_subcommand_from list-bin" -l "remote-build-reporting" -d "Generate build reports to send to a remote server (none, anonymous or detailed)." -x
 complete -c cabal -n "__fish_seen_subcommand_from list-bin" -l "report-planning-failure" -d "Generate build reports when the dependency solver fails."
 complete -c cabal -n "__fish_seen_subcommand_from list-bin" -l "enable-per-component" -d "Enable Per-component builds when possible"
 complete -c cabal -n "__fish_seen_subcommand_from list-bin" -l "disable-per-component" -d "Disable Per-component builds when possible"
 complete -c cabal -n "__fish_seen_subcommand_from list-bin" -l "one-shot" -d "Do not record the packages in the world file."
 complete -c cabal -n "__fish_seen_subcommand_from list-bin" -l "run-tests" -d "Run package test suites during installation."
-complete -c cabal -n "__fish_seen_subcommand_from list-bin" -s "j" -l "jobs" -d "Run NUM jobs simultaneously (or '$ncpus' if no NUM is given)." -x
+complete -c cabal -n "__fish_seen_subcommand_from list-bin" -s "j" -l "jobs" -d "Run NUM jobs simultaneously (or '\$ncpus' if no NUM is given)." -x
 complete -c cabal -n "__fish_seen_subcommand_from list-bin" -l "keep-going" -d "After a build failure, continue to build other unaffected packages."
 complete -c cabal -n "__fish_seen_subcommand_from list-bin" -l "offline" -d "Don't download packages from the Internet."
 complete -c cabal -n "__fish_seen_subcommand_from list-bin" -l "haddock-hoogle" -d "Generate a hoogle database"
@@ -2082,16 +2082,16 @@ complete -c cabal -n "__fish_seen_subcommand_from list-bin" -l "haddock-hyperlin
 complete -c cabal -n "__fish_seen_subcommand_from list-bin" -l "haddock-quickjump" -d "Generate an index for interactive documentation navigation"
 complete -c cabal -n "__fish_seen_subcommand_from list-bin" -l "haddock-hscolour-css" -d "Use PATH as the HsColour stylesheet" -r
 complete -c cabal -n "__fish_seen_subcommand_from list-bin" -l "haddock-contents-location" -d "Bake URL in as the location for the contents page" -x
-complete -c cabal -n "__fish_seen_subcommand_from list-bin" -l "test-log" -d "Log all test suite results to file (name template can use $pkgid, $compiler, $os, $arch, $test-suite, $result)" -r
-complete -c cabal -n "__fish_seen_subcommand_from list-bin" -l "test-machine-log" -d "Produce a machine-readable log file (name template can use $pkgid, $compiler, $os, $arch, $result)" -r
+complete -c cabal -n "__fish_seen_subcommand_from list-bin" -l "test-log" -d "Log all test suite results to file (name template can use \$pkgid, \$compiler, \$os, \$arch, \$test-suite, \$result)" -r
+complete -c cabal -n "__fish_seen_subcommand_from list-bin" -l "test-machine-log" -d "Produce a machine-readable log file (name template can use \$pkgid, \$compiler, \$os, \$arch, \$result)" -r
 complete -c cabal -n "__fish_seen_subcommand_from list-bin" -l "test-show-details" -d "'always': always show results of individual test cases." -r
 complete -c cabal -n "__fish_seen_subcommand_from list-bin" -l "test-keep-tix-files" -d "keep .tix files for HPC between test runs"
 complete -c cabal -n "__fish_seen_subcommand_from list-bin" -l "test-wrapper" -d "Run test through a wrapper." -r
 complete -c cabal -n "__fish_seen_subcommand_from list-bin" -l "test-fail-when-no-test-suites" -d "Exit with failure when no test suites are found."
-complete -c cabal -n "__fish_seen_subcommand_from list-bin" -l "test-options" -d "give extra options to test executables (name templates can use $pkgid, $compiler, $os, $arch, $test-suite)" -x
-complete -c cabal -n "__fish_seen_subcommand_from list-bin" -l "test-option" -d "give extra option to test executables (no need to quote options containing spaces, name template can use $pkgid, $compiler, $os, $arch, $test-suite)" -x
-complete -c cabal -n "__fish_seen_subcommand_from list-bin" -l "benchmark-options" -d "give extra options to benchmark executables (name templates can use $pkgid, $compiler, $os, $arch, $benchmark)" -x
-complete -c cabal -n "__fish_seen_subcommand_from list-bin" -l "benchmark-option" -d "give extra option to benchmark executables (no need to quote options containing spaces, name template can use $pkgid, $compiler, $os, $arch, $benchmark)" -x
+complete -c cabal -n "__fish_seen_subcommand_from list-bin" -l "test-options" -d "give extra options to test executables (name templates can use \$pkgid, \$compiler, \$os, \$arch, \$test-suite)" -x
+complete -c cabal -n "__fish_seen_subcommand_from list-bin" -l "test-option" -d "give extra option to test executables (no need to quote options containing spaces, name template can use \$pkgid, \$compiler, \$os, \$arch, \$test-suite)" -x
+complete -c cabal -n "__fish_seen_subcommand_from list-bin" -l "benchmark-options" -d "give extra options to benchmark executables (name templates can use \$pkgid, \$compiler, \$os, \$arch, \$benchmark)" -x
+complete -c cabal -n "__fish_seen_subcommand_from list-bin" -l "benchmark-option" -d "give extra option to benchmark executables (no need to quote options containing spaces, name template can use \$pkgid, \$compiler, \$os, \$arch, \$benchmark)" -x
 complete -c cabal -n "__fish_seen_subcommand_from list-bin" -l "project-file" -d "Set the name of the cabal.project file to search for in parent directories" -r
 complete -c cabal -n "__fish_seen_subcommand_from list-bin" -s "z" -l "ignore-project" -d "Ignore local project configuration"
 
@@ -2192,7 +2192,7 @@ complete -c cabal -n "__fish_seen_subcommand_from v2-build" -l "allow-newer" -d 
 complete -c cabal -n "__fish_seen_subcommand_from v2-build" -l "write-ghc-environment-files" -d "Whether to create a .ghc.environment file after a successful build (v2-build only)" -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-build" -l "enable-documentation" -d "Enable building of documentation"
 complete -c cabal -n "__fish_seen_subcommand_from v2-build" -l "disable-documentation" -d "Disable building of documentation"
-complete -c cabal -n "__fish_seen_subcommand_from v2-build" -l "doc-index-file" -d "A central index of haddock API documentation (template cannot use $pkgid)" -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-build" -l "doc-index-file" -d "A central index of haddock API documentation (template cannot use \$pkgid)" -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-build" -l "dry-run" -d "Do not install anything, only print what would be installed."
 complete -c cabal -n "__fish_seen_subcommand_from v2-build" -l "only-download" -d "Do not build anything, only fetch the packages."
 complete -c cabal -n "__fish_seen_subcommand_from v2-build" -l "max-backjumps" -d "Maximum number of backjumps allowed while solving (default: 4000)." -x
@@ -2213,15 +2213,15 @@ complete -c cabal -n "__fish_seen_subcommand_from v2-build" -l "only-dependencie
 complete -c cabal -n "__fish_seen_subcommand_from v2-build" -l "dependencies-only" -d "A synonym for --only-dependencies"
 complete -c cabal -n "__fish_seen_subcommand_from v2-build" -l "index-state" -d "Use source package index state as it existed at a previous time." -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-build" -l "root-cmd" -d "(No longer supported, do not use.)" -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-build" -l "build-summary" -d "Save build summaries to file (name template can use $pkgid, $compiler, $os, $arch)" -r
-complete -c cabal -n "__fish_seen_subcommand_from v2-build" -l "build-log" -d "Log all builds to file (name template can use $pkgid, $compiler, $os, $arch)" -r
+complete -c cabal -n "__fish_seen_subcommand_from v2-build" -l "build-summary" -d "Save build summaries to file (name template can use \$pkgid, \$compiler, \$os, \$arch)" -r
+complete -c cabal -n "__fish_seen_subcommand_from v2-build" -l "build-log" -d "Log all builds to file (name template can use \$pkgid, \$compiler, \$os, \$arch)" -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-build" -l "remote-build-reporting" -d "Generate build reports to send to a remote server (none, anonymous or detailed)." -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-build" -l "report-planning-failure" -d "Generate build reports when the dependency solver fails."
 complete -c cabal -n "__fish_seen_subcommand_from v2-build" -l "enable-per-component" -d "Enable Per-component builds when possible"
 complete -c cabal -n "__fish_seen_subcommand_from v2-build" -l "disable-per-component" -d "Disable Per-component builds when possible"
 complete -c cabal -n "__fish_seen_subcommand_from v2-build" -l "one-shot" -d "Do not record the packages in the world file."
 complete -c cabal -n "__fish_seen_subcommand_from v2-build" -l "run-tests" -d "Run package test suites during installation."
-complete -c cabal -n "__fish_seen_subcommand_from v2-build" -s "j" -l "jobs" -d "Run NUM jobs simultaneously (or '$ncpus' if no NUM is given)." -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-build" -s "j" -l "jobs" -d "Run NUM jobs simultaneously (or '\$ncpus' if no NUM is given)." -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-build" -l "keep-going" -d "After a build failure, continue to build other unaffected packages."
 complete -c cabal -n "__fish_seen_subcommand_from v2-build" -l "offline" -d "Don't download packages from the Internet."
 complete -c cabal -n "__fish_seen_subcommand_from v2-build" -l "haddock-hoogle" -d "Generate a hoogle database"
@@ -2238,16 +2238,16 @@ complete -c cabal -n "__fish_seen_subcommand_from v2-build" -l "haddock-hyperlin
 complete -c cabal -n "__fish_seen_subcommand_from v2-build" -l "haddock-quickjump" -d "Generate an index for interactive documentation navigation"
 complete -c cabal -n "__fish_seen_subcommand_from v2-build" -l "haddock-hscolour-css" -d "Use PATH as the HsColour stylesheet" -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-build" -l "haddock-contents-location" -d "Bake URL in as the location for the contents page" -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-build" -l "test-log" -d "Log all test suite results to file (name template can use $pkgid, $compiler, $os, $arch, $test-suite, $result)" -r
-complete -c cabal -n "__fish_seen_subcommand_from v2-build" -l "test-machine-log" -d "Produce a machine-readable log file (name template can use $pkgid, $compiler, $os, $arch, $result)" -r
+complete -c cabal -n "__fish_seen_subcommand_from v2-build" -l "test-log" -d "Log all test suite results to file (name template can use \$pkgid, \$compiler, \$os, \$arch, \$test-suite, \$result)" -r
+complete -c cabal -n "__fish_seen_subcommand_from v2-build" -l "test-machine-log" -d "Produce a machine-readable log file (name template can use \$pkgid, \$compiler, \$os, \$arch, \$result)" -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-build" -l "test-show-details" -d "'always': always show results of individual test cases." -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-build" -l "test-keep-tix-files" -d "keep .tix files for HPC between test runs"
 complete -c cabal -n "__fish_seen_subcommand_from v2-build" -l "test-wrapper" -d "Run test through a wrapper." -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-build" -l "test-fail-when-no-test-suites" -d "Exit with failure when no test suites are found."
-complete -c cabal -n "__fish_seen_subcommand_from v2-build" -l "test-options" -d "give extra options to test executables (name templates can use $pkgid, $compiler, $os, $arch, $test-suite)" -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-build" -l "test-option" -d "give extra option to test executables (no need to quote options containing spaces, name template can use $pkgid, $compiler, $os, $arch, $test-suite)" -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-build" -l "benchmark-options" -d "give extra options to benchmark executables (name templates can use $pkgid, $compiler, $os, $arch, $benchmark)" -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-build" -l "benchmark-option" -d "give extra option to benchmark executables (no need to quote options containing spaces, name template can use $pkgid, $compiler, $os, $arch, $benchmark)" -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-build" -l "test-options" -d "give extra options to test executables (name templates can use \$pkgid, \$compiler, \$os, \$arch, \$test-suite)" -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-build" -l "test-option" -d "give extra option to test executables (no need to quote options containing spaces, name template can use \$pkgid, \$compiler, \$os, \$arch, \$test-suite)" -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-build" -l "benchmark-options" -d "give extra options to benchmark executables (name templates can use \$pkgid, \$compiler, \$os, \$arch, \$benchmark)" -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-build" -l "benchmark-option" -d "give extra option to benchmark executables (no need to quote options containing spaces, name template can use \$pkgid, \$compiler, \$os, \$arch, \$benchmark)" -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-build" -l "project-file" -d "Set the name of the cabal.project file to search for in parent directories" -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-build" -l "only-configure" -d "Instead of performing a full build just run the configure step"
 
@@ -2348,7 +2348,7 @@ complete -c cabal -n "__fish_seen_subcommand_from v2-configure" -l "allow-newer"
 complete -c cabal -n "__fish_seen_subcommand_from v2-configure" -l "write-ghc-environment-files" -d "Whether to create a .ghc.environment file after a successful build (v2-build only)" -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-configure" -l "enable-documentation" -d "Enable building of documentation"
 complete -c cabal -n "__fish_seen_subcommand_from v2-configure" -l "disable-documentation" -d "Disable building of documentation"
-complete -c cabal -n "__fish_seen_subcommand_from v2-configure" -l "doc-index-file" -d "A central index of haddock API documentation (template cannot use $pkgid)" -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-configure" -l "doc-index-file" -d "A central index of haddock API documentation (template cannot use \$pkgid)" -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-configure" -l "dry-run" -d "Do not install anything, only print what would be installed."
 complete -c cabal -n "__fish_seen_subcommand_from v2-configure" -l "only-download" -d "Do not build anything, only fetch the packages."
 complete -c cabal -n "__fish_seen_subcommand_from v2-configure" -l "max-backjumps" -d "Maximum number of backjumps allowed while solving (default: 4000)." -x
@@ -2369,15 +2369,15 @@ complete -c cabal -n "__fish_seen_subcommand_from v2-configure" -l "only-depende
 complete -c cabal -n "__fish_seen_subcommand_from v2-configure" -l "dependencies-only" -d "A synonym for --only-dependencies"
 complete -c cabal -n "__fish_seen_subcommand_from v2-configure" -l "index-state" -d "Use source package index state as it existed at a previous time." -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-configure" -l "root-cmd" -d "(No longer supported, do not use.)" -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-configure" -l "build-summary" -d "Save build summaries to file (name template can use $pkgid, $compiler, $os, $arch)" -r
-complete -c cabal -n "__fish_seen_subcommand_from v2-configure" -l "build-log" -d "Log all builds to file (name template can use $pkgid, $compiler, $os, $arch)" -r
+complete -c cabal -n "__fish_seen_subcommand_from v2-configure" -l "build-summary" -d "Save build summaries to file (name template can use \$pkgid, \$compiler, \$os, \$arch)" -r
+complete -c cabal -n "__fish_seen_subcommand_from v2-configure" -l "build-log" -d "Log all builds to file (name template can use \$pkgid, \$compiler, \$os, \$arch)" -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-configure" -l "remote-build-reporting" -d "Generate build reports to send to a remote server (none, anonymous or detailed)." -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-configure" -l "report-planning-failure" -d "Generate build reports when the dependency solver fails."
 complete -c cabal -n "__fish_seen_subcommand_from v2-configure" -l "enable-per-component" -d "Enable Per-component builds when possible"
 complete -c cabal -n "__fish_seen_subcommand_from v2-configure" -l "disable-per-component" -d "Disable Per-component builds when possible"
 complete -c cabal -n "__fish_seen_subcommand_from v2-configure" -l "one-shot" -d "Do not record the packages in the world file."
 complete -c cabal -n "__fish_seen_subcommand_from v2-configure" -l "run-tests" -d "Run package test suites during installation."
-complete -c cabal -n "__fish_seen_subcommand_from v2-configure" -s "j" -l "jobs" -d "Run NUM jobs simultaneously (or '$ncpus' if no NUM is given)." -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-configure" -s "j" -l "jobs" -d "Run NUM jobs simultaneously (or '\$ncpus' if no NUM is given)." -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-configure" -l "keep-going" -d "After a build failure, continue to build other unaffected packages."
 complete -c cabal -n "__fish_seen_subcommand_from v2-configure" -l "offline" -d "Don't download packages from the Internet."
 complete -c cabal -n "__fish_seen_subcommand_from v2-configure" -l "haddock-hoogle" -d "Generate a hoogle database"
@@ -2394,16 +2394,16 @@ complete -c cabal -n "__fish_seen_subcommand_from v2-configure" -l "haddock-hype
 complete -c cabal -n "__fish_seen_subcommand_from v2-configure" -l "haddock-quickjump" -d "Generate an index for interactive documentation navigation"
 complete -c cabal -n "__fish_seen_subcommand_from v2-configure" -l "haddock-hscolour-css" -d "Use PATH as the HsColour stylesheet" -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-configure" -l "haddock-contents-location" -d "Bake URL in as the location for the contents page" -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-configure" -l "test-log" -d "Log all test suite results to file (name template can use $pkgid, $compiler, $os, $arch, $test-suite, $result)" -r
-complete -c cabal -n "__fish_seen_subcommand_from v2-configure" -l "test-machine-log" -d "Produce a machine-readable log file (name template can use $pkgid, $compiler, $os, $arch, $result)" -r
+complete -c cabal -n "__fish_seen_subcommand_from v2-configure" -l "test-log" -d "Log all test suite results to file (name template can use \$pkgid, \$compiler, \$os, \$arch, \$test-suite, \$result)" -r
+complete -c cabal -n "__fish_seen_subcommand_from v2-configure" -l "test-machine-log" -d "Produce a machine-readable log file (name template can use \$pkgid, \$compiler, \$os, \$arch, \$result)" -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-configure" -l "test-show-details" -d "'always': always show results of individual test cases." -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-configure" -l "test-keep-tix-files" -d "keep .tix files for HPC between test runs"
 complete -c cabal -n "__fish_seen_subcommand_from v2-configure" -l "test-wrapper" -d "Run test through a wrapper." -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-configure" -l "test-fail-when-no-test-suites" -d "Exit with failure when no test suites are found."
-complete -c cabal -n "__fish_seen_subcommand_from v2-configure" -l "test-options" -d "give extra options to test executables (name templates can use $pkgid, $compiler, $os, $arch, $test-suite)" -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-configure" -l "test-option" -d "give extra option to test executables (no need to quote options containing spaces, name template can use $pkgid, $compiler, $os, $arch, $test-suite)" -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-configure" -l "benchmark-options" -d "give extra options to benchmark executables (name templates can use $pkgid, $compiler, $os, $arch, $benchmark)" -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-configure" -l "benchmark-option" -d "give extra option to benchmark executables (no need to quote options containing spaces, name template can use $pkgid, $compiler, $os, $arch, $benchmark)" -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-configure" -l "test-options" -d "give extra options to test executables (name templates can use \$pkgid, \$compiler, \$os, \$arch, \$test-suite)" -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-configure" -l "test-option" -d "give extra option to test executables (no need to quote options containing spaces, name template can use \$pkgid, \$compiler, \$os, \$arch, \$test-suite)" -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-configure" -l "benchmark-options" -d "give extra options to benchmark executables (name templates can use \$pkgid, \$compiler, \$os, \$arch, \$benchmark)" -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-configure" -l "benchmark-option" -d "give extra option to benchmark executables (no need to quote options containing spaces, name template can use \$pkgid, \$compiler, \$os, \$arch, \$benchmark)" -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-configure" -l "project-file" -d "Set the name of the cabal.project file to search for in parent directories" -r
 
 
@@ -2503,7 +2503,7 @@ complete -c cabal -n "__fish_seen_subcommand_from v2-repl" -l "allow-newer" -d "
 complete -c cabal -n "__fish_seen_subcommand_from v2-repl" -l "write-ghc-environment-files" -d "Whether to create a .ghc.environment file after a successful build (v2-build only)" -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-repl" -l "enable-documentation" -d "Enable building of documentation"
 complete -c cabal -n "__fish_seen_subcommand_from v2-repl" -l "disable-documentation" -d "Disable building of documentation"
-complete -c cabal -n "__fish_seen_subcommand_from v2-repl" -l "doc-index-file" -d "A central index of haddock API documentation (template cannot use $pkgid)" -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-repl" -l "doc-index-file" -d "A central index of haddock API documentation (template cannot use \$pkgid)" -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-repl" -l "dry-run" -d "Do not install anything, only print what would be installed."
 complete -c cabal -n "__fish_seen_subcommand_from v2-repl" -l "only-download" -d "Do not build anything, only fetch the packages."
 complete -c cabal -n "__fish_seen_subcommand_from v2-repl" -l "max-backjumps" -d "Maximum number of backjumps allowed while solving (default: 4000)." -x
@@ -2524,15 +2524,15 @@ complete -c cabal -n "__fish_seen_subcommand_from v2-repl" -l "only-dependencies
 complete -c cabal -n "__fish_seen_subcommand_from v2-repl" -l "dependencies-only" -d "A synonym for --only-dependencies"
 complete -c cabal -n "__fish_seen_subcommand_from v2-repl" -l "index-state" -d "Use source package index state as it existed at a previous time." -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-repl" -l "root-cmd" -d "(No longer supported, do not use.)" -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-repl" -l "build-summary" -d "Save build summaries to file (name template can use $pkgid, $compiler, $os, $arch)" -r
-complete -c cabal -n "__fish_seen_subcommand_from v2-repl" -l "build-log" -d "Log all builds to file (name template can use $pkgid, $compiler, $os, $arch)" -r
+complete -c cabal -n "__fish_seen_subcommand_from v2-repl" -l "build-summary" -d "Save build summaries to file (name template can use \$pkgid, \$compiler, \$os, \$arch)" -r
+complete -c cabal -n "__fish_seen_subcommand_from v2-repl" -l "build-log" -d "Log all builds to file (name template can use \$pkgid, \$compiler, \$os, \$arch)" -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-repl" -l "remote-build-reporting" -d "Generate build reports to send to a remote server (none, anonymous or detailed)." -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-repl" -l "report-planning-failure" -d "Generate build reports when the dependency solver fails."
 complete -c cabal -n "__fish_seen_subcommand_from v2-repl" -l "enable-per-component" -d "Enable Per-component builds when possible"
 complete -c cabal -n "__fish_seen_subcommand_from v2-repl" -l "disable-per-component" -d "Disable Per-component builds when possible"
 complete -c cabal -n "__fish_seen_subcommand_from v2-repl" -l "one-shot" -d "Do not record the packages in the world file."
 complete -c cabal -n "__fish_seen_subcommand_from v2-repl" -l "run-tests" -d "Run package test suites during installation."
-complete -c cabal -n "__fish_seen_subcommand_from v2-repl" -s "j" -l "jobs" -d "Run NUM jobs simultaneously (or '$ncpus' if no NUM is given)." -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-repl" -s "j" -l "jobs" -d "Run NUM jobs simultaneously (or '\$ncpus' if no NUM is given)." -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-repl" -l "keep-going" -d "After a build failure, continue to build other unaffected packages."
 complete -c cabal -n "__fish_seen_subcommand_from v2-repl" -l "offline" -d "Don't download packages from the Internet."
 complete -c cabal -n "__fish_seen_subcommand_from v2-repl" -l "haddock-hoogle" -d "Generate a hoogle database"
@@ -2549,16 +2549,16 @@ complete -c cabal -n "__fish_seen_subcommand_from v2-repl" -l "haddock-hyperlink
 complete -c cabal -n "__fish_seen_subcommand_from v2-repl" -l "haddock-quickjump" -d "Generate an index for interactive documentation navigation"
 complete -c cabal -n "__fish_seen_subcommand_from v2-repl" -l "haddock-hscolour-css" -d "Use PATH as the HsColour stylesheet" -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-repl" -l "haddock-contents-location" -d "Bake URL in as the location for the contents page" -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-repl" -l "test-log" -d "Log all test suite results to file (name template can use $pkgid, $compiler, $os, $arch, $test-suite, $result)" -r
-complete -c cabal -n "__fish_seen_subcommand_from v2-repl" -l "test-machine-log" -d "Produce a machine-readable log file (name template can use $pkgid, $compiler, $os, $arch, $result)" -r
+complete -c cabal -n "__fish_seen_subcommand_from v2-repl" -l "test-log" -d "Log all test suite results to file (name template can use \$pkgid, \$compiler, \$os, \$arch, \$test-suite, \$result)" -r
+complete -c cabal -n "__fish_seen_subcommand_from v2-repl" -l "test-machine-log" -d "Produce a machine-readable log file (name template can use \$pkgid, \$compiler, \$os, \$arch, \$result)" -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-repl" -l "test-show-details" -d "'always': always show results of individual test cases." -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-repl" -l "test-keep-tix-files" -d "keep .tix files for HPC between test runs"
 complete -c cabal -n "__fish_seen_subcommand_from v2-repl" -l "test-wrapper" -d "Run test through a wrapper." -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-repl" -l "test-fail-when-no-test-suites" -d "Exit with failure when no test suites are found."
-complete -c cabal -n "__fish_seen_subcommand_from v2-repl" -l "test-options" -d "give extra options to test executables (name templates can use $pkgid, $compiler, $os, $arch, $test-suite)" -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-repl" -l "test-option" -d "give extra option to test executables (no need to quote options containing spaces, name template can use $pkgid, $compiler, $os, $arch, $test-suite)" -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-repl" -l "benchmark-options" -d "give extra options to benchmark executables (name templates can use $pkgid, $compiler, $os, $arch, $benchmark)" -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-repl" -l "benchmark-option" -d "give extra option to benchmark executables (no need to quote options containing spaces, name template can use $pkgid, $compiler, $os, $arch, $benchmark)" -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-repl" -l "test-options" -d "give extra options to test executables (name templates can use \$pkgid, \$compiler, \$os, \$arch, \$test-suite)" -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-repl" -l "test-option" -d "give extra option to test executables (no need to quote options containing spaces, name template can use \$pkgid, \$compiler, \$os, \$arch, \$test-suite)" -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-repl" -l "benchmark-options" -d "give extra options to benchmark executables (name templates can use \$pkgid, \$compiler, \$os, \$arch, \$benchmark)" -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-repl" -l "benchmark-option" -d "give extra option to benchmark executables (no need to quote options containing spaces, name template can use \$pkgid, \$compiler, \$os, \$arch, \$benchmark)" -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-repl" -l "project-file" -d "Set the name of the cabal.project file to search for in parent directories" -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-repl" -s "z" -l "ignore-project" -d "Ignore local project configuration"
 complete -c cabal -n "__fish_seen_subcommand_from v2-repl" -l "repl-options" -d "use this option for the repl" -x
@@ -2662,7 +2662,7 @@ complete -c cabal -n "__fish_seen_subcommand_from v2-run" -l "allow-newer" -d "I
 complete -c cabal -n "__fish_seen_subcommand_from v2-run" -l "write-ghc-environment-files" -d "Whether to create a .ghc.environment file after a successful build (v2-build only)" -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-run" -l "enable-documentation" -d "Enable building of documentation"
 complete -c cabal -n "__fish_seen_subcommand_from v2-run" -l "disable-documentation" -d "Disable building of documentation"
-complete -c cabal -n "__fish_seen_subcommand_from v2-run" -l "doc-index-file" -d "A central index of haddock API documentation (template cannot use $pkgid)" -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-run" -l "doc-index-file" -d "A central index of haddock API documentation (template cannot use \$pkgid)" -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-run" -l "dry-run" -d "Do not install anything, only print what would be installed."
 complete -c cabal -n "__fish_seen_subcommand_from v2-run" -l "only-download" -d "Do not build anything, only fetch the packages."
 complete -c cabal -n "__fish_seen_subcommand_from v2-run" -l "max-backjumps" -d "Maximum number of backjumps allowed while solving (default: 4000)." -x
@@ -2683,15 +2683,15 @@ complete -c cabal -n "__fish_seen_subcommand_from v2-run" -l "only-dependencies"
 complete -c cabal -n "__fish_seen_subcommand_from v2-run" -l "dependencies-only" -d "A synonym for --only-dependencies"
 complete -c cabal -n "__fish_seen_subcommand_from v2-run" -l "index-state" -d "Use source package index state as it existed at a previous time." -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-run" -l "root-cmd" -d "(No longer supported, do not use.)" -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-run" -l "build-summary" -d "Save build summaries to file (name template can use $pkgid, $compiler, $os, $arch)" -r
-complete -c cabal -n "__fish_seen_subcommand_from v2-run" -l "build-log" -d "Log all builds to file (name template can use $pkgid, $compiler, $os, $arch)" -r
+complete -c cabal -n "__fish_seen_subcommand_from v2-run" -l "build-summary" -d "Save build summaries to file (name template can use \$pkgid, \$compiler, \$os, \$arch)" -r
+complete -c cabal -n "__fish_seen_subcommand_from v2-run" -l "build-log" -d "Log all builds to file (name template can use \$pkgid, \$compiler, \$os, \$arch)" -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-run" -l "remote-build-reporting" -d "Generate build reports to send to a remote server (none, anonymous or detailed)." -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-run" -l "report-planning-failure" -d "Generate build reports when the dependency solver fails."
 complete -c cabal -n "__fish_seen_subcommand_from v2-run" -l "enable-per-component" -d "Enable Per-component builds when possible"
 complete -c cabal -n "__fish_seen_subcommand_from v2-run" -l "disable-per-component" -d "Disable Per-component builds when possible"
 complete -c cabal -n "__fish_seen_subcommand_from v2-run" -l "one-shot" -d "Do not record the packages in the world file."
 complete -c cabal -n "__fish_seen_subcommand_from v2-run" -l "run-tests" -d "Run package test suites during installation."
-complete -c cabal -n "__fish_seen_subcommand_from v2-run" -s "j" -l "jobs" -d "Run NUM jobs simultaneously (or '$ncpus' if no NUM is given)." -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-run" -s "j" -l "jobs" -d "Run NUM jobs simultaneously (or '\$ncpus' if no NUM is given)." -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-run" -l "keep-going" -d "After a build failure, continue to build other unaffected packages."
 complete -c cabal -n "__fish_seen_subcommand_from v2-run" -l "offline" -d "Don't download packages from the Internet."
 complete -c cabal -n "__fish_seen_subcommand_from v2-run" -l "haddock-hoogle" -d "Generate a hoogle database"
@@ -2708,16 +2708,16 @@ complete -c cabal -n "__fish_seen_subcommand_from v2-run" -l "haddock-hyperlink-
 complete -c cabal -n "__fish_seen_subcommand_from v2-run" -l "haddock-quickjump" -d "Generate an index for interactive documentation navigation"
 complete -c cabal -n "__fish_seen_subcommand_from v2-run" -l "haddock-hscolour-css" -d "Use PATH as the HsColour stylesheet" -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-run" -l "haddock-contents-location" -d "Bake URL in as the location for the contents page" -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-run" -l "test-log" -d "Log all test suite results to file (name template can use $pkgid, $compiler, $os, $arch, $test-suite, $result)" -r
-complete -c cabal -n "__fish_seen_subcommand_from v2-run" -l "test-machine-log" -d "Produce a machine-readable log file (name template can use $pkgid, $compiler, $os, $arch, $result)" -r
+complete -c cabal -n "__fish_seen_subcommand_from v2-run" -l "test-log" -d "Log all test suite results to file (name template can use \$pkgid, \$compiler, \$os, \$arch, \$test-suite, \$result)" -r
+complete -c cabal -n "__fish_seen_subcommand_from v2-run" -l "test-machine-log" -d "Produce a machine-readable log file (name template can use \$pkgid, \$compiler, \$os, \$arch, \$result)" -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-run" -l "test-show-details" -d "'always': always show results of individual test cases." -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-run" -l "test-keep-tix-files" -d "keep .tix files for HPC between test runs"
 complete -c cabal -n "__fish_seen_subcommand_from v2-run" -l "test-wrapper" -d "Run test through a wrapper." -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-run" -l "test-fail-when-no-test-suites" -d "Exit with failure when no test suites are found."
-complete -c cabal -n "__fish_seen_subcommand_from v2-run" -l "test-options" -d "give extra options to test executables (name templates can use $pkgid, $compiler, $os, $arch, $test-suite)" -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-run" -l "test-option" -d "give extra option to test executables (no need to quote options containing spaces, name template can use $pkgid, $compiler, $os, $arch, $test-suite)" -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-run" -l "benchmark-options" -d "give extra options to benchmark executables (name templates can use $pkgid, $compiler, $os, $arch, $benchmark)" -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-run" -l "benchmark-option" -d "give extra option to benchmark executables (no need to quote options containing spaces, name template can use $pkgid, $compiler, $os, $arch, $benchmark)" -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-run" -l "test-options" -d "give extra options to test executables (name templates can use \$pkgid, \$compiler, \$os, \$arch, \$test-suite)" -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-run" -l "test-option" -d "give extra option to test executables (no need to quote options containing spaces, name template can use \$pkgid, \$compiler, \$os, \$arch, \$test-suite)" -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-run" -l "benchmark-options" -d "give extra options to benchmark executables (name templates can use \$pkgid, \$compiler, \$os, \$arch, \$benchmark)" -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-run" -l "benchmark-option" -d "give extra option to benchmark executables (no need to quote options containing spaces, name template can use \$pkgid, \$compiler, \$os, \$arch, \$benchmark)" -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-run" -l "project-file" -d "Set the name of the cabal.project file to search for in parent directories" -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-run" -s "z" -l "ignore-project" -d "Ignore local project configuration"
 
@@ -2818,7 +2818,7 @@ complete -c cabal -n "__fish_seen_subcommand_from v2-test" -l "allow-newer" -d "
 complete -c cabal -n "__fish_seen_subcommand_from v2-test" -l "write-ghc-environment-files" -d "Whether to create a .ghc.environment file after a successful build (v2-build only)" -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-test" -l "enable-documentation" -d "Enable building of documentation"
 complete -c cabal -n "__fish_seen_subcommand_from v2-test" -l "disable-documentation" -d "Disable building of documentation"
-complete -c cabal -n "__fish_seen_subcommand_from v2-test" -l "doc-index-file" -d "A central index of haddock API documentation (template cannot use $pkgid)" -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-test" -l "doc-index-file" -d "A central index of haddock API documentation (template cannot use \$pkgid)" -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-test" -l "dry-run" -d "Do not install anything, only print what would be installed."
 complete -c cabal -n "__fish_seen_subcommand_from v2-test" -l "only-download" -d "Do not build anything, only fetch the packages."
 complete -c cabal -n "__fish_seen_subcommand_from v2-test" -l "max-backjumps" -d "Maximum number of backjumps allowed while solving (default: 4000)." -x
@@ -2839,15 +2839,15 @@ complete -c cabal -n "__fish_seen_subcommand_from v2-test" -l "only-dependencies
 complete -c cabal -n "__fish_seen_subcommand_from v2-test" -l "dependencies-only" -d "A synonym for --only-dependencies"
 complete -c cabal -n "__fish_seen_subcommand_from v2-test" -l "index-state" -d "Use source package index state as it existed at a previous time." -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-test" -l "root-cmd" -d "(No longer supported, do not use.)" -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-test" -l "build-summary" -d "Save build summaries to file (name template can use $pkgid, $compiler, $os, $arch)" -r
-complete -c cabal -n "__fish_seen_subcommand_from v2-test" -l "build-log" -d "Log all builds to file (name template can use $pkgid, $compiler, $os, $arch)" -r
+complete -c cabal -n "__fish_seen_subcommand_from v2-test" -l "build-summary" -d "Save build summaries to file (name template can use \$pkgid, \$compiler, \$os, \$arch)" -r
+complete -c cabal -n "__fish_seen_subcommand_from v2-test" -l "build-log" -d "Log all builds to file (name template can use \$pkgid, \$compiler, \$os, \$arch)" -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-test" -l "remote-build-reporting" -d "Generate build reports to send to a remote server (none, anonymous or detailed)." -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-test" -l "report-planning-failure" -d "Generate build reports when the dependency solver fails."
 complete -c cabal -n "__fish_seen_subcommand_from v2-test" -l "enable-per-component" -d "Enable Per-component builds when possible"
 complete -c cabal -n "__fish_seen_subcommand_from v2-test" -l "disable-per-component" -d "Disable Per-component builds when possible"
 complete -c cabal -n "__fish_seen_subcommand_from v2-test" -l "one-shot" -d "Do not record the packages in the world file."
 complete -c cabal -n "__fish_seen_subcommand_from v2-test" -l "run-tests" -d "Run package test suites during installation."
-complete -c cabal -n "__fish_seen_subcommand_from v2-test" -s "j" -l "jobs" -d "Run NUM jobs simultaneously (or '$ncpus' if no NUM is given)." -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-test" -s "j" -l "jobs" -d "Run NUM jobs simultaneously (or '\$ncpus' if no NUM is given)." -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-test" -l "keep-going" -d "After a build failure, continue to build other unaffected packages."
 complete -c cabal -n "__fish_seen_subcommand_from v2-test" -l "offline" -d "Don't download packages from the Internet."
 complete -c cabal -n "__fish_seen_subcommand_from v2-test" -l "haddock-hoogle" -d "Generate a hoogle database"
@@ -2864,16 +2864,16 @@ complete -c cabal -n "__fish_seen_subcommand_from v2-test" -l "haddock-hyperlink
 complete -c cabal -n "__fish_seen_subcommand_from v2-test" -l "haddock-quickjump" -d "Generate an index for interactive documentation navigation"
 complete -c cabal -n "__fish_seen_subcommand_from v2-test" -l "haddock-hscolour-css" -d "Use PATH as the HsColour stylesheet" -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-test" -l "haddock-contents-location" -d "Bake URL in as the location for the contents page" -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-test" -l "test-log" -d "Log all test suite results to file (name template can use $pkgid, $compiler, $os, $arch, $test-suite, $result)" -r
-complete -c cabal -n "__fish_seen_subcommand_from v2-test" -l "test-machine-log" -d "Produce a machine-readable log file (name template can use $pkgid, $compiler, $os, $arch, $result)" -r
+complete -c cabal -n "__fish_seen_subcommand_from v2-test" -l "test-log" -d "Log all test suite results to file (name template can use \$pkgid, \$compiler, \$os, \$arch, \$test-suite, \$result)" -r
+complete -c cabal -n "__fish_seen_subcommand_from v2-test" -l "test-machine-log" -d "Produce a machine-readable log file (name template can use \$pkgid, \$compiler, \$os, \$arch, \$result)" -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-test" -l "test-show-details" -d "'always': always show results of individual test cases." -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-test" -l "test-keep-tix-files" -d "keep .tix files for HPC between test runs"
 complete -c cabal -n "__fish_seen_subcommand_from v2-test" -l "test-wrapper" -d "Run test through a wrapper." -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-test" -l "test-fail-when-no-test-suites" -d "Exit with failure when no test suites are found."
-complete -c cabal -n "__fish_seen_subcommand_from v2-test" -l "test-options" -d "give extra options to test executables (name templates can use $pkgid, $compiler, $os, $arch, $test-suite)" -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-test" -l "test-option" -d "give extra option to test executables (no need to quote options containing spaces, name template can use $pkgid, $compiler, $os, $arch, $test-suite)" -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-test" -l "benchmark-options" -d "give extra options to benchmark executables (name templates can use $pkgid, $compiler, $os, $arch, $benchmark)" -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-test" -l "benchmark-option" -d "give extra option to benchmark executables (no need to quote options containing spaces, name template can use $pkgid, $compiler, $os, $arch, $benchmark)" -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-test" -l "test-options" -d "give extra options to test executables (name templates can use \$pkgid, \$compiler, \$os, \$arch, \$test-suite)" -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-test" -l "test-option" -d "give extra option to test executables (no need to quote options containing spaces, name template can use \$pkgid, \$compiler, \$os, \$arch, \$test-suite)" -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-test" -l "benchmark-options" -d "give extra options to benchmark executables (name templates can use \$pkgid, \$compiler, \$os, \$arch, \$benchmark)" -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-test" -l "benchmark-option" -d "give extra option to benchmark executables (no need to quote options containing spaces, name template can use \$pkgid, \$compiler, \$os, \$arch, \$benchmark)" -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-test" -l "project-file" -d "Set the name of the cabal.project file to search for in parent directories" -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-test" -s "z" -l "ignore-project" -d "Ignore local project configuration"
 
@@ -2974,7 +2974,7 @@ complete -c cabal -n "__fish_seen_subcommand_from v2-bench" -l "allow-newer" -d 
 complete -c cabal -n "__fish_seen_subcommand_from v2-bench" -l "write-ghc-environment-files" -d "Whether to create a .ghc.environment file after a successful build (v2-build only)" -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-bench" -l "enable-documentation" -d "Enable building of documentation"
 complete -c cabal -n "__fish_seen_subcommand_from v2-bench" -l "disable-documentation" -d "Disable building of documentation"
-complete -c cabal -n "__fish_seen_subcommand_from v2-bench" -l "doc-index-file" -d "A central index of haddock API documentation (template cannot use $pkgid)" -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-bench" -l "doc-index-file" -d "A central index of haddock API documentation (template cannot use \$pkgid)" -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-bench" -l "dry-run" -d "Do not install anything, only print what would be installed."
 complete -c cabal -n "__fish_seen_subcommand_from v2-bench" -l "only-download" -d "Do not build anything, only fetch the packages."
 complete -c cabal -n "__fish_seen_subcommand_from v2-bench" -l "max-backjumps" -d "Maximum number of backjumps allowed while solving (default: 4000)." -x
@@ -2995,15 +2995,15 @@ complete -c cabal -n "__fish_seen_subcommand_from v2-bench" -l "only-dependencie
 complete -c cabal -n "__fish_seen_subcommand_from v2-bench" -l "dependencies-only" -d "A synonym for --only-dependencies"
 complete -c cabal -n "__fish_seen_subcommand_from v2-bench" -l "index-state" -d "Use source package index state as it existed at a previous time." -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-bench" -l "root-cmd" -d "(No longer supported, do not use.)" -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-bench" -l "build-summary" -d "Save build summaries to file (name template can use $pkgid, $compiler, $os, $arch)" -r
-complete -c cabal -n "__fish_seen_subcommand_from v2-bench" -l "build-log" -d "Log all builds to file (name template can use $pkgid, $compiler, $os, $arch)" -r
+complete -c cabal -n "__fish_seen_subcommand_from v2-bench" -l "build-summary" -d "Save build summaries to file (name template can use \$pkgid, \$compiler, \$os, \$arch)" -r
+complete -c cabal -n "__fish_seen_subcommand_from v2-bench" -l "build-log" -d "Log all builds to file (name template can use \$pkgid, \$compiler, \$os, \$arch)" -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-bench" -l "remote-build-reporting" -d "Generate build reports to send to a remote server (none, anonymous or detailed)." -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-bench" -l "report-planning-failure" -d "Generate build reports when the dependency solver fails."
 complete -c cabal -n "__fish_seen_subcommand_from v2-bench" -l "enable-per-component" -d "Enable Per-component builds when possible"
 complete -c cabal -n "__fish_seen_subcommand_from v2-bench" -l "disable-per-component" -d "Disable Per-component builds when possible"
 complete -c cabal -n "__fish_seen_subcommand_from v2-bench" -l "one-shot" -d "Do not record the packages in the world file."
 complete -c cabal -n "__fish_seen_subcommand_from v2-bench" -l "run-tests" -d "Run package test suites during installation."
-complete -c cabal -n "__fish_seen_subcommand_from v2-bench" -s "j" -l "jobs" -d "Run NUM jobs simultaneously (or '$ncpus' if no NUM is given)." -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-bench" -s "j" -l "jobs" -d "Run NUM jobs simultaneously (or '\$ncpus' if no NUM is given)." -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-bench" -l "keep-going" -d "After a build failure, continue to build other unaffected packages."
 complete -c cabal -n "__fish_seen_subcommand_from v2-bench" -l "offline" -d "Don't download packages from the Internet."
 complete -c cabal -n "__fish_seen_subcommand_from v2-bench" -l "haddock-hoogle" -d "Generate a hoogle database"
@@ -3020,16 +3020,16 @@ complete -c cabal -n "__fish_seen_subcommand_from v2-bench" -l "haddock-hyperlin
 complete -c cabal -n "__fish_seen_subcommand_from v2-bench" -l "haddock-quickjump" -d "Generate an index for interactive documentation navigation"
 complete -c cabal -n "__fish_seen_subcommand_from v2-bench" -l "haddock-hscolour-css" -d "Use PATH as the HsColour stylesheet" -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-bench" -l "haddock-contents-location" -d "Bake URL in as the location for the contents page" -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-bench" -l "test-log" -d "Log all test suite results to file (name template can use $pkgid, $compiler, $os, $arch, $test-suite, $result)" -r
-complete -c cabal -n "__fish_seen_subcommand_from v2-bench" -l "test-machine-log" -d "Produce a machine-readable log file (name template can use $pkgid, $compiler, $os, $arch, $result)" -r
+complete -c cabal -n "__fish_seen_subcommand_from v2-bench" -l "test-log" -d "Log all test suite results to file (name template can use \$pkgid, \$compiler, \$os, \$arch, \$test-suite, \$result)" -r
+complete -c cabal -n "__fish_seen_subcommand_from v2-bench" -l "test-machine-log" -d "Produce a machine-readable log file (name template can use \$pkgid, \$compiler, \$os, \$arch, \$result)" -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-bench" -l "test-show-details" -d "'always': always show results of individual test cases." -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-bench" -l "test-keep-tix-files" -d "keep .tix files for HPC between test runs"
 complete -c cabal -n "__fish_seen_subcommand_from v2-bench" -l "test-wrapper" -d "Run test through a wrapper." -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-bench" -l "test-fail-when-no-test-suites" -d "Exit with failure when no test suites are found."
-complete -c cabal -n "__fish_seen_subcommand_from v2-bench" -l "test-options" -d "give extra options to test executables (name templates can use $pkgid, $compiler, $os, $arch, $test-suite)" -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-bench" -l "test-option" -d "give extra option to test executables (no need to quote options containing spaces, name template can use $pkgid, $compiler, $os, $arch, $test-suite)" -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-bench" -l "benchmark-options" -d "give extra options to benchmark executables (name templates can use $pkgid, $compiler, $os, $arch, $benchmark)" -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-bench" -l "benchmark-option" -d "give extra option to benchmark executables (no need to quote options containing spaces, name template can use $pkgid, $compiler, $os, $arch, $benchmark)" -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-bench" -l "test-options" -d "give extra options to test executables (name templates can use \$pkgid, \$compiler, \$os, \$arch, \$test-suite)" -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-bench" -l "test-option" -d "give extra option to test executables (no need to quote options containing spaces, name template can use \$pkgid, \$compiler, \$os, \$arch, \$test-suite)" -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-bench" -l "benchmark-options" -d "give extra options to benchmark executables (name templates can use \$pkgid, \$compiler, \$os, \$arch, \$benchmark)" -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-bench" -l "benchmark-option" -d "give extra option to benchmark executables (no need to quote options containing spaces, name template can use \$pkgid, \$compiler, \$os, \$arch, \$benchmark)" -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-bench" -l "project-file" -d "Set the name of the cabal.project file to search for in parent directories" -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-bench" -s "z" -l "ignore-project" -d "Ignore local project configuration"
 
@@ -3130,7 +3130,7 @@ complete -c cabal -n "__fish_seen_subcommand_from v2-freeze" -l "allow-newer" -d
 complete -c cabal -n "__fish_seen_subcommand_from v2-freeze" -l "write-ghc-environment-files" -d "Whether to create a .ghc.environment file after a successful build (v2-build only)" -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-freeze" -l "enable-documentation" -d "Enable building of documentation"
 complete -c cabal -n "__fish_seen_subcommand_from v2-freeze" -l "disable-documentation" -d "Disable building of documentation"
-complete -c cabal -n "__fish_seen_subcommand_from v2-freeze" -l "doc-index-file" -d "A central index of haddock API documentation (template cannot use $pkgid)" -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-freeze" -l "doc-index-file" -d "A central index of haddock API documentation (template cannot use \$pkgid)" -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-freeze" -l "dry-run" -d "Do not install anything, only print what would be installed."
 complete -c cabal -n "__fish_seen_subcommand_from v2-freeze" -l "only-download" -d "Do not build anything, only fetch the packages."
 complete -c cabal -n "__fish_seen_subcommand_from v2-freeze" -l "max-backjumps" -d "Maximum number of backjumps allowed while solving (default: 4000)." -x
@@ -3151,15 +3151,15 @@ complete -c cabal -n "__fish_seen_subcommand_from v2-freeze" -l "only-dependenci
 complete -c cabal -n "__fish_seen_subcommand_from v2-freeze" -l "dependencies-only" -d "A synonym for --only-dependencies"
 complete -c cabal -n "__fish_seen_subcommand_from v2-freeze" -l "index-state" -d "Use source package index state as it existed at a previous time." -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-freeze" -l "root-cmd" -d "(No longer supported, do not use.)" -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-freeze" -l "build-summary" -d "Save build summaries to file (name template can use $pkgid, $compiler, $os, $arch)" -r
-complete -c cabal -n "__fish_seen_subcommand_from v2-freeze" -l "build-log" -d "Log all builds to file (name template can use $pkgid, $compiler, $os, $arch)" -r
+complete -c cabal -n "__fish_seen_subcommand_from v2-freeze" -l "build-summary" -d "Save build summaries to file (name template can use \$pkgid, \$compiler, \$os, \$arch)" -r
+complete -c cabal -n "__fish_seen_subcommand_from v2-freeze" -l "build-log" -d "Log all builds to file (name template can use \$pkgid, \$compiler, \$os, \$arch)" -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-freeze" -l "remote-build-reporting" -d "Generate build reports to send to a remote server (none, anonymous or detailed)." -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-freeze" -l "report-planning-failure" -d "Generate build reports when the dependency solver fails."
 complete -c cabal -n "__fish_seen_subcommand_from v2-freeze" -l "enable-per-component" -d "Enable Per-component builds when possible"
 complete -c cabal -n "__fish_seen_subcommand_from v2-freeze" -l "disable-per-component" -d "Disable Per-component builds when possible"
 complete -c cabal -n "__fish_seen_subcommand_from v2-freeze" -l "one-shot" -d "Do not record the packages in the world file."
 complete -c cabal -n "__fish_seen_subcommand_from v2-freeze" -l "run-tests" -d "Run package test suites during installation."
-complete -c cabal -n "__fish_seen_subcommand_from v2-freeze" -s "j" -l "jobs" -d "Run NUM jobs simultaneously (or '$ncpus' if no NUM is given)." -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-freeze" -s "j" -l "jobs" -d "Run NUM jobs simultaneously (or '\$ncpus' if no NUM is given)." -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-freeze" -l "keep-going" -d "After a build failure, continue to build other unaffected packages."
 complete -c cabal -n "__fish_seen_subcommand_from v2-freeze" -l "offline" -d "Don't download packages from the Internet."
 complete -c cabal -n "__fish_seen_subcommand_from v2-freeze" -l "haddock-hoogle" -d "Generate a hoogle database"
@@ -3176,16 +3176,16 @@ complete -c cabal -n "__fish_seen_subcommand_from v2-freeze" -l "haddock-hyperli
 complete -c cabal -n "__fish_seen_subcommand_from v2-freeze" -l "haddock-quickjump" -d "Generate an index for interactive documentation navigation"
 complete -c cabal -n "__fish_seen_subcommand_from v2-freeze" -l "haddock-hscolour-css" -d "Use PATH as the HsColour stylesheet" -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-freeze" -l "haddock-contents-location" -d "Bake URL in as the location for the contents page" -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-freeze" -l "test-log" -d "Log all test suite results to file (name template can use $pkgid, $compiler, $os, $arch, $test-suite, $result)" -r
-complete -c cabal -n "__fish_seen_subcommand_from v2-freeze" -l "test-machine-log" -d "Produce a machine-readable log file (name template can use $pkgid, $compiler, $os, $arch, $result)" -r
+complete -c cabal -n "__fish_seen_subcommand_from v2-freeze" -l "test-log" -d "Log all test suite results to file (name template can use \$pkgid, \$compiler, \$os, \$arch, \$test-suite, \$result)" -r
+complete -c cabal -n "__fish_seen_subcommand_from v2-freeze" -l "test-machine-log" -d "Produce a machine-readable log file (name template can use \$pkgid, \$compiler, \$os, \$arch, \$result)" -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-freeze" -l "test-show-details" -d "'always': always show results of individual test cases." -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-freeze" -l "test-keep-tix-files" -d "keep .tix files for HPC between test runs"
 complete -c cabal -n "__fish_seen_subcommand_from v2-freeze" -l "test-wrapper" -d "Run test through a wrapper." -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-freeze" -l "test-fail-when-no-test-suites" -d "Exit with failure when no test suites are found."
-complete -c cabal -n "__fish_seen_subcommand_from v2-freeze" -l "test-options" -d "give extra options to test executables (name templates can use $pkgid, $compiler, $os, $arch, $test-suite)" -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-freeze" -l "test-option" -d "give extra option to test executables (no need to quote options containing spaces, name template can use $pkgid, $compiler, $os, $arch, $test-suite)" -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-freeze" -l "benchmark-options" -d "give extra options to benchmark executables (name templates can use $pkgid, $compiler, $os, $arch, $benchmark)" -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-freeze" -l "benchmark-option" -d "give extra option to benchmark executables (no need to quote options containing spaces, name template can use $pkgid, $compiler, $os, $arch, $benchmark)" -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-freeze" -l "test-options" -d "give extra options to test executables (name templates can use \$pkgid, \$compiler, \$os, \$arch, \$test-suite)" -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-freeze" -l "test-option" -d "give extra option to test executables (no need to quote options containing spaces, name template can use \$pkgid, \$compiler, \$os, \$arch, \$test-suite)" -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-freeze" -l "benchmark-options" -d "give extra options to benchmark executables (name templates can use \$pkgid, \$compiler, \$os, \$arch, \$benchmark)" -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-freeze" -l "benchmark-option" -d "give extra option to benchmark executables (no need to quote options containing spaces, name template can use \$pkgid, \$compiler, \$os, \$arch, \$benchmark)" -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-freeze" -l "project-file" -d "Set the name of the cabal.project file to search for in parent directories" -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-freeze" -s "z" -l "ignore-project" -d "Ignore local project configuration"
 
@@ -3286,7 +3286,7 @@ complete -c cabal -n "__fish_seen_subcommand_from v2-haddock" -l "allow-newer" -
 complete -c cabal -n "__fish_seen_subcommand_from v2-haddock" -l "write-ghc-environment-files" -d "Whether to create a .ghc.environment file after a successful build (v2-build only)" -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-haddock" -l "enable-documentation" -d "Enable building of documentation"
 complete -c cabal -n "__fish_seen_subcommand_from v2-haddock" -l "disable-documentation" -d "Disable building of documentation"
-complete -c cabal -n "__fish_seen_subcommand_from v2-haddock" -l "doc-index-file" -d "A central index of haddock API documentation (template cannot use $pkgid)" -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-haddock" -l "doc-index-file" -d "A central index of haddock API documentation (template cannot use \$pkgid)" -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-haddock" -l "dry-run" -d "Do not install anything, only print what would be installed."
 complete -c cabal -n "__fish_seen_subcommand_from v2-haddock" -l "only-download" -d "Do not build anything, only fetch the packages."
 complete -c cabal -n "__fish_seen_subcommand_from v2-haddock" -l "max-backjumps" -d "Maximum number of backjumps allowed while solving (default: 4000)." -x
@@ -3307,15 +3307,15 @@ complete -c cabal -n "__fish_seen_subcommand_from v2-haddock" -l "only-dependenc
 complete -c cabal -n "__fish_seen_subcommand_from v2-haddock" -l "dependencies-only" -d "A synonym for --only-dependencies"
 complete -c cabal -n "__fish_seen_subcommand_from v2-haddock" -l "index-state" -d "Use source package index state as it existed at a previous time." -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-haddock" -l "root-cmd" -d "(No longer supported, do not use.)" -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-haddock" -l "build-summary" -d "Save build summaries to file (name template can use $pkgid, $compiler, $os, $arch)" -r
-complete -c cabal -n "__fish_seen_subcommand_from v2-haddock" -l "build-log" -d "Log all builds to file (name template can use $pkgid, $compiler, $os, $arch)" -r
+complete -c cabal -n "__fish_seen_subcommand_from v2-haddock" -l "build-summary" -d "Save build summaries to file (name template can use \$pkgid, \$compiler, \$os, \$arch)" -r
+complete -c cabal -n "__fish_seen_subcommand_from v2-haddock" -l "build-log" -d "Log all builds to file (name template can use \$pkgid, \$compiler, \$os, \$arch)" -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-haddock" -l "remote-build-reporting" -d "Generate build reports to send to a remote server (none, anonymous or detailed)." -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-haddock" -l "report-planning-failure" -d "Generate build reports when the dependency solver fails."
 complete -c cabal -n "__fish_seen_subcommand_from v2-haddock" -l "enable-per-component" -d "Enable Per-component builds when possible"
 complete -c cabal -n "__fish_seen_subcommand_from v2-haddock" -l "disable-per-component" -d "Disable Per-component builds when possible"
 complete -c cabal -n "__fish_seen_subcommand_from v2-haddock" -l "one-shot" -d "Do not record the packages in the world file."
 complete -c cabal -n "__fish_seen_subcommand_from v2-haddock" -l "run-tests" -d "Run package test suites during installation."
-complete -c cabal -n "__fish_seen_subcommand_from v2-haddock" -s "j" -l "jobs" -d "Run NUM jobs simultaneously (or '$ncpus' if no NUM is given)." -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-haddock" -s "j" -l "jobs" -d "Run NUM jobs simultaneously (or '\$ncpus' if no NUM is given)." -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-haddock" -l "keep-going" -d "After a build failure, continue to build other unaffected packages."
 complete -c cabal -n "__fish_seen_subcommand_from v2-haddock" -l "offline" -d "Don't download packages from the Internet."
 complete -c cabal -n "__fish_seen_subcommand_from v2-haddock" -l "haddock-hoogle" -d "Generate a hoogle database"
@@ -3332,16 +3332,16 @@ complete -c cabal -n "__fish_seen_subcommand_from v2-haddock" -l "haddock-hyperl
 complete -c cabal -n "__fish_seen_subcommand_from v2-haddock" -l "haddock-quickjump" -d "Generate an index for interactive documentation navigation"
 complete -c cabal -n "__fish_seen_subcommand_from v2-haddock" -l "haddock-hscolour-css" -d "Use PATH as the HsColour stylesheet" -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-haddock" -l "haddock-contents-location" -d "Bake URL in as the location for the contents page" -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-haddock" -l "test-log" -d "Log all test suite results to file (name template can use $pkgid, $compiler, $os, $arch, $test-suite, $result)" -r
-complete -c cabal -n "__fish_seen_subcommand_from v2-haddock" -l "test-machine-log" -d "Produce a machine-readable log file (name template can use $pkgid, $compiler, $os, $arch, $result)" -r
+complete -c cabal -n "__fish_seen_subcommand_from v2-haddock" -l "test-log" -d "Log all test suite results to file (name template can use \$pkgid, \$compiler, \$os, \$arch, \$test-suite, \$result)" -r
+complete -c cabal -n "__fish_seen_subcommand_from v2-haddock" -l "test-machine-log" -d "Produce a machine-readable log file (name template can use \$pkgid, \$compiler, \$os, \$arch, \$result)" -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-haddock" -l "test-show-details" -d "'always': always show results of individual test cases." -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-haddock" -l "test-keep-tix-files" -d "keep .tix files for HPC between test runs"
 complete -c cabal -n "__fish_seen_subcommand_from v2-haddock" -l "test-wrapper" -d "Run test through a wrapper." -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-haddock" -l "test-fail-when-no-test-suites" -d "Exit with failure when no test suites are found."
-complete -c cabal -n "__fish_seen_subcommand_from v2-haddock" -l "test-options" -d "give extra options to test executables (name templates can use $pkgid, $compiler, $os, $arch, $test-suite)" -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-haddock" -l "test-option" -d "give extra option to test executables (no need to quote options containing spaces, name template can use $pkgid, $compiler, $os, $arch, $test-suite)" -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-haddock" -l "benchmark-options" -d "give extra options to benchmark executables (name templates can use $pkgid, $compiler, $os, $arch, $benchmark)" -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-haddock" -l "benchmark-option" -d "give extra option to benchmark executables (no need to quote options containing spaces, name template can use $pkgid, $compiler, $os, $arch, $benchmark)" -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-haddock" -l "test-options" -d "give extra options to test executables (name templates can use \$pkgid, \$compiler, \$os, \$arch, \$test-suite)" -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-haddock" -l "test-option" -d "give extra option to test executables (no need to quote options containing spaces, name template can use \$pkgid, \$compiler, \$os, \$arch, \$test-suite)" -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-haddock" -l "benchmark-options" -d "give extra options to benchmark executables (name templates can use \$pkgid, \$compiler, \$os, \$arch, \$benchmark)" -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-haddock" -l "benchmark-option" -d "give extra option to benchmark executables (no need to quote options containing spaces, name template can use \$pkgid, \$compiler, \$os, \$arch, \$benchmark)" -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-haddock" -l "project-file" -d "Set the name of the cabal.project file to search for in parent directories" -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-haddock" -s "z" -l "ignore-project" -d "Ignore local project configuration"
 
@@ -3442,7 +3442,7 @@ complete -c cabal -n "__fish_seen_subcommand_from v2-exec" -l "allow-newer" -d "
 complete -c cabal -n "__fish_seen_subcommand_from v2-exec" -l "write-ghc-environment-files" -d "Whether to create a .ghc.environment file after a successful build (v2-build only)" -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-exec" -l "enable-documentation" -d "Enable building of documentation"
 complete -c cabal -n "__fish_seen_subcommand_from v2-exec" -l "disable-documentation" -d "Disable building of documentation"
-complete -c cabal -n "__fish_seen_subcommand_from v2-exec" -l "doc-index-file" -d "A central index of haddock API documentation (template cannot use $pkgid)" -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-exec" -l "doc-index-file" -d "A central index of haddock API documentation (template cannot use \$pkgid)" -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-exec" -l "dry-run" -d "Do not install anything, only print what would be installed."
 complete -c cabal -n "__fish_seen_subcommand_from v2-exec" -l "only-download" -d "Do not build anything, only fetch the packages."
 complete -c cabal -n "__fish_seen_subcommand_from v2-exec" -l "max-backjumps" -d "Maximum number of backjumps allowed while solving (default: 4000)." -x
@@ -3463,15 +3463,15 @@ complete -c cabal -n "__fish_seen_subcommand_from v2-exec" -l "only-dependencies
 complete -c cabal -n "__fish_seen_subcommand_from v2-exec" -l "dependencies-only" -d "A synonym for --only-dependencies"
 complete -c cabal -n "__fish_seen_subcommand_from v2-exec" -l "index-state" -d "Use source package index state as it existed at a previous time." -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-exec" -l "root-cmd" -d "(No longer supported, do not use.)" -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-exec" -l "build-summary" -d "Save build summaries to file (name template can use $pkgid, $compiler, $os, $arch)" -r
-complete -c cabal -n "__fish_seen_subcommand_from v2-exec" -l "build-log" -d "Log all builds to file (name template can use $pkgid, $compiler, $os, $arch)" -r
+complete -c cabal -n "__fish_seen_subcommand_from v2-exec" -l "build-summary" -d "Save build summaries to file (name template can use \$pkgid, \$compiler, \$os, \$arch)" -r
+complete -c cabal -n "__fish_seen_subcommand_from v2-exec" -l "build-log" -d "Log all builds to file (name template can use \$pkgid, \$compiler, \$os, \$arch)" -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-exec" -l "remote-build-reporting" -d "Generate build reports to send to a remote server (none, anonymous or detailed)." -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-exec" -l "report-planning-failure" -d "Generate build reports when the dependency solver fails."
 complete -c cabal -n "__fish_seen_subcommand_from v2-exec" -l "enable-per-component" -d "Enable Per-component builds when possible"
 complete -c cabal -n "__fish_seen_subcommand_from v2-exec" -l "disable-per-component" -d "Disable Per-component builds when possible"
 complete -c cabal -n "__fish_seen_subcommand_from v2-exec" -l "one-shot" -d "Do not record the packages in the world file."
 complete -c cabal -n "__fish_seen_subcommand_from v2-exec" -l "run-tests" -d "Run package test suites during installation."
-complete -c cabal -n "__fish_seen_subcommand_from v2-exec" -s "j" -l "jobs" -d "Run NUM jobs simultaneously (or '$ncpus' if no NUM is given)." -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-exec" -s "j" -l "jobs" -d "Run NUM jobs simultaneously (or '\$ncpus' if no NUM is given)." -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-exec" -l "keep-going" -d "After a build failure, continue to build other unaffected packages."
 complete -c cabal -n "__fish_seen_subcommand_from v2-exec" -l "offline" -d "Don't download packages from the Internet."
 complete -c cabal -n "__fish_seen_subcommand_from v2-exec" -l "haddock-hoogle" -d "Generate a hoogle database"
@@ -3488,16 +3488,16 @@ complete -c cabal -n "__fish_seen_subcommand_from v2-exec" -l "haddock-hyperlink
 complete -c cabal -n "__fish_seen_subcommand_from v2-exec" -l "haddock-quickjump" -d "Generate an index for interactive documentation navigation"
 complete -c cabal -n "__fish_seen_subcommand_from v2-exec" -l "haddock-hscolour-css" -d "Use PATH as the HsColour stylesheet" -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-exec" -l "haddock-contents-location" -d "Bake URL in as the location for the contents page" -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-exec" -l "test-log" -d "Log all test suite results to file (name template can use $pkgid, $compiler, $os, $arch, $test-suite, $result)" -r
-complete -c cabal -n "__fish_seen_subcommand_from v2-exec" -l "test-machine-log" -d "Produce a machine-readable log file (name template can use $pkgid, $compiler, $os, $arch, $result)" -r
+complete -c cabal -n "__fish_seen_subcommand_from v2-exec" -l "test-log" -d "Log all test suite results to file (name template can use \$pkgid, \$compiler, \$os, \$arch, \$test-suite, \$result)" -r
+complete -c cabal -n "__fish_seen_subcommand_from v2-exec" -l "test-machine-log" -d "Produce a machine-readable log file (name template can use \$pkgid, \$compiler, \$os, \$arch, \$result)" -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-exec" -l "test-show-details" -d "'always': always show results of individual test cases." -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-exec" -l "test-keep-tix-files" -d "keep .tix files for HPC between test runs"
 complete -c cabal -n "__fish_seen_subcommand_from v2-exec" -l "test-wrapper" -d "Run test through a wrapper." -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-exec" -l "test-fail-when-no-test-suites" -d "Exit with failure when no test suites are found."
-complete -c cabal -n "__fish_seen_subcommand_from v2-exec" -l "test-options" -d "give extra options to test executables (name templates can use $pkgid, $compiler, $os, $arch, $test-suite)" -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-exec" -l "test-option" -d "give extra option to test executables (no need to quote options containing spaces, name template can use $pkgid, $compiler, $os, $arch, $test-suite)" -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-exec" -l "benchmark-options" -d "give extra options to benchmark executables (name templates can use $pkgid, $compiler, $os, $arch, $benchmark)" -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-exec" -l "benchmark-option" -d "give extra option to benchmark executables (no need to quote options containing spaces, name template can use $pkgid, $compiler, $os, $arch, $benchmark)" -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-exec" -l "test-options" -d "give extra options to test executables (name templates can use \$pkgid, \$compiler, \$os, \$arch, \$test-suite)" -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-exec" -l "test-option" -d "give extra option to test executables (no need to quote options containing spaces, name template can use \$pkgid, \$compiler, \$os, \$arch, \$test-suite)" -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-exec" -l "benchmark-options" -d "give extra options to benchmark executables (name templates can use \$pkgid, \$compiler, \$os, \$arch, \$benchmark)" -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-exec" -l "benchmark-option" -d "give extra option to benchmark executables (no need to quote options containing spaces, name template can use \$pkgid, \$compiler, \$os, \$arch, \$benchmark)" -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-exec" -l "project-file" -d "Set the name of the cabal.project file to search for in parent directories" -r
 
 
@@ -3597,7 +3597,7 @@ complete -c cabal -n "__fish_seen_subcommand_from v2-update" -l "allow-newer" -d
 complete -c cabal -n "__fish_seen_subcommand_from v2-update" -l "write-ghc-environment-files" -d "Whether to create a .ghc.environment file after a successful build (v2-build only)" -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-update" -l "enable-documentation" -d "Enable building of documentation"
 complete -c cabal -n "__fish_seen_subcommand_from v2-update" -l "disable-documentation" -d "Disable building of documentation"
-complete -c cabal -n "__fish_seen_subcommand_from v2-update" -l "doc-index-file" -d "A central index of haddock API documentation (template cannot use $pkgid)" -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-update" -l "doc-index-file" -d "A central index of haddock API documentation (template cannot use \$pkgid)" -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-update" -l "dry-run" -d "Do not install anything, only print what would be installed."
 complete -c cabal -n "__fish_seen_subcommand_from v2-update" -l "only-download" -d "Do not build anything, only fetch the packages."
 complete -c cabal -n "__fish_seen_subcommand_from v2-update" -l "max-backjumps" -d "Maximum number of backjumps allowed while solving (default: 4000)." -x
@@ -3618,15 +3618,15 @@ complete -c cabal -n "__fish_seen_subcommand_from v2-update" -l "only-dependenci
 complete -c cabal -n "__fish_seen_subcommand_from v2-update" -l "dependencies-only" -d "A synonym for --only-dependencies"
 complete -c cabal -n "__fish_seen_subcommand_from v2-update" -l "index-state" -d "Use source package index state as it existed at a previous time." -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-update" -l "root-cmd" -d "(No longer supported, do not use.)" -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-update" -l "build-summary" -d "Save build summaries to file (name template can use $pkgid, $compiler, $os, $arch)" -r
-complete -c cabal -n "__fish_seen_subcommand_from v2-update" -l "build-log" -d "Log all builds to file (name template can use $pkgid, $compiler, $os, $arch)" -r
+complete -c cabal -n "__fish_seen_subcommand_from v2-update" -l "build-summary" -d "Save build summaries to file (name template can use \$pkgid, \$compiler, \$os, \$arch)" -r
+complete -c cabal -n "__fish_seen_subcommand_from v2-update" -l "build-log" -d "Log all builds to file (name template can use \$pkgid, \$compiler, \$os, \$arch)" -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-update" -l "remote-build-reporting" -d "Generate build reports to send to a remote server (none, anonymous or detailed)." -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-update" -l "report-planning-failure" -d "Generate build reports when the dependency solver fails."
 complete -c cabal -n "__fish_seen_subcommand_from v2-update" -l "enable-per-component" -d "Enable Per-component builds when possible"
 complete -c cabal -n "__fish_seen_subcommand_from v2-update" -l "disable-per-component" -d "Disable Per-component builds when possible"
 complete -c cabal -n "__fish_seen_subcommand_from v2-update" -l "one-shot" -d "Do not record the packages in the world file."
 complete -c cabal -n "__fish_seen_subcommand_from v2-update" -l "run-tests" -d "Run package test suites during installation."
-complete -c cabal -n "__fish_seen_subcommand_from v2-update" -s "j" -l "jobs" -d "Run NUM jobs simultaneously (or '$ncpus' if no NUM is given)." -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-update" -s "j" -l "jobs" -d "Run NUM jobs simultaneously (or '\$ncpus' if no NUM is given)." -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-update" -l "keep-going" -d "After a build failure, continue to build other unaffected packages."
 complete -c cabal -n "__fish_seen_subcommand_from v2-update" -l "offline" -d "Don't download packages from the Internet."
 complete -c cabal -n "__fish_seen_subcommand_from v2-update" -l "haddock-hoogle" -d "Generate a hoogle database"
@@ -3643,16 +3643,16 @@ complete -c cabal -n "__fish_seen_subcommand_from v2-update" -l "haddock-hyperli
 complete -c cabal -n "__fish_seen_subcommand_from v2-update" -l "haddock-quickjump" -d "Generate an index for interactive documentation navigation"
 complete -c cabal -n "__fish_seen_subcommand_from v2-update" -l "haddock-hscolour-css" -d "Use PATH as the HsColour stylesheet" -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-update" -l "haddock-contents-location" -d "Bake URL in as the location for the contents page" -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-update" -l "test-log" -d "Log all test suite results to file (name template can use $pkgid, $compiler, $os, $arch, $test-suite, $result)" -r
-complete -c cabal -n "__fish_seen_subcommand_from v2-update" -l "test-machine-log" -d "Produce a machine-readable log file (name template can use $pkgid, $compiler, $os, $arch, $result)" -r
+complete -c cabal -n "__fish_seen_subcommand_from v2-update" -l "test-log" -d "Log all test suite results to file (name template can use \$pkgid, \$compiler, \$os, \$arch, \$test-suite, \$result)" -r
+complete -c cabal -n "__fish_seen_subcommand_from v2-update" -l "test-machine-log" -d "Produce a machine-readable log file (name template can use \$pkgid, \$compiler, \$os, \$arch, \$result)" -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-update" -l "test-show-details" -d "'always': always show results of individual test cases." -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-update" -l "test-keep-tix-files" -d "keep .tix files for HPC between test runs"
 complete -c cabal -n "__fish_seen_subcommand_from v2-update" -l "test-wrapper" -d "Run test through a wrapper." -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-update" -l "test-fail-when-no-test-suites" -d "Exit with failure when no test suites are found."
-complete -c cabal -n "__fish_seen_subcommand_from v2-update" -l "test-options" -d "give extra options to test executables (name templates can use $pkgid, $compiler, $os, $arch, $test-suite)" -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-update" -l "test-option" -d "give extra option to test executables (no need to quote options containing spaces, name template can use $pkgid, $compiler, $os, $arch, $test-suite)" -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-update" -l "benchmark-options" -d "give extra options to benchmark executables (name templates can use $pkgid, $compiler, $os, $arch, $benchmark)" -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-update" -l "benchmark-option" -d "give extra option to benchmark executables (no need to quote options containing spaces, name template can use $pkgid, $compiler, $os, $arch, $benchmark)" -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-update" -l "test-options" -d "give extra options to test executables (name templates can use \$pkgid, \$compiler, \$os, \$arch, \$test-suite)" -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-update" -l "test-option" -d "give extra option to test executables (no need to quote options containing spaces, name template can use \$pkgid, \$compiler, \$os, \$arch, \$test-suite)" -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-update" -l "benchmark-options" -d "give extra options to benchmark executables (name templates can use \$pkgid, \$compiler, \$os, \$arch, \$benchmark)" -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-update" -l "benchmark-option" -d "give extra option to benchmark executables (no need to quote options containing spaces, name template can use \$pkgid, \$compiler, \$os, \$arch, \$benchmark)" -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-update" -l "project-file" -d "Set the name of the cabal.project file to search for in parent directories" -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-update" -s "z" -l "ignore-project" -d "Ignore local project configuration"
 
@@ -3753,7 +3753,7 @@ complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l "allow-newer" -
 complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l "write-ghc-environment-files" -d "Whether to create a .ghc.environment file after a successful build (v2-build only)" -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l "enable-documentation" -d "Enable building of documentation"
 complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l "disable-documentation" -d "Disable building of documentation"
-complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l "doc-index-file" -d "A central index of haddock API documentation (template cannot use $pkgid)" -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l "doc-index-file" -d "A central index of haddock API documentation (template cannot use \$pkgid)" -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l "dry-run" -d "Do not install anything, only print what would be installed."
 complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l "only-download" -d "Do not build anything, only fetch the packages."
 complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l "max-backjumps" -d "Maximum number of backjumps allowed while solving (default: 4000)." -x
@@ -3774,15 +3774,15 @@ complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l "only-dependenc
 complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l "dependencies-only" -d "A synonym for --only-dependencies"
 complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l "index-state" -d "Use source package index state as it existed at a previous time." -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l "root-cmd" -d "(No longer supported, do not use.)" -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l "build-summary" -d "Save build summaries to file (name template can use $pkgid, $compiler, $os, $arch)" -r
-complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l "build-log" -d "Log all builds to file (name template can use $pkgid, $compiler, $os, $arch)" -r
+complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l "build-summary" -d "Save build summaries to file (name template can use \$pkgid, \$compiler, \$os, \$arch)" -r
+complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l "build-log" -d "Log all builds to file (name template can use \$pkgid, \$compiler, \$os, \$arch)" -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l "remote-build-reporting" -d "Generate build reports to send to a remote server (none, anonymous or detailed)." -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l "report-planning-failure" -d "Generate build reports when the dependency solver fails."
 complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l "enable-per-component" -d "Enable Per-component builds when possible"
 complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l "disable-per-component" -d "Disable Per-component builds when possible"
 complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l "one-shot" -d "Do not record the packages in the world file."
 complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l "run-tests" -d "Run package test suites during installation."
-complete -c cabal -n "__fish_seen_subcommand_from v2-install" -s "j" -l "jobs" -d "Run NUM jobs simultaneously (or '$ncpus' if no NUM is given)." -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-install" -s "j" -l "jobs" -d "Run NUM jobs simultaneously (or '\$ncpus' if no NUM is given)." -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l "keep-going" -d "After a build failure, continue to build other unaffected packages."
 complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l "offline" -d "Don't download packages from the Internet."
 complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l "haddock-hoogle" -d "Generate a hoogle database"
@@ -3799,16 +3799,16 @@ complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l "haddock-hyperl
 complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l "haddock-quickjump" -d "Generate an index for interactive documentation navigation"
 complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l "haddock-hscolour-css" -d "Use PATH as the HsColour stylesheet" -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l "haddock-contents-location" -d "Bake URL in as the location for the contents page" -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l "test-log" -d "Log all test suite results to file (name template can use $pkgid, $compiler, $os, $arch, $test-suite, $result)" -r
-complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l "test-machine-log" -d "Produce a machine-readable log file (name template can use $pkgid, $compiler, $os, $arch, $result)" -r
+complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l "test-log" -d "Log all test suite results to file (name template can use \$pkgid, \$compiler, \$os, \$arch, \$test-suite, \$result)" -r
+complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l "test-machine-log" -d "Produce a machine-readable log file (name template can use \$pkgid, \$compiler, \$os, \$arch, \$result)" -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l "test-show-details" -d "'always': always show results of individual test cases." -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l "test-keep-tix-files" -d "keep .tix files for HPC between test runs"
 complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l "test-wrapper" -d "Run test through a wrapper." -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l "test-fail-when-no-test-suites" -d "Exit with failure when no test suites are found."
-complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l "test-options" -d "give extra options to test executables (name templates can use $pkgid, $compiler, $os, $arch, $test-suite)" -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l "test-option" -d "give extra option to test executables (no need to quote options containing spaces, name template can use $pkgid, $compiler, $os, $arch, $test-suite)" -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l "benchmark-options" -d "give extra options to benchmark executables (name templates can use $pkgid, $compiler, $os, $arch, $benchmark)" -x
-complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l "benchmark-option" -d "give extra option to benchmark executables (no need to quote options containing spaces, name template can use $pkgid, $compiler, $os, $arch, $benchmark)" -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l "test-options" -d "give extra options to test executables (name templates can use \$pkgid, \$compiler, \$os, \$arch, \$test-suite)" -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l "test-option" -d "give extra option to test executables (no need to quote options containing spaces, name template can use \$pkgid, \$compiler, \$os, \$arch, \$test-suite)" -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l "benchmark-options" -d "give extra options to benchmark executables (name templates can use \$pkgid, \$compiler, \$os, \$arch, \$benchmark)" -x
+complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l "benchmark-option" -d "give extra option to benchmark executables (no need to quote options containing spaces, name template can use \$pkgid, \$compiler, \$os, \$arch, \$benchmark)" -x
 complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l "project-file" -d "Set the name of the cabal.project file to search for in parent directories" -r
 complete -c cabal -n "__fish_seen_subcommand_from v2-install" -s "z" -l "ignore-project" -d "Ignore local project configuration"
 complete -c cabal -n "__fish_seen_subcommand_from v2-install" -l "lib" -d "Install libraries rather than executables from the target package (provisional, see https://github.com/haskell/cabal/issues/6481 for more information)."
@@ -3841,7 +3841,7 @@ complete -c cabal -n "__fish_seen_subcommand_from v2-sdist" -s "o" -l "output-di
 complete -c cabal -n "__fish_seen_subcommand_from v1-build" -s "h" -l "help" -d "Show this help text"
 complete -c cabal -n "__fish_seen_subcommand_from v1-build" -s "v" -l "verbose" -d "Control verbosity (n is 0--3, default verbosity level is 1)" -x
 complete -c cabal -n "__fish_seen_subcommand_from v1-build" -l "builddir" -d "The directory where Cabal puts generated build files (default dist)" -r
-complete -c cabal -n "__fish_seen_subcommand_from v1-build" -s "j" -l "jobs" -d "Run NUM jobs simultaneously (or '$ncpus' if no NUM is given)." -x
+complete -c cabal -n "__fish_seen_subcommand_from v1-build" -s "j" -l "jobs" -d "Run NUM jobs simultaneously (or '\$ncpus' if no NUM is given)." -x
 complete -c cabal -n "__fish_seen_subcommand_from v1-build" -l "with-PROG" -d "give the path to PROG" -r
 complete -c cabal -n "__fish_seen_subcommand_from v1-build" -l "PROG-option" -d "give an extra option to PROG (no need to quote options containing spaces)" -x
 complete -c cabal -n "__fish_seen_subcommand_from v1-build" -l "PROG-options" -d "give extra options to PROG" -x
@@ -3957,7 +3957,7 @@ complete -c cabal -n "__fish_seen_subcommand_from v1-repl" -l "repl-options" -d 
 complete -c cabal -n "__fish_seen_subcommand_from v1-run" -s "h" -l "help" -d "Show this help text"
 complete -c cabal -n "__fish_seen_subcommand_from v1-run" -s "v" -l "verbose" -d "Control verbosity (n is 0--3, default verbosity level is 1)" -x
 complete -c cabal -n "__fish_seen_subcommand_from v1-run" -l "builddir" -d "The directory where Cabal puts generated build files (default dist)" -r
-complete -c cabal -n "__fish_seen_subcommand_from v1-run" -s "j" -l "jobs" -d "Run NUM jobs simultaneously (or '$ncpus' if no NUM is given)." -x
+complete -c cabal -n "__fish_seen_subcommand_from v1-run" -s "j" -l "jobs" -d "Run NUM jobs simultaneously (or '\$ncpus' if no NUM is given)." -x
 complete -c cabal -n "__fish_seen_subcommand_from v1-run" -l "with-PROG" -d "give the path to PROG" -r
 complete -c cabal -n "__fish_seen_subcommand_from v1-run" -l "PROG-option" -d "give an extra option to PROG (no need to quote options containing spaces)" -x
 complete -c cabal -n "__fish_seen_subcommand_from v1-run" -l "PROG-options" -d "give extra options to PROG" -x
@@ -3965,32 +3965,32 @@ complete -c cabal -n "__fish_seen_subcommand_from v1-run" -l "PROG-options" -d "
 
 
 complete -c cabal -n "__fish_seen_subcommand_from v1-test" -s "h" -l "help" -d "Show this help text"
-complete -c cabal -n "__fish_seen_subcommand_from v1-test" -s "j" -l "jobs" -d "Run NUM jobs simultaneously (or '$ncpus' if no NUM is given)." -x
+complete -c cabal -n "__fish_seen_subcommand_from v1-test" -s "j" -l "jobs" -d "Run NUM jobs simultaneously (or '\$ncpus' if no NUM is given)." -x
 complete -c cabal -n "__fish_seen_subcommand_from v1-test" -l "with-PROG" -d "give the path to PROG" -r
 complete -c cabal -n "__fish_seen_subcommand_from v1-test" -l "PROG-option" -d "give an extra option to PROG (no need to quote options containing spaces)" -x
 complete -c cabal -n "__fish_seen_subcommand_from v1-test" -l "PROG-options" -d "give extra options to PROG" -x
 complete -c cabal -n "__fish_seen_subcommand_from v1-test" -s "v" -l "verbose" -d "Control verbosity (n is 0--3, default verbosity level is 1)" -x
 complete -c cabal -n "__fish_seen_subcommand_from v1-test" -l "builddir" -d "The directory where Cabal puts generated build files (default dist)" -r
-complete -c cabal -n "__fish_seen_subcommand_from v1-test" -l "log" -d "Log all test suite results to file (name template can use $pkgid, $compiler, $os, $arch, $test-suite, $result)" -r
-complete -c cabal -n "__fish_seen_subcommand_from v1-test" -l "machine-log" -d "Produce a machine-readable log file (name template can use $pkgid, $compiler, $os, $arch, $result)" -r
+complete -c cabal -n "__fish_seen_subcommand_from v1-test" -l "log" -d "Log all test suite results to file (name template can use \$pkgid, \$compiler, \$os, \$arch, \$test-suite, \$result)" -r
+complete -c cabal -n "__fish_seen_subcommand_from v1-test" -l "machine-log" -d "Produce a machine-readable log file (name template can use \$pkgid, \$compiler, \$os, \$arch, \$result)" -r
 complete -c cabal -n "__fish_seen_subcommand_from v1-test" -l "show-details" -d "'always': always show results of individual test cases." -r
 complete -c cabal -n "__fish_seen_subcommand_from v1-test" -l "keep-tix-files" -d "keep .tix files for HPC between test runs"
 complete -c cabal -n "__fish_seen_subcommand_from v1-test" -l "test-wrapper" -d "Run test through a wrapper." -r
 complete -c cabal -n "__fish_seen_subcommand_from v1-test" -l "fail-when-no-test-suites" -d "Exit with failure when no test suites are found."
-complete -c cabal -n "__fish_seen_subcommand_from v1-test" -l "test-options" -d "give extra options to test executables (name templates can use $pkgid, $compiler, $os, $arch, $test-suite)" -x
-complete -c cabal -n "__fish_seen_subcommand_from v1-test" -l "test-option" -d "give extra option to test executables (no need to quote options containing spaces, name template can use $pkgid, $compiler, $os, $arch, $test-suite)" -x
+complete -c cabal -n "__fish_seen_subcommand_from v1-test" -l "test-options" -d "give extra options to test executables (name templates can use \$pkgid, \$compiler, \$os, \$arch, \$test-suite)" -x
+complete -c cabal -n "__fish_seen_subcommand_from v1-test" -l "test-option" -d "give extra option to test executables (no need to quote options containing spaces, name template can use \$pkgid, \$compiler, \$os, \$arch, \$test-suite)" -x
 
 
 
 complete -c cabal -n "__fish_seen_subcommand_from v1-bench" -s "h" -l "help" -d "Show this help text"
-complete -c cabal -n "__fish_seen_subcommand_from v1-bench" -s "j" -l "jobs" -d "Run NUM jobs simultaneously (or '$ncpus' if no NUM is given)." -x
+complete -c cabal -n "__fish_seen_subcommand_from v1-bench" -s "j" -l "jobs" -d "Run NUM jobs simultaneously (or '\$ncpus' if no NUM is given)." -x
 complete -c cabal -n "__fish_seen_subcommand_from v1-bench" -l "with-PROG" -d "give the path to PROG" -r
 complete -c cabal -n "__fish_seen_subcommand_from v1-bench" -l "PROG-option" -d "give an extra option to PROG (no need to quote options containing spaces)" -x
 complete -c cabal -n "__fish_seen_subcommand_from v1-bench" -l "PROG-options" -d "give extra options to PROG" -x
 complete -c cabal -n "__fish_seen_subcommand_from v1-bench" -s "v" -l "verbose" -d "Control verbosity (n is 0--3, default verbosity level is 1)" -x
 complete -c cabal -n "__fish_seen_subcommand_from v1-bench" -l "builddir" -d "The directory where Cabal puts generated build files (default dist)" -r
-complete -c cabal -n "__fish_seen_subcommand_from v1-bench" -l "benchmark-options" -d "give extra options to benchmark executables (name templates can use $pkgid, $compiler, $os, $arch, $benchmark)" -x
-complete -c cabal -n "__fish_seen_subcommand_from v1-bench" -l "benchmark-option" -d "give extra option to benchmark executables (no need to quote options containing spaces, name template can use $pkgid, $compiler, $os, $arch, $benchmark)" -x
+complete -c cabal -n "__fish_seen_subcommand_from v1-bench" -l "benchmark-options" -d "give extra options to benchmark executables (name templates can use \$pkgid, \$compiler, \$os, \$arch, \$benchmark)" -x
+complete -c cabal -n "__fish_seen_subcommand_from v1-bench" -l "benchmark-option" -d "give extra option to benchmark executables (no need to quote options containing spaces, name template can use \$pkgid, \$compiler, \$os, \$arch, \$benchmark)" -x
 
 
 
@@ -4137,7 +4137,7 @@ complete -c cabal -n "__fish_seen_subcommand_from v1-install" -l "allow-newer" -
 complete -c cabal -n "__fish_seen_subcommand_from v1-install" -l "write-ghc-environment-files" -d "Whether to create a .ghc.environment file after a successful build (v2-build only)" -r
 complete -c cabal -n "__fish_seen_subcommand_from v1-install" -l "enable-documentation" -d "Enable building of documentation"
 complete -c cabal -n "__fish_seen_subcommand_from v1-install" -l "disable-documentation" -d "Disable building of documentation"
-complete -c cabal -n "__fish_seen_subcommand_from v1-install" -l "doc-index-file" -d "A central index of haddock API documentation (template cannot use $pkgid)" -x
+complete -c cabal -n "__fish_seen_subcommand_from v1-install" -l "doc-index-file" -d "A central index of haddock API documentation (template cannot use \$pkgid)" -x
 complete -c cabal -n "__fish_seen_subcommand_from v1-install" -l "dry-run" -d "Do not install anything, only print what would be installed."
 complete -c cabal -n "__fish_seen_subcommand_from v1-install" -l "only-download" -d "Do not build anything, only fetch the packages."
 complete -c cabal -n "__fish_seen_subcommand_from v1-install" -l "max-backjumps" -d "Maximum number of backjumps allowed while solving (default: 4000)." -x
@@ -4159,15 +4159,15 @@ complete -c cabal -n "__fish_seen_subcommand_from v1-install" -l "dependencies-o
 complete -c cabal -n "__fish_seen_subcommand_from v1-install" -l "index-state" -d "Use source package index state as it existed at a previous time." -x
 complete -c cabal -n "__fish_seen_subcommand_from v1-install" -l "root-cmd" -d "(No longer supported, do not use.)" -x
 complete -c cabal -n "__fish_seen_subcommand_from v1-install" -l "symlink-bindir" -d "Add symlinks to installed executables into this directory." -r
-complete -c cabal -n "__fish_seen_subcommand_from v1-install" -l "build-summary" -d "Save build summaries to file (name template can use $pkgid, $compiler, $os, $arch)" -r
-complete -c cabal -n "__fish_seen_subcommand_from v1-install" -l "build-log" -d "Log all builds to file (name template can use $pkgid, $compiler, $os, $arch)" -r
+complete -c cabal -n "__fish_seen_subcommand_from v1-install" -l "build-summary" -d "Save build summaries to file (name template can use \$pkgid, \$compiler, \$os, \$arch)" -r
+complete -c cabal -n "__fish_seen_subcommand_from v1-install" -l "build-log" -d "Log all builds to file (name template can use \$pkgid, \$compiler, \$os, \$arch)" -r
 complete -c cabal -n "__fish_seen_subcommand_from v1-install" -l "remote-build-reporting" -d "Generate build reports to send to a remote server (none, anonymous or detailed)." -x
 complete -c cabal -n "__fish_seen_subcommand_from v1-install" -l "report-planning-failure" -d "Generate build reports when the dependency solver fails."
 complete -c cabal -n "__fish_seen_subcommand_from v1-install" -l "enable-per-component" -d "Enable Per-component builds when possible"
 complete -c cabal -n "__fish_seen_subcommand_from v1-install" -l "disable-per-component" -d "Disable Per-component builds when possible"
 complete -c cabal -n "__fish_seen_subcommand_from v1-install" -l "one-shot" -d "Do not record the packages in the world file."
 complete -c cabal -n "__fish_seen_subcommand_from v1-install" -l "run-tests" -d "Run package test suites during installation."
-complete -c cabal -n "__fish_seen_subcommand_from v1-install" -s "j" -l "jobs" -d "Run NUM jobs simultaneously (or '$ncpus' if no NUM is given)." -x
+complete -c cabal -n "__fish_seen_subcommand_from v1-install" -s "j" -l "jobs" -d "Run NUM jobs simultaneously (or '\$ncpus' if no NUM is given)." -x
 complete -c cabal -n "__fish_seen_subcommand_from v1-install" -l "keep-going" -d "After a build failure, continue to build other unaffected packages."
 complete -c cabal -n "__fish_seen_subcommand_from v1-install" -l "offline" -d "Don't download packages from the Internet."
 complete -c cabal -n "__fish_seen_subcommand_from v1-install" -l "haddock-hoogle" -d "Generate a hoogle database"
@@ -4184,16 +4184,16 @@ complete -c cabal -n "__fish_seen_subcommand_from v1-install" -l "haddock-hyperl
 complete -c cabal -n "__fish_seen_subcommand_from v1-install" -l "haddock-quickjump" -d "Generate an index for interactive documentation navigation"
 complete -c cabal -n "__fish_seen_subcommand_from v1-install" -l "haddock-hscolour-css" -d "Use PATH as the HsColour stylesheet" -r
 complete -c cabal -n "__fish_seen_subcommand_from v1-install" -l "haddock-contents-location" -d "Bake URL in as the location for the contents page" -x
-complete -c cabal -n "__fish_seen_subcommand_from v1-install" -l "test-log" -d "Log all test suite results to file (name template can use $pkgid, $compiler, $os, $arch, $test-suite, $result)" -r
-complete -c cabal -n "__fish_seen_subcommand_from v1-install" -l "test-machine-log" -d "Produce a machine-readable log file (name template can use $pkgid, $compiler, $os, $arch, $result)" -r
+complete -c cabal -n "__fish_seen_subcommand_from v1-install" -l "test-log" -d "Log all test suite results to file (name template can use \$pkgid, \$compiler, \$os, \$arch, \$test-suite, \$result)" -r
+complete -c cabal -n "__fish_seen_subcommand_from v1-install" -l "test-machine-log" -d "Produce a machine-readable log file (name template can use \$pkgid, \$compiler, \$os, \$arch, \$result)" -r
 complete -c cabal -n "__fish_seen_subcommand_from v1-install" -l "test-show-details" -d "'always': always show results of individual test cases." -r
 complete -c cabal -n "__fish_seen_subcommand_from v1-install" -l "test-keep-tix-files" -d "keep .tix files for HPC between test runs"
 complete -c cabal -n "__fish_seen_subcommand_from v1-install" -l "test-wrapper" -d "Run test through a wrapper." -r
 complete -c cabal -n "__fish_seen_subcommand_from v1-install" -l "test-fail-when-no-test-suites" -d "Exit with failure when no test suites are found."
-complete -c cabal -n "__fish_seen_subcommand_from v1-install" -l "test-options" -d "give extra options to test executables (name templates can use $pkgid, $compiler, $os, $arch, $test-suite)" -x
-complete -c cabal -n "__fish_seen_subcommand_from v1-install" -l "test-option" -d "give extra option to test executables (no need to quote options containing spaces, name template can use $pkgid, $compiler, $os, $arch, $test-suite)" -x
-complete -c cabal -n "__fish_seen_subcommand_from v1-install" -l "benchmark-options" -d "give extra options to benchmark executables (name templates can use $pkgid, $compiler, $os, $arch, $benchmark)" -x
-complete -c cabal -n "__fish_seen_subcommand_from v1-install" -l "benchmark-option" -d "give extra option to benchmark executables (no need to quote options containing spaces, name template can use $pkgid, $compiler, $os, $arch, $benchmark)" -x
+complete -c cabal -n "__fish_seen_subcommand_from v1-install" -l "test-options" -d "give extra options to test executables (name templates can use \$pkgid, \$compiler, \$os, \$arch, \$test-suite)" -x
+complete -c cabal -n "__fish_seen_subcommand_from v1-install" -l "test-option" -d "give extra option to test executables (no need to quote options containing spaces, name template can use \$pkgid, \$compiler, \$os, \$arch, \$test-suite)" -x
+complete -c cabal -n "__fish_seen_subcommand_from v1-install" -l "benchmark-options" -d "give extra options to benchmark executables (name templates can use \$pkgid, \$compiler, \$os, \$arch, \$benchmark)" -x
+complete -c cabal -n "__fish_seen_subcommand_from v1-install" -l "benchmark-option" -d "give extra option to benchmark executables (no need to quote options containing spaces, name template can use \$pkgid, \$compiler, \$os, \$arch, \$benchmark)" -x
 
 
 

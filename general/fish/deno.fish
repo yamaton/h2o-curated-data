@@ -138,7 +138,7 @@ complete -c deno -n "__fish_seen_subcommand_from compile" -l "no-check" -d "Skip
 complete -c deno -n "__fish_seen_subcommand_from compile" -l "no-config" -d "Disable automatic loading of the configuration file."
 complete -c deno -n "__fish_seen_subcommand_from compile" -l "no-prompt" -d "Always throw if required permission wasn't passed"
 complete -c deno -n "__fish_seen_subcommand_from compile" -l "no-remote" -d "Do not resolve remote modules"
-complete -c deno -n "__fish_seen_subcommand_from compile" -s "o" -l "output" -d "Output file (defaults to $PWD/<inferred-name>)" -r
+complete -c deno -n "__fish_seen_subcommand_from compile" -s "o" -l "output" -d "Output file (defaults to \$PWD/<inferred-name>)" -r
 complete -c deno -n "__fish_seen_subcommand_from compile" -s "q" -l "quiet" -d "Suppress diagnostic output"
 complete -c deno -n "__fish_seen_subcommand_from compile" -s "r" -l "reload" -d "Reload source code cache (recompile TypeScript) --reload" -x
 complete -c deno -n "__fish_seen_subcommand_from compile" -l "seed" -d "Set the random number generator seed" -x

@@ -101,7 +101,7 @@ complete -c bundle -n "__fish_seen_subcommand_from binstubs" -l "all" -d "Create
 
 complete -c bundle -n "__fish_seen_subcommand_from check" -l "dry-run" -d "Locks the [Gemfile(5)][Gemfile(5)] before running the command."
 complete -c bundle -n "__fish_seen_subcommand_from check" -l "gemfile" -d "Use the specified gemfile instead of the [Gemfile(5)][Gemfile(5)]."
-complete -c bundle -n "__fish_seen_subcommand_from check" -l "path" -d "Specify a different path than the system default ($BUNDLE_PATH or $GEM_HOME)."
+complete -c bundle -n "__fish_seen_subcommand_from check" -l "path" -d "Specify a different path than the system default (\$BUNDLE_PATH or \$GEM_HOME)."
 
 
 

@@ -3,7 +3,7 @@
 complete -c cat -s "A" -l "show-all" -d "equivalent to -vET"
 complete -c cat -s "b" -l "number-nonblank" -d "number nonempty output lines, overrides -n"
 complete -c cat -s "e" -d "equivalent to -vE"
-complete -c cat -s "E" -l "show-ends" -d "display $ at end of each line"
+complete -c cat -s "E" -l "show-ends" -d "display \$ at end of each line"
 complete -c cat -s "n" -l "number" -d "number all output lines"
 complete -c cat -s "s" -l "squeeze-blank" -d "suppress repeated empty output lines"
 complete -c cat -s "t" -d "equivalent to -vT"

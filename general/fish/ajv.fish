@@ -15,10 +15,10 @@ complete -c ajv -n "not __fish_seen_subcommand_from validate compile migrate tes
 complete -c ajv -n "not __fish_seen_subcommand_from validate compile migrate test help" -l "allow-matching-properties" -d "allow \"properties\" matching patterns in \"patternProperties\""
 complete -c ajv -n "not __fish_seen_subcommand_from validate compile migrate test help" -l "allow-union-types" -d "allow union type keyword"
 complete -c ajv -n "not __fish_seen_subcommand_from validate compile migrate test help" -l "validate-formats" -d "disable format validation" -x
-complete -c ajv -n "not __fish_seen_subcommand_from validate compile migrate test help" -l "data" -d "use $data references"
+complete -c ajv -n "not __fish_seen_subcommand_from validate compile migrate test help" -l "data" -d "use \$data references"
 complete -c ajv -n "not __fish_seen_subcommand_from validate compile migrate test help" -l "all-errors" -d "collect all errors"
 complete -c ajv -n "not __fish_seen_subcommand_from validate compile migrate test help" -l "verbose" -d "include schema and data in errors"
-complete -c ajv -n "not __fish_seen_subcommand_from validate compile migrate test help" -l "comment" -d "log schema \"$comment\"s"
+complete -c ajv -n "not __fish_seen_subcommand_from validate compile migrate test help" -l "comment" -d "log schema \"\$comment\"s"
 complete -c ajv -n "not __fish_seen_subcommand_from validate compile migrate test help" -l "inline-refs" -d "referenced schemas compilation mode" -x
 complete -c ajv -n "not __fish_seen_subcommand_from validate compile migrate test help" -l "remove-additional" -d "remove additional properties" -x
 complete -c ajv -n "not __fish_seen_subcommand_from validate compile migrate test help" -l "use-defaults" -d "replace missing properties/items with the values from default keyword"
@@ -56,10 +56,10 @@ complete -c ajv -n "__fish_seen_subcommand_from validate" -l "strict-types" -d "
 complete -c ajv -n "__fish_seen_subcommand_from validate" -l "allow-matching-properties" -d "allow \"properties\" matching patterns in \"patternProperties\""
 complete -c ajv -n "__fish_seen_subcommand_from validate" -l "allow-union-types" -d "allow union type keyword"
 complete -c ajv -n "__fish_seen_subcommand_from validate" -l "validate-formats" -d "disable format validation" -x
-complete -c ajv -n "__fish_seen_subcommand_from validate" -l "data" -d "use $data references"
+complete -c ajv -n "__fish_seen_subcommand_from validate" -l "data" -d "use \$data references"
 complete -c ajv -n "__fish_seen_subcommand_from validate" -l "all-errors" -d "collect all errors"
 complete -c ajv -n "__fish_seen_subcommand_from validate" -l "verbose" -d "include schema and data in errors"
-complete -c ajv -n "__fish_seen_subcommand_from validate" -l "comment" -d "log schema \"$comment\"s"
+complete -c ajv -n "__fish_seen_subcommand_from validate" -l "comment" -d "log schema \"\$comment\"s"
 complete -c ajv -n "__fish_seen_subcommand_from validate" -l "inline-refs" -d "referenced schemas compilation mode" -x
 complete -c ajv -n "__fish_seen_subcommand_from validate" -l "remove-additional" -d "remove additional properties" -x
 complete -c ajv -n "__fish_seen_subcommand_from validate" -l "use-defaults" -d "replace missing properties/items with the values from default keyword"
@@ -87,10 +87,10 @@ complete -c ajv -n "__fish_seen_subcommand_from compile" -l "strict-types" -d "u
 complete -c ajv -n "__fish_seen_subcommand_from compile" -l "allow-matching-properties" -d "allow \"properties\" matching patterns in \"patternProperties\""
 complete -c ajv -n "__fish_seen_subcommand_from compile" -l "allow-union-types" -d "allow union type keyword"
 complete -c ajv -n "__fish_seen_subcommand_from compile" -l "validate-formats" -d "disable format validation" -x
-complete -c ajv -n "__fish_seen_subcommand_from compile" -l "data" -d "use $data references"
+complete -c ajv -n "__fish_seen_subcommand_from compile" -l "data" -d "use \$data references"
 complete -c ajv -n "__fish_seen_subcommand_from compile" -l "all-errors" -d "collect all errors"
 complete -c ajv -n "__fish_seen_subcommand_from compile" -l "verbose" -d "include schema and data in errors"
-complete -c ajv -n "__fish_seen_subcommand_from compile" -l "comment" -d "log schema \"$comment\"s"
+complete -c ajv -n "__fish_seen_subcommand_from compile" -l "comment" -d "log schema \"\$comment\"s"
 complete -c ajv -n "__fish_seen_subcommand_from compile" -l "inline-refs" -d "referenced schemas compilation mode" -x
 complete -c ajv -n "__fish_seen_subcommand_from compile" -l "remove-additional" -d "remove additional properties" -x
 complete -c ajv -n "__fish_seen_subcommand_from compile" -l "use-defaults" -d "replace missing properties/items with the values from default keyword"
@@ -128,10 +128,10 @@ complete -c ajv -n "__fish_seen_subcommand_from test" -l "strict-types" -d "unio
 complete -c ajv -n "__fish_seen_subcommand_from test" -l "allow-matching-properties" -d "allow \"properties\" matching patterns in \"patternProperties\""
 complete -c ajv -n "__fish_seen_subcommand_from test" -l "allow-union-types" -d "allow union type keyword"
 complete -c ajv -n "__fish_seen_subcommand_from test" -l "validate-formats" -d "disable format validation" -x
-complete -c ajv -n "__fish_seen_subcommand_from test" -l "data" -d "use $data references"
+complete -c ajv -n "__fish_seen_subcommand_from test" -l "data" -d "use \$data references"
 complete -c ajv -n "__fish_seen_subcommand_from test" -l "all-errors" -d "collect all errors"
 complete -c ajv -n "__fish_seen_subcommand_from test" -l "verbose" -d "include schema and data in errors"
-complete -c ajv -n "__fish_seen_subcommand_from test" -l "comment" -d "log schema \"$comment\"s"
+complete -c ajv -n "__fish_seen_subcommand_from test" -l "comment" -d "log schema \"\$comment\"s"
 complete -c ajv -n "__fish_seen_subcommand_from test" -l "inline-refs" -d "referenced schemas compilation mode" -x
 complete -c ajv -n "__fish_seen_subcommand_from test" -l "remove-additional" -d "remove additional properties" -x
 complete -c ajv -n "__fish_seen_subcommand_from test" -l "use-defaults" -d "replace missing properties/items with the values from default keyword"

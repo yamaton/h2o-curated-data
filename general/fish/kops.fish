@@ -2,7 +2,7 @@
 
 complete -c kops -n "not __fish_seen_subcommand_from completion create delete distrust edit export get promote replace rolling-update toolbox trust update upgrade validate version" -l "add_dir_header" -d "If true, adds the file directory to the header of the log messages"
 complete -c kops -n "not __fish_seen_subcommand_from completion create delete distrust edit export get promote replace rolling-update toolbox trust update upgrade validate version" -l "alsologtostderr" -d "log to standard error as well as files"
-complete -c kops -n "not __fish_seen_subcommand_from completion create delete distrust edit export get promote replace rolling-update toolbox trust update upgrade validate version" -l "config" -d "yaml config file (default is $HOME/.kops.yaml)" -r
+complete -c kops -n "not __fish_seen_subcommand_from completion create delete distrust edit export get promote replace rolling-update toolbox trust update upgrade validate version" -l "config" -d "yaml config file (default is \$HOME/.kops.yaml)" -r
 complete -c kops -n "not __fish_seen_subcommand_from completion create delete distrust edit export get promote replace rolling-update toolbox trust update upgrade validate version" -s "h" -l "help" -d "help for kops"
 complete -c kops -n "not __fish_seen_subcommand_from completion create delete distrust edit export get promote replace rolling-update toolbox trust update upgrade validate version" -l "log_backtrace_at" -d "when logging hits line file:N, emit a stack trace (default :0)" -r
 complete -c kops -n "not __fish_seen_subcommand_from completion create delete distrust edit export get promote replace rolling-update toolbox trust update upgrade validate version" -l "log_dir" -d "If non-empty, write log files in this directory" -r
@@ -42,7 +42,7 @@ complete -k -c kops -n __fish_use_subcommand -x -a completion -d "generate the a
 complete -c kops -n "__fish_seen_subcommand_from completion" -s "h" -l "help" -d "help for completion"
 complete -c kops -n "__fish_seen_subcommand_from completion" -l "add_dir_header" -d "If true, adds the file directory to the header of the log messages"
 complete -c kops -n "__fish_seen_subcommand_from completion" -l "alsologtostderr" -d "log to standard error as well as files"
-complete -c kops -n "__fish_seen_subcommand_from completion" -l "config" -d "yaml config file (default is $HOME/.kops.yaml)" -r
+complete -c kops -n "__fish_seen_subcommand_from completion" -l "config" -d "yaml config file (default is \$HOME/.kops.yaml)" -r
 complete -c kops -n "__fish_seen_subcommand_from completion" -l "log_backtrace_at" -d "when logging hits line file:N, emit a stack trace (default :0)" -r
 complete -c kops -n "__fish_seen_subcommand_from completion" -l "log_dir" -d "If non-empty, write log files in this directory" -r
 complete -c kops -n "__fish_seen_subcommand_from completion" -l "log_file" -d "If non-empty, use this log file" -r
@@ -63,7 +63,7 @@ complete -c kops -n "__fish_seen_subcommand_from create" -s "f" -l "filename" -d
 complete -c kops -n "__fish_seen_subcommand_from create" -s "h" -l "help" -d "help for create"
 complete -c kops -n "__fish_seen_subcommand_from create" -l "add_dir_header" -d "If true, adds the file directory to the header of the log messages"
 complete -c kops -n "__fish_seen_subcommand_from create" -l "alsologtostderr" -d "log to standard error as well as files"
-complete -c kops -n "__fish_seen_subcommand_from create" -l "config" -d "yaml config file (default is $HOME/.kops.yaml)" -r
+complete -c kops -n "__fish_seen_subcommand_from create" -l "config" -d "yaml config file (default is \$HOME/.kops.yaml)" -r
 complete -c kops -n "__fish_seen_subcommand_from create" -l "log_backtrace_at" -d "when logging hits line file:N, emit a stack trace (default :0)" -r
 complete -c kops -n "__fish_seen_subcommand_from create" -l "log_dir" -d "If non-empty, write log files in this directory" -r
 complete -c kops -n "__fish_seen_subcommand_from create" -l "log_file" -d "If non-empty, use this log file" -r
@@ -85,7 +85,7 @@ complete -c kops -n "__fish_seen_subcommand_from delete" -s "h" -l "help" -d "he
 complete -c kops -n "__fish_seen_subcommand_from delete" -s "y" -l "yes" -d "Specify --yes to immediately delete the resource"
 complete -c kops -n "__fish_seen_subcommand_from delete" -l "add_dir_header" -d "If true, adds the file directory to the header of the log messages"
 complete -c kops -n "__fish_seen_subcommand_from delete" -l "alsologtostderr" -d "log to standard error as well as files"
-complete -c kops -n "__fish_seen_subcommand_from delete" -l "config" -d "yaml config file (default is $HOME/.kops.yaml)" -r
+complete -c kops -n "__fish_seen_subcommand_from delete" -l "config" -d "yaml config file (default is \$HOME/.kops.yaml)" -r
 complete -c kops -n "__fish_seen_subcommand_from delete" -l "log_backtrace_at" -d "when logging hits line file:N, emit a stack trace (default :0)" -r
 complete -c kops -n "__fish_seen_subcommand_from delete" -l "log_dir" -d "If non-empty, write log files in this directory" -r
 complete -c kops -n "__fish_seen_subcommand_from delete" -l "log_file" -d "If non-empty, use this log file" -r
@@ -105,7 +105,7 @@ complete -c kops -n "__fish_seen_subcommand_from delete" -l "vmodule" -d "comma-
 complete -c kops -n "__fish_seen_subcommand_from distrust" -s "h" -l "help" -d "help for distrust"
 complete -c kops -n "__fish_seen_subcommand_from distrust" -l "add_dir_header" -d "If true, adds the file directory to the header of the log messages"
 complete -c kops -n "__fish_seen_subcommand_from distrust" -l "alsologtostderr" -d "log to standard error as well as files"
-complete -c kops -n "__fish_seen_subcommand_from distrust" -l "config" -d "yaml config file (default is $HOME/.kops.yaml)" -r
+complete -c kops -n "__fish_seen_subcommand_from distrust" -l "config" -d "yaml config file (default is \$HOME/.kops.yaml)" -r
 complete -c kops -n "__fish_seen_subcommand_from distrust" -l "log_backtrace_at" -d "when logging hits line file:N, emit a stack trace (default :0)" -r
 complete -c kops -n "__fish_seen_subcommand_from distrust" -l "log_dir" -d "If non-empty, write log files in this directory" -r
 complete -c kops -n "__fish_seen_subcommand_from distrust" -l "log_file" -d "If non-empty, use this log file" -r
@@ -125,7 +125,7 @@ complete -c kops -n "__fish_seen_subcommand_from distrust" -l "vmodule" -d "comm
 complete -c kops -n "__fish_seen_subcommand_from edit" -s "h" -l "help" -d "help for edit"
 complete -c kops -n "__fish_seen_subcommand_from edit" -l "add_dir_header" -d "If true, adds the file directory to the header of the log messages"
 complete -c kops -n "__fish_seen_subcommand_from edit" -l "alsologtostderr" -d "log to standard error as well as files"
-complete -c kops -n "__fish_seen_subcommand_from edit" -l "config" -d "yaml config file (default is $HOME/.kops.yaml)" -r
+complete -c kops -n "__fish_seen_subcommand_from edit" -l "config" -d "yaml config file (default is \$HOME/.kops.yaml)" -r
 complete -c kops -n "__fish_seen_subcommand_from edit" -l "log_backtrace_at" -d "when logging hits line file:N, emit a stack trace (default :0)" -r
 complete -c kops -n "__fish_seen_subcommand_from edit" -l "log_dir" -d "If non-empty, write log files in this directory" -r
 complete -c kops -n "__fish_seen_subcommand_from edit" -l "log_file" -d "If non-empty, use this log file" -r
@@ -145,7 +145,7 @@ complete -c kops -n "__fish_seen_subcommand_from edit" -l "vmodule" -d "comma-se
 complete -c kops -n "__fish_seen_subcommand_from export" -s "h" -l "help" -d "help for export"
 complete -c kops -n "__fish_seen_subcommand_from export" -l "add_dir_header" -d "If true, adds the file directory to the header of the log messages"
 complete -c kops -n "__fish_seen_subcommand_from export" -l "alsologtostderr" -d "log to standard error as well as files"
-complete -c kops -n "__fish_seen_subcommand_from export" -l "config" -d "yaml config file (default is $HOME/.kops.yaml)" -r
+complete -c kops -n "__fish_seen_subcommand_from export" -l "config" -d "yaml config file (default is \$HOME/.kops.yaml)" -r
 complete -c kops -n "__fish_seen_subcommand_from export" -l "log_backtrace_at" -d "when logging hits line file:N, emit a stack trace (default :0)" -r
 complete -c kops -n "__fish_seen_subcommand_from export" -l "log_dir" -d "If non-empty, write log files in this directory" -r
 complete -c kops -n "__fish_seen_subcommand_from export" -l "log_file" -d "If non-empty, use this log file" -r
@@ -166,7 +166,7 @@ complete -c kops -n "__fish_seen_subcommand_from get" -s "h" -l "help" -d "help 
 complete -c kops -n "__fish_seen_subcommand_from get" -s "o" -l "output" -d "output format." -x
 complete -c kops -n "__fish_seen_subcommand_from get" -l "add_dir_header" -d "If true, adds the file directory to the header of the log messages"
 complete -c kops -n "__fish_seen_subcommand_from get" -l "alsologtostderr" -d "log to standard error as well as files"
-complete -c kops -n "__fish_seen_subcommand_from get" -l "config" -d "yaml config file (default is $HOME/.kops.yaml)" -r
+complete -c kops -n "__fish_seen_subcommand_from get" -l "config" -d "yaml config file (default is \$HOME/.kops.yaml)" -r
 complete -c kops -n "__fish_seen_subcommand_from get" -l "log_backtrace_at" -d "when logging hits line file:N, emit a stack trace (default :0)" -r
 complete -c kops -n "__fish_seen_subcommand_from get" -l "log_dir" -d "If non-empty, write log files in this directory" -r
 complete -c kops -n "__fish_seen_subcommand_from get" -l "log_file" -d "If non-empty, use this log file" -r
@@ -186,7 +186,7 @@ complete -c kops -n "__fish_seen_subcommand_from get" -l "vmodule" -d "comma-sep
 complete -c kops -n "__fish_seen_subcommand_from promote" -s "h" -l "help" -d "help for promote"
 complete -c kops -n "__fish_seen_subcommand_from promote" -l "add_dir_header" -d "If true, adds the file directory to the header of the log messages"
 complete -c kops -n "__fish_seen_subcommand_from promote" -l "alsologtostderr" -d "log to standard error as well as files"
-complete -c kops -n "__fish_seen_subcommand_from promote" -l "config" -d "yaml config file (default is $HOME/.kops.yaml)" -r
+complete -c kops -n "__fish_seen_subcommand_from promote" -l "config" -d "yaml config file (default is \$HOME/.kops.yaml)" -r
 complete -c kops -n "__fish_seen_subcommand_from promote" -l "log_backtrace_at" -d "when logging hits line file:N, emit a stack trace (default :0)" -r
 complete -c kops -n "__fish_seen_subcommand_from promote" -l "log_dir" -d "If non-empty, write log files in this directory" -r
 complete -c kops -n "__fish_seen_subcommand_from promote" -l "log_file" -d "If non-empty, use this log file" -r
@@ -208,7 +208,7 @@ complete -c kops -n "__fish_seen_subcommand_from replace" -l "force" -d "Force a
 complete -c kops -n "__fish_seen_subcommand_from replace" -s "h" -l "help" -d "help for replace"
 complete -c kops -n "__fish_seen_subcommand_from replace" -l "add_dir_header" -d "If true, adds the file directory to the header of the log messages"
 complete -c kops -n "__fish_seen_subcommand_from replace" -l "alsologtostderr" -d "log to standard error as well as files"
-complete -c kops -n "__fish_seen_subcommand_from replace" -l "config" -d "yaml config file (default is $HOME/.kops.yaml)" -r
+complete -c kops -n "__fish_seen_subcommand_from replace" -l "config" -d "yaml config file (default is \$HOME/.kops.yaml)" -r
 complete -c kops -n "__fish_seen_subcommand_from replace" -l "log_backtrace_at" -d "when logging hits line file:N, emit a stack trace (default :0)" -r
 complete -c kops -n "__fish_seen_subcommand_from replace" -l "log_dir" -d "If non-empty, write log files in this directory" -r
 complete -c kops -n "__fish_seen_subcommand_from replace" -l "log_file" -d "If non-empty, use this log file" -r
@@ -228,7 +228,7 @@ complete -c kops -n "__fish_seen_subcommand_from replace" -l "vmodule" -d "comma
 complete -c kops -n "__fish_seen_subcommand_from rolling-update" -s "h" -l "help" -d "help for rolling-update"
 complete -c kops -n "__fish_seen_subcommand_from rolling-update" -l "add_dir_header" -d "If true, adds the file directory to the header of the log messages"
 complete -c kops -n "__fish_seen_subcommand_from rolling-update" -l "alsologtostderr" -d "log to standard error as well as files"
-complete -c kops -n "__fish_seen_subcommand_from rolling-update" -l "config" -d "yaml config file (default is $HOME/.kops.yaml)" -r
+complete -c kops -n "__fish_seen_subcommand_from rolling-update" -l "config" -d "yaml config file (default is \$HOME/.kops.yaml)" -r
 complete -c kops -n "__fish_seen_subcommand_from rolling-update" -l "log_backtrace_at" -d "when logging hits line file:N, emit a stack trace (default :0)" -r
 complete -c kops -n "__fish_seen_subcommand_from rolling-update" -l "log_dir" -d "If non-empty, write log files in this directory" -r
 complete -c kops -n "__fish_seen_subcommand_from rolling-update" -l "log_file" -d "If non-empty, use this log file" -r
@@ -248,7 +248,7 @@ complete -c kops -n "__fish_seen_subcommand_from rolling-update" -l "vmodule" -d
 complete -c kops -n "__fish_seen_subcommand_from toolbox" -s "h" -l "help" -d "help for toolbox"
 complete -c kops -n "__fish_seen_subcommand_from toolbox" -l "add_dir_header" -d "If true, adds the file directory to the header of the log messages"
 complete -c kops -n "__fish_seen_subcommand_from toolbox" -l "alsologtostderr" -d "log to standard error as well as files"
-complete -c kops -n "__fish_seen_subcommand_from toolbox" -l "config" -d "yaml config file (default is $HOME/.kops.yaml)" -r
+complete -c kops -n "__fish_seen_subcommand_from toolbox" -l "config" -d "yaml config file (default is \$HOME/.kops.yaml)" -r
 complete -c kops -n "__fish_seen_subcommand_from toolbox" -l "log_backtrace_at" -d "when logging hits line file:N, emit a stack trace (default :0)" -r
 complete -c kops -n "__fish_seen_subcommand_from toolbox" -l "log_dir" -d "If non-empty, write log files in this directory" -r
 complete -c kops -n "__fish_seen_subcommand_from toolbox" -l "log_file" -d "If non-empty, use this log file" -r
@@ -268,7 +268,7 @@ complete -c kops -n "__fish_seen_subcommand_from toolbox" -l "vmodule" -d "comma
 complete -c kops -n "__fish_seen_subcommand_from trust" -s "h" -l "help" -d "help for trust"
 complete -c kops -n "__fish_seen_subcommand_from trust" -l "add_dir_header" -d "If true, adds the file directory to the header of the log messages"
 complete -c kops -n "__fish_seen_subcommand_from trust" -l "alsologtostderr" -d "log to standard error as well as files"
-complete -c kops -n "__fish_seen_subcommand_from trust" -l "config" -d "yaml config file (default is $HOME/.kops.yaml)" -r
+complete -c kops -n "__fish_seen_subcommand_from trust" -l "config" -d "yaml config file (default is \$HOME/.kops.yaml)" -r
 complete -c kops -n "__fish_seen_subcommand_from trust" -l "log_backtrace_at" -d "when logging hits line file:N, emit a stack trace (default :0)" -r
 complete -c kops -n "__fish_seen_subcommand_from trust" -l "log_dir" -d "If non-empty, write log files in this directory" -r
 complete -c kops -n "__fish_seen_subcommand_from trust" -l "log_file" -d "If non-empty, use this log file" -r
@@ -288,7 +288,7 @@ complete -c kops -n "__fish_seen_subcommand_from trust" -l "vmodule" -d "comma-s
 complete -c kops -n "__fish_seen_subcommand_from update" -s "h" -l "help" -d "help for update"
 complete -c kops -n "__fish_seen_subcommand_from update" -l "add_dir_header" -d "If true, adds the file directory to the header of the log messages"
 complete -c kops -n "__fish_seen_subcommand_from update" -l "alsologtostderr" -d "log to standard error as well as files"
-complete -c kops -n "__fish_seen_subcommand_from update" -l "config" -d "yaml config file (default is $HOME/.kops.yaml)" -r
+complete -c kops -n "__fish_seen_subcommand_from update" -l "config" -d "yaml config file (default is \$HOME/.kops.yaml)" -r
 complete -c kops -n "__fish_seen_subcommand_from update" -l "log_backtrace_at" -d "when logging hits line file:N, emit a stack trace (default :0)" -r
 complete -c kops -n "__fish_seen_subcommand_from update" -l "log_dir" -d "If non-empty, write log files in this directory" -r
 complete -c kops -n "__fish_seen_subcommand_from update" -l "log_file" -d "If non-empty, use this log file" -r
@@ -308,7 +308,7 @@ complete -c kops -n "__fish_seen_subcommand_from update" -l "vmodule" -d "comma-
 complete -c kops -n "__fish_seen_subcommand_from upgrade" -s "h" -l "help" -d "help for upgrade"
 complete -c kops -n "__fish_seen_subcommand_from upgrade" -l "add_dir_header" -d "If true, adds the file directory to the header of the log messages"
 complete -c kops -n "__fish_seen_subcommand_from upgrade" -l "alsologtostderr" -d "log to standard error as well as files"
-complete -c kops -n "__fish_seen_subcommand_from upgrade" -l "config" -d "yaml config file (default is $HOME/.kops.yaml)" -r
+complete -c kops -n "__fish_seen_subcommand_from upgrade" -l "config" -d "yaml config file (default is \$HOME/.kops.yaml)" -r
 complete -c kops -n "__fish_seen_subcommand_from upgrade" -l "log_backtrace_at" -d "when logging hits line file:N, emit a stack trace (default :0)" -r
 complete -c kops -n "__fish_seen_subcommand_from upgrade" -l "log_dir" -d "If non-empty, write log files in this directory" -r
 complete -c kops -n "__fish_seen_subcommand_from upgrade" -l "log_file" -d "If non-empty, use this log file" -r
@@ -328,7 +328,7 @@ complete -c kops -n "__fish_seen_subcommand_from upgrade" -l "vmodule" -d "comma
 complete -c kops -n "__fish_seen_subcommand_from validate" -s "h" -l "help" -d "help for validate"
 complete -c kops -n "__fish_seen_subcommand_from validate" -l "add_dir_header" -d "If true, adds the file directory to the header of the log messages"
 complete -c kops -n "__fish_seen_subcommand_from validate" -l "alsologtostderr" -d "log to standard error as well as files"
-complete -c kops -n "__fish_seen_subcommand_from validate" -l "config" -d "yaml config file (default is $HOME/.kops.yaml)" -r
+complete -c kops -n "__fish_seen_subcommand_from validate" -l "config" -d "yaml config file (default is \$HOME/.kops.yaml)" -r
 complete -c kops -n "__fish_seen_subcommand_from validate" -l "log_backtrace_at" -d "when logging hits line file:N, emit a stack trace (default :0)" -r
 complete -c kops -n "__fish_seen_subcommand_from validate" -l "log_dir" -d "If non-empty, write log files in this directory" -r
 complete -c kops -n "__fish_seen_subcommand_from validate" -l "log_file" -d "If non-empty, use this log file" -r
@@ -349,7 +349,7 @@ complete -c kops -n "__fish_seen_subcommand_from version" -s "h" -l "help" -d "h
 complete -c kops -n "__fish_seen_subcommand_from version" -l "short" -d "only print the main kOps version."
 complete -c kops -n "__fish_seen_subcommand_from version" -l "add_dir_header" -d "If true, adds the file directory to the header of the log messages"
 complete -c kops -n "__fish_seen_subcommand_from version" -l "alsologtostderr" -d "log to standard error as well as files"
-complete -c kops -n "__fish_seen_subcommand_from version" -l "config" -d "yaml config file (default is $HOME/.kops.yaml)" -r
+complete -c kops -n "__fish_seen_subcommand_from version" -l "config" -d "yaml config file (default is \$HOME/.kops.yaml)" -r
 complete -c kops -n "__fish_seen_subcommand_from version" -l "log_backtrace_at" -d "when logging hits line file:N, emit a stack trace (default :0)" -r
 complete -c kops -n "__fish_seen_subcommand_from version" -l "log_dir" -d "If non-empty, write log files in this directory" -r
 complete -c kops -n "__fish_seen_subcommand_from version" -l "log_file" -d "If non-empty, use this log file" -r

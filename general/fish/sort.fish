@@ -25,7 +25,7 @@ complete -c sort -s "o" -l "output" -d "write result to FILE instead of standard
 complete -c sort -s "s" -l "stable" -d "stabilize sort by disabling last-resort comparison"
 complete -c sort -s "S" -l "buffer-size" -d "use SIZE for main memory buffer" -x
 complete -c sort -s "t" -l "field-separator" -d "use SEP instead of non-blank to blank transition" -x
-complete -c sort -s "T" -l "temporary-directory" -d "use DIR for temporaries, not $TMPDIR or /tmp; multiple options specify multiple directories" -r
+complete -c sort -s "T" -l "temporary-directory" -d "use DIR for temporaries, not \$TMPDIR or /tmp; multiple options specify multiple directories" -r
 complete -c sort -l "parallel" -d "change the number of sorts run concurrently to N" -x
 complete -c sort -s "u" -l "unique" -d "with -c, check for strict ordering; without -c, output only the first of an equal run"
 complete -c sort -s "z" -l "zero-terminated" -d "line delimiter is NUL, not newline"

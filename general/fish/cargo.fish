@@ -16,7 +16,7 @@ complete -c cargo -n "not __fish_seen_subcommand_from build check clean doc new 
 
 
 complete -k -c cargo -n __fish_use_subcommand -x -a uninstall -d "Uninstall a Rust binary"
-complete -k -c cargo -n __fish_use_subcommand -x -a install -d "Install a Rust binary. Default location is $HOME/.cargo/bin"
+complete -k -c cargo -n __fish_use_subcommand -x -a install -d "Install a Rust binary. Default location is \$HOME/.cargo/bin"
 complete -k -c cargo -n __fish_use_subcommand -x -a publish -d "Package and upload this package to the registry"
 complete -k -c cargo -n __fish_use_subcommand -x -a search -d "Search registry for crates"
 complete -k -c cargo -n __fish_use_subcommand -x -a update -d "Update dependencies listed in Cargo.lock"

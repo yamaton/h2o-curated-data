@@ -10,10 +10,10 @@ complete -c jq -s "C" -d "colorize JSON;"
 complete -c jq -s "M" -d "monochrome (don't colorize JSON);"
 complete -c jq -s "S" -d "sort keys of objects on output;"
 complete -c jq -l "tab" -d "use tabs for indentation;"
-complete -c jq -l "arg" -d "set variable $a to value <v>;" -x
-complete -c jq -l "argjson" -d "set variable $a to JSON value <v>;" -x
-complete -c jq -l "slurpfile" -d "set variable $a to an array of JSON texts read from <f>;" -x
-complete -c jq -l "rawfile" -d "set variable $a to a string consisting of the contents of <f>;" -x
+complete -c jq -l "arg" -d "set variable \$a to value <v>;" -x
+complete -c jq -l "argjson" -d "set variable \$a to JSON value <v>;" -x
+complete -c jq -l "slurpfile" -d "set variable \$a to an array of JSON texts read from <f>;" -x
+complete -c jq -l "rawfile" -d "set variable \$a to a string consisting of the contents of <f>;" -x
 complete -c jq -l "args" -d "remaining arguments are string arguments, not files;"
 complete -c jq -l "jsonargs" -d "remaining arguments are JSON arguments, not files;"
 complete -c jq  -d "terminates argument processing;"

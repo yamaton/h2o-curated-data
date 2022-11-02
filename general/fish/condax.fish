@@ -5,9 +5,9 @@ complete -c condax -n "not __fish_seen_subcommand_from ensure-path install remov
 
 
 complete -k -c condax -n __fish_use_subcommand -x -a update -d "Update package(s) installed by condax."
-complete -k -c condax -n __fish_use_subcommand -x -a remove -d "Ensure the condax links directory is on $PATH."
+complete -k -c condax -n __fish_use_subcommand -x -a remove -d "Ensure the condax links directory is on \$PATH."
 complete -k -c condax -n __fish_use_subcommand -x -a install -d "Install a package with condax."
-complete -k -c condax -n __fish_use_subcommand -x -a ensure-path -d "Ensure the condax links directory is on $PATH."
+complete -k -c condax -n __fish_use_subcommand -x -a ensure-path -d "Ensure the condax links directory is on \$PATH."
 
 
 

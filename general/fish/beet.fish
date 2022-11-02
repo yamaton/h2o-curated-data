@@ -25,7 +25,7 @@ complete -k -c beet -n __fish_use_subcommand -x -a config -d "show or edit the u
 
 complete -c beet -n "__fish_seen_subcommand_from config" -s "h" -l "help" -d "show this help message and exit"
 complete -c beet -n "__fish_seen_subcommand_from config" -s "p" -l "paths" -d "show files that configuration was loaded from"
-complete -c beet -n "__fish_seen_subcommand_from config" -s "e" -l "edit" -d "edit user configuration with $EDITOR"
+complete -c beet -n "__fish_seen_subcommand_from config" -s "e" -l "edit" -d "edit user configuration with \$EDITOR"
 complete -c beet -n "__fish_seen_subcommand_from config" -s "d" -l "defaults" -d "include the default configuration"
 complete -c beet -n "__fish_seen_subcommand_from config" -s "c" -l "clear" -d "do not redact sensitive fields"
 

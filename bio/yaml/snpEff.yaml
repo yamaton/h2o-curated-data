@@ -1,0 +1,747 @@
+name: snpEff
+description: snpEff
+usage: snpEff [command] [options] [files]
+options:
+  - names:
+      - -c
+      - -config
+    argument: ""
+    description: 'Specify config file'
+  - names:
+      - -configOption
+    argument: name=value
+    description: 'Override a config file option'
+  - names:
+      - -d
+      - -debug
+    argument: ""
+    description: 'Debug mode (very verbose).'
+  - names:
+      - -dataDir
+    argument: <path>
+    description: 'Override data_dir parameter from config file.'
+  - names:
+      - -download
+    argument: ""
+    description: 'Download a SnpEff database, if not available locally. Default: true'
+  - names:
+      - -nodownload
+    argument: ""
+    description: 'Do not download a SnpEff database, if not available locally.'
+  - names:
+      - -h
+      - -help
+    argument: ""
+    description: 'Show this help and exit'
+  - names:
+      - -noLog
+    argument: ""
+    description: 'Do not report usage statistics to server'
+  - names:
+      - -q
+      - -quiet
+    argument: ""
+    description: 'Quiet mode (do not show any messages or errors)'
+  - names:
+      - -v
+      - -verbose
+    argument: ""
+    description: 'Verbose mode'
+  - names:
+      - -version
+    argument: ""
+    description: 'Show version number and exit'
+  - names:
+      - -canon
+    argument: ""
+    description: 'Only use canonical transcripts.'
+  - names:
+      - -canonList
+    argument: <file>
+    description: 'Only use canonical transcripts, replace some transcripts using the ''gene_id transcript_id'' entries in <file>.'
+  - names:
+      - -interaction
+    argument: ""
+    description: 'Annotate using inteactions (requires interaciton database). Default: true'
+  - names:
+      - -interval
+    argument: <file>
+    description: 'Use a custom intervals in TXT/BED/BigBed/VCF/GFF file (you may use this option many times)'
+  - names:
+      - -maxTSL
+    argument: <TSL_number>
+    description: 'Only use transcripts having Transcript Support Level lower than <TSL_number>.'
+  - names:
+      - -motif
+    argument: ""
+    description: 'Annotate using motifs (requires Motif database). Default: true'
+  - names:
+      - -nextProt
+    argument: ""
+    description: 'Annotate using NextProt (requires NextProt database).'
+  - names:
+      - -noGenome
+    argument: ""
+    description: 'Do not load any genomic database (e.g. annotate using custom files).'
+  - names:
+      - -noExpandIUB
+    argument: ""
+    description: 'Disable IUB code expansion in input variants'
+  - names:
+      - -noInteraction
+    argument: ""
+    description: 'Disable inteaction annotations'
+  - names:
+      - -noMotif
+    argument: ""
+    description: 'Disable motif annotations.'
+  - names:
+      - -noNextProt
+    argument: ""
+    description: 'Disable NextProt annotations.'
+  - names:
+      - -onlyReg
+    argument: ""
+    description: 'Only use regulation tracks.'
+  - names:
+      - -onlyProtein
+    argument: ""
+    description: 'Only use protein coding transcripts. Default: false'
+  - names:
+      - -onlyTr
+    argument: <file.txt>
+    description: 'Only use the transcripts in this file. Format: One transcript ID per line.'
+  - names:
+      - -reg
+    argument: <name>
+    description: 'Regulation track to use (this option can be used add several times).'
+  - names:
+      - -ss
+      - -spliceSiteSize
+    argument: <int>
+    description: 'Set size for splice sites (donor and acceptor) in bases. Default: 2'
+  - names:
+      - -spliceRegionExonSize
+    argument: <int>
+    description: 'Set size for splice site region within exons. Default: 3 bases'
+  - names:
+      - -spliceRegionIntronMin
+    argument: <int>
+    description: 'Set minimum number of bases for splice site region within intron. Default: 3 bases'
+  - names:
+      - -spliceRegionIntronMax
+    argument: <int>
+    description: 'Set maximum number of bases for splice site region within intron. Default: 8 bases'
+  - names:
+      - -strict
+    argument: ""
+    description: 'Only use ''validated'' transcripts (i.e. sequence has been checked). Default: false'
+  - names:
+      - -ud
+      - -upDownStreamLen
+    argument: <int>
+    description: Set upstream downstream interval length (in bases)
+subcommands:
+  - name: build
+    description: Build a SnpEff database.
+    usage: snpEff build [options] genome_version
+    options:
+      - names:
+          - -embl
+        argument: ""
+        description: 'Use Embl format.'
+      - names:
+          - -genbank
+        argument: ""
+        description: 'Use GenBank format.'
+      - names:
+          - -gff2
+        argument: ""
+        description: 'Use GFF2 format (obsolete).'
+      - names:
+          - -gff3
+        argument: ""
+        description: 'Use GFF3 format.'
+      - names:
+          - -gtf22
+        argument: ""
+        description: 'Use GTF 2.2 format.'
+      - names:
+          - -knowngenes
+        argument: ""
+        description: 'Use KnownGenes table from UCSC.'
+      - names:
+          - -refseq
+        argument: ""
+        description: 'Use RefSeq table from UCSC.'
+      - names:
+          - -cellType
+        argument: <type>
+        description: 'Only build regulation tracks for cellType <type>.'
+      - names:
+          - -maxErrorRate
+        argument: <num>
+        description: 'Maximum allowed error rate (number between 0.0 and 1.0). Default: 0.05'
+      - names:
+          - -noCheckCds
+        argument: ""
+        description: 'Skip CDS sequences check.'
+      - names:
+          - -noCheckProtein
+        argument: ""
+        description: 'Skip Protein sequences check.'
+      - names:
+          - -noStoreSeqs
+        argument: ""
+        description: 'Do not store sequence in binary files. Default: false'
+      - names:
+          - -onlyReg
+        argument: ""
+        description: 'Only build regulation tracks.'
+      - names:
+          - -regSortedByType
+        argument: ""
+        description: 'The ''regulation.gff'' file is sorted by ''regulation type'' instead of sorted by chromosome:pos. Default: false'
+      - names:
+          - -storeSeqs
+        argument: ""
+        description: 'Store sequence in binary files. Default: true'
+      - names:
+          - -c
+          - -config
+        argument: ""
+        description: 'Specify config file'
+      - names:
+          - -configOption
+        argument: name=value
+        description: 'Override a config file option'
+      - names:
+          - -d
+          - -debug
+        argument: ""
+        description: 'Debug mode (very verbose).'
+      - names:
+          - -dataDir
+        argument: <path>
+        description: 'Override data_dir parameter from config file.'
+      - names:
+          - -download
+        argument: ""
+        description: 'Download a SnpEff database, if not available locally. Default: true'
+      - names:
+          - -nodownload
+        argument: ""
+        description: 'Do not download a SnpEff database, if not available locally.'
+      - names:
+          - -h
+          - -help
+        argument: ""
+        description: 'Show this help and exit'
+      - names:
+          - -noLog
+        argument: ""
+        description: 'Do not report usage statistics to server'
+      - names:
+          - -q
+          - -quiet
+        argument: ""
+        description: 'Quiet mode (do not show any messages or errors)'
+      - names:
+          - -v
+          - -verbose
+        argument: ""
+        description: 'Verbose mode'
+      - names:
+          - -version
+        argument: ""
+        description: 'Show version number and exit'
+  - name: buildNextProt
+    description: Build a SnpEff for NextProt (using NextProt's XML files).
+    usage: snpEff buildNextProt genome_version nextProt_XML_dir
+    options: []
+  - name: cds
+    description: Compare CDS sequences calculated form a SnpEff database to the one in a FASTA file. Used for checking databases correctness.
+    usage: snpEff cds [options] genome_version cds_file
+    options:
+      - names:
+          - -c
+          - -config
+        argument: <file>
+        description: 'Specify config file'
+      - names:
+          - -noLog
+        argument: ""
+        description: 'Do not report usage statistics to server'
+      - names:
+          - -v
+        argument: ""
+        description: 'Verbose mode'
+      - names:
+          - -d
+        argument: ""
+        description: 'Debug mode'
+  - name: closest
+    description: Annotate the closest genomic region.
+    usage: snpEff closestExon [options] genome_version file.vcf
+    options:
+      - names:
+          - -bed
+        argument: ""
+        description: 'Input format is BED. Default: VCF'
+      - names:
+          - -tss
+        argument: ""
+        description: Measure distance from TSS (transcription start site)
+  - name: count
+    description: Count how many intervals (from a BAM, BED or VCF file) overlap with each genomic interval.
+    usage: "snpEff count [options] genome file_1 file_2 ...  file_N\n -n name          : Output file base name. \n -p               : Calculate probability model (binomial). Default: false\n file             : A file contianing intervals or reads. Either BAM, SAM, VCF, BED or BigBed format."
+    options:
+      - names:
+          - -n
+        argument: name
+        description: 'Output file base name.'
+      - names:
+          - -p
+        argument: ""
+        description: 'Calculate probability model (binomial). Default: false'
+      - names:
+          - -c
+          - -config
+        argument: ""
+        description: 'Specify config file'
+      - names:
+          - -configOption
+        argument: name=value
+        description: 'Override a config file option'
+      - names:
+          - -d
+          - -debug
+        argument: ""
+        description: 'Debug mode (very verbose).'
+      - names:
+          - -dataDir
+        argument: <path>
+        description: 'Override data_dir parameter from config file.'
+      - names:
+          - -download
+        argument: ""
+        description: 'Download a SnpEff database, if not available locally. Default: true'
+      - names:
+          - -nodownload
+        argument: ""
+        description: 'Do not download a SnpEff database, if not available locally.'
+      - names:
+          - -h
+          - -help
+        argument: ""
+        description: 'Show this help and exit'
+      - names:
+          - -noLog
+        argument: ""
+        description: 'Do not report usage statistics to server'
+      - names:
+          - -q
+          - -quiet
+        argument: ""
+        description: 'Quiet mode (do not show any messages or errors)'
+      - names:
+          - -v
+          - -verbose
+        argument: ""
+        description: 'Verbose mode'
+      - names:
+          - -version
+        argument: ""
+        description: 'Show version number and exit'
+      - names:
+          - -canon
+        argument: ""
+        description: 'Only use canonical transcripts.'
+      - names:
+          - -canonList
+        argument: <file>
+        description: 'Only use canonical transcripts, replace some transcripts using the ''gene_id transcript_id'' entries in <file>.'
+      - names:
+          - -interaction
+        argument: ""
+        description: 'Annotate using inteactions (requires interaciton database). Default: true'
+      - names:
+          - -interval
+        argument: <file>
+        description: 'Use a custom intervals in TXT/BED/BigBed/VCF/GFF file (you may use this option many times)'
+      - names:
+          - -maxTSL
+        argument: <TSL_number>
+        description: 'Only use transcripts having Transcript Support Level lower than <TSL_number>.'
+      - names:
+          - -motif
+        argument: ""
+        description: 'Annotate using motifs (requires Motif database). Default: true'
+      - names:
+          - -nextProt
+        argument: ""
+        description: 'Annotate using NextProt (requires NextProt database).'
+      - names:
+          - -noGenome
+        argument: ""
+        description: 'Do not load any genomic database (e.g. annotate using custom files).'
+      - names:
+          - -noExpandIUB
+        argument: ""
+        description: 'Disable IUB code expansion in input variants'
+      - names:
+          - -noInteraction
+        argument: ""
+        description: 'Disable inteaction annotations'
+      - names:
+          - -noMotif
+        argument: ""
+        description: 'Disable motif annotations.'
+      - names:
+          - -noNextProt
+        argument: ""
+        description: 'Disable NextProt annotations.'
+      - names:
+          - -onlyReg
+        argument: ""
+        description: 'Only use regulation tracks.'
+      - names:
+          - -onlyProtein
+        argument: ""
+        description: 'Only use protein coding transcripts. Default: false'
+      - names:
+          - -onlyTr
+        argument: <file.txt>
+        description: 'Only use the transcripts in this file. Format: One transcript ID per line.'
+      - names:
+          - -reg
+        argument: <name>
+        description: 'Regulation track to use (this option can be used add several times).'
+      - names:
+          - -ss
+          - -spliceSiteSize
+        argument: <int>
+        description: 'Set size for splice sites (donor and acceptor) in bases. Default: 2'
+      - names:
+          - -spliceRegionExonSize
+        argument: <int>
+        description: 'Set size for splice site region within exons. Default: 3 bases'
+      - names:
+          - -spliceRegionIntronMin
+        argument: <int>
+        description: 'Set minimum number of bases for splice site region within intron. Default: 3 bases'
+      - names:
+          - -spliceRegionIntronMax
+        argument: <int>
+        description: 'Set maximum number of bases for splice site region within intron. Default: 8 bases'
+      - names:
+          - -strict
+        argument: ""
+        description: 'Only use ''validated'' transcripts (i.e. sequence has been checked). Default: false'
+      - names:
+          - -ud
+          - -upDownStreamLen
+        argument: <int>
+        description: Set upstream downstream interval length (in bases)
+  - name: databases
+    description: Show currently available databases (from local config file).
+    usage: snpEff databases [galaxy|html]
+    options: []
+  - name: download
+    description: Download a SnpEff database.
+    usage: snpEff download [options] {snpeff | genome_version}
+    options: []
+  - name: dump
+    description: Dump to STDOUT a SnpEff database (mostly used for debugging).
+    usage: |-
+      snpEff dump [options] genome_version
+       -bed                    : Dump in BED format (implies -0)
+       -chr <string>           : Prepend 'string' to chromosome name (e.g. 'chr1' instead of '1')
+       -txt                    : Dump as a TXT table (implies -1)
+    options:
+      - names:
+          - -bed
+        argument: ""
+        description: 'Dump in BED format (implies -0)'
+      - names:
+          - -chr
+        argument: <string>
+        description: 'Prepend ''string'' to chromosome name (e.g. ''chr1'' instead of ''1'')'
+      - names:
+          - -txt
+        argument: ""
+        description: 'Dump as a TXT table (implies -1)'
+      - names:
+          - "-0"
+        argument: ""
+        description: 'Output zero-based coordinates.'
+      - names:
+          - "-1"
+        argument: ""
+        description: 'Output one-based coordinates'
+  - name: genes2bed
+    description: Create a bed file from a genes list.
+    usage: SnpEffCmdGenes2Bed genomeVer [-f genes.txt | geneList]}
+    options:
+      - names:
+          - -cds
+        argument: ""
+        description: 'Show coding exons (no UTRs).'
+      - names:
+          - -e
+        argument: ""
+        description: 'Show exons for every transcript.'
+      - names:
+          - -f
+        argument: <file.txt>
+        description: 'A TXT file having one gene ID (or name) per line.'
+      - names:
+          - -i
+        argument: ""
+        description: 'Show introns for every transcript.'
+      - names:
+          - -pc
+        argument: ""
+        description: 'Use only protein coding genes.'
+      - names:
+          - -tr
+        argument: ""
+        description: 'Show transcript coordinates.'
+      - names:
+          - -ud
+        argument: <num>
+        description: 'Expand gene interval upstream and downstream by ''num'' bases.'
+  - name: len
+    description: Calculate total genomic length for each marker type.
+    usage: snpEff len [options] genome_version
+    options:
+      - names:
+          - -r
+        argument: ""
+        description: '<num> : Assume a read size of ''num'' bases.'
+      - names:
+          - -iter
+        argument: ""
+        description: '<num> : Perform ''num'' iterations of random sampling.'
+      - names:
+          - -reads
+        argument: <num>
+        description: Each random sampling iteration has 'num' reads.
+  - name: pdb
+    description: Build interaction database (based on PDB data).
+    usage: snpEff pdb [options] genome_version
+    options:
+      - names:
+          - -aaSep
+        argument: <number>
+        description: 'Minimum number of AA of separation within the sequence. Default: 20'
+      - names:
+          - -idMap
+        argument: <file>
+        description: 'ID map file (i.e. file containing mapping from PDB ID to transcript ID). Default: db/pdb/idMap_pdbId_ensemblId_refseqId.txt.gz'
+      - names:
+          - -interactList
+        argument: <file>
+        description: 'A file containing protein-protein interations (from PDB co-srystalzed structures). Default: db/pdb/idMap_pdbId_ensemblId_refseqId.txt.gz'
+      - names:
+          - -maxDist
+        argument: <number>
+        description: 'Maximum distance in Angtrom for any atom in a pair of amino acids to be considered ''in contact''. Default: 3.0'
+      - names:
+          - -maxErr
+        argument: <number>
+        description: 'Maximum amino acid sequence differece between PDB file and genome. Default: 0.1'
+      - names:
+          - -org
+        argument: <name>
+        description: 'Organism ''common name''. Default: HUMAN'
+      - names:
+          - -orgScientific
+        argument: <name>
+        description: 'Organism ''scientific name''. Default: HOMO SAPIENS'
+      - names:
+          - -pdbDir
+        argument: <path>
+        description: 'Path to PDB files (files in all sub-dirs are scanned).'
+      - names:
+          - -res
+        argument: <number>
+        description: 'Maximum PDB file resolution. Default: 3.0'
+      - names:
+          - -c
+          - -config
+        argument: ""
+        description: 'Specify config file'
+      - names:
+          - -configOption
+        argument: name=value
+        description: 'Override a config file option'
+      - names:
+          - -d
+          - -debug
+        argument: ""
+        description: 'Debug mode (very verbose).'
+      - names:
+          - -dataDir
+        argument: <path>
+        description: 'Override data_dir parameter from config file.'
+      - names:
+          - -download
+        argument: ""
+        description: 'Download a SnpEff database, if not available locally. Default: true'
+      - names:
+          - -nodownload
+        argument: ""
+        description: 'Do not download a SnpEff database, if not available locally.'
+      - names:
+          - -h
+          - -help
+        argument: ""
+        description: 'Show this help and exit'
+      - names:
+          - -noLog
+        argument: ""
+        description: 'Do not report usage statistics to server'
+      - names:
+          - -q
+          - -quiet
+        argument: ""
+        description: 'Quiet mode (do not show any messages or errors)'
+      - names:
+          - -v
+          - -verbose
+        argument: ""
+        description: 'Verbose mode'
+      - names:
+          - -version
+        argument: ""
+        description: 'Show version number and exit'
+      - names:
+          - -canon
+        argument: ""
+        description: 'Only use canonical transcripts.'
+      - names:
+          - -canonList
+        argument: <file>
+        description: 'Only use canonical transcripts, replace some transcripts using the ''gene_id transcript_id'' entries in <file>.'
+      - names:
+          - -interaction
+        argument: ""
+        description: 'Annotate using inteactions (requires interaciton database). Default: true'
+      - names:
+          - -interval
+        argument: <file>
+        description: 'Use a custom intervals in TXT/BED/BigBed/VCF/GFF file (you may use this option many times)'
+      - names:
+          - -maxTSL
+        argument: <TSL_number>
+        description: 'Only use transcripts having Transcript Support Level lower than <TSL_number>.'
+      - names:
+          - -motif
+        argument: ""
+        description: 'Annotate using motifs (requires Motif database). Default: true'
+      - names:
+          - -nextProt
+        argument: ""
+        description: 'Annotate using NextProt (requires NextProt database).'
+      - names:
+          - -noGenome
+        argument: ""
+        description: 'Do not load any genomic database (e.g. annotate using custom files).'
+      - names:
+          - -noExpandIUB
+        argument: ""
+        description: 'Disable IUB code expansion in input variants'
+      - names:
+          - -noInteraction
+        argument: ""
+        description: 'Disable inteaction annotations'
+      - names:
+          - -noMotif
+        argument: ""
+        description: 'Disable motif annotations.'
+      - names:
+          - -noNextProt
+        argument: ""
+        description: 'Disable NextProt annotations.'
+      - names:
+          - -onlyReg
+        argument: ""
+        description: 'Only use regulation tracks.'
+      - names:
+          - -onlyProtein
+        argument: ""
+        description: 'Only use protein coding transcripts. Default: false'
+      - names:
+          - -onlyTr
+        argument: <file.txt>
+        description: 'Only use the transcripts in this file. Format: One transcript ID per line.'
+      - names:
+          - -reg
+        argument: <name>
+        description: 'Regulation track to use (this option can be used add several times).'
+      - names:
+          - -ss
+          - -spliceSiteSize
+        argument: <int>
+        description: 'Set size for splice sites (donor and acceptor) in bases. Default: 2'
+      - names:
+          - -spliceRegionExonSize
+        argument: <int>
+        description: 'Set size for splice site region within exons. Default: 3 bases'
+      - names:
+          - -spliceRegionIntronMin
+        argument: <int>
+        description: 'Set minimum number of bases for splice site region within intron. Default: 3 bases'
+      - names:
+          - -spliceRegionIntronMax
+        argument: <int>
+        description: 'Set maximum number of bases for splice site region within intron. Default: 8 bases'
+      - names:
+          - -strict
+        argument: ""
+        description: 'Only use ''validated'' transcripts (i.e. sequence has been checked). Default: false'
+      - names:
+          - -ud
+          - -upDownStreamLen
+        argument: <int>
+        description: Set upstream downstream interval length (in bases)
+  - name: protein
+    description: Compare protein sequences calculated form a SnpEff database to the one in a FASTA file. Used for checking databases correctness.
+    usage: snpEff protein [options] genome_version proteing_file
+    options:
+      - names:
+          - -codonTables
+        argument: ""
+        description: 'Try all codon tables on each chromosome and calculate error rates.'
+  - name: seq
+    description: Show sequence (from command line) translation.
+    usage: |-
+      snpEff seq [-r] genome seq_1 seq_2 ... seq_N
+       -r : Reverse-Watson-Cricks complement.
+    options:
+      - names:
+          - -r
+        argument: ""
+        description: Reverse-Watson-Cricks complement.
+  - name: show
+    description: Show a text representation of genes or transcripts coordiantes, DNA sequence and protein sequence.
+    usage: snpEff show genome_version gene_1 ... gene_N ... trId_1 ... trId_N
+    options: []
+  - name: translocReport
+    description: Create a translocations report (from VCF file).
+    usage: snpEff translocReport [options] genome_version input.vcf
+    options:
+      - names:
+          - -onlyOneTr
+        argument: ""
+        description: 'Report only one transcript (used for debugging).'
+      - names:
+          - -outPath
+        argument: <dir>
+        description: 'Create output SVG files for each translocation in ''path'' (set to empty to disable). Default '''''
+      - names:
+          - -report
+        argument: <file>
+        description: 'Output report file name. Default: translocations_report.html'
+version: 'SnpEff version SnpEff 5.1d (build 2022-04-19 15:49), by Pablo Cingolani'

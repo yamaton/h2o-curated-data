@@ -15,147 +15,187 @@ function _ffmpeg {
  
 
     _arguments -C \
-        '-L[Show license.]' \
-        {-h,-?,-help,--help}'[Show help. An optional parameter may be specified to print help about a specific item. If no argument is specified, only basic (non advanced) tool options are shown.]' \
-        '-version[Show version.]' \
-        '-formats[Show available formats (including devices).]' \
-        '-demuxers[Show available demuxers.]' \
-        '-muxers[Show available muxers.]' \
-        '-devices[Show available devices.]' \
-        '-codecs[Show all codecs known to libavcodec.]' \
-        '-decoders[Show available decoders.]' \
-        '-encoders[Show all available encoders.]' \
-        '-bsfs[Show available bitstream filters.]' \
-        '-protocols[Show available protocols.]' \
-        '-filters[Show available libavfilter filters.]' \
-        '-pix_fmts[Show available pixel formats.]' \
-        '-sample_fmts[Show available sample formats.]' \
-        '-layouts[Show channel names and standard channel layouts.]' \
-        '-colors[Show recognized color names.]' \
-        '-sources[Show autodetected sources of the input device. Some devices may provide system-dependent source names that cannot be autodetected. The returned list cannot be assumed to be always complete.]' \
-        '-sinks[Show autodetected sinks of the output device. Some devices may provide system-dependent sink names that cannot be autodetected. The returned list cannot be assumed to be always complete.]' \
-        {-loglevel,-v}'[Set logging level and flags used by the library.]' \
-        '-report[Dump full command line and console output to a file named "program-YYYYMMDD-HHMMSS.log" in the current directory. This file can be useful for bug reports. It also implies "-loglevel debug".]' \
-        '-hide_banner[Suppress printing banner.]' \
-        '-cpuflags[Allows setting and clearing cpu flags. This option is intended for testing. Do not use it unless you know what you'\''re doing.]' \
-        '-f[Force input or output file format. The format is normally auto detected for input files and guessed from the file extension for output files, so this option is not needed in most cases.]' \
-        '-i[input file url]':file:_files \
-        '-y[Overwrite output files without asking.]' \
-        '-n[Do not overwrite output files, and exit immediately if a specified output file already exists.]' \
-        '-stream_loop[Set number of times input stream shall be looped. Loop 0 means no loop, loop -1 means infinite loop.]' \
-        {-c,-codec}'[Select an encoder (when used before an output file) or a decoder (when used before an input file) for one or more streams. codec is the name of a decoder/encoder or a special value "copy" (output only) to indicate that the stream is not to be re-encoded.]' \
-        '-t[When used as an input option (before "-i"), limit the duration of data read from the input file.]' \
-        '-to[Stop writing the output or reading the input at position. position must be a time duration specification, see the Time duration section in the ffmpeg-utils(1) manual.]' \
-        '-fs[Set the file size limit, expressed in bytes. No further chunk of bytes is written after the limit is exceeded. The size of the output file is slightly more than the requested file size.]' \
-        '-ss[When used as an input option (before "-i"), seeks in this input file to position. Note that in most formats it is not possible to seek exactly, so ffmpeg will seek to the closest seek point before position. When transcoding and -accurate_seek is enabled (the default), this extra segment between the seek point and position will be decoded and discarded. When doing stream copy or when -noaccurate_seek is used, it will be preserved.]' \
-        '-sseof[Like the "-ss" option but relative to the "end of file". That is negative values are earlier in the file, 0 is at EOF.]' \
-        '-itsoffset[Set the input time offset.]' \
-        '-itsscale[Rescale input timestamps. scale should be a floating point number.]' \
-        '-timestamp[Set the recording timestamp in the container.]' \
-        '-metadata[Set a metadata key/value pair.]' \
-        '-disposition[Sets the disposition for a stream.]' \
-        '-program[Creates a program with the specified title, program_num and adds the specified stream(s) to it.]' \
-        '-target[Specify target file type ("vcd", "svcd", "dvd", "dv", "dv50"). type may be prefixed with "pal-", "ntsc-" or "film-" to use the corresponding standard. All the format options (bitrate, codecs, buffer sizes) are then set automatically. You can just type:]' \
-        '-dn[As an input option, blocks all data streams of a file from being filtered or being automatically selected or mapped for any output. See "-discard" option to disable streams individually.]' \
-        '-dframes[Set the number of data frames to output. This is an obsolete alias for "-frames:d", which you should use instead.]' \
-        '-frames[Stop writing to the stream after framecount frames.]' \
-        {-q,-qscale}'[Use fixed quality scale (VBR). The meaning of q/qscale is codec-dependent. If qscale is used without a stream_specifier then it applies only to the video stream, this is to maintain compatibility with previous behavior and as specifying the same codec specific value to 2 different codecs that is audio and video generally is not what is intended when no stream_specifier is used.]' \
-        '-filter[Create the filtergraph specified by filtergraph and use it to filter the stream.]' \
-        '-filter_script[This option is similar to -filter, the only difference is that its argument is the name of the file from which a filtergraph description is to be read.]':file:_files \
-        '-filter_threads[Defines how many threads are used to process a filter pipeline. Each pipeline will produce a thread pool with this many threads available for parallel processing. The default is the number of available CPUs.]' \
-        '-pre[Specify the preset for matching stream(s).]' \
-        '-stats[Print encoding progress/statistics. It is on by default, to explicitly disable it you need to specify "-nostats".]' \
-        '-progress[Send program-friendly progress information to url.]' \
-        '-stdin[Enable interaction on standard input. On by default unless standard input is used as an input. To explicitly disable interaction you need to specify "-nostdin".]' \
-        '-debug_ts[Print timestamp information. It is off by default. This option is mostly useful for testing and debugging purposes, and the output format may change from one version to another, so it should not be employed by portable scripts.]' \
-        '-attach[Add an attachment to the output file. This is supported by a few formats like Matroska for e.g. fonts used in rendering subtitles. Attachments are implemented as a specific type of stream, so this option will add a new stream to the file. It is then possible to use per-stream options on this stream in the usual way. Attachment streams created with this option will be created after all the other streams (i.e. those created with "-map" or automatic mappings).]':file:_files \
-        '-dump_attachment[Extract the matching attachment stream into a file named filename. If filename is empty, then the value of the "filename" metadata tag will be used.]':file:_files \
-        '-noautorotate[Disable automatically rotating video based on file metadata.]' \
-        '-vframes[Set the number of video frames to output. This is an obsolete alias for "-frames:v", which you should use instead.]' \
-        '-r[Set frame rate (Hz value, fraction or abbreviation).]' \
-        '-s[Set frame size.]' \
-        '-aspect[Set the video display aspect ratio specified by aspect.]' \
-        '-vn[As an input option, blocks all video streams of a file from being filtered or being automatically selected or mapped for any output. See "-discard" option to disable streams individually.]' \
-        '-vcodec[Set the video codec. This is an alias for "-codec:v".]' \
-        '-pass[Select the pass number (1 or 2). It is used to do two-pass video encoding. The statistics of the video are recorded in the first pass into a log file (see also the option -passlogfile), and in the second pass that log file is used to generate the video at the exact requested bitrate. On pass 1, you may just deactivate audio and set output to null, examples for Windows and Unix:]' \
-        '-passlogfile[Set two-pass log file name prefix to prefix, the default file name prefix is ``ffmpeg2pass'\'''\''. The complete file name will be PREFIX-N.log, where N is a number specific to the output stream]' \
-        '-vf[Create the filtergraph specified by filtergraph and use it to filter the stream.]' \
-        '-pix_fmt[Set pixel format. Use "-pix_fmts" to show all the supported pixel formats. If the selected pixel format can not be selected, ffmpeg will print a warning and select the best pixel format supported by the encoder. If pix_fmt is prefixed by a "+", ffmpeg will exit with an error if the requested pixel format can not be selected, and automatic conversions inside filtergraphs are disabled. If pix_fmt is a single "+", ffmpeg selects the same pixel format as the input (or graph output) and automatic conversions are disabled.]' \
-        '-sws_flags[Set SwScaler flags.]' \
-        '-rc_override[Rate control override for specific intervals, formatted as "int,int,int" list separated with slashes. Two first values are the beginning and end frame numbers, last one is quantizer to use if positive, or quality factor if negative.]' \
-        '-ilme[Force interlacing support in encoder (MPEG-2 and MPEG-4 only). Use this option if your input file is interlaced and you want to keep the interlaced format for minimum losses. The alternative is to deinterlace the input stream with -deinterlace, but deinterlacing introduces losses.]' \
-        '-psnr[Calculate PSNR of compressed frames.]' \
-        '-vstats[Dump video coding statistics to vstats_HHMMSS.log.]' \
-        '-vstats_file[Dump video coding statistics to file.]':file:_files \
-        '-vstats_version[Specifies which version of the vstats format to use. Default is 2.]':file:_files \
+        '-L[show license]' \
+        '-h[show help]' \
+        '-?[show help]' \
+        '-help[show help]' \
+        '--help[show help]' \
+        '-version[show version]' \
+        '-buildconf[show build configuration]' \
+        '-formats[show available formats]' \
+        '-muxers[show available muxers]' \
+        '-demuxers[show available demuxers]' \
+        '-devices[show available devices]' \
+        '-codecs[show available codecs]' \
+        '-decoders[show available decoders]' \
+        '-encoders[show available encoders]' \
+        '-bsfs[show available bit stream filters]' \
+        '-protocols[show available protocols]' \
+        '-filters[show available filters]' \
+        '-pix_fmts[show available pixel formats]' \
+        '-layouts[show standard channel layouts]' \
+        '-sample_fmts[show available audio sample formats]' \
+        '-dispositions[show available stream dispositions]' \
+        '-colors[show available color names]' \
+        '-sources[list sources of the input device]' \
+        '-sinks[list sinks of the output device]' \
+        '-hwaccels[show available HW acceleration methods]' \
+        '-loglevel[set logging level]' \
+        '-v[set logging level]' \
+        '-report[generate a report]' \
+        '-max_alloc[set maximum size of a single allocated block]' \
+        '-y[overwrite output files]' \
+        '-n[never overwrite output files]' \
+        '-ignore_unknown[Ignore unknown stream types]' \
+        '-filter_threads[number of non-complex filter threads]' \
+        '-filter_complex_threads[number of threads for -filter_complex]' \
+        '-stats[print progress report during encoding]' \
+        '-max_error_rate[ratio of decoding errors (0.0: no errors, 1.0: 100% errors) above which ffmpeg returns an error instead of success.]' \
+        '-vol[change audio volume (256=normal)]' \
+        '-cpuflags[force specific cpu flags]' \
+        '-cpucount[force specific cpu count]' \
+        '-hide_banner[do not show program banner]' \
+        '-copy_unknown[Copy unknown stream types]' \
+        '-recast_media[allow recasting stream type in order to force a decoder of different media type]' \
+        '-benchmark[add timings for benchmarking]' \
+        '-benchmark_all[add timings for each task]' \
+        '-progress[write program-readable progress information]' \
+        '-stdin[enable or disable interaction on standard input]' \
+        '-timelimit[set max runtime in seconds in CPU user time]' \
+        '-dump[dump each input packet]' \
+        '-hex[when dumping packets, also dump the payload]' \
+        '-vsync[set video sync method globally; deprecated, use -fps_mode]' \
+        '-frame_drop_threshold[frame drop threshold]' \
+        '-async[audio sync method]' \
+        '-adrift_threshold[audio drift threshold]' \
+        '-copyts[copy timestamps]' \
+        '-start_at_zero[shift input timestamps to start at 0 when using copyts]' \
+        '-copytb[copy input stream time base when stream copying]' \
+        '-dts_delta_threshold[timestamp discontinuity delta threshold]' \
+        '-dts_error_threshold[timestamp error delta threshold]' \
+        '-x[exit on error]' \
+        '-abort_on[abort on the specified condition flags]' \
+        '-filter_complex[create a complex filtergraph]' \
+        '-lavfi[create a complex filtergraph]' \
+        '-filter_complex_script[read complex filtergraph description from a file]':file:_files \
+        '-auto_conversion_filters[enable automatic conversion filters globally]' \
+        '-stats_period[set the period at which ffmpeg updates stats and -progress output]' \
+        '-debug_ts[print timestamp debugging info]' \
+        '-psnr[calculate PSNR of compressed frames]' \
+        '-vstats[dump video coding statistics to file]' \
+        '-vstats_file[dump video coding statistics to file]':file:_files \
+        '-vstats_version[Version of the vstats format to use.]' \
+        '-qphist[show QP histogram]' \
+        '-sdp_file[specify a file in which to print sdp information]':file:_files \
+        '-vaapi_device[set VAAPI hardware device (DRM path or X11 display name)]' \
+        '-init_hw_device[initialise hardware device]' \
+        '-filter_hw_device[set hardware device used when filtering]' \
+        '-f[force format]' \
+        '-c[codec name]' \
+        '-codec[codec name]' \
+        '-pre[preset name]' \
+        '-map_metadata[set metadata information of outfile from infile]':file:_files \
+        '-t[record or transcode "duration" seconds of audio/video]' \
+        '-to[record or transcode stop time]' \
+        '-fs[set the limit file size in bytes]' \
+        '-ss[set the start time offset]' \
+        '-sseof[set the start time offset relative to EOF]' \
+        '-seek_timestamp[enable/disable seeking by timestamp with -ss]' \
+        '-timestamp[set the recording timestamp ('\''now'\'' to set the current time)]' \
+        '-metadata[add metadata]' \
+        '-program[add program with specified streams]' \
+        '-target[specify target file type ("vcd", "svcd", "dvd", "dv" or "dv50" with optional prefixes "pal-", "ntsc-" or "film-")]' \
+        '-apad[audio pad]' \
+        '-frames[set the number of frames to output]' \
+        '-filter[set stream filtergraph]' \
+        '-filter_script[read stream filtergraph description from a file]':file:_files \
+        '-reinit_filter[reinit filtergraph on input parameter changes]' \
+        {-discard,-disposition}'[disposition]' \
+        '-map[set input stream mapping]':file:_files \
+        '-map_channel[map an audio channel from one stream to another]':file:_files \
+        '-map_chapters[set chapters mapping]':file:_files \
+        '-accurate_seek[enable/disable accurate seeking with -ss]' \
+        '-isync[Indicate the input index for sync reference]' \
+        '-itsoffset[set the input ts offset]' \
+        '-itsscale[set the input ts scale]' \
+        '-dframes[set the number of data frames to output]' \
+        '-re[read input at native frame rate; equivalent to -readrate 1]' \
+        '-readrate[read input at specified rate]' \
+        '-shortest[finish encoding within shortest input]' \
+        '-bitexact[bitexact mode]' \
+        '-copyinkf[copy initial non-keyframes]' \
+        '-copypriorss[copy or discard frames before start time]' \
+        '-tag[force codec tag/fourcc]' \
+        '-q[use fixed quality scale (VBR)]' \
+        '-qscale[use fixed quality scale (VBR)]' \
+        '-profile[set profile]':file:_files \
+        '-attach[add an attachment to the output file]':file:_files \
+        '-dump_attachment[extract an attachment into a file]':file:_files \
+        '-stream_loop[set number of times input stream shall be looped]' \
+        '-thread_queue_size[set the maximum number of queued packets from the demuxer]' \
+        '-find_stream_info[read and decode the streams to fill missing information with heuristics]' \
+        '-bits_per_raw_sample[set the number of bits per raw sample]' \
+        '-autorotate[automatically insert correct rotate filters]' \
+        '-autoscale[automatically insert a scale filter at the end of the filter graph]' \
+        '-muxdelay[set the maximum demux-decode delay]' \
+        '-muxpreload[set the initial demux-decode delay]' \
+        '-time_base[set the desired time base hint for output stream (1:24, 1:48000 or 0.04166, 2.0833e-5)]' \
+        '-enc_time_base[set the desired time base for the encoder (1:24, 1:48000 or 0.04166, 2.0833e-5). two special values are defined - 0 = use frame rate (video) or sample rate (audio),-1 = match source time base]' \
+        '-bsf[A comma-separated list of bitstream filters]' \
+        '-fpre[set options from indicated preset file]':file:_files \
+        '-max_muxing_queue_size[maximum number of packets that can be buffered while waiting for all streams to initialize]' \
+        '-muxing_queue_data_threshold[set the threshold after which max_muxing_queue_size is taken into account]' \
+        '-d[force data codec ('\''copy'\'' to copy stream)]' \
+        '-vframes[set the number of video frames to output]' \
+        '-r[set frame rate (Hz value, fraction or abbreviation)]' \
+        '-fpsmax[set max frame rate (Hz value, fraction or abbreviation)]' \
+        '-s[set frame size (WxH or abbreviation)]' \
+        '-aspect[set aspect ratio (4:3, 16:9 or 1.3333, 1.7777)]' \
+        '-vn[disable video]' \
+        '-v[force video codec ('\''copy'\'' to copy stream)]' \
+        '-timecode[set initial TimeCode value.]' \
+        '-pass[select the pass number (1 to 3)]' \
+        '-vf[set video filters]' \
+        '-ab[audio bitrate (please use -b:a)]' \
+        '-b[video bitrate (please use -b:v)]' \
+        '-dn[disable data]' \
+        '-pix_fmt[set pixel format]' \
+        '-rc_override[rate control override for specific intervals]' \
+        '-passlogfile[select two pass log file name prefix]' \
+        '-intra_matrix[specify intra matrix coeffs]' \
+        '-inter_matrix[specify inter matrix coeffs]' \
+        '-chroma_intra_matrix[specify intra matrix coeffs]' \
         '-top[top=1/bottom=0/auto=-1 field first]' \
-        '-dc[Intra_dc_precision.]' \
-        '-vtag[Force video tag/fourcc. This is an alias for "-tag:v".]' \
-        '-qphist[Show QP histogram]' \
-        '-vbsf[Deprecated see -bsf]' \
-        '-force_key_frames[Force key frames at the specified timestamps, more precisely at the first frames after each specified time.]' \
-        '-copyinkf[When doing stream copy, copy also non-key frames found at the beginning.]' \
-        '-init_hw_device[Initialise a new hardware device of type type called name, using the given device parameters. If no name is specified it will receive a default name of the form "type%d".]' \
-        '-init_hw_device[List all hardware device types supported in this build of ffmpeg.]' \
-        '-filter_hw_device[Pass the hardware device called name to all filters in any filter graph. This can be used to set the device to upload to with the "hwupload" filter, or the device to map to with the "hwmap" filter. Other filters may also make use of this parameter when they require a hardware device. Note that this is typically only required when the input is not already in hardware frames - when it is, filters will derive the device they require from the context of the frames they receive as input.]' \
-        '-hwaccel[Use hardware acceleration to decode the matching stream(s). The allowed values of hwaccel are:]' \
-        '-hwaccel_device[Select a device to use for hardware acceleration.]' \
-        '-hwaccels[List all hardware acceleration methods supported in this build of ffmpeg.]' \
-        '-aframes[Set the number of audio frames to output. This is an obsolete alias for "-frames:a", which you should use instead.]' \
-        '-ar[Set the audio sampling frequency. For output streams it is set by default to the frequency of the corresponding input stream. For input streams this option only makes sense for audio grabbing devices and raw demuxers and is mapped to the corresponding demuxer options.]' \
-        '-aq[Set the audio quality (codec-specific, VBR). This is an alias for -q:a.]' \
-        '-ac[Set the number of audio channels. For output streams it is set by default to the number of input audio channels. For input streams this option only makes sense for audio grabbing devices and raw demuxers and is mapped to the corresponding demuxer options.]' \
-        '-an[As an input option, blocks all audio streams of a file from being filtered or being automatically selected or mapped for any output. See "-discard" option to disable streams individually.]' \
-        '-acodec[Set the audio codec. This is an alias for "-codec:a".]' \
-        '-sample_fmt[Set the audio sample format. Use "-sample_fmts" to get a list of supported sample formats.]' \
-        '-af[Create the filtergraph specified by filtergraph and use it to filter the stream.]' \
-        '-atag[Force audio tag/fourcc. This is an alias for "-tag:a".]' \
-        '-absf[Deprecated, see -bsf]' \
-        '-guess_layout_max[If some input channel layout is not known, try to guess only if it corresponds to at most the specified number of channels. For example, 2 tells to ffmpeg to recognize 1 channel as mono and 2 channels as stereo but not 6 channels as 5.1. The default is to always try to guess. Use 0 to disable all guessing.]' \
-        '-scodec[Set the subtitle codec. This is an alias for "-codec:s".]' \
-        '-sn[As an input option, blocks all subtitle streams of a file from being filtered or being automatically selected or mapped for any output. See "-discard" option to disable streams individually.]' \
-        '-sbsf[Deprecated, see -bsf]' \
-        '-fix_sub_duration[Fix subtitles durations. For each subtitle, wait for the next packet in the same stream and adjust the duration of the first to avoid overlap. This is necessary with some subtitles codecs, especially DVB subtitles, because the duration in the original packet is only a rough estimate and the end is actually marked by an empty subtitle frame. Failing to use this option when necessary can result in exaggerated durations or muxing failures due to non-monotonic timestamps.]' \
-        '-canvas_size[Set the size of the canvas used to render subtitles.]' \
-        '-ignore_unknown[Ignore input streams with unknown type instead of failing if copying such streams is attempted.]' \
-        '-copy_unknown[Allow input streams with unknown type to be copied instead of failing if copying such streams is attempted.]' \
-        '-map_channel[Map an audio channel from a given input to an output. If output_file_id.stream_specifier is not set, the audio channel will be mapped on all the audio streams.]':file:_files \
-        '-map_metadata[Set metadata information of the next output file from infile. Note that those are file indices (zero-based), not filenames. Optional metadata_spec_in/out parameters specify, which metadata to copy. A metadata specifier can have the following forms:]':file:_files \
-        '-map_chapters[Copy chapters from input file with index input_file_index to the next output file. If no chapter mapping is specified, then chapters are copied from the first input file with at least one chapter. Use a negative file index to disable any chapter copying.]':file:_files \
-        '-benchmark[Show benchmarking information at the end of an encode. Shows real, system and user time used and maximum memory consumption. Maximum memory consumption is not supported on all systems, it will usually display as 0 if not supported.]' \
-        '-benchmark_all[Show benchmarking information during the encode. Shows real, system and user time used in various steps (audio/video encode/decode).]' \
-        '-timelimit[Exit after ffmpeg has been running for duration seconds.]' \
-        '-dump[Dump each input packet to stderr.]' \
-        '-hex[When dumping packets, also dump the payload.]' \
-        '-re[Read input at native frame rate. Mainly used to simulate a grab device, or live input stream (e.g. when reading from a file). Should not be used with actual grab devices or live input streams (where it can cause packet loss). By default ffmpeg attempts to read the input(s) as fast as possible. This option will slow down the reading of the input(s) to the native frame rate of the input(s). It is useful for real-time output (e.g. live streaming).]' \
-        '-vsync[Video sync method. For compatibility reasons old values can be specified as numbers. Newly added values will have to be specified as strings always.]' \
-        '-frame_drop_threshold[Frame drop threshold, which specifies how much behind video frames can be before they are dropped. In frame rate units, so 1.0 is one frame. The default is -1.1. One possible usecase is to avoid framedrops in case of noisy timestamps or to increase frame drop precision in case of exact timestamps.]' \
-        '-async[Audio sync method. "Stretches/squeezes" the audio stream to match the timestamps, the parameter is the maximum samples per second by which the audio is changed. -async 1 is a special case where only the start of the audio stream is corrected without any later correction.]' \
-        '-copyts[Do not process input timestamps, but keep their values without trying to sanitize them. In particular, do not remove the initial start time offset value.]' \
-        '-start_at_zero[When used with copyts, shift input timestamps so they start at zero.]' \
-        '-copytb[Specify how to set the encoder timebase when stream copying. mode is an integer numeric value, and can assume one of the following values:]' \
-        '-enc_time_base[Set the encoder timebase. timebase is a floating point number, and can assume one of the following values:]' \
-        '-bitexact[Enable bitexact mode for (de)muxer and (de/en)coder]' \
-        '-shortest[Finish encoding when the shortest input stream ends.]' \
-        '-dts_delta_threshold[Timestamp discontinuity delta threshold.]' \
-        '-muxdelay[Set the maximum demux-decode delay.]' \
-        '-muxpreload[Set the initial demux-decode delay.]' \
-        '-streamid[Assign a new stream-id value to an output stream. This option should be specified prior to the output filename to which it applies. For the situation where multiple output files exist, a streamid may be reassigned to a different value.]' \
-        '-bsf[Set bitstream filters for matching streams. bitstream_filters is a comma-separated list of bitstream filters. Use the "-bsfs" option to get the list of bitstream filters.]' \
-        '-tag[Force a tag/fourcc for matching streams.]' \
-        '-timecode[Specify Timecode for writing. SEP is '\'':'\'' for non drop timecode and '\'';'\'' (or '\''.'\'') for drop.]' \
-        '-filter_complex[Define a complex filtergraph, i.e. one with arbitrary number of inputs and/or outputs. For simple graphs -- those with one input and one output of the same type -- see the -filter options. filtergraph is a description of the filtergraph, as described in the ``Filtergraph syntax'\'''\'' section of the ffmpeg-filters manual.]' \
-        '-filter_complex_threads[Defines how many threads are used to process a filter_complex graph. Similar to filter_threads but used for "-filter_complex" graphs only. The default is the number of available CPUs.]' \
-        '-lavfi[Define a complex filtergraph, i.e. one with arbitrary number of inputs and/or outputs. Equivalent to -filter_complex.]' \
-        '-filter_complex_script[This option is similar to -filter_complex, the only difference is that its argument is the name of the file from which a complex filtergraph description is to be read.]':file:_files \
-        '-accurate_seek[This option enables or disables accurate seeking in input files with the -ss option. It is enabled by default, so seeking is accurate when transcoding. Use -noaccurate_seek to disable it, which may be useful e.g. when copying some streams and transcoding the others.]' \
-        '-seek_timestamp[This option enables or disables seeking by timestamp in input files with the -ss option. It is disabled by default. If enabled, the argument to the -ss option is considered an actual timestamp, and is not offset by the start time of the file. This matters only for files which do not start from timestamp 0, such as transport streams.]' \
-        '-thread_queue_size[This option sets the maximum number of queued packets when reading from the file or device. With low latency / high rate live streams, packets may be discarded if they are not read in a timely manner; raising this value can avoid it.]' \
-        '-sdp_file[Print sdp information for an output stream to file. This allows dumping sdp information when at least one output isn'\''t an rtp stream. (Requires at least one of the output formats to be rtp).]':file:_files \
-        '-discard[Allows discarding specific streams or frames from streams. Any input stream can be fully discarded, using value "all" whereas selective discarding of frames from a stream occurs at the demuxer and is not supported by all demuxers.]' \
-        '-abort_on[Stop and abort on various conditions. The following flags are available:]' \
-        '-xerror[Stop and exit on error]' \
-        '-max_muxing_queue_size[When transcoding audio and/or video streams, ffmpeg will not begin writing into the output until it has one packet for each such stream. While waiting for that to happen, packets for other streams are buffered. This option sets the size of this buffer, in packets, for the matching output stream.]' \
+        '-vtag[force video tag/fourcc]' \
+        '-fps_mode[set framerate mode for matching video streams; overrides vsync]' \
+        '-force_fps[force the selected framerate, disable the best supported framerate selection]' \
+        '-streamid[set the value of an outfile streamid]' \
+        '-force_key_frames[force key frames at specified timestamps]' \
+        '-hwaccel[use HW accelerated decoding]' \
+        '-hwaccel_device[select a device for HW acceleration]' \
+        '-hwaccel_output_format[select output format used with HW accelerated decoding]' \
+        '-vbsf[deprecated]' \
+        '-vpre[set the video options to the indicated preset]' \
+        '-aframes[set the number of audio frames to output]' \
+        '-aq[set audio quality (codec-specific)]' \
+        '-ar[set audio sampling rate (in Hz)]' \
+        '-ac[set number of audio channels]' \
+        '-an[disable audio]' \
+        '-a[force audio codec ('\''copy'\'' to copy stream)]' \
+        '-af[set audio filters]' \
+        '-atag[force audio tag/fourcc]' \
+        '-sample_fmt[set sample format]' \
+        '-channel_layout[set channel layout]' \
+        '-ch_layout[set channel layout]' \
+        '-guess_layout_max[set the maximum number of channels to try to guess the channel layout]' \
+        '-absf[deprecated]' \
+        '-apre[set the audio options to the indicated preset]' \
+        '-sn[disable subtitle]' \
+        '-s[force subtitle codec ('\''copy'\'' to copy stream)]' \
+        '-stag[force subtitle tag/fourcc]' \
+        '-fix_sub_duration[fix subtitles duration]' \
+        '-canvas_size[set canvas size (WxH or abbreviation)]' \
+        '-spre[set the subtitle options to the indicated preset]' \
         '*: :_files'
 
     case $state in

@@ -1,143 +1,183 @@
 # Auto-generated with h2o
 
-complete -c ffmpeg -s "L" -d "Show license."
-complete -c ffmpeg -s "h" -s "?" -o "help" -l "help" -d "Show help." -x
-complete -c ffmpeg -o "version" -d "Show version."
-complete -c ffmpeg -o "formats" -d "Show available formats (including devices)."
-complete -c ffmpeg -o "demuxers" -d "Show available demuxers."
-complete -c ffmpeg -o "muxers" -d "Show available muxers."
-complete -c ffmpeg -o "devices" -d "Show available devices."
-complete -c ffmpeg -o "codecs" -d "Show all codecs known to libavcodec."
-complete -c ffmpeg -o "decoders" -d "Show available decoders."
-complete -c ffmpeg -o "encoders" -d "Show all available encoders."
-complete -c ffmpeg -o "bsfs" -d "Show available bitstream filters."
-complete -c ffmpeg -o "protocols" -d "Show available protocols."
-complete -c ffmpeg -o "filters" -d "Show available libavfilter filters."
-complete -c ffmpeg -o "pix_fmts" -d "Show available pixel formats."
-complete -c ffmpeg -o "sample_fmts" -d "Show available sample formats."
-complete -c ffmpeg -o "layouts" -d "Show channel names and standard channel layouts."
-complete -c ffmpeg -o "colors" -d "Show recognized color names."
-complete -c ffmpeg -o "sources" -d "Show autodetected sources of the input device." -x
-complete -c ffmpeg -o "sinks" -d "Show autodetected sinks of the output device." -x
-complete -c ffmpeg -o "loglevel" -s "v" -d "Set logging level and flags used by the library." -x
-complete -c ffmpeg -o "report" -d "Dump full command line and console output to a file named \"program-YYYYMMDD-HHMMSS.log\" in the current directory."
-complete -c ffmpeg -o "hide_banner" -d "Suppress printing banner."
-complete -c ffmpeg -o "cpuflags" -d "Allows setting and clearing cpu flags." -x
-complete -c ffmpeg -s "f" -d "Force input or output file format." -r
-complete -c ffmpeg -s "i" -d "input file url" -r
-complete -c ffmpeg -s "y" -d "Overwrite output files without asking." -r
-complete -c ffmpeg -s "n" -d "Do not overwrite output files, and exit immediately if a specified output file already exists." -r
-complete -c ffmpeg -o "stream_loop" -d "Set number of times input stream shall be looped." -x
-complete -c ffmpeg -s "c" -o "codec" -d "Select an encoder (when used before an output file) or a decoder (when used before an input file) for one or more streams." -r
-complete -c ffmpeg -s "t" -d "When used as an input option (before \"-i\"), limit the duration of data read from the input file." -r
-complete -c ffmpeg -o "to" -d "Stop writing the output or reading the input at position." -x
-complete -c ffmpeg -o "fs" -d "Set the file size limit, expressed in bytes." -r
-complete -c ffmpeg -o "ss" -d "When used as an input option (before \"-i\"), seeks in this input file to position." -r
-complete -c ffmpeg -o "sseof" -d "Like the \"-ss\" option but relative to the \"end of file\"." -r
-complete -c ffmpeg -o "itsoffset" -d "Set the input time offset." -x
-complete -c ffmpeg -o "itsscale" -d "Rescale input timestamps." -x
-complete -c ffmpeg -o "timestamp" -d "Set the recording timestamp in the container." -x
-complete -c ffmpeg -o "metadata" -d "Set a metadata key/value pair." -x
-complete -c ffmpeg -o "disposition" -d "Sets the disposition for a stream." -x
-complete -c ffmpeg -o "program" -d "Creates a program with the specified title, program_num and adds the specified stream(s) to it." -x
-complete -c ffmpeg -o "target" -d "Specify target file type (\"vcd\", \"svcd\", \"dvd\", \"dv\", \"dv50\")." -r
-complete -c ffmpeg -o "dn" -d "As an input option, blocks all data streams of a file from being filtered or being automatically selected or mapped for any output." -r
-complete -c ffmpeg -o "dframes" -d "Set the number of data frames to output." -x
-complete -c ffmpeg -o "frames" -d "Stop writing to the stream after framecount frames." -x
-complete -c ffmpeg -s "q" -o "qscale" -d "Use fixed quality scale (VBR)." -x
-complete -c ffmpeg -o "filter" -d "Create the filtergraph specified by filtergraph and use it to filter the stream." -x
-complete -c ffmpeg -o "filter_script" -d "This option is similar to -filter, the only difference is that its argument is the name of the file from which a filtergraph description is to be read." -r
-complete -c ffmpeg -o "filter_threads" -d "Defines how many threads are used to process a filter pipeline." -x
-complete -c ffmpeg -o "pre" -d "Specify the preset for matching stream(s)." -x
-complete -c ffmpeg -o "stats" -d "Print encoding progress/statistics." -x
-complete -c ffmpeg -o "progress" -d "Send program-friendly progress information to url." -x
-complete -c ffmpeg -o "stdin" -d "Enable interaction on standard input."
-complete -c ffmpeg -o "debug_ts" -d "Print timestamp information." -x
-complete -c ffmpeg -o "attach" -d "Add an attachment to the output file." -r
-complete -c ffmpeg -o "dump_attachment" -d "Extract the matching attachment stream into a file named filename." -r
-complete -c ffmpeg -o "noautorotate" -d "Disable automatically rotating video based on file metadata."
-complete -c ffmpeg -o "vframes" -d "Set the number of video frames to output." -x
-complete -c ffmpeg -s "r" -d "Set frame rate (Hz value, fraction or abbreviation)." -x
-complete -c ffmpeg -s "s" -d "Set frame size." -x
-complete -c ffmpeg -o "aspect" -d "Set the video display aspect ratio specified by aspect." -x
-complete -c ffmpeg -o "vn" -d "As an input option, blocks all video streams of a file from being filtered or being automatically selected or mapped for any output." -r
-complete -c ffmpeg -o "vcodec" -d "Set the video codec." -x
-complete -c ffmpeg -o "pass" -d "Select the pass number (1 or 2)." -r
-complete -c ffmpeg -o "passlogfile" -d "Set two-pass log file name prefix to prefix, the default file name prefix is ``ffmpeg2pass''." -r
-complete -c ffmpeg -o "vf" -d "Create the filtergraph specified by filtergraph and use it to filter the stream." -x
-complete -c ffmpeg -o "pix_fmt" -d "Set pixel format." -x
-complete -c ffmpeg -o "sws_flags" -d "Set SwScaler flags." -x
-complete -c ffmpeg -o "rc_override" -d "Rate control override for specific intervals, formatted as \"int,int,int\" list separated with slashes." -x
-complete -c ffmpeg -o "ilme" -d "Force interlacing support in encoder (MPEG-2 and MPEG-4 only)."
-complete -c ffmpeg -o "psnr" -d "Calculate PSNR of compressed frames."
-complete -c ffmpeg -o "vstats" -d "Dump video coding statistics to vstats_HHMMSS.log."
-complete -c ffmpeg -o "vstats_file" -d "Dump video coding statistics to file." -r
-complete -c ffmpeg -o "vstats_version" -d "Specifies which version of the vstats format to use." -r
-complete -c ffmpeg -o "top" -d "top=1/bottom=0/auto=-1 field first" -x
-complete -c ffmpeg -o "dc" -d "Intra_dc_precision." -x
-complete -c ffmpeg -o "vtag" -d "Force video tag/fourcc." -x
-complete -c ffmpeg -o "qphist" -d "Show QP histogram" -x
-complete -c ffmpeg -o "vbsf" -d "Deprecated see -bsf" -x
-complete -c ffmpeg -o "force_key_frames" -d "Force key frames at the specified timestamps, more precisely at the first frames after each specified time." -x
-complete -c ffmpeg -o "copyinkf" -d "When doing stream copy, copy also non-key frames found at the beginning." -x
-complete -c ffmpeg -o "init_hw_device" -d "Initialise a new hardware device of type type called name, using the given device parameters." -x
-complete -c ffmpeg -o "init_hw_device" -d "List all hardware device types supported in this build of ffmpeg." -x
-complete -c ffmpeg -o "filter_hw_device" -d "Pass the hardware device called name to all filters in any filter graph." -x
-complete -c ffmpeg -o "hwaccel" -d "Use hardware acceleration to decode the matching stream(s)." -x
-complete -c ffmpeg -o "hwaccel_device" -d "Select a device to use for hardware acceleration." -x
-complete -c ffmpeg -o "hwaccels" -d "List all hardware acceleration methods supported in this build of ffmpeg."
-complete -c ffmpeg -o "aframes" -d "Set the number of audio frames to output." -x
-complete -c ffmpeg -o "ar" -d "Set the audio sampling frequency." -x
-complete -c ffmpeg -o "aq" -d "Set the audio quality (codec-specific, VBR)." -x
-complete -c ffmpeg -o "ac" -d "Set the number of audio channels." -x
-complete -c ffmpeg -o "an" -d "As an input option, blocks all audio streams of a file from being filtered or being automatically selected or mapped for any output." -r
-complete -c ffmpeg -o "acodec" -d "Set the audio codec." -x
-complete -c ffmpeg -o "sample_fmt" -d "Set the audio sample format." -x
-complete -c ffmpeg -o "af" -d "Create the filtergraph specified by filtergraph and use it to filter the stream." -x
-complete -c ffmpeg -o "atag" -d "Force audio tag/fourcc." -x
-complete -c ffmpeg -o "absf" -d "Deprecated, see -bsf" -x
-complete -c ffmpeg -o "guess_layout_max" -d "If some input channel layout is not known, try to guess only if it corresponds to at most the specified number of channels." -x
-complete -c ffmpeg -o "scodec" -d "Set the subtitle codec." -x
-complete -c ffmpeg -o "sn" -d "As an input option, blocks all subtitle streams of a file from being filtered or being automatically selected or mapped for any output." -r
-complete -c ffmpeg -o "sbsf" -d "Deprecated, see -bsf" -x
-complete -c ffmpeg -o "fix_sub_duration" -d "Fix subtitles durations."
-complete -c ffmpeg -o "canvas_size" -d "Set the size of the canvas used to render subtitles." -x
-complete -c ffmpeg -o "ignore_unknown" -d "Ignore input streams with unknown type instead of failing if copying such streams is attempted."
-complete -c ffmpeg -o "copy_unknown" -d "Allow input streams with unknown type to be copied instead of failing if copying such streams is attempted."
-complete -c ffmpeg -o "map_channel" -d "Map an audio channel from a given input to an output." -r
-complete -c ffmpeg -o "map_metadata" -d "Set metadata information of the next output file from infile." -r
-complete -c ffmpeg -o "map_chapters" -d "Copy chapters from input file with index input_file_index to the next output file." -r
-complete -c ffmpeg -o "benchmark" -d "Show benchmarking information at the end of an encode." -x
-complete -c ffmpeg -o "benchmark_all" -d "Show benchmarking information during the encode." -x
-complete -c ffmpeg -o "timelimit" -d "Exit after ffmpeg has been running for duration seconds." -x
-complete -c ffmpeg -o "dump" -d "Dump each input packet to stderr." -x
-complete -c ffmpeg -o "hex" -d "When dumping packets, also dump the payload." -x
-complete -c ffmpeg -o "re" -d "Read input at native frame rate." -r
-complete -c ffmpeg -o "vsync" -d "Video sync method." -x
-complete -c ffmpeg -o "frame_drop_threshold" -d "Frame drop threshold, which specifies how much behind video frames can be before they are dropped." -x
-complete -c ffmpeg -o "async" -d "Audio sync method." -x
-complete -c ffmpeg -o "copyts" -d "Do not process input timestamps, but keep their values without trying to sanitize them."
-complete -c ffmpeg -o "start_at_zero" -d "When used with copyts, shift input timestamps so they start at zero."
-complete -c ffmpeg -o "copytb" -d "Specify how to set the encoder timebase when stream copying." -x
-complete -c ffmpeg -o "enc_time_base" -d "Set the encoder timebase." -x
-complete -c ffmpeg -o "bitexact" -d "Enable bitexact mode for (de)muxer and (de/en)coder" -x
-complete -c ffmpeg -o "shortest" -d "Finish encoding when the shortest input stream ends." -x
-complete -c ffmpeg -o "dts_delta_threshold" -d "Timestamp discontinuity delta threshold."
-complete -c ffmpeg -o "muxdelay" -d "Set the maximum demux-decode delay." -x
-complete -c ffmpeg -o "muxpreload" -d "Set the initial demux-decode delay." -x
-complete -c ffmpeg -o "streamid" -d "Assign a new stream-id value to an output stream." -r
-complete -c ffmpeg -o "bsf" -d "Set bitstream filters for matching streams." -x
-complete -c ffmpeg -o "tag" -d "Force a tag/fourcc for matching streams." -x
-complete -c ffmpeg -o "timecode" -d "Specify Timecode for writing." -x
-complete -c ffmpeg -o "filter_complex" -d "Define a complex filtergraph, i.e. one with arbitrary number of inputs and/or outputs." -x
-complete -c ffmpeg -o "filter_complex_threads" -d "Defines how many threads are used to process a filter_complex graph." -x
-complete -c ffmpeg -o "lavfi" -d "Define a complex filtergraph, i.e. one with arbitrary number of inputs and/or outputs." -x
-complete -c ffmpeg -o "filter_complex_script" -d "This option is similar to -filter_complex, the only difference is that its argument is the name of the file from which a complex filtergraph description is to be read." -r
-complete -c ffmpeg -o "accurate_seek" -d "This option enables or disables accurate seeking in input files with the -ss option." -r
-complete -c ffmpeg -o "seek_timestamp" -d "This option enables or disables seeking by timestamp in input files with the -ss option." -r
-complete -c ffmpeg -o "thread_queue_size" -d "This option sets the maximum number of queued packets when reading from the file or device." -r
-complete -c ffmpeg -o "sdp_file" -d "Print sdp information for an output stream to file." -r
-complete -c ffmpeg -o "discard" -d "Allows discarding specific streams or frames from streams." -x
-complete -c ffmpeg -o "abort_on" -d "Stop and abort on various conditions." -x
-complete -c ffmpeg -o "xerror" -d "Stop and exit on error" -x
-complete -c ffmpeg -o "max_muxing_queue_size" -d "When transcoding audio and/or video streams, ffmpeg will not begin writing into the output until it has one packet for each such stream." -x
+complete -c ffmpeg -s "L" -d "show license"
+complete -c ffmpeg -s "h" -d "show help" -x
+complete -c ffmpeg -s "?" -d "show help" -x
+complete -c ffmpeg -o "help" -d "show help" -x
+complete -c ffmpeg -l "help" -d "show help" -x
+complete -c ffmpeg -o "version" -d "show version"
+complete -c ffmpeg -o "buildconf" -d "show build configuration"
+complete -c ffmpeg -o "formats" -d "show available formats"
+complete -c ffmpeg -o "muxers" -d "show available muxers"
+complete -c ffmpeg -o "demuxers" -d "show available demuxers"
+complete -c ffmpeg -o "devices" -d "show available devices"
+complete -c ffmpeg -o "codecs" -d "show available codecs"
+complete -c ffmpeg -o "decoders" -d "show available decoders"
+complete -c ffmpeg -o "encoders" -d "show available encoders"
+complete -c ffmpeg -o "bsfs" -d "show available bit stream filters"
+complete -c ffmpeg -o "protocols" -d "show available protocols"
+complete -c ffmpeg -o "filters" -d "show available filters"
+complete -c ffmpeg -o "pix_fmts" -d "show available pixel formats"
+complete -c ffmpeg -o "layouts" -d "show standard channel layouts"
+complete -c ffmpeg -o "sample_fmts" -d "show available audio sample formats"
+complete -c ffmpeg -o "dispositions" -d "show available stream dispositions"
+complete -c ffmpeg -o "colors" -d "show available color names"
+complete -c ffmpeg -o "sources" -d "list sources of the input device" -x
+complete -c ffmpeg -o "sinks" -d "list sinks of the output device" -x
+complete -c ffmpeg -o "hwaccels" -d "show available HW acceleration methods"
+complete -c ffmpeg -o "loglevel" -d "set logging level" -x
+complete -c ffmpeg -s "v" -d "set logging level" -x
+complete -c ffmpeg -o "report" -d "generate a report"
+complete -c ffmpeg -o "max_alloc" -d "set maximum size of a single allocated block" -x
+complete -c ffmpeg -s "y" -d "overwrite output files"
+complete -c ffmpeg -s "n" -d "never overwrite output files"
+complete -c ffmpeg -o "ignore_unknown" -d "Ignore unknown stream types"
+complete -c ffmpeg -o "filter_threads" -d "number of non-complex filter threads"
+complete -c ffmpeg -o "filter_complex_threads" -d "number of threads for -filter_complex"
+complete -c ffmpeg -o "stats" -d "print progress report during encoding"
+complete -c ffmpeg -o "max_error_rate" -d "ratio of decoding errors (0.0: no errors, 1.0: 100% errors) above which ffmpeg returns an error instead of success." -x
+complete -c ffmpeg -o "vol" -d "change audio volume (256=normal)" -x
+complete -c ffmpeg -o "cpuflags" -d "force specific cpu flags" -x
+complete -c ffmpeg -o "cpucount" -d "force specific cpu count" -x
+complete -c ffmpeg -o "hide_banner" -d "do not show program banner" -x
+complete -c ffmpeg -o "copy_unknown" -d "Copy unknown stream types"
+complete -c ffmpeg -o "recast_media" -d "allow recasting stream type in order to force a decoder of different media type"
+complete -c ffmpeg -o "benchmark" -d "add timings for benchmarking"
+complete -c ffmpeg -o "benchmark_all" -d "add timings for each task"
+complete -c ffmpeg -o "progress" -d "write program-readable progress information" -x
+complete -c ffmpeg -o "stdin" -d "enable or disable interaction on standard input"
+complete -c ffmpeg -o "timelimit" -d "set max runtime in seconds in CPU user time" -x
+complete -c ffmpeg -o "dump" -d "dump each input packet"
+complete -c ffmpeg -o "hex" -d "when dumping packets, also dump the payload"
+complete -c ffmpeg -o "vsync" -d "set video sync method globally; deprecated, use -fps_mode"
+complete -c ffmpeg -o "frame_drop_threshold" -d "frame drop threshold"
+complete -c ffmpeg -o "async" -d "audio sync method"
+complete -c ffmpeg -o "adrift_threshold" -d "audio drift threshold" -x
+complete -c ffmpeg -o "copyts" -d "copy timestamps"
+complete -c ffmpeg -o "start_at_zero" -d "shift input timestamps to start at 0 when using copyts"
+complete -c ffmpeg -o "copytb" -d "copy input stream time base when stream copying" -x
+complete -c ffmpeg -o "dts_delta_threshold" -d "timestamp discontinuity delta threshold" -x
+complete -c ffmpeg -o "dts_error_threshold" -d "timestamp error delta threshold" -x
+complete -c ffmpeg -s "x" -d "exit on error" -x
+complete -c ffmpeg -o "abort_on" -d "abort on the specified condition flags" -x
+complete -c ffmpeg -o "filter_complex" -d "create a complex filtergraph" -x
+complete -c ffmpeg -o "lavfi" -d "create a complex filtergraph" -x
+complete -c ffmpeg -o "filter_complex_script" -d "read complex filtergraph description from a file" -r
+complete -c ffmpeg -o "auto_conversion_filters" -d "enable automatic conversion filters globally"
+complete -c ffmpeg -o "stats_period" -d "set the period at which ffmpeg updates stats and -progress output" -x
+complete -c ffmpeg -o "debug_ts" -d "print timestamp debugging info"
+complete -c ffmpeg -o "psnr" -d "calculate PSNR of compressed frames"
+complete -c ffmpeg -o "vstats" -d "dump video coding statistics to file"
+complete -c ffmpeg -o "vstats_file" -d "dump video coding statistics to file" -r
+complete -c ffmpeg -o "vstats_version" -d "Version of the vstats format to use."
+complete -c ffmpeg -o "qphist" -d "show QP histogram"
+complete -c ffmpeg -o "sdp_file" -d "specify a file in which to print sdp information" -r
+complete -c ffmpeg -o "vaapi_device" -d "set VAAPI hardware device (DRM path or X11 display name)" -r
+complete -c ffmpeg -o "init_hw_device" -d "initialise hardware device" -x
+complete -c ffmpeg -o "filter_hw_device" -d "set hardware device used when filtering" -x
+complete -c ffmpeg -s "f" -d "force format" -x
+complete -c ffmpeg -s "c" -d "codec name" -x
+complete -c ffmpeg -o "codec" -d "codec name" -x
+complete -c ffmpeg -o "pre" -d "preset name" -x
+complete -c ffmpeg -o "map_metadata" -d "set metadata information of outfile from infile" -r
+complete -c ffmpeg -s "t" -d "record or transcode \"duration\" seconds of audio/video" -x
+complete -c ffmpeg -o "to" -d "record or transcode stop time" -x
+complete -c ffmpeg -o "fs" -d "set the limit file size in bytes" -r
+complete -c ffmpeg -o "ss" -d "set the start time offset" -x
+complete -c ffmpeg -o "sseof" -d "set the start time offset relative to EOF" -x
+complete -c ffmpeg -o "seek_timestamp" -d "enable/disable seeking by timestamp with -ss"
+complete -c ffmpeg -o "timestamp" -d "set the recording timestamp ('now' to set the current time)" -x
+complete -c ffmpeg -o "metadata" -d "add metadata" -x
+complete -c ffmpeg -o "program" -d "add program with specified streams" -x
+complete -c ffmpeg -o "target" -d "specify target file type (\"vcd\", \"svcd\", \"dvd\", \"dv\" or \"dv50\" with optional prefixes \"pal-\", \"ntsc-\" or \"film-\")" -r
+complete -c ffmpeg -o "apad" -d "audio pad"
+complete -c ffmpeg -o "frames" -d "set the number of frames to output" -x
+complete -c ffmpeg -o "filter" -d "set stream filtergraph" -x
+complete -c ffmpeg -o "filter_script" -d "read stream filtergraph description from a file" -r
+complete -c ffmpeg -o "reinit_filter" -d "reinit filtergraph on input parameter changes"
+complete -c ffmpeg -o "discard" -o "disposition" -d "disposition" -x
+complete -c ffmpeg -o "map" -d "set input stream mapping" -r
+complete -c ffmpeg -o "map_channel" -d "map an audio channel from one stream to another" -r
+complete -c ffmpeg -o "map_chapters" -d "set chapters mapping" -r
+complete -c ffmpeg -o "accurate_seek" -d "enable/disable accurate seeking with -ss"
+complete -c ffmpeg -o "isync" -d "Indicate the input index for sync reference" -x
+complete -c ffmpeg -o "itsoffset" -d "set the input ts offset" -x
+complete -c ffmpeg -o "itsscale" -d "set the input ts scale" -x
+complete -c ffmpeg -o "dframes" -d "set the number of data frames to output" -x
+complete -c ffmpeg -o "re" -d "read input at native frame rate; equivalent to -readrate 1"
+complete -c ffmpeg -o "readrate" -d "read input at specified rate" -x
+complete -c ffmpeg -o "shortest" -d "finish encoding within shortest input"
+complete -c ffmpeg -o "bitexact" -d "bitexact mode"
+complete -c ffmpeg -o "copyinkf" -d "copy initial non-keyframes"
+complete -c ffmpeg -o "copypriorss" -d "copy or discard frames before start time"
+complete -c ffmpeg -o "tag" -d "force codec tag/fourcc" -x
+complete -c ffmpeg -s "q" -d "use fixed quality scale (VBR)" -x
+complete -c ffmpeg -o "qscale" -d "use fixed quality scale (VBR)" -x
+complete -c ffmpeg -o "profile" -d "set profile" -r
+complete -c ffmpeg -o "attach" -d "add an attachment to the output file" -r
+complete -c ffmpeg -o "dump_attachment" -d "extract an attachment into a file" -r
+complete -c ffmpeg -o "stream_loop" -d "set number of times input stream shall be looped" -x
+complete -c ffmpeg -o "thread_queue_size" -d "set the maximum number of queued packets from the demuxer"
+complete -c ffmpeg -o "find_stream_info" -d "read and decode the streams to fill missing information with heuristics"
+complete -c ffmpeg -o "bits_per_raw_sample" -d "set the number of bits per raw sample" -x
+complete -c ffmpeg -o "autorotate" -d "automatically insert correct rotate filters"
+complete -c ffmpeg -o "autoscale" -d "automatically insert a scale filter at the end of the filter graph"
+complete -c ffmpeg -o "muxdelay" -d "set the maximum demux-decode delay" -x
+complete -c ffmpeg -o "muxpreload" -d "set the initial demux-decode delay" -x
+complete -c ffmpeg -o "time_base" -d "set the desired time base hint for output stream (1:24, 1:48000 or 0.04166, 2.0833e-5)" -x
+complete -c ffmpeg -o "enc_time_base" -d "set the desired time base for the encoder (1:24, 1:48000 or 0.04166, 2.0833e-5)." -x
+complete -c ffmpeg -o "bsf" -d "A comma-separated list of bitstream filters" -x
+complete -c ffmpeg -o "fpre" -d "set options from indicated preset file" -r
+complete -c ffmpeg -o "max_muxing_queue_size" -d "maximum number of packets that can be buffered while waiting for all streams to initialize" -x
+complete -c ffmpeg -o "muxing_queue_data_threshold" -d "set the threshold after which max_muxing_queue_size is taken into account" -x
+complete -c ffmpeg -s "d" -d "force data codec ('copy' to copy stream)" -x
+complete -c ffmpeg -o "vframes" -d "set the number of video frames to output" -x
+complete -c ffmpeg -s "r" -d "set frame rate (Hz value, fraction or abbreviation)" -x
+complete -c ffmpeg -o "fpsmax" -d "set max frame rate (Hz value, fraction or abbreviation)" -x
+complete -c ffmpeg -s "s" -d "set frame size (WxH or abbreviation)" -x
+complete -c ffmpeg -o "aspect" -d "set aspect ratio (4:3, 16:9 or 1.3333, 1.7777)" -x
+complete -c ffmpeg -o "vn" -d "disable video"
+complete -c ffmpeg -s "v" -d "force video codec ('copy' to copy stream)" -x
+complete -c ffmpeg -o "timecode" -d "set initial TimeCode value." -x
+complete -c ffmpeg -o "pass" -d "select the pass number (1 to 3)" -x
+complete -c ffmpeg -o "vf" -d "set video filters" -x
+complete -c ffmpeg -o "ab" -d "audio bitrate (please use -b:a)" -x
+complete -c ffmpeg -s "b" -d "video bitrate (please use -b:v)" -x
+complete -c ffmpeg -o "dn" -d "disable data"
+complete -c ffmpeg -o "pix_fmt" -d "set pixel format" -x
+complete -c ffmpeg -o "rc_override" -d "rate control override for specific intervals" -x
+complete -c ffmpeg -o "passlogfile" -d "select two pass log file name prefix" -r
+complete -c ffmpeg -o "intra_matrix" -d "specify intra matrix coeffs" -x
+complete -c ffmpeg -o "inter_matrix" -d "specify inter matrix coeffs" -x
+complete -c ffmpeg -o "chroma_intra_matrix" -d "specify intra matrix coeffs" -x
+complete -c ffmpeg -o "top" -d "top=1/bottom=0/auto=-1 field first"
+complete -c ffmpeg -o "vtag" -d "force video tag/fourcc" -x
+complete -c ffmpeg -o "fps_mode" -d "set framerate mode for matching video streams; overrides vsync"
+complete -c ffmpeg -o "force_fps" -d "force the selected framerate, disable the best supported framerate selection"
+complete -c ffmpeg -o "streamid" -d "set the value of an outfile streamid" -r
+complete -c ffmpeg -o "force_key_frames" -d "force key frames at specified timestamps" -x
+complete -c ffmpeg -o "hwaccel" -d "use HW accelerated decoding" -x
+complete -c ffmpeg -o "hwaccel_device" -d "select a device for HW acceleration" -x
+complete -c ffmpeg -o "hwaccel_output_format" -d "select output format used with HW accelerated decoding" -x
+complete -c ffmpeg -o "vbsf" -d "deprecated" -x
+complete -c ffmpeg -o "vpre" -d "set the video options to the indicated preset" -x
+complete -c ffmpeg -o "aframes" -d "set the number of audio frames to output" -x
+complete -c ffmpeg -o "aq" -d "set audio quality (codec-specific)" -x
+complete -c ffmpeg -o "ar" -d "set audio sampling rate (in Hz)" -x
+complete -c ffmpeg -o "ac" -d "set number of audio channels" -x
+complete -c ffmpeg -o "an" -d "disable audio"
+complete -c ffmpeg -s "a" -d "force audio codec ('copy' to copy stream)" -x
+complete -c ffmpeg -o "af" -d "set audio filters" -x
+complete -c ffmpeg -o "atag" -d "force audio tag/fourcc" -x
+complete -c ffmpeg -o "sample_fmt" -d "set sample format" -x
+complete -c ffmpeg -o "channel_layout" -d "set channel layout" -x
+complete -c ffmpeg -o "ch_layout" -d "set channel layout" -x
+complete -c ffmpeg -o "guess_layout_max" -d "set the maximum number of channels to try to guess the channel layout"
+complete -c ffmpeg -o "absf" -d "deprecated" -x
+complete -c ffmpeg -o "apre" -d "set the audio options to the indicated preset" -x
+complete -c ffmpeg -o "sn" -d "disable subtitle"
+complete -c ffmpeg -s "s" -d "force subtitle codec ('copy' to copy stream)" -x
+complete -c ffmpeg -o "stag" -d "force subtitle tag/fourcc" -x
+complete -c ffmpeg -o "fix_sub_duration" -d "fix subtitles duration"
+complete -c ffmpeg -o "canvas_size" -d "set canvas size (WxH or abbreviation)" -x
+complete -c ffmpeg -o "spre" -d "set the subtitle options to the indicated preset" -x

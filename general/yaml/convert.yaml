@@ -1,5 +1,6 @@
 name: convert
 description: convert
+usage: convert [options ...] file [ [options ...] file ...] [options ...] file
 options:
   - names:
       - -adjoin
@@ -50,17 +51,17 @@ options:
     argument: string
     description: assign a caption to an image
   - names:
-      - -channel
-    argument: type
-    description: apply option to select image channels
+      - -clip
+    argument: ""
+    description: clip along the first path from the 8BIM profile
   - names:
       - -clip-mask
     argument: filename
     description: associate a clip mask with the image
   - names:
-      - -colors
-    argument: value
-    description: preferred number of colors in the image
+      - -clip-path
+    argument: id
+    description: clip along a named path from the 8BIM profile
   - names:
       - -colorspace
     argument: type
@@ -122,6 +123,10 @@ options:
     argument: name
     description: render text with this font family
   - names:
+      - -features
+    argument: distance
+    description: analyze image features (e.g. contrast, correlation)
+  - names:
       - -fill
     argument: color
     description: color to use when filling a graphic primitive
@@ -150,9 +155,13 @@ options:
     argument: point
     description: chromaticity green primary point
   - names:
+      - -illuminant
+    argument: type
+    description: reference illuminant
+  - names:
       - -intensity
     argument: method
-    description: method to generate intensity value from pixel
+    description: method to generate an intensity value from a pixel
   - names:
       - -intent
     argument: type
@@ -189,10 +198,6 @@ options:
       - -loop
     argument: iterations
     description: add Netscape loop extension to your GIF animation
-  - names:
-      - -mask
-    argument: filename
-    description: associate a mask with the image
   - names:
       - -matte
     argument: ""
@@ -242,6 +247,10 @@ options:
     argument: ""
     description: suppress all warning messages
   - names:
+      - -read-mask
+    argument: filename
+    description: associate a read mask with the image
+  - names:
       - -red-primary
     argument: point
     description: chromaticity red primary point
@@ -257,6 +266,10 @@ options:
       - -repage
     argument: geometry
     description: size and location of an image canvas
+  - names:
+      - -respect-parentheses
+    argument: ""
+    description: settings remain in effect until parenthesis boundary
   - names:
       - -sampling-factor
     argument: geometry
@@ -346,6 +359,10 @@ options:
     argument: point
     description: chromaticity white point
   - names:
+      - -write-mask
+    argument: filename
+    description: associate a write mask with the image -word-break type sets whether line breaks appear wherever the text would otherwise overflow
+  - names:
       - -adaptive-blur
     argument: geometry
     description: adaptively blur pixels; decrease effect near edges
@@ -378,9 +395,17 @@ options:
     argument: ""
     description: automagically orient (rotate) image
   - names:
+      - -auto-threshold
+    argument: method
+    description: automatically perform image thresholding
+  - names:
       - -bench
     argument: iterations
     description: measure performance
+  - names:
+      - -bilateral-blur
+    argument: geometry
+    description: non-linear, edge-preserving, and noise-reducing smoothing filter
   - names:
       - -black-threshold
     argument: value
@@ -410,6 +435,10 @@ options:
     argument: filename
     description: color correct with a color decision list
   - names:
+      - -channel
+    argument: mask
+    description: set the image channel mask
+  - names:
       - -charcoal
     argument: radius
     description: simulate a charcoal drawing
@@ -418,21 +447,25 @@ options:
     argument: geometry
     description: remove pixels from the image interior
   - names:
+      - -clahe
+    argument: geometry
+    description: contrast limited adaptive histogram equalization
+  - names:
       - -clamp
     argument: ""
     description: keep pixel values in range (0-QuantumRange)
   - names:
-      - -clip
-    argument: ""
-    description: clip along the first path from the 8BIM profile
-  - names:
-      - -clip-path
-    argument: id
-    description: clip along a named path from the 8BIM profile
-  - names:
       - -colorize
     argument: value
     description: colorize the image with the fill color
+  - names:
+      - -color-matrix
+    argument: matrix
+    description: apply color correction to the image
+  - names:
+      - -colors
+    argument: value
+    description: preferred number of colors in the image
   - names:
       - -connected-components
     argument: connectivity
@@ -444,7 +477,7 @@ options:
   - names:
       - -contrast-stretch
     argument: geometry
-    description: improve contrast by `stretching' the intensity range
+    description: improve contrast by 'stretching' the intensity range
   - names:
       - -convolve
     argument: coefficients
@@ -468,7 +501,7 @@ options:
   - names:
       - -distort
     argument: method args
-    description: distort images according to given method ad args
+    description: distort images according to given method and args
   - names:
       - -draw
     argument: string
@@ -505,10 +538,6 @@ options:
       - -extract
     argument: geometry
     description: extract area from image
-  - names:
-      - -features
-    argument: distance
-    description: analyze image features (e.g. contrast, correlation)
   - names:
       - -fft
     argument: ""
@@ -566,9 +595,17 @@ options:
     argument: amount
     description: implode image pixels about the center
   - names:
+      - -integral
+    argument: ""
+    description: calculate the sum of values (pixel values) in the image
+  - names:
       - -interpolative-resize
     argument: geometry
-    description: resize image using 'point sampled' interpolation
+    description: resize image using interpolation
+  - names:
+      - -kmeans
+    argument: geometry
+    description: K means color reduction
   - names:
       - -kuwahara
     argument: geometry
@@ -588,7 +625,7 @@ options:
   - names:
       - -linear-stretch
     argument: geometry
-    description: improve contrast by `stretching with saturation'
+    description: improve contrast by 'stretching with saturation'
   - names:
       - -liquid-rescale
     argument: geometry
@@ -597,10 +634,6 @@ options:
       - -local-contrast
     argument: geometry
     description: enhance local contrast
-  - names:
-      - -magnify
-    argument: ""
-    description: double the size of the image with pixel art scaling
   - names:
       - -mean-shift
     argument: geometry
@@ -674,10 +707,6 @@ options:
     argument: colorspace
     description: reduce colors in this colorspace
   - names:
-      - -radial-blur
-    argument: angle
-    description: radial blur the image (deprecated use -rotational-blur
-  - names:
       - -raise
     argument: value
     description: lighten/darken image edges to create a 3-D effect
@@ -685,6 +714,10 @@ options:
       - -random-threshold
     argument: low,high
     description: random threshold the image
+  - names:
+      - -range-threshold
+    argument: values
+    description: perform either hard or soft thresholding within some range of values in an image
   - names:
       - -region
     argument: geometry
@@ -770,6 +803,10 @@ options:
     argument: threshold
     description: negate all pixels above the threshold level
   - names:
+      - -sort-pixels
+    argument: ""
+    description: sort each scanline in ascending order of intensity
+  - names:
       - -sparse-color
     argument: method args
     description: fill in a image based on a few color points
@@ -854,9 +891,21 @@ options:
     argument: threshold
     description: removes noise from the image using a wavelet transform
   - names:
+      - -white-balance
+    argument: ""
+    description: automagically adjust white balance of image
+  - names:
       - -white-threshold
     argument: value
     description: force all pixels above the threshold into white
+  - names:
+      - -channel-fx
+    argument: expression
+    description: exchange, extract, or transfer one or more image channels
+  - names:
+      - -separate
+    argument: ""
+    description: separate an image channel into a grayscale image
   - names:
       - -append
     argument: ""
@@ -938,10 +987,6 @@ options:
     argument: arguments
     description: process the image with a custom image filter
   - names:
-      - -separate
-    argument: ""
-    description: separate an image channel into a grayscale image
-  - names:
       - -smush
     argument: geometry
     description: smush an image sequence together
@@ -997,6 +1042,7 @@ options:
       - -version
     argument: ""
     description: print version information
+version: 'Version: ImageMagick 7.1.0-50 Q16-HDRI x86_64 740ac6550:20221008 https://imagemagick.org'
 tldr: |
   > ImageMagick image conversion tool.
   > More information: <https://imagemagick.org/script/convert.php>.

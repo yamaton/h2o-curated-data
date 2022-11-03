@@ -1,5 +1,6 @@
 name: mogrify
 description: mogrify
+usage: mogrify [options ...] file [ [options ...] file ...]
 options:
   - names:
       - -adjoin
@@ -50,18 +51,6 @@ options:
     argument: string
     description: assign a caption to an image
   - names:
-      - -cdl
-    argument: filename
-    description: color correct with a color decision list
-  - names:
-      - -channel
-    argument: type
-    description: apply option to select image channels
-  - names:
-      - -colors
-    argument: value
-    description: preferred number of colors in the image
-  - names:
       - -colorspace
     argument: type
     description: alternate image colorspace
@@ -78,12 +67,8 @@ options:
     argument: type
     description: type of pixel compression when writing the image
   - names:
-      - -decipher
-    argument: filename
-    description: convert cipher pixels to plain pixels
-  - names:
       - -define
-    argument: format:option
+    argument: format:option=value
     description: define one or more image format options
   - names:
       - -delay
@@ -114,10 +99,6 @@ options:
     argument: method
     description: apply error diffusion to image
   - names:
-      - -encipher
-    argument: filename
-    description: convert plain pixels to cipher pixels
-  - names:
       - -encoding
     argument: type
     description: text encoding type
@@ -142,25 +123,13 @@ options:
     argument: type
     description: use this filter when resizing an image
   - names:
-      - -flatten
-    argument: ""
-    description: flatten a sequence of images
-  - names:
       - -font
     argument: name
     description: render text with this font
   - names:
       - -format
     argument: '"string"'
-    description: output formatted image characteristics
-  - names:
-      - -function
-    argument: name
-    description: apply a function to the image
-  - names:
-      - -fuzz
-    argument: distance
-    description: colors within this distance are considered equal
+    description: output formatted image characteristics,-fuzz distance   colors within this distance are considered equal
   - names:
       - -gravity
     argument: type
@@ -170,9 +139,13 @@ options:
     argument: point
     description: chromaticity green primary point
   - names:
+      - -illuminant
+    argument: type
+    description: reference illuminant
+  - names:
       - -intensity
     argument: method
-    description: method to generate intensity value from pixel
+    description: method to generate an intensity value from a pixel
   - names:
       - -intent
     argument: type
@@ -210,10 +183,6 @@ options:
     argument: iterations
     description: add Netscape loop extension to your GIF animation
   - names:
-      - -mask
-    argument: filename
-    description: associate a mask with the image
-  - names:
       - -matte
     argument: ""
     description: store matte channel if the image has one
@@ -225,10 +194,6 @@ options:
       - -monitor
     argument: ""
     description: monitor progress
-  - names:
-      - -morphology
-    argument: method kernel
-    description: apply a morphology method to the image
   - names:
       - -orient
     argument: type
@@ -266,6 +231,10 @@ options:
     argument: ""
     description: suppress all warning messages
   - names:
+      - -read-mask
+    argument: filename
+    description: associate a read mask with the image
+  - names:
       - -red-primary
     argument: point
     description: chromaticity red primary point
@@ -278,9 +247,9 @@ options:
     argument: filename
     description: transform image colors to match this set of colors
   - names:
-      - -repage
-    argument: geometry
-    description: size and location of an image canvas
+      - -respect-parentheses
+    argument: ""
+    description: settings remain in effect until parenthesis boundary
   - names:
       - -sampling-factor
     argument: geometry
@@ -366,6 +335,10 @@ options:
     argument: point
     description: chromaticity white point
   - names:
+      - -word-break
+    argument: type
+    description: sets whether line breaks appear wherever the text would otherwise overflow -write-mask filename associate a write mask with the image
+  - names:
       - -adaptive-blur
     argument: geometry
     description: adaptively blur pixels; decrease effect near edges
@@ -398,9 +371,17 @@ options:
     argument: ""
     description: automagically orient (rotate) image
   - names:
+      - -auto-threshold
+    argument: method
+    description: automatically perform image thresholding
+  - names:
       - -bench
     argument: iterations
     description: measure performance
+  - names:
+      - -bilateral-blur
+    argument: geometry
+    description: non-linear, edge-preserving, and noise-reducing smoothing filter
   - names:
       - -black-threshold
     argument: value
@@ -426,13 +407,25 @@ options:
     argument: geometry
     description: detect edges in the image
   - names:
+      - -cdl
+    argument: filename
+    description: color correct with a color decision list
+  - names:
+      - -channel
+    argument: mask
+    description: set the image channel mask
+  - names:
       - -charcoal
-    argument: radius
+    argument: geometry
     description: simulate a charcoal drawing
   - names:
       - -chop
     argument: geometry
     description: remove pixels from the image interior
+  - names:
+      - -clahe
+    argument: geometry
+    description: contrast limited adaptive histogram equalization
   - names:
       - -clamp
     argument: ""
@@ -454,6 +447,18 @@ options:
     argument: value
     description: colorize the image with the fill color
   - names:
+      - -color-matrix
+    argument: matrix
+    description: apply color correction to the image
+  - names:
+      - -colors
+    argument: value
+    description: preferred number of colors in the image
+  - names:
+      - -color-threshold
+    argument: start_color-stop_color
+    description: force all pixels in the color range to white otherwise black
+  - names:
       - -connected-components
     argument: connectivity
     description: connected-components uniquely labeled
@@ -464,7 +469,7 @@ options:
   - names:
       - -contrast-stretch
     argument: geometry
-    description: improve contrast by `stretching' the intensity range
+    description: improve contrast by 'stretching' the intensity range
   - names:
       - -convolve
     argument: coefficients
@@ -473,6 +478,10 @@ options:
       - -cycle
     argument: amount
     description: cycle the image colormap
+  - names:
+      - -decipher
+    argument: filename
+    description: convert cipher pixels to plain pixels
   - names:
       - -deskew
     argument: threshold
@@ -493,6 +502,10 @@ options:
       - -edge
     argument: radius
     description: apply a filter to detect edges in the image
+  - names:
+      - -encipher
+    argument: filename
+    description: convert plain pixels to cipher pixels
   - names:
       - -emboss
     argument: radius
@@ -517,10 +530,6 @@ options:
       - -extract
     argument: geometry
     description: extract area from image
-  - names:
-      - -hough-lines
-    argument: geometry
-    description: identify lines in the image
   - names:
       - -fft
     argument: ""
@@ -562,9 +571,9 @@ options:
     argument: method
     description: convert image to grayscale
   - names:
-      - -help
-    argument: ""
-    description: print program options
+      - -hough-lines
+    argument: geometry
+    description: identify lines in the image
   - names:
       - -identify
     argument: ""
@@ -578,6 +587,18 @@ options:
     argument: amount
     description: implode image pixels about the center
   - names:
+      - -integral
+    argument: ""
+    description: calculate the sum of values (pixel values) in the image
+  - names:
+      - -interpolative-resize
+    argument: geometry
+    description: resize image using interpolation
+  - names:
+      - -kmeans
+    argument: geometry
+    description: K means color reduction
+  - names:
       - -kuwahara
     argument: geometry
     description: edge preserving noise reduction filter
@@ -585,10 +606,6 @@ options:
       - -lat
     argument: geometry
     description: local adaptive thresholding
-  - names:
-      - -layers
-    argument: method
-    description: optimize, merge,  or compare image layers
   - names:
       - -level
     argument: value
@@ -600,7 +617,7 @@ options:
   - names:
       - -linear-stretch
     argument: geometry
-    description: improve contrast by `stretching with saturation'
+    description: improve contrast by 'stretching with saturation'
   - names:
       - -liquid-rescale
     argument: geometry
@@ -633,6 +650,10 @@ options:
       - -monochrome
     argument: ""
     description: transform image to black and white
+  - names:
+      - -morphology
+    argument: method kernel
+    description: apply a morphology method to the image
   - names:
       - -motion-blur
     argument: geometry
@@ -682,10 +703,6 @@ options:
     argument: colorspace
     description: reduce colors in this colorspace
   - names:
-      - -radial-blur
-    argument: angle
-    description: radial blur the image
-  - names:
       - -raise
     argument: value
     description: lighten/darken image edges to create a 3-D effect
@@ -694,6 +711,10 @@ options:
     argument: low,high
     description: random threshold the image
   - names:
+      - -range-threshold
+    argument: values
+    description: perform either hard or soft thresholding within some range of values in an image
+  - names:
       - -region
     argument: geometry
     description: apply options to a portion of the image
@@ -701,6 +722,10 @@ options:
       - -render
     argument: ""
     description: render vector graphics
+  - names:
+      - -repage
+    argument: geometry
+    description: size and location of an image canvas
   - names:
       - -resample
     argument: geometry
@@ -717,6 +742,10 @@ options:
       - -rotate
     argument: degrees
     description: apply Paeth rotation to the image
+  - names:
+      - -rotational-blur
+    argument: angle
+    description: rotational blur the image
   - names:
       - -sample
     argument: geometry
@@ -773,6 +802,10 @@ options:
       - -solarize
     argument: threshold
     description: negate all pixels above the threshold level
+  - names:
+      - -sort-pixels
+    argument: ""
+    description: sort each scanline in ascending order of intensity
   - names:
       - -sparse-color
     argument: method args
@@ -858,9 +891,21 @@ options:
     argument: threshold
     description: removes noise from the image using a wavelet transform
   - names:
+      - -white-balance
+    argument: ""
+    description: automagically adjust white balance of image
+  - names:
       - -white-threshold
     argument: value
     description: force all pixels above the threshold into white
+  - names:
+      - -channel-fx
+    argument: expression
+    description: exchange, extract, or transfer one or more image channels
+  - names:
+      - -separate
+    argument: ""
+    description: separate an image channel into a grayscale image
   - names:
       - -affinity
     argument: filename
@@ -910,6 +955,10 @@ options:
     argument: operator
     description: evaluate an arithmetic, relational, or logical expression
   - names:
+      - -flatten
+    argument: ""
+    description: flatten a sequence of images
+  - names:
       - -fx
     argument: expression
     description: apply mathematical expression to an image channel(s)
@@ -941,10 +990,6 @@ options:
       - -process
     argument: arguments
     description: process the image with a custom image filter
-  - names:
-      - -separate
-    argument: ""
-    description: separate an image channel into a grayscale image
   - names:
       - -smush
     argument: geometry
@@ -982,6 +1027,10 @@ options:
     argument: port
     description: distributed pixel cache spanning one or more servers
   - names:
+      - -help
+    argument: ""
+    description: print program options
+  - names:
       - -list
     argument: type
     description: print a list of supported option arguments
@@ -993,6 +1042,7 @@ options:
       - -version
     argument: ""
     description: print version information
+version: 'Version: ImageMagick 7.1.0-50 Q16-HDRI x86_64 740ac6550:20221008 https://imagemagick.org'
 tldr: |
   > Perform operations on multiple images, such as resizing, cropping, flipping, and adding effects.
   > Changes are applied directly to the original file.

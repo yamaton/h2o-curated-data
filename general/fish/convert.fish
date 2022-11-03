@@ -12,9 +12,9 @@ complete -c convert -o "black-point-compensation" -d "use black point compensati
 complete -c convert -o "blue-primary" -d "chromaticity blue primary point" -x
 complete -c convert -o "bordercolor" -d "border color" -x
 complete -c convert -o "caption" -d "assign a caption to an image" -x
-complete -c convert -o "channel" -d "apply option to select image channels" -x
+complete -c convert -o "clip" -d "clip along the first path from the 8BIM profile"
 complete -c convert -o "clip-mask" -d "associate a clip mask with the image" -r
-complete -c convert -o "colors" -d "preferred number of colors in the image" -x
+complete -c convert -o "clip-path" -d "clip along a named path from the 8BIM profile" -r
 complete -c convert -o "colorspace" -d "alternate image colorspace" -x
 complete -c convert -o "comment" -d "annotate image with comment" -x
 complete -c convert -o "compose" -d "set image composite operator" -x
@@ -30,6 +30,7 @@ complete -c convert -o "dither" -d "apply error diffusion to image" -x
 complete -c convert -o "encoding" -d "text encoding type" -x
 complete -c convert -o "endian" -d "endianness (MSB or LSB) of the image" -x
 complete -c convert -o "family" -d "render text with this font family" -x
+complete -c convert -o "features" -d "analyze image features (e.g. contrast, correlation)" -x
 complete -c convert -o "fill" -d "color to use when filling a graphic primitive" -x
 complete -c convert -o "filter" -d "use this filter when resizing an image" -x
 complete -c convert -o "font" -d "render text with this font" -x
@@ -37,7 +38,8 @@ complete -c convert -o "format" -d "output formatted image characteristics" -x
 complete -c convert -o "fuzz" -d "colors within this distance are considered equal" -x
 complete -c convert -o "gravity" -d "horizontal and vertical text placement" -x
 complete -c convert -o "green-primary" -d "chromaticity green primary point" -x
-complete -c convert -o "intensity" -d "method to generate intensity value from pixel" -x
+complete -c convert -o "illuminant" -d "reference illuminant" -x
+complete -c convert -o "intensity" -d "method to generate an intensity value from a pixel" -x
 complete -c convert -o "intent" -d "type of rendering intent when managing the image color" -x
 complete -c convert -o "interlace" -d "type of image interlacing scheme" -x
 complete -c convert -o "interline-spacing" -d "set the space between two text lines" -x
@@ -47,7 +49,6 @@ complete -c convert -o "kerning" -d "set the space between two letters" -x
 complete -c convert -o "label" -d "assign a label to an image" -x
 complete -c convert -o "limit" -d "pixel cache resource limit" -x
 complete -c convert -o "loop" -d "add Netscape loop extension to your GIF animation" -x
-complete -c convert -o "mask" -d "associate a mask with the image" -r
 complete -c convert -o "matte" -d "store matte channel if the image has one"
 complete -c convert -o "mattecolor" -d "frame color" -x
 complete -c convert -o "moments" -d "report image moments"
@@ -60,10 +61,12 @@ complete -c convert -o "precision" -d "maximum number of significant digits to p
 complete -c convert -o "preview" -d "image preview type" -x
 complete -c convert -o "quality" -d "JPEG/MIFF/PNG compression level" -x
 complete -c convert -o "quiet" -d "suppress all warning messages"
+complete -c convert -o "read-mask" -d "associate a read mask with the image" -r
 complete -c convert -o "red-primary" -d "chromaticity red primary point" -x
 complete -c convert -o "regard-warnings" -d "pay attention to warning messages"
 complete -c convert -o "remap" -d "transform image colors to match this set of colors" -r
 complete -c convert -o "repage" -d "size and location of an image canvas" -x
+complete -c convert -o "respect-parentheses" -d "settings remain in effect until parenthesis boundary"
 complete -c convert -o "sampling-factor" -d "horizontal and vertical sampling factor" -x
 complete -c convert -o "scene" -d "image scene number" -x
 complete -c convert -o "seed" -d "seed a new sequence of pseudo-random numbers" -x
@@ -86,6 +89,7 @@ complete -c convert -o "view" -d "FlashPix viewing transforms"
 complete -c convert -o "virtual-pixel" -d "virtual pixel access method" -x
 complete -c convert -o "weight" -d "render text with this font weight" -x
 complete -c convert -o "white-point" -d "chromaticity white point" -x
+complete -c convert -o "write-mask" -d "associate a write mask with the image -word-break type sets whether line breaks appear wherever the text would otherwise overflow" -r
 complete -c convert -o "adaptive-blur" -d "adaptively blur pixels; decrease effect near edges" -x
 complete -c convert -o "adaptive-resize" -d "adaptively resize image using 'mesh' interpolation" -x
 complete -c convert -o "adaptive-sharpen" -d "adaptively sharpen pixels; increase effect near edges" -x
@@ -94,7 +98,9 @@ complete -c convert -o "annotate" -d "annotate the image with text" -x
 complete -c convert -o "auto-gamma" -d "automagically adjust gamma level of image"
 complete -c convert -o "auto-level" -d "automagically adjust color levels of image"
 complete -c convert -o "auto-orient" -d "automagically orient (rotate) image"
+complete -c convert -o "auto-threshold" -d "automatically perform image thresholding" -x
 complete -c convert -o "bench" -d "measure performance" -x
+complete -c convert -o "bilateral-blur" -d "non-linear, edge-preserving, and noise-reducing smoothing filter" -x
 complete -c convert -o "black-threshold" -d "force all pixels below the threshold into black" -x
 complete -c convert -o "blue-shift" -d "simulate a scene at nighttime in the moonlight" -x
 complete -c convert -o "blur" -d "reduce image noise and reduce detail levels" -x
@@ -102,21 +108,23 @@ complete -c convert -o "border" -d "surround image with a border of color" -x
 complete -c convert -o "brightness-contrast" -d "improve brightness / contrast of the image" -x
 complete -c convert -o "canny" -d "detect edges in the image" -x
 complete -c convert -o "cdl" -d "color correct with a color decision list" -r
+complete -c convert -o "channel" -d "set the image channel mask" -x
 complete -c convert -o "charcoal" -d "simulate a charcoal drawing" -x
 complete -c convert -o "chop" -d "remove pixels from the image interior" -x
+complete -c convert -o "clahe" -d "contrast limited adaptive histogram equalization" -x
 complete -c convert -o "clamp" -d "keep pixel values in range (0-QuantumRange)"
-complete -c convert -o "clip" -d "clip along the first path from the 8BIM profile"
-complete -c convert -o "clip-path" -d "clip along a named path from the 8BIM profile" -r
 complete -c convert -o "colorize" -d "colorize the image with the fill color" -x
+complete -c convert -o "color-matrix" -d "apply color correction to the image" -x
+complete -c convert -o "colors" -d "preferred number of colors in the image" -x
 complete -c convert -o "connected-components" -d "connected-components uniquely labeled" -x
 complete -c convert -o "contrast" -d "enhance or reduce the image contrast"
-complete -c convert -o "contrast-stretch" -d "improve contrast by `stretching' the intensity range" -x
+complete -c convert -o "contrast-stretch" -d "improve contrast by 'stretching' the intensity range" -x
 complete -c convert -o "convolve" -d "apply a convolution kernel to the image" -x
 complete -c convert -o "cycle" -d "cycle the image colormap" -x
 complete -c convert -o "decipher" -d "convert cipher pixels to plain pixels" -r
 complete -c convert -o "deskew" -d "straighten an image" -x
 complete -c convert -o "despeckle" -d "reduce the speckles within an image"
-complete -c convert -o "distort" -d "distort images according to given method ad args" -x
+complete -c convert -o "distort" -d "distort images according to given method and args" -x
 complete -c convert -o "draw" -d "annotate the image with a graphic primitive" -x
 complete -c convert -o "edge" -d "apply a filter to detect edges in the image" -x
 complete -c convert -o "encipher" -d "convert plain pixels to cipher pixels" -r
@@ -126,7 +134,6 @@ complete -c convert -o "equalize" -d "perform histogram equalization to an image
 complete -c convert -o "evaluate" -d "evaluate an arithmetic, relational, or logical expression" -x
 complete -c convert -o "extent" -d "set the image size" -x
 complete -c convert -o "extract" -d "extract area from image" -x
-complete -c convert -o "features" -d "analyze image features (e.g. contrast, correlation)" -x
 complete -c convert -o "fft" -d "implements the discrete Fourier transform (DFT)"
 complete -c convert -o "flip" -d "flip image vertically"
 complete -c convert -o "floodfill" -d "floodfill the image with color" -x
@@ -141,15 +148,16 @@ complete -c convert -o "hough-lines" -d "identify lines in the image" -x
 complete -c convert -o "identify" -d "identify the format and characteristics of the image"
 complete -c convert -o "ift" -d "implements the inverse discrete Fourier transform (DFT)"
 complete -c convert -o "implode" -d "implode image pixels about the center" -x
-complete -c convert -o "interpolative-resize" -d "resize image using 'point sampled' interpolation" -x
+complete -c convert -o "integral" -d "calculate the sum of values (pixel values) in the image"
+complete -c convert -o "interpolative-resize" -d "resize image using interpolation" -x
+complete -c convert -o "kmeans" -d "K means color reduction" -x
 complete -c convert -o "kuwahara" -d "edge preserving noise reduction filter" -x
 complete -c convert -o "lat" -d "local adaptive thresholding" -x
 complete -c convert -o "level" -d "adjust the level of image contrast" -x
 complete -c convert -o "level-colors" -d "level image with the given colors" -x
-complete -c convert -o "linear-stretch" -d "improve contrast by `stretching with saturation'" -x
+complete -c convert -o "linear-stretch" -d "improve contrast by 'stretching with saturation'" -x
 complete -c convert -o "liquid-rescale" -d "rescale image with seam-carving" -x
 complete -c convert -o "local-contrast" -d "enhance local contrast" -x
-complete -c convert -o "magnify" -d "double the size of the image with pixel art scaling"
 complete -c convert -o "mean-shift" -d "delineate arbitrarily shaped clusters in the image" -x
 complete -c convert -o "median" -d "apply a median filter to the image" -x
 complete -c convert -o "mode" -d "make each pixel the 'predominant color' of the neighborhood" -x
@@ -168,9 +176,9 @@ complete -c convert -o "polaroid" -d "simulate a Polaroid picture" -x
 complete -c convert -o "posterize" -d "reduce the image to a limited number of color levels" -x
 complete -c convert -o "profile" -d "add, delete, or apply an image profile" -r
 complete -c convert -o "quantize" -d "reduce colors in this colorspace" -x
-complete -c convert -o "radial-blur" -d "radial blur the image (deprecated use -rotational-blur" -x
 complete -c convert -o "raise" -d "lighten/darken image edges to create a 3-D effect" -x
 complete -c convert -o "random-threshold" -d "random threshold the image" -x
+complete -c convert -o "range-threshold" -d "perform either hard or soft thresholding within some range of values in an image" -x
 complete -c convert -o "region" -d "apply options to a portion of the image" -x
 complete -c convert -o "render" -d "render vector graphics"
 complete -c convert -o "resample" -d "change the resolution of an image" -x
@@ -192,6 +200,7 @@ complete -c convert -o "shear" -d "slide one edge of the image along the X or Y 
 complete -c convert -o "sigmoidal-contrast" -d "increase the contrast without saturating highlights or shadows" -x
 complete -c convert -o "sketch" -d "simulate a pencil sketch" -x
 complete -c convert -o "solarize" -d "negate all pixels above the threshold level" -x
+complete -c convert -o "sort-pixels" -d "sort each scanline in ascending order of intensity"
 complete -c convert -o "sparse-color" -d "fill in a image based on a few color points" -x
 complete -c convert -o "splice" -d "splice the background color into the image" -x
 complete -c convert -o "spread" -d "displace image pixels by a random amount" -x
@@ -213,7 +222,10 @@ complete -c convert -o "unsharp" -d "sharpen the image" -x
 complete -c convert -o "vignette" -d "soften the edges of the image in vignette style" -x
 complete -c convert -o "wave" -d "alter an image along a sine wave" -x
 complete -c convert -o "wavelet-denoise" -d "removes noise from the image using a wavelet transform" -x
+complete -c convert -o "white-balance" -d "automagically adjust white balance of image"
 complete -c convert -o "white-threshold" -d "force all pixels above the threshold into white" -x
+complete -c convert -o "channel-fx" -d "exchange, extract, or transfer one or more image channels" -x
+complete -c convert -o "separate" -d "separate an image channel into a grayscale image"
 complete -c convert -o "append" -d "append an image sequence"
 complete -c convert -o "clut" -d "apply a color lookup table to the image"
 complete -c convert -o "coalesce" -d "merge a sequence of images"
@@ -234,7 +246,6 @@ complete -c convert -o "mosaic" -d "create a mosaic from an image sequence"
 complete -c convert -o "poly" -d "build a polynomial from the image sequence and the corresponding terms (coefficients and degree pairs)." -x
 complete -c convert -o "print" -d "interpret string and print to console" -x
 complete -c convert -o "process" -d "process the image with a custom image filter" -x
-complete -c convert -o "separate" -d "separate an image channel into a grayscale image"
 complete -c convert -o "smush" -d "smush an image sequence together" -x
 complete -c convert -o "write" -d "write images to this file" -r
 complete -c convert -o "clone" -d "clone an image" -x

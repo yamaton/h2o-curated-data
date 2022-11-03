@@ -1,5 +1,8 @@
 name: yq
 description: yq
+usage: |-
+  yq [flags]
+  yq [command]
 options:
   - names:
       - -C
@@ -12,6 +15,14 @@ options:
     argument: ""
     description: set exit status if there are no matches or null or false is returned
   - names:
+      - --expression
+    argument: string
+    description: forcibly set the expression argument. Useful when yq argument detection thinks your expression is a file.
+  - names:
+      - --from-file
+    argument: string
+    description: Load expression from specified file.
+  - names:
       - -f
       - --front-matter
     argument: string
@@ -19,7 +30,7 @@ options:
   - names:
       - --header-preprocess
     argument: ""
-    description: Slurp any header comments and separators before processing expression. This is a workaround for go-yaml to persist header content. This flag will be removed once this feature has been out in the wild for a while. (default true)
+    description: Slurp any header comments and separators before processing expression. (default true)
   - names:
       - -h
       - --help
@@ -34,7 +45,12 @@ options:
       - -i
       - --inplace
     argument: ""
-    description: update the yaml file inplace of first yaml file given.
+    description: update the file inplace of first file given.
+  - names:
+      - -p
+      - --input-format
+    argument: string
+    description: '[yaml|y|props|p|xml|x] parse format for input. Note that json is a subset of yaml. (default "yaml")'
   - names:
       - -M
       - --no-colors
@@ -49,18 +65,28 @@ options:
       - -n
       - --null-input
     argument: ""
-    description: Don't read input, simply evaluate the expression given. Useful for creating yaml docs from scratch.
+    description: Don't read input, simply evaluate the expression given. Useful for creating docs from scratch.
   - names:
       - -o
       - --output-format
     argument: string
-    description: '[yaml|y|json|j|props|p] output format type. (default "yaml")'
+    description: '[yaml|y|json|j|props|p|xml|x] output format type. (default "yaml")'
   - names:
       - -P
       - --prettyPrint
     argument: ""
     description: pretty print, shorthand for '... style = ""'
   - names:
+      - -s
+      - --split-exp
+    argument: string
+    description: print each result (or doc) into a file named (exp). [exp] argument must return a string. You can use $index in the expression as the result counter.
+  - names:
+      - --split-exp-file
+    argument: string
+    description: Use a file to specify the split-exp expression.
+  - names:
+      - -r
       - --unwrapScalar
     argument: ""
     description: unwrap scalar, print the value with no quotes, colors or comments (default true)
@@ -74,9 +100,46 @@ options:
       - --version
     argument: ""
     description: Print version information and quit
+  - names:
+      - --xml-attribute-prefix
+    argument: string
+    description: prefix for xml attributes (default "+")
+  - names:
+      - --xml-content-name
+    argument: string
+    description: name for xml content (if no attribute name is present). (default "+content")
+  - names:
+      - --xml-directive-name
+    argument: string
+    description: name for xml directives (e.g. <!DOCTYPE thing cat>) (default "+directive")
+  - names:
+      - --xml-keep-namespace
+    argument: ""
+    description: enables keeping namespace after parsing attributes (default true)
+  - names:
+      - --xml-proc-inst-prefix
+    argument: string
+    description: prefix for xml processing instructions (e.g. <?xml version="1"?>) (default "+p_")
+  - names:
+      - --xml-raw-token
+    argument: ""
+    description: enables using RawToken method instead Token. Commonly disables namespace translations. See https://pkg.go.dev/encoding/xml#Decoder.RawToken for details. (default true)
+  - names:
+      - --xml-skip-directives
+    argument: ""
+    description: skip over directives (e.g. <!DOCTYPE thing cat>)
+  - names:
+      - --xml-skip-proc-inst
+    argument: ""
+    description: skip over process instructions (e.g. <?xml version="1"?>)
+  - names:
+      - --xml-strict-mode
+    argument: ""
+    description: enables strict parsing of XML. See https://pkg.go.dev/encoding/xml for more details.
 subcommands:
   - name: eval
-    description: Apply the expression to each document in each yaml file in sequence
+    description: (default) Apply the expression to each document in each yaml file in sequence
+    usage: yq eval [expression] [yaml_file1]... [flags]
     options:
       - names:
           - -h
@@ -94,6 +157,14 @@ subcommands:
         argument: ""
         description: set exit status if there are no matches or null or false is returned
       - names:
+          - --expression
+        argument: string
+        description: forcibly set the expression argument. Useful when yq argument detection thinks your expression is a file.
+      - names:
+          - --from-file
+        argument: string
+        description: Load expression from specified file.
+      - names:
           - -f
           - --front-matter
         argument: string
@@ -101,7 +172,7 @@ subcommands:
       - names:
           - --header-preprocess
         argument: ""
-        description: Slurp any header comments and separators before processing expression. This is a workaround for go-yaml to persist header content. This flag will be removed once this feature has been out in the wild for a while. (default true)
+        description: Slurp any header comments and separators before processing expression. (default true)
       - names:
           - -I
           - --indent
@@ -111,7 +182,12 @@ subcommands:
           - -i
           - --inplace
         argument: ""
-        description: update the yaml file inplace of first yaml file given.
+        description: update the file inplace of first file given.
+      - names:
+          - -p
+          - --input-format
+        argument: string
+        description: '[yaml|y|props|p|xml|x] parse format for input. Note that json is a subset of yaml. (default "yaml")'
       - names:
           - -M
           - --no-colors
@@ -126,18 +202,28 @@ subcommands:
           - -n
           - --null-input
         argument: ""
-        description: Don't read input, simply evaluate the expression given. Useful for creating yaml docs from scratch.
+        description: Don't read input, simply evaluate the expression given. Useful for creating docs from scratch.
       - names:
           - -o
           - --output-format
         argument: string
-        description: '[yaml|y|json|j|props|p] output format type. (default "yaml")'
+        description: '[yaml|y|json|j|props|p|xml|x] output format type. (default "yaml")'
       - names:
           - -P
           - --prettyPrint
         argument: ""
         description: pretty print, shorthand for '... style = ""'
       - names:
+          - -s
+          - --split-exp
+        argument: string
+        description: print each result (or doc) into a file named (exp). [exp] argument must return a string. You can use $index in the expression as the result counter.
+      - names:
+          - --split-exp-file
+        argument: string
+        description: Use a file to specify the split-exp expression.
+      - names:
+          - -r
           - --unwrapScalar
         argument: ""
         description: unwrap scalar, print the value with no quotes, colors or comments (default true)
@@ -146,8 +232,45 @@ subcommands:
           - --verbose
         argument: ""
         description: verbose mode
+      - names:
+          - --xml-attribute-prefix
+        argument: string
+        description: prefix for xml attributes (default "+")
+      - names:
+          - --xml-content-name
+        argument: string
+        description: name for xml content (if no attribute name is present). (default "+content")
+      - names:
+          - --xml-directive-name
+        argument: string
+        description: name for xml directives (e.g. <!DOCTYPE thing cat>) (default "+directive")
+      - names:
+          - --xml-keep-namespace
+        argument: ""
+        description: enables keeping namespace after parsing attributes (default true)
+      - names:
+          - --xml-proc-inst-prefix
+        argument: string
+        description: prefix for xml processing instructions (e.g. <?xml version="1"?>) (default "+p_")
+      - names:
+          - --xml-raw-token
+        argument: ""
+        description: enables using RawToken method instead Token. Commonly disables namespace translations. See https://pkg.go.dev/encoding/xml#Decoder.RawToken for details. (default true)
+      - names:
+          - --xml-skip-directives
+        argument: ""
+        description: skip over directives (e.g. <!DOCTYPE thing cat>)
+      - names:
+          - --xml-skip-proc-inst
+        argument: ""
+        description: skip over process instructions (e.g. <?xml version="1"?>)
+      - names:
+          - --xml-strict-mode
+        argument: ""
+        description: enables strict parsing of XML. See https://pkg.go.dev/encoding/xml for more details.
   - name: eval-all
     description: Loads _all_ yaml documents of _all_ yaml files and runs expression once
+    usage: yq eval-all [expression] [yaml_file1]... [flags]
     options:
       - names:
           - -h
@@ -165,6 +288,14 @@ subcommands:
         argument: ""
         description: set exit status if there are no matches or null or false is returned
       - names:
+          - --expression
+        argument: string
+        description: forcibly set the expression argument. Useful when yq argument detection thinks your expression is a file.
+      - names:
+          - --from-file
+        argument: string
+        description: Load expression from specified file.
+      - names:
           - -f
           - --front-matter
         argument: string
@@ -172,7 +303,7 @@ subcommands:
       - names:
           - --header-preprocess
         argument: ""
-        description: Slurp any header comments and separators before processing expression. This is a workaround for go-yaml to persist header content. This flag will be removed once this feature has been out in the wild for a while. (default true)
+        description: Slurp any header comments and separators before processing expression. (default true)
       - names:
           - -I
           - --indent
@@ -182,7 +313,12 @@ subcommands:
           - -i
           - --inplace
         argument: ""
-        description: update the yaml file inplace of first yaml file given.
+        description: update the file inplace of first file given.
+      - names:
+          - -p
+          - --input-format
+        argument: string
+        description: '[yaml|y|props|p|xml|x] parse format for input. Note that json is a subset of yaml. (default "yaml")'
       - names:
           - -M
           - --no-colors
@@ -197,18 +333,28 @@ subcommands:
           - -n
           - --null-input
         argument: ""
-        description: Don't read input, simply evaluate the expression given. Useful for creating yaml docs from scratch.
+        description: Don't read input, simply evaluate the expression given. Useful for creating docs from scratch.
       - names:
           - -o
           - --output-format
         argument: string
-        description: '[yaml|y|json|j|props|p] output format type. (default "yaml")'
+        description: '[yaml|y|json|j|props|p|xml|x] output format type. (default "yaml")'
       - names:
           - -P
           - --prettyPrint
         argument: ""
         description: pretty print, shorthand for '... style = ""'
       - names:
+          - -s
+          - --split-exp
+        argument: string
+        description: print each result (or doc) into a file named (exp). [exp] argument must return a string. You can use $index in the expression as the result counter.
+      - names:
+          - --split-exp-file
+        argument: string
+        description: Use a file to specify the split-exp expression.
+      - names:
+          - -r
           - --unwrapScalar
         argument: ""
         description: unwrap scalar, print the value with no quotes, colors or comments (default true)
@@ -217,14 +363,51 @@ subcommands:
           - --verbose
         argument: ""
         description: verbose mode
-  - name: help
-    description: Help about any command
+      - names:
+          - --xml-attribute-prefix
+        argument: string
+        description: prefix for xml attributes (default "+")
+      - names:
+          - --xml-content-name
+        argument: string
+        description: name for xml content (if no attribute name is present). (default "+content")
+      - names:
+          - --xml-directive-name
+        argument: string
+        description: name for xml directives (e.g. <!DOCTYPE thing cat>) (default "+directive")
+      - names:
+          - --xml-keep-namespace
+        argument: ""
+        description: enables keeping namespace after parsing attributes (default true)
+      - names:
+          - --xml-proc-inst-prefix
+        argument: string
+        description: prefix for xml processing instructions (e.g. <?xml version="1"?>) (default "+p_")
+      - names:
+          - --xml-raw-token
+        argument: ""
+        description: enables using RawToken method instead Token. Commonly disables namespace translations. See https://pkg.go.dev/encoding/xml#Decoder.RawToken for details. (default true)
+      - names:
+          - --xml-skip-directives
+        argument: ""
+        description: skip over directives (e.g. <!DOCTYPE thing cat>)
+      - names:
+          - --xml-skip-proc-inst
+        argument: ""
+        description: skip over process instructions (e.g. <?xml version="1"?>)
+      - names:
+          - --xml-strict-mode
+        argument: ""
+        description: enables strict parsing of XML. See https://pkg.go.dev/encoding/xml for more details.
+  - name: shell-completion
+    description: Generate completion script
+    usage: yq shell-completion [bash|zsh|fish|powershell]
     options:
       - names:
           - -h
           - --help
         argument: ""
-        description: help for help
+        description: help for shell-completion
       - names:
           - -C
           - --colors
@@ -236,6 +419,14 @@ subcommands:
         argument: ""
         description: set exit status if there are no matches or null or false is returned
       - names:
+          - --expression
+        argument: string
+        description: forcibly set the expression argument. Useful when yq argument detection thinks your expression is a file.
+      - names:
+          - --from-file
+        argument: string
+        description: Load expression from specified file.
+      - names:
           - -f
           - --front-matter
         argument: string
@@ -243,7 +434,7 @@ subcommands:
       - names:
           - --header-preprocess
         argument: ""
-        description: Slurp any header comments and separators before processing expression. This is a workaround for go-yaml to persist header content. This flag will be removed once this feature has been out in the wild for a while. (default true)
+        description: Slurp any header comments and separators before processing expression. (default true)
       - names:
           - -I
           - --indent
@@ -253,7 +444,12 @@ subcommands:
           - -i
           - --inplace
         argument: ""
-        description: update the yaml file inplace of first yaml file given.
+        description: update the file inplace of first file given.
+      - names:
+          - -p
+          - --input-format
+        argument: string
+        description: '[yaml|y|props|p|xml|x] parse format for input. Note that json is a subset of yaml. (default "yaml")'
       - names:
           - -M
           - --no-colors
@@ -268,18 +464,28 @@ subcommands:
           - -n
           - --null-input
         argument: ""
-        description: Don't read input, simply evaluate the expression given. Useful for creating yaml docs from scratch.
+        description: Don't read input, simply evaluate the expression given. Useful for creating docs from scratch.
       - names:
           - -o
           - --output-format
         argument: string
-        description: '[yaml|y|json|j|props|p] output format type. (default "yaml")'
+        description: '[yaml|y|json|j|props|p|xml|x] output format type. (default "yaml")'
       - names:
           - -P
           - --prettyPrint
         argument: ""
         description: pretty print, shorthand for '... style = ""'
       - names:
+          - -s
+          - --split-exp
+        argument: string
+        description: print each result (or doc) into a file named (exp). [exp] argument must return a string. You can use $index in the expression as the result counter.
+      - names:
+          - --split-exp-file
+        argument: string
+        description: Use a file to specify the split-exp expression.
+      - names:
+          - -r
           - --unwrapScalar
         argument: ""
         description: unwrap scalar, print the value with no quotes, colors or comments (default true)
@@ -288,6 +494,43 @@ subcommands:
           - --verbose
         argument: ""
         description: verbose mode
+      - names:
+          - --xml-attribute-prefix
+        argument: string
+        description: prefix for xml attributes (default "+")
+      - names:
+          - --xml-content-name
+        argument: string
+        description: name for xml content (if no attribute name is present). (default "+content")
+      - names:
+          - --xml-directive-name
+        argument: string
+        description: name for xml directives (e.g. <!DOCTYPE thing cat>) (default "+directive")
+      - names:
+          - --xml-keep-namespace
+        argument: ""
+        description: enables keeping namespace after parsing attributes (default true)
+      - names:
+          - --xml-proc-inst-prefix
+        argument: string
+        description: prefix for xml processing instructions (e.g. <?xml version="1"?>) (default "+p_")
+      - names:
+          - --xml-raw-token
+        argument: ""
+        description: enables using RawToken method instead Token. Commonly disables namespace translations. See https://pkg.go.dev/encoding/xml#Decoder.RawToken for details. (default true)
+      - names:
+          - --xml-skip-directives
+        argument: ""
+        description: skip over directives (e.g. <!DOCTYPE thing cat>)
+      - names:
+          - --xml-skip-proc-inst
+        argument: ""
+        description: skip over process instructions (e.g. <?xml version="1"?>)
+      - names:
+          - --xml-strict-mode
+        argument: ""
+        description: enables strict parsing of XML. See https://pkg.go.dev/encoding/xml for more details.
+version: yq (https://github.com/mikefarah/yq/) version 4.29.2
 tldr: |
   > A lightweight and portable command-line YAML processor.
   > More information: <https://mikefarah.gitbook.io/yq/>.

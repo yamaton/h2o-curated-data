@@ -202,6 +202,10 @@ _docker()
             return
             ;;
 
+          extension) _docker_extension
+            return
+            ;;
+
           image) _docker_image
             return
             ;;
@@ -259,7 +263,7 @@ _docker()
             ;;
 
       *)
-          word_list=" attach build commit cp create diff events exec export history images import info inspect kill load login logout logs pause port ps pull push rename restart rm rmi run save search start stats stop tag top unpause update version wait builder buildx compose config container context image manifest network node plugin sbom scan secret service stack swarm system trust volume --config -c --context -D --debug -H --host -l --log-level --tls --tlscacert --tlscert --tlskey --tlsverify -v --version"
+          word_list=" attach build commit cp create diff events exec export history images import info inspect kill load login logout logs pause port ps pull push rename restart rm rmi run save search start stats stop tag top unpause update version wait builder buildx compose config container context extension image manifest network node plugin sbom scan secret service stack swarm system trust volume --config -c --context -D --debug -H --host -l --log-level --tls --tlscacert --tlscert --tlskey --tlsverify -v --version"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac
@@ -389,7 +393,15 @@ _docker_load ()
 _docker_login ()
 {
     local cur word_list
-    word_list=" -p --password --password-stdin -u --username" 
+    word_list=" -h --help -p --password --password-stdin -u --username" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_docker_logout ()
+{
+    local cur word_list
+    word_list=" -h --help" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -509,7 +521,7 @@ _docker_update ()
 _docker_version ()
 {
     local cur word_list
-    word_list=" -f --format --kubeconfig" 
+    word_list=" -f --format -h --help --kubeconfig" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -1450,11 +1462,15 @@ _docker_context ()
             return
             ;;
 
-          ls) _docker_ls
+          list) _docker_list
             return
             ;;
 
           rm) _docker_rm
+            return
+            ;;
+
+          show) _docker_show
             return
             ;;
 
@@ -1471,7 +1487,7 @@ _docker_context ()
         (( subcommand_index++ ))
     done
 
-    word_list=" create export import inspect ls rm update use" 
+    word_list=" create export import inspect list rm show update use -h --help" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -1479,7 +1495,53 @@ _docker_context ()
 _context_create ()
 {
     local cur word_list
-    word_list=" --default-stack-orchestrator --description --docker --from --kubernetes" 
+    local i=1 subcommand_index
+
+    # take the last word that's NOT starting with -
+    while [[ ( $i < $COMP_CWORD ) ]]; do
+        local s="${COMP_WORDS[i]}"
+        case "$s" in
+          create)
+            subcommand_index=$i
+            break
+            ;;
+        esac
+        (( i++ ))
+    done
+
+    while [[ ( $subcommand_index < $COMP_CWORD ) ]]; do
+        local s="${COMP_WORDS[subcommand_index}"
+        case "$s" in
+          aci) _context_aci
+            return
+            ;;
+
+          ecs) _context_ecs
+            return
+            ;;
+
+          *)  ;; 
+        esac
+        (( subcommand_index++ ))
+    done
+
+    word_list=" aci ecs --default-stack-orchestrator --description --docker --from -h --help --kubernetes" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_create_aci ()
+{
+    local cur word_list
+    word_list=" --description -h --help --location --resource-group --subscription-id" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_create_ecs ()
+{
+    local cur word_list
+    word_list=" --access-keys --description --from-env -h --help --local-simulation --profile" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -1487,7 +1549,15 @@ _context_create ()
 _context_export ()
 {
     local cur word_list
-    word_list=" --kubeconfig" 
+    word_list=" -h --help --kubeconfig" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_context_import ()
+{
+    local cur word_list
+    word_list=" -h --help" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -1495,15 +1565,15 @@ _context_export ()
 _context_inspect ()
 {
     local cur word_list
-    word_list=" -f --format" 
+    word_list=" -f --format -h --help" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
 
-_context_ls ()
+_context_list ()
 {
     local cur word_list
-    word_list=" --format -q --quiet" 
+    word_list=" --format -h --help -q --quiet" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -1511,7 +1581,15 @@ _context_ls ()
 _context_rm ()
 {
     local cur word_list
-    word_list=" -f --force" 
+    word_list=" -f --force -h --help" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_context_show ()
+{
+    local cur word_list
+    word_list=" -h --help" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -1519,7 +1597,151 @@ _context_rm ()
 _context_update ()
 {
     local cur word_list
-    word_list=" --default-stack-orchestrator --description --docker --kubernetes" 
+    word_list=" --default-stack-orchestrator --description --docker -h --help --kubernetes" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_context_use ()
+{
+    local cur word_list
+    word_list=" -h --help" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_docker_extension ()
+{
+    local cur word_list
+    local i=1 subcommand_index
+
+    # take the last word that's NOT starting with -
+    while [[ ( $i < $COMP_CWORD ) ]]; do
+        local s="${COMP_WORDS[i]}"
+        case "$s" in
+          extension)
+            subcommand_index=$i
+            break
+            ;;
+        esac
+        (( i++ ))
+    done
+
+    while [[ ( $subcommand_index < $COMP_CWORD ) ]]; do
+        local s="${COMP_WORDS[subcommand_index}"
+        case "$s" in
+          dev) _docker_dev
+            return
+            ;;
+
+          disable) _docker_disable
+            return
+            ;;
+
+          enable) _docker_enable
+            return
+            ;;
+
+          init) _docker_init
+            return
+            ;;
+
+          install) _docker_install
+            return
+            ;;
+
+          ls) _docker_ls
+            return
+            ;;
+
+          rm) _docker_rm
+            return
+            ;;
+
+          update) _docker_update
+            return
+            ;;
+
+          validate) _docker_validate
+            return
+            ;;
+
+          version) _docker_version
+            return
+            ;;
+
+          *)  ;; 
+        esac
+        (( subcommand_index++ ))
+    done
+
+    word_list=" dev disable enable init install ls rm update validate version --socket" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_extension_dev ()
+{
+    local cur word_list
+    local i=1 subcommand_index
+
+    # take the last word that's NOT starting with -
+    while [[ ( $i < $COMP_CWORD ) ]]; do
+        local s="${COMP_WORDS[i]}"
+        case "$s" in
+          dev)
+            subcommand_index=$i
+            break
+            ;;
+        esac
+        (( i++ ))
+    done
+
+    while [[ ( $subcommand_index < $COMP_CWORD ) ]]; do
+        local s="${COMP_WORDS[subcommand_index}"
+        case "$s" in
+          debug) _extension_debug
+            return
+            ;;
+
+          reset) _extension_reset
+            return
+            ;;
+
+          ui-source) _extension_uisource
+            return
+            ;;
+
+          *)  ;; 
+        esac
+        (( subcommand_index++ ))
+    done
+
+    word_list=" debug reset ui-source" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_extension_install ()
+{
+    local cur word_list
+    word_list=" -f --force" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_extension_ls ()
+{
+    local cur word_list
+    word_list=" --format -q --quiet" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_extension_update ()
+{
+    local cur word_list
+    word_list=" -f --force" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }

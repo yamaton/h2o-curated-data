@@ -1,5 +1,6 @@
 name: docker
 description: docker
+usage: docker [OPTIONS] COMMAND
 options:
   - names:
       - --config
@@ -53,6 +54,7 @@ options:
 subcommands:
   - name: attach
     description: Attach local standard input, output, and error streams to a running container
+    usage: docker attach [OPTIONS] CONTAINER
     options:
       - names:
           - --detach-keys
@@ -68,6 +70,7 @@ subcommands:
         description: Proxy all received signals to the process (default true)
   - name: build
     description: Build an image from a Dockerfile
+    usage: docker build [OPTIONS] PATH | URL | -
     options:
       - names:
           - --add-host
@@ -151,6 +154,7 @@ subcommands:
         description: Set the target build stage to build.
   - name: commit
     description: Create a new image from a container's changes
+    usage: docker commit [OPTIONS] CONTAINER [REPOSITORY[:TAG]]
     options:
       - names:
           - -a
@@ -174,6 +178,9 @@ subcommands:
         description: Pause container during commit (default true)
   - name: cp
     description: Copy files/folders between a container and the local filesystem
+    usage: |-
+      docker cp [OPTIONS] CONTAINER:SRC_PATH DEST_PATH|-
+      docker cp [OPTIONS] SRC_PATH|- CONTAINER:DEST_PATH
     options:
       - names:
           - -a
@@ -187,6 +194,7 @@ subcommands:
         description: Always follow symbol link in SRC_PATH
   - name: create
     description: Create a new container
+    usage: docker create [OPTIONS] IMAGE [COMMAND] [ARG...]
     options:
       - names:
           - --add-host
@@ -575,9 +583,11 @@ subcommands:
         description: Working directory inside the container
   - name: diff
     description: Inspect changes to files or directories on a container's filesystem
+    usage: docker diff CONTAINER
     options: []
   - name: events
     description: Get real time events from the server
+    usage: docker events [OPTIONS]
     options:
       - names:
           - -f
@@ -598,6 +608,7 @@ subcommands:
         description: Stream events until this timestamp
   - name: exec
     description: Run a command in a running container
+    usage: docker exec [OPTIONS] CONTAINER COMMAND [ARG...]
     options:
       - names:
           - -d
@@ -643,6 +654,7 @@ subcommands:
         description: Working directory inside the container
   - name: export
     description: Export a container's filesystem as a tar archive
+    usage: docker export [OPTIONS] CONTAINER
     options:
       - names:
           - -o
@@ -651,6 +663,7 @@ subcommands:
         description: Write to a file, instead of STDOUT
   - name: history
     description: Show the history of an image
+    usage: docker history [OPTIONS] IMAGE
     options:
       - names:
           - --format
@@ -672,6 +685,7 @@ subcommands:
         description: Only show image IDs
   - name: images
     description: List images
+    usage: docker images [OPTIONS] [REPOSITORY[:TAG]]
     options:
       - names:
           - -a
@@ -702,6 +716,7 @@ subcommands:
         description: Only show image IDs
   - name: import
     description: Import the contents from a tarball to create a filesystem image
+    usage: docker import [OPTIONS] file|URL|- [REPOSITORY[:TAG]]
     options:
       - names:
           - -c
@@ -719,6 +734,7 @@ subcommands:
         description: Set platform if server is multi-platform capable
   - name: info
     description: Display system-wide information
+    usage: docker info [OPTIONS]
     options:
       - names:
           - -f
@@ -727,6 +743,7 @@ subcommands:
         description: Format the output using the given Go template
   - name: inspect
     description: Return low-level information on Docker objects
+    usage: docker inspect [OPTIONS] NAME|ID [NAME|ID...]
     options:
       - names:
           - -f
@@ -744,6 +761,7 @@ subcommands:
         description: Return JSON for specified type
   - name: kill
     description: Kill one or more running containers
+    usage: docker kill [OPTIONS] CONTAINER [CONTAINER...]
     options:
       - names:
           - -s
@@ -752,6 +770,7 @@ subcommands:
         description: Signal to send to the container (default "KILL")
   - name: load
     description: Load an image from a tar archive or STDIN
+    usage: docker load [OPTIONS]
     options:
       - names:
           - -i
@@ -765,23 +784,40 @@ subcommands:
         description: Suppress the load output
   - name: login
     description: Log in to a Docker registry
+    usage: |-
+      docker login [OPTIONS] [SERVER] [flags]
+      docker login [command]
     options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: Help for login
       - names:
           - -p
           - --password
           - --password-stdin
-        argument: string   Password
+        argument: string   password
         description: Take the password from stdin
       - names:
           - -u
           - --username
         argument: string
-        description: Username
+        description: username
   - name: logout
     description: Log out from a Docker registry
-    options: []
+    usage: |-
+      docker logout [SERVER] [flags]
+      docker logout [command]
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: Help for logout
   - name: logs
     description: Fetch the logs of a container
+    usage: docker logs [OPTIONS] CONTAINER
     options:
       - names:
           - --details
@@ -812,12 +848,15 @@ subcommands:
         description: Show logs before a timestamp (e.g. 2013-01-02T13:23:37Z) or relative (e.g. 42m for 42 minutes)
   - name: pause
     description: Pause all processes within one or more containers
+    usage: docker pause CONTAINER [CONTAINER...]
     options: []
   - name: port
     description: List port mappings or a specific mapping for the container
+    usage: docker port CONTAINER [PRIVATE_PORT[/PROTO]]
     options: []
   - name: ps
     description: List containers
+    usage: docker ps [OPTIONS]
     options:
       - names:
           - -a
@@ -859,6 +898,7 @@ subcommands:
         description: Display total file sizes
   - name: pull
     description: Pull an image or a repository from a registry
+    usage: docker pull [OPTIONS] NAME[:TAG|@DIGEST]
     options:
       - names:
           - -a
@@ -880,6 +920,7 @@ subcommands:
         description: Suppress verbose output
   - name: push
     description: Push an image or a repository to a registry
+    usage: docker push [OPTIONS] NAME[:TAG]
     options:
       - names:
           - -a
@@ -897,9 +938,11 @@ subcommands:
         description: Suppress verbose output
   - name: rename
     description: Rename a container
+    usage: docker rename CONTAINER NEW_NAME
     options: []
   - name: restart
     description: Restart one or more containers
+    usage: docker restart [OPTIONS] CONTAINER [CONTAINER...]
     options:
       - names:
           - -t
@@ -908,6 +951,7 @@ subcommands:
         description: Seconds to wait for stop before killing the container (default 10)
   - name: rm
     description: Remove one or more containers
+    usage: docker rm [OPTIONS] CONTAINER [CONTAINER...]
     options:
       - names:
           - -f
@@ -926,6 +970,7 @@ subcommands:
         description: Remove anonymous volumes associated with the container
   - name: rmi
     description: Remove one or more images
+    usage: docker rmi [OPTIONS] IMAGE [IMAGE...]
     options:
       - names:
           - -f
@@ -938,6 +983,7 @@ subcommands:
         description: Do not delete untagged parents
   - name: run
     description: Run a command in a new container
+    usage: docker run [OPTIONS] IMAGE [COMMAND] [ARG...]
     options:
       - names:
           - --add-host
@@ -1339,6 +1385,7 @@ subcommands:
         description: Working directory inside the container
   - name: save
     description: Save one or more images to a tar archive (streamed to STDOUT by default)
+    usage: docker save [OPTIONS] IMAGE [IMAGE...]
     options:
       - names:
           - -o
@@ -1347,6 +1394,7 @@ subcommands:
         description: Write to a file, instead of STDOUT
   - name: search
     description: Search the Docker Hub for images
+    usage: docker search [OPTIONS] TERM
     options:
       - names:
           - -f
@@ -1367,6 +1415,7 @@ subcommands:
         description: Don't truncate output
   - name: start
     description: Start one or more stopped containers
+    usage: docker start [OPTIONS] CONTAINER [CONTAINER...]
     options:
       - names:
           - -a
@@ -1384,6 +1433,7 @@ subcommands:
         description: Attach container's STDIN
   - name: stats
     description: Display a live stream of container(s) resource usage statistics
+    usage: docker stats [OPTIONS] [CONTAINER...]
     options:
       - names:
           - -a
@@ -1404,6 +1454,7 @@ subcommands:
         description: Do not truncate output
   - name: stop
     description: Stop one or more running containers
+    usage: docker stop [OPTIONS] CONTAINER [CONTAINER...]
     options:
       - names:
           - -t
@@ -1412,15 +1463,19 @@ subcommands:
         description: Seconds to wait for stop before killing it (default 10)
   - name: tag
     description: Create a tag TARGET_IMAGE that refers to SOURCE_IMAGE
+    usage: docker tag SOURCE_IMAGE[:TAG] TARGET_IMAGE[:TAG]
     options: []
   - name: top
     description: Display the running processes of a container
+    usage: docker top CONTAINER [ps OPTIONS]
     options: []
   - name: unpause
     description: Unpause all processes within one or more containers
+    usage: docker unpause CONTAINER [CONTAINER...]
     options: []
   - name: update
     description: Update configuration of one or more containers
+    usage: docker update [OPTIONS] CONTAINER [CONTAINER...]
     options:
       - names:
           - --blkio-weight
@@ -1486,25 +1541,34 @@ subcommands:
         description: Restart policy to apply when a container exits
   - name: version
     description: Show the Docker version information
+    usage: docker version [flags]
     options:
       - names:
           - -f
           - --format
         argument: string
-        description: Format the output using the given Go template
+        description: 'Format the output. Values: [pretty | json]. (Default: pretty)'
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: Help for version
       - names:
           - --kubeconfig
         argument: string
         description: Kubernetes config file
   - name: wait
     description: Block until one or more containers stop, then print their exit codes
+    usage: docker wait CONTAINER [CONTAINER...]
     options: []
   - name: builder
     description: Manage builds
+    usage: docker builder COMMAND
     options: []
     subcommands:
       - name: build
         description: Build an image from a Dockerfile
+        usage: docker builder build [OPTIONS] PATH | URL | -
         options:
           - names:
               - --add-host
@@ -1588,6 +1652,7 @@ subcommands:
             description: Set the target build stage to build.
       - name: prune
         description: Remove build cache
+        usage: docker builder prune
         options:
           - names:
               - -a
@@ -1609,6 +1674,7 @@ subcommands:
             description: Amount of disk space to keep for cache
   - name: buildx
     description: Docker Buildx (Docker Inc., v0.8.2)
+    usage: docker buildx [OPTIONS] COMMAND
     options:
       - names:
           - --builder
@@ -1617,6 +1683,7 @@ subcommands:
     subcommands:
       - name: imagetools
         description: Commands to work on images in registry
+        usage: docker buildx imagetools [OPTIONS] COMMAND
         options:
           - names:
               - --builder
@@ -1625,6 +1692,7 @@ subcommands:
         subcommands:
           - name: create
             description: Create a new image based on source images
+            usage: docker buildx imagetools create [OPTIONS] [SOURCE] [SOURCE...]
             options:
               - names:
                   - --append
@@ -1650,6 +1718,7 @@ subcommands:
                 description: Set reference for new image
           - name: inspect
             description: Show details of an image in the registry
+            usage: docker buildx imagetools inspect [OPTIONS] NAME
             options:
               - names:
                   - --builder
@@ -1665,6 +1734,7 @@ subcommands:
                 description: Show original, unformatted JSON manifest
       - name: bake
         description: Build from a file
+        usage: docker buildx bake [OPTIONS] [TARGET...]
         options:
           - names:
               - --builder
@@ -1709,6 +1779,7 @@ subcommands:
             description: Override target value (e.g., "targetpattern.key=value")
       - name: build
         description: Start a build
+        usage: docker buildx build [OPTIONS] PATH | URL | -
         options:
           - names:
               - --add-host
@@ -1828,6 +1899,7 @@ subcommands:
             description: Ulimit options (default [])
       - name: create
         description: Create a new builder instance
+        usage: docker buildx create [OPTIONS] [CONTEXT|ENDPOINT]
         options:
           - names:
               - --append
@@ -1875,6 +1947,7 @@ subcommands:
             description: Set the current builder instance
       - name: du
         description: Disk usage
+        usage: docker buildx du
         options:
           - names:
               - --builder
@@ -1890,6 +1963,7 @@ subcommands:
             description: Provide a more verbose output
       - name: inspect
         description: Inspect current builder instance
+        usage: docker buildx inspect [NAME]
         options:
           - names:
               - --bootstrap
@@ -1901,9 +1975,11 @@ subcommands:
             description: Override the configured builder instance
       - name: ls
         description: List builder instances
+        usage: docker buildx ls
         options: []
       - name: prune
         description: Remove build cache
+        usage: docker buildx prune
         options:
           - names:
               - -a
@@ -1933,6 +2009,7 @@ subcommands:
             description: Provide a more verbose output
       - name: rm
         description: Remove a builder instance
+        usage: docker buildx rm [NAME]
         options:
           - names:
               - --all-inactive
@@ -1957,6 +2034,7 @@ subcommands:
             description: Keep BuildKit state
       - name: stop
         description: Stop builder instance
+        usage: docker buildx stop [NAME]
         options:
           - names:
               - --builder
@@ -1964,6 +2042,7 @@ subcommands:
             description: Override the configured builder instance
       - name: use
         description: Set the current builder instance
+        usage: docker buildx use [OPTIONS] NAME
         options:
           - names:
               - --builder
@@ -1979,9 +2058,11 @@ subcommands:
             description: Builder persists context changes
       - name: version
         description: Show buildx version information
+        usage: docker buildx version
         options: []
   - name: compose
-    description: Docker Compose (Docker Inc., v2.5.1)
+    description: Docker Compose (Docker Inc., v2.6.1)
+    usage: docker compose [OPTIONS] COMMAND
     options:
       - names:
           - --ansi
@@ -2016,6 +2097,7 @@ subcommands:
     subcommands:
       - name: build
         description: Build or rebuild services
+        usage: docker compose build [SERVICE...]
         options:
           - names:
               - --build-arg
@@ -2044,6 +2126,7 @@ subcommands:
             description: Set SSH authentications used when building service images. (use 'default' for using your default SSH Agent)
       - name: convert
         description: Converts the compose file to platform's canonical format
+        usage: docker compose convert SERVICES
         options:
           - names:
               - --format
@@ -2093,6 +2176,9 @@ subcommands:
             description: Print the volume names, one per line.
       - name: cp
         description: Copy files/folders between a service container and the local filesystem
+        usage: |-
+          docker compose cp [OPTIONS] SERVICE:SRC_PATH DEST_PATH|-
+          docker compose cp [OPTIONS] SRC_PATH|- SERVICE:DEST_PATH
         options:
           - names:
               - -a
@@ -2110,6 +2196,7 @@ subcommands:
             description: Index of the container if there are multiple instances of a service .
       - name: create
         description: Creates containers for a service.
+        usage: docker compose create [SERVICE...]
         options:
           - names:
               - --build
@@ -2129,6 +2216,7 @@ subcommands:
             description: If containers already exist, don't recreate them. Incompatible with --force-recreate.
       - name: down
         description: Stop and remove containers, networks
+        usage: docker compose down
         options:
           - names:
               - --remove-orphans
@@ -2150,6 +2238,7 @@ subcommands:
             description: Remove named volumes declared in the volumes section of the Compose file and anonymous volumes attached to containers.
       - name: events
         description: Receive real time events from containers.
+        usage: docker compose events [options] [--] [SERVICE...]
         options:
           - names:
               - --json
@@ -2157,6 +2246,7 @@ subcommands:
             description: Output events as a stream of json objects
       - name: exec
         description: Execute a command in a running container.
+        usage: docker compose exec [options] [-e KEY=VAL...] [--] SERVICE COMMAND [ARGS...]
         options:
           - names:
               - -d
@@ -2193,6 +2283,7 @@ subcommands:
             description: Path to workdir directory for this command.
       - name: images
         description: List images used by the created containers
+        usage: docker compose images [SERVICE...]
         options:
           - names:
               - -q
@@ -2201,6 +2292,7 @@ subcommands:
             description: Only display IDs
       - name: kill
         description: Force stop service containers.
+        usage: docker compose kill [options] [SERVICE...]
         options:
           - names:
               - -s
@@ -2209,6 +2301,7 @@ subcommands:
             description: SIGNAL to send to the container. (default "SIGKILL")
       - name: logs
         description: View output from containers
+        usage: docker compose logs [SERVICE...]
         options:
           - names:
               - -f
@@ -2242,6 +2335,7 @@ subcommands:
             description: Show logs before a timestamp (e.g. 2013-01-02T13:23:37Z) or relative (e.g. 42m for 42 minutes)
       - name: ls
         description: List running compose projects
+        usage: docker compose ls
         options:
           - names:
               - -a
@@ -2263,9 +2357,11 @@ subcommands:
             description: Only display IDs.
       - name: pause
         description: Pause services
+        usage: docker compose pause [SERVICE...]
         options: []
       - name: port
         description: Print the public port for a port binding.
+        usage: docker compose port [options] [--] SERVICE PRIVATE_PORT
         options:
           - names:
               - --index
@@ -2277,6 +2373,7 @@ subcommands:
             description: tcp or udp (default "tcp")
       - name: ps
         description: List containers
+        usage: docker compose ps [SERVICE...]
         options:
           - names:
               - -a
@@ -2306,6 +2403,7 @@ subcommands:
             description: 'Filter services by status. Values: [paused | restarting | removing | running | dead | created | exited]'
       - name: pull
         description: Pull service images
+        usage: docker compose pull [SERVICE...]
         options:
           - names:
               - --ignore-pull-failures
@@ -2322,6 +2420,7 @@ subcommands:
             description: Pull without printing progress information
       - name: push
         description: Push service images
+        usage: docker compose push [SERVICE...]
         options:
           - names:
               - --ignore-push-failures
@@ -2329,6 +2428,7 @@ subcommands:
             description: Push what it can and ignores images with push failures
       - name: restart
         description: Restart containers
+        usage: docker compose restart
         options:
           - names:
               - -t
@@ -2337,6 +2437,7 @@ subcommands:
             description: Specify a shutdown timeout in seconds (default 10)
       - name: rm
         description: Removes stopped service containers
+        usage: docker compose rm [SERVICE...]
         options:
           - names:
               - -f
@@ -2355,6 +2456,7 @@ subcommands:
             description: Remove any anonymous volumes attached to containers
       - name: run
         description: Run a one-off command on a service.
+        usage: docker compose run [options] [-v VOLUME...] [-p PORT...] [-e KEY=VAL...] [-l KEY=VALUE...] SERVICE [COMMAND] [ARGS...]
         options:
           - names:
               - -d
@@ -2431,9 +2533,11 @@ subcommands:
             description: Working directory inside the container
       - name: start
         description: Start services
+        usage: docker compose start [SERVICE...]
         options: []
       - name: stop
         description: Stop services
+        usage: docker compose stop [SERVICE...]
         options:
           - names:
               - -t
@@ -2442,12 +2546,15 @@ subcommands:
             description: Specify a shutdown timeout in seconds (default 10)
       - name: top
         description: Display the running processes
+        usage: docker compose top [SERVICES...]
         options: []
       - name: unpause
         description: Unpause services
+        usage: docker compose unpause [SERVICE...]
         options: []
       - name: up
         description: Create and start containers
+        usage: docker compose up [SERVICE...]
         options:
           - names:
               - --abort-on-container-exit
@@ -2534,6 +2641,7 @@ subcommands:
             description: Wait for services to be running|healthy. Implies detached mode.
       - name: version
         description: Show the Docker Compose version information
+        usage: docker compose version
         options:
           - names:
               - -f
@@ -2546,10 +2654,12 @@ subcommands:
             description: Shows only Compose's version number.
   - name: config
     description: Manage Docker configs
+    usage: docker config COMMAND
     options: []
     subcommands:
       - name: create
         description: Create a config from a file or STDIN
+        usage: docker config create [OPTIONS] CONFIG file|-
         options:
           - names:
               - -l
@@ -2562,6 +2672,7 @@ subcommands:
             description: Template driver
       - name: inspect
         description: Display detailed information on one or more configs
+        usage: docker config inspect [OPTIONS] CONFIG [CONFIG...]
         options:
           - names:
               - -f
@@ -2574,6 +2685,7 @@ subcommands:
             description: Print the information in a human friendly format
       - name: ls
         description: List configs
+        usage: docker config ls [OPTIONS]
         options:
           - names:
               - -f
@@ -2591,13 +2703,16 @@ subcommands:
             description: Only display IDs
       - name: rm
         description: Remove one or more configs
+        usage: docker config rm CONFIG [CONFIG...]
         options: []
   - name: container
     description: Manage containers
+    usage: docker container COMMAND
     options: []
     subcommands:
       - name: attach
         description: Attach local standard input, output, and error streams to a running container
+        usage: docker container attach [OPTIONS] CONTAINER
         options:
           - names:
               - --detach-keys
@@ -2613,6 +2728,7 @@ subcommands:
             description: Proxy all received signals to the process (default true)
       - name: commit
         description: Create a new image from a container's changes
+        usage: docker container commit [OPTIONS] CONTAINER [REPOSITORY[:TAG]]
         options:
           - names:
               - -a
@@ -2636,6 +2752,9 @@ subcommands:
             description: Pause container during commit (default true)
       - name: cp
         description: Copy files/folders between a container and the local filesystem
+        usage: |-
+          docker container cp [OPTIONS] CONTAINER:SRC_PATH DEST_PATH|-
+          docker cp [OPTIONS] SRC_PATH|- CONTAINER:DEST_PATH
         options:
           - names:
               - -a
@@ -2649,6 +2768,7 @@ subcommands:
             description: Always follow symbol link in SRC_PATH
       - name: create
         description: Create a new container
+        usage: docker container create [OPTIONS] IMAGE [COMMAND] [ARG...]
         options:
           - names:
               - --add-host
@@ -3037,9 +3157,11 @@ subcommands:
             description: Working directory inside the container
       - name: diff
         description: Inspect changes to files or directories on a container's filesystem
+        usage: docker container diff CONTAINER
         options: []
       - name: exec
         description: Run a command in a running container
+        usage: docker container exec [OPTIONS] CONTAINER COMMAND [ARG...]
         options:
           - names:
               - -d
@@ -3085,6 +3207,7 @@ subcommands:
             description: Working directory inside the container
       - name: export
         description: Export a container's filesystem as a tar archive
+        usage: docker container export [OPTIONS] CONTAINER
         options:
           - names:
               - -o
@@ -3093,6 +3216,7 @@ subcommands:
             description: Write to a file, instead of STDOUT
       - name: inspect
         description: Display detailed information on one or more containers
+        usage: docker container inspect [OPTIONS] CONTAINER [CONTAINER...]
         options:
           - names:
               - -f
@@ -3106,6 +3230,7 @@ subcommands:
             description: Display total file sizes
       - name: kill
         description: Kill one or more running containers
+        usage: docker container kill [OPTIONS] CONTAINER [CONTAINER...]
         options:
           - names:
               - -s
@@ -3114,6 +3239,7 @@ subcommands:
             description: Signal to send to the container (default "KILL")
       - name: logs
         description: Fetch the logs of a container
+        usage: docker container logs [OPTIONS] CONTAINER
         options:
           - names:
               - --details
@@ -3147,6 +3273,7 @@ subcommands:
           - ps
           - list
         description: List containers
+        usage: docker container ls [OPTIONS]
         options:
           - names:
               - -a
@@ -3188,12 +3315,15 @@ subcommands:
             description: Display total file sizes
       - name: pause
         description: Pause all processes within one or more containers
+        usage: docker container pause CONTAINER [CONTAINER...]
         options: []
       - name: port
         description: List port mappings or a specific mapping for the container
+        usage: docker container port CONTAINER [PRIVATE_PORT[/PROTO]]
         options: []
       - name: prune
         description: Remove all stopped containers
+        usage: docker container prune [OPTIONS]
         options:
           - names:
               - --filter
@@ -3206,9 +3336,11 @@ subcommands:
             description: Do not prompt for confirmation
       - name: rename
         description: Rename a container
+        usage: docker container rename CONTAINER NEW_NAME
         options: []
       - name: restart
         description: Restart one or more containers
+        usage: docker container restart [OPTIONS] CONTAINER [CONTAINER...]
         options:
           - names:
               - -t
@@ -3217,6 +3349,7 @@ subcommands:
             description: Seconds to wait for stop before killing the container (default 10)
       - name: rm
         description: Remove one or more containers
+        usage: docker container rm [OPTIONS] CONTAINER [CONTAINER...]
         options:
           - names:
               - -f
@@ -3235,6 +3368,7 @@ subcommands:
             description: Remove anonymous volumes associated with the container
       - name: run
         description: Run a command in a new container
+        usage: docker container run [OPTIONS] IMAGE [COMMAND] [ARG...]
         options:
           - names:
               - --add-host
@@ -3636,6 +3770,7 @@ subcommands:
             description: Working directory inside the container
       - name: start
         description: Start one or more stopped containers
+        usage: docker container start [OPTIONS] CONTAINER [CONTAINER...]
         options:
           - names:
               - -a
@@ -3653,6 +3788,7 @@ subcommands:
             description: Attach container's STDIN
       - name: stats
         description: Display a live stream of container(s) resource usage statistics
+        usage: docker container stats [OPTIONS] [CONTAINER...]
         options:
           - names:
               - -a
@@ -3673,6 +3809,7 @@ subcommands:
             description: Do not truncate output
       - name: stop
         description: Stop one or more running containers
+        usage: docker container stop [OPTIONS] CONTAINER [CONTAINER...]
         options:
           - names:
               - -t
@@ -3681,12 +3818,15 @@ subcommands:
             description: Seconds to wait for stop before killing it (default 10)
       - name: top
         description: Display the running processes of a container
+        usage: docker container top CONTAINER [ps OPTIONS]
         options: []
       - name: unpause
         description: Unpause all processes within one or more containers
+        usage: docker container unpause CONTAINER [CONTAINER...]
         options: []
       - name: update
         description: Update configuration of one or more containers
+        usage: docker container update [OPTIONS] CONTAINER [CONTAINER...]
         options:
           - names:
               - --blkio-weight
@@ -3752,13 +3892,23 @@ subcommands:
             description: Restart policy to apply when a container exits
       - name: wait
         description: Block until one or more containers stop, then print their exit codes
+        usage: docker container wait CONTAINER [CONTAINER...]
         options: []
   - name: context
     description: Manage contexts
-    options: []
+    usage: docker context [command]
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: Help for context
     subcommands:
       - name: create
-        description: Create a context
+        description: Create new context
+        usage: |-
+          docker context create CONTEXT [flags]
+          docker context create [command]
         options:
           - names:
               - --default-stack-orchestrator
@@ -3771,40 +3921,121 @@ subcommands:
           - names:
               - --docker
             argument: stringToString
-            description: set the docker endpoint (default [])
+            description: Set the docker endpoint (default [])
           - names:
               - --from
             argument: string
-            description: create context from a named context
+            description: Create context from a named context
+          - names:
+              - -h
+              - --help
+            argument: ""
+            description: Help for create
           - names:
               - --kubernetes
             argument: stringToString
-            description: set the kubernetes endpoint (default [])
+            description: Set the kubernetes endpoint (default [])
+        subcommands:
+          - name: aci
+            description: Create a context for Azure Container Instances
+            usage: docker context create aci CONTEXT [flags]
+            options:
+              - names:
+                  - --description
+                argument: string
+                description: Description of the context
+              - names:
+                  - -h
+                  - --help
+                argument: ""
+                description: Help for aci
+              - names:
+                  - --location
+                  - --resource-group
+                argument: string          Location
+                description: Resource group
+              - names:
+                  - --subscription-id
+                argument: string
+                description: Subscription id
+          - name: ecs
+            description: Create a context for Amazon ECS
+            usage: docker context create ecs CONTEXT [flags]
+            options:
+              - names:
+                  - --access-keys
+                argument: string
+                description: Use AWS access keys from file
+              - names:
+                  - --description
+                argument: string
+                description: Description of the context
+              - names:
+                  - --from-env
+                argument: ""
+                description: Use AWS environment variables for profile, or credentials and region
+              - names:
+                  - -h
+                  - --help
+                argument: ""
+                description: Help for ecs
+              - names:
+                  - --local-simulation
+                argument: ""
+                description: Create context for ECS local simulation endpoints
+              - names:
+                  - --profile
+                argument: string
+                description: Use an existing AWS profile
       - name: export
         description: Export a context to a tar or kubeconfig file
+        usage: docker context export [flags]
         options:
+          - names:
+              - -h
+              - --help
+            argument: ""
+            description: Help for export
           - names:
               - --kubeconfig
             argument: ""
             description: Export as a kubeconfig file
       - name: import
         description: Import a context from a tar or zip file
-        options: []
+        usage: docker context import [flags]
+        options:
+          - names:
+              - -h
+              - --help
+            argument: ""
+            description: Help for import
       - name: inspect
         description: Display detailed information on one or more contexts
+        usage: docker context inspect [flags]
         options:
           - names:
               - -f
               - --format
             argument: string
             description: Format the output using the given Go template
-      - name: ls
-        description: List contexts
+          - names:
+              - -h
+              - --help
+            argument: ""
+            description: Help for inspect
+      - name: list
+        description: List available contexts
+        usage: docker context list [flags]
         options:
           - names:
               - --format
             argument: string
-            description: Pretty-print contexts using a Go template
+            description: 'Format the output. Values: [pretty | json]. (Default: pretty)'
+          - names:
+              - -h
+              - --help
+            argument: ""
+            description: Help for list
           - names:
               - -q
               - --quiet
@@ -3812,14 +4043,30 @@ subcommands:
             description: Only show context names
       - name: rm
         description: Remove one or more contexts
+        usage: docker context rm CONTEXT [CONTEXT...] [flags]
         options:
           - names:
               - -f
               - --force
             argument: ""
-            description: Force the removal of a context in use
+            description: Force removing current context
+          - names:
+              - -h
+              - --help
+            argument: ""
+            description: Help for rm
+      - name: show
+        description: Print the current context
+        usage: docker context show [flags]
+        options:
+          - names:
+              - -h
+              - --help
+            argument: ""
+            description: Help for show
       - name: update
         description: Update a context
+        usage: docker context update [flags]
         options:
           - names:
               - --default-stack-orchestrator
@@ -3832,20 +4079,114 @@ subcommands:
           - names:
               - --docker
             argument: stringToString
-            description: set the docker endpoint (default [])
+            description: Set the docker endpoint (default [])
+          - names:
+              - -h
+              - --help
+            argument: ""
+            description: Help for update
           - names:
               - --kubernetes
             argument: stringToString
-            description: set the kubernetes endpoint (default [])
+            description: Set the kubernetes endpoint (default [])
       - name: use
-        description: Set the current docker context
+        description: Set the default context
+        usage: docker context use CONTEXT [flags]
+        options:
+          - names:
+              - -h
+              - --help
+            argument: ""
+            description: Help for use
+  - name: extension
+    description: Manages Docker extensions (Docker Inc., v0.2.7)
+    usage: docker extension [OPTIONS] COMMAND
+    options:
+      - names:
+          - --socket
+        argument: string
+        description: The Desktop extension manager socket
+    subcommands:
+      - name: dev
+        description: Extension development helpers
+        usage: docker extension dev COMMAND
+        options: []
+        subcommands:
+          - name: debug
+            description: Set the debug mode for an extension
+            usage: docker extension dev debug
+            options: []
+          - name: reset
+            description: Reset the source and disables the debug mode for the extension UI
+            usage: docker extension dev reset
+            options: []
+          - name: ui-source
+            description: Set a new source for the extension UI
+            usage: docker extension dev ui-source
+            options: []
+      - name: disable
+        description: Disable extensions in Docker Desktop
+        usage: docker extension disable
+        options: []
+      - name: enable
+        description: Enable extensions in Docker Desktop
+        usage: docker extension enable
+        options: []
+      - name: init
+        description: Create a new Docker Extension based on a template.
+        usage: docker extension init [NAME]
+        options: []
+      - name: install
+        description: Install a Docker extension with the specified image
+        usage: docker extension install IMAGE[:TAG]
+        options:
+          - names:
+              - -f
+              - --force
+            argument: ""
+            description: Do not prompt for confirmation
+      - name: ls
+        description: List installed Docker extensions
+        usage: docker extension ls
+        options:
+          - names:
+              - --format
+            argument: string
+            description: 'Format the output. Values: [pretty | json]. (default "pretty")'
+          - names:
+              - -q
+              - --quiet
+            argument: ""
+            description: Only display IDs.
+      - name: rm
+        description: Removes a Docker extension
+        usage: docker extension rm EXTENSION
+        options: []
+      - name: update
+        description: removes and re-install a Docker extension
+        usage: docker extension update EXTENSION
+        options:
+          - names:
+              - -f
+              - --force
+            argument: ""
+            description: Do not prompt for confirmation
+      - name: validate
+        description: Validate extension extension image or metadata file
+        usage: docker extension validate [IMAGE | metadata.json]
+        options: []
+      - name: version
+        description: Print the client and server versions
+        usage: docker extension version
         options: []
   - name: image
     description: Manage images
+    usage: docker image COMMAND
     options: []
     subcommands:
       - name: build
         description: Build an image from a Dockerfile
+        usage: docker image build [OPTIONS] PATH | URL | -
         options:
           - names:
               - --add-host
@@ -3929,6 +4270,7 @@ subcommands:
             description: Set the target build stage to build.
       - name: history
         description: Show the history of an image
+        usage: docker image history [OPTIONS] IMAGE
         options:
           - names:
               - --format
@@ -3950,6 +4292,7 @@ subcommands:
             description: Only show image IDs
       - name: import
         description: Import the contents from a tarball to create a filesystem image
+        usage: docker image import [OPTIONS] file|URL|- [REPOSITORY[:TAG]]
         options:
           - names:
               - -c
@@ -3967,6 +4310,7 @@ subcommands:
             description: Set platform if server is multi-platform capable
       - name: inspect
         description: Display detailed information on one or more images
+        usage: docker image inspect [OPTIONS] IMAGE [IMAGE...]
         options:
           - names:
               - -f
@@ -3975,6 +4319,7 @@ subcommands:
             description: Format the output using the given Go template
       - name: load
         description: Load an image from a tar archive or STDIN
+        usage: docker image load [OPTIONS]
         options:
           - names:
               - -i
@@ -3988,6 +4333,7 @@ subcommands:
             description: Suppress the load output
       - name: ls
         description: List images
+        usage: docker image ls [OPTIONS] [REPOSITORY[:TAG]]
         options:
           - names:
               - -a
@@ -4018,6 +4364,7 @@ subcommands:
             description: Only show image IDs
       - name: prune
         description: Remove unused images
+        usage: docker image prune [OPTIONS]
         options:
           - names:
               - -a
@@ -4035,6 +4382,7 @@ subcommands:
             description: Do not prompt for confirmation
       - name: pull
         description: Pull an image or a repository from a registry
+        usage: docker image pull [OPTIONS] NAME[:TAG|@DIGEST]
         options:
           - names:
               - -a
@@ -4056,6 +4404,7 @@ subcommands:
             description: Suppress verbose output
       - name: push
         description: Push an image or a repository to a registry
+        usage: docker image push [OPTIONS] NAME[:TAG]
         options:
           - names:
               - -a
@@ -4073,6 +4422,7 @@ subcommands:
             description: Suppress verbose output
       - name: rm
         description: Remove one or more images
+        usage: docker image rm [OPTIONS] IMAGE [IMAGE...]
         options:
           - names:
               - -f
@@ -4085,6 +4435,7 @@ subcommands:
             description: Do not delete untagged parents
       - name: save
         description: Save one or more images to a tar archive (streamed to STDOUT by default)
+        usage: docker image save [OPTIONS] IMAGE [IMAGE...]
         options:
           - names:
               - -o
@@ -4093,13 +4444,16 @@ subcommands:
             description: Write to a file, instead of STDOUT
       - name: tag
         description: Create a tag TARGET_IMAGE that refers to SOURCE_IMAGE
+        usage: docker image tag SOURCE_IMAGE[:TAG] TARGET_IMAGE[:TAG]
         options: []
   - name: manifest
     description: Manage Docker image manifests and manifest lists
+    usage: docker manifest COMMAND
     options: []
     subcommands:
       - name: annotate
         description: Add additional information to a local image manifest
+        usage: docker manifest annotate [OPTIONS] MANIFEST_LIST MANIFEST
         options:
           - names:
               - --arch
@@ -4123,6 +4477,7 @@ subcommands:
             description: Set architecture variant
       - name: create
         description: Create a local manifest list for annotating and pushing to a registry
+        usage: docker manifest create MANIFEST_LIST MANIFEST [MANIFEST...]
         options:
           - names:
               - -a
@@ -4135,6 +4490,7 @@ subcommands:
             description: Allow communication with an insecure registry
       - name: inspect
         description: Display an image manifest, or manifest list
+        usage: docker manifest inspect [OPTIONS] [MANIFEST_LIST] MANIFEST
         options:
           - names:
               - --insecure
@@ -4147,6 +4503,7 @@ subcommands:
             description: Output additional info including layers and platform
       - name: push
         description: Push a manifest list to a repository
+        usage: docker manifest push [OPTIONS] MANIFEST_LIST
         options:
           - names:
               - --insecure
@@ -4159,13 +4516,16 @@ subcommands:
             description: Remove the local manifest list after push
       - name: rm
         description: Delete one or more manifest lists from local storage
+        usage: docker manifest rm MANIFEST_LIST [MANIFEST_LIST...]
         options: []
   - name: network
     description: Manage networks
+    usage: docker network COMMAND
     options: []
     subcommands:
       - name: connect
         description: Connect a container to a network
+        usage: docker network connect [OPTIONS] NETWORK CONTAINER
         options:
           - names:
               - --alias
@@ -4193,6 +4553,7 @@ subcommands:
             description: Add a link-local address for the container
       - name: create
         description: Create a network
+        usage: docker network create [OPTIONS] NETWORK
         options:
           - names:
               - --attachable
@@ -4262,6 +4623,7 @@ subcommands:
             description: Subnet in CIDR format that represents a network segment
       - name: disconnect
         description: Disconnect a container from a network
+        usage: docker network disconnect [OPTIONS] NETWORK CONTAINER
         options:
           - names:
               - -f
@@ -4270,6 +4632,7 @@ subcommands:
             description: Force the container to disconnect from a network
       - name: inspect
         description: Display detailed information on one or more networks
+        usage: docker network inspect [OPTIONS] NETWORK [NETWORK...]
         options:
           - names:
               - -f
@@ -4283,6 +4646,7 @@ subcommands:
             description: Verbose output for diagnostics
       - name: ls
         description: List networks
+        usage: docker network ls [OPTIONS]
         options:
           - names:
               - -f
@@ -4304,6 +4668,7 @@ subcommands:
             description: Only display network IDs
       - name: prune
         description: Remove all unused networks
+        usage: docker network prune [OPTIONS]
         options:
           - names:
               - --filter
@@ -4316,16 +4681,20 @@ subcommands:
             description: Do not prompt for confirmation
       - name: rm
         description: Remove one or more networks
+        usage: docker network rm NETWORK [NETWORK...]
         options: []
   - name: node
     description: Manage Swarm nodes
+    usage: docker node COMMAND
     options: []
     subcommands:
       - name: demote
         description: Demote one or more nodes from manager in the swarm
+        usage: docker node demote NODE [NODE...]
         options: []
       - name: inspect
         description: Display detailed information on one or more nodes
+        usage: docker node inspect [OPTIONS] self|NODE [NODE...]
         options:
           - names:
               - -f
@@ -4338,6 +4707,7 @@ subcommands:
             description: Print the information in a human friendly format
       - name: ls
         description: List nodes in the swarm
+        usage: docker node ls [OPTIONS]
         options:
           - names:
               - -f
@@ -4355,9 +4725,11 @@ subcommands:
             description: Only display IDs
       - name: promote
         description: Promote one or more nodes to manager in the swarm
+        usage: docker node promote NODE [NODE...]
         options: []
       - name: ps
         description: List tasks running on one or more nodes, defaults to current node
+        usage: docker node ps [OPTIONS] [NODE...]
         options:
           - names:
               - -f
@@ -4383,6 +4755,7 @@ subcommands:
             description: Only display task IDs
       - name: rm
         description: Remove one or more nodes from the swarm
+        usage: docker node rm [OPTIONS] NODE [NODE...]
         options:
           - names:
               - -f
@@ -4391,6 +4764,7 @@ subcommands:
             description: Force remove a node from the swarm
       - name: update
         description: Update a node
+        usage: docker node update [OPTIONS] NODE
         options:
           - names:
               - --availability
@@ -4410,10 +4784,12 @@ subcommands:
             description: Role of the node ("worker"|"manager")
   - name: plugin
     description: Manage plugins
+    usage: docker plugin COMMAND
     options: []
     subcommands:
       - name: create
         description: Create a plugin from a rootfs and configuration. Plugin data directory must contain config.json and rootfs directory.
+        usage: docker plugin create [OPTIONS] PLUGIN PLUGIN-DATA-DIR
         options:
           - names:
               - --compress
@@ -4421,6 +4797,7 @@ subcommands:
             description: Compress the context using gzip
       - name: disable
         description: Disable a plugin
+        usage: docker plugin disable [OPTIONS] PLUGIN
         options:
           - names:
               - -f
@@ -4429,6 +4806,7 @@ subcommands:
             description: Force the disable of an active plugin
       - name: enable
         description: Enable a plugin
+        usage: docker plugin enable [OPTIONS] PLUGIN
         options:
           - names:
               - --timeout
@@ -4436,6 +4814,7 @@ subcommands:
             description: HTTP client timeout (in seconds) (default 30)
       - name: inspect
         description: Display detailed information on one or more plugins
+        usage: docker plugin inspect [OPTIONS] PLUGIN [PLUGIN...]
         options:
           - names:
               - -f
@@ -4444,6 +4823,7 @@ subcommands:
             description: Format the output using the given Go template
       - name: install
         description: Install a plugin
+        usage: docker plugin install [OPTIONS] PLUGIN [KEY=VALUE...]
         options:
           - names:
               - --alias
@@ -4463,6 +4843,7 @@ subcommands:
             description: Grant all permissions necessary to run the plugin
       - name: ls
         description: List plugins
+        usage: docker plugin ls [OPTIONS]
         options:
           - names:
               - -f
@@ -4484,6 +4865,7 @@ subcommands:
             description: Only display plugin IDs
       - name: push
         description: Push a plugin to a registry
+        usage: docker plugin push [OPTIONS] PLUGIN[:TAG]
         options:
           - names:
               - --disable-content-trust
@@ -4491,6 +4873,7 @@ subcommands:
             description: Skip image signing (default true)
       - name: rm
         description: Remove one or more plugins
+        usage: docker plugin rm [OPTIONS] PLUGIN [PLUGIN...]
         options:
           - names:
               - -f
@@ -4499,9 +4882,11 @@ subcommands:
             description: Force the removal of an active plugin
       - name: set
         description: Change settings for a plugin
+        usage: docker plugin set PLUGIN KEY=VALUE [KEY=VALUE...]
         options: []
       - name: upgrade
         description: Upgrade an existing plugin
+        usage: docker plugin upgrade [OPTIONS] PLUGIN [REMOTE]
         options:
           - names:
               - --disable-content-trust
@@ -4517,6 +4902,7 @@ subcommands:
             description: Do not check if specified remote plugin matches existing plugin image
   - name: sbom
     description: View the packaged-based Software Bill Of Materials (SBOM) for an image (Anchore Inc., 0.6.0)
+    usage: docker sbom [OPTIONS] COMMAND
     options:
       - names:
           - -D
@@ -4555,6 +4941,7 @@ subcommands:
         description: version for sbom
   - name: scan
     description: Docker Scan (Docker Inc., v0.17.0)
+    usage: docker scan [OPTIONS] IMAGE
     options:
       - names:
           - --accept-license
@@ -4603,10 +4990,12 @@ subcommands:
         description: Display version of the scan plugin
   - name: secret
     description: Manage Docker secrets
+    usage: docker secret COMMAND
     options: []
     subcommands:
       - name: create
         description: Create a secret from a file or STDIN as content
+        usage: docker secret create [OPTIONS] SECRET [file|-]
         options:
           - names:
               - -d
@@ -4624,6 +5013,7 @@ subcommands:
             description: Template driver
       - name: inspect
         description: Display detailed information on one or more secrets
+        usage: docker secret inspect [OPTIONS] SECRET [SECRET...]
         options:
           - names:
               - -f
@@ -4636,6 +5026,7 @@ subcommands:
             description: Print the information in a human friendly format
       - name: ls
         description: List secrets
+        usage: docker secret ls [OPTIONS]
         options:
           - names:
               - -f
@@ -4653,13 +5044,16 @@ subcommands:
             description: Only display IDs
       - name: rm
         description: Remove one or more secrets
+        usage: docker secret rm SECRET [SECRET...]
         options: []
   - name: service
     description: Manage services
+    usage: docker service COMMAND
     options: []
     subcommands:
       - name: create
         description: Create a new service
+        usage: docker service create [OPTIONS] IMAGE [COMMAND] [ARG...]
         options:
           - names:
               - --cap-add
@@ -4955,6 +5349,7 @@ subcommands:
             description: Working directory inside the container
       - name: inspect
         description: Display detailed information on one or more services
+        usage: docker service inspect [OPTIONS] SERVICE [SERVICE...]
         options:
           - names:
               - -f
@@ -4967,6 +5362,7 @@ subcommands:
             description: Print the information in a human friendly format
       - name: logs
         description: Fetch the logs of a service or task
+        usage: docker service logs [OPTIONS] SERVICE|TASK
         options:
           - names:
               - --details
@@ -5009,6 +5405,7 @@ subcommands:
             description: Show timestamps
       - name: ls
         description: List services
+        usage: docker service ls [OPTIONS]
         options:
           - names:
               - -f
@@ -5026,6 +5423,7 @@ subcommands:
             description: Only display IDs
       - name: ps
         description: List the tasks of one or more services
+        usage: docker service ps [OPTIONS] SERVICE [SERVICE...]
         options:
           - names:
               - -f
@@ -5051,9 +5449,11 @@ subcommands:
             description: Only display task IDs
       - name: rm
         description: Remove one or more services
+        usage: docker service rm SERVICE [SERVICE...]
         options: []
       - name: rollback
         description: Revert changes to a service's configuration
+        usage: docker service rollback [OPTIONS] SERVICE
         options:
           - names:
               - -d
@@ -5067,6 +5467,7 @@ subcommands:
             description: Suppress progress output
       - name: scale
         description: Scale one or multiple replicated services
+        usage: docker service scale SERVICE=REPLICAS [SERVICE=REPLICAS...]
         options:
           - names:
               - -d
@@ -5075,6 +5476,7 @@ subcommands:
             description: Exit immediately instead of waiting for the service to converge
       - name: update
         description: Update a service
+        usage: docker service update [OPTIONS] SERVICE
         options:
           - names:
               - --args
@@ -5443,6 +5845,7 @@ subcommands:
             description: Working directory inside the container
   - name: stack
     description: Manage Docker stacks
+    usage: docker stack [OPTIONS] COMMAND
     options:
       - names:
           - --orchestrator
@@ -5451,6 +5854,7 @@ subcommands:
     subcommands:
       - name: deploy
         description: Deploy a new stack or update an existing stack
+        usage: docker stack deploy [OPTIONS] STACK
         options:
           - names:
               - -c
@@ -5475,6 +5879,7 @@ subcommands:
             description: Send registry authentication details to Swarm agents
       - name: ls
         description: List stacks
+        usage: docker stack ls [OPTIONS]
         options:
           - names:
               - --format
@@ -5486,6 +5891,7 @@ subcommands:
             description: Orchestrator to use (swarm|kubernetes|all)
       - name: ps
         description: List the tasks in the stack
+        usage: docker stack ps [OPTIONS] STACK
         options:
           - names:
               - -f
@@ -5515,6 +5921,7 @@ subcommands:
             description: Only display task IDs
       - name: rm
         description: Remove one or more stacks
+        usage: docker stack rm [OPTIONS] STACK [STACK...]
         options:
           - names:
               - --orchestrator
@@ -5522,6 +5929,7 @@ subcommands:
             description: Orchestrator to use (swarm|kubernetes|all)
       - name: services
         description: List the services in the stack
+        usage: docker stack services [OPTIONS] STACK
         options:
           - names:
               - -f
@@ -5543,10 +5951,12 @@ subcommands:
             description: Only display IDs
   - name: swarm
     description: Manage Swarm
+    usage: docker swarm COMMAND
     options: []
     subcommands:
       - name: ca
         description: Display and rotate the root CA
+        usage: docker swarm ca [OPTIONS]
         options:
           - names:
               - --ca-cert
@@ -5580,6 +5990,7 @@ subcommands:
             description: Rotate the swarm CA - if no certificate or key are provided, new ones will be generated
       - name: init
         description: Initialize a swarm
+        usage: docker swarm init [OPTIONS]
         options:
           - names:
               - --advertise-addr
@@ -5643,6 +6054,7 @@ subcommands:
             description: Task history retention limit (default 5)
       - name: join
         description: Join a swarm as a node and/or manager
+        usage: docker swarm join [OPTIONS] HOST:PORT
         options:
           - names:
               - --advertise-addr
@@ -5666,6 +6078,7 @@ subcommands:
             description: Token for entry into the swarm
       - name: join-token
         description: Manage join tokens
+        usage: docker swarm join-token [OPTIONS] (worker|manager)
         options:
           - names:
               - -q
@@ -5678,6 +6091,7 @@ subcommands:
             description: Rotate join token
       - name: leave
         description: Leave the swarm
+        usage: docker swarm leave [OPTIONS]
         options:
           - names:
               - -f
@@ -5686,9 +6100,11 @@ subcommands:
             description: Force this node to leave the swarm, ignoring warnings
       - name: unlock
         description: Unlock swarm
+        usage: docker swarm unlock
         options: []
       - name: unlock-key
         description: Manage the unlock key
+        usage: docker swarm unlock-key [OPTIONS]
         options:
           - names:
               - -q
@@ -5701,6 +6117,7 @@ subcommands:
             description: Rotate unlock key
       - name: update
         description: Update the swarm
+        usage: docker swarm update [OPTIONS]
         options:
           - names:
               - --autolock
@@ -5732,10 +6149,12 @@ subcommands:
             description: Task history retention limit (default 5)
   - name: system
     description: Manage Docker
+    usage: docker system COMMAND
     options: []
     subcommands:
       - name: df
         description: Show docker disk usage
+        usage: docker system df [OPTIONS]
         options:
           - names:
               - --format
@@ -5748,6 +6167,7 @@ subcommands:
             description: Show detailed information on space usage
       - name: events
         description: Get real time events from the server
+        usage: docker system events [OPTIONS]
         options:
           - names:
               - -f
@@ -5768,6 +6188,7 @@ subcommands:
             description: Stream events until this timestamp
       - name: info
         description: Display system-wide information
+        usage: docker system info [OPTIONS]
         options:
           - names:
               - -f
@@ -5776,6 +6197,7 @@ subcommands:
             description: Format the output using the given Go template
       - name: prune
         description: Remove unused data
+        usage: docker system prune [OPTIONS]
         options:
           - names:
               - -a
@@ -5797,14 +6219,17 @@ subcommands:
             description: Prune volumes
   - name: trust
     description: Manage trust on Docker images
+    usage: docker trust COMMAND
     options: []
     subcommands:
       - name: key
         description: Manage keys for signing Docker images
+        usage: docker trust key COMMAND
         options: []
         subcommands:
           - name: generate
             description: Generate and load a signing key-pair
+            usage: docker trust key generate NAME
             options:
               - names:
                   - --dir
@@ -5812,6 +6237,7 @@ subcommands:
                 description: Directory to generate key in, defaults to current directory
           - name: load
             description: Load a private key file for signing
+            usage: docker trust key load [OPTIONS] KEYFILE
             options:
               - names:
                   - --name
@@ -5819,10 +6245,12 @@ subcommands:
                 description: Name for the loaded key (default "signer")
       - name: signer
         description: Manage entities who can sign Docker images
+        usage: docker trust signer COMMAND
         options: []
         subcommands:
           - name: add
             description: Add a signer
+            usage: docker trust signer add OPTIONS NAME REPOSITORY [REPOSITORY...]
             options:
               - names:
                   - --key
@@ -5830,6 +6258,7 @@ subcommands:
                 description: Path to the signer's public key file
           - name: remove
             description: Remove a signer
+            usage: docker trust signer remove [OPTIONS] NAME REPOSITORY [REPOSITORY...]
             options:
               - names:
                   - -f
@@ -5838,6 +6267,7 @@ subcommands:
                 description: Do not prompt for confirmation before removing the most recent signer
       - name: inspect
         description: Return low-level information about keys and signatures
+        usage: docker trust inspect IMAGE[:TAG] [IMAGE[:TAG]...]
         options:
           - names:
               - --pretty
@@ -5845,6 +6275,7 @@ subcommands:
             description: Print the information in a human friendly format
       - name: revoke
         description: Remove trust for an image
+        usage: docker trust revoke [OPTIONS] IMAGE[:TAG]
         options:
           - names:
               - -y
@@ -5853,6 +6284,7 @@ subcommands:
             description: Do not prompt for confirmation
       - name: sign
         description: Sign an image
+        usage: docker trust sign IMAGE:TAG
         options:
           - names:
               - --local
@@ -5860,10 +6292,12 @@ subcommands:
             description: Sign a locally tagged image
   - name: volume
     description: Manage volumes
+    usage: docker volume COMMAND
     options: []
     subcommands:
       - name: create
         description: Create a volume
+        usage: docker volume create [OPTIONS] [VOLUME]
         options:
           - names:
               - -d
@@ -5881,6 +6315,7 @@ subcommands:
             description: Set driver specific options (default map[])
       - name: inspect
         description: Display detailed information on one or more volumes
+        usage: docker volume inspect [OPTIONS] VOLUME [VOLUME...]
         options:
           - names:
               - -f
@@ -5889,6 +6324,7 @@ subcommands:
             description: Format the output using the given Go template
       - name: ls
         description: List volumes
+        usage: docker volume ls [OPTIONS]
         options:
           - names:
               - -f
@@ -5906,6 +6342,7 @@ subcommands:
             description: Only display volume names
       - name: prune
         description: Remove all unused local volumes
+        usage: docker volume prune [OPTIONS]
         options:
           - names:
               - --filter
@@ -5918,13 +6355,14 @@ subcommands:
             description: Do not prompt for confirmation
       - name: rm
         description: Remove one or more volumes
+        usage: docker volume rm [OPTIONS] VOLUME [VOLUME...]
         options:
           - names:
               - -f
               - --force
             argument: ""
             description: Force the removal of one or more volumes
-version: Docker version 20.10.12, build 20.10.12-0ubuntu2~20.04.1
+version: Docker version 20.10.17, build 100c701
 tldr: |
   > Manage Docker containers and images.
   > Some subcommands such as `docker run` have their own usage documentation.

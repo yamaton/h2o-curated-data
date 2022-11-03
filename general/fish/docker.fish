@@ -1,16 +1,16 @@
 # Auto-generated with h2o
 
-complete -c docker -n "not __fish_seen_subcommand_from attach build commit cp create diff events exec export history images import info inspect kill load login logout logs pause port ps pull push rename restart rm rmi run save search start stats stop tag top unpause update version wait builder buildx compose config container context image manifest network node plugin sbom scan secret service stack swarm system trust volume" -l "config" -d "Location of client config files (default \"~/.docker\")" -r
-complete -c docker -n "not __fish_seen_subcommand_from attach build commit cp create diff events exec export history images import info inspect kill load login logout logs pause port ps pull push rename restart rm rmi run save search start stats stop tag top unpause update version wait builder buildx compose config container context image manifest network node plugin sbom scan secret service stack swarm system trust volume" -s "c" -l "context" -d "Name of the context to use to connect to the daemon (overrides DOCKER_HOST env var and default context set with \"docker context use\")" -x
-complete -c docker -n "not __fish_seen_subcommand_from attach build commit cp create diff events exec export history images import info inspect kill load login logout logs pause port ps pull push rename restart rm rmi run save search start stats stop tag top unpause update version wait builder buildx compose config container context image manifest network node plugin sbom scan secret service stack swarm system trust volume" -s "D" -l "debug" -d "Enable debug mode"
-complete -c docker -n "not __fish_seen_subcommand_from attach build commit cp create diff events exec export history images import info inspect kill load login logout logs pause port ps pull push rename restart rm rmi run save search start stats stop tag top unpause update version wait builder buildx compose config container context image manifest network node plugin sbom scan secret service stack swarm system trust volume" -s "H" -l "host" -d "Daemon socket(s) to connect to" -x
-complete -c docker -n "not __fish_seen_subcommand_from attach build commit cp create diff events exec export history images import info inspect kill load login logout logs pause port ps pull push rename restart rm rmi run save search start stats stop tag top unpause update version wait builder buildx compose config container context image manifest network node plugin sbom scan secret service stack swarm system trust volume" -s "l" -l "log-level" -d "Set the logging level (\"debug\"|\"info\"|\"warn\"|\"error\"|\"fatal\") (default \"info\")" -x
-complete -c docker -n "not __fish_seen_subcommand_from attach build commit cp create diff events exec export history images import info inspect kill load login logout logs pause port ps pull push rename restart rm rmi run save search start stats stop tag top unpause update version wait builder buildx compose config container context image manifest network node plugin sbom scan secret service stack swarm system trust volume" -l "tls" -d "Use TLS; implied by --tlsverify"
-complete -c docker -n "not __fish_seen_subcommand_from attach build commit cp create diff events exec export history images import info inspect kill load login logout logs pause port ps pull push rename restart rm rmi run save search start stats stop tag top unpause update version wait builder buildx compose config container context image manifest network node plugin sbom scan secret service stack swarm system trust volume" -l "tlscacert" -d "Trust certs signed only by this CA (default \"~/.docker/ca.pem\")" -x
-complete -c docker -n "not __fish_seen_subcommand_from attach build commit cp create diff events exec export history images import info inspect kill load login logout logs pause port ps pull push rename restart rm rmi run save search start stats stop tag top unpause update version wait builder buildx compose config container context image manifest network node plugin sbom scan secret service stack swarm system trust volume" -l "tlscert" -d "Path to TLS certificate file (default \"~/.docker/cert.pem\")" -r
-complete -c docker -n "not __fish_seen_subcommand_from attach build commit cp create diff events exec export history images import info inspect kill load login logout logs pause port ps pull push rename restart rm rmi run save search start stats stop tag top unpause update version wait builder buildx compose config container context image manifest network node plugin sbom scan secret service stack swarm system trust volume" -l "tlskey" -d "Path to TLS key file (default \"~/.docker/key.pem\")" -r
-complete -c docker -n "not __fish_seen_subcommand_from attach build commit cp create diff events exec export history images import info inspect kill load login logout logs pause port ps pull push rename restart rm rmi run save search start stats stop tag top unpause update version wait builder buildx compose config container context image manifest network node plugin sbom scan secret service stack swarm system trust volume" -l "tlsverify" -d "Use TLS and verify the remote"
-complete -c docker -n "not __fish_seen_subcommand_from attach build commit cp create diff events exec export history images import info inspect kill load login logout logs pause port ps pull push rename restart rm rmi run save search start stats stop tag top unpause update version wait builder buildx compose config container context image manifest network node plugin sbom scan secret service stack swarm system trust volume" -s "v" -l "version" -d "Print version information and quit"
+complete -c docker -n "not __fish_seen_subcommand_from attach build commit cp create diff events exec export history images import info inspect kill load login logout logs pause port ps pull push rename restart rm rmi run save search start stats stop tag top unpause update version wait builder buildx compose config container context extension image manifest network node plugin sbom scan secret service stack swarm system trust volume" -l "config" -d "Location of client config files (default \"~/.docker\")" -r
+complete -c docker -n "not __fish_seen_subcommand_from attach build commit cp create diff events exec export history images import info inspect kill load login logout logs pause port ps pull push rename restart rm rmi run save search start stats stop tag top unpause update version wait builder buildx compose config container context extension image manifest network node plugin sbom scan secret service stack swarm system trust volume" -s "c" -l "context" -d "Name of the context to use to connect to the daemon (overrides DOCKER_HOST env var and default context set with \"docker context use\")" -x
+complete -c docker -n "not __fish_seen_subcommand_from attach build commit cp create diff events exec export history images import info inspect kill load login logout logs pause port ps pull push rename restart rm rmi run save search start stats stop tag top unpause update version wait builder buildx compose config container context extension image manifest network node plugin sbom scan secret service stack swarm system trust volume" -s "D" -l "debug" -d "Enable debug mode"
+complete -c docker -n "not __fish_seen_subcommand_from attach build commit cp create diff events exec export history images import info inspect kill load login logout logs pause port ps pull push rename restart rm rmi run save search start stats stop tag top unpause update version wait builder buildx compose config container context extension image manifest network node plugin sbom scan secret service stack swarm system trust volume" -s "H" -l "host" -d "Daemon socket(s) to connect to" -x
+complete -c docker -n "not __fish_seen_subcommand_from attach build commit cp create diff events exec export history images import info inspect kill load login logout logs pause port ps pull push rename restart rm rmi run save search start stats stop tag top unpause update version wait builder buildx compose config container context extension image manifest network node plugin sbom scan secret service stack swarm system trust volume" -s "l" -l "log-level" -d "Set the logging level (\"debug\"|\"info\"|\"warn\"|\"error\"|\"fatal\") (default \"info\")" -x
+complete -c docker -n "not __fish_seen_subcommand_from attach build commit cp create diff events exec export history images import info inspect kill load login logout logs pause port ps pull push rename restart rm rmi run save search start stats stop tag top unpause update version wait builder buildx compose config container context extension image manifest network node plugin sbom scan secret service stack swarm system trust volume" -l "tls" -d "Use TLS; implied by --tlsverify"
+complete -c docker -n "not __fish_seen_subcommand_from attach build commit cp create diff events exec export history images import info inspect kill load login logout logs pause port ps pull push rename restart rm rmi run save search start stats stop tag top unpause update version wait builder buildx compose config container context extension image manifest network node plugin sbom scan secret service stack swarm system trust volume" -l "tlscacert" -d "Trust certs signed only by this CA (default \"~/.docker/ca.pem\")" -x
+complete -c docker -n "not __fish_seen_subcommand_from attach build commit cp create diff events exec export history images import info inspect kill load login logout logs pause port ps pull push rename restart rm rmi run save search start stats stop tag top unpause update version wait builder buildx compose config container context extension image manifest network node plugin sbom scan secret service stack swarm system trust volume" -l "tlscert" -d "Path to TLS certificate file (default \"~/.docker/cert.pem\")" -r
+complete -c docker -n "not __fish_seen_subcommand_from attach build commit cp create diff events exec export history images import info inspect kill load login logout logs pause port ps pull push rename restart rm rmi run save search start stats stop tag top unpause update version wait builder buildx compose config container context extension image manifest network node plugin sbom scan secret service stack swarm system trust volume" -l "tlskey" -d "Path to TLS key file (default \"~/.docker/key.pem\")" -r
+complete -c docker -n "not __fish_seen_subcommand_from attach build commit cp create diff events exec export history images import info inspect kill load login logout logs pause port ps pull push rename restart rm rmi run save search start stats stop tag top unpause update version wait builder buildx compose config container context extension image manifest network node plugin sbom scan secret service stack swarm system trust volume" -l "tlsverify" -d "Use TLS and verify the remote"
+complete -c docker -n "not __fish_seen_subcommand_from attach build commit cp create diff events exec export history images import info inspect kill load login logout logs pause port ps pull push rename restart rm rmi run save search start stats stop tag top unpause update version wait builder buildx compose config container context extension image manifest network node plugin sbom scan secret service stack swarm system trust volume" -s "v" -l "version" -d "Print version information and quit"
 
 
 
@@ -28,10 +28,11 @@ complete -k -c docker -n __fish_use_subcommand -x -a node -d "Manage Swarm nodes
 complete -k -c docker -n __fish_use_subcommand -x -a network -d "Manage networks"
 complete -k -c docker -n __fish_use_subcommand -x -a manifest -d "Manage Docker image manifests and manifest lists"
 complete -k -c docker -n __fish_use_subcommand -x -a image -d "Manage images"
+complete -k -c docker -n __fish_use_subcommand -x -a extension -d "Manages Docker extensions (Docker Inc., v0.2.7)"
 complete -k -c docker -n __fish_use_subcommand -x -a context -d "Manage contexts"
 complete -k -c docker -n __fish_use_subcommand -x -a container -d "Manage containers"
 complete -k -c docker -n __fish_use_subcommand -x -a config -d "Manage Docker configs"
-complete -k -c docker -n __fish_use_subcommand -x -a compose -d "Docker Compose (Docker Inc., v2.5.1)"
+complete -k -c docker -n __fish_use_subcommand -x -a compose -d "Docker Compose (Docker Inc., v2.6.1)"
 complete -k -c docker -n __fish_use_subcommand -x -a buildx -d "Docker Buildx (Docker Inc., v0.8.2)"
 complete -k -c docker -n __fish_use_subcommand -x -a builder -d "Manage builds"
 complete -k -c docker -n __fish_use_subcommand -x -a wait -d "Block until one or more containers stop, then print their exit codes"
@@ -277,8 +278,13 @@ complete -c docker -n "__fish_seen_subcommand_from load" -s "q" -l "quiet" -d "S
 
 
 
+complete -c docker -n "__fish_seen_subcommand_from login" -s "h" -l "help" -d "Help for login"
 complete -c docker -n "__fish_seen_subcommand_from login" -s "p" -l "password" -l "password-stdin" -d "Take the password from stdin" -x
-complete -c docker -n "__fish_seen_subcommand_from login" -s "u" -l "username" -d "Username" -x
+complete -c docker -n "__fish_seen_subcommand_from login" -s "u" -l "username" -d "username" -x
+
+
+
+complete -c docker -n "__fish_seen_subcommand_from logout" -s "h" -l "help" -d "Help for logout"
 
 
 
@@ -475,7 +481,8 @@ complete -c docker -n "__fish_seen_subcommand_from update" -l "restart" -d "Rest
 
 
 
-complete -c docker -n "__fish_seen_subcommand_from version" -s "f" -l "format" -d "Format the output using the given Go template" -x
+complete -c docker -n "__fish_seen_subcommand_from version" -s "f" -l "format" -d "Format the output." -x
+complete -c docker -n "__fish_seen_subcommand_from version" -s "h" -l "help" -d "Help for version"
 complete -c docker -n "__fish_seen_subcommand_from version" -l "kubeconfig" -d "Kubernetes config file" -r
 
 
@@ -491,6 +498,14 @@ complete -c docker -n "__fish_seen_subcommand_from compose" -s "f" -l "file" -d 
 complete -c docker -n "__fish_seen_subcommand_from compose" -l "profile" -d "Specify a profile to enable" -r
 complete -c docker -n "__fish_seen_subcommand_from compose" -l "project-directory" -d "Specify an alternate working directory (default: the path of the, first specified, Compose file)" -r
 complete -c docker -n "__fish_seen_subcommand_from compose" -s "p" -l "project-name" -d "Project name" -x
+
+
+
+complete -c docker -n "__fish_seen_subcommand_from context" -s "h" -l "help" -d "Help for context"
+
+
+
+complete -c docker -n "__fish_seen_subcommand_from extension" -l "socket" -d "The Desktop extension manager socket" -x
 
 
 

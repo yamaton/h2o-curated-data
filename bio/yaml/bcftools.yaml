@@ -1,9 +1,11 @@
 name: bcftools
-description: Tools for variant calling and manipulating VCFs and BCFs
+description: bcftools
+usage: bcftools [--version|--version-only] [--help] <command> <argument>
 options: []
 subcommands:
   - name: index
     description: index VCF/BCF files
+    usage: bcftools index [options] <in.bcf>|<in.vcf.gz>
     options:
       - names:
           - -c
@@ -35,6 +37,11 @@ subcommands:
         argument: INT
         description: use multithreading with INT worker threads [0]
       - names:
+          - -a
+          - --all
+        argument: ""
+        description: with --stats, print stats for all contigs even when zero
+      - names:
           - -n
           - --nrecords
         argument: ""
@@ -46,16 +53,13 @@ subcommands:
         description: print per contig stats based on existing index file
   - name: annotate
     description: annotate and edit VCF/BCF files
+    usage: bcftools annotate [options] VCF
     options:
       - names:
           - -a
           - --annotations
         argument: FILE
         description: 'VCF file or tabix-indexed FILE with annotations: CHR\tPOS[\tVALUE]+'
-      - names:
-          - --collapse
-        argument: STR
-        description: Matching records by <snps|indels|both|all|some|none>, see man page for details [some]
       - names:
           - -c
           - --columns
@@ -75,6 +79,11 @@ subcommands:
           - --force
         argument: ""
         description: Continue despite parsing error (at your own risk!)
+      - names:
+          - -H
+          - --header-line
+        argument: STR
+        description: Header line which should be appended to the VCF header, can be given multiple times
       - names:
           - -h
           - --header-lines
@@ -106,6 +115,10 @@ subcommands:
         argument: '[+-]TAG'
         description: Add INFO/TAG flag to sites which are ("+") or are not ("-") listed in the -a file
       - names:
+          - --min-overlap
+        argument: ANN:VCF
+        description: Required overlap as a fraction of variant in the -a file (ANN), the VCF (:VCF), or reciprocal (ANN:VCF)
+      - names:
           - --no-version
         argument: ""
         description: Do not append version and command line to the header
@@ -119,6 +132,10 @@ subcommands:
           - --output-type
         argument: u|b|v|z[0-9]
         description: 'u/b: un/compressed BCF, v/z: un/compressed VCF, 0-9: compression level [v]'
+      - names:
+          - --pair-logic
+        argument: STR
+        description: Matching records by <snps|indels|both|all|some|exact>, see man page for details [some]
       - names:
           - -r
           - --regions
@@ -166,6 +183,7 @@ subcommands:
         description: Number of extra output compression threads [0]
   - name: concat
     description: concatenate VCF/BCF files from the same set of samples
+    usage: bcftools concat [options] <A.vcf.gz> [<B.vcf.gz> [...]]
     options:
       - names:
           - -a
@@ -258,6 +276,7 @@ subcommands:
         description: Set verbosity level [1]
   - name: convert
     description: convert VCF/BCF files to different formats and back
+    usage: bcftools convert [OPTIONS] INPUT_FILE
     options:
       - names:
           - -e
@@ -336,6 +355,10 @@ subcommands:
         argument: '...'
         description: <PREFIX>|<GEN-FILE>,<SAMPLE-FILE>
       - names:
+          - --3N6
+        argument: ""
+        description: Use 3*N+6 column format instead of the old 3*N+5 column format
+      - names:
           - --tag
         argument: STRING
         description: 'Tag to take values for .gen file: GT,PL,GL,GP [GT]'
@@ -411,6 +434,7 @@ subcommands:
         description: File of sample names
   - name: isec
     description: intersections of VCF/BCF files
+    usage: bcftools isec [options] <A.vcf.gz> <B.vcf.gz> [...]
     options:
       - names:
           - -c
@@ -500,6 +524,7 @@ subcommands:
         description: List of files to write with -p given as 1-based indexes. By default, all files are written
   - name: merge
     description: merge VCF/BCF files files from non-overlapping sample sets
+    usage: bcftools merge [options] <A.vcf.gz> <B.vcf.gz> [...]
     options:
       - names:
           - --force-samples
@@ -552,7 +577,7 @@ subcommands:
           - -m
           - --merge
         argument: STRING
-        description: Allow multiallelic records for <snps|indels|both|all|none|id>, see man page for details [both]
+        description: Allow multiallelic records for <snps|indels|both|snp-ins-del|all|none|id>, see man page for details [both]
       - names:
           - --no-index
         argument: ""
@@ -591,6 +616,7 @@ subcommands:
         description: Use multithreading with <int> worker threads [0]
   - name: norm
     description: left-align and normalize indels
+    usage: bcftools norm [options] <in.vcf.gz>
     options:
       - names:
           - -a
@@ -599,7 +625,7 @@ subcommands:
         description: Decompose complex variants (e.g. MNVs become consecutive SNVs)
       - names:
           - --atom-overlaps
-        argument: "'*'|."
+        argument: '''*''|.'
         description: Use the star allele (*) for overlapping alleles or set to missing (.) [*]
       - names:
           - -c
@@ -632,7 +658,7 @@ subcommands:
       - names:
           - -m
           - --multiallelics
-        argument: '<-|+>[type]'
+        argument: '-|+TYPE'
         description: 'Split multiallelics (-) or join biallelics (+), type: snps|indels|both|any [both]'
       - names:
           - --no-version
@@ -701,6 +727,9 @@ subcommands:
         description: Buffer for sorting lines which changed position during realignment [1000]
   - name: plugin
     description: user-defined plugins
+    usage: |-
+      bcftools plugin <name> [OPTIONS] <file> [-- PLUGIN_OPTIONS]
+      bcftools +name [OPTIONS] <file>  [-- PLUGIN_OPTIONS]
     options:
       - names:
           - -e
@@ -752,12 +781,7 @@ subcommands:
       - names:
           - -O
           - --output-type
-        argument: u|b|v|z
-        description: 'u/b: un/compressed BCF, v/z: un/compressed VCF, 0-9: compression level [v]'
-      - names:
-          - -O
-          - --output-type
-        argument: u|b|v|z0-9
+        argument: u|b|v|z[0-9]
         description: 'u/b: un/compressed BCF, v/z: un/compressed VCF, 0-9: compression level [v]'
       - names:
           - --threads
@@ -785,12 +809,17 @@ subcommands:
         description: Print version string and exit
   - name: query
     description: transform VCF/BCF into user-defined formats
+    usage: bcftools query [options] <A.vcf.gz> [<B.vcf.gz> [...]]
     options:
       - names:
           - -e
           - --exclude
         argument: EXPR
         description: Exclude sites for which the expression is true (see man page for details)
+      - names:
+          - --force-samples
+        argument: ""
+        description: Only warn about unknown subset samples
       - names:
           - -f
           - --format
@@ -866,6 +895,7 @@ subcommands:
         description: Process multiple VCFs listed in the file
   - name: reheader
     description: modify VCF/BCF header, change sample names
+    usage: bcftools reheader [OPTIONS] <in.vcf.gz>
     options:
       - names:
           - -f
@@ -898,6 +928,7 @@ subcommands:
         description: use multithreading with <int> worker threads (BCF only) [0]
   - name: sort
     description: sort VCF/BCF file
+    usage: bcftools sort [OPTIONS] <FILE.vcf>
     options:
       - names:
           - -m
@@ -926,6 +957,7 @@ subcommands:
         description: temporary files [/tmp/bcftools.XXXXXX]
   - name: view
     description: VCF/BCF conversion, view, subset and filter VCF/BCF files
+    usage: bcftools view [options] <in.vcf.gz> [region1 [...]]
     options:
       - names:
           - -G
@@ -1033,6 +1065,7 @@ subcommands:
         description: Require one or more hom/het/missing genotype or, if prefixed with "^", exclude such sites
   - name: call
     description: SNP/indel calling
+    usage: bcftools call [options] <in.vcf.gz>
     options:
       - names:
           - --no-version
@@ -1180,6 +1213,7 @@ subcommands:
         description: Mutation rate (use bigger for greater sensitivity), use with -m [1.1e-3]
   - name: consensus
     description: create consensus sequence by applying VCF variants
+    usage: bcftools consensus [OPTIONS] <file.vcf.gz>
     options:
       - names:
           - --sample
@@ -1267,6 +1301,7 @@ subcommands:
         description: apply variants of the given sample
   - name: cnv
     description: HMM CNV calling
+    usage: bcftools cnv [OPTIONS] FILE.vcf
     options:
       - names:
           - -c
@@ -1370,6 +1405,7 @@ subcommands:
         description: P(x|y) transition probability [1e-9]
   - name: csq
     description: call variation consequences
+    usage: bcftools csq [OPTIONS] in.vcf
     options:
       - names:
           - -f
@@ -1483,6 +1519,7 @@ subcommands:
         description: Verbosity level 0-2 [1]
   - name: filter
     description: filter VCF/BCF files using fixed thresholds
+    usage: bcftools filter [options] <in.vcf.gz>
     options:
       - names:
           - -e
@@ -1504,6 +1541,19 @@ subcommands:
           - --include
         argument: EXPR
         description: Include only sites for which the expression is true (see man page for details
+      - names:
+          - --mask
+        argument: '[^]REGION'
+        description: Soft filter regions, "^" to negate
+      - names:
+          - -M
+          - --mask-file
+        argument: '[^]FILE'
+        description: Soft filter regions listed in a file, "^" to negate
+      - names:
+          - --mask-overlap
+        argument: 0|1|2
+        description: Mask if POS in the region (0), record overlaps (1), variant overlaps (2) [1]
       - names:
           - -m
           - --mode
@@ -1567,10 +1617,11 @@ subcommands:
         description: Use multithreading with <int> worker threads [0]
   - name: gtcheck
     description: check sample concordance, detect sample swaps and contamination
+    usage: bcftools gtcheck [options] [-g <genotypes.vcf.gz>] <query.vcf.gz>
     options:
       - names:
           - --distinctive-sites
-        argument: ""
+        argument: NUM[,MEM[,TMP]]
         description: Find sites that can distinguish between at least NUM sample pairs.
       - names:
           - --dry-run
@@ -1654,6 +1705,7 @@ subcommands:
         description: Which tag to use in the query file (TAG1) and the -g file (TAG2) [PL,GT]
   - name: mpileup
     description: multi-way pileup producing genotype likelihoods
+    usage: bcftools mpileup [options] in1.bam [in2.bam [...]]
     options:
       - names:
           - "-6"
@@ -1742,20 +1794,30 @@ subcommands:
         argument: ""
         description: Ignore RG tags (one BAM = one sample)
       - names:
-          - --rf
-          - --incl-flags
-        argument: "STR|INT"
-        description: 'Required flags: skip reads with mask bits unset []'
+          - --ls
+          - --skip-all-set
+        argument: STR|INT
+        description: Skip reads with all of the bits set []
       - names:
-          - --ff
-          - --excl-flags
-        argument: "STR|INT"
-        description: 'Filter flags: skip reads with mask bits set [UNMAP,SECONDARY,QCFAIL,DUP]'
+          - --ns
+          - --skip-any-set
+        argument: STR|INT
+        description: Skip reads with any of the bits set [UNMAP,SECONDARY,QCFAIL,DUP]
+      - names:
+          - --lu
+          - --skip-all-unset
+        argument: STR|INT
+        description: Skip reads with all of the bits unset []
+      - names:
+          - --nu
+          - --skip-any-unset
+        argument: STR|INT
+        description: Skip reads with any of the bits unset []
       - names:
           - -s
           - --samples
         argument: LIST
-        description: comma separated list of samples to include
+        description: Comma separated list of samples to include
       - names:
           - -S
           - --samples-file
@@ -1784,7 +1846,7 @@ subcommands:
           - -a
           - --annotate
         argument: LIST
-        description: Optional tags to output; '?' to list available tags []
+        description: Optional tags to output; '\?' to list available tags []
       - names:
           - -g
           - --gvcf
@@ -1883,12 +1945,18 @@ subcommands:
         description: Approximate maximum indel size considered [110]
   - name: polysomy
     description: detect number of chromosomal copies
+    usage: bcftools polysomy [OPTIONS] FILE.vcf
     options:
       - names:
           - -o
           - --output-dir
         argument: PATH
-        description: -r, --regions REGION Restrict to comma-separated list of regions
+        description: Output directory
+      - names:
+          - -r
+          - --regions
+        argument: REGION
+        description: Restrict to comma-separated list of regions
       - names:
           - -R
           - --regions-file
@@ -1949,6 +2017,7 @@ subcommands:
         description: Peak symmetry threshold (0-1, larger is stricter) [0.5]
   - name: roh
     description: identify runs of autozygosity (HMM)
+    usage: bcftools roh [options] <in.vcf.gz>
     options:
       - names:
           - --AF-dflt
@@ -1971,7 +2040,7 @@ subcommands:
           - -e
           - --estimate-AF
         argument: '[TAG],<file>'
-        description: estimate AF from FORMAT/TAG (GT or PL) of all samples ("-") or samples listed
+        description: estimate AF from FORMAT/TAG (GT or PL) of all samples ("-") or samples listed in <file>.
       - names:
           - --exclude
         argument: <expr>
@@ -2003,7 +2072,7 @@ subcommands:
           - -m
           - --genetic-map
         argument: <file>
-        description: genetic map in IMPUTE2 format, single file or mask, where string "{CHROM}"
+        description: genetic map in IMPUTE2 format, single file or mask, where string "{CHROM}" is replaced with chromosome name
       - names:
           - -M
           - --rec-rate
@@ -2078,6 +2147,7 @@ subcommands:
         description: estimate HMM parameters, <float> is the convergence threshold, e.g. 1e-10 (experimental)
   - name: stats
     description: produce VCF/BCF stats
+    usage: bcftools stats [options] <A.vcf.gz> [<B.vcf.gz>]
     options:
       - names:
           - --af-bins
@@ -2184,7 +2254,7 @@ subcommands:
           - --verbose
         argument: ""
         description: Produce verbose per-site and per-sample output
-version: '1.15'
+version: bcftools 1.16
 tldr: |
   > Tools for variant calling and manipulating VCFs and BCFs
 

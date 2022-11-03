@@ -14,8 +14,8 @@ complete -c sort -s "r" -l "reverse" -d "reverse the result of comparisons"
 complete -c sort -l "sort" -d "sort according to WORD: general-numeric -g, human-numeric -h, month -M, numeric -n, random -R, version -V" -x
 complete -c sort -s "V" -l "version-sort" -d "natural sort of (version) numbers within text"
 complete -c sort -l "batch-size" -d "merge at most NMERGE inputs at once; for more use temp files" -r
-complete -c sort -s "c" -l "check" -l "check" -d "check for sorted input; do not sort" -x
-complete -c sort -s "C" -l "check" -l "check" -d "like -c, but do not report first bad line" -x
+complete -c sort -s "c" -l "check" -d "check for sorted input; do not sort" -x
+complete -c sort -s "C" -l "check" -d "like -c, but do not report first bad line" -x
 complete -c sort -l "compress-program" -d "compress temporaries with PROG; decompress them with PROG -d" -x
 complete -c sort -l "debug" -d "annotate the part of the line used to sort, and warn about questionable usage to stderr"
 complete -c sort -l "files0-from" -d "read input from the files specified by NUL-terminated names in file F; If F is - then read names from standard input" -r

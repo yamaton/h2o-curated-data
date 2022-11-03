@@ -1,5 +1,6 @@
 name: yt-dlp
 description: yt-dlp
+usage: yt-dlp [OPTIONS] URL [URL...]
 options:
   - names:
       - -h
@@ -14,7 +15,11 @@ options:
       - -U
       - --update
     argument: ""
-    description: Update this program to latest version
+    description: Check if updates are available. You installed yt-dlp with pip or using the wheel from PyPi; Use that to update
+  - names:
+      - --no-update
+    argument: ""
+    description: Do not check for updates (default)
   - names:
       - -i
       - --ignore-errors
@@ -41,13 +46,13 @@ options:
     argument: ""
     description: Output descriptions of all supported extractors and exit
   - names:
-      - --force-generic-extractor
-    argument: ""
-    description: Force extraction to use the generic extractor
+      - --use-extractors
+    argument: NAMES
+    description: 'Extractor names to use separated by commas. You can also use regexes, "all", "default" and "end" (end URL matching); e.g. --ies "holodex.*,end,youtube". Prefix the name with a "-" to exclude it, e.g. --ies default,-generic. Use --list-extractors for a list of extractor names. (Alias: --ies)'
   - names:
       - --default-search
     argument: PREFIX
-    description: Use this prefix for unqualified URLs. For example "gvsearch2:" downloads two videos from google videos for the search term "large apple". Use the value "auto" to let yt-dlp guess ("auto_warning" to emit a warning when guessing). "error" just throws an error. The default value "fixup_error" repairs broken URLs, but emits an error if this is not possible instead of searching
+    description: Use this prefix for unqualified URLs. E.g. "gvsearch2:python" downloads two videos from google videos for the search term "python". Use the value "auto" to let yt-dlp guess ("auto_warning" to emit a warning when guessing). "error" just throws an error. The default value "fixup_error" repairs broken URLs, but emits an error if this is not possible instead of searching
   - names:
       - --ignore-config
     argument: ""
@@ -59,7 +64,7 @@ options:
   - names:
       - --config-locations
     argument: PATH
-    description: Location of the main configuration file; either the path to the config or its containing directory. Can be used multiple times and inside other configuration files
+    description: Location of the main configuration file; either the path to the config or its containing directory ("-" for stdin). Can be used multiple times and inside other configuration files
   - names:
       - --flat-playlist
     argument: ""
@@ -95,15 +100,19 @@ options:
   - names:
       - --no-colors
     argument: ""
-    description: Do not emit color codes in output
+    description: 'Do not emit color codes in output (Alias: --no-colours)'
   - names:
       - --compat-options
     argument: OPTS
     description: Options that can help keep compatibility with youtube-dl or youtube-dlc configurations by reverting some of the changes made in yt-dlp. See "Differences in default behavior" for details
   - names:
+      - --alias
+    argument: ALIASES OPTIONS
+    description: Create aliases for an option string. Unless an alias starts with a dash "-", it is prefixed with "--". Arguments are parsed according to the Python string formatting mini-language. E.g. --alias get-audio,-X "-S=aext:{0},abr -x --audio-format {0}" creates options "--get-audio" and "-X" that takes an argument (ARG0) and expands to "-S=aext:ARG0,abr -x --audio-format ARG0". All defined aliases are listed in the --help output. Alias options can trigger more aliases; so be careful to avoid defining recursive options. As a safety measure, each alias may be triggered a maximum of 100 times. This option can be used multiple times
+  - names:
       - --proxy
     argument: URL
-    description: Use the specified HTTP/HTTPS/SOCKS proxy. To enable SOCKS proxy, specify a proper scheme. For example socks5://user:pass@127.0.0.1:1080/. Pass in an empty string (--proxy "") for direct connection
+    description: Use the specified HTTP/HTTPS/SOCKS proxy. To enable SOCKS proxy, specify a proper scheme, e.g. socks5://user:pass@127.0.0.1:1080/. Pass in an empty string (--proxy "") for direct connection
   - names:
       - --socket-timeout
     argument: SECONDS
@@ -143,29 +152,22 @@ options:
     argument: IP_BLOCK
     description: Force bypass geographic restriction with explicitly provided IP block in CIDR notation
   - names:
-      - --playlist-start
-    argument: NUMBER
-    description: Playlist video to start at (default is 1)
-  - names:
-      - --playlist-end
-    argument: NUMBER
-    description: Playlist video to end at (default is last)
-  - names:
+      - -I
       - --playlist-items
     argument: ITEM_SPEC
-    description: 'Playlist video items to download. Specify indices of the videos in the playlist separated by commas like: "--playlist-items 1,2,5,8" if you want to download videos indexed 1, 2, 5, 8 in the playlist. You can specify range: "--playlist-items 1-3,7,10-13", it will download the videos at index 1, 2, 3, 7, 10, 11, 12 and 13'
+    description: Comma separated playlist_index of the videos to download. You can specify a range using "[START]:[STOP][:STEP]". For backward compatibility, START-STOP is also supported. Use negative indices to count from the right and negative STEP to download in reverse order. E.g. "-I 1:3,7,-5::2" used on a playlist of size 15 will download the videos at index 1,2,3,7,11,13,15
   - names:
       - --min-filesize
     argument: SIZE
-    description: Do not download any videos smaller than SIZE (e.g. 50k or 44.6m)
+    description: Do not download any videos smaller than SIZE, e.g. 50k or 44.6M
   - names:
       - --max-filesize
     argument: SIZE
-    description: Do not download any videos larger than SIZE (e.g. 50k or 44.6m)
+    description: Do not download any videos larger than SIZE, e.g. 50k or 44.6M
   - names:
       - --date
     argument: DATE
-    description: 'Download only videos uploaded on this date. The date can be "YYYYMMDD" or in the format [now|today|yesterday][-N[day|week|month|year]]. Eg: --date today-2weeks'
+    description: Download only videos uploaded on this date. The date can be "YYYYMMDD" or in the format [now|today|yesterday][-N[day|week|month|year]]. E.g. --date today-2weeks
   - names:
       - --datebefore
     argument: DATE
@@ -177,7 +179,7 @@ options:
   - names:
       - --match-filters
     argument: FILTER
-    description: 'Generic video filter. Any field (see "OUTPUT TEMPLATE") can be compared with a number or a string using the operators defined in "Filtering formats". You can also simply specify a field to match if the field is present, use "!field" to check if the field is not present, and "&" to check multiple conditions. Use a "\" to escape "&" or quotes if needed. If used multiple times, the filter matches if atleast one of the conditions are met. Eg: --match-filter !is_live --match-filter "like_count>?100 & description~=''(?i)\bcats \& dogs\b''" matches only videos that are not live OR those that have a like count more than 100 (or the like field is not available) and also has a description that contains the phrase "cats & dogs" (ignoring case). Use "--match-filter -" to interactively ask whether to download each video'
+    description: Generic video filter. Any "OUTPUT TEMPLATE" field can be compared with a number or a string using the operators defined in "Filtering Formats". You can also simply specify a field to match if the field is present, use "!field" to check if the field is not present, and "&" to check multiple conditions. Use a "\" to escape "&" or quotes if needed. If used multiple times, the filter matches if atleast one of the conditions are met. E.g. --match-filter !is_live --match-filter "like_count>?100 & description~='(?i)\bcats \& dogs\b'" matches only videos that are not live OR those that have a like count more than 100 (or the like field is not available) and also has a description that contains the phrase "cats & dogs" (caseless). Use "--match-filter -" to interactively ask whether to download each video
   - names:
       - --no-match-filter
     argument: ""
@@ -217,7 +219,7 @@ options:
   - names:
       - --break-per-input
     argument: ""
-    description: Make --break-on-existing, --break-on-reject and --max-downloads act only on the current input URL
+    description: --break-on-existing, --break-on-reject, --max-downloads, and autonumber resets per input URL
   - names:
       - --no-break-per-input
     argument: ""
@@ -235,11 +237,11 @@ options:
       - -r
       - --limit-rate
     argument: RATE
-    description: Maximum download rate in bytes per second (e.g. 50K or 4.2M)
+    description: Maximum download rate in bytes per second, e.g. 50K or 4.2M
   - names:
       - --throttled-rate
     argument: RATE
-    description: Minimum download rate in bytes per second below which throttling is assumed and the video data is re-extracted (e.g. 100K)
+    description: Minimum download rate in bytes per second below which throttling is assumed and the video data is re-extracted, e.g. 100K
   - names:
       - -R
       - --retries
@@ -254,13 +256,17 @@ options:
     argument: RETRIES
     description: Number of retries for a fragment (default is 10), or "infinite" (DASH, hlsnative and ISM)
   - names:
+      - --retry-sleep
+    argument: '[TYPE:]EXPR'
+    description: Time to sleep between retries in seconds (optionally) prefixed by the type of retry (http (default), fragment, file_access, extractor) to apply the sleep to. EXPR can be a number, linear=START[:END[:STEP=1]] or exp=START[:END[:BASE=2]]. This option can be used multiple times to set the sleep for the different retry types, e.g. --retry-sleep linear=1::2 --retry-sleep fragment:exp=1:20
+  - names:
       - --skip-unavailable-fragments
     argument: ""
-    description: 'Skip unavailable fragments for DASH, hlsnative and ISM (default) (Alias: --no-abort-on-unavailable-fragment)'
+    description: 'Skip unavailable fragments for DASH, hlsnative and ISM downloads (default) (Alias: --no-abort-on-unavailable-fragment)'
   - names:
       - --abort-on-unavailable-fragment
     argument: ""
-    description: 'Abort downloading if a fragment is unavailable (Alias: --no-skip-unavailable-fragments)'
+    description: 'Abort download if a fragment is unavailable (Alias: --no-skip-unavailable-fragments)'
   - names:
       - --keep-fragments
     argument: ""
@@ -272,7 +278,7 @@ options:
   - names:
       - --buffer-size
     argument: SIZE
-    description: Size of download buffer (e.g. 1024 or 16K) (default is 1024)
+    description: Size of download buffer, e.g. 1024 or 16K (default is 1024)
   - names:
       - --resize-buffer
     argument: ""
@@ -284,19 +290,19 @@ options:
   - names:
       - --http-chunk-size
     argument: SIZE
-    description: Size of a chunk for chunk-based HTTP downloading (e.g. 10485760 or 10M) (default is disabled). May be useful for bypassing bandwidth throttling imposed by a webserver (experimental)
-  - names:
-      - --playlist-reverse
-    argument: ""
-    description: Download playlist videos in reverse order
-  - names:
-      - --no-playlist-reverse
-    argument: ""
-    description: Download playlist videos in default order (default)
+    description: Size of a chunk for chunk-based HTTP downloading, e.g. 10485760 or 10M (default is disabled). May be useful for bypassing bandwidth throttling imposed by a webserver (experimental)
   - names:
       - --playlist-random
     argument: ""
     description: Download playlist videos in random order
+  - names:
+      - --lazy-playlist
+    argument: ""
+    description: Process entries in the playlist as they are received. This disables n_entries, --playlist-random and --playlist-reverse
+  - names:
+      - --no-lazy-playlist
+    argument: ""
+    description: Process videos in the playlist only after the entire playlist is parsed (default)
   - names:
       - --xattr-set-filesize
     argument: ""
@@ -310,9 +316,13 @@ options:
     argument: ""
     description: Do not use the mpegts container for HLS videos. This is default when not downloading live streams
   - names:
+      - --download-sections
+    argument: REGEX
+    description: Download only chapters whose title matches the given regular expression. Time ranges prefixed by a "*" can also be used in place of chapters to download the specified range. Needs ffmpeg. This option can be used multiple times to download multiple sections, e.g. --download-sections "*10:15-inf" --download-sections "intro"
+  - names:
       - --downloader
     argument: '[PROTO:]NAME'
-    description: 'Name or path of the external downloader to use (optionally) prefixed by the protocols (http, ftp, m3u8, dash, rstp, rtmp, mms) to use it for. Currently supports native, aria2c, avconv, axel, curl, ffmpeg, httpie, wget. You can use this option multiple times to set different downloaders for different protocols. For example, --downloader aria2c --downloader "dash,m3u8:native" will use aria2c for http/ftp downloads, and the native downloader for dash/m3u8 downloads (Alias: --external-downloader)'
+    description: 'Name or path of the external downloader to use (optionally) prefixed by the protocols (http, ftp, m3u8, dash, rstp, rtmp, mms) to use it for. Currently supports native, aria2c, avconv, axel, curl, ffmpeg, httpie, wget. You can use this option multiple times to set different downloaders for different protocols. E.g. --downloader aria2c --downloader "dash,m3u8:native" will use aria2c for http/ftp downloads, and the native downloader for dash/m3u8 downloads (Alias: --external-downloader)'
   - names:
       - --downloader-args
     argument: NAME:ARGS
@@ -339,7 +349,7 @@ options:
   - names:
       - --output-na-placeholder
     argument: TEXT
-    description: 'Placeholder value for unavailable meta fields in output filename template (default: "NA")'
+    description: 'Placeholder for unavailable fields in "OUTPUT TEMPLATE" (default: "NA")'
   - names:
       - --restrict-filenames
     argument: ""
@@ -452,8 +462,8 @@ options:
     description: Do not read/dump cookies from/to file (default)
   - names:
       - --cookies-from-browser
-    argument: BROWSER[+KEYRING][:PROFILE]
-    description: 'The name of the browser and (optionally) the name/path of the profile to load cookies from, separated by a ":". Currently supported browsers are: brave, chrome, chromium, edge, firefox, opera, safari, vivaldi. By default, the most recently accessed profile is used. The keyring used for decrypting Chromium cookies on Linux can be (optionally) specified after the browser name separated by a "+". Currently supported keyrings are: basictext, gnomekeyring, kwallet'
+    argument: BROWSER[+KEYRING][:PROFILE][::CONTAINER]
+    description: 'The name of the browser to load cookies from. Currently supported browsers are: brave, chrome, chromium, edge, firefox, opera, safari, vivaldi. Optionally, the KEYRING used for decrypting Chromium cookies on Linux, the name/path of the PROFILE to load cookies from, and the CONTAINER name (if Firefox) ("none" for no container) can be given with their respective seperators. By default, all containers of the most recently accessed profile are used. Currently supported keyrings are: basictext, gnomekeyring, kwallet'
   - names:
       - --no-cookies-from-browser
     argument: ""
@@ -461,7 +471,7 @@ options:
   - names:
       - --cache-dir
     argument: DIR
-    description: Location in the filesystem where youtube-dl can store some downloaded information (such as client ids and signatures) permanently. By default $XDG_CACHE_HOME/yt-dlp or ~/.cache/yt-dlp
+    description: Location in the filesystem where yt-dlp can store some downloaded information (such as client ids and signatures) permanently. By default ${XDG_CACHE_HOME}/yt-dlp
   - names:
       - --no-cache-dir
     argument: ""
@@ -574,7 +584,7 @@ options:
   - names:
       - --progress-template
     argument: '[TYPES:]TEMPLATE'
-    description: 'Template for progress outputs, optionally prefixed with one of "download:" (default), "download-title:" (the console title), "postprocess:", or "postprocess-title:". The video''s fields are accessible under the "info" key and the progress attributes are accessible under "progress" key. E.g.: --console-title --progress-template "download-title:%(info.id)s-%(progress.eta)s"'
+    description: Template for progress outputs, optionally prefixed with one of "download:" (default), "download-title:" (the console title), "postprocess:", or "postprocess-title:". The video's fields are accessible under the "info" key and the progress attributes are accessible under "progress" key. E.g. --console-title --progress-template "download-title:%(info.id)s-%(progress.eta)s"
   - names:
       - -v
       - --verbose
@@ -645,11 +655,11 @@ options:
   - names:
       - --format-sort-force
     argument: ""
-    description: Force user specified sort order to have precedence over all fields, see "Sorting Formats" for more details
+    description: 'Force user specified sort order to have precedence over all fields, see "Sorting Formats" for more details (Alias: --S-force)'
   - names:
       - --no-format-sort-force
     argument: ""
-    description: Some fields have precedence over the user specified sort order (default), see "Sorting Formats" for more details
+    description: Some fields have precedence over the user specified sort order (default)
   - names:
       - --video-multistreams
     argument: ""
@@ -694,7 +704,7 @@ options:
   - names:
       - --merge-output-format
     argument: FORMAT
-    description: If a merge is required (e.g. bestvideo+bestaudio), output to given container format. One of mkv, mp4, ogg, webm, flv. Ignored if no merge is required
+    description: 'Containers that may be used when merging formats, separated by "/", e.g. "mp4/mkv". Ignored if no merge is required. (currently supported: avi, flv, mkv, mov, mp4, webm)'
   - names:
       - --write-subs
     argument: ""
@@ -718,11 +728,11 @@ options:
   - names:
       - --sub-format
     argument: FORMAT
-    description: 'Subtitle format, accepts formats preference, for example: "srt" or "ass/srt/best"'
+    description: Subtitle format; accepts formats preference, e.g. "srt" or "ass/srt/best"
   - names:
       - --sub-langs
     argument: LANGS
-    description: 'Languages of the subtitles to download (can be regex) or "all" separated by commas. (Eg: --sub-langs "en.*,ja") You can prefix the language code with a "-" to exempt it from the requested languages. (Eg: --sub-langs all,-live_chat) Use --list-subs for a list of available language tags'
+    description: Languages of the subtitles to download (can be regex) or "all" separated by commas, e.g. --sub-langs "en.*,ja". You can prefix the language code with a "-" to exclude it from the requested languages, e.g. --sub-langs all,-live_chat. Use --list-subs for a list of available language tags
   - names:
       - -u
       - --username
@@ -778,7 +788,7 @@ options:
   - names:
       - --client-certificate-password
     argument: PASSWORD
-    description: Password for client certificate private key, if encrypted. If not provided and the key is encrypted, yt-dlp will ask interactively
+    description: Password for client certificate private key, if encrypted. If not provided, and the key is encrypted, yt-dlp will ask interactively
   - names:
       - -x
       - --extract-audio
@@ -787,7 +797,7 @@ options:
   - names:
       - --audio-format
     argument: FORMAT
-    description: 'Specify audio format to convert the audio to when -x is used. Currently supported formats are: best (default) or one of aac, flac, mp3, m4a, opus, vorbis, wav, alac'
+    description: 'Format to convert the audio to when -x is used. (currently supported: best (default), aac, alac, flac, m4a, mp3, opus, vorbis, wav). You can specify multiple rules using similar syntax as --remux-video'
   - names:
       - --audio-quality
     argument: QUALITY
@@ -795,15 +805,15 @@ options:
   - names:
       - --remux-video
     argument: FORMAT
-    description: 'Remux the video into another container if necessary (currently supported: mp4, mkv, flv, webm, mov, avi, mka, ogg, aac, flac, mp3, m4a, opus, vorbis, wav, alac). If target container does not support the video/audio codec, remuxing will fail. You can specify multiple rules; Eg. "aac>m4a/mov>mp4/mkv" will remux aac to m4a, mov to mp4 and anything else to mkv.'
+    description: 'Remux the video into another container if necessary (currently supported: avi, flv, mkv, mov, mp4, webm, aac, aiff, alac, flac, m4a, mka, mp3, ogg, opus, vorbis, wav). If target container does not support the video/audio codec, remuxing will fail. You can specify multiple rules; e.g. "aac>m4a/mov>mp4/mkv" will remux aac to m4a, mov to mp4 and anything else to mkv'
   - names:
       - --recode-video
     argument: FORMAT
-    description: Re-encode the video into another format if re-encoding is necessary. The syntax and supported formats are the same as --remux-video
+    description: Re-encode the video into another format if necessary. The syntax and supported formats are the same as --remux-video
   - names:
       - --postprocessor-args
     argument: NAME:ARGS
-    description: 'Give these arguments to the postprocessors. Specify the postprocessor/executable name and the arguments separated by a colon ":" to give the argument to the specified postprocessor/executable. Supported PP are: Merger, ModifyChapters, SplitChapters, ExtractAudio, VideoRemuxer, VideoConvertor, Metadata, EmbedSubtitle, EmbedThumbnail, SubtitlesConvertor, ThumbnailsConvertor, FixupStretched, FixupM4a, FixupM3u8, FixupTimestamp and FixupDuration. The supported executables are: AtomicParsley, FFmpeg and FFprobe. You can also specify "PP+EXE:ARGS" to give the arguments to the specified executable only when being used by the specified postprocessor. Additionally, for ffmpeg/ffprobe, "_i"/"_o" can be appended to the prefix optionally followed by a number to pass the argument before the specified input/output file. Eg: --ppa "Merger+ffmpeg_i1:-v quiet". You can use this option multiple times to give different arguments to different postprocessors. (Alias: --ppa)'
+    description: 'Give these arguments to the postprocessors. Specify the postprocessor/executable name and the arguments separated by a colon ":" to give the argument to the specified postprocessor/executable. Supported PP are: Merger, ModifyChapters, SplitChapters, ExtractAudio, VideoRemuxer, VideoConvertor, Metadata, EmbedSubtitle, EmbedThumbnail, SubtitlesConvertor, ThumbnailsConvertor, FixupStretched, FixupM4a, FixupM3u8, FixupTimestamp and FixupDuration. The supported executables are: AtomicParsley, FFmpeg and FFprobe. You can also specify "PP+EXE:ARGS" to give the arguments to the specified executable only when being used by the specified postprocessor. Additionally, for ffmpeg/ffprobe, "_i"/"_o" can be appended to the prefix optionally followed by a number to pass the argument before the specified input/output file, e.g. --ppa "Merger+ffmpeg_i1:-v quiet". You can use this option multiple times to give different arguments to different postprocessors. (Alias: --ppa)'
   - names:
       - -k
       - --keep-video
@@ -896,11 +906,11 @@ options:
   - names:
       - --convert-subs
     argument: FORMAT
-    description: 'Convert the subtitles to another format (currently supported: srt, vtt, ass, lrc) (Alias: --convert-subtitles)'
+    description: 'Convert the subtitles to another format (currently supported: ass, lrc, srt, vtt) (Alias: --convert-subtitles)'
   - names:
       - --convert-thumbnails
     argument: FORMAT
-    description: 'Convert the thumbnails to another format (currently supported: jpg, png, webp)'
+    description: 'Convert the thumbnails to another format (currently supported: jpg, png, webp). You can specify multiple rules using similar syntax as --remux-video'
   - names:
       - --split-chapters
     argument: ""
@@ -912,7 +922,7 @@ options:
   - names:
       - --remove-chapters
     argument: REGEX
-    description: 'Remove chapters whose title matches the given regular expression. Time ranges prefixed by a "*" can also be used in place of chapters to remove the specified range. Eg: --remove-chapters "*10:15-15:00" --remove-chapters "intro". This option can be used multiple times'
+    description: Remove chapters whose title matches the given regular expression. The syntax is the same as --download-sections. This option can be used multiple times
   - names:
       - --no-remove-chapters
     argument: ""
@@ -920,7 +930,7 @@ options:
   - names:
       - --force-keyframes-at-cuts
     argument: ""
-    description: Force keyframes around the chapters before removing/splitting them. Requires a re-encode and thus is very slow, but the resulting video may have fewer artifacts around the cuts
+    description: Force keyframes at cuts when downloading/splitting/removing sections. This is slow due to needing a re-encode, but the resulting video may have fewer artifacts around the cuts
   - names:
       - --no-force-keyframes-at-cuts
     argument: ""
@@ -932,7 +942,7 @@ options:
   - names:
       - --sponsorblock-mark
     argument: CATS
-    description: 'SponsorBlock categories to create chapters for, separated by commas. Available categories are all, default(=all), sponsor, intro, outro, selfpromo, preview, filler, interaction, music_offtopic, poi_highlight. You can prefix the category with a "-" to exempt it. See [1] for description of the categories. Eg: --sponsorblock-mark all,-preview [1] https://wiki.sponsor.ajay.app/w/Segment_Categories'
+    description: SponsorBlock categories to create chapters for, separated by commas. Available categories are sponsor, intro, outro, selfpromo, preview, filler, interaction, music_offtopic, poi_highlight, all and default (=all). You can prefix the category with a "-" to exclude it. See [1] for description of the categories. E.g. --sponsorblock-mark all,-preview [1] https://wiki.sponsor.ajay.app/w/Segment_Categories
   - names:
       - --sponsorblock-remove
     argument: CATS
@@ -940,7 +950,7 @@ options:
   - names:
       - --sponsorblock-chapter-title
     argument: TEMPLATE
-    description: 'The title template for SponsorBlock chapters created by --sponsorblock-mark. The same syntax as the output template is used, but the only available fields are start_time, end_time, category, categories, name, category_names. Defaults to "[SponsorBlock]: %(category_names)l"'
+    description: 'An output template for the title of the SponsorBlock chapters created by --sponsorblock-mark. The only available fields are start_time, end_time, category, categories, name, category_names. Defaults to "[SponsorBlock]: %(category_names)l"'
   - names:
       - --no-sponsorblock
     argument: ""
@@ -971,9 +981,9 @@ options:
     description: Do not split HLS playlists to different formats at discontinuities such as ad breaks (default)
   - names:
       - --extractor-args
-    argument: KEY:ARGS
-    description: Pass these arguments to the extractor. See "EXTRACTOR ARGUMENTS" for details. You can use this option multiple times to give arguments for different extractors
-version: '2022.05.18'
+    argument: IE_KEY:ARGS
+    description: Pass ARGS arguments to the IE_KEY extractor. See "EXTRACTOR ARGUMENTS" for details. You can use this option multiple times to give arguments for different extractors
+version: 2022.10.04
 tldr: |
   > A youtube-dl fork with additional features and fixes.
   > Download videos from YouTube and other websites.
@@ -983,15 +993,15 @@ tldr: |
 
   `yt-dlp "{{https://www.youtube.com/watch?v=oHg5SJYRHA0}}"`
 
-  - Download a video with a defined format. In this case merging the best video format with the best audio format (Default):
+  - Download a video with a defined format, in this case the best mp4 video available (default is "bv\*+ba/b"):
 
-  `yt-dlp --format "{{bv*+ba/b}}" "{{https://www.youtube.com/watch?v=oHg5SJYRHA0}}"`
+  `yt-dlp --format "{{bv*[ext=mp4]+ba[ext=m4a]/b[ext=mp4]}}" "{{https://www.youtube.com/watch?v=oHg5SJYRHA0}}"`
 
   - Extract audio from videos (required ffmpeg or ffprobe):
 
   `yt-dlp --extract-audio "{{https://www.youtube.com/watch?v=oHg5SJYRHA0}}"`
 
-  - Specify audio format of extracted audio (best(default), aac, flac, mp3, m4a, opus, vorbis, wav, alac):
+  - Specify audio format of extracted audio (the default is "best"):
 
   `yt-dlp --extract-audio --audio-format {{mp3}} "{{https://www.youtube.com/watch?v=oHg5SJYRHA0}}"`
 

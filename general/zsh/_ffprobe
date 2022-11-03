@@ -15,61 +15,439 @@ function _ffprobe {
  
 
     _arguments -C \
-        '-L[Show license.]' \
-        {-h,-?,-help,--help}'[Show help. An optional parameter may be specified to print help about a specific item. If no argument is specified, only basic (non advanced) tool options are shown.]' \
-        '-version[Show version.]' \
-        '-formats[Show available formats (including devices).]' \
-        '-demuxers[Show available demuxers.]' \
-        '-muxers[Show available muxers.]' \
-        '-devices[Show available devices.]' \
-        '-codecs[Show all codecs known to libavcodec.]' \
-        '-decoders[Show available decoders.]' \
-        '-encoders[Show all available encoders.]' \
-        '-bsfs[Show available bitstream filters.]' \
-        '-protocols[Show available protocols.]' \
-        '-filters[Show available libavfilter filters.]' \
-        '-pix_fmts[Show available pixel formats.]' \
-        '-sample_fmts[Show available sample formats.]' \
-        '-layouts[Show channel names and standard channel layouts.]' \
-        '-colors[Show recognized color names.]' \
-        '-sources[Show autodetected sources of the input device.  Some devices may provide system-dependent source names that cannot be autodetected.  The returned list cannot be assumed to be always complete.]' \
-        '-sinks[Show autodetected sinks of the output device.  Some devices may provide system-dependent sink names that cannot be autodetected.  The returned list cannot be assumed to be always complete.]' \
-        {-loglevel,-v}'[Set logging level and flags used by the library.]' \
-        '-report[Dump full command line and log output to a file named "program-YYYYMMDD-HHMMSS.log" in the current directory.  This file can be useful for bug reports.  It also implies "-loglevel debug".]' \
-        '-hide_banner[Suppress printing banner.]' \
-        '-cpuflags[Allows setting and clearing cpu flags. This option is intended for testing. Do not use it unless you know what you'\''re doing.]' \
-        '-cpuflags[Allows setting and clearing cpu flags. This option is intended for testing. Do not use it unless you know what you'\''re doing.]' \
-        '-f[Force format to use.]' \
-        '-unit[Show the unit of the displayed values.]' \
-        '-prefix[Use SI prefixes for the displayed values.  Unless the "-byte_binary_prefix" option is used all the prefixes are decimal.]' \
-        '-byte_binary_prefix[Force the use of binary prefixes for byte values.]' \
-        '-sexagesimal[Use sexagesimal format HH:MM:SS.MICROSECONDS for time values.]' \
-        '-pretty[Prettify the format of the displayed values, it corresponds to the options "-unit -prefix -byte_binary_prefix -sexagesimal".]' \
-        {-of,-print_format}'[Set the output printing format.]' \
-        '-sections[Print sections structure and section information, and exit. The output is not meant to be parsed by a machine.]' \
-        '-select_streams[Select only the streams specified by stream_specifier. This option affects only the options related to streams (e.g. "show_streams", "show_packets", etc.).]' \
-        '-show_data[Show payload data, as a hexadecimal and ASCII dump. Coupled with -show_packets, it will dump the packets'\'' data. Coupled with -show_streams, it will dump the codec extradata.]' \
-        '-show_data_hash[Show a hash of payload data, for packets with -show_packets and for codec extradata with -show_streams.]' \
-        '-show_error[Show information about the error found when trying to probe the input.]' \
-        '-show_format[Show information about the container format of the input multimedia stream.]' \
-        '-show_format_entry[Like -show_format, but only prints the specified entry of the container format information, rather than all. This option may be given more than once, then all specified entries will be shown.]' \
-        '-show_entries[Set list of entries to show.]' \
-        '-show_packets[Show information about each packet contained in the input multimedia stream.]' \
-        '-show_frames[Show information about each frame and subtitle contained in the input multimedia stream.]' \
-        '-show_log[Show logging information from the decoder about each frame according to the value set in loglevel, (see "-loglevel"). This option requires "-show_frames".]' \
-        '-show_streams[Show information about each media stream contained in the input multimedia stream.]' \
-        '-show_programs[Show information about programs and their streams contained in the input multimedia stream.]' \
-        '-show_chapters[Show information about chapters stored in the format.]' \
-        '-count_frames[Count the number of frames per stream and report it in the corresponding stream section.]' \
-        '-count_packets[Count the number of packets per stream and report it in the corresponding stream section.]' \
-        '-read_intervals[Read only the specified intervals. read_intervals must be a sequence of interval specifications separated by ",". ffprobe will seek to the interval starting point, and will continue reading from that.]' \
-        {-show_private_data,-private}'[Show private data, that is data depending on the format of the particular shown element.  This option is enabled by default, but you may need to disable it for specific uses, for example when creating XSD-compliant XML output.]' \
-        '-show_program_version[Show information related to program version.]' \
-        '-show_library_versions[Show information related to library versions.]' \
-        '-show_versions[Show information related to program and library versions. This is the equivalent of setting both -show_program_version and -show_library_versions options.]' \
-        '-show_pixel_formats[Show information about all pixel formats supported by FFmpeg.]' \
-        '-bitexact[Force bitexact output, useful to produce output which is not dependent on the specific build.]' \
-        '-i[Read input_url.]' \
+        '-L[show license]' \
+        '-h[show help]' \
+        '-?[show help]' \
+        '-help[show help]' \
+        '--help[show help]' \
+        '-version[show version]' \
+        '-buildconf[show build configuration]' \
+        '-formats[show available formats]' \
+        '-muxers[show available muxers]' \
+        '-demuxers[show available demuxers]' \
+        '-devices[show available devices]' \
+        '-codecs[show available codecs]' \
+        '-decoders[show available decoders]' \
+        '-encoders[show available encoders]' \
+        '-bsfs[show available bit stream filters]' \
+        '-protocols[show available protocols]' \
+        '-filters[show available filters]' \
+        '-pix_fmts[show available pixel formats]' \
+        '-layouts[show standard channel layouts]' \
+        '-sample_fmts[show available audio sample formats]' \
+        '-dispositions[show available stream dispositions]' \
+        '-colors[show available color names]' \
+        '-loglevel[set logging level]' \
+        '-v[set logging level]' \
+        '-report[generate a report]' \
+        '-max_alloc[set maximum size of a single allocated block]' \
+        '-cpuflags[force specific cpu flags]' \
+        '-cpucount[force specific cpu count]' \
+        '-hide_banner[do not show program banner]' \
+        '-sources[list sources of the input device]' \
+        '-sinks[list sinks of the output device]' \
+        '-f[force format]' \
+        '-unit[show unit of the displayed values]' \
+        '-prefix[use SI prefixes for the displayed values]' \
+        '-byte_binary_prefix[use binary prefixes for byte units]' \
+        '-sexagesimal[use sexagesimal format HOURS:MM:SS.MICROSECONDS for time units]' \
+        '-pretty[prettify the format of displayed values, make it more human readable]' \
+        '-print_format[set the output printing format (available formats are: default, compact, csv, flat, ini, json, xml)]' \
+        '-of[alias for -print_format]' \
+        '-select_streams[select the specified streams]' \
+        '-sections[print sections structure and section information, and exit]' \
+        '-show_data[show packets data]' \
+        '-show_data_hash[show packets data hash]' \
+        '-show_error[show probing error]' \
+        '-show_format[show format/container info]' \
+        '-show_frames[show frames info]' \
+        '-show_entries[show a set of specified entries]' \
+        '-show_log[show log]' \
+        '-show_packets[show packets info]' \
+        '-show_programs[show programs info]' \
+        '-show_streams[show streams info]' \
+        '-show_chapters[show chapters info]' \
+        '-count_frames[count the number of frames per stream]' \
+        '-count_packets[count the number of packets per stream]' \
+        '-show_program_version[show ffprobe version]' \
+        '-show_library_versions[show library versions]' \
+        '-show_versions[show program and library versions]' \
+        '-show_pixel_formats[show pixel format descriptions]' \
+        '-show_optional_fields[show optional fields]' \
+        '-show_private_data[show private data]' \
+        '-private[same as show_private_data]' \
+        '-bitexact[force bitexact output]' \
+        '-read_intervals[set read intervals]' \
+        '-i[read specified file]':file:_files \
+        '-o[write to specified output]':file:_files \
+        '-print_filename[override the printed input filename]':file:_files \
+        '-find_stream_info[read and decode the streams to fill missing information with heuristics]' \
+        '-avioflags[ED......... (default 0)]' \
+        '-probesize[.D......... set probing size (from 32 to I64_MAX) (default 5000000)]' \
+        '-formatprobesize[.D......... number of bytes to probe file format (from 0 to 2.14748e+09) (default 1048576)]' \
+        '-fflags[ED......... (default autobsf)]' \
+        '-seek2any[.D......... allow seeking to non-keyframes on demuxer level when supported (default false)]' \
+        '-analyzeduration[.D......... specify how many microseconds are analyzed to probe the input (from 0 to I64_MAX) (default 0)]' \
+        '-cryptokey[.D......... decryption key]' \
+        '-indexmem[.D......... max memory used for timestamp index (per stream) (from 0 to INT_MAX) (default 1048576)]' \
+        '-rtbufsize[.D......... max memory used for buffering real-time frames (from 0 to INT_MAX) (default 3041280)]' \
+        '-fdebug[ED......... print specific debug info (default 0)]' \
+        '-max_delay[ED......... maximum muxing or demuxing delay in microseconds (from -1 to INT_MAX) (default -1)]' \
+        '-fpsprobesize[.D......... number of frames used to probe fps (from -1 to 2.14748e+09) (default -1)]' \
+        '-f_err_detect[.D......... set error detection flags (deprecated; use err_detect, save via avconv) (default crccheck)]' \
+        '-err_detect[.D......... set error detection flags (default crccheck)]' \
+        '-use_wallclock_as_timestamps[.D......... use wallclock as timestamps (default false),-skip_initial_bytes <int64>   .D......... set number of bytes to skip before reading header and frames (from 0 to I64_MAX) (default 0)]' \
+        '-correct_ts_overflow[.D......... correct single timestamp overflows (default true)]' \
+        '-f_strict[ED......... how strictly to follow the standards (deprecated; use strict, save via avconv) (from INT_MIN to INT_MAX) (default normal)]' \
+        '-strict[ED......... how strictly to follow the standards (from INT_MIN to INT_MAX) (default normal)]' \
+        '-max_ts_probe[.D......... maximum number of packets to read while waiting for the first timestamp (from 0 to INT_MAX) (default 50)]' \
+        '-dump_separator[ED......... set information dump field separator (default ", ")]' \
+        '-codec_whitelist[.D......... List of decoders that are allowed to be used]' \
+        '-format_whitelist[.D......... List of demuxers that are allowed to be used]' \
+        '-protocol_whitelist[.D......... List of protocols that are allowed to be used]' \
+        '-protocol_blacklist[.D......... List of protocols that are not allowed to be used]' \
+        '-max_streams[.D......... maximum number of streams (from 0 to INT_MAX) (default 1000)]' \
+        '-skip_estimate_duration_from_pts[<boolean> .D......... skip duration calculation in estimate_timings_from_pts (default false)]' \
+        '-max_probe_packets[.D......... Maximum number of packets to probe a codec (from 0 to INT_MAX) (default 2500)]' \
+        '-rw_timeout[<int64> ED......... Timeout for IO operations (in microseconds) (from 0 to I64_MAX) (default 0)]' \
+        '-read_ahead_limit[.D......... Amount in bytes that may be read ahead when seeking isn'\''t supported, -1 for unlimited (from -1 to INT_MAX) (default 65536)]' \
+        '-key[ED......... AES encryption/decryption key]' \
+        '-iv[ED......... AES encryption/decryption initialization vector]' \
+        '-decryption_key[.D......... AES decryption key]' \
+        '-decryption_iv[.D......... AES decryption initialization vector]' \
+        '-ffrtmphttp_tls[.D......... Use a HTTPS tunneling connection (RTMPTS). (default false)]' \
+        '-follow[.D......... Follow a file as it is being written (from 0 to 1) (default 0)]' \
+        '-seekable[ED......... Sets if the file is seekable (from -1 to 0) (default -1)]' \
+        '-timeout[ED......... set timeout of socket I/O operations (from -1 to INT_MAX) (default -1)]' \
+        '-ftp-anonymous-password[ED......... password for anonymous login. E-mail address should be used.,-ftp-user          <string>   ED......... user for FTP login. Overridden by whatever is in the URL.]' \
+        '-ftp-password[ED......... password for FTP login. Overridden by whatever is in the URL.]' \
+        '-seekable[.D......... control seekability of connection (default auto)]' \
+        '-http_proxy[ED......... set HTTP proxy to tunnel through]' \
+        '-headers[ED......... set custom HTTP headers, can override built in default headers]' \
+        '-content_type[ED......... set a specific content type for the POST messages]' \
+        '-user_agent[.D......... override User-Agent header (default "Lavf/59.27.100")]' \
+        '-referer[.D......... override referer header]' \
+        '-multiple_requests[ED......... use persistent connections (default false)]' \
+        '-post_data[ED......... set custom HTTP post data]' \
+        '-cookies[.D......... set cookies to be sent in applicable future requests, use newline delimited Set-Cookie HTTP field value syntax]' \
+        '-icy[.D......... request ICY metadata (default true)]' \
+        '-auth_type[ED......... HTTP authentication type (from 0 to 1) (default none)]' \
+        '-location[ED......... The actual location of the data received]' \
+        '-offset[.D......... initial byte offset (from 0 to I64_MAX) (default 0)]' \
+        '-end_offset[.D......... try to limit the request to bytes preceding this offset (from 0 to I64_MAX) (default 0)]' \
+        '-method[ED......... Override the HTTP method or set the expected HTTP method from a client]' \
+        '-reconnect[.D......... auto reconnect after disconnect before EOF (default false)]' \
+        '-reconnect_at_eof[.D......... auto reconnect at EOF (default false)]' \
+        '-reconnect_on_network_error[.D......... auto reconnect in case of tcp/tls error during connect (default false),-reconnect_on_http_error <string>     .D......... list of http status codes to reconnect on,-reconnect_streamed <boolean>   .D......... auto reconnect streamed / non seekable streams (default false)]' \
+        '-reconnect_delay_max[.D......... max reconnect delay in seconds after which to give up (from 0 to 4294) (default 120)]' \
+        '-listen[ED......... listen on HTTP (from 0 to 2) (default 0)]' \
+        '-short_seek_size[.D......... Threshold to favor readahead over seek. (from 0 to INT_MAX) (default 0)]' \
+        '-rtmp_app[ED......... Name of application to connect to on the RTMP server]' \
+        '-rtmp_buffer[ED......... Set buffer time in milliseconds. The default is 3000. (from 0 to INT_MAX) (default 3000)]' \
+        '-rtmp_conn[ED......... Append arbitrary AMF data to the Connect message]' \
+        '-rtmp_flashver[ED......... Version of the Flash plugin used to run the SWF player.]' \
+        '-rtmp_live[.D......... Specify that the media is a live stream. (from INT_MIN to INT_MAX) (default any)]' \
+        '-rtmp_pageurl[.D......... URL of the web page in which the media was embedded. By default no value will be sent.]' \
+        '-rtmp_playpath[ED......... Stream identifier to play or to publish]' \
+        '-rtmp_subscribe[.D......... Name of live stream to subscribe to. Defaults to rtmp_playpath.]' \
+        '-rtmp_swfhash[.D......... SHA256 hash of the decompressed SWF file (32 bytes).]' \
+        '-rtmp_swfsize[.D......... Size of the decompressed SWF file, required for SWFVerification. (from 0 to INT_MAX) (default 0)]' \
+        '-rtmp_swfurl[ED......... URL of the SWF player. By default no value will be sent]' \
+        '-rtmp_swfverify[.D......... URL to player swf file, compute hash/size automatically.]' \
+        '-rtmp_tcurl[ED......... URL of the target stream. Defaults to proto://host\[:port\]/app.]' \
+        '-rtmp_listen[.D......... Listen for incoming rtmp connections (from INT_MIN to INT_MAX) (default 0)]' \
+        '-listen[.D......... Listen for incoming rtmp connections (from INT_MIN to INT_MAX) (default 0)]' \
+        '-tcp_nodelay[ED......... Use TCP_NODELAY to disable Nagle'\''s algorithm (from 0 to 1) (default 0)]' \
+        '-timeout[.D......... Maximum timeout (in seconds) to wait for incoming connections. -1 is infinite. Implies -rtmp_listen 1 (from INT_MIN to INT_MAX) (default -1)]' \
+        '-ttl[ED......... Time to live (multicast only) (from -1 to 255) (default -1)]' \
+        '-buffer_size[ED......... Send/Receive buffer size (in bytes) (from -1 to INT_MAX) (default -1)]' \
+        '-rtcp_port[ED......... Custom rtcp port (from -1 to INT_MAX) (default -1)]' \
+        '-local_rtpport[ED......... Local rtp port (from -1 to INT_MAX) (default -1)]' \
+        '-local_rtcpport[ED......... Local rtcp port (from -1 to INT_MAX) (default -1)]' \
+        '-connect[ED......... Connect socket (default false)]' \
+        '-write_to_source[ED......... Send packets to the source address of the latest received packet (default false)]' \
+        '-pkt_size[ED......... Maximum packet size (from -1 to INT_MAX) (default -1)]' \
+        '-dscp[ED......... DSCP class (from -1 to INT_MAX) (default -1)]' \
+        '-timeout[ED......... set timeout (in microseconds) of socket I/O operations (from -1 to I64_MAX) (default -1)]' \
+        '-sources[ED......... Source list]' \
+        '-block[ED......... Block list]' \
+        '-localaddr[ED......... Local address]' \
+        {-srtp_in_suite,-srtp_in_params}'[.D.........]' \
+        '-start[.D......... start offset (from 0 to I64_MAX) (default 0)]' \
+        '-end[.D......... end offset (from 0 to I64_MAX) (default 0)]' \
+        '-listen[ED......... Listen for incoming connections (from 0 to 2) (default 0)]' \
+        '-timeout[ED......... set timeout (in microseconds) of socket I/O operations (from -1 to INT_MAX) (default -1)]' \
+        '-listen_timeout[ED......... Connection awaiting timeout (in milliseconds) (from -1 to INT_MAX) (default -1)]' \
+        '-send_buffer_size[ED......... Socket send buffer size (in bytes) (from -1 to INT_MAX) (default -1)]' \
+        '-recv_buffer_size[ED......... Socket receive buffer size (in bytes) (from -1 to INT_MAX) (default -1)]' \
+        '-tcp_nodelay[ED......... Use TCP_NODELAY to disable nagle'\''s algorithm (default false)]' \
+        '-tcp_mss[ED......... Maximum segment size for outgoing TCP packets (from -1 to INT_MAX) (default -1)]' \
+        '-ca_file[ED......... Certificate Authority database file]' \
+        '-cafile[ED......... Certificate Authority database file]' \
+        '-tls_verify[ED......... Verify the peer certificate (from 0 to 1) (default 0)]' \
+        '-cert_file[ED......... Certificate file]' \
+        '-key_file[ED......... Private key file]' \
+        '-listen[ED......... Listen for incoming connections (from 0 to 1) (default 0)]' \
+        '-verifyhost[ED......... Verify against a specific hostname]' \
+        '-http_proxy[ED......... Set proxy to tunnel through]' \
+        '-buffer_size[ED......... System data size (in bytes) (from -1 to INT_MAX) (default -1)]' \
+        '-localport[ED......... Local port (from -1 to INT_MAX) (default -1)]' \
+        '-local_port[ED......... Local port (from -1 to INT_MAX) (default -1)]' \
+        '-udplite_coverage[ED......... choose UDPLite head size which should be validated by checksum (from 0 to INT_MAX) (default 0)]' \
+        '-pkt_size[ED......... Maximum UDP packet size (from -1 to INT_MAX) (default 1472)]' \
+        '-reuse[ED......... explicitly allow reusing UDP sockets (default auto)]' \
+        '-reuse_socket[ED......... explicitly allow reusing UDP sockets (default auto)]' \
+        '-connect[ED......... set if connect() should be called on socket (default false)]' \
+        '-fifo_size[.D......... set the UDP receiving circular buffer size, expressed as a number of packets with size of 188 bytes (from 0 to INT_MAX) (default 28672)]' \
+        '-overrun_nonfatal[.D......... survive in case of UDP receiving circular buffer overrun (default false)]' \
+        '-timeout[.D......... set raise error timeout, in microseconds (only in read mode) (from 0 to INT_MAX) (default 0)]' \
+        '-listen[ED......... Open socket for listening (default false)]' \
+        '-timeout[ED......... Timeout in ms (from -1 to INT_MAX) (default -1)]' \
+        '-type[ED......... Socket type (from INT_MIN to INT_MAX) (default stream)]' \
+        '-gateway[.D......... The gateway to ask for IPFS data.]' \
+        '-initial_pause[.D......... do not start playing the stream immediately (default false)]' \
+        '-rtsp_transport[ED......... set RTSP transport protocols (default 0)]' \
+        '-rtsp_flags[.D......... set RTSP flags (default 0)]' \
+        '-allowed_media_types[.D......... set media types to accept from the server (default video+audio+data+subtitle)]' \
+        '-min_port[ED......... set minimum local UDP port (from 0 to 65535) (default 5000)]' \
+        '-max_port[ED......... set maximum local UDP port (from 0 to 65535) (default 65000)]' \
+        '-listen_timeout[.D......... set maximum timeout (in seconds) to wait for incoming connections (-1 is infinite, imply flag listen) (from INT_MIN to INT_MAX) (default -1)]' \
+        '-timeout[.D......... set timeout (in microseconds) of socket I/O operations (from INT_MIN to I64_MAX) (default 0)]' \
+        '-reorder_queue_size[.D......... set number of packets to buffer for handling of reordered packets (from -1 to INT_MAX) (default -1)]' \
+        '-buffer_size[ED......... Underlying protocol send/receive buffer size (from -1 to INT_MAX) (default -1)]' \
+        '-user_agent[.D......... override User-Agent header (default "Lavf59.27.100")]' \
+        '-aa_fixed_key[.D......... Fixed key used for handling Audible AA files]' \
+        '-raw_packet_size[.D......... (from 1 to INT_MAX) (default 1024)]' \
+        '-linespeed[<int> .D......... set simulated line speed (bytes per second) (from 1 to INT_MAX) (default 6000)]' \
+        '-video_size[<image_size> .D......... set video size, such as 640x480 or hd720.]' \
+        '-framerate[<video_rate> .D......... set framerate (frames per second) (default "25")]' \
+        '-ignore_loop[.D......... ignore loop setting (default true)]' \
+        '-max_fps[.D......... maximum framerate (0 is no limit) (from 0 to INT_MAX) (default 0)]' \
+        '-default_fps[.D......... default framerate (0 is as fast as possible) (from 0 to INT_MAX) (default 15)]' \
+        '-sample_rate[.D......... (from 0 to INT_MAX) (default 48000)]' \
+        '-subfps[.D...S..... set the movie frame rate (from 0 to INT_MAX) (default 25/1)]' \
+        '-no_resync_search[.D......... Don'\''t try to resynchronize by looking for a certain optional start code (default false)]' \
+        '-export_xmp[.D......... Export full XMP metadata (default false)]' \
+        '-framerate[<video_rate> .D......... (default "25")]' \
+        '-use_odml[.D......... use odml index (default true)]' \
+        '-raw_packet_size[<int> .D......... (from 1 to INT_MAX) (default 1024)]' \
+        '-pixel_format[<string> .D......... set pixel format (default "yuv420p")]' \
+        '-video_size[<image_size> .D......... set frame size]' \
+        '-framerate[<video_rate> .D......... set frame rate (default "25")]' \
+        '-sample_rate[<int> .D......... (from 8000 to INT_MAX) (default 11025)]' \
+        '-frame_rate[<video_rate> .D......... (default "15")]' \
+        '-frames_per_packet[.D......... Number of frames to read at a time. Higher = faster decoding, lower granularity (from 1 to INT_MAX) (default 1)]' \
+        '-mode[.D......... codec2 mode \[mandatory\] (from -1 to 8) (default -1)]' \
+        '-safe[<boolean> .D......... enable safe mode (default true)]' \
+        '-auto_convert[<boolean> .D......... automatically convert bitstream format (default true)]' \
+        '-segment_time_metadata[.D......... output file segment start time and duration as packet metadata (default false)]' \
+        '-allowed_extensions[.D......... List of file extensions that dash is allowed to access (default "aac,m4a,m4s,m4v,mov,mp4,webm,ts")]' \
+        '-cenc_decryption_key[.D......... Media decryption key (hex)]' \
+        '-sample_rate[<int> .D......... (from 0 to INT_MAX) (default 48000)]' \
+        '-channels[<int> .D........P (from 0 to INT_MAX) (default 1)]' \
+        '-ch_layout[<channel_layout> .D.........]' \
+        '-framerate[<video_rate> .D......... set the framerate (default "1")]' \
+        '-flv_metadata[.D.V....... Allocate streams according to the onMetaData array (default false)]' \
+        '-flv_full_metadata[.D.V....... Dump full metadata of the onMetadata (default false)]' \
+        '-flv_ignore_prevtag[.D.V....... Ignore the Size of previous tag (default false)]' \
+        '-missing_streams[.D.V..XR... (from 0 to 255) (default 0)]' \
+        '-code_size[.D......... Bits per G.726 code (from 2 to 5) (default 4)]' \
+        '-sample_rate[.D......... (from 0 to INT_MAX) (default 8000)]' \
+        '-bit_rate[.D......... (from 0 to INT_MAX) (default 8000)]' \
+        '-min_delay[.D......... minimum valid delay between frames (in hundredths of second) (from 0 to 6000) (default 2)]' \
+        '-max_gif_delay[.D......... maximum valid delay between frames (in hundredths of seconds) (from 0 to 65535) (default 65535)]' \
+        '-default_delay[.D......... default delay between frames (in hundredths of second) (from 0 to 6000) (default 10)]' \
+        '-ignore_loop[.D......... ignore loop setting (netscape extension) (default true)]' \
+        '-sample_rate[.D......... (from 1 to 6.50753e+07) (default 8000)]' \
+        '-live_start_index[<int> .D......... segment index to start live streams at (negative values are from the end) (from INT_MIN to INT_MAX) (default -3)]' \
+        '-prefer_x_start[<boolean> .D......... prefer to use #EXT-X-START if it'\''s in playlist instead of live_start_index (default false)]' \
+        '-allowed_extensions[.D......... List of file extensions that hls is allowed to access (default "3gp,aac,avi,ac3,eac3,flac,mkv,m3u8,m4a,m4s,m4v,mpg,mov,mp2,mp3,mp4,mpeg,mpegts,ogg,ogv,oga,ts,vob,wav")]' \
+        '-max_reload[<int> .D......... Maximum number of times a insufficient list is attempted to be reloaded (from 0 to INT_MAX) (default 1000)]' \
+        '-m3u8_hold_counters[.D......... The maximum number of times to load m3u8 when it refreshes without new segments (from 0 to INT_MAX) (default 1000)]' \
+        '-http_persistent[<boolean> .D......... Use persistent HTTP connections (default true)]' \
+        '-http_multiple[<boolean> .D......... Use multiple HTTP connections for fetching segments (default auto)]' \
+        '-http_seekable[<boolean> .D......... Use HTTP partial requests, 0 = disable, 1 = enable, -1 = auto (default auto)]' \
+        '-seg_format_options[.D......... Set options for segment demuxer]' \
+        '-pattern_type[<int> .D......... set pattern type (from 0 to INT_MAX) (default 4)]' \
+        '-start_number[<int> .D......... set first number in the sequence (from INT_MIN to INT_MAX) (default 0)]' \
+        '-start_number_range[.D......... set range for looking at the first sequence number (from 1 to INT_MAX) (default 5)]' \
+        '-ts_from_file[<int> .D......... set frame timestamp from file'\''s one (from 0 to 2) (default none)]' \
+        '-export_path_metadata[.D......... enable metadata containing input path information (default false)]' \
+        '-framerate[<video_rate> .D......... set the video framerate (default "25")]' \
+        '-pixel_format[<string> .D......... set video pixel format]' \
+        '-video_size[<image_size> .D......... set video size]' \
+        '-loop[<boolean> .D......... force loop over input file sequence (default false)]' \
+        '-frame_size[<int> .D......... force frame size in bytes (from 0 to INT_MAX) (default 0)]' \
+        '-assetmaps[.D......... Comma-separated paths to ASSETMAP files.If not specified, the `ASSETMAP.xml` file in the same directory as the CPL is used.]' \
+        '-subfps[.D...S..... set the movie frame rate fallback (from 0 to INT_MAX) (default 0/1)]' \
+        '-use_absolute_path[.D.V....... allow using absolute path when opening alias, this is a possible security issue (default false)]' \
+        '-seek_streams_individually[.D.V....... Seek each stream individually to the closest point (default true),-ignore_editlist   <boolean>   .D.V....... Ignore the edit list atom. (default false)]' \
+        '-advanced_editlist[.D.V....... Modify the AVIndex according to the editlists. Use this option to decode in the order specified by the edits. (default true)]' \
+        '-ignore_chapters[.D.V....... (default false)]' \
+        '-use_mfra_for[.D.V....... use mfra for fragment timestamps (from -1 to 2) (default auto)]' \
+        '-use_tfdt[.D.V....... use tfdt for fragment timestamps (default true)]' \
+        '-export_all[.D.V....... Export unrecognized metadata entries (default false)]' \
+        '-export_xmp[.D.V....... Export full XMP metadata (default false)]' \
+        '-activation_bytes[.D......... Secret bytes for Audible AAX files]' \
+        '-audible_key[.D......... AES-128 Key for Audible AAXC files]' \
+        '-audible_iv[.D......... AES-128 IV for Audible AAXC files]' \
+        '-audible_fixed_key[.D......... Fixed key used for handling Audible AAX files]' \
+        '-decryption_key[.D......... The media decryption key (hex)]' \
+        '-enable_drefs[.D.V....... Enable external track support. (default false)]' \
+        '-max_stts_delta[.D......... treat offsets above this value as invalid (from 0 to UINT32_MAX) (default 4294487295)]' \
+        '-usetoc[.D......... use table of contents (default false)]' \
+        '-resync_size[.D......... set size limit for looking up a new synchronization (from 0 to INT_MAX) (default 65536)]' \
+        '-fix_teletext_pts[.D......... try to fix pts values of dvb teletext streams (default true)]' \
+        '-ts_packetsize[.D....XR... output option carrying the raw packet size (from 0 to 0) (default 0)]' \
+        '-scan_all_pmts[.D......... scan and combine all PMTs (default auto)]' \
+        '-skip_unknown_pmt[.D......... skip PMTs for programs not advertised in the PAT (default false)]' \
+        '-merge_pmt_versions[.D......... re-use streams when PMT'\''s version/pids change (default false)]' \
+        '-max_packet_size[.D......... maximum size of emitted packet (from 1 to 1.07374e+09) (default 204800)]' \
+        '-compute_pcr[.D......... compute exact PCR for each transport stream packet (default false)]' \
+        '-strict_mime_boundary[.D......... require MIME boundaries match (default false)]' \
+        '-eia608_extract[.D......... extract eia 608 captions from s436m track (default false)]' \
+        '-sample_rate[<int> .D......... (from 0 to INT_MAX) (default 44100)]' \
+        '-rtp_flags[<flags> .D......... set RTP flags (default 0)]' \
+        '-listen_timeout[<duration> .D......... set maximum timeout (in seconds) to wait for incoming connections (default 10)]' \
+        '-localaddr[<string> .D......... local address]' \
+        '-buffer_size[<int> ED......... Underlying protocol send/receive buffer size (from -1 to INT_MAX) (default -1)]' \
+        '-sample_rate[.D......... (from 0 to INT_MAX) (default 0)]' \
+        '-frame_size[.D......... (from 0 to INT_MAX) (default 0)]' \
+        '-max_file_size[.D......... (from 0 to INT_MAX) (default 5000000)]' \
+        '-sdp_flags[<flags> .D......... SDP flags (default 0)]' \
+        '-sample_rate[<int> .D......... (from 0 to INT_MAX) (default 8000)]' \
+        '-start_time[.D...S..... set the start time (offset) of the subtitles, in ms (from I64_MIN to I64_MAX) (default 15000)]' \
+        '-chars_per_frame[<int> .D......... (from 1 to INT_MAX) (default 6000)]' \
+        '-video_size[<image_size> .D......... A string describing frame size, such as 640x480 or hd720.]' \
+        '-sub_name[.D......... URI for .sub file]' \
+        '-max_size[.D......... max size of single packet (from 1024 to 4.1943e+06) (default 4096)]' \
+        '-ignore_length[.D......... Ignore length (default false)]' \
+        '-live[.D......... flag indicating that the input is a live file that only has the headers. (default false)]' \
+        '-bandwidth[.D......... bandwidth of this stream to be specified in the DASH manifest. (from 0 to INT_MAX) (default 0)]' \
+        '-kind[.D...S..... Set kind of WebVTT track (from 0 to INT_MAX) (default subtitles)]' \
+        '-graph[.D......... set libavfilter graph]' \
+        '-graph_file[.D......... set libavfilter graph filename]' \
+        '-dumpgraph[.D......... dump graph to stderr]' \
+        '-sample_rate[.D......... (from 1 to INT_MAX) (default 48000)]' \
+        '-channels[.D......... (from 1 to INT_MAX) (default 2)]' \
+        '-standard[<string> .D......... set TV standard, used only by analog frame grabber]' \
+        '-channel[<int> .D......... set TV channel, used only by frame grabber (from -1 to INT_MAX) (default -1)]' \
+        '-pixel_format[<string> .D......... set preferred pixel format]' \
+        '-input_format[<string> .D......... set preferred pixel format (for raw video) or codec name]' \
+        '-framerate[<string> .D......... set frame rate]' \
+        '-list_formats[<int> .D......... list available formats and exit (from 0 to INT_MAX) (default 0)]' \
+        '-list_standards[<int> .D......... list supported standards and exit (from 0 to 1) (default 0)]' \
+        '-timestamps[<int> .D......... set type of timestamps for grabbed frames (from 0 to 2) (default default)]' \
+        '-ts[<int> .D......... set type of timestamps for grabbed frames (from 0 to 2) (default default)]' \
+        '-use_libv4l2[<boolean> .D......... use libv4l2 (v4l-utils) conversion functions (default false)]' \
+        '-window_id[.D......... Window to capture. (from 0 to UINT32_MAX) (default 0)]' \
+        '-x[.D......... Initial x coordinate. (from 0 to INT_MAX) (default 0)]' \
+        '-y[.D......... Initial y coordinate. (from 0 to INT_MAX) (default 0)]' \
+        '-grab_x[.D......... Initial x coordinate. (from 0 to INT_MAX) (default 0)]' \
+        '-grab_y[.D......... Initial y coordinate. (from 0 to INT_MAX) (default 0)]' \
+        '-video_size[.D......... A string describing frame size, such as 640x480 or hd720.]' \
+        '-framerate[.D......... (default "ntsc")]' \
+        '-draw_mouse[.D......... Draw the mouse pointer. (from 0 to 1) (default 1)]' \
+        '-follow_mouse[.D......... Move the grabbing region when the mouse pointer reaches within specified amount of pixels to the edge of region. (from -1 to INT_MAX) (default 0)]' \
+        '-show_region[.D......... Show the grabbing region. (from 0 to 1) (default 0)]' \
+        '-region_border[.D......... Set the region border thickness. (from 1 to 128) (default 3)]' \
+        '-select_region[.D......... Select the grabbing region graphically using the pointer. (default false)]' \
+        '-flags[ED.VAS..... (default 0)]' \
+        '-flags2[ED.VAS..... (default 0)]' \
+        '-export_side_data[ED.VAS..... Export metadata as side data (default 0)]' \
+        '-ar[ED..A...... set audio sampling rate (in Hz) (from 0 to INT_MAX) (default 0)]' \
+        '-ac[ED..A...... set number of audio channels (from 0 to INT_MAX) (default 0)]' \
+        '-bug[.D.V....... work around not autodetected encoder bugs (default autodetect)]' \
+        '-strict[ED.VA...... how strictly to follow the standards (from INT_MIN to INT_MAX) (default normal)]' \
+        '-err_detect[ED.VAS..... set error detection flags (default 0)]' \
+        '-idct[ED.V....... select IDCT implementation (from 0 to INT_MAX) (default auto)]' \
+        '-ec[.D.V....... set error concealment strategy (default guess_mvs+deblock)]' \
+        '-debug[ED.VAS..... print specific debug info (default 0)]' \
+        '-threads[ED.VA...... set the number of threads (from 0 to INT_MAX) (default 1)]' \
+        '-skip_top[.D.V....... number of macroblock rows at the top which are skipped (from INT_MIN to INT_MAX) (default 0)]' \
+        '-skip_bottom[.D.V....... number of macroblock rows at the bottom which are skipped (from INT_MIN to INT_MAX) (default 0)]' \
+        '-lowres[.D.VA...... decode at 1= 1/2, 2=1/4, 3=1/8 resolutions (from 0 to INT_MAX) (default 0)]' \
+        '-skip_loop_filter[.D.V....... skip loop filtering process for the selected frames (from INT_MIN to INT_MAX) (default default)]' \
+        '-skip_idct[.D.V....... skip IDCT/dequantization for the selected frames (from INT_MIN to INT_MAX) (default default)]' \
+        '-skip_frame[.D.V....... skip decoding for the selected frames (from INT_MIN to INT_MAX) (default default)]' \
+        {-ch_layout,-channel_layout,-request_channel_layout,-ticks_per_frame}'[ED.VA...... (from 1 to INT_MAX) (default 1)]' \
+        '-color_primaries[ED.V....... color primaries (from 1 to INT_MAX) (default unknown)]' \
+        '-color_trc[ED.V....... color transfer characteristics (from 1 to INT_MAX) (default unknown)]' \
+        '-colorspace[ED.V....... color space (from 0 to INT_MAX) (default unknown)]' \
+        '-color_range[ED.V....... color range (from 0 to INT_MAX) (default unknown)]' \
+        '-chroma_sample_location[ED.V....... chroma sample location (from 0 to INT_MAX) (default unknown),-thread_type       <flags>   ED.VA...... select multithreading type (default slice+frame)]' \
+        '-request_sample_fmt[.D..A...... sample format audio decoders should prefer (default none)]' \
+        '-sub_charenc[.D...S..... set input text subtitles character encoding]' \
+        '-sub_charenc_mode[.D...S..... set input text subtitles character encoding mode (default 0)]' \
+        '-sub_text_format[.D...S....P Deprecated, does nothing (from 0 to 1) (default ass)]' \
+        '-apply_cropping[.D.V....... (default true)]' \
+        '-skip_alpha[.D.V....... Skip processing alpha (default false)]' \
+        '-field_order[ED.V....... Field order (from 0 to 5) (default 0)]' \
+        '-dump_separator[ED.VAS..... set information dump field separator]' \
+        '-codec_whitelist[.D.VAS..... List of decoders that are allowed to be used]' \
+        '-max_pixels[ED.VAS..... Maximum number of pixels (from 0 to INT_MAX) (default INT_MAX)]' \
+        '-max_samples[ED..A...... Maximum number of samples (from 0 to INT_MAX) (default INT_MAX)]' \
+        '-hwaccel_flags[.D.V....... (default ignore_level)]' \
+        '-extra_hw_frames[.D.V....... Number of extra hardware frames to allocate for the user (from -1 to INT_MAX) (default -1)]' \
+        '-discard_damaged_percentage[.D.V....... Percentage of damaged samples to discard a frame (from 0 to 100) (default 95)]' \
+        '-layer[.D.V....... Set the decoding layer (default "")]' \
+        '-part[.D.V....... Set the decoding part (from 0 to INT_MAX) (default 0)]' \
+        '-gamma[.D.V....... Set the float gamma value when decoding (from 0.001 to FLT_MAX) (default 1)]' \
+        '-apply_trc[.D.V....... color transfer characteristics to apply to EXR linear input (from 1 to 18) (default gamma)]' \
+        '-skip_cursor[.D.V....... skip the cursor (default false)]' \
+        '-blank_value[.D.V....... value that is used to replace BLANK pixels in data array (from 0 to 65535) (default 0)]' \
+        '-change_field_order[.D.V....... Change field order (default false)]' \
+        '-trans_color[.D.V....... color value (ARGB) that is used instead of transparent color (from 0 to UINT32_MAX) (default 16777215)]' \
+        '-is_avc[.D.V..X.... is avc (default false)]' \
+        '-nal_length_size[.D.V..X.... nal_length_size (from 0 to 4) (default 0)]' \
+        '-enable_er[.D.V....... Enable error resilience on damaged frames (unsafe) (default auto)]' \
+        '-x264_build[.D.V....... Assume this x264 version if no x264 version found in any SEI (from -1 to INT_MAX) (default -1)]' \
+        '-apply_defdispwin[.D.V....... Apply default display window from VUI (default false)]' \
+        '-strict-displaywin[.D.V....... stricly apply default display window size (default false)]' \
+        '-lowres[.D.V....... Lower the decoding resolution by a power of two (from 0 to 33) (default 0)]' \
+        '-extern_huff[.D.V....... Use external huffman table. (default false)]' \
+        '-lowres[.D.V....... Lower the decoding resolution by a power of two (from 0 to 4) (default 0)]' \
+        '-top[.D.V....... top field first (default auto)]' \
+        '-non_pcm_mode[.D..A...... Chooses what to do with NON-PCM (from 0 to 3) (default decode_drop)]' \
+        '-subimage[.D.V....... decode subimage instead if available (default false)]' \
+        '-thumbnail[.D.V....... decode embedded thumbnail subimage instead if available (default false)]' \
+        '-page[.D.V....... page number of multi-page image to decode (starting from 1) (from 0 to 65535) (default 0)]' \
+        '-custom_stride[.D.V....... Custom V210 stride (from -1 to INT_MAX) (default 0)]' \
+        '-dual_mono_mode[.D..A...... Select the channel to decode for dual mono (from -1 to 2) (default auto)]' \
+        '-channel_order[.D..A...... Order in which the channels are to be exported (from 0 to 1) (default default)]' \
+        '-cons_noisegen[.D..A...... enable consistent noise generation (default false)]' \
+        '-drc_scale[.D..A...... percentage of dynamic range compression to apply (from 0 to 6) (default 1)]' \
+        '-heavy_compr[.D..A...... enable heavy dynamic range compression (default false)]' \
+        '-target_level[.D..A...... target level in -dBFS (0 not applied) (from -31 to 0) (default 0)]' \
+        '-downmix[<channel_layout> .D..A...... Request a specific channel layout from the decoder]' \
+        '-extra_bits_bug[.D..A...... Force non-standard decoding process (default false)]' \
+        '-max_samples[<int> .D..A...... maximum number of samples decoded per call (from 1 to INT_MAX) (default 4608)]' \
+        '-core_only[<boolean> .D..A...... Decode core only without extensions (default false)]' \
+        '-channel_order[<int> .D..A...... Order in which the channels are to be exported (from 0 to 1) (default default)]' \
+        '-postfilter[.D..A...... enable postfilter (default true)]' \
+        '-use_buggy_lpc[.D..A...... emulate old buggy lavc behavior (default false)]' \
+        '-apply_phase_inv[.D..A...... Apply intensity stereo phase inversion (default true)]' \
+        '-password[.D..A...... Set decoding password]' \
+        '-bits_per_codeword[.D..A...... Bits per G722 codeword (from 6 to 8) (default 8)]' \
+        '-real_time[<boolean> .D...S..... emit subtitle events as they are decoded for real-time display (default false)]' \
+        '-real_time_latency_msec[.D...S..... minimum elapsed time between emitting real-time subtitle events (from 0 to 500) (default 200)]' \
+        '-data_field[<int> .D...S..... select data field (from -1 to 1) (default auto)]' \
+        '-compute_edt[.D...S..... compute end of time using pts or timeout (default false)]' \
+        '-compute_clut[.D...S..... compute clut when not available(-1) or only once (-2) or always(1) or never(0) (default auto)]' \
+        '-dvb_substream[.D...S..... (from -1 to 63) (default -1)]' \
+        '-palette[.D...S..... set the global palette]' \
+        '-ifo_palette[.D...S..... obtain the global palette from .IFO file]' \
+        '-forced_subs_only[.D...S..... Only show forced subtitles (default false)]' \
+        '-width[.D...S..... Frame width, usually video width (from 0 to INT_MAX) (default 0)]' \
+        '-height[.D...S..... Frame height, usually video height (from 0 to INT_MAX) (default 0)]' \
+        '-keep_ass_markup[.D...S..... Set if ASS tags must be escaped (default false)]' \
+        '-operating_point[.D.V....... Select an operating point of the scalable bitstream (from 0 to 31) (default 0)]' \
+        '-deint[.D.V....... Set deinterlacing mode (from 0 to 2) (default weave)]' \
+        '-gpu[.D.V....... GPU to be used for decoding]' \
+        '-surfaces[.D.V....... Maximum surfaces to be used for decoding (from 0 to INT_MAX) (default 25)]' \
+        '-drop_second_field[.D.V....... Drop second field when deinterlacing (default false)]' \
+        '-crop[.D.V....... Crop (top)x(bottom)x(left)x(right)]' \
+        '-resize[.D.V....... Resize (width)x(height)]' \
         '*: :_files'
 
     case $state in

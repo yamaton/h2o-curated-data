@@ -78,5 +78,51 @@ _ajv_test ()
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
 
+_ajv_help ()
+{
+    local cur word_list
+    local i=1 subcommand_index
+
+    # take the last word that's NOT starting with -
+    while [[ ( $i < $COMP_CWORD ) ]]; do
+        local s="${COMP_WORDS[i]}"
+        case "$s" in
+          help)
+            subcommand_index=$i
+            break
+            ;;
+        esac
+        (( i++ ))
+    done
+
+    while [[ ( $subcommand_index < $COMP_CWORD ) ]]; do
+        local s="${COMP_WORDS[subcommand_index}"
+        case "$s" in
+          validate) _ajv_validate
+            return
+            ;;
+
+          compile) _ajv_compile
+            return
+            ;;
+
+          migrate) _ajv_migrate
+            return
+            ;;
+
+          test) _ajv_test
+            return
+            ;;
+
+          *)  ;; 
+        esac
+        (( subcommand_index++ ))
+    done
+
+    word_list=" validate compile migrate test" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
 ## -o bashdefault and -o default are fallback
 complete -o bashdefault -o default -F _ajv ajv

@@ -6,7 +6,7 @@ complete -c make -s "C" -l "directory" -d "Change to DIRECTORY before doing anyt
 complete -c make -s "d" -d "Print lots of debugging information."
 complete -c make -l "debug" -d "Print various types of debugging information." -x
 complete -c make -s "e" -l "environment-overrides" -d "Environment variables override makefiles."
-complete -c make -l "eval" -d "Evaluate STRING as a makefile statement." -r
+complete -c make -s "E" -l "eval" -d "Evaluate STRING as a makefile statement." -r
 complete -c make -s "f" -l "file" -l "makefile" -d "Read FILE as a makefile." -r
 complete -c make -s "h" -l "help" -d "Print this message and exit."
 complete -c make -s "i" -l "ignore-errors" -d "Ignore errors from recipes."
@@ -23,6 +23,7 @@ complete -c make -s "q" -l "question" -d "Run no recipe; exit status says if up 
 complete -c make -s "r" -l "no-builtin-rules" -d "Disable the built-in implicit rules."
 complete -c make -s "R" -l "no-builtin-variables" -d "Disable the built-in variable settings."
 complete -c make -s "s" -l "silent" -l "quiet" -d "Don't echo recipes."
+complete -c make -l "no-silent" -d "Echo recipes (disable --silent mode)."
 complete -c make -s "S" -l "no-keep-going" -l "stop" -d "Turns off -k."
 complete -c make -s "t" -l "touch" -d "Touch targets instead of remaking them."
 complete -c make -l "trace" -d "Print tracing information."

@@ -1,5 +1,31 @@
 name: cmake
 description: cmake
+usage: |-
+  Generate a Project Buildsystem
+   cmake [<options>] <path-to-source>
+   cmake [<options>] <path-to-existing-build>
+   cmake [<options>] -S <path-to-source> -B <path-to-build>
+
+  Build a Project
+   cmake --build <dir> [<options>] [-- <build-tool-options>]
+
+  Install a Project
+   cmake --install <dir> [<options>]
+
+  Open a Project
+   cmake --open <dir>
+
+  Run a Script
+   cmake [{-D <var>=<value>}...] -P <cmake-script-file>
+
+  Run a Command-Line Tool
+   cmake -E <command> [<options>]
+
+  Run the Find-Package Tool
+   cmake --find-package [<options>]
+
+  View Help
+   cmake --help[-<topic>]
 options:
   - names:
       - -S
@@ -33,6 +59,14 @@ options:
       - -A
     argument: <platform-name>
     description: Specify platform name if supported by generator.
+  - names:
+      - --toolchain
+    argument: <path-to-file>
+    description: Specify the cross compiling toolchain file, equivalent to setting CMAKE_TOOLCHAIN_FILE variable.
+  - names:
+      - --install-prefix
+    argument: <directory>
+    description: Specify the installation directory, used by the CMAKE_INSTALL_PREFIX variable. Must be an absolute path.
   - names:
       - -Wno-dev
     argument: ""
@@ -86,6 +120,10 @@ options:
     argument: <ERROR|WARNING|NOTICE|STATUS|VERBOSE|DEBUG|TRACE>
     description: Set the log level.
   - names:
+      - --log-context
+    argument: ""
+    description: Enable the message() command outputting context attached to each message.
+  - names:
       - --debug-trycompile
     argument: ""
     description: Do not delete the try_compile() build tree. Only useful on one try_compile() at a time.
@@ -94,6 +132,10 @@ options:
     argument: ""
     description: Put cmake in a debug mode.
   - names:
+      - --debug-find
+    argument: ""
+    description: Put cmake find commands in a debug mode.
+  - names:
       - --trace
     argument: ""
     description: Put cmake in trace mode.
@@ -101,6 +143,10 @@ options:
       - --trace-expand
     argument: ""
     description: Put cmake in trace mode.
+  - names:
+      - --trace-format
+    argument: <format>
+    description: Put cmake in trace mode and sets the trace output format.
   - names:
       - --trace-source
     argument: <file>
@@ -116,24 +162,48 @@ options:
   - names:
       - --warn-unused-vars
     argument: ""
-    description: Warn about unused variables.
+    description: Does nothing. In CMake versions 3.2 and below this enabled warnings about unused variables. In CMake versions 3.3 through 3.18 the option was broken. In CMake 3.19 and above the option has been removed.
   - names:
       - --no-warn-unused-cli
     argument: ""
-    description: Don’t warn about command line options.
+    description: Don't warn about command line options.
   - names:
       - --check-system-vars
     argument: ""
     description: Find problems with variable usage in system files.
   - names:
+      - --profiling-output
+    argument: <path>
+    description: Used in conjunction with --profiling-format to output to a given path.
+  - names:
+      - --profiling-format
+    argument: <file>
+    description: Enable the output of profiling data of CMake script in the given format.
+  - names:
+      - --preset
+    argument: <preset>
+    description: Reads a preset from <path-to-source>/CMakePresets.json and <path-to-source>/CMakeUserPresets.json. The preset may specify the generator and the build directory, and a list of variables and other arguments to pass to CMake. The current working directory must contain CMake preset files. The CMake GUI can also recognize CMakePresets.json and CMakeUserPresets.json files. For full details on these files, see cmake-presets(7).
+  - names:
+      - --list-presets
+    argument: <[configure | build | test | all]>
+    description: Lists the available presets. If no option is specified only configure presets will be listed. The current working directory must contain CMake preset files.
+  - names:
       - --build
     argument: <dir>
-    description: Project binary directory to be built. This is required and must be first.
+    description: Project binary directory to be built. This is required (unless a preset is specified) and must be first.
+  - names:
+      - --preset
+    argument: <preset>
+    description: Use a build preset to specify build options. The project binary directory is inferred from the configurePreset key. The current working directory must contain CMake preset files. See preset for more details.
+  - names:
+      - --list-presets
+    argument: ""
+    description: Lists the available build presets. The current working directory must contain CMake preset files.
   - names:
       - --parallel
       - -j
     argument: '[<jobs>]'
-    description: The maximum number of concurrent processes to use when building. If <jobs> is omitted the native build tool’s default number is used.
+    description: The maximum number of concurrent processes to use when building. If <jobs> is omitted the native build tool's default number is used.
   - names:
       - --target
       - -t
@@ -172,6 +242,10 @@ options:
       - --component
     argument: <comp>
     description: Component-based install. Only install component <comp>.
+  - names:
+      - --default-directory-permissions
+    argument: <permissions>
+    description: Default directory install permissions. Permissions in format <u=rwx,g=rx,o=rx>.
   - names:
       - --prefix
     argument: <prefix>
@@ -273,10 +347,8 @@ options:
       - --help-variables
     argument: '[<f>]'
     description: Print cmake-variables manual and exit.
-version: cmake version 3.16.3
+version: cmake version 3.22.1
 tldr: |
-  # cmake
-
   > Cross-platform build automation system, that generates recipes for native build systems.
   > More information: <https://cmake.org/cmake/help/latest/manual/cmake.1.html>.
 

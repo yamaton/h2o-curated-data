@@ -1,16 +1,19 @@
 name: bat
 description: bat
+usage: |-
+  bat [OPTIONS] [FILE]...
+  bat <SUBCOMMAND>
 options:
   - names:
       - -A
       - --show-all
     argument: ""
-    description: Show non-printable characters like space, tab or newline. Use '--tabs' to control the width of the tab-placeholders.
+    description: Show non-printable characters like space, tab or newline. This option can also be used to print binary files. Use '--tabs' to control the width of the tab-placeholders.
   - names:
       - -p
       - --plain
     argument: ""
-    description: Only show plain style, no decorations. This is an alias for '--style=plain'. When '-p' is used twice ('-pp'), it also disables automatic paging (alias for '--style=plain --pager=never').
+    description: Only show plain style, no decorations. This is an alias for '--style=plain'. When '-p' is used twice ('-pp'), it also disables automatic paging (alias for '--style=plain --paging=never').
   - names:
       - -l
       - --language
@@ -19,20 +22,20 @@ options:
   - names:
       - -H
       - --highlight-line
-    argument: <N:M>...
-    description: 'Highlight the specified line ranges with a different background color.'
+    argument: <N:M>
+    description: 'Highlight the specified line ranges with a different background color For example:'
   - names:
       - --file-name
-    argument: <name>...
+    argument: <name>
     description: Specify the name to display for a file. Useful when piping data to bat from STDIN when bat does not otherwise know the filename. Note that the provided file name is also used for syntax detection.
   - names:
       - -d
       - --diff
     argument: ""
-    description: Only show lines that have been added/removed/modified with respect to the Git index. Use '--diff-context=N' to control how much context you want to see.
+    description: Only show lines that have been added/removed/modified with respect to the Git index. Use --diff-context=N to control how much context you want to see.
   - names:
       - --diff-context
-    argument: <N>...
+    argument: <N>
     description: Include N lines of context around added/removed/modified lines when using '--diff'.
   - names:
       - --tabs
@@ -54,7 +57,7 @@ options:
   - names:
       - --color
     argument: <when>
-    description: 'Specify when to use colored output. The automatic mode only enables colors if an interactive terminal is detected. Possible values: *auto*, never, always.'
+    description: 'Specify when to use colored output. The automatic mode only enables colors if an interactive terminal is detected - colors are automatically disabled if the output goes to a pipe. Possible values: *auto*, never, always.'
   - names:
       - --italic-text
     argument: <when>
@@ -71,7 +74,7 @@ options:
   - names:
       - --paging
     argument: <when>
-    description: 'Specify when to use the pager. To disable the pager, use ''--paging=never'' or its alias, -P. To disable the pager permanently, set BAT_PAGER to an empty string. To control which pager is used, see the ''--pager'' option. Possible values: *auto*, never, always.'
+    description: 'Specify when to use the pager. To disable the pager, use --paging=never'' or its alias,''-P''. To disable the pager permanently, set BAT_PAGER to an empty string. To control which pager is used, see the ''--pager'' option. Possible values: *auto*, never, always.'
   - names:
       - --pager
     argument: <command>
@@ -79,8 +82,12 @@ options:
   - names:
       - -m
       - --map-syntax
-    argument: <glob-pattern:syntax-name>...
+    argument: <glob:syntax>
     description: Map a glob pattern to an existing syntax name. The glob pattern is matched on the full path and the filename. For example, to highlight *.build files with the Python syntax, use -m '*.build:Python'. To highlight files named '.myignore' with the Git Ignore syntax, use -m '.myignore:Git Ignore'. Note that the right-hand side is the *name* of the syntax, not a file extension.
+  - names:
+      - --ignored-suffix
+    argument: <ignored-suffix>
+    description: 'Ignore extension. For example:'
   - names:
       - --theme
     argument: <theme>
@@ -91,13 +98,13 @@ options:
     description: Display a list of supported themes for syntax highlighting.
   - names:
       - --style
-    argument: <style-components>
-    description: 'Configure which elements (line numbers, file headers, grid borders, Git modifications, ..) to display in addition to the file contents. The argument is a comma-separated list of components to display (e.g. ''numbers,changes,grid'') or a pre-defined style (''full''). To set a default style, add the ''--style=".."'' option to the configuration file or export the BAT_STYLE environment variable (e.g.: export BAT_STYLE=".."). Possible values: *default*, full, auto, plain, changes, header, header-filename, header-filesize, grid, rule, numbers, snip.'
+    argument: <components>
+    description: 'Configure which elements (line numbers, file headers, grid borders, Git modifications, ..) to display in addition to the file contents. The argument is a comma-separated list of components to display (e.g. ''numbers,changes,grid'') or a pre-defined style (''full''). To set a default style, add the ''--style=".."'' option to the configuration file or export the BAT_STYLE environment variable (e.g.: export BAT_STYLE="..").'
   - names:
       - -r
       - --line-range
-    argument: <N:M>...
-    description: 'Only print the specified range of lines for each file.'
+    argument: <N:M>
+    description: 'Only print the specified range of lines for each file. For example:'
   - names:
       - -L
       - --list-languages
@@ -109,6 +116,14 @@ options:
     argument: ""
     description: This option exists for POSIX-compliance reasons ('u' is for 'unbuffered'). The output is always unbuffered - this option is simply ignored.
   - names:
+      - --diagnostic
+    argument: ""
+    description: Show diagnostic information for bug reports.
+  - names:
+      - --acknowledgements
+    argument: ""
+    description: Show acknowledgements.
+  - names:
       - -h
       - --help
     argument: ""
@@ -117,8 +132,8 @@ options:
       - -V
       - --version
     argument: ""
-    description: Show version information.
-version: bat 0.21.0 (405e5f7)
+    description: Print version information
+version: bat 0.22.1 (398e146-modified)
 tldr: |
   > Print and concatenate files.
   > A `cat` clone with syntax highlighting and Git integration.

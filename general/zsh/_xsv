@@ -34,7 +34,7 @@
 
     function _xsv_flatten {
         _arguments \
-            {-c,--condense}'[imits the length of each field to the value specified. If the field is UTF-8 encoded, then <arg> refers to the number of code points. Otherwise, it refers to the number of bytes.]' \
+            {-c,--condense}'[Limits the length of each field to the value   specified. If the field is UTF-8 encoded, then <arg> refers to the number of code points. Otherwise, it refers to the number of bytes.]' \
             {-s,--separator}'[A string of characters to write after each record. When non-empty, a new line is automatically appended to the separator. \[default: #\]]' \
             {-h,--help}'[Display this message]' \
             {-n,--no-headers}'[When set, the first row will not be interpreted as headers. When set, the name of each field will be its index.]' \
@@ -79,6 +79,15 @@
             '--intersect[Shows the intersection of all headers in all of the inputs given.]' \
             {-h,--help}'[Display this message]' \
             {-d,--delimiter}'[The field delimiter for reading CSV data. Must be a single character. (default: ,)]' \
+            "*: :_files"
+
+    }
+
+    function _xsv_help {
+        _arguments \
+            '--list[List all commands available.]' \
+            {-h,--help}'[Display this message]' \
+            '--version[Print version info and exit]' \
             "*: :_files"
 
     }
@@ -213,7 +222,7 @@
         _arguments \
             {-w,--width}'[The minimum width of each column. \[default: 2\]]' \
             {-p,--pad}'[The minimum number of spaces between each column. \[default: 2\]]' \
-            {-c,--condense}'[imits the length of each field to the value specified. If the field is UTF-8 encoded, then <arg> refers to the number of code points. Otherwise, it refers to the number of bytes.]' \
+            {-c,--condense}'[Limits the length of each field to the value   specified. If the field is UTF-8 encoded, then <arg> refers to the number of code points. Otherwise, it refers to the number of bytes.]' \
             {-h,--help}'[Display this message]' \
             {-o,--output}'[Write output to <file> instead of stdout.]':file:_files \
             {-d,--delimiter}'[The field delimiter for reading CSV data. Must be a single character. (default: ,)]' \
@@ -235,6 +244,7 @@ function _xsv {
             'fmt:Format CSV output (change field delimiter)'
             'frequency:Show frequency tables'
             'headers:Show header names'
+            'help:Show this usage message.'
             'index:Create CSV index for faster access'
             'input:Read CSV data with special quoting rules'
             'join:Join CSV files'
@@ -290,6 +300,10 @@ function _xsv {
 
         (headers)
             _xsv_headers
+            ;;
+
+        (help)
+            _xsv_help
             ;;
 
         (index)

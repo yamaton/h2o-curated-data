@@ -1,5 +1,8 @@
 name: xsv
 description: xsv
+usage: |-
+  xsv <command> [<args>...]
+  xsv [options]
 options:
   - names:
       - --list
@@ -17,6 +20,10 @@ options:
 subcommands:
   - name: cat
     description: Concatenate by row or column
+    usage: |-
+      xsv cat rows    [options] [<input>...]
+      xsv cat columns [options] [<input>...]
+      xsv cat --help
     options:
       - names:
           - -p
@@ -45,6 +52,7 @@ subcommands:
         description: 'The field delimiter for reading CSV data. Must be a single character. (default: ,)'
   - name: count
     description: Count records
+    usage: xsv count [options] [<input>]
     options:
       - names:
           - -h
@@ -63,6 +71,7 @@ subcommands:
         description: 'The field delimiter for reading CSV data. Must be a single character. (default: ,)'
   - name: fixlengths
     description: Makes all records have same length
+    usage: xsv fixlengths [options] [<input>]
     options:
       - names:
           - -l
@@ -86,12 +95,13 @@ subcommands:
         description: 'The field delimiter for reading CSV data. Must be a single character. (default: ,)'
   - name: flatten
     description: Show one field per line
+    usage: xsv flatten [options] [<input>]
     options:
       - names:
           - -c
           - --condense
-        argument: <arg>  L
-        description: imits the length of each field to the value specified. If the field is UTF-8 encoded, then <arg> refers to the number of code points. Otherwise, it refers to the number of bytes.
+        argument: <arg>
+        description: Limits the length of each field to the value   specified. If the field is UTF-8 encoded, then <arg> refers to the number of code points. Otherwise, it refers to the number of bytes.
       - names:
           - -s
           - --separator
@@ -114,6 +124,7 @@ subcommands:
         description: 'The field delimiter for reading CSV data. Must be a single character. (default: ,)'
   - name: fmt
     description: Format CSV output (change field delimiter)
+    usage: xsv fmt [options] [<input>]
     options:
       - names:
           - -t
@@ -157,6 +168,7 @@ subcommands:
         description: 'The field delimiter for reading CSV data. Must be a single character. (default: ,)'
   - name: frequency
     description: Show frequency tables
+    usage: xsv frequency [options] [<input>]
     options:
       - names:
           - -s
@@ -204,6 +216,7 @@ subcommands:
         description: 'The field delimiter for reading CSV data. Must be a single character. (default: ,)'
   - name: headers
     description: Show header names
+    usage: xsv headers [options] [<input>...]
     options:
       - names:
           - -j
@@ -224,8 +237,27 @@ subcommands:
           - --delimiter
         argument: <arg>
         description: 'The field delimiter for reading CSV data. Must be a single character. (default: ,)'
+  - name: help
+    description: Show this usage message.
+    options:
+      - names:
+          - --list
+        argument: ""
+        description: List all commands available.
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: Display this message
+      - names:
+          - --version
+        argument: ""
+        description: Print version info and exit
   - name: index
     description: Create CSV index for faster access
+    usage: |-
+      xsv index [options] <input>
+      xsv index --help
     options:
       - names:
           - -o
@@ -244,6 +276,7 @@ subcommands:
         description: 'The field delimiter for reading CSV data. Must be a single character. (default: ,)'
   - name: input
     description: Read CSV data with special quoting rules
+    usage: xsv input [options] [<input>]
     options:
       - names:
           - --quote
@@ -274,6 +307,9 @@ subcommands:
         description: 'The field delimiter for reading CSV data. Must be a single character. (default: ,)'
   - name: join
     description: Join CSV files
+    usage: |-
+      xsv join [options] <columns1> <input1> <columns2> <input2>
+      xsv join --help
     options:
       - names:
           - --no-case
@@ -321,6 +357,9 @@ subcommands:
         description: 'The field delimiter for reading CSV data. Must be a single character. (default: ,)'
   - name: sample
     description: Randomly sample CSV data
+    usage: |-
+      xsv sample [options] <sample-size> [<input>]
+      xsv sample --help
     options:
       - names:
           - -h
@@ -344,6 +383,9 @@ subcommands:
         description: 'The field delimiter for reading CSV data. Must be a single character. (default: ,)'
   - name: search
     description: Search CSV data with regexes
+    usage: |-
+      xsv search [options] <regex> [<input>]
+      xsv search --help
     options:
       - names:
           - -i
@@ -382,6 +424,9 @@ subcommands:
         description: 'The field delimiter for reading CSV data. Must be a single character. (default: ,)'
   - name: select
     description: Select columns from CSV
+    usage: |-
+      xsv select [options] [--] <selection> [<input>]
+      xsv select --help
     options:
       - names:
           - -h
@@ -405,6 +450,7 @@ subcommands:
         description: 'The field delimiter for reading CSV data. Must be a single character. (default: ,)'
   - name: slice
     description: Slice records from CSV
+    usage: xsv slice [options] [<input>]
     options:
       - names:
           - -s
@@ -448,6 +494,7 @@ subcommands:
         description: 'The field delimiter for reading CSV data. Must be a single character. (default: ,)'
   - name: sort
     description: Sort CSV data
+    usage: xsv sort [options] [<input>]
     options:
       - names:
           - -s
@@ -486,6 +533,9 @@ subcommands:
         description: 'The field delimiter for reading CSV data. Must be a single character. (default: ,)'
   - name: split
     description: Split CSV data into many files
+    usage: |-
+      xsv split [options] <outdir> [<input>]
+      xsv split --help
     options:
       - names:
           - -s
@@ -518,6 +568,7 @@ subcommands:
         description: 'The field delimiter for reading CSV data. Must be a single character. (default: ,)'
   - name: stats
     description: Compute basic statistics
+    usage: xsv stats [options] [<input>]
     options:
       - names:
           - -s
@@ -571,6 +622,7 @@ subcommands:
         description: 'The field delimiter for reading CSV data. Must be a single character. (default: ,)'
   - name: table
     description: Align CSV data into columns
+    usage: xsv table [options] [<input>]
     options:
       - names:
           - -w
@@ -585,8 +637,8 @@ subcommands:
       - names:
           - -c
           - --condense
-        argument: <arg>  L
-        description: imits the length of each field to the value specified. If the field is UTF-8 encoded, then <arg> refers to the number of code points. Otherwise, it refers to the number of bytes.
+        argument: <arg>
+        description: Limits the length of each field to the value   specified. If the field is UTF-8 encoded, then <arg> refers to the number of code points. Otherwise, it refers to the number of bytes.
       - names:
           - -h
           - --help

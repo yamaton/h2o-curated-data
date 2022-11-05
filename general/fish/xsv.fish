@@ -1,8 +1,8 @@
 # Auto-generated with h2o
 
-complete -c xsv -n "not __fish_seen_subcommand_from cat count fixlengths flatten fmt frequency headers index input join sample search select slice sort split stats table" -l "list" -d "List all commands available."
-complete -c xsv -n "not __fish_seen_subcommand_from cat count fixlengths flatten fmt frequency headers index input join sample search select slice sort split stats table" -s "h" -l "help" -d "Display this message"
-complete -c xsv -n "not __fish_seen_subcommand_from cat count fixlengths flatten fmt frequency headers index input join sample search select slice sort split stats table" -l "version" -d "Print version info and exit"
+complete -c xsv -n "not __fish_seen_subcommand_from cat count fixlengths flatten fmt frequency headers help index input join sample search select slice sort split stats table" -l "list" -d "List all commands available."
+complete -c xsv -n "not __fish_seen_subcommand_from cat count fixlengths flatten fmt frequency headers help index input join sample search select slice sort split stats table" -s "h" -l "help" -d "Display this message"
+complete -c xsv -n "not __fish_seen_subcommand_from cat count fixlengths flatten fmt frequency headers help index input join sample search select slice sort split stats table" -l "version" -d "Print version info and exit"
 
 
 
@@ -17,6 +17,7 @@ complete -k -c xsv -n __fish_use_subcommand -x -a sample -d "Randomly sample CSV
 complete -k -c xsv -n __fish_use_subcommand -x -a join -d "Join CSV files"
 complete -k -c xsv -n __fish_use_subcommand -x -a input -d "Read CSV data with special quoting rules"
 complete -k -c xsv -n __fish_use_subcommand -x -a index -d "Create CSV index for faster access"
+complete -k -c xsv -n __fish_use_subcommand -x -a help -d "Show this usage message."
 complete -k -c xsv -n __fish_use_subcommand -x -a headers -d "Show header names"
 complete -k -c xsv -n __fish_use_subcommand -x -a frequency -d "Show frequency tables"
 complete -k -c xsv -n __fish_use_subcommand -x -a fmt -d "Format CSV output (change field delimiter)"
@@ -48,7 +49,7 @@ complete -c xsv -n "__fish_seen_subcommand_from fixlengths" -s "d" -l "delimiter
 
 
 
-complete -c xsv -n "__fish_seen_subcommand_from flatten" -s "c" -l "condense" -d "imits the length of each field to the value specified." -x
+complete -c xsv -n "__fish_seen_subcommand_from flatten" -s "c" -l "condense" -d "Limits the length of each field to the value specified." -x
 complete -c xsv -n "__fish_seen_subcommand_from flatten" -s "s" -l "separator" -d "A string of characters to write after each record." -x
 complete -c xsv -n "__fish_seen_subcommand_from flatten" -s "h" -l "help" -d "Display this message"
 complete -c xsv -n "__fish_seen_subcommand_from flatten" -s "n" -l "no-headers" -d "When set, the first row will not be interpreted as headers."
@@ -84,6 +85,12 @@ complete -c xsv -n "__fish_seen_subcommand_from headers" -s "j" -l "just-names" 
 complete -c xsv -n "__fish_seen_subcommand_from headers" -l "intersect" -d "Shows the intersection of all headers in all of the inputs given."
 complete -c xsv -n "__fish_seen_subcommand_from headers" -s "h" -l "help" -d "Display this message"
 complete -c xsv -n "__fish_seen_subcommand_from headers" -s "d" -l "delimiter" -d "The field delimiter for reading CSV data." -x
+
+
+
+complete -c xsv -n "__fish_seen_subcommand_from help" -l "list" -d "List all commands available."
+complete -c xsv -n "__fish_seen_subcommand_from help" -s "h" -l "help" -d "Display this message"
+complete -c xsv -n "__fish_seen_subcommand_from help" -l "version" -d "Print version info and exit"
 
 
 
@@ -185,7 +192,7 @@ complete -c xsv -n "__fish_seen_subcommand_from stats" -s "d" -l "delimiter" -d 
 
 complete -c xsv -n "__fish_seen_subcommand_from table" -s "w" -l "width" -d "The minimum width of each column." -x
 complete -c xsv -n "__fish_seen_subcommand_from table" -s "p" -l "pad" -d "The minimum number of spaces between each column." -x
-complete -c xsv -n "__fish_seen_subcommand_from table" -s "c" -l "condense" -d "imits the length of each field to the value specified." -x
+complete -c xsv -n "__fish_seen_subcommand_from table" -s "c" -l "condense" -d "Limits the length of each field to the value specified." -x
 complete -c xsv -n "__fish_seen_subcommand_from table" -s "h" -l "help" -d "Display this message"
 complete -c xsv -n "__fish_seen_subcommand_from table" -s "o" -l "output" -d "Write output to <file> instead of stdout." -r
 complete -c xsv -n "__fish_seen_subcommand_from table" -s "d" -l "delimiter" -d "The field delimiter for reading CSV data." -x

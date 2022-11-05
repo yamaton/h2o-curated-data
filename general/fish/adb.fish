@@ -32,6 +32,7 @@ complete -k -c adb -n __fish_use_subcommand -x -a logcat -d "show device log"
 complete -k -c adb -n __fish_use_subcommand -x -a jdwp -d "list pids of processes hosting a JDWP transport"
 complete -k -c adb -n __fish_use_subcommand -x -a bugreport -d "write bugreport to given PATH"
 complete -k -c adb -n __fish_use_subcommand -x -a uninstall -d "remove this app package from the device"
+complete -k -c adb -n __fish_use_subcommand -x -a install-multi-package -d "push one or more packages to the device and install them atomically"
 complete -k -c adb -n __fish_use_subcommand -x -a install-multiple -d "push packages to the device and install them"
 complete -k -c adb -n __fish_use_subcommand -x -a install -d "push package to the device and install them"
 complete -k -c adb -n __fish_use_subcommand -x -a emu -d "run emulator console command"
@@ -95,6 +96,15 @@ complete -c adb -n "__fish_seen_subcommand_from install" -s "s" -d "install appl
 complete -c adb -n "__fish_seen_subcommand_from install" -s "d" -d "allow version code downgrade (debuggable packages only)"
 complete -c adb -n "__fish_seen_subcommand_from install" -s "p" -d "partial application install (install-multiple only)"
 complete -c adb -n "__fish_seen_subcommand_from install" -s "g" -d "grant all runtime permissions"
+complete -c adb -n "__fish_seen_subcommand_from install" -l "instant" -d "cause the app to be installed as an ephemeral install app"
+complete -c adb -n "__fish_seen_subcommand_from install" -l "no-streaming" -d "always push APK to device and invoke Package Manager as separate steps"
+complete -c adb -n "__fish_seen_subcommand_from install" -l "streaming" -d "force streaming APK directly into Package Manager"
+complete -c adb -n "__fish_seen_subcommand_from install" -l "fastdeploy" -d "use fast deploy"
+complete -c adb -n "__fish_seen_subcommand_from install" -l "no-fastdeploy" -d "prevent use of fast deploy"
+complete -c adb -n "__fish_seen_subcommand_from install" -l "force-agent" -d "force update of deployment agent when using fast deploy"
+complete -c adb -n "__fish_seen_subcommand_from install" -l "date-check-agent" -d "update deployment agent when local version is newer and using fast deploy"
+complete -c adb -n "__fish_seen_subcommand_from install" -l "version-check-agent" -d "update deployment agent when local version has different version code and using fast deploy"
+complete -c adb -n "__fish_seen_subcommand_from install" -l "local-agent" -d "locate agent files from local source build (instead of SDK location)"
 
 
 
@@ -105,6 +115,34 @@ complete -c adb -n "__fish_seen_subcommand_from install-multiple" -s "s" -d "ins
 complete -c adb -n "__fish_seen_subcommand_from install-multiple" -s "d" -d "allow version code downgrade (debuggable packages only)"
 complete -c adb -n "__fish_seen_subcommand_from install-multiple" -s "p" -d "partial application install (install-multiple only)"
 complete -c adb -n "__fish_seen_subcommand_from install-multiple" -s "g" -d "grant all runtime permissions"
+complete -c adb -n "__fish_seen_subcommand_from install-multiple" -l "instant" -d "cause the app to be installed as an ephemeral install app"
+complete -c adb -n "__fish_seen_subcommand_from install-multiple" -l "no-streaming" -d "always push APK to device and invoke Package Manager as separate steps"
+complete -c adb -n "__fish_seen_subcommand_from install-multiple" -l "streaming" -d "force streaming APK directly into Package Manager"
+complete -c adb -n "__fish_seen_subcommand_from install-multiple" -l "fastdeploy" -d "use fast deploy"
+complete -c adb -n "__fish_seen_subcommand_from install-multiple" -l "no-fastdeploy" -d "prevent use of fast deploy"
+complete -c adb -n "__fish_seen_subcommand_from install-multiple" -l "force-agent" -d "force update of deployment agent when using fast deploy"
+complete -c adb -n "__fish_seen_subcommand_from install-multiple" -l "date-check-agent" -d "update deployment agent when local version is newer and using fast deploy"
+complete -c adb -n "__fish_seen_subcommand_from install-multiple" -l "version-check-agent" -d "update deployment agent when local version has different version code and using fast deploy"
+complete -c adb -n "__fish_seen_subcommand_from install-multiple" -l "local-agent" -d "locate agent files from local source build (instead of SDK location)"
+
+
+
+complete -c adb -n "__fish_seen_subcommand_from install-multi-package" -s "l" -d "forward lock application"
+complete -c adb -n "__fish_seen_subcommand_from install-multi-package" -s "r" -d "replace existing application"
+complete -c adb -n "__fish_seen_subcommand_from install-multi-package" -s "t" -d "allow test packages"
+complete -c adb -n "__fish_seen_subcommand_from install-multi-package" -s "s" -d "install application on sdcard"
+complete -c adb -n "__fish_seen_subcommand_from install-multi-package" -s "d" -d "allow version code downgrade (debuggable packages only)"
+complete -c adb -n "__fish_seen_subcommand_from install-multi-package" -s "p" -d "partial application install (install-multiple only)"
+complete -c adb -n "__fish_seen_subcommand_from install-multi-package" -s "g" -d "grant all runtime permissions"
+complete -c adb -n "__fish_seen_subcommand_from install-multi-package" -l "instant" -d "cause the app to be installed as an ephemeral install app"
+complete -c adb -n "__fish_seen_subcommand_from install-multi-package" -l "no-streaming" -d "always push APK to device and invoke Package Manager as separate steps"
+complete -c adb -n "__fish_seen_subcommand_from install-multi-package" -l "streaming" -d "force streaming APK directly into Package Manager"
+complete -c adb -n "__fish_seen_subcommand_from install-multi-package" -l "fastdeploy" -d "use fast deploy"
+complete -c adb -n "__fish_seen_subcommand_from install-multi-package" -l "no-fastdeploy" -d "prevent use of fast deploy"
+complete -c adb -n "__fish_seen_subcommand_from install-multi-package" -l "force-agent" -d "force update of deployment agent when using fast deploy"
+complete -c adb -n "__fish_seen_subcommand_from install-multi-package" -l "date-check-agent" -d "update deployment agent when local version is newer and using fast deploy"
+complete -c adb -n "__fish_seen_subcommand_from install-multi-package" -l "version-check-agent" -d "update deployment agent when local version has different version code and using fast deploy"
+complete -c adb -n "__fish_seen_subcommand_from install-multi-package" -l "local-agent" -d "locate agent files from local source build (instead of SDK location)"
 
 
 

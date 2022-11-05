@@ -78,6 +78,10 @@ _adb()
             return
             ;;
 
+          install-multi-package) _adb_installmultipackage
+            return
+            ;;
+
           uninstall) _adb_uninstall
             return
             ;;
@@ -207,7 +211,7 @@ _adb()
             ;;
 
       *)
-          word_list=" devices help version connect diconnect forward ppp reverse push pull sync shell emu install install-multiple uninstall bugreport jdwp logcat disable-verify enable-verify keygen wait-for-device wait-for-usb-device wait-for-local-device wait-for-recovery wait-for-usb-recovery wait-for-local-recovery wait-for-sideload wait-for-usb-sideload wait-for-local-sideload wait-for-bootloader wait-for-usb-bootloader wait-for-local-bootloader get-state get-serialno get-devpath remount reboot sideload root unroot usb tcpip start-server kill-server reconnect "
+          word_list=" devices help version connect diconnect forward ppp reverse push pull sync shell emu install install-multiple install-multi-package uninstall bugreport jdwp logcat disable-verify enable-verify keygen wait-for-device wait-for-usb-device wait-for-local-device wait-for-recovery wait-for-usb-recovery wait-for-local-recovery wait-for-sideload wait-for-usb-sideload wait-for-local-sideload wait-for-bootloader wait-for-usb-bootloader wait-for-local-bootloader get-state get-serialno get-devpath remount reboot sideload root unroot usb tcpip start-server kill-server reconnect "
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac
@@ -265,33 +269,7 @@ _adb_sync ()
 _adb_shell ()
 {
     local cur word_list
-    local i=1 subcommand_index
-
-    # take the last word that's NOT starting with -
-    while [[ ( $i < $COMP_CWORD ) ]]; do
-        local s="${COMP_WORDS[i]}"
-        case "$s" in
-          shell)
-            subcommand_index=$i
-            break
-            ;;
-        esac
-        (( i++ ))
-    done
-
-    while [[ ( $subcommand_index < $COMP_CWORD ) ]]; do
-        local s="${COMP_WORDS[subcommand_index}"
-        case "$s" in
-          bu) _adb_bu
-            return
-            ;;
-
-          *)  ;; 
-        esac
-        (( subcommand_index++ ))
-    done
-
-    word_list=" bu -e -n -T -t -x" 
+    word_list=" -e -n -T -t -x" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -299,7 +277,7 @@ _adb_shell ()
 _adb_install ()
 {
     local cur word_list
-    word_list=" -l -r -t -s -d -p -g" 
+    word_list=" -l -r -t -s -d -p -g --instant --no-streaming --streaming --fastdeploy --no-fastdeploy --force-agent --date-check-agent --version-check-agent --local-agent" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -307,7 +285,15 @@ _adb_install ()
 _adb_installmultiple ()
 {
     local cur word_list
-    word_list=" -l -r -t -s -d -p -g" 
+    word_list=" -l -r -t -s -d -p -g --instant --no-streaming --streaming --fastdeploy --no-fastdeploy --force-agent --date-check-agent --version-check-agent --local-agent" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_adb_installmultipackage ()
+{
+    local cur word_list
+    word_list=" -l -r -t -s -d -p -g --instant --no-streaming --streaming --fastdeploy --no-fastdeploy --force-agent --date-check-agent --version-check-agent --local-agent" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }

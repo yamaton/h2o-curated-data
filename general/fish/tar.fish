@@ -1,5 +1,26 @@
 # Auto-generated with h2o
 
+complete -c tar -s "A" -l "catenate" -l "concatenate" -d "append tar files to an archive"
+complete -c tar -s "c" -l "create" -d "create a new archive"
+complete -c tar -l "delete" -d "delete from the archive (not on mag tapes!)"
+complete -c tar -s "d" -l "diff" -l "compare" -d "find differences between archive and file system"
+complete -c tar -s "r" -l "append" -d "append files to the end of an archive"
+complete -c tar -l "test-label" -d "test the archive volume label and exit"
+complete -c tar -s "t" -l "list" -d "list the contents of an archive"
+complete -c tar -s "u" -l "update" -d "only append files newer than copy in archive"
+complete -c tar -s "x" -l "extract" -l "get" -d "extract files from an archive"
+complete -c tar -l "check-device" -d "check device numbers when creating incremental archives (default)"
+complete -c tar -s "g" -l "listed-incremental" -d "handle new GNU-format incremental backup" -r
+complete -c tar -s "G" -l "incremental" -d "handle old GNU-format incremental backup"
+complete -c tar -l "hole-detection" -d "technique to detect holes" -x
+complete -c tar -l "ignore-failed-read" -d "do not exit with nonzero on unreadable files"
+complete -c tar -l "level" -d "dump level for created listed-incremental archive" -x
+complete -c tar -l "no-check-device" -d "do not check device numbers when creating incremental archives"
+complete -c tar -l "no-seek" -d "archive is not seekable"
+complete -c tar -s "n" -l "seek" -d "archive is seekable"
+complete -c tar -l "occurrence" -d "process only the NUMBERth occurrence of each file in the archive; this option is valid only in conjunction with one of the subcommands --delete, --diff, --extract or --list and when a list of files is given either on the command line or via the -T option; NUMBER defaults to 1" -r
+complete -c tar -l "sparse-version" -d "set version of the sparse format to use (implies --sparse)" -x
+complete -c tar -s "S" -l "sparse" -d "handle sparse files efficiently"
 complete -c tar -l "add-file" -d "add given FILE to the archive (useful if its name starts with a dash)" -r
 complete -c tar -s "C" -l "directory" -d "change to directory DIR" -r
 complete -c tar -l "exclude" -d "exclude files, given as a PATTERN" -r
@@ -32,30 +53,9 @@ complete -c tar -l "no-wildcards" -d "verbatim string matching"
 complete -c tar -l "no-wildcards-match-slash" -d "wildcards do not match '/'"
 complete -c tar -l "wildcards" -d "use wildcards (default for exclusion)"
 complete -c tar -l "wildcards-match-slash" -d "wildcards match '/' (default for exclusion)"
-complete -c tar -s "A" -l "catenate" -l "concatenate" -d "append tar files to an archive"
-complete -c tar -s "c" -l "create" -d "create a new archive"
-complete -c tar -s "d" -l "diff" -l "compare" -d "find differences between archive and file system"
-complete -c tar -l "delete" -d "delete from the archive (not on mag tapes!)"
-complete -c tar -s "r" -l "append" -d "append files to the end of an archive"
-complete -c tar -s "t" -l "list" -d "list the contents of an archive"
-complete -c tar -l "test-label" -d "test the archive volume label and exit"
-complete -c tar -s "u" -l "update" -d "only append files newer than copy in archive"
-complete -c tar -s "x" -l "extract" -l "get" -d "extract files from an archive"
-complete -c tar -l "check-device" -d "check device numbers when creating incremental archives (default)"
-complete -c tar -s "g" -l "listed-incremental" -d "handle new GNU-format incremental backup" -r
-complete -c tar -s "G" -l "incremental" -d "handle old GNU-format incremental backup"
-complete -c tar -l "hole-detection" -d "technique to detect holes" -x
-complete -c tar -l "ignore-failed-read" -d "do not exit with nonzero on unreadable files"
-complete -c tar -l "level" -d "dump level for created listed-incremental archive" -x
-complete -c tar -s "n" -l "seek" -d "archive is seekable"
-complete -c tar -l "no-check-device" -d "do not check device numbers when creating incremental archives"
-complete -c tar -l "no-seek" -d "archive is not seekable"
-complete -c tar -l "occurrence" -d "process only the NUMBERth occurrence of each file in the archive; this option is valid only in conjunction with one of the subcommands --delete, --diff, --extract or --list and when a list of files is given either on the command line or via the -T option; NUMBER defaults to 1" -r
-complete -c tar -l "sparse-version" -d "set version of the sparse format to use (implies --sparse)" -x
-complete -c tar -s "S" -l "sparse" -d "handle sparse files efficiently"
-complete -c tar -s "k" -l "keep-old-files" -d "don't replace existing files when extracting, treat them as errors"
 complete -c tar -l "keep-directory-symlink" -d "preserve existing symlinks to directories when extracting"
 complete -c tar -l "keep-newer-files" -d "don't replace existing files that are newer than their archive copies"
+complete -c tar -s "k" -l "keep-old-files" -d "don't replace existing files when extracting, treat them as errors"
 complete -c tar -l "no-overwrite-dir" -d "preserve metadata of existing directories"
 complete -c tar -l "one-top-level" -d "create a subdirectory to avoid having loose files extracted" -r
 complete -c tar -l "overwrite" -d "overwrite existing files when extracting"
@@ -85,8 +85,8 @@ complete -c tar -l "owner" -d "force NAME as owner for added files" -r
 complete -c tar -l "owner-map" -d "use FILE to map file owner UIDs and names" -r
 complete -c tar -s "p" -l "preserve-permissions" -l "same-permissions" -d "extract information about file permissions (default for superuser)"
 complete -c tar -l "same-owner" -d "try extracting files with the same ownership as exists in the archive (default for superuser)"
-complete -c tar -s "s" -l "preserve-order" -l "same-order" -d "member arguments are listed in the same order as the files in the archive"
 complete -c tar -l "sort" -d "directory sorting order: none (default), name or inode" -r
+complete -c tar -s "s" -l "preserve-order" -l "same-order" -d "member arguments are listed in the same order as the files in the archive"
 complete -c tar -l "acls" -d "Enable the POSIX ACLs support"
 complete -c tar -l "no-acls" -d "Disable the POSIX ACLs support"
 complete -c tar -l "no-selinux" -d "Disable the SELinux context support"
@@ -95,8 +95,8 @@ complete -c tar -l "selinux" -d "Enable the SELinux context support"
 complete -c tar -l "xattrs" -d "Enable extended attributes support"
 complete -c tar -l "xattrs-exclude" -d "specify the exclude pattern for xattr keys" -x
 complete -c tar -l "xattrs-include" -d "specify the include pattern for xattr keys" -x
-complete -c tar -s "f" -l "file" -d "use archive file or device ARCHIVE" -r
 complete -c tar -l "force-local" -d "archive file is local even if it has a colon"
+complete -c tar -s "f" -l "file" -d "use archive file or device ARCHIVE" -r
 complete -c tar -s "F" -l "info-script" -l "new-volume-script" -d "run script at end of each tape (implies -M)" -x
 complete -c tar -s "L" -l "tape-length" -d "change tape after writing NUMBER x 1024 bytes" -x
 complete -c tar -s "M" -l "multi-volume" -d "create/list/extract multi-volume archive"
@@ -120,12 +120,12 @@ complete -c tar -l "lzip" -d "filter the archive through lzip"
 complete -c tar -l "lzma" -d "filter the archive through xz"
 complete -c tar -l "lzop" -d "filter the archive through lzop"
 complete -c tar -l "no-auto-compress" -d "do not use archive suffix to determine the compression program"
-complete -c tar -s "z" -l "gzip" -l "gunzip" -l "ungzip" -d "filter the archive through gzip"
 complete -c tar -l "zstd" -d "filter the archive through zstd"
+complete -c tar -s "z" -l "gzip" -l "gunzip" -l "ungzip" -d "filter the archive through gzip"
 complete -c tar -s "Z" -l "compress" -l "uncompress" -d "filter the archive through compress"
 complete -c tar -l "backup" -d "backup before removal, choose version CONTROL" -x
-complete -c tar -s "h" -l "dereference" -d "follow symlinks; archive and dump the files they point to"
 complete -c tar -l "hard-dereference" -d "follow hard links; archive and dump the files they refer to"
+complete -c tar -s "h" -l "dereference" -d "follow symlinks; archive and dump the files they point to"
 complete -c tar -s "K" -l "starting-file" -d "begin at member MEMBER-NAME when reading the archive" -x
 complete -c tar -l "newer-mtime" -d "compare date and time when data changed only" -x
 complete -c tar -s "N" -l "newer" -l "after-date" -d "only store files newer than DATE-OR-FILE" -r

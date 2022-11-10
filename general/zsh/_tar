@@ -15,6 +15,27 @@ function _tar {
  
 
     _arguments -C \
+        {-A,--catenate,--concatenate}'[append tar files to an archive]' \
+        {-c,--create}'[create a new archive]' \
+        '--delete[delete from the archive (not on mag tapes!)]' \
+        {-d,--diff,--compare}'[find differences between archive and file system]' \
+        {-r,--append}'[append files to the end of an archive]' \
+        '--test-label[test the archive volume label and exit]' \
+        {-t,--list}'[list the contents of an archive]' \
+        {-u,--update}'[only append files newer than copy in archive]' \
+        {-x,--extract,--get}'[extract files from an archive]' \
+        '--check-device[check device numbers when creating incremental archives (default)]' \
+        {-g,--listed-incremental}'[handle new GNU-format incremental backup]':file:_files \
+        {-G,--incremental}'[handle old GNU-format incremental backup]' \
+        '--hole-detection[technique to detect holes]' \
+        '--ignore-failed-read[do not exit with nonzero on unreadable files]' \
+        '--level[dump level for created listed-incremental archive]' \
+        '--no-check-device[do not check device numbers when creating incremental archives]' \
+        '--no-seek[archive is not seekable]' \
+        {-n,--seek}'[archive is seekable]' \
+        '--occurrence[process only the NUMBERth occurrence of each file in the archive; this option is valid only in conjunction with one of the subcommands --delete, --diff, --extract or --list and when a list of files is given either on the command line or via the -T option; NUMBER defaults to 1]' \
+        '--sparse-version[set version of the sparse format to use (implies --sparse)]' \
+        {-S,--sparse}'[handle sparse files efficiently]' \
         '--add-file[add given FILE to the archive (useful if its name starts with a dash)]':file:_files \
         {-C,--directory}'[change to directory DIR]':file:_files \
         '--exclude[exclude files, given as a PATTERN]' \
@@ -47,30 +68,9 @@ function _tar {
         '--no-wildcards-match-slash[wildcards do not match '\''/'\'']' \
         '--wildcards[use wildcards (default for exclusion)]' \
         '--wildcards-match-slash[wildcards match '\''/'\'' (default for exclusion)]' \
-        {-A,--catenate,--concatenate}'[append tar files to an archive]' \
-        {-c,--create}'[create a new archive]' \
-        {-d,--diff,--compare}'[find differences between archive and file system]' \
-        '--delete[delete from the archive (not on mag tapes!)]' \
-        {-r,--append}'[append files to the end of an archive]' \
-        {-t,--list}'[list the contents of an archive]' \
-        '--test-label[test the archive volume label and exit]' \
-        {-u,--update}'[only append files newer than copy in archive]' \
-        {-x,--extract,--get}'[extract files from an archive]' \
-        '--check-device[check device numbers when creating incremental archives (default)]' \
-        {-g,--listed-incremental}'[handle new GNU-format incremental backup]':file:_files \
-        {-G,--incremental}'[handle old GNU-format incremental backup]' \
-        '--hole-detection[technique to detect holes]' \
-        '--ignore-failed-read[do not exit with nonzero on unreadable files]' \
-        '--level[dump level for created listed-incremental archive]' \
-        {-n,--seek}'[archive is seekable]' \
-        '--no-check-device[do not check device numbers when creating incremental archives]' \
-        '--no-seek[archive is not seekable]' \
-        '--occurrence[process only the NUMBERth occurrence of each file in the archive; this option is valid only in conjunction with one of the subcommands --delete, --diff, --extract or --list and when a list of files is given either on the command line or via the -T option; NUMBER defaults to 1]' \
-        '--sparse-version[set version of the sparse format to use (implies --sparse)]' \
-        {-S,--sparse}'[handle sparse files efficiently]' \
-        {-k,--keep-old-files}'[don'\''t replace existing files when extracting, treat them as errors]' \
         '--keep-directory-symlink[preserve existing symlinks to directories when extracting]' \
         '--keep-newer-files[don'\''t replace existing files that are newer than their archive copies]' \
+        {-k,--keep-old-files}'[don'\''t replace existing files when extracting, treat them as errors]' \
         '--no-overwrite-dir[preserve metadata of existing directories]' \
         '--one-top-level[create a subdirectory to avoid having loose files extracted]':file:_files \
         '--overwrite[overwrite existing files when extracting]' \
@@ -100,8 +100,8 @@ function _tar {
         '--owner-map[use FILE to map file owner UIDs and names]':file:_files \
         {-p,--preserve-permissions,--same-permissions}'[extract information about file permissions (default for superuser)]' \
         '--same-owner[try extracting files with the same ownership as exists in the archive (default for superuser)]' \
-        {-s,--preserve-order,--same-order}'[member arguments are listed in the same order as the files in the archive]' \
         '--sort[directory sorting order: none (default), name or inode]' \
+        {-s,--preserve-order,--same-order}'[member arguments are listed in the same order as the files in the archive]' \
         '--acls[Enable the POSIX ACLs support]' \
         '--no-acls[Disable the POSIX ACLs support]' \
         '--no-selinux[Disable the SELinux context support]' \
@@ -110,8 +110,8 @@ function _tar {
         '--xattrs[Enable extended attributes support]' \
         '--xattrs-exclude[specify the exclude pattern for xattr keys]' \
         '--xattrs-include[specify the include pattern for xattr keys]' \
-        {-f,--file}'[use archive file or device ARCHIVE]':file:_files \
         '--force-local[archive file is local even if it has a colon]' \
+        {-f,--file}'[use archive file or device ARCHIVE]':file:_files \
         {-F,--info-script,--new-volume-script}'[run script at end of each tape (implies -M)]' \
         {-L,--tape-length}'[change tape after writing NUMBER x 1024 bytes]' \
         {-M,--multi-volume}'[create/list/extract multi-volume archive]' \
@@ -135,12 +135,12 @@ function _tar {
         '--lzma[filter the archive through xz]' \
         '--lzop[filter the archive through lzop]' \
         '--no-auto-compress[do not use archive suffix to determine the compression program]' \
-        {-z,--gzip,--gunzip,--ungzip}'[filter the archive through gzip]' \
         '--zstd[filter the archive through zstd]' \
+        {-z,--gzip,--gunzip,--ungzip}'[filter the archive through gzip]' \
         {-Z,--compress,--uncompress}'[filter the archive through compress]' \
         '--backup[backup before removal, choose version CONTROL]' \
-        {-h,--dereference}'[follow symlinks; archive and dump the files they point to]' \
         '--hard-dereference[follow hard links; archive and dump the files they refer to]' \
+        {-h,--dereference}'[follow symlinks; archive and dump the files they point to]' \
         {-K,--starting-file}'[begin at member MEMBER-NAME when reading the archive]' \
         '--newer-mtime[compare date and time when data changed only]' \
         {-N,--newer,--after-date}'[only store files newer than DATE-OR-FILE]':file:_files \

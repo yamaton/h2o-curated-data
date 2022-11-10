@@ -1,9 +1,16 @@
 name: go
 description: go
+usage: |-
+  go <command> [arguments]
 options: []
 subcommands:
+  - name: bug
+    description: start a bug report
+    usage: go bug
+    options: []
   - name: build
     description: compile packages and dependencies
+    usage: go build [-o output] [build flags] [packages]
     options:
       - names:
           - -a
@@ -20,11 +27,15 @@ subcommands:
       - names:
           - -race
         argument: ""
-        description: enable data race detection. Supported only on linux/amd64, freebsd/amd64, darwin/amd64, windows/amd64, linux/ppc64le and linux/arm64 (only for 48-bit VMA).
+        description: enable data race detection. Supported only on linux/amd64, freebsd/amd64, darwin/amd64, darwin/arm64, windows/amd64, linux/ppc64le and linux/arm64 (only for 48-bit VMA).
       - names:
           - -msan
         argument: ""
         description: enable interoperation with memory sanitizer. Supported only on linux/amd64, linux/arm64 and only with Clang/LLVM as the host C compiler. On linux/arm64, pie build mode will be used.
+      - names:
+          - -asan
+        argument: ""
+        description: enable interoperation with address sanitizer. Supported only on linux/arm64, linux/amd64. Supported only on linux/amd64 or linux/arm64 and only with GCC 7 and higher or Clang/LLVM 9 and higher.
       - names:
           - -v
         argument: ""
@@ -46,6 +57,10 @@ subcommands:
         argument: mode
         description: build mode to use. See 'go help buildmode' for more.
       - names:
+          - -buildvcs
+        argument: ""
+        description: Whether to stamp binaries with version control information ("true", "false", or "auto"). By default ("auto"), version control information is stamped into a binary if the main package, the main module containing it, and the current directory are all in the same repository. Use -buildvcs=false to always omit version control information, or -buildvcs=true to error out if version control information is available but cannot be included due to a missing tool or ambiguous directory structure.
+      - names:
           - -compiler
         argument: name
         description: name of compiler to use, as in runtime.Compiler (gccgo or gc).
@@ -60,7 +75,7 @@ subcommands:
       - names:
           - -installsuffix
         argument: suffix
-        description: a suffix to use in the name of the package installation directory, in order to keep output separate from default builds. If using the -race flag, the install suffix is automatically set to race or, if set explicitly, has _race appended to it. Likewise for the -msan flag. Using a -buildmode option that requires non-default compile flags has a similar effect.
+        description: a suffix to use in the name of the package installation directory, in order to keep output separate from default builds. If using the -race flag, the install suffix is automatically set to race or, if set explicitly, has _race appended to it. Likewise for the -msan and -asan flags. Using a -buildmode option that requires non-default compile flags has a similar effect.
       - names:
           - -ldflags
         argument: '''[pattern=]arg list'''
@@ -92,47 +107,67 @@ subcommands:
       - names:
           - -tags
         argument: tag,list
-        description: a comma-separated list of build tags to consider satisfied during the build. For more information about build tags, see the description of build constraints in the documentation for the go/build package. (Earlier versions of Go used a space-separated list, and that form is deprecated but still recognized.)
+        description: a comma-separated list of additional build tags to consider satisfied during the build. For more information about build tags, see 'go help buildconstraint'. (Earlier versions of Go used a space-separated list, and that form is deprecated but still recognized.)
       - names:
           - -trimpath
         argument: ""
-        description: remove all file system paths from the resulting executable. Instead of absolute file system paths, the recorded file names will begin with either "go" (for the standard library), or a module path@version (when using modules), or a plain import path (when using GOPATH).
+        description: remove all file system paths from the resulting executable. Instead of absolute file system paths, the recorded file names will begin either a module path@version (when using modules), or a plain import path (when using the standard library, or GOPATH).
       - names:
           - -toolexec
         argument: '''cmd args'''
         description: a program to use to invoke toolchain programs like vet and asm. For example, instead of running asm, the go command will run 'cmd args /path/to/asm <arguments for asm>'. The TOOLEXEC_IMPORTPATH environment variable will be set, matching 'go list -f {{.ImportPath}}' for the package being built.
   - name: clean
     description: remove object files and cached files
+    usage: go clean [clean flags] [build flags] [packages]
     options: []
   - name: doc
     description: show documentation for package or symbol
+    usage: go doc [doc flags] [package|[package.]symbol[.methodOrField]]
     options:
       - names:
           - -all
         argument: ""
-        description: show all documentation for package
+        description: Show all the documentation for the package.
       - names:
           - -c
         argument: ""
-        description: symbol matching honors case (paths not affected)
+        description: Respect case when matching symbols.
       - names:
           - -cmd
         argument: ""
-        description: show symbols with package docs even if package is a command
+        description: Treat a command (package main) like a regular package. Otherwise package main's exported symbols are hidden when showing the package's top-level documentation.
       - names:
           - -short
         argument: ""
-        description: one-line representation for each symbol
+        description: One-line representation for each symbol.
       - names:
           - -src
         argument: ""
-        description: show source code for symbol
+        description: Show the full source code for the symbol. This will display the full Go source of its declaration and definition, such as a function definition (including the body), type declaration or enclosing const block. The output may therefore include unexported details.
       - names:
           - -u
         argument: ""
-        description: show unexported symbols as well as exported
+        description: Show documentation for unexported as well as exported symbols, methods, and fields.
+    subcommands:
+      - name: documentation
+        description: 'for json.Decoder''s Decode method:'
+        usage: ""
+        options: []
+  - name: env
+    description: print Go environment information
+    usage: go env [-json] [-u] [-w] [var ...]
+    options: []
+  - name: fix
+    description: update packages to use new APIs
+    usage: go fix [-fix list] [packages]
+    options: []
+  - name: fmt
+    description: gofmt (reformat) package sources
+    usage: go fmt [-n] [-x] [packages]
+    options: []
   - name: generate
     description: generate Go files by processing source
+    usage: go generate [-run regexp] [-n] [-v] [-x] [build flags] [file.go... | packages]
     options:
       - names:
           - -run
@@ -140,28 +175,83 @@ subcommands:
         description: if non-empty, specifies a regular expression to select directives whose full original source text (excluding any trailing spaces and final newline) matches the expression.
   - name: get
     description: add dependencies to current module and install them
+    usage: go get [-t] [-u] [-v] [build flags] [packages]
     options: []
   - name: install
     description: compile and install packages and dependencies
+    usage: go install [build flags] [packages]
     options: []
   - name: list
     description: list packages or modules
+    usage: go list [-f format] [-json] [-m] [list flags] [build flags] [packages]
     options: []
   - name: mod
     description: module maintenance
+    usage: |2-
+      go mod <command> [arguments]
     options: []
     subcommands:
       - name: download
         description: download modules to local cache
+        usage: go mod download [-x] [-json] [-reuse=old.json] [modules]
         options: []
       - name: edit
         description: edit go.mod from tools or scripts
+        usage: go mod edit [editing flags] [-fmt|-print|-json] [go.mod]
+        options: []
+      - name: graph
+        description: print module requirement graph
+        usage: go mod graph [-go=version]
+        options: []
+      - name: init
+        description: initialize new module in current directory
+        usage: go mod init [module-path]
+        options: []
+      - name: tidy
+        description: add missing and remove unused modules
+        usage: go mod tidy [-e] [-v] [-go=version] [-compat=version]
+        options: []
+      - name: vendor
+        description: make vendored copy of dependencies
+        usage: go mod vendor [-e] [-v] [-o outdir]
+        options: []
+      - name: verify
+        description: verify dependencies have expected content
+        usage: go mod verify
         options: []
       - name: why
         description: explain why packages or modules are needed
+        usage: go mod why [-m] [-vendor] packages...
         options: []
+  - name: work
+    description: workspace maintenance
+    usage: |2-
+      go work <command> [arguments]
+    options: []
+    subcommands:
+      - name: edit
+        description: edit go.work from tools or scripts
+        usage: go work edit [editing flags] [go.work]
+        options: []
+      - name: init
+        description: initialize workspace file
+        usage: go work init [moddirs]
+        options: []
+      - name: sync
+        description: sync workspace build list to modules
+        usage: go work sync
+        options: []
+      - name: use
+        description: add modules to workspace file
+        usage: go work use [-r] moddirs
+        options: []
+  - name: run
+    description: compile and run Go program
+    usage: go run [build flags] [-exec xprog] package [arguments...]
+    options: []
   - name: test
     description: test packages
+    usage: go test [build/test flags] [packages] [build/test flags & test binary flags]
     options:
       - names:
           - -args
@@ -187,35 +277,29 @@ subcommands:
           - -o
         argument: file
         description: Compile the test binary to the named file. The test still runs (unless -c or -i is specified).
+  - name: tool
+    description: run specified go tool
+    usage: go tool [-n] command [args...]
+    options: []
+  - name: version
+    description: print Go version
+    usage: go version [-m] [-v] [file ...]
+    options: []
+  - name: vet
+    description: report likely mistakes in packages
+    usage: go vet [-n] [-x] [-vettool prog] [build flags] [vet flags] [packages]
+    options: []
   - name: buildconstraint
     description: build constraints
+    usage: ""
     options:
       - names:
           - '-'
         argument: ""
-        description: the target operating system, as spelled by runtime.GOOS, set with the GOOS environment variable.
-      - names:
-          - '-'
-        argument: ""
-        description: the target architecture, as spelled by runtime.GOARCH, set with the GOARCH environment variable.
-      - names:
-          - '-'
-        argument: ""
-        description: the compiler being used, either "gc" or "gccgo"
-      - names:
-          - '-'
-        argument: ""
-        description: '"cgo", if the cgo command is supported (see CGO_ENABLED in ''go help environment'').'
-      - names:
-          - '-'
-        argument: ""
-        description: 'a term for each Go major release, through the current version: "go1.1" from Go version 1.1 onward, "go1.12" from Go 1.12, and so on.'
-      - names:
-          - '-'
-        argument: ""
-        description: any additional tags given by the -tags flag (see 'go help build').
+        description: '"unix", if GOOS is a Unix or Unix-like system.'
   - name: buildmode
     description: build modes
+    usage: ""
     options:
       - names:
           - -buildmode
@@ -249,26 +333,61 @@ subcommands:
           - -buildmode
         argument: plugin
         description: Build the listed main packages, plus all packages that they import, into a Go plugin. Packages not named main are ignored.
+  - name: c
+    description: calling between Go and C
+    usage: ""
+    options: []
+  - name: cache
+    description: build and test caching
+    usage: ""
+    options: []
   - name: environment
     description: environment variables
+    usage: ""
     options: []
   - name: filetype
     description: file types
+    usage: ""
     options: []
   - name: gopath
     description: GOPATH environment variable
+    usage: ""
+    options: []
+  - name: gopath-get
+    description: legacy GOPATH go get
+    usage: go get [-d] [-f] [-t] [-u] [-v] [-fix] [build flags] [packages]
+    options: []
+  - name: goproxy
+    description: module proxy protocol
+    usage: ""
     options: []
   - name: importpath
     description: import path syntax
+    usage: ""
+    options: []
+  - name: modules
+    description: modules, module versions, and more
+    usage: ""
     options: []
   - name: module-get
     description: module-aware go get
+    usage: go get [-t] [-u] [-v] [build flags] [packages]
+    options: []
+  - name: module-auth
+    description: module authentication using go.sum
+    usage: ""
     options: []
   - name: packages
     description: package lists and patterns
+    usage: ""
+    options: []
+  - name: private
+    description: configuration for downloading non-public code
+    usage: ""
     options: []
   - name: testflag
     description: testing flags
+    usage: ""
     options:
       - names:
           - -bench
@@ -281,7 +400,7 @@ subcommands:
       - names:
           - -count
         argument: "n"
-        description: Run each test and benchmark n times (default 1). If -cpu is set, run n times for each GOMAXPROCS value. Examples are always run once.
+        description: Run each test, benchmark, and fuzz seed n times (default 1). If -cpu is set, run n times for each GOMAXPROCS value. Examples are always run once. -count does not apply to fuzz tests matched by -fuzz.
       - names:
           - -cover
         argument: ""
@@ -297,27 +416,47 @@ subcommands:
       - names:
           - -cpu
         argument: 1,2,4
-        description: Specify a list of GOMAXPROCS values for which the tests or benchmarks should be executed. The default is the current value of GOMAXPROCS.
+        description: Specify a list of GOMAXPROCS values for which the tests, benchmarks or fuzz tests should be executed. The default is the current value of GOMAXPROCS. -cpu does not apply to fuzz tests matched by -fuzz.
       - names:
           - -failfast
         argument: ""
         description: Do not start new tests after the first test failure.
       - names:
+          - -fuzz
+        argument: regexp
+        description: Run the fuzz test matching the regular expression. When specified, the command line argument must match exactly one package within the main module, and regexp must match exactly one fuzz test within that package. Fuzzing will occur after tests, benchmarks, seed corpora of other fuzz tests, and examples have completed. See the Fuzzing section of the testing package documentation for details.
+      - names:
+          - -fuzztime
+        argument: t
+        description: Run enough iterations of the fuzz target during fuzzing to take t, specified as a time.Duration (for example, -fuzztime 1h30s).
+      - names:
+          - -fuzzminimizetime
+        argument: t
+        description: Run enough iterations of the fuzz target during each minimization attempt to take t, as specified as a time.Duration (for example, -fuzzminimizetime 30s).
+      - names:
+          - -json
+        argument: ""
+        description: Log verbose output and test results in JSON. This presents the same information as the -v flag in a machine-readable format.
+      - names:
           - -list
         argument: regexp
-        description: List tests, benchmarks, or examples matching the regular expression. No tests, benchmarks or examples will be run. This will only list top-level tests. No subtest or subbenchmarks will be shown.
+        description: List tests, benchmarks, fuzz tests, or examples matching the regular expression. No tests, benchmarks, fuzz tests, or examples will be run. This will only list top-level tests. No subtest or subbenchmarks will be shown.
       - names:
           - -parallel
         argument: "n"
-        description: Allow parallel execution of test functions that call t.Parallel. The value of this flag is the maximum number of tests to run simultaneously; by default, it is set to the value of GOMAXPROCS. Note that -parallel only applies within a single test binary. The 'go test' command may run tests for different packages in parallel as well, according to the setting of the -p flag (see 'go help build').
+        description: Allow parallel execution of test functions that call t.Parallel, and fuzz targets that call t.Parallel when running the seed corpus. The value of this flag is the maximum number of tests to run simultaneously. While fuzzing, the value of this flag is the maximum number of subprocesses that may call the fuzz function simultaneously, regardless of whether T.Parallel is called. By default, -parallel is set to the value of GOMAXPROCS. Setting -parallel to values higher than GOMAXPROCS may cause degraded performance due to CPU contention, especially when fuzzing. Note that -parallel only applies within a single test binary. The 'go test' command may run tests for different packages in parallel as well, according to the setting of the -p flag (see 'go help build').
       - names:
           - -run
         argument: regexp
-        description: Run only those tests and examples matching the regular expression. For tests, the regular expression is split by unbracketed slash (/) characters into a sequence of regular expressions, and each part of a test's identifier must match the corresponding element in the sequence, if any. Note that possible parents of matches are run too, so that -run=X/Y matches and runs and reports the result of all tests matching X, even those without sub-tests matching Y, because it must run them to look for those sub-tests.
+        description: Run only those tests, examples, and fuzz tests matching the regular expression. For tests, the regular expression is split by unbracketed slash (/) characters into a sequence of regular expressions, and each part of a test's identifier must match the corresponding element in the sequence, if any. Note that possible parents of matches are run too, so that -run=X/Y matches and runs and reports the result of all tests matching X, even those without sub-tests matching Y, because it must run them to look for those sub-tests.
       - names:
           - -short
         argument: ""
         description: Tell long-running tests to shorten their run time. It is off by default but set during all.bash so that installing the Go tree can run a sanity check but not spend time running exhaustive tests.
+      - names:
+          - -shuffle
+        argument: off,on,N
+        description: Randomize the execution order of tests and benchmarks. It is off by default. If -shuffle is set to on, then it will seed the randomizer using the system clock. If -shuffle is set to an integer N, then N will be used as the seed value. In both cases, the seed will be reported for reproducibility.
       - names:
           - -timeout
         argument: d
@@ -376,7 +515,13 @@ subcommands:
         description: Write an execution trace to the specified file before exiting.
   - name: testfunc
     description: testing functions
+    usage: ""
     options: []
+  - name: vcs
+    description: controlling version control with GOVCS
+    usage: ""
+    options: []
+version: 'go version go1.19.3'
 tldr: |
   > Tool for managing go source code.
   > Some subcommands such as `go build` have their own usage documentation.

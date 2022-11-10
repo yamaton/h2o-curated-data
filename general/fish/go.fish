@@ -1,24 +1,41 @@
 # Auto-generated with h2o
 
+complete -k -c go -n __fish_use_subcommand -x -a vcs -d "controlling version control with GOVCS"
 complete -k -c go -n __fish_use_subcommand -x -a testfunc -d "testing functions"
 complete -k -c go -n __fish_use_subcommand -x -a testflag -d "testing flags"
+complete -k -c go -n __fish_use_subcommand -x -a private -d "configuration for downloading non-public code"
 complete -k -c go -n __fish_use_subcommand -x -a packages -d "package lists and patterns"
+complete -k -c go -n __fish_use_subcommand -x -a module-auth -d "module authentication using go.sum"
 complete -k -c go -n __fish_use_subcommand -x -a module-get -d "module-aware go get"
+complete -k -c go -n __fish_use_subcommand -x -a modules -d "modules, module versions, and more"
 complete -k -c go -n __fish_use_subcommand -x -a importpath -d "import path syntax"
+complete -k -c go -n __fish_use_subcommand -x -a goproxy -d "module proxy protocol"
+complete -k -c go -n __fish_use_subcommand -x -a gopath-get -d "legacy GOPATH go get"
 complete -k -c go -n __fish_use_subcommand -x -a gopath -d "GOPATH environment variable"
 complete -k -c go -n __fish_use_subcommand -x -a filetype -d "file types"
 complete -k -c go -n __fish_use_subcommand -x -a environment -d "environment variables"
+complete -k -c go -n __fish_use_subcommand -x -a cache -d "build and test caching"
+complete -k -c go -n __fish_use_subcommand -x -a c -d "calling between Go and C"
 complete -k -c go -n __fish_use_subcommand -x -a buildmode -d "build modes"
 complete -k -c go -n __fish_use_subcommand -x -a buildconstraint -d "build constraints"
+complete -k -c go -n __fish_use_subcommand -x -a vet -d "report likely mistakes in packages"
+complete -k -c go -n __fish_use_subcommand -x -a version -d "print Go version"
+complete -k -c go -n __fish_use_subcommand -x -a tool -d "run specified go tool"
 complete -k -c go -n __fish_use_subcommand -x -a test -d "test packages"
+complete -k -c go -n __fish_use_subcommand -x -a run -d "compile and run Go program"
+complete -k -c go -n __fish_use_subcommand -x -a work -d "workspace maintenance"
 complete -k -c go -n __fish_use_subcommand -x -a mod -d "module maintenance"
 complete -k -c go -n __fish_use_subcommand -x -a list -d "list packages or modules"
 complete -k -c go -n __fish_use_subcommand -x -a install -d "compile and install packages and dependencies"
 complete -k -c go -n __fish_use_subcommand -x -a get -d "add dependencies to current module and install them"
 complete -k -c go -n __fish_use_subcommand -x -a generate -d "generate Go files by processing source"
+complete -k -c go -n __fish_use_subcommand -x -a fmt -d "gofmt (reformat) package sources"
+complete -k -c go -n __fish_use_subcommand -x -a fix -d "update packages to use new APIs"
+complete -k -c go -n __fish_use_subcommand -x -a env -d "print Go environment information"
 complete -k -c go -n __fish_use_subcommand -x -a doc -d "show documentation for package or symbol"
 complete -k -c go -n __fish_use_subcommand -x -a clean -d "remove object files and cached files"
 complete -k -c go -n __fish_use_subcommand -x -a build -d "compile packages and dependencies"
+complete -k -c go -n __fish_use_subcommand -x -a bug -d "start a bug report"
 
 
 
@@ -27,11 +44,13 @@ complete -c go -n "__fish_seen_subcommand_from build" -s "n" -d "print the comma
 complete -c go -n "__fish_seen_subcommand_from build" -s "p" -d "the number of programs, such as build commands or test binaries, that can be run in parallel." -x
 complete -c go -n "__fish_seen_subcommand_from build" -o "race" -d "enable data race detection."
 complete -c go -n "__fish_seen_subcommand_from build" -o "msan" -d "enable interoperation with memory sanitizer."
+complete -c go -n "__fish_seen_subcommand_from build" -o "asan" -d "enable interoperation with address sanitizer."
 complete -c go -n "__fish_seen_subcommand_from build" -s "v" -d "print the names of packages as they are compiled."
 complete -c go -n "__fish_seen_subcommand_from build" -o "work" -d "print the name of the temporary work directory and do not delete it when exiting."
 complete -c go -n "__fish_seen_subcommand_from build" -s "x" -d "print the commands."
 complete -c go -n "__fish_seen_subcommand_from build" -o "asmflags" -d "arguments to pass on each go tool asm invocation." -x
 complete -c go -n "__fish_seen_subcommand_from build" -o "buildmode" -d "build mode to use." -x
+complete -c go -n "__fish_seen_subcommand_from build" -o "buildvcs" -d "Whether to stamp binaries with version control information (\"true\", \"false\", or \"auto\")."
 complete -c go -n "__fish_seen_subcommand_from build" -o "compiler" -d "name of compiler to use, as in runtime.Compiler (gccgo or gc)." -x
 complete -c go -n "__fish_seen_subcommand_from build" -o "gccgoflags" -d "arguments to pass on each gccgo compiler/linker invocation." -x
 complete -c go -n "__fish_seen_subcommand_from build" -o "gcflags" -d "arguments to pass on each go tool compile invocation." -x
@@ -43,18 +62,18 @@ complete -c go -n "__fish_seen_subcommand_from build" -o "modcacherw" -d "leave 
 complete -c go -n "__fish_seen_subcommand_from build" -o "modfile" -d "in module aware mode, read (and possibly write) an alternate go.mod file instead of the one in the module root directory." -r
 complete -c go -n "__fish_seen_subcommand_from build" -o "overlay" -d "read a JSON config file that provides an overlay for build operations." -r
 complete -c go -n "__fish_seen_subcommand_from build" -o "pkgdir" -d "install and load all packages from dir instead of the usual locations." -r
-complete -c go -n "__fish_seen_subcommand_from build" -o "tags" -d "a comma-separated list of build tags to consider satisfied during the build." -x
+complete -c go -n "__fish_seen_subcommand_from build" -o "tags" -d "a comma-separated list of additional build tags to consider satisfied during the build." -x
 complete -c go -n "__fish_seen_subcommand_from build" -o "trimpath" -d "remove all file system paths from the resulting executable."
 complete -c go -n "__fish_seen_subcommand_from build" -o "toolexec" -d "a program to use to invoke toolchain programs like vet and asm." -r
 
 
 
-complete -c go -n "__fish_seen_subcommand_from doc" -o "all" -d "show all documentation for package"
-complete -c go -n "__fish_seen_subcommand_from doc" -s "c" -d "symbol matching honors case (paths not affected)"
-complete -c go -n "__fish_seen_subcommand_from doc" -o "cmd" -d "show symbols with package docs even if package is a command"
-complete -c go -n "__fish_seen_subcommand_from doc" -o "short" -d "one-line representation for each symbol"
-complete -c go -n "__fish_seen_subcommand_from doc" -o "src" -d "show source code for symbol"
-complete -c go -n "__fish_seen_subcommand_from doc" -s "u" -d "show unexported symbols as well as exported"
+complete -c go -n "__fish_seen_subcommand_from doc" -o "all" -d "Show all the documentation for the package."
+complete -c go -n "__fish_seen_subcommand_from doc" -s "c" -d "Respect case when matching symbols."
+complete -c go -n "__fish_seen_subcommand_from doc" -o "cmd" -d "Treat a command (package main) like a regular package."
+complete -c go -n "__fish_seen_subcommand_from doc" -o "short" -d "One-line representation for each symbol."
+complete -c go -n "__fish_seen_subcommand_from doc" -o "src" -d "Show the full source code for the symbol."
+complete -c go -n "__fish_seen_subcommand_from doc" -s "u" -d "Show documentation for unexported as well as exported symbols, methods, and fields."
 
 
 
@@ -71,12 +90,7 @@ complete -c go -n "__fish_seen_subcommand_from test" -s "o" -d "Compile the test
 
 
 
-complete -c go -n "__fish_seen_subcommand_from buildconstraint"  -d "the target operating system, as spelled by runtime.GOOS, set with the GOOS environment variable."
-complete -c go -n "__fish_seen_subcommand_from buildconstraint"  -d "the target architecture, as spelled by runtime.GOARCH, set with the GOARCH environment variable."
-complete -c go -n "__fish_seen_subcommand_from buildconstraint"  -d "the compiler being used, either \"gc\" or \"gccgo\""
-complete -c go -n "__fish_seen_subcommand_from buildconstraint"  -d "\"cgo\", if the cgo command is supported (see CGO_ENABLED in 'go help environment')."
-complete -c go -n "__fish_seen_subcommand_from buildconstraint"  -d "a term for each Go major release, through the current version: \"go1.1\" from Go version 1.1 onward, \"go1.12\" from Go 1.12, and so on."
-complete -c go -n "__fish_seen_subcommand_from buildconstraint"  -d "any additional tags given by the -tags flag (see 'go help build')."
+complete -c go -n "__fish_seen_subcommand_from buildconstraint"  -d "\"unix\", if GOOS is a Unix or Unix-like system."
 
 
 
@@ -93,16 +107,21 @@ complete -c go -n "__fish_seen_subcommand_from buildmode" -o "buildmode" -d "Bui
 
 complete -c go -n "__fish_seen_subcommand_from testflag" -o "bench" -d "Run only those benchmarks matching a regular expression." -x
 complete -c go -n "__fish_seen_subcommand_from testflag" -o "benchtime" -d "Run enough iterations of each benchmark to take t, specified as a time.Duration (for example, -benchtime 1h30s)." -x
-complete -c go -n "__fish_seen_subcommand_from testflag" -o "count" -d "Run each test and benchmark n times (default 1)." -x
+complete -c go -n "__fish_seen_subcommand_from testflag" -o "count" -d "Run each test, benchmark, and fuzz seed n times (default 1)." -x
 complete -c go -n "__fish_seen_subcommand_from testflag" -o "cover" -d "Enable coverage analysis."
 complete -c go -n "__fish_seen_subcommand_from testflag" -o "covermode" -d "Set the mode for coverage analysis for the package[s] being tested." -x
 complete -c go -n "__fish_seen_subcommand_from testflag" -o "coverpkg" -d "Apply coverage analysis in each test to packages matching the patterns." -x
-complete -c go -n "__fish_seen_subcommand_from testflag" -o "cpu" -d "Specify a list of GOMAXPROCS values for which the tests or benchmarks should be executed." -x
+complete -c go -n "__fish_seen_subcommand_from testflag" -o "cpu" -d "Specify a list of GOMAXPROCS values for which the tests, benchmarks or fuzz tests should be executed." -x
 complete -c go -n "__fish_seen_subcommand_from testflag" -o "failfast" -d "Do not start new tests after the first test failure."
-complete -c go -n "__fish_seen_subcommand_from testflag" -o "list" -d "List tests, benchmarks, or examples matching the regular expression." -x
-complete -c go -n "__fish_seen_subcommand_from testflag" -o "parallel" -d "Allow parallel execution of test functions that call t.Parallel." -x
-complete -c go -n "__fish_seen_subcommand_from testflag" -o "run" -d "Run only those tests and examples matching the regular expression." -x
+complete -c go -n "__fish_seen_subcommand_from testflag" -o "fuzz" -d "Run the fuzz test matching the regular expression." -x
+complete -c go -n "__fish_seen_subcommand_from testflag" -o "fuzztime" -d "Run enough iterations of the fuzz target during fuzzing to take t, specified as a time.Duration (for example, -fuzztime 1h30s)." -x
+complete -c go -n "__fish_seen_subcommand_from testflag" -o "fuzzminimizetime" -d "Run enough iterations of the fuzz target during each minimization attempt to take t, as specified as a time.Duration (for example, -fuzzminimizetime 30s)." -x
+complete -c go -n "__fish_seen_subcommand_from testflag" -o "json" -d "Log verbose output and test results in JSON."
+complete -c go -n "__fish_seen_subcommand_from testflag" -o "list" -d "List tests, benchmarks, fuzz tests, or examples matching the regular expression." -x
+complete -c go -n "__fish_seen_subcommand_from testflag" -o "parallel" -d "Allow parallel execution of test functions that call t.Parallel, and fuzz targets that call t.Parallel when running the seed corpus." -x
+complete -c go -n "__fish_seen_subcommand_from testflag" -o "run" -d "Run only those tests, examples, and fuzz tests matching the regular expression." -x
 complete -c go -n "__fish_seen_subcommand_from testflag" -o "short" -d "Tell long-running tests to shorten their run time."
+complete -c go -n "__fish_seen_subcommand_from testflag" -o "shuffle" -d "Randomize the execution order of tests and benchmarks." -x
 complete -c go -n "__fish_seen_subcommand_from testflag" -o "timeout" -d "If a test binary runs longer than duration d, panic." -x
 complete -c go -n "__fish_seen_subcommand_from testflag" -s "v" -d "Verbose output: log all tests as they are run."
 complete -c go -n "__fish_seen_subcommand_from testflag" -o "vet" -d "Configure the invocation of \"go vet\" during \"go test\" to use the comma-separated list of vet checks." -x

@@ -1,5 +1,6 @@
 name: deno
 description: deno
+usage: deno [OPTIONS] [SUBCOMMAND]
 options:
   - names:
       - -h
@@ -23,6 +24,7 @@ options:
 subcommands:
   - name: bench
     description: Run benchmarks
+    usage: deno bench [OPTIONS] [files]... [-- <SCRIPT_ARG>...]
     options:
       - names:
           - -A
@@ -54,6 +56,10 @@ subcommands:
         argument: '[=<allow-run>...]'
         description: Allow running subprocesses
       - names:
+          - --allow-sys
+        argument: '[=<allow-sys>...]'
+        description: Allow access to system info
+      - names:
           - --allow-write
         argument: '[=<allow-write>...]'
         description: Allow file system write access
@@ -61,7 +67,7 @@ subcommands:
           - -c
           - --config
         argument: <FILE>
-        description: The configuration file can be used to configure different aspects of deno including TypeScript, linting, and code formatting. Typically the configuration file will be called `deno.json` or `deno.jsonc` and automatically detected; in that case this flag is not necessary. See https://deno.land/manual@v1.22.0/getting_started/configuration_file
+        description: The configuration file can be used to configure different aspects of deno including TypeScript, linting, and code formatting. Typically the configuration file will be called `deno.json` or `deno.jsonc` and automatically detected; in that case this flag is not necessary. See https://deno.land/manual@v1.27.2/getting_started/configuration_file
       - names:
           - --cached-only
         argument: ""
@@ -73,11 +79,7 @@ subcommands:
       - names:
           - --check
         argument: '[=<CHECK_TYPE>...]'
-        description: Type check modules. Currently this is a default behavior to type check modules, but in future releases Deno will not automatically type check without the --check flag.
-      - names:
-          - --compat
-        argument: ""
-        description: See https://deno.land/manual@v1.22.0/node/compatibility_mode
+        description: Type-check modules.
       - names:
           - --filter
         argument: <filter>
@@ -101,12 +103,12 @@ subcommands:
         description: Value of 'globalThis.location' used by some web APIs
       - names:
           - --lock
-        argument: <FILE>
-        description: Check the specified lock file
+        argument: '[<FILE>...]'
+        description: Check the specified lock file. If value is not provided, defaults to "deno.lock" in the current working directory.
       - names:
           - --lock-write
         argument: ""
-        description: Write lock file (use with --lock)
+        description: Force overwriting the lock file.
       - names:
           - --no-check
         argument: '[=<NO_CHECK_TYPE>...]'
@@ -120,6 +122,14 @@ subcommands:
         argument: ""
         description: Disable automatic loading of the configuration file.
       - names:
+          - --no-lock
+        argument: ""
+        description: Disable auto discovery of the lock file.
+      - names:
+          - --no-npm
+        argument: ""
+        description: Do not resolve npm modules
+      - names:
           - --no-prompt
         argument: ""
         description: Always throw if required permission wasn't passed
@@ -127,6 +137,10 @@ subcommands:
           - --no-remote
         argument: ""
         description: Do not resolve remote modules
+      - names:
+          - --node-modules-dir
+        argument: ""
+        description: Creates a local node_modules folder
       - names:
           - -q
           - --quiet
@@ -156,15 +170,16 @@ subcommands:
       - names:
           - --watch
         argument: ""
-        description: 'UNSTABLE: Watch for file changes and restart process automatically. Only local files from entry point module graph are watched.'
+        description: Watch for file changes and restart process automatically. Only local files from entry point module graph are watched.
   - name: bundle
     description: Bundle module and dependencies into single file
+    usage: deno bundle [OPTIONS] <source_file> [--] [out_file]
     options:
       - names:
           - -c
           - --config
         argument: <FILE>
-        description: The configuration file can be used to configure different aspects of deno including TypeScript, linting, and code formatting. Typically the configuration file will be called `deno.json` or `deno.jsonc` and automatically detected; in that case this flag is not necessary. See https://deno.land/manual@v1.22.0/getting_started/configuration_file
+        description: The configuration file can be used to configure different aspects of deno including TypeScript, linting, and code formatting. Typically the configuration file will be called `deno.json` or `deno.jsonc` and automatically detected; in that case this flag is not necessary. See https://deno.land/manual@v1.27.2/getting_started/configuration_file
       - names:
           - --cert
         argument: <FILE>
@@ -172,7 +187,7 @@ subcommands:
       - names:
           - --check
         argument: '[=<CHECK_TYPE>...]'
-        description: Type check modules. Currently this is a default behavior to type check modules, but in future releases Deno will not automatically type check without the --check flag.
+        description: Type-check modules.
       - names:
           - -h
           - --help
@@ -184,12 +199,12 @@ subcommands:
         description: Load import map file from local file or remote URL.
       - names:
           - --lock
-        argument: <FILE>
-        description: Check the specified lock file
+        argument: '[<FILE>...]'
+        description: Check the specified lock file. If value is not provided, defaults to "deno.lock" in the current working directory.
       - names:
           - --lock-write
         argument: ""
-        description: Write lock file (use with --lock)
+        description: Force overwriting the lock file.
       - names:
           - --no-check
         argument: '[=<NO_CHECK_TYPE>...]'
@@ -203,9 +218,21 @@ subcommands:
         argument: ""
         description: Disable automatic loading of the configuration file.
       - names:
+          - --no-lock
+        argument: ""
+        description: Disable auto discovery of the lock file.
+      - names:
+          - --no-npm
+        argument: ""
+        description: Do not resolve npm modules
+      - names:
           - --no-remote
         argument: ""
         description: Do not resolve remote modules
+      - names:
+          - --node-modules-dir
+        argument: ""
+        description: Creates a local node_modules folder
       - names:
           - -q
           - --quiet
@@ -223,15 +250,16 @@ subcommands:
       - names:
           - --watch
         argument: ""
-        description: 'UNSTABLE: Watch for file changes and restart process automatically. Only local files from entry point module graph are watched.'
+        description: Watch for file changes and restart process automatically. Only local files from entry point module graph are watched.
   - name: cache
     description: Cache the dependencies
+    usage: deno cache [OPTIONS] <file>...
     options:
       - names:
           - -c
           - --config
         argument: <FILE>
-        description: The configuration file can be used to configure different aspects of deno including TypeScript, linting, and code formatting. Typically the configuration file will be called `deno.json` or `deno.jsonc` and automatically detected; in that case this flag is not necessary. See https://deno.land/manual@v1.22.0/getting_started/configuration_file
+        description: The configuration file can be used to configure different aspects of deno including TypeScript, linting, and code formatting. Typically the configuration file will be called `deno.json` or `deno.jsonc` and automatically detected; in that case this flag is not necessary. See https://deno.land/manual@v1.27.2/getting_started/configuration_file
       - names:
           - --cert
         argument: <FILE>
@@ -239,7 +267,7 @@ subcommands:
       - names:
           - --check
         argument: '[=<CHECK_TYPE>...]'
-        description: Type check modules. Currently this is a default behavior to type check modules, but in future releases Deno will not automatically type check without the --check flag.
+        description: Type-check modules.
       - names:
           - -h
           - --help
@@ -251,12 +279,12 @@ subcommands:
         description: Load import map file from local file or remote URL.
       - names:
           - --lock
-        argument: <FILE>
-        description: Check the specified lock file
+        argument: '[<FILE>...]'
+        description: Check the specified lock file. If value is not provided, defaults to "deno.lock" in the current working directory.
       - names:
           - --lock-write
         argument: ""
-        description: Write lock file (use with --lock)
+        description: Force overwriting the lock file.
       - names:
           - --no-check
         argument: '[=<NO_CHECK_TYPE>...]'
@@ -266,9 +294,21 @@ subcommands:
         argument: ""
         description: Disable automatic loading of the configuration file.
       - names:
+          - --no-lock
+        argument: ""
+        description: Disable auto discovery of the lock file.
+      - names:
+          - --no-npm
+        argument: ""
+        description: Do not resolve npm modules
+      - names:
           - --no-remote
         argument: ""
         description: Do not resolve remote modules
+      - names:
+          - --node-modules-dir
+        argument: ""
+        description: Creates a local node_modules folder
       - names:
           - -q
           - --quiet
@@ -285,12 +325,13 @@ subcommands:
         description: Enable unstable features and APIs
   - name: check
     description: Type-check the dependencies
+    usage: deno check [OPTIONS] <file>...
     options:
       - names:
           - -c
           - --config
         argument: <FILE>
-        description: The configuration file can be used to configure different aspects of deno including TypeScript, linting, and code formatting. Typically the configuration file will be called `deno.json` or `deno.jsonc` and automatically detected; in that case this flag is not necessary. See https://deno.land/manual@v1.22.0/getting_started/configuration_file
+        description: The configuration file can be used to configure different aspects of deno including TypeScript, linting, and code formatting. Typically the configuration file will be called `deno.json` or `deno.jsonc` and automatically detected; in that case this flag is not necessary. See https://deno.land/manual@v1.27.2/getting_started/configuration_file
       - names:
           - --cert
         argument: <FILE>
@@ -306,20 +347,32 @@ subcommands:
         description: Load import map file from local file or remote URL.
       - names:
           - --lock
-        argument: <FILE>
-        description: Check the specified lock file
+        argument: '[<FILE>...]'
+        description: Check the specified lock file. If value is not provided, defaults to "deno.lock" in the current working directory.
       - names:
           - --lock-write
         argument: ""
-        description: Write lock file (use with --lock)
+        description: Force overwriting the lock file.
       - names:
           - --no-config
         argument: ""
         description: Disable automatic loading of the configuration file.
       - names:
+          - --no-lock
+        argument: ""
+        description: Disable auto discovery of the lock file.
+      - names:
+          - --no-npm
+        argument: ""
+        description: Do not resolve npm modules
+      - names:
           - --no-remote
         argument: ""
         description: Do not resolve remote modules
+      - names:
+          - --node-modules-dir
+        argument: ""
+        description: Creates a local node_modules folder
       - names:
           - -q
           - --quiet
@@ -340,6 +393,7 @@ subcommands:
         description: Enable unstable features and APIs
   - name: compile
     description: 'UNSTABLE: Compile the script into a self contained executable'
+    usage: deno compile [OPTIONS] <SCRIPT_ARG>...
     options:
       - names:
           - -A
@@ -371,6 +425,10 @@ subcommands:
         argument: '[=<allow-run>...]'
         description: Allow running subprocesses
       - names:
+          - --allow-sys
+        argument: '[=<allow-sys>...]'
+        description: Allow access to system info
+      - names:
           - --allow-write
         argument: '[=<allow-write>...]'
         description: Allow file system write access
@@ -378,7 +436,7 @@ subcommands:
           - -c
           - --config
         argument: <FILE>
-        description: The configuration file can be used to configure different aspects of deno including TypeScript, linting, and code formatting. Typically the configuration file will be called `deno.json` or `deno.jsonc` and automatically detected; in that case this flag is not necessary. See https://deno.land/manual@v1.22.0/getting_started/configuration_file
+        description: The configuration file can be used to configure different aspects of deno including TypeScript, linting, and code formatting. Typically the configuration file will be called `deno.json` or `deno.jsonc` and automatically detected; in that case this flag is not necessary. See https://deno.land/manual@v1.27.2/getting_started/configuration_file
       - names:
           - --cached-only
         argument: ""
@@ -390,11 +448,7 @@ subcommands:
       - names:
           - --check
         argument: '[=<CHECK_TYPE>...]'
-        description: Type check modules. Currently this is a default behavior to type check modules, but in future releases Deno will not automatically type check without the --check flag.
-      - names:
-          - --compat
-        argument: ""
-        description: See https://deno.land/manual@v1.22.0/node/compatibility_mode
+        description: Type-check modules.
       - names:
           - -h
           - --help
@@ -410,12 +464,12 @@ subcommands:
         description: Value of 'globalThis.location' used by some web APIs
       - names:
           - --lock
-        argument: <FILE>
-        description: Check the specified lock file
+        argument: '[<FILE>...]'
+        description: Check the specified lock file. If value is not provided, defaults to "deno.lock" in the current working directory.
       - names:
           - --lock-write
         argument: ""
-        description: Write lock file (use with --lock)
+        description: Force overwriting the lock file.
       - names:
           - --no-check
         argument: '[=<NO_CHECK_TYPE>...]'
@@ -425,6 +479,14 @@ subcommands:
         argument: ""
         description: Disable automatic loading of the configuration file.
       - names:
+          - --no-lock
+        argument: ""
+        description: Disable auto discovery of the lock file.
+      - names:
+          - --no-npm
+        argument: ""
+        description: Do not resolve npm modules
+      - names:
           - --no-prompt
         argument: ""
         description: Always throw if required permission wasn't passed
@@ -432,6 +494,10 @@ subcommands:
           - --no-remote
         argument: ""
         description: Do not resolve remote modules
+      - names:
+          - --node-modules-dir
+        argument: ""
+        description: Creates a local node_modules folder
       - names:
           - -o
           - --output
@@ -469,6 +535,7 @@ subcommands:
         description: To see a list of all available flags use --v8-flags=--help.
   - name: completions
     description: Generate shell completions
+    usage: deno completions [OPTIONS] <shell>
     options:
       - names:
           - -h
@@ -486,6 +553,7 @@ subcommands:
         description: Enable unstable features and APIs
   - name: coverage
     description: Print coverage reports
+    usage: deno coverage [OPTIONS] <files>...
     options:
       - names:
           - --exclude
@@ -523,6 +591,7 @@ subcommands:
         description: Enable unstable features and APIs
   - name: doc
     description: Show documentation for a module
+    usage: deno doc [OPTIONS] [--] [ARGS]
     options:
       - names:
           - -h
@@ -549,20 +618,46 @@ subcommands:
       - names:
           - -r
           - --reload
-        argument: '[=<CACHE_BLOCKLIST>...]'
-        description: Reload source code cache (recompile TypeScript) --reload
+        argument: ""
+        description: Reload source code cache (recompile TypeScript)
+      - names:
+          - -r
+          - --reload
+        argument: <CACHE_BLOCKLIST>...
+        description: Reload source code cache (recompile TypeScript)
+      - names:
+          - --reload
+        argument: ""
+        description: Reload everything
+      - names:
+          - --reload
+        argument: https://deno.land/std
+        description: Reload only standard modules
+      - names:
+          - --reload
+        argument: https://deno.land/std/fs/utils.ts,https://deno.land/std/fmt/colors.ts
+        description: Reloads specific modules
+      - names:
+          - --reload
+        argument: npm
+        description: Reload all npm modules
+      - names:
+          - --reload
+        argument: npm:chalk
+        description: Reload specific npm module
       - names:
           - --unstable
         argument: ""
         description: Enable unstable features and APIs
   - name: eval
     description: Eval script
+    usage: deno eval [OPTIONS] <CODE_ARG>...
     options:
       - names:
           - -c
           - --config
         argument: <FILE>
-        description: The configuration file can be used to configure different aspects of deno including TypeScript, linting, and code formatting. Typically the configuration file will be called `deno.json` or `deno.jsonc` and automatically detected; in that case this flag is not necessary. See https://deno.land/manual@v1.22.0/getting_started/configuration_file
+        description: The configuration file can be used to configure different aspects of deno including TypeScript, linting, and code formatting. Typically the configuration file will be called `deno.json` or `deno.jsonc` and automatically detected; in that case this flag is not necessary. See https://deno.land/manual@v1.27.2/getting_started/configuration_file
       - names:
           - --cached-only
         argument: ""
@@ -574,11 +669,7 @@ subcommands:
       - names:
           - --check
         argument: '[=<CHECK_TYPE>...]'
-        description: Type check modules. Currently this is a default behavior to type check modules, but in future releases Deno will not automatically type check without the --check flag.
-      - names:
-          - --compat
-        argument: ""
-        description: See https://deno.land/manual@v1.22.0/node/compatibility_mode
+        description: Type-check modules.
       - names:
           - --ext
         argument: <ext>
@@ -606,12 +697,12 @@ subcommands:
         description: Value of 'globalThis.location' used by some web APIs
       - names:
           - --lock
-        argument: <FILE>
-        description: Check the specified lock file
+        argument: '[<FILE>...]'
+        description: Check the specified lock file. If value is not provided, defaults to "deno.lock" in the current working directory.
       - names:
           - --lock-write
         argument: ""
-        description: Write lock file (use with --lock)
+        description: Force overwriting the lock file.
       - names:
           - --no-check
         argument: '[=<NO_CHECK_TYPE>...]'
@@ -621,9 +712,21 @@ subcommands:
         argument: ""
         description: Disable automatic loading of the configuration file.
       - names:
+          - --no-lock
+        argument: ""
+        description: Disable auto discovery of the lock file.
+      - names:
+          - --no-npm
+        argument: ""
+        description: Do not resolve npm modules
+      - names:
           - --no-remote
         argument: ""
         description: Do not resolve remote modules
+      - names:
+          - --node-modules-dir
+        argument: ""
+        description: Creates a local node_modules folder
       - names:
           - -p
           - --print
@@ -653,12 +756,13 @@ subcommands:
         description: To see a list of all available flags use --v8-flags=--help.
   - name: fmt
     description: Format source files
+    usage: deno fmt [OPTIONS] [files]...
     options:
       - names:
           - -c
           - --config
         argument: <FILE>
-        description: The configuration file can be used to configure different aspects of deno including TypeScript, linting, and code formatting. Typically the configuration file will be called `deno.json` or `deno.jsonc` and automatically detected; in that case this flag is not necessary. See https://deno.land/manual@v1.22.0/getting_started/configuration_file
+        description: The configuration file can be used to configure different aspects of deno including TypeScript, linting, and code formatting. Typically the configuration file will be called `deno.json` or `deno.jsonc` and automatically detected; in that case this flag is not necessary. See https://deno.land/manual@v1.27.2/getting_started/configuration_file
       - names:
           - --check
         argument: ""
@@ -716,10 +820,29 @@ subcommands:
       - names:
           - --watch
         argument: ""
-        description: 'UNSTABLE: Watch for file changes and restart process automatically. Only local files from entry point module graph are watched.'
+        description: Watch for file changes and restart process automatically. Only local files from entry point module graph are watched.
+  - name: help
+    description: Print this message or the help of the given subcommand(s)
+    usage: deno help [OPTIONS] [SUBCOMMAND]...
+    options:
+      - names:
+          - -q
+          - --quiet
+        argument: ""
+        description: Suppress diagnostic output
+      - names:
+          - --unstable
+        argument: ""
+        description: Enable unstable features and APIs
   - name: info
     description: Show info about cache or info related to source file
+    usage: deno info [OPTIONS] [--] [file]
     options:
+      - names:
+          - -c
+          - --config
+        argument: <FILE>
+        description: The configuration file can be used to configure different aspects of deno including TypeScript, linting, and code formatting. Typically the configuration file will be called `deno.json` or `deno.jsonc` and automatically detected; in that case this flag is not necessary. See https://deno.land/manual@v1.27.2/getting_started/configuration_file
       - names:
           - --cert
         argument: <FILE>
@@ -742,6 +865,14 @@ subcommands:
         argument: <HREF>
         description: Show files used for origin bound APIs like the Web Storage API when running a script with '--location=<HREF>'
       - names:
+          - --no-config
+        argument: ""
+        description: Disable automatic loading of the configuration file.
+      - names:
+          - --node-modules-dir
+        argument: ""
+        description: Creates a local node_modules folder
+      - names:
           - -q
           - --quiet
         argument: ""
@@ -755,8 +886,27 @@ subcommands:
           - --unstable
         argument: ""
         description: Enable unstable features and APIs
+  - name: init
+    description: Initialize a new project
+    usage: deno init [OPTIONS] [dir]
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: Print help information
+      - names:
+          - -q
+          - --quiet
+        argument: ""
+        description: Suppress diagnostic output
+      - names:
+          - --unstable
+        argument: ""
+        description: Enable unstable features and APIs
   - name: install
     description: Install script as an executable
+    usage: deno install [OPTIONS] <cmd>...
     options:
       - names:
           - '-'
@@ -796,6 +946,10 @@ subcommands:
         argument: '[=<allow-run>...]'
         description: Allow running subprocesses
       - names:
+          - --allow-sys
+        argument: '[=<allow-sys>...]'
+        description: Allow access to system info
+      - names:
           - --allow-write
         argument: '[=<allow-write>...]'
         description: Allow file system write access
@@ -803,7 +957,7 @@ subcommands:
           - -c
           - --config
         argument: <FILE>
-        description: The configuration file can be used to configure different aspects of deno including TypeScript, linting, and code formatting. Typically the configuration file will be called `deno.json` or `deno.jsonc` and automatically detected; in that case this flag is not necessary. See https://deno.land/manual@v1.22.0/getting_started/configuration_file
+        description: The configuration file can be used to configure different aspects of deno including TypeScript, linting, and code formatting. Typically the configuration file will be called `deno.json` or `deno.jsonc` and automatically detected; in that case this flag is not necessary. See https://deno.land/manual@v1.27.2/getting_started/configuration_file
       - names:
           - --cached-only
         argument: ""
@@ -815,11 +969,7 @@ subcommands:
       - names:
           - --check
         argument: '[=<CHECK_TYPE>...]'
-        description: Type check modules. Currently this is a default behavior to type check modules, but in future releases Deno will not automatically type check without the --check flag.
-      - names:
-          - --compat
-        argument: ""
-        description: See https://deno.land/manual@v1.22.0/node/compatibility_mode
+        description: Type-check modules.
       - names:
           - -f
           - --force
@@ -848,12 +998,12 @@ subcommands:
         description: Value of 'globalThis.location' used by some web APIs
       - names:
           - --lock
-        argument: <FILE>
-        description: Check the specified lock file
+        argument: '[<FILE>...]'
+        description: Check the specified lock file. If value is not provided, defaults to "deno.lock" in the current working directory.
       - names:
           - --lock-write
         argument: ""
-        description: Write lock file (use with --lock)
+        description: Force overwriting the lock file.
       - names:
           - -n
           - --name
@@ -868,6 +1018,14 @@ subcommands:
         argument: ""
         description: Disable automatic loading of the configuration file.
       - names:
+          - --no-lock
+        argument: ""
+        description: Disable auto discovery of the lock file.
+      - names:
+          - --no-npm
+        argument: ""
+        description: Do not resolve npm modules
+      - names:
           - --no-prompt
         argument: ""
         description: Always throw if required permission wasn't passed
@@ -875,6 +1033,10 @@ subcommands:
           - --no-remote
         argument: ""
         description: Do not resolve remote modules
+      - names:
+          - --node-modules-dir
+        argument: ""
+        description: Creates a local node_modules folder
       - names:
           - -q
           - --quiet
@@ -907,12 +1069,17 @@ subcommands:
         description: To see a list of all available flags use --v8-flags=--help.
   - name: lint
     description: Lint source files
+    usage: deno lint [OPTIONS] [files]...
     options:
       - names:
           - -c
           - --config
         argument: <FILE>
-        description: The configuration file can be used to configure different aspects of deno including TypeScript, linting, and code formatting. Typically the configuration file will be called `deno.json` or `deno.jsonc` and automatically detected; in that case this flag is not necessary. See https://deno.land/manual@v1.22.0/getting_started/configuration_file
+        description: The configuration file can be used to configure different aspects of deno including TypeScript, linting, and code formatting. Typically the configuration file will be called `deno.json` or `deno.jsonc` and automatically detected; in that case this flag is not necessary. See https://deno.land/manual@v1.27.2/getting_started/configuration_file
+      - names:
+          - --compact
+        argument: ""
+        description: Output lint result in compact format
       - names:
           - -h
           - --help
@@ -962,9 +1129,10 @@ subcommands:
       - names:
           - --watch
         argument: ""
-        description: 'UNSTABLE: Watch for file changes and restart process automatically. Only local files from entry point module graph are watched.'
+        description: Watch for file changes and restart process automatically. Only local files from entry point module graph are watched.
   - name: lsp
     description: Start the language server
+    usage: deno lsp [OPTIONS]
     options:
       - names:
           - -h
@@ -982,12 +1150,13 @@ subcommands:
         description: Enable unstable features and APIs
   - name: repl
     description: Read Eval Print Loop
+    usage: deno repl [OPTIONS]
     options:
       - names:
           - -c
           - --config
         argument: <FILE>
-        description: The configuration file can be used to configure different aspects of deno including TypeScript, linting, and code formatting. Typically the configuration file will be called `deno.json` or `deno.jsonc` and automatically detected; in that case this flag is not necessary. See https://deno.land/manual@v1.22.0/getting_started/configuration_file
+        description: The configuration file can be used to configure different aspects of deno including TypeScript, linting, and code formatting. Typically the configuration file will be called `deno.json` or `deno.jsonc` and automatically detected; in that case this flag is not necessary. See https://deno.land/manual@v1.27.2/getting_started/configuration_file
       - names:
           - --cached-only
         argument: ""
@@ -999,11 +1168,7 @@ subcommands:
       - names:
           - --check
         argument: '[=<CHECK_TYPE>...]'
-        description: Type check modules. Currently this is a default behavior to type check modules, but in future releases Deno will not automatically type check without the --check flag.
-      - names:
-          - --compat
-        argument: ""
-        description: See https://deno.land/manual@v1.22.0/node/compatibility_mode
+        description: Type-check modules.
       - names:
           - --eval
         argument: <code>
@@ -1035,12 +1200,12 @@ subcommands:
         description: Value of 'globalThis.location' used by some web APIs
       - names:
           - --lock
-        argument: <FILE>
-        description: Check the specified lock file
+        argument: '[<FILE>...]'
+        description: Check the specified lock file. If value is not provided, defaults to "deno.lock" in the current working directory.
       - names:
           - --lock-write
         argument: ""
-        description: Write lock file (use with --lock)
+        description: Force overwriting the lock file.
       - names:
           - --no-check
         argument: '[=<NO_CHECK_TYPE>...]'
@@ -1050,9 +1215,21 @@ subcommands:
         argument: ""
         description: Disable automatic loading of the configuration file.
       - names:
+          - --no-lock
+        argument: ""
+        description: Disable auto discovery of the lock file.
+      - names:
+          - --no-npm
+        argument: ""
+        description: Do not resolve npm modules
+      - names:
           - --no-remote
         argument: ""
         description: Do not resolve remote modules
+      - names:
+          - --node-modules-dir
+        argument: ""
+        description: Creates a local node_modules folder
       - names:
           - -q
           - --quiet
@@ -1081,6 +1258,7 @@ subcommands:
         description: To see a list of all available flags use --v8-flags=--help.
   - name: run
     description: Run a JavaScript or TypeScript program
+    usage: deno run [OPTIONS] <SCRIPT_ARG>...
     options:
       - names:
           - -A
@@ -1112,6 +1290,10 @@ subcommands:
         argument: '[=<allow-run>...]'
         description: Allow running subprocesses
       - names:
+          - --allow-sys
+        argument: '[=<allow-sys>...]'
+        description: Allow access to system info
+      - names:
           - --allow-write
         argument: '[=<allow-write>...]'
         description: Allow file system write access
@@ -1119,7 +1301,7 @@ subcommands:
           - -c
           - --config
         argument: <FILE>
-        description: The configuration file can be used to configure different aspects of deno including TypeScript, linting, and code formatting. Typically the configuration file will be called `deno.json` or `deno.jsonc` and automatically detected; in that case this flag is not necessary. See https://deno.land/manual@v1.22.0/getting_started/configuration_file
+        description: The configuration file can be used to configure different aspects of deno including TypeScript, linting, and code formatting. Typically the configuration file will be called `deno.json` or `deno.jsonc` and automatically detected; in that case this flag is not necessary. See https://deno.land/manual@v1.27.2/getting_started/configuration_file
       - names:
           - --cached-only
         argument: ""
@@ -1131,11 +1313,7 @@ subcommands:
       - names:
           - --check
         argument: '[=<CHECK_TYPE>...]'
-        description: Type check modules. Currently this is a default behavior to type check modules, but in future releases Deno will not automatically type check without the --check flag.
-      - names:
-          - --compat
-        argument: ""
-        description: See https://deno.land/manual@v1.22.0/node/compatibility_mode
+        description: Type-check modules.
       - names:
           - -h
           - --help
@@ -1159,12 +1337,12 @@ subcommands:
         description: Value of 'globalThis.location' used by some web APIs
       - names:
           - --lock
-        argument: <FILE>
-        description: Check the specified lock file
+        argument: '[<FILE>...]'
+        description: Check the specified lock file. If value is not provided, defaults to "deno.lock" in the current working directory.
       - names:
           - --lock-write
         argument: ""
-        description: Write lock file (use with --lock)
+        description: Force overwriting the lock file.
       - names:
           - --no-check
         argument: '[=<NO_CHECK_TYPE>...]'
@@ -1178,6 +1356,14 @@ subcommands:
         argument: ""
         description: Disable automatic loading of the configuration file.
       - names:
+          - --no-lock
+        argument: ""
+        description: Disable auto discovery of the lock file.
+      - names:
+          - --no-npm
+        argument: ""
+        description: Do not resolve npm modules
+      - names:
           - --no-prompt
         argument: ""
         description: Always throw if required permission wasn't passed
@@ -1185,6 +1371,10 @@ subcommands:
           - --no-remote
         argument: ""
         description: Do not resolve remote modules
+      - names:
+          - --node-modules-dir
+        argument: ""
+        description: Creates a local node_modules folder
       - names:
           - -q
           - --quiet
@@ -1214,24 +1404,25 @@ subcommands:
       - names:
           - --watch
         argument: '[=<FILES>...]'
-        description: 'UNSTABLE: Watch for file changes and restart process automatically. Local files from entry point module graph are watched by default. Additional paths might be watched by passing them as arguments to this flag.'
+        description: Watch for file changes and restart process automatically. Local files from entry point module graph are watched by default. Additional paths might be watched by passing them as arguments to this flag.
   - name: task
     description: Run a task defined in the configuration file
+    usage: deno task [OPTIONS] [task_name_and_args]...
     options:
       - names:
           - -c
           - --config
         argument: <FILE>
-        description: The configuration file can be used to configure different aspects of deno including TypeScript, linting, and code formatting. Typically the configuration file will be called `deno.json` or `deno.jsonc` and automatically detected; in that case this flag is not necessary. See https://deno.land/manual@v1.22.0/getting_started/configuration_file
+        description: The configuration file can be used to configure different aspects of deno including TypeScript, linting, and code formatting. Typically the configuration file will be called `deno.json` or `deno.jsonc` and automatically detected; in that case this flag is not necessary. See https://deno.land/manual@v1.27.2/getting_started/configuration_file
+      - names:
+          - --cwd
+        argument: <DIR>
+        description: Specify the directory to run the task in
       - names:
           - -h
           - --help
         argument: ""
         description: Print help information
-      - names:
-          - --no-config
-        argument: ""
-        description: Disable automatic loading of the configuration file.
       - names:
           - -q
           - --quiet
@@ -1243,6 +1434,7 @@ subcommands:
         description: Enable unstable features and APIs
   - name: test
     description: Run tests
+    usage: deno test [OPTIONS] [files]... [-- <SCRIPT_ARG>...]
     options:
       - names:
           - -A
@@ -1278,6 +1470,10 @@ subcommands:
         argument: '[=<allow-run>...]'
         description: Allow running subprocesses
       - names:
+          - --allow-sys
+        argument: '[=<allow-sys>...]'
+        description: Allow access to system info
+      - names:
           - --allow-write
         argument: '[=<allow-write>...]'
         description: Allow file system write access
@@ -1285,7 +1481,7 @@ subcommands:
           - -c
           - --config
         argument: <FILE>
-        description: The configuration file can be used to configure different aspects of deno including TypeScript, linting, and code formatting. Typically the configuration file will be called `deno.json` or `deno.jsonc` and automatically detected; in that case this flag is not necessary. See https://deno.land/manual@v1.22.0/getting_started/configuration_file
+        description: The configuration file can be used to configure different aspects of deno including TypeScript, linting, and code formatting. Typically the configuration file will be called `deno.json` or `deno.jsonc` and automatically detected; in that case this flag is not necessary. See https://deno.land/manual@v1.27.2/getting_started/configuration_file
       - names:
           - --cached-only
         argument: ""
@@ -1297,11 +1493,7 @@ subcommands:
       - names:
           - --check
         argument: '[=<CHECK_TYPE>...]'
-        description: Type check modules. Currently this is a default behavior to type check modules, but in future releases Deno will not automatically type check without the --check flag.
-      - names:
-          - --compat
-        argument: ""
-        description: See https://deno.land/manual@v1.22.0/node/compatibility_mode
+        description: Type-check modules.
       - names:
           - --coverage
         argument: <DIR>
@@ -1309,7 +1501,7 @@ subcommands:
       - names:
           - --doc
         argument: ""
-        description: 'UNSTABLE: type check code blocks'
+        description: 'UNSTABLE: type-check code blocks'
       - names:
           - --fail-fast
         argument: '[=<N>...]'
@@ -1340,22 +1532,17 @@ subcommands:
         argument: '[=<HOST:PORT>...]'
         description: Activate inspector on host:port and break at start of user script
       - names:
-          - -j
-          - --jobs
-        argument: '[<jobs>...]'
-        description: 'Number of parallel workers, defaults to # of CPUs when no value is provided. Defaults to 1 when the option is not present.'
-      - names:
           - --location
         argument: <HREF>
         description: Value of 'globalThis.location' used by some web APIs
       - names:
           - --lock
-        argument: <FILE>
-        description: Check the specified lock file
+        argument: '[<FILE>...]'
+        description: Check the specified lock file. If value is not provided, defaults to "deno.lock" in the current working directory.
       - names:
           - --lock-write
         argument: ""
-        description: Write lock file (use with --lock)
+        description: Force overwriting the lock file.
       - names:
           - --no-check
         argument: '[=<NO_CHECK_TYPE>...]'
@@ -1369,6 +1556,14 @@ subcommands:
         argument: ""
         description: Disable automatic loading of the configuration file.
       - names:
+          - --no-lock
+        argument: ""
+        description: Disable auto discovery of the lock file.
+      - names:
+          - --no-npm
+        argument: ""
+        description: Do not resolve npm modules
+      - names:
           - --no-prompt
         argument: ""
         description: Always throw if required permission wasn't passed
@@ -1380,6 +1575,14 @@ subcommands:
           - --no-run
         argument: ""
         description: Cache test modules, but don't run tests
+      - names:
+          - --node-modules-dir
+        argument: ""
+        description: Creates a local node_modules folder
+      - names:
+          - --parallel
+        argument: ""
+        description: Run test modules in parallel. Parallelism defaults to the number of available CPUs or the value in the DENO_JOBS environment variable.
       - names:
           - -q
           - --quiet
@@ -1417,9 +1620,10 @@ subcommands:
       - names:
           - --watch
         argument: ""
-        description: 'UNSTABLE: Watch for file changes and restart process automatically. Only local files from entry point module graph are watched.'
+        description: Watch for file changes and restart process automatically. Only local files from entry point module graph are watched.
   - name: types
     description: Print runtime TypeScript declarations
+    usage: deno types [OPTIONS]
     options:
       - names:
           - -h
@@ -1437,6 +1641,7 @@ subcommands:
         description: Enable unstable features and APIs
   - name: uninstall
     description: Uninstall a script previously installed with deno install
+    usage: deno uninstall [OPTIONS] <name>
     options:
       - names:
           - -h
@@ -1458,6 +1663,7 @@ subcommands:
         description: Enable unstable features and APIs
   - name: upgrade
     description: Upgrade deno executable to given version
+    usage: deno upgrade [OPTIONS]
     options:
       - names:
           - --canary
@@ -1500,12 +1706,13 @@ subcommands:
         description: The version to upgrade to
   - name: vendor
     description: Vendor remote modules into a local directory
+    usage: deno vendor [OPTIONS] <specifiers>...
     options:
       - names:
           - -c
           - --config
         argument: <FILE>
-        description: The configuration file can be used to configure different aspects of deno including TypeScript, linting, and code formatting. Typically the configuration file will be called `deno.json` or `deno.jsonc` and automatically detected; in that case this flag is not necessary. See https://deno.land/manual@v1.22.0/getting_started/configuration_file
+        description: The configuration file can be used to configure different aspects of deno including TypeScript, linting, and code formatting. Typically the configuration file will be called `deno.json` or `deno.jsonc` and automatically detected; in that case this flag is not necessary. See https://deno.land/manual@v1.27.2/getting_started/configuration_file
       - names:
           - --cert
         argument: <FILE>
@@ -1526,8 +1733,8 @@ subcommands:
         description: Load import map file from local file or remote URL.
       - names:
           - --lock
-        argument: <FILE>
-        description: Check the specified lock file
+        argument: '[<FILE>...]'
+        description: Check the specified lock file. If value is not provided, defaults to "deno.lock" in the current working directory.
       - names:
           - --no-config
         argument: ""
@@ -1550,10 +1757,10 @@ subcommands:
           - --unstable
         argument: ""
         description: Enable unstable features and APIs
-version: 'deno 1.22.0'
+version: 'deno 1.27.2'
 tldr: |
   > A secure runtime for JavaScript and TypeScript.
-  > More information: <https://deno.land/>.
+  > More information: <https://deno.land>.
 
   - Run a JavaScript or TypeScript file:
 

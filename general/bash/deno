@@ -58,7 +58,15 @@ _deno()
             return
             ;;
 
+          help) _deno_help
+            return
+            ;;
+
           info) _deno_info
+            return
+            ;;
+
+          init) _deno_init
             return
             ;;
 
@@ -107,7 +115,7 @@ _deno()
             ;;
 
       *)
-          word_list=" bench bundle cache check compile completions coverage doc eval fmt info install lint lsp repl run task test types uninstall upgrade vendor -h --help -q --quiet --unstable -V --version"
+          word_list=" bench bundle cache check compile completions coverage doc eval fmt help info init install lint lsp repl run task test types uninstall upgrade vendor -h --help -q --quiet --unstable -V --version"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac
@@ -117,7 +125,7 @@ _deno()
 _deno_bench ()
 {
     local cur word_list
-    word_list=" -A --allow-all --allow-env --allow-ffi --allow-hrtime --allow-net --allow-read --allow-run --allow-write -c --config --cached-only --cert --check --compat --filter -h --help --ignore --import-map --location --lock --lock-write --no-check --no-clear-screen --no-config --no-prompt --no-remote -q --quiet -r --reload --seed --unsafely-ignore-certificate-errors --unstable --v8-flags --watch" 
+    word_list=" -A --allow-all --allow-env --allow-ffi --allow-hrtime --allow-net --allow-read --allow-run --allow-sys --allow-write -c --config --cached-only --cert --check --filter -h --help --ignore --import-map --location --lock --lock-write --no-check --no-clear-screen --no-config --no-lock --no-npm --no-prompt --no-remote --node-modules-dir -q --quiet -r --reload --seed --unsafely-ignore-certificate-errors --unstable --v8-flags --watch" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -125,7 +133,7 @@ _deno_bench ()
 _deno_bundle ()
 {
     local cur word_list
-    word_list=" -c --config --cert --check -h --help --import-map --lock --lock-write --no-check --no-clear-screen --no-config --no-remote -q --quiet -r --reload --unstable --watch" 
+    word_list=" -c --config --cert --check -h --help --import-map --lock --lock-write --no-check --no-clear-screen --no-config --no-lock --no-npm --no-remote --node-modules-dir -q --quiet -r --reload --unstable --watch" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -133,7 +141,7 @@ _deno_bundle ()
 _deno_cache ()
 {
     local cur word_list
-    word_list=" -c --config --cert --check -h --help --import-map --lock --lock-write --no-check --no-config --no-remote -q --quiet -r --reload --unstable" 
+    word_list=" -c --config --cert --check -h --help --import-map --lock --lock-write --no-check --no-config --no-lock --no-npm --no-remote --node-modules-dir -q --quiet -r --reload --unstable" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -141,7 +149,7 @@ _deno_cache ()
 _deno_check ()
 {
     local cur word_list
-    word_list=" -c --config --cert -h --help --import-map --lock --lock-write --no-config --no-remote -q --quiet -r --reload --remote --unstable" 
+    word_list=" -c --config --cert -h --help --import-map --lock --lock-write --no-config --no-lock --no-npm --no-remote --node-modules-dir -q --quiet -r --reload --remote --unstable" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -149,7 +157,7 @@ _deno_check ()
 _deno_compile ()
 {
     local cur word_list
-    word_list=" -A --allow-all --allow-env --allow-ffi --allow-hrtime --allow-net --allow-read --allow-run --allow-write -c --config --cached-only --cert --check --compat -h --help --import-map --location --lock --lock-write --no-check --no-config --no-prompt --no-remote -o --output -q --quiet -r --reload --seed --target --unsafely-ignore-certificate-errors --unstable --v8-flags" 
+    word_list=" -A --allow-all --allow-env --allow-ffi --allow-hrtime --allow-net --allow-read --allow-run --allow-sys --allow-write -c --config --cached-only --cert --check -h --help --import-map --location --lock --lock-write --no-check --no-config --no-lock --no-npm --no-prompt --no-remote --node-modules-dir -o --output -q --quiet -r --reload --seed --target --unsafely-ignore-certificate-errors --unstable --v8-flags" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -173,7 +181,7 @@ _deno_coverage ()
 _deno_doc ()
 {
     local cur word_list
-    word_list=" -h --help --import-map --json --private -q --quiet -r --reload --unstable" 
+    word_list=" -h --help --import-map --json --private -q --quiet -r --reload -r --reload --reload --reload --reload --reload --reload --unstable" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -181,7 +189,7 @@ _deno_doc ()
 _deno_eval ()
 {
     local cur word_list
-    word_list=" -c --config --cached-only --cert --check --compat --ext -h --help --import-map --inspect --inspect-brk --location --lock --lock-write --no-check --no-config --no-remote -p --print -q --quiet -r --reload --seed --unstable --v8-flags" 
+    word_list=" -c --config --cached-only --cert --check --ext -h --help --import-map --inspect --inspect-brk --location --lock --lock-write --no-check --no-config --no-lock --no-npm --no-remote --node-modules-dir -p --print -q --quiet -r --reload --seed --unstable --v8-flags" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -194,10 +202,26 @@ _deno_fmt ()
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
 
+_deno_help ()
+{
+    local cur word_list
+    word_list=" -q --quiet --unstable" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
 _deno_info ()
 {
     local cur word_list
-    word_list=" --cert -h --help --import-map --json --location -q --quiet -r --reload --unstable" 
+    word_list=" -c --config --cert -h --help --import-map --json --location --no-config --node-modules-dir -q --quiet -r --reload --unstable" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_deno_init ()
+{
+    local cur word_list
+    word_list=" -h --help -q --quiet --unstable" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -205,7 +229,7 @@ _deno_info ()
 _deno_install ()
 {
     local cur word_list
-    word_list=" - - -A --allow-all --allow-env --allow-ffi --allow-hrtime --allow-net --allow-read --allow-run --allow-write -c --config --cached-only --cert --check --compat -f --force -h --help --import-map --inspect --inspect-brk --location --lock --lock-write -n --name --no-check --no-config --no-prompt --no-remote -q --quiet -r --reload --root --seed --unsafely-ignore-certificate-errors --unstable --v8-flags" 
+    word_list=" - - -A --allow-all --allow-env --allow-ffi --allow-hrtime --allow-net --allow-read --allow-run --allow-sys --allow-write -c --config --cached-only --cert --check -f --force -h --help --import-map --inspect --inspect-brk --location --lock --lock-write -n --name --no-check --no-config --no-lock --no-npm --no-prompt --no-remote --node-modules-dir -q --quiet -r --reload --root --seed --unsafely-ignore-certificate-errors --unstable --v8-flags" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -213,7 +237,7 @@ _deno_install ()
 _deno_lint ()
 {
     local cur word_list
-    word_list=" -c --config -h --help --ignore --json --no-clear-screen --no-config -q --quiet --rules --rules-exclude --rules-include --rules-tags --unstable --watch" 
+    word_list=" -c --config --compact -h --help --ignore --json --no-clear-screen --no-config -q --quiet --rules --rules-exclude --rules-include --rules-tags --unstable --watch" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -229,7 +253,7 @@ _deno_lsp ()
 _deno_repl ()
 {
     local cur word_list
-    word_list=" -c --config --cached-only --cert --check --compat --eval --eval-file -h --help --import-map --inspect --inspect-brk --location --lock --lock-write --no-check --no-config --no-remote -q --quiet -r --reload --seed --unsafely-ignore-certificate-errors --unstable --v8-flags" 
+    word_list=" -c --config --cached-only --cert --check --eval --eval-file -h --help --import-map --inspect --inspect-brk --location --lock --lock-write --no-check --no-config --no-lock --no-npm --no-remote --node-modules-dir -q --quiet -r --reload --seed --unsafely-ignore-certificate-errors --unstable --v8-flags" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -237,7 +261,7 @@ _deno_repl ()
 _deno_run ()
 {
     local cur word_list
-    word_list=" -A --allow-all --allow-env --allow-ffi --allow-hrtime --allow-net --allow-read --allow-run --allow-write -c --config --cached-only --cert --check --compat -h --help --import-map --inspect --inspect-brk --location --lock --lock-write --no-check --no-clear-screen --no-config --no-prompt --no-remote -q --quiet -r --reload --seed --unsafely-ignore-certificate-errors --unstable --v8-flags --watch" 
+    word_list=" -A --allow-all --allow-env --allow-ffi --allow-hrtime --allow-net --allow-read --allow-run --allow-sys --allow-write -c --config --cached-only --cert --check -h --help --import-map --inspect --inspect-brk --location --lock --lock-write --no-check --no-clear-screen --no-config --no-lock --no-npm --no-prompt --no-remote --node-modules-dir -q --quiet -r --reload --seed --unsafely-ignore-certificate-errors --unstable --v8-flags --watch" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -245,7 +269,7 @@ _deno_run ()
 _deno_task ()
 {
     local cur word_list
-    word_list=" -c --config -h --help --no-config -q --quiet --unstable" 
+    word_list=" -c --config --cwd -h --help -q --quiet --unstable" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -253,7 +277,7 @@ _deno_task ()
 _deno_test ()
 {
     local cur word_list
-    word_list=" -A --allow-all --allow-env --allow-ffi --allow-hrtime --allow-net --allow-none --allow-read --allow-run --allow-write -c --config --cached-only --cert --check --compat --coverage --doc --fail-fast --filter -h --help --ignore --import-map --inspect --inspect-brk -j --jobs --location --lock --lock-write --no-check --no-clear-screen --no-config --no-prompt --no-remote --no-run -q --quiet -r --reload --seed --shuffle --trace-ops --unsafely-ignore-certificate-errors --unstable --v8-flags --watch" 
+    word_list=" -A --allow-all --allow-env --allow-ffi --allow-hrtime --allow-net --allow-none --allow-read --allow-run --allow-sys --allow-write -c --config --cached-only --cert --check --coverage --doc --fail-fast --filter -h --help --ignore --import-map --inspect --inspect-brk --location --lock --lock-write --no-check --no-clear-screen --no-config --no-lock --no-npm --no-prompt --no-remote --no-run --node-modules-dir --parallel -q --quiet -r --reload --seed --shuffle --trace-ops --unsafely-ignore-certificate-errors --unstable --v8-flags --watch" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }

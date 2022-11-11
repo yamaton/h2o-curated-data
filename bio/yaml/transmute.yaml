@@ -1,13 +1,136 @@
 name: transmute
-description: transform XML, JSON, and URL data
+description: transform (NCBI Entrez Direct) data
+usage: |-
+  transmute -x2p|-j2p
+  transmute -align [-a codes] [-g N] [-h N]
+  transmute -j2x [-set tag] [-rec tag] [-nest flat|recurse|plural|depth]
+  transmute -a2x [-set tag] [-rec tag]
+  transmute -t2x|-c2x [-set tag] [-rec tag] [-skip N] [-header] [-lower|-upper] [-indent|-flush] columnName1 ...
+  transmute -g2x (gbf2xml
+  transmute -diff
+  transmute -revcomp
+  transmute -remove [-first N] [-last N]
+  transmute -retain -leading N-trailing N
+  transmute -replace -offset N|-column N [-delete N] [-insert seq]
+  transmute -extract feat_loc
+  transmute -cds2prot [-code N] [-frame N] [-stop] [-trim] [-part5] [-part3] [-every]
+  transmute -molwt [-met]
+  transmute -hgvs
+  transmute -encodeXML|-decodeXML|-plainXML
+  transmute -encodeURL|-decodeURL
+  transmute -encode64|-decode64
+  transmute -aa1to3|-aa3to1
+  transmute -format fmt [-xml declaration] [-doctype declaration] [-comment] [-cdata] [-separate] [-self] [-unicode style] [-script style] [-mathml terse]
+  transmute -filter element action target
+  transmute -normalize database
 options:
   - names:
-      - -j2x
-      - -json2xml
+      - -x2p
     argument: ""
-    description: Convert JSON to XML.
+    description: Reformat XML
   - names:
-      - -x2j
-      - -xml2json
+      - -j2p
     argument: ""
-    description: Convert XML to JSON.
+    description: Reformat JSON
+  - names:
+      - -align
+    argument: Table column alignment
+    description: '-a codes Column alignment codes:'
+  - names:
+      - -j2x
+    argument: ""
+    description: Convert JSON stream to XML suitable for -path navigation. -set tag
+  - names:
+      - -a2x
+    argument: ""
+    description: Convert text ASN.1 stream to XML suitable for -path navigation. -set tag Replace set wrapper tag. -rec tag Replace record wrapper tag.
+  - names:
+      - -t2x
+      - -c2x
+    argument: ""
+    description: Convert tab-delimited table or comma-separated values file, respectively, to XML. -set tag Replace set wrapper tag. -rec tag Replace record wrapper tag. -skip N Skip the first N lines. -header Use fields from first row for column names. -lower Convert text to lowercase. -upper Convert text to uppercase. -indent Indent XML output. -flush Do not indent XML output. columnName1 ... XML object names per column.
+  - names:
+      - -g2x
+    argument: ""
+    description: Convert GenBank flatfile format to INSDSeq XML.
+  - names:
+      - -diff
+    argument: ""
+    description: Compare two aligned files for point differences.
+  - names:
+      - -extrac
+    argument: ""
+    description: t feat_loc
+  - names:
+      - -hgvs
+    argument: ""
+    description: Convert Human Genome Variation Society variation format to XML.
+  - names:
+      - -aa1to3
+    argument: ""
+    description: Convert amino acids from 1-character to 3-character format.
+  - names:
+      - -aa3to1
+    argument: ""
+    description: Convert amino acids from 3-character to 1-character format.
+  - names:
+      - -format
+    argument: fmt
+    description: copy Fast block copy (still applies processing flags). compact Compress runs of spaces. flush Suppress line indentation. indent Indent according to nesting depth. expand Place each attribute on a separate line.
+  - names:
+      - -filter
+    argument: element action target
+    description: 'Actions: retain Keep matching elements (no-op). remove Remove matching elements. encode HTML-escape special characters. decode Decode HTML escapes. shrink Compress runs of spaces. expand Place each attribute on a separate line. accent Strip off Unicode accents.'
+  - names:
+      - -normalize
+    argument: database
+    description: Adjust XML fields to conform to common conventions.
+  - names:
+      - -revcomp
+    argument: ""
+    description: Reverse complement nucleotide sequence.
+  - names:
+      - -remove
+    argument: ""
+    description: Trim at ends of sequence.
+  - names:
+      - -retain
+    argument: ""
+    description: Save either end of sequence.
+  - names:
+      - -replace
+    argument: ""
+    description: Apply base or residue substition.
+  - names:
+      - -molwt
+    argument: ""
+    description: Calculate molecular weight of peptide.
+  - names:
+      - -encodeXML
+    argument: ""
+    description: XML-encode <, >, &, ", and ' characters.
+  - names:
+      - -decodeXML
+    argument: ""
+    description: Decode XML entity references.
+  - names:
+      - -plainXML
+    argument: ""
+    description: Remove embedded mixed-content tags and compress runs of spaces.
+  - names:
+      - -encodeURL
+    argument: ""
+    description: Compress runs of spaces, and URI-escape the result.
+  - names:
+      - -decodeURL
+    argument: ""
+    description: URI-unescape the input.
+  - names:
+      - -encode64
+    argument: ""
+    description: Base64-encode the input.
+  - names:
+      - -decode64
+    argument: ""
+    description: Base64-decode the input.
+version: "16.2"

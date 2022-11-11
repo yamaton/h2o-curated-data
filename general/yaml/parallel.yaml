@@ -1,0 +1,700 @@
+name: parallel
+description: parallel
+usage: |-
+  parallel [options] [command [arguments]] < list_of_arguments
+  parallel [options] [command [arguments]] ( ::: arguments | :::+ arguments | :::: argfile(s) | ::::+ argfile(s) ) ...
+  parallel --semaphore [options] command
+options:
+  - names:
+      - --null
+      - "-0"
+    argument: ""
+    description: Use NUL as delimiter.
+  - names:
+      - --arg-file
+      - -a
+    argument: input-file
+    description: Use input-file as input source.
+  - names:
+      - --arg-file-sep
+    argument: sep-str
+    description: 'Use sep-str instead of :::: as separator string between command and argument files.'
+  - names:
+      - --arg-sep
+    argument: sep-str
+    description: 'Use sep-str instead of ::: as separator string.'
+  - names:
+      - --bar
+    argument: ""
+    description: Show progress as a progress bar.
+  - names:
+      - --basefile
+      - --bf
+    argument: file
+    description: file will be transferred to each sshlogin before first job is started.
+  - names:
+      - --basenamereplace
+      - --bnr
+    argument: replace-str
+    description: Use the replacement string replace-str instead of {/} for basename of input line.
+  - names:
+      - --basenameextensionreplace
+      - --bner
+    argument: replace-str
+    description: Use the replacement string replace-str instead of {/.} for basename of input line without extension.
+  - names:
+      - --bin
+    argument: binexpr
+    description: Use binexpr as binning key and bin input to the jobs.
+  - names:
+      - --bg
+    argument: ""
+    description: Run command in background.
+  - names:
+      - --bibtex
+      - --citation
+    argument: ""
+    description: Print the citation notice and BibTeX entry for GNU parallel, silence citation notice for all future runs, and exit. It will not run any commands.
+  - names:
+      - --block
+      - --block-size
+    argument: size
+    description: Size of block in bytes to read at a time. The size can be postfixed with K, M, G, T, P, k, m, g, t, or p.
+  - names:
+      - --block-timeout
+      - --bt
+    argument: duration
+    description: Timeout for reading block when using --pipe.
+  - names:
+      - --cat
+    argument: ""
+    description: Create a temporary file with content.
+  - names:
+      - --cleanup
+    argument: ""
+    description: Remove transferred files.
+  - names:
+      - --color
+    argument: (beta testing)
+    description: Colour output.
+  - names:
+      - --color-failed
+      - --cf
+    argument: (beta testing)
+    description: Colour the output from failing jobs white on red.
+  - names:
+      - --colsep
+      - -C
+    argument: regexp
+    description: Column separator.
+  - names:
+      - --compress
+    argument: ""
+    description: Compress temporary files.
+  - names:
+      - --compress-program
+      - --decompress-program
+    argument: prg
+    description: Use prg for (de)compressing temporary files.
+  - names:
+      - --csv
+    argument: ""
+    description: Treat input as CSV-format.
+  - names:
+      - --ctag
+    argument: '(obsolete: use --color --tag)'
+    description: Color tag.
+  - names:
+      - --ctagstring
+    argument: 'str (obsolete: use --color --tagstring)'
+    description: Color tagstring.
+  - names:
+      - --delay
+    argument: duration
+    description: Delay starting next job by duration.
+  - names:
+      - --delimiter
+      - -d
+    argument: delim
+    description: Input items are terminated by delim.
+  - names:
+      - --dirnamereplace
+      - --dnr
+    argument: replace-str
+    description: Use the replacement string replace-str instead of {//} for dirname of input line.
+  - names:
+      - --dry-run
+    argument: ""
+    description: Print the job to run on stdout (standard output), but do not run the job.
+  - names:
+      - -E
+    argument: eof-str
+    description: Set the end of file string to eof-str.
+  - names:
+      - --eof
+      - -e
+    argument: '[=eof-str]'
+    description: This option is a synonym for the -E option.
+  - names:
+      - --embed
+    argument: ""
+    description: Embed GNU parallel in a shell script.
+  - names:
+      - --env
+    argument: var
+    description: Copy exported environment variable var.
+  - names:
+      - --eta
+    argument: ""
+    description: Show the estimated number of seconds before finishing.
+  - names:
+      - --fg
+    argument: ""
+    description: Run command in foreground.
+  - names:
+      - --fifo
+    argument: ""
+    description: Create a temporary fifo with content.
+  - names:
+      - --filter
+    argument: filter
+    description: Only run jobs where filter is true.
+  - names:
+      - --filter-hosts
+    argument: ""
+    description: Remove down hosts.
+  - names:
+      - --gnu
+    argument: ""
+    description: Behave like GNU parallel.
+  - names:
+      - --group
+    argument: ""
+    description: Group output.
+  - names:
+      - --group-by
+    argument: val
+    description: Group input by value.
+  - names:
+      - --help
+      - -h
+    argument: ""
+    description: Print a summary of the options to GNU parallel and exit.
+  - names:
+      - --halt-on-error
+      - --halt
+    argument: val
+    description: When should GNU parallel terminate?
+  - names:
+      - --header
+    argument: regexp
+    description: Use regexp as header.
+  - names:
+      - --hostgroups
+      - --hgrp
+    argument: ""
+    description: Enable hostgroups on arguments.
+  - names:
+      - -I
+    argument: replace-str
+    description: Use the replacement string replace-str instead of {}.
+  - names:
+      - --replace
+      - -i
+    argument: '[replace-str]'
+    description: This option is deprecated; use -I instead.
+  - names:
+      - --joblog
+    argument: logfile
+    description: Logfile for executed jobs.
+  - names:
+      - --jobs
+      - -j
+      - --max-procs
+      - -P
+    argument: "N"
+    description: Number of jobslots on each machine.
+  - names:
+      - --jobs
+      - -j
+      - --max-procs
+      - -P
+    argument: "+N"
+    description: Add N to the number of CPU threads.
+  - names:
+      - --jobs
+      - -j
+      - --max-procs
+      - -P
+    argument: "-N"
+    description: Subtract N from the number of CPU threads.
+  - names:
+      - --jobs
+      - -j
+      - --max-procs
+      - -P
+    argument: procfile
+    description: Read parameter from file.
+  - names:
+      - --keep-order
+      - -k
+    argument: ""
+    description: Keep sequence of output same as the order of input.
+  - names:
+      - -L
+    argument: recsize
+    description: 'When used with --pipe: Read records of recsize.'
+  - names:
+      - --max-lines
+      - -l
+    argument: '[recsize]'
+    description: 'When used with --pipe: Read records of recsize lines.'
+  - names:
+      - --limit
+    argument: '"command args"'
+    description: Dynamic job limit.
+  - names:
+      - --latest-line
+      - --ll
+    argument: (alpha testing)
+    description: Print the lastest line of each running job.
+  - names:
+      - --line-buffer
+      - --lb
+    argument: (beta testing)
+    description: Buffer output on line basis.
+  - names:
+      - --link
+      - --xapply
+    argument: ""
+    description: Link input sources.
+  - names:
+      - --load
+    argument: max-load
+    description: Only start jobs if load is less than max-load.
+  - names:
+      - --controlmaster
+      - -M
+    argument: ""
+    description: Use ssh's ControlMaster to make ssh connections faster.
+  - names:
+      - -m
+    argument: ""
+    description: Multiple arguments.
+  - names:
+      - --memfree
+    argument: size
+    description: Minimum memory free when starting another job.
+  - names:
+      - --memsuspend
+    argument: size
+    description: Suspend jobs when there is less memory available.
+  - names:
+      - --minversion
+    argument: version
+    description: Print the version GNU parallel and exit.
+  - names:
+      - --max-args
+      - -n
+    argument: max-args
+    description: Use at most max-args arguments per command line.
+  - names:
+      - --max-replace-args
+      - -N
+    argument: max-args
+    description: Use at most max-args arguments per command line.
+  - names:
+      - --nonall
+    argument: ""
+    description: --onall with no arguments.
+  - names:
+      - --onall
+    argument: ""
+    description: Run all the jobs on all computers given with --sshlogin.
+  - names:
+      - --open-tty
+      - -o
+    argument: ""
+    description: Open terminal tty.
+  - names:
+      - --output-as-files
+      - --outputasfiles
+      - --files
+    argument: ""
+    description: Save output to files.
+  - names:
+      - --pipe
+      - --spreadstdin
+    argument: ""
+    description: Spread input to jobs on stdin (standard input).
+  - names:
+      - --pipe-part
+    argument: ""
+    description: Pipe parts of a physical file.
+  - names:
+      - --plain
+    argument: ""
+    description: Ignore --profile, $PARALLEL, and ~/.parallel/config.
+  - names:
+      - --plus
+    argument: ""
+    description: Add more replacement strings.
+  - names:
+      - --process-slot-var
+    argument: varname
+    description: Set the environment variable varname to the jobslot number-1.
+  - names:
+      - --progress
+    argument: ""
+    description: Show progress of computations.
+  - names:
+      - --max-line-length-allowed
+    argument: (alpha testing)
+    description: Print maximal command line length.
+  - names:
+      - --number-of-cpus
+    argument: (obsolete)
+    description: Print the number of physical CPU cores and exit.
+  - names:
+      - --number-of-cores
+    argument: ""
+    description: Print the number of physical CPU cores and exit (used by GNU parallel itself to determine the number of physical CPU cores on remote computers).
+  - names:
+      - --number-of-sockets
+    argument: ""
+    description: Print the number of filled CPU sockets and exit (used by GNU parallel itself to determine the number of filled CPU sockets on remote computers).
+  - names:
+      - --number-of-threads
+    argument: ""
+    description: Print the number of hyperthreaded CPU cores and exit (used by GNU parallel itself to determine the number of hyperthreaded CPU cores on remote computers).
+  - names:
+      - --no-keep-order
+    argument: ""
+    description: Overrides an earlier --keep-order (e.g. if set in ~/.parallel/config).
+  - names:
+      - --nice
+    argument: niceness
+    description: Run the command at this niceness.
+  - names:
+      - --interactive
+      - -p
+    argument: ""
+    description: Ask user before running a job.
+  - names:
+      - --parens
+    argument: parensstring
+    description: Use parensstring instead of {==}.
+  - names:
+      - --profile
+      - -J
+    argument: profilename
+    description: Use profile profilename for options.
+  - names:
+      - --quote
+      - -q
+    argument: ""
+    description: Quote command.
+  - names:
+      - --no-run-if-empty
+      - -r
+    argument: ""
+    description: Do not run empty input.
+  - names:
+      - --noswap
+    argument: ""
+    description: Do not start job is computer is swapping.
+  - names:
+      - --record-env
+    argument: ""
+    description: Record exported environment.
+  - names:
+      - --recstart
+      - --recend
+    argument: startstring
+    description: Split record between endstring and startstring.
+  - names:
+      - --regexp
+    argument: ""
+    description: Use --regexp to interpret --recstart and --recend as regular expressions. This is slow, however.
+  - names:
+      - --remove-rec-sep
+      - --removerecsep
+      - --rrs
+    argument: ""
+    description: Remove record separator.
+  - names:
+      - --results
+      - --res
+    argument: name
+    description: Save the output into files.
+  - names:
+      - --resume
+    argument: ""
+    description: Resumes from the last unfinished job.
+  - names:
+      - --resume-failed
+    argument: ""
+    description: Retry all failed and resume from the last unfinished job.
+  - names:
+      - --retry-failed
+    argument: ""
+    description: Retry all failed jobs in joblog.
+  - names:
+      - --retries
+    argument: "n"
+    description: Try failing jobs n times.
+  - names:
+      - --return
+    argument: filename
+    description: Transfer files from remote computers.
+  - names:
+      - --round-robin
+      - --round
+    argument: ""
+    description: Distribute chunks of standard input in a round robin fashion.
+  - names:
+      - --rpl
+    argument: '''tag perl expression'''
+    description: Define replacement string.
+  - names:
+      - --rsync-opts
+    argument: options
+    description: Options to pass on to rsync.
+  - names:
+      - --max-chars
+      - -s
+    argument: max-chars
+    description: Limit length of command.
+  - names:
+      - --show-limits
+    argument: ""
+    description: Display limits given by the operating system.
+  - names:
+      - --semaphore
+    argument: ""
+    description: Work as a counting semaphore.
+  - names:
+      - --semaphore-name
+      - --id
+    argument: name
+    description: Use name as the name of the semaphore.
+  - names:
+      - --semaphore-timeout
+      - --st
+    argument: secs
+    description: 'If secs > 0: If the semaphore is not released within secs seconds, take it anyway.'
+  - names:
+      - --seqreplace
+    argument: replace-str
+    description: Use the replacement string replace-str instead of {#} for job sequence number.
+  - names:
+      - --session
+    argument: ""
+    description: Record names in current environment in $PARALLEL_IGNORED_NAMES and exit.
+  - names:
+      - --shard
+    argument: shardexpr
+    description: Use shardexpr as shard key and shard input to the jobs.
+  - names:
+      - --shebang
+      - --hashbang
+    argument: ""
+    description: GNU parallel can be called as a shebang (#!) command as the first line of a script. The content of the file will be treated as inputsource.
+  - names:
+      - --shebang-wrap
+    argument: ""
+    description: GNU parallel can parallelize scripts by wrapping the shebang line.
+  - names:
+      - --shell-completion
+    argument: shell
+    description: Generate shell completion code for interactive shells.
+  - names:
+      - --shell-quote
+    argument: ""
+    description: Does not run the command but quotes it. Useful for making quoted composed commands for GNU parallel.
+  - names:
+      - --shuf
+    argument: ""
+    description: Shuffle jobs.
+  - names:
+      - --skip-first-line
+    argument: ""
+    description: Do not use the first line of input (used by GNU parallel itself when called with --shebang).
+  - names:
+      - --sql
+    argument: DBURL (obsolete)
+    description: Use --sql-master instead.
+  - names:
+      - --sql-master
+    argument: DBURL
+    description: Submit jobs via SQL server.
+  - names:
+      - --sql-and-worker
+    argument: DBURL
+    description: 'Shorthand for: --sql-master DBURL --sql-worker DBURL.'
+  - names:
+      - --sql-worker
+    argument: DBURL
+    description: Execute jobs via SQL server. Read the input sources variables from the table pointed to by DBURL. The command on the command line should be the same as given by --sqlmaster.
+  - names:
+      - --ssh
+    argument: sshcommand
+    description: GNU parallel defaults to using ssh for remote access. This can be overridden with --ssh. It can also be set on a per server basis with --sshlogin.
+  - names:
+      - --ssh-delay
+    argument: duration
+    description: Delay starting next ssh by duration.
+  - names:
+      - --sshloginfile
+      - --slf
+    argument: filename
+    description: 'File with sshlogins. The file consists of sshlogins on separate lines. Empty lines and lines starting with ''#'' are ignored.'
+  - names:
+      - --slotreplace
+    argument: replace-str
+    description: Use the replacement string replace-str instead of {%} for job slot number.
+  - names:
+      - --silent
+    argument: ""
+    description: Silent.
+  - names:
+      - --template
+      - --tmpl
+    argument: file=repl
+    description: Replace replacement strings in file and save it in repl.
+  - names:
+      - --tty
+    argument: ""
+    description: Open terminal tty.
+  - names:
+      - --tag
+    argument: ""
+    description: Tag lines with arguments.
+  - names:
+      - --tagstring
+    argument: str
+    description: Tag lines with a string.
+  - names:
+      - --tee
+    argument: ""
+    description: Pipe all data to all jobs.
+  - names:
+      - --term-seq
+    argument: sequence
+    description: Termination sequence.
+  - names:
+      - --tmpdir
+    argument: dirname
+    description: Directory for temporary files.
+  - names:
+      - --tmux
+    argument: (Long beta testing)
+    description: Use tmux for output. Start a tmux session and run each job in a window in that session. No other output will be produced.
+  - names:
+      - --tmuxpane
+    argument: (Long beta testing)
+    description: Use tmux for output but put output into panes in the first window. Useful if you want to monitor the progress of less than 100 concurrent jobs.
+  - names:
+      - --timeout
+    argument: duration
+    description: Time out for command. If the command runs for longer than duration seconds it will get killed as per --term-seq.
+  - names:
+      - --verbose
+      - -t
+    argument: ""
+    description: Print the job to be run on stderr (standard error).
+  - names:
+      - --transfer
+    argument: ""
+    description: Transfer files to remote computers.
+  - names:
+      - --transferfile
+      - --tf
+    argument: filename
+    description: Transfer filename to remote computers.
+  - names:
+      - --trc
+    argument: filename
+    description: 'Transfer, Return, Cleanup. Shorthand for: --transfer --return filename --cleanup'
+  - names:
+      - --trim
+    argument: <n|l|r|lr|rl>
+    description: Trim white space in input.
+  - names:
+      - --ungroup
+      - -u
+    argument: ""
+    description: Ungroup output.
+  - names:
+      - --extensionreplace
+      - --er
+    argument: replace-str
+    description: Use the replacement string replace-str instead of {.} for input line without extension.
+  - names:
+      - --use-sockets-instead-of-threads
+    argument: ""
+    description: 'See also: --use-cores-instead-of-threads'
+  - names:
+      - --use-cores-instead-of-threads
+      - --use-cpus-instead-of-cores
+    argument: (obsolete)
+    description: Determine how GNU parallel counts the number of CPUs.
+  - names:
+      - -v
+    argument: ""
+    description: Verbose.
+  - names:
+      - --version
+      - -V
+    argument: ""
+    description: Print the version GNU parallel and exit.
+  - names:
+      - --workdir
+      - --wd
+    argument: mydir
+    description: Jobs will be run in the dir mydir. The default is the current dir for the local machine, and the login dir for remote computers.
+  - names:
+      - --wait
+    argument: ""
+    description: Wait for all commands to complete.
+  - names:
+      - -X
+    argument: ""
+    description: Multiple arguments with context replace.
+  - names:
+      - --exit
+      - -x
+    argument: ""
+    description: Exit if the size (see the -s option) is exceeded.
+  - names:
+      - --xargs
+    argument: ""
+    description: Multiple arguments. Insert as many arguments as the command line length permits.
+version: GNU parallel 20221022
+tldr: |
+  > Run commands on multiple CPU cores.
+  > More information: <https://www.gnu.org/software/parallel>.
+
+  - Gzip several files at once, using all cores:
+
+  `parallel gzip ::: {{file1}} {{file2}} {{file3}}`
+
+  - Read arguments from stdin, run 4 jobs at once:
+
+  `ls *.txt | parallel -j4 gzip`
+
+  - Convert JPG images to PNG using replacement strings:
+
+  `parallel convert {} {.}.png ::: *.jpg`
+
+  - Parallel xargs, cram as many args as possible onto one command:
+
+  `{{args}} | parallel -X {{command}}`
+
+  - Break stdin into ~1M blocks, feed each block to stdin of new command:
+
+  `cat {{big_file.txt}} | parallel --pipe --block 1M {{command}}`
+
+  - Run on multiple machines via SSH:
+
+  `parallel -S {{machine1}},{{machine2}} {{command}} ::: {{arg1}} {{arg2}}`

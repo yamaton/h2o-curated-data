@@ -1,5 +1,6 @@
 name: quast-lg.py
 description: quast-lg.py
+usage: quast-lg.py [options] <files_with_contigs>
 options:
   - names:
       - -o
@@ -91,6 +92,10 @@ options:
     argument: <int,int,...>
     description: 'Comma-separated list of contig length thresholds [default: 0,1000,5000,10000,25000,50000]'
   - names:
+      - --x-for-Nx
+    argument: <int>
+    description: 'Value of ''x'' for Nx, Lx, etc metrics reported in addition to N50, L50, etc (0, 100) [default: 90]'
+  - names:
       - -u
       - --use-all-alignments
     argument: ""
@@ -123,6 +128,10 @@ options:
     argument: <int>
     description: 'Lower threshold for extensive misassembly size. All relocations with inconsistency less than extensive-mis-size are counted as local misassemblies [default: 7000]'
   - names:
+      - --local-mis-size
+    argument: <int>
+    description: 'Lower threshold on local misassembly size. Local misassemblies with inconsistency less than local-mis-size are counted as (long) indels [default: 200]'
+  - names:
       - --scaffold-gap-max-size
     argument: <int>
     description: 'Max allowed scaffold gap length difference. All relocations with inconsistency less than scaffold-gap-size are counted as scaffold gap misassemblies [default: 10000]'
@@ -141,7 +150,7 @@ options:
   - names:
       - --fragmented-max-indent
     argument: <int>
-    description: 'Mark translocation as fake if both alignments are located no further than N bases from the ends of the reference fragments [default: 85] Requires --fragmented option'
+    description: 'Mark translocation as fake if both alignments are located no further than N bases from the ends of the reference fragments [default: 200] Requires --fragmented option'
   - names:
       - --upper-bound-assembly
     argument: ""
@@ -154,6 +163,10 @@ options:
       - --est-insert-size
     argument: <int>
     description: 'Use provided insert size in upper bound assembly simulation [default: auto detect from reads or 255]'
+  - names:
+      - --report-all-metrics
+    argument: ""
+    description: Keep all quality metrics in the main report even if their values are '-' for all assemblies or if they are not applicable (e.g., reference-based metrics in the no-reference mode)
   - names:
       - --plots-format
     argument: <str>
@@ -253,13 +266,9 @@ options:
     argument: ""
     description: Do not run structural variation detection (make sense only if reads are specified)
   - names:
-      - --no-gzip
-    argument: ""
-    description: Do not compress large output files
-  - names:
       - --no-read-stats
     argument: ""
-    description: Do not align reads to assemblies Reads will be aligned to reference and used for coverage analysis, upper bound assembly simulation, and structural variation detection. Use this option if you do not need read statistics for assemblies.
+    description: Do not align reads to assemblies   Reads will be aligned to reference and used for coverage analysis, upper bound assembly simulation, and structural variation detection. Use this option if you do not need read statistics for assemblies.
   - names:
       - --fast
     argument: ""
@@ -286,3 +295,4 @@ options:
       - --version
     argument: ""
     description: Print version
+version: QUAST v5.2.0 (QUAST-LG mode)

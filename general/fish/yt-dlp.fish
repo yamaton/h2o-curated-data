@@ -37,8 +37,8 @@ complete -c yt-dlp -l "no-geo-bypass" -d "Do not bypass geographic restriction v
 complete -c yt-dlp -l "geo-bypass-country" -d "Force bypass geographic restriction with explicitly provided two-letter ISO 3166-2 country code" -x
 complete -c yt-dlp -l "geo-bypass-ip-block" -d "Force bypass geographic restriction with explicitly provided IP block in CIDR notation" -x
 complete -c yt-dlp -s "I" -l "playlist-items" -d "Comma separated playlist_index of the videos to download." -x
-complete -c yt-dlp -l "min-filesize" -d "Do not download any videos smaller than SIZE, e.g. 50k or 44.6M" -x
-complete -c yt-dlp -l "max-filesize" -d "Do not download any videos larger than SIZE, e.g. 50k or 44.6M" -x
+complete -c yt-dlp -l "min-filesize" -d "Abort download if filesize is smaller than SIZE, e.g. 50k or 44.6M" -r
+complete -c yt-dlp -l "max-filesize" -d "Abort download if filesize if larger than SIZE, e.g. 50k or 44.6M" -r
 complete -c yt-dlp -l "date" -d "Download only videos uploaded on this date." -x
 complete -c yt-dlp -l "datebefore" -d "Download only videos uploaded on or before this date." -x
 complete -c yt-dlp -l "dateafter" -d "Download only videos uploaded on or after this date." -x

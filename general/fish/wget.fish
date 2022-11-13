@@ -140,7 +140,7 @@ complete -c wget -s "A" -l "accept" -d "comma-separated list of accepted extensi
 complete -c wget -s "R" -l "reject" -d "comma-separated list of rejected extensions" -x
 complete -c wget -l "accept-regex" -d "regex matching accepted URLs" -x
 complete -c wget -l "reject-regex" -d "regex matching rejected URLs" -x
-complete -c wget -l "regex-type" -d "regex type (posix|pcre)" -x
+complete -c wget -l "regex-type" -d "regex type (posix)" -x
 complete -c wget -s "D" -l "domains" -d "comma-separated list of accepted domains" -x
 complete -c wget -l "exclude-domains" -d "comma-separated list of rejected domains" -x
 complete -c wget -l "follow-ftp" -d "follow FTP links from HTML documents"

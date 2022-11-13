@@ -1,5 +1,12 @@
 name: snakemake
 description: snakemake
+usage: |-
+  snakemake [-h] [--dry-run] [--profile PROFILE] [--cache [RULE ...]] [--snakefile FILE] [--cores [N]] [--jobs [N]] [--local-cores N] [--resources [NAME=INT ...]] [--set-threads RULE=THREADS [RULE=THREADS ...]] [--max-threads MAX_THREADS] [--set-resources RULE:RESOURCE=VALUE [RULE:RESOURCE=VALUE ...]] [--set-scatter NAME=SCATTERITEMS [NAME=SCATTERITEMS ...]] [--set-resource-scopes RESOURCE=[global|local] [RESOURCE=[global|local] ...]] [--default-resources [NAME=INT ...]] [--preemption-default PREEMPTION_DEFAULT] [--preemptible-rules PREEMPTIBLE_RULES [PREEMPTIBLE_RULES ...]] [--config [KEY=VALUE ...]] [--configfile FILE [FILE ...]] [--envvars VARNAME [VARNAME ...]] [--directory DIR] [--touch] [--keep-going] [--rerun-triggers {mtime,params,input,software-env,code} [{mtime,params,input,software-env,code} ...]] [--force] [--forceall] [--forcerun [TARGET ...]] [--prioritize TARGET [TARGET ...]] [--batch RULE=BATCH/BATCHES] [--until TARGET [TARGET ...]]
+            [--omit-from TARGET [TARGET ...]] [--rerun-incomplete] [--shadow-prefix DIR] [--scheduler [{ilp,greedy}]] [--wms-monitor [WMS_MONITOR]] [--wms-monitor-arg [NAME=VALUE ...]] [--scheduler-ilp-solver {COIN_CMD}] [--scheduler-solver-path SCHEDULER_SOLVER_PATH] [--conda-base-path CONDA_BASE_PATH] [--no-subworkflows] [--groups GROUPS [GROUPS ...]] [--group-components GROUP_COMPONENTS [GROUP_COMPONENTS ...]] [--report [FILE]] [--report-stylesheet CSSFILE] [--draft-notebook TARGET] [--edit-notebook TARGET] [--notebook-listen IP:PORT] [--lint [{text,json}]] [--generate-unit-tests [TESTPATH]] [--containerize] [--export-cwl FILE] [--list] [--list-target-rules] [--dag] [--rulegraph] [--filegraph] [--d3dag] [--summary] [--detailed-summary] [--archive FILE] [--cleanup-metadata FILE [FILE ...]] [--cleanup-shadow] [--skip-script-cleanup] [--unlock] [--list-version-changes] [--list-code-changes] [--list-input-changes] [--list-params-changes] [--list-untracked] [--delete-all-output]
+            [--delete-temp-output] [--bash-completion] [--keep-incomplete] [--drop-metadata] [--version] [--reason] [--gui [PORT]] [--printshellcmds] [--debug-dag] [--stats FILE] [--nocolor] [--quiet [{progress,rules,all} ...]] [--print-compilation] [--verbose] [--force-use-threads] [--allow-ambiguity] [--nolock] [--ignore-incomplete] [--max-inventory-time SECONDS] [--latency-wait SECONDS] [--wait-for-files [FILE ...]] [--wait-for-files-file FILE] [--notemp] [--all-temp] [--keep-remote] [--keep-target-files] [--allowed-rules ALLOWED_RULES [ALLOWED_RULES ...]] [--target-jobs TARGET_JOBS [TARGET_JOBS ...]] [--local-groupid LOCAL_GROUPID] [--max-jobs-per-second MAX_JOBS_PER_SECOND] [--max-status-checks-per-second MAX_STATUS_CHECKS_PER_SECOND] [-T RETRIES] [--attempt ATTEMPT] [--wrapper-prefix WRAPPER_PREFIX] [--default-remote-provider {S3,GS,FTP,SFTP,S3Mocked,gfal,gridftp,iRODS,AzBlob,XRootD}] [--default-remote-prefix DEFAULT_REMOTE_PREFIX] [--no-shared-fs]
+            [--greediness GREEDINESS] [--no-hooks] [--overwrite-shellcmd OVERWRITE_SHELLCMD] [--debug] [--runtime-profile FILE] [--mode {0,1,2}] [--show-failed-logs] [--log-handler-script FILE] [--log-service {none,slack,wms}] [--cluster CMD | --cluster-sync CMD | --drmaa [ARGS]] [--cluster-config FILE] [--immediate-submit] [--jobscript SCRIPT] [--jobname NAME] [--cluster-status CLUSTER_STATUS] [--cluster-cancel CLUSTER_CANCEL] [--cluster-cancel-nargs CLUSTER_CANCEL_NARGS] [--cluster-sidecar CLUSTER_SIDECAR] [--drmaa-log-dir DIR] [--kubernetes [NAMESPACE]] [--container-image IMAGE] [--k8s-cpu-scalar FLOAT] [--tibanna] [--tibanna-sfn TIBANNA_SFN] [--precommand PRECOMMAND] [--tibanna-config TIBANNA_CONFIG [TIBANNA_CONFIG ...]] [--google-lifesciences] [--google-lifesciences-regions GOOGLE_LIFESCIENCES_REGIONS [GOOGLE_LIFESCIENCES_REGIONS ...]] [--google-lifesciences-location GOOGLE_LIFESCIENCES_LOCATION] [--google-lifesciences-keep-cache] [--flux] [--tes URL] [--use-conda]
+            [--conda-not-block-search-path-envvars] [--list-conda-envs] [--conda-prefix DIR] [--conda-cleanup-envs] [--conda-cleanup-pkgs [{tarballs,cache}]] [--conda-create-envs-only] [--conda-frontend {conda,mamba}] [--use-singularity] [--singularity-prefix DIR] [--singularity-args ARGS] [--use-envmodules]
+            [target ...]
 options:
   - names:
       - -h
@@ -29,7 +36,7 @@ options:
       - --cores
       - -c
     argument: '[N]'
-    description: 'Use at most N CPU cores/jobs in parallel. If N is omitted or ''all'', the limit is set to the number of available CPU cores. In case of cluster/cloud execution, this argument sets the number of total cores used over all jobs (made available to rules via workflow.cores). (default: None)'
+    description: 'Use at most N CPU cores/jobs in parallel. If N is omitted or ''all'', the limit is set to the number of available CPU cores. In case of cluster/cloud execution, this argument sets the maximum number of cores requested from the cluster or cloud scheduler. (See https://snakemake.readthedocs.io/en/stable/snakefiles/rules.html#resources-remote-execution for more info)This number is available to rules via workflow.cores. (default: None)'
   - names:
       - --jobs
       - -j
@@ -38,12 +45,12 @@ options:
   - names:
       - --local-cores
     argument: "N"
-    description: 'In cluster/cloud mode, use at most N cores of the host machine in parallel (default: number of CPU cores of the host). The cores are used to execute local rules. This option is ignored when not in cluster/cloud mode. (default: 8)'
+    description: 'In cluster/cloud mode, use at most N cores of the host machine in parallel (default: number of CPU cores of the host). The cores are used to execute local rules. This option is ignored when not in cluster/cloud mode. (default: 12)'
   - names:
       - --resources
       - --res
     argument: '[NAME=INT ...]'
-    description: 'Define additional resources that shall constrain the scheduling analogously to threads (see above). A resource is defined as a name and an integer value. E.g. --resources mem_mb=1000. Rules can use resources by defining the resource keyword, e.g. resources: mem_mb=600. If now two rules require 600 of the resource ''mem_mb'' they won''t be run in parallel by the scheduler. (default: None)'
+    description: 'Define additional resources that shall constrain the scheduling analogously to --cores (see above). A resource is defined as a name and an integer value. E.g. --resources mem_mb=1000. Rules can use resources by defining the resource keyword, e.g. resources: mem_mb=600. If now two rules require 600 of the resource ''mem_mb'' they won''t be run in parallel by the scheduler. In cluster/cloud mode, this argument will also constrain the amount of resources requested from the server. (See https://snakemake.readthedocs.io/en/stable/snakefiles/rules.html#resources-remote-execution for more info) (default: None)'
   - names:
       - --set-threads
     argument: RULE=THREADS [RULE=THREADS ...]
@@ -51,7 +58,7 @@ options:
   - names:
       - --max-threads
     argument: MAX_THREADS
-    description: 'Define a global maximum number of threads for any job. This can be helpful in a cluster/cloud setting, when you want to restrict the maximum number of requested threads without modifying the workflow definition or overwriting them invidiually with --set-threads. (default: None)'
+    description: 'Define a global maximum number of threads available to any rule. Rules requesting more threads (via the threads keyword) will have their values reduced to the maximum. This can be useful when you want to restrict the maximum number of threads without modifying the workflow definition or overwriting rules individually with --set-threads. (default: None)'
   - names:
       - --set-resources
     argument: RULE:RESOURCE=VALUE [RULE:RESOURCE=VALUE ...]
@@ -60,6 +67,10 @@ options:
       - --set-scatter
     argument: NAME=SCATTERITEMS [NAME=SCATTERITEMS ...]
     description: 'Overwrite number of scatter items of scattergather processes. This allows to fine-tune workflow parallelization. Thereby, SCATTERITEMS has to be a positive integer, and NAME has to be the name of the scattergather process defined via a scattergather directive in the workflow. (default: None)'
+  - names:
+      - --set-resource-scopes
+    argument: RESOURCE=[global|local] [RESOURCE=[global|local] ...]
+    description: 'Overwrite resource scopes. A scope determines how a constraint is reckoned in cluster execution. With RESOURCE=local, a constraint applied to RESOURCE using --resources will be considered the limit for each group submission. With RESOURCE=global, the constraint will apply across all groups cumulatively. By default, only `mem_mb` and `disk_mb` are considered local, all other resources are global. This may be modified in the snakefile using the `resource_scopes:` directive. Note that number of threads, specified via --cores, is always considered local. (See https://snakemake.readthedocs.io/en/stable/snakefiles/rules.html#resources-remote-execution for more info) (default: None)'
   - names:
       - --default-resources
       - --default-res
@@ -152,7 +163,7 @@ options:
   - names:
       - --scheduler
     argument: '[{ilp,greedy}]'
-    description: 'Specifies if jobs are selected by a greedy algorithm or by solving an ilp. The ilp scheduler aims to reduce runtime and hdd usage by best possible use of resources. (default: greedy)'
+    description: 'Specifies if jobs are selected by a greedy algorithm or by solving an ilp. The ilp scheduler aims to reduce runtime and hdd usage by best possible use of resources. (default: ilp)'
   - names:
       - --wms-monitor
     argument: '[WMS_MONITOR]'
@@ -163,7 +174,7 @@ options:
     description: 'If the workflow management service accepts extra arguments, provide. them in key value pairs with --wms-monitor-arg. For example, to run an existing workflow using a wms monitor, you can provide the pair id=12345 and the arguments will be provided to the endpoint to first interact with the workflow (default: None)'
   - names:
       - --scheduler-ilp-solver
-    argument: '{PULP_CBC_CMD}'
+    argument: '{COIN_CMD}'
     description: 'Specifies solver to be utilized when selecting ilp-scheduler. (default: COIN_CMD)'
   - names:
       - --scheduler-solver-path
@@ -426,6 +437,10 @@ options:
     argument: ALLOWED_RULES [ALLOWED_RULES ...]
     description: 'Only consider given rules. If omitted, all rules in Snakefile are used. Note that this is intended primarily for internal use and may lead to unexpected results otherwise. (default: None)'
   - names:
+      - --target-jobs
+    argument: TARGET_JOBS [TARGET_JOBS ...]
+    description: 'Target particular jobs by RULE:WILDCARD1=VALUE,WILDCARD2=VALUE,... This is meant for internal use by Snakemake itself only. (default: None)'
+  - names:
       - --local-groupid
     argument: LOCAL_GROUPID
     description: 'Name for local groupid, meant for internal use only. (default: local)'
@@ -552,6 +567,10 @@ options:
     argument: DIR
     description: 'Specify a directory in which stdout and stderr files of DRMAA jobs will be written. The value may be given as a relative path, in which case Snakemake will use the current invocation directory as the origin. If given, this will override any given ''-o'' and/or ''-e'' native specification. If not given, all DRMAA stdout and stderr files are written to the current working directory. (default: None)'
   - names:
+      - --flux
+    argument: ""
+    description: 'Execute your workflow on a flux cluster. (default: False)'
+  - names:
       - --kubernetes
     argument: '[NAMESPACE]'
     description: 'Execute workflow in a kubernetes cluster (in the cloud). NAMESPACE is the namespace you want to use for your job (if nothing specified: ''default''). Usually, this requires --default-remote-provider and --default-remote-prefix to be set to a S3 or GS bucket where your . data shall be stored. It is further advisable to activate conda integration via --use-conda. (default: None)'
@@ -559,6 +578,10 @@ options:
       - --container-image
     argument: IMAGE
     description: 'Docker image to use, e.g., when submitting jobs to kubernetes Defaults to ''https://hub.docker.com/r/snakemake/snakemake'', tagged with the same version as the currently running Snakemake instance. Note that overwriting this value is up to your responsibility. Any used image has to contain a working snakemake installation that is compatible with (or ideally the same as) the currently running version. (default: None)'
+  - names:
+      - --k8s-cpu-scalar
+    argument: FLOAT
+    description: 'K8s reserves some proportion of available CPUs for its own use. So, where an underlying node may have 8 CPUs, only e.g. 7600 milliCPUs are allocatable to k8s pods (i.e. snakemake jobs). As 8 > 7.6, k8s can''t find a node with enough CPU resource to run such jobs. This argument acts as a global scalar on each job''s CPU request, so that e.g. a job whose rule definition asks for 8 CPUs will request 7600m CPUs from k8s, allowing it to utilise one entire node. N.B: the job itself would still see the original value, i.e. as the value substituted in {threads}. (default: 0.95)'
   - names:
       - --tibanna
     argument: ""
@@ -643,5 +666,4 @@ options:
       - --use-envmodules
     argument: ""
     description: 'If defined in the rule, run job within the given environment modules, loaded in the given order. This can be combined with --use-conda and --use-singularity, which will then be only used as a fallback for rules which don''t define environment modules. (default: False)'
-version: '7.8.0'
-
+version: 7.18.2

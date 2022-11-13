@@ -1,0 +1,30 @@
+# Auto-generated with h2o
+
+_bwrap()
+{
+    local i=1 cmd cur word_list
+    cur="${COMP_WORDS[COMP_CWORD]}"
+
+    # take the last word that's NOT starting with -
+    while [[ ( "$i" < "$COMP_CWORD" ) ]]; do
+        local s="${COMP_WORDS[i]}"
+        case "$s" in
+          -*) ;;
+          *)
+            cmd="$s"
+            ;;
+        esac
+        (( i++ ))
+    done
+
+    case "$cmd" in
+      *)
+          word_list="  --help --version --args --unshare-all --share-net --unshare-user --unshare-user-try --unshare-ipc --unshare-pid --unshare-net --unshare-uts --unshare-cgroup --unshare-cgroup-try --userns --userns2 --pidns --uid --gid --hostname --chdir --clearenv --setenv --unsetenv --lock-file --sync-fd --bind --bind-try --dev-bind --dev-bind-try --ro-bind --ro-bind-try --remount-ro --exec-label --file-label --proc --dev --tmpfs --mqueue --dir --file --bind-data --ro-bind-data --symlink --seccomp --add-seccomp-fd --block-fd --userns-block-fd --info-fd --json-status-fd --new-session --die-with-parent --as-pid-1 --cap-add --cap-drop --perms --size --chmod"
+          COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+          ;;
+    esac
+
+}
+
+## -o bashdefault and -o default are fallback
+complete -o bashdefault -o default -F _bwrap bwrap

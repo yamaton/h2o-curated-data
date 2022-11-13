@@ -11,6 +11,8 @@ complete -c stack -n "not __fish_seen_subcommand_from build install uninstall te
 complete -c stack -n "not __fish_seen_subcommand_from build install uninstall test bench haddock new templates init setup path ls unpack update upgrade upload sdist dot ghc hoogle exec run ghci repl runghc runhaskell script eval clean purge query list ide docker config hpc" -l "silent" -d "Enable silent mode: verbosity level \"silent\""
 complete -c stack -n "not __fish_seen_subcommand_from build install uninstall test bench haddock new templates init setup path ls unpack update upgrade upload sdist dot ghc hoogle exec run ghci repl runghc runhaskell script eval clean purge query list ide docker config hpc" -l "time-in-log" -d "Enable/disable inclusion of timings in logs, for the purposes of using diff with logs (default: enabled)"
 complete -c stack -n "not __fish_seen_subcommand_from build install uninstall test bench haddock new templates init setup path ls unpack update upgrade upload sdist dot ghc hoogle exec run ghci repl runghc runhaskell script eval clean purge query list ide docker config hpc" -l "no-time-in-log" -d "Enable/disable inclusion of timings in logs, for the purposes of using diff with logs (default: enabled)"
+complete -c stack -n "not __fish_seen_subcommand_from build install uninstall test bench haddock new templates init setup path ls unpack update upgrade upload sdist dot ghc hoogle exec run ghci repl runghc runhaskell script eval clean purge query list ide docker config hpc" -l "rsl-in-log" -d "Enable/disable inclusion of raw snapshot layer (rsl) in logs (default: disabled)"
+complete -c stack -n "not __fish_seen_subcommand_from build install uninstall test bench haddock new templates init setup path ls unpack update upgrade upload sdist dot ghc hoogle exec run ghci repl runghc runhaskell script eval clean purge query list ide docker config hpc" -l "no-rsl-in-log" -d "Enable/disable inclusion of raw snapshot layer (rsl) in logs (default: disabled)"
 complete -c stack -n "not __fish_seen_subcommand_from build install uninstall test bench haddock new templates init setup path ls unpack update upgrade upload sdist dot ghc hoogle exec run ghci repl runghc runhaskell script eval clean purge query list ide docker config hpc" -l "stack-root" -d "Absolute path to the global stack root directory (Overrides any STACK_ROOT environment variable)" -r
 complete -c stack -n "not __fish_seen_subcommand_from build install uninstall test bench haddock new templates init setup path ls unpack update upgrade upload sdist dot ghc hoogle exec run ghci repl runghc runhaskell script eval clean purge query list ide docker config hpc" -l "work-dir" -d "Relative path of work directory (Overrides any STACK_WORK environment variable, default is '.stack-work')" -r
 complete -c stack -n "not __fish_seen_subcommand_from build install uninstall test bench haddock new templates init setup path ls unpack update upgrade upload sdist dot ghc hoogle exec run ghci repl runghc runhaskell script eval clean purge query list ide docker config hpc" -l "system-ghc" -d "Enable/disable using the system installed GHC (on the PATH) if it is available and its version matches."
@@ -18,7 +20,7 @@ complete -c stack -n "not __fish_seen_subcommand_from build install uninstall te
 complete -c stack -n "not __fish_seen_subcommand_from build install uninstall test bench haddock new templates init setup path ls unpack update upgrade upload sdist dot ghc hoogle exec run ghci repl runghc runhaskell script eval clean purge query list ide docker config hpc" -l "install-ghc" -d "Enable/disable downloading and installing GHC if necessary (can be done manually with stack setup) (default: enabled)"
 complete -c stack -n "not __fish_seen_subcommand_from build install uninstall test bench haddock new templates init setup path ls unpack update upgrade upload sdist dot ghc hoogle exec run ghci repl runghc runhaskell script eval clean purge query list ide docker config hpc" -l "no-install-ghc" -d "Enable/disable downloading and installing GHC if necessary (can be done manually with stack setup) (default: enabled)"
 complete -c stack -n "not __fish_seen_subcommand_from build install uninstall test bench haddock new templates init setup path ls unpack update upgrade upload sdist dot ghc hoogle exec run ghci repl runghc runhaskell script eval clean purge query list ide docker config hpc" -l "arch" -d "System architecture, e.g. i386, x86_64" -x
-complete -c stack -n "not __fish_seen_subcommand_from build install uninstall test bench haddock new templates init setup path ls unpack update upgrade upload sdist dot ghc hoogle exec run ghci repl runghc runhaskell script eval clean purge query list ide docker config hpc" -l "ghc-variant" -d "Specialized GHC variant, e.g. integersimple (incompatible with --system-ghc)" -x
+complete -c stack -n "not __fish_seen_subcommand_from build install uninstall test bench haddock new templates init setup path ls unpack update upgrade upload sdist dot ghc hoogle exec run ghci repl runghc runhaskell script eval clean purge query list ide docker config hpc" -l "ghc-variant" -d "Specialized GHC variant, e.g. int-native or integersimple (incompatible with --system-ghc)" -x
 complete -c stack -n "not __fish_seen_subcommand_from build install uninstall test bench haddock new templates init setup path ls unpack update upgrade upload sdist dot ghc hoogle exec run ghci repl runghc runhaskell script eval clean purge query list ide docker config hpc" -l "ghc-build" -d "Specialized GHC build, e.g. 'gmp4' or 'standard' (usually auto-detected)" -x
 complete -c stack -n "not __fish_seen_subcommand_from build install uninstall test bench haddock new templates init setup path ls unpack update upgrade upload sdist dot ghc hoogle exec run ghci repl runghc runhaskell script eval clean purge query list ide docker config hpc" -s "j" -l "jobs" -d "Number of concurrent jobs to run" -x
 complete -c stack -n "not __fish_seen_subcommand_from build install uninstall test bench haddock new templates init setup path ls unpack update upgrade upload sdist dot ghc hoogle exec run ghci repl runghc runhaskell script eval clean purge query list ide docker config hpc" -l "extra-include-dirs" -d "Extra directories to check for C header files" -r
@@ -40,6 +42,8 @@ complete -c stack -n "not __fish_seen_subcommand_from build install uninstall te
 complete -c stack -n "not __fish_seen_subcommand_from build install uninstall test bench haddock new templates init setup path ls unpack update upgrade upload sdist dot ghc hoogle exec run ghci repl runghc runhaskell script eval clean purge query list ide docker config hpc" -l "no-dump-logs" -d "Enable/disable dump the build output logs for local packages to the console (default: dump warning logs)"
 complete -c stack -n "not __fish_seen_subcommand_from build install uninstall test bench haddock new templates init setup path ls unpack update upgrade upload sdist dot ghc hoogle exec run ghci repl runghc runhaskell script eval clean purge query list ide docker config hpc" -l "color" -l "colour" -d "Specify when to use color in output; WHEN is 'always', 'never', or 'auto'." -x
 complete -c stack -n "not __fish_seen_subcommand_from build install uninstall test bench haddock new templates init setup path ls unpack update upgrade upload sdist dot ghc hoogle exec run ghci repl runghc runhaskell script eval clean purge query list ide docker config hpc" -l "snapshot-location-base" -d "The base location of LTS/Nightly snapshots" -x
+complete -c stack -n "not __fish_seen_subcommand_from build install uninstall test bench haddock new templates init setup path ls unpack update upgrade upload sdist dot ghc hoogle exec run ghci repl runghc runhaskell script eval clean purge query list ide docker config hpc" -l "script-no-run-compile" -d "Enable/disable the use of options `--no-run --compile` with `stack script` (default: disabled)"
+complete -c stack -n "not __fish_seen_subcommand_from build install uninstall test bench haddock new templates init setup path ls unpack update upgrade upload sdist dot ghc hoogle exec run ghci repl runghc runhaskell script eval clean purge query list ide docker config hpc" -l "no-script-no-run-compile" -d "Enable/disable the use of options `--no-run --compile` with `stack script` (default: disabled)"
 complete -c stack -n "not __fish_seen_subcommand_from build install uninstall test bench haddock new templates init setup path ls unpack update upgrade upload sdist dot ghc hoogle exec run ghci repl runghc runhaskell script eval clean purge query list ide docker config hpc" -l "resolver" -d "Override resolver in project file" -r
 complete -c stack -n "not __fish_seen_subcommand_from build install uninstall test bench haddock new templates init setup path ls unpack update upgrade upload sdist dot ghc hoogle exec run ghci repl runghc runhaskell script eval clean purge query list ide docker config hpc" -l "compiler" -d "Use the specified compiler" -x
 complete -c stack -n "not __fish_seen_subcommand_from build install uninstall test bench haddock new templates init setup path ls unpack update upgrade upload sdist dot ghc hoogle exec run ghci repl runghc runhaskell script eval clean purge query list ide docker config hpc" -l "terminal" -d "Enable/disable overriding terminal detection in the case of running in a false terminal"
@@ -76,7 +80,7 @@ complete -k -c stack -n __fish_use_subcommand -x -a upload -d "Upload a package 
 complete -k -c stack -n __fish_use_subcommand -x -a upgrade -d "Upgrade to the latest stack"
 complete -k -c stack -n __fish_use_subcommand -x -a update -d "Update the package index"
 complete -k -c stack -n __fish_use_subcommand -x -a unpack -d "Unpack one or more packages locally"
-complete -k -c stack -n __fish_use_subcommand -x -a ls -d "List command. (Supports snapshots, dependencies and"
+complete -k -c stack -n __fish_use_subcommand -x -a ls -d "List command. (Supports snapshots, dependencies,"
 complete -k -c stack -n __fish_use_subcommand -x -a path -d "Print out handy path information"
 complete -k -c stack -n __fish_use_subcommand -x -a setup -d "Get the appropriate GHC for your project"
 complete -k -c stack -n __fish_use_subcommand -x -a init -d "Create stack project config from cabal or hpack"
@@ -85,7 +89,7 @@ complete -k -c stack -n __fish_use_subcommand -x -a new -d "Create a new project
 complete -k -c stack -n __fish_use_subcommand -x -a haddock -d "Shortcut for 'build --haddock'"
 complete -k -c stack -n __fish_use_subcommand -x -a bench -d "Shortcut for 'build --bench'"
 complete -k -c stack -n __fish_use_subcommand -x -a test -d "Shortcut for 'build --test'"
-complete -k -c stack -n __fish_use_subcommand -x -a uninstall -d "DEPRECATED: This command performs no actions, and is"
+complete -k -c stack -n __fish_use_subcommand -x -a uninstall -d "Show how to uninstall Stack. This command does not"
 complete -k -c stack -n __fish_use_subcommand -x -a install -d "Shortcut for 'build --copy-bins'"
 complete -k -c stack -n __fish_use_subcommand -x -a build -d "Build the package(s) in this directory/configuration"
 
@@ -153,11 +157,12 @@ complete -c stack -n "__fish_seen_subcommand_from build" -l "ba" -l "benchmark-a
 complete -c stack -n "__fish_seen_subcommand_from build" -l "no-run-benchmarks" -d "Disable running of benchmarks."
 complete -c stack -n "__fish_seen_subcommand_from build" -l "reconfigure" -d "Enable/disable Perform the configure step even if unnecessary."
 complete -c stack -n "__fish_seen_subcommand_from build" -l "no-reconfigure" -d "Enable/disable Perform the configure step even if unnecessary."
+complete -c stack -n "__fish_seen_subcommand_from build" -l "cabal-verbosity" -d "Cabal verbosity (accepts Cabal's numerical and extended syntax)" -x
 complete -c stack -n "__fish_seen_subcommand_from build" -l "cabal-verbose" -d "Enable/disable Ask Cabal to be verbose in its output (default: disabled)"
 complete -c stack -n "__fish_seen_subcommand_from build" -l "no-cabal-verbose" -d "Enable/disable Ask Cabal to be verbose in its output (default: disabled)"
 complete -c stack -n "__fish_seen_subcommand_from build" -l "split-objs" -d "Enable/disable Enable split-objs, to reduce output size (at the cost of build time)."
 complete -c stack -n "__fish_seen_subcommand_from build" -l "no-split-objs" -d "Enable/disable Enable split-objs, to reduce output size (at the cost of build time)."
-complete -c stack -n "__fish_seen_subcommand_from build" -l "skip" -d "Skip given component, can be specified multiple times" -x
+complete -c stack -n "__fish_seen_subcommand_from build" -l "skip" -d "Skip given component (can be specified multiple times)" -x
 complete -c stack -n "__fish_seen_subcommand_from build" -l "interleaved-output" -d "Enable/disable Print concurrent GHC output to the console with a prefix for the package name (default: enabled)"
 complete -c stack -n "__fish_seen_subcommand_from build" -l "no-interleaved-output" -d "Enable/disable Print concurrent GHC output to the console with a prefix for the package name (default: enabled)"
 complete -c stack -n "__fish_seen_subcommand_from build" -l "ddump-dir" -d "Specify output ddump-files" -r
@@ -229,11 +234,12 @@ complete -c stack -n "__fish_seen_subcommand_from install" -l "ba" -l "benchmark
 complete -c stack -n "__fish_seen_subcommand_from install" -l "no-run-benchmarks" -d "Disable running of benchmarks."
 complete -c stack -n "__fish_seen_subcommand_from install" -l "reconfigure" -d "Enable/disable Perform the configure step even if unnecessary."
 complete -c stack -n "__fish_seen_subcommand_from install" -l "no-reconfigure" -d "Enable/disable Perform the configure step even if unnecessary."
+complete -c stack -n "__fish_seen_subcommand_from install" -l "cabal-verbosity" -d "Cabal verbosity (accepts Cabal's numerical and extended syntax)" -x
 complete -c stack -n "__fish_seen_subcommand_from install" -l "cabal-verbose" -d "Enable/disable Ask Cabal to be verbose in its output (default: disabled)"
 complete -c stack -n "__fish_seen_subcommand_from install" -l "no-cabal-verbose" -d "Enable/disable Ask Cabal to be verbose in its output (default: disabled)"
 complete -c stack -n "__fish_seen_subcommand_from install" -l "split-objs" -d "Enable/disable Enable split-objs, to reduce output size (at the cost of build time)."
 complete -c stack -n "__fish_seen_subcommand_from install" -l "no-split-objs" -d "Enable/disable Enable split-objs, to reduce output size (at the cost of build time)."
-complete -c stack -n "__fish_seen_subcommand_from install" -l "skip" -d "Skip given component, can be specified multiple times" -x
+complete -c stack -n "__fish_seen_subcommand_from install" -l "skip" -d "Skip given component (can be specified multiple times)" -x
 complete -c stack -n "__fish_seen_subcommand_from install" -l "interleaved-output" -d "Enable/disable Print concurrent GHC output to the console with a prefix for the package name (default: enabled)"
 complete -c stack -n "__fish_seen_subcommand_from install" -l "no-interleaved-output" -d "Enable/disable Print concurrent GHC output to the console with a prefix for the package name (default: enabled)"
 complete -c stack -n "__fish_seen_subcommand_from install" -l "ddump-dir" -d "Specify output ddump-files" -r
@@ -311,11 +317,12 @@ complete -c stack -n "__fish_seen_subcommand_from test" -l "ba" -l "benchmark-ar
 complete -c stack -n "__fish_seen_subcommand_from test" -l "no-run-benchmarks" -d "Disable running of benchmarks."
 complete -c stack -n "__fish_seen_subcommand_from test" -l "reconfigure" -d "Enable/disable Perform the configure step even if unnecessary."
 complete -c stack -n "__fish_seen_subcommand_from test" -l "no-reconfigure" -d "Enable/disable Perform the configure step even if unnecessary."
+complete -c stack -n "__fish_seen_subcommand_from test" -l "cabal-verbosity" -d "Cabal verbosity (accepts Cabal's numerical and extended syntax)" -x
 complete -c stack -n "__fish_seen_subcommand_from test" -l "cabal-verbose" -d "Enable/disable Ask Cabal to be verbose in its output (default: disabled)"
 complete -c stack -n "__fish_seen_subcommand_from test" -l "no-cabal-verbose" -d "Enable/disable Ask Cabal to be verbose in its output (default: disabled)"
 complete -c stack -n "__fish_seen_subcommand_from test" -l "split-objs" -d "Enable/disable Enable split-objs, to reduce output size (at the cost of build time)."
 complete -c stack -n "__fish_seen_subcommand_from test" -l "no-split-objs" -d "Enable/disable Enable split-objs, to reduce output size (at the cost of build time)."
-complete -c stack -n "__fish_seen_subcommand_from test" -l "skip" -d "Skip given component, can be specified multiple times" -x
+complete -c stack -n "__fish_seen_subcommand_from test" -l "skip" -d "Skip given component (can be specified multiple times)" -x
 complete -c stack -n "__fish_seen_subcommand_from test" -l "interleaved-output" -d "Enable/disable Print concurrent GHC output to the console with a prefix for the package name (default: enabled)"
 complete -c stack -n "__fish_seen_subcommand_from test" -l "no-interleaved-output" -d "Enable/disable Print concurrent GHC output to the console with a prefix for the package name (default: enabled)"
 complete -c stack -n "__fish_seen_subcommand_from test" -l "ddump-dir" -d "Specify output ddump-files" -r
@@ -387,11 +394,12 @@ complete -c stack -n "__fish_seen_subcommand_from bench" -l "ba" -l "benchmark-a
 complete -c stack -n "__fish_seen_subcommand_from bench" -l "no-run-benchmarks" -d "Disable running of benchmarks."
 complete -c stack -n "__fish_seen_subcommand_from bench" -l "reconfigure" -d "Enable/disable Perform the configure step even if unnecessary."
 complete -c stack -n "__fish_seen_subcommand_from bench" -l "no-reconfigure" -d "Enable/disable Perform the configure step even if unnecessary."
+complete -c stack -n "__fish_seen_subcommand_from bench" -l "cabal-verbosity" -d "Cabal verbosity (accepts Cabal's numerical and extended syntax)" -x
 complete -c stack -n "__fish_seen_subcommand_from bench" -l "cabal-verbose" -d "Enable/disable Ask Cabal to be verbose in its output (default: disabled)"
 complete -c stack -n "__fish_seen_subcommand_from bench" -l "no-cabal-verbose" -d "Enable/disable Ask Cabal to be verbose in its output (default: disabled)"
 complete -c stack -n "__fish_seen_subcommand_from bench" -l "split-objs" -d "Enable/disable Enable split-objs, to reduce output size (at the cost of build time)."
 complete -c stack -n "__fish_seen_subcommand_from bench" -l "no-split-objs" -d "Enable/disable Enable split-objs, to reduce output size (at the cost of build time)."
-complete -c stack -n "__fish_seen_subcommand_from bench" -l "skip" -d "Skip given component, can be specified multiple times" -x
+complete -c stack -n "__fish_seen_subcommand_from bench" -l "skip" -d "Skip given component (can be specified multiple times)" -x
 complete -c stack -n "__fish_seen_subcommand_from bench" -l "interleaved-output" -d "Enable/disable Print concurrent GHC output to the console with a prefix for the package name (default: enabled)"
 complete -c stack -n "__fish_seen_subcommand_from bench" -l "no-interleaved-output" -d "Enable/disable Print concurrent GHC output to the console with a prefix for the package name (default: enabled)"
 complete -c stack -n "__fish_seen_subcommand_from bench" -l "ddump-dir" -d "Specify output ddump-files" -r
@@ -463,11 +471,12 @@ complete -c stack -n "__fish_seen_subcommand_from haddock" -l "ba" -l "benchmark
 complete -c stack -n "__fish_seen_subcommand_from haddock" -l "no-run-benchmarks" -d "Disable running of benchmarks."
 complete -c stack -n "__fish_seen_subcommand_from haddock" -l "reconfigure" -d "Enable/disable Perform the configure step even if unnecessary."
 complete -c stack -n "__fish_seen_subcommand_from haddock" -l "no-reconfigure" -d "Enable/disable Perform the configure step even if unnecessary."
+complete -c stack -n "__fish_seen_subcommand_from haddock" -l "cabal-verbosity" -d "Cabal verbosity (accepts Cabal's numerical and extended syntax)" -x
 complete -c stack -n "__fish_seen_subcommand_from haddock" -l "cabal-verbose" -d "Enable/disable Ask Cabal to be verbose in its output (default: disabled)"
 complete -c stack -n "__fish_seen_subcommand_from haddock" -l "no-cabal-verbose" -d "Enable/disable Ask Cabal to be verbose in its output (default: disabled)"
 complete -c stack -n "__fish_seen_subcommand_from haddock" -l "split-objs" -d "Enable/disable Enable split-objs, to reduce output size (at the cost of build time)."
 complete -c stack -n "__fish_seen_subcommand_from haddock" -l "no-split-objs" -d "Enable/disable Enable split-objs, to reduce output size (at the cost of build time)."
-complete -c stack -n "__fish_seen_subcommand_from haddock" -l "skip" -d "Skip given component, can be specified multiple times" -x
+complete -c stack -n "__fish_seen_subcommand_from haddock" -l "skip" -d "Skip given component (can be specified multiple times)" -x
 complete -c stack -n "__fish_seen_subcommand_from haddock" -l "interleaved-output" -d "Enable/disable Print concurrent GHC output to the console with a prefix for the package name (default: enabled)"
 complete -c stack -n "__fish_seen_subcommand_from haddock" -l "no-interleaved-output" -d "Enable/disable Print concurrent GHC output to the console with a prefix for the package name (default: enabled)"
 complete -c stack -n "__fish_seen_subcommand_from haddock" -l "ddump-dir" -d "Specify output ddump-files" -r
@@ -479,9 +488,9 @@ complete -c stack -n "__fish_seen_subcommand_from haddock" -l "help" -d "Show th
 
 complete -c stack -n "__fish_seen_subcommand_from new" -l "bare" -d "Do not create a subdirectory for the project"
 complete -c stack -n "__fish_seen_subcommand_from new" -s "p" -l "param" -d "Parameter for the template in the format key:value" -x
-complete -c stack -n "__fish_seen_subcommand_from new" -l "omit-packages" -d "Exclude conflicting or incompatible user packages"
-complete -c stack -n "__fish_seen_subcommand_from new" -l "force" -d "Force overwriting an existing stack.yaml"
-complete -c stack -n "__fish_seen_subcommand_from new" -l "ignore-subdirs" -d "Do not search for .cabal files in sub directories"
+complete -c stack -n "__fish_seen_subcommand_from new" -l "omit-packages" -d "Exclude conflicting or incompatible user packages, when initialising."
+complete -c stack -n "__fish_seen_subcommand_from new" -l "force" -d "Force an initialisation that overwrites any existing stack.yaml file."
+complete -c stack -n "__fish_seen_subcommand_from new" -l "ignore-subdirs" -d "Do not search for .cabal files in subdirectories, when initialising."
 complete -c stack -n "__fish_seen_subcommand_from new" -l "setup-info-yaml" -d "Alternate URL or relative / absolute path for stack dependencies" -r
 complete -c stack -n "__fish_seen_subcommand_from new" -l "snapshot-location-base" -d "The base location of LTS/Nightly snapshots" -x
 complete -c stack -n "__fish_seen_subcommand_from new" -l "help" -d "Show this help text"
@@ -494,9 +503,9 @@ complete -c stack -n "__fish_seen_subcommand_from templates" -l "help" -d "Show 
 
 
 
-complete -c stack -n "__fish_seen_subcommand_from init" -l "omit-packages" -d "Exclude conflicting or incompatible user packages"
-complete -c stack -n "__fish_seen_subcommand_from init" -l "force" -d "Force overwriting an existing stack.yaml"
-complete -c stack -n "__fish_seen_subcommand_from init" -l "ignore-subdirs" -d "Do not search for .cabal files in sub directories"
+complete -c stack -n "__fish_seen_subcommand_from init" -l "omit-packages" -d "Exclude conflicting or incompatible user packages, when initialising."
+complete -c stack -n "__fish_seen_subcommand_from init" -l "force" -d "Force an initialisation that overwrites any existing stack.yaml file."
+complete -c stack -n "__fish_seen_subcommand_from init" -l "ignore-subdirs" -d "Do not search for .cabal files in subdirectories, when initialising."
 complete -c stack -n "__fish_seen_subcommand_from init" -l "setup-info-yaml" -d "Alternate URL or relative / absolute path for stack dependencies" -r
 complete -c stack -n "__fish_seen_subcommand_from init" -l "snapshot-location-base" -d "The base location of LTS/Nightly snapshots" -x
 complete -c stack -n "__fish_seen_subcommand_from init" -l "help" -d "Show this help text"
@@ -519,7 +528,7 @@ complete -c stack -n "__fish_seen_subcommand_from path" -l "stack-root" -d "Glob
 complete -c stack -n "__fish_seen_subcommand_from path" -l "project-root" -d "Project root (derived from stack.yaml file)"
 complete -c stack -n "__fish_seen_subcommand_from path" -l "config-location" -d "Configuration location (where the stack.yaml file is)"
 complete -c stack -n "__fish_seen_subcommand_from path" -l "bin-path" -d "PATH environment variable"
-complete -c stack -n "__fish_seen_subcommand_from path" -l "programs" -d "Install location for GHC and other core tools"
+complete -c stack -n "__fish_seen_subcommand_from path" -l "programs" -d "Install location for GHC and other core tools (see 'stack ls tools' command)"
 complete -c stack -n "__fish_seen_subcommand_from path" -l "compiler-exe" -d "Compiler binary (e.g. ghc)"
 complete -c stack -n "__fish_seen_subcommand_from path" -l "compiler-bin" -d "Directory containing the compiler binary (e.g. ghc)"
 complete -c stack -n "__fish_seen_subcommand_from path" -l "compiler-tools-bin" -d "Directory containing binaries specific to a particular compiler (e.g. intero)"
@@ -569,8 +578,8 @@ complete -c stack -n "__fish_seen_subcommand_from upgrade" -l "source-only" -d "
 complete -c stack -n "__fish_seen_subcommand_from upgrade" -l "binary-platform" -d "Platform type for archive to download" -x
 complete -c stack -n "__fish_seen_subcommand_from upgrade" -l "force-download" -d "Download the latest available stack executable"
 complete -c stack -n "__fish_seen_subcommand_from upgrade" -l "binary-version" -d "Download a specific stack version" -x
-complete -c stack -n "__fish_seen_subcommand_from upgrade" -l "github-org" -d "Github organization name" -x
-complete -c stack -n "__fish_seen_subcommand_from upgrade" -l "github-repo" -d "Github repository name" -x
+complete -c stack -n "__fish_seen_subcommand_from upgrade" -l "github-org" -d "GitHub organization name" -x
+complete -c stack -n "__fish_seen_subcommand_from upgrade" -l "github-repo" -d "GitHub repository name" -x
 complete -c stack -n "__fish_seen_subcommand_from upgrade" -l "binary-only" -d "Do not use a source upgrade path"
 complete -c stack -n "__fish_seen_subcommand_from upgrade" -l "git" -d "Clone from Git instead of downloading from Hackage (more dangerous)"
 complete -c stack -n "__fish_seen_subcommand_from upgrade" -l "git-repo" -d "Clone from specified git repository (default: \"https://github.com/commercialhaskell/stack\")" -x
@@ -624,7 +633,7 @@ complete -c stack -n "__fish_seen_subcommand_from ghc" -l "ghc-package-path" -d 
 complete -c stack -n "__fish_seen_subcommand_from ghc" -l "no-ghc-package-path" -d "Enable/disable setting the GHC_PACKAGE_PATH variable for the subprocess (default: enabled)"
 complete -c stack -n "__fish_seen_subcommand_from ghc" -l "stack-exe" -d "Enable/disable setting the STACK_EXE environment variable to the path for the stack executable (default: enabled)"
 complete -c stack -n "__fish_seen_subcommand_from ghc" -l "no-stack-exe" -d "Enable/disable setting the STACK_EXE environment variable to the path for the stack executable (default: enabled)"
-complete -c stack -n "__fish_seen_subcommand_from ghc" -l "package" -d "Additional package(s) that must be installed" -x
+complete -c stack -n "__fish_seen_subcommand_from ghc" -l "package" -d "Add a package (can be specified multiple times)" -x
 complete -c stack -n "__fish_seen_subcommand_from ghc" -l "rts-options" -d "Explicit RTS options to pass to application" -x
 complete -c stack -n "__fish_seen_subcommand_from ghc" -l "cwd" -d "Sets the working directory before executing" -r
 complete -c stack -n "__fish_seen_subcommand_from ghc" -l "setup-info-yaml" -d "Alternate URL or relative / absolute path for stack dependencies" -r
@@ -647,7 +656,7 @@ complete -c stack -n "__fish_seen_subcommand_from exec" -l "ghc-package-path" -d
 complete -c stack -n "__fish_seen_subcommand_from exec" -l "no-ghc-package-path" -d "Enable/disable setting the GHC_PACKAGE_PATH variable for the subprocess (default: enabled)"
 complete -c stack -n "__fish_seen_subcommand_from exec" -l "stack-exe" -d "Enable/disable setting the STACK_EXE environment variable to the path for the stack executable (default: enabled)"
 complete -c stack -n "__fish_seen_subcommand_from exec" -l "no-stack-exe" -d "Enable/disable setting the STACK_EXE environment variable to the path for the stack executable (default: enabled)"
-complete -c stack -n "__fish_seen_subcommand_from exec" -l "package" -d "Additional package(s) that must be installed" -x
+complete -c stack -n "__fish_seen_subcommand_from exec" -l "package" -d "Add a package (can be specified multiple times)" -x
 complete -c stack -n "__fish_seen_subcommand_from exec" -l "rts-options" -d "Explicit RTS options to pass to application" -x
 complete -c stack -n "__fish_seen_subcommand_from exec" -l "cwd" -d "Sets the working directory before executing" -r
 complete -c stack -n "__fish_seen_subcommand_from exec" -l "setup-info-yaml" -d "Alternate URL or relative / absolute path for stack dependencies" -r
@@ -660,7 +669,7 @@ complete -c stack -n "__fish_seen_subcommand_from run" -l "ghc-package-path" -d 
 complete -c stack -n "__fish_seen_subcommand_from run" -l "no-ghc-package-path" -d "Enable/disable setting the GHC_PACKAGE_PATH variable for the subprocess (default: enabled)"
 complete -c stack -n "__fish_seen_subcommand_from run" -l "stack-exe" -d "Enable/disable setting the STACK_EXE environment variable to the path for the stack executable (default: enabled)"
 complete -c stack -n "__fish_seen_subcommand_from run" -l "no-stack-exe" -d "Enable/disable setting the STACK_EXE environment variable to the path for the stack executable (default: enabled)"
-complete -c stack -n "__fish_seen_subcommand_from run" -l "package" -d "Additional package(s) that must be installed" -x
+complete -c stack -n "__fish_seen_subcommand_from run" -l "package" -d "Add a package (can be specified multiple times)" -x
 complete -c stack -n "__fish_seen_subcommand_from run" -l "rts-options" -d "Explicit RTS options to pass to application" -x
 complete -c stack -n "__fish_seen_subcommand_from run" -l "cwd" -d "Sets the working directory before executing" -r
 complete -c stack -n "__fish_seen_subcommand_from run" -l "setup-info-yaml" -d "Alternate URL or relative / absolute path for stack dependencies" -r
@@ -676,7 +685,7 @@ complete -c stack -n "__fish_seen_subcommand_from ghci" -l "flag" -d "Override f
 complete -c stack -n "__fish_seen_subcommand_from ghci" -l "with-ghc" -d "Use this GHC to run GHCi" -x
 complete -c stack -n "__fish_seen_subcommand_from ghci" -l "load" -d "Enable/disable load modules on start-up (default: enabled)"
 complete -c stack -n "__fish_seen_subcommand_from ghci" -l "no-load" -d "Enable/disable load modules on start-up (default: enabled)"
-complete -c stack -n "__fish_seen_subcommand_from ghci" -l "package" -d "Additional package(s) that must be installed" -x
+complete -c stack -n "__fish_seen_subcommand_from ghci" -l "package" -d "Add a package (can be specified multiple times)" -x
 complete -c stack -n "__fish_seen_subcommand_from ghci" -l "main-is" -d "Specify which target should contain the main module to load, such as for an executable for test suite or benchmark." -x
 complete -c stack -n "__fish_seen_subcommand_from ghci" -l "load-local-deps" -d "Load all local dependencies of your targets"
 complete -c stack -n "__fish_seen_subcommand_from ghci" -l "package-hiding" -d "Enable/disable package hiding"
@@ -702,7 +711,7 @@ complete -c stack -n "__fish_seen_subcommand_from repl" -l "flag" -d "Override f
 complete -c stack -n "__fish_seen_subcommand_from repl" -l "with-ghc" -d "Use this GHC to run GHCi" -x
 complete -c stack -n "__fish_seen_subcommand_from repl" -l "load" -d "Enable/disable load modules on start-up (default: enabled)"
 complete -c stack -n "__fish_seen_subcommand_from repl" -l "no-load" -d "Enable/disable load modules on start-up (default: enabled)"
-complete -c stack -n "__fish_seen_subcommand_from repl" -l "package" -d "Additional package(s) that must be installed" -x
+complete -c stack -n "__fish_seen_subcommand_from repl" -l "package" -d "Add a package (can be specified multiple times)" -x
 complete -c stack -n "__fish_seen_subcommand_from repl" -l "main-is" -d "Specify which target should contain the main module to load, such as for an executable for test suite or benchmark." -x
 complete -c stack -n "__fish_seen_subcommand_from repl" -l "load-local-deps" -d "Load all local dependencies of your targets"
 complete -c stack -n "__fish_seen_subcommand_from repl" -l "package-hiding" -d "Enable/disable package hiding"
@@ -725,7 +734,7 @@ complete -c stack -n "__fish_seen_subcommand_from runghc" -l "ghc-package-path" 
 complete -c stack -n "__fish_seen_subcommand_from runghc" -l "no-ghc-package-path" -d "Enable/disable setting the GHC_PACKAGE_PATH variable for the subprocess (default: enabled)"
 complete -c stack -n "__fish_seen_subcommand_from runghc" -l "stack-exe" -d "Enable/disable setting the STACK_EXE environment variable to the path for the stack executable (default: enabled)"
 complete -c stack -n "__fish_seen_subcommand_from runghc" -l "no-stack-exe" -d "Enable/disable setting the STACK_EXE environment variable to the path for the stack executable (default: enabled)"
-complete -c stack -n "__fish_seen_subcommand_from runghc" -l "package" -d "Additional package(s) that must be installed" -x
+complete -c stack -n "__fish_seen_subcommand_from runghc" -l "package" -d "Add a package (can be specified multiple times)" -x
 complete -c stack -n "__fish_seen_subcommand_from runghc" -l "rts-options" -d "Explicit RTS options to pass to application" -x
 complete -c stack -n "__fish_seen_subcommand_from runghc" -l "cwd" -d "Sets the working directory before executing" -r
 complete -c stack -n "__fish_seen_subcommand_from runghc" -l "setup-info-yaml" -d "Alternate URL or relative / absolute path for stack dependencies" -r
@@ -738,7 +747,7 @@ complete -c stack -n "__fish_seen_subcommand_from runhaskell" -l "ghc-package-pa
 complete -c stack -n "__fish_seen_subcommand_from runhaskell" -l "no-ghc-package-path" -d "Enable/disable setting the GHC_PACKAGE_PATH variable for the subprocess (default: enabled)"
 complete -c stack -n "__fish_seen_subcommand_from runhaskell" -l "stack-exe" -d "Enable/disable setting the STACK_EXE environment variable to the path for the stack executable (default: enabled)"
 complete -c stack -n "__fish_seen_subcommand_from runhaskell" -l "no-stack-exe" -d "Enable/disable setting the STACK_EXE environment variable to the path for the stack executable (default: enabled)"
-complete -c stack -n "__fish_seen_subcommand_from runhaskell" -l "package" -d "Additional package(s) that must be installed" -x
+complete -c stack -n "__fish_seen_subcommand_from runhaskell" -l "package" -d "Add a package (can be specified multiple times)" -x
 complete -c stack -n "__fish_seen_subcommand_from runhaskell" -l "rts-options" -d "Explicit RTS options to pass to application" -x
 complete -c stack -n "__fish_seen_subcommand_from runhaskell" -l "cwd" -d "Sets the working directory before executing" -r
 complete -c stack -n "__fish_seen_subcommand_from runhaskell" -l "setup-info-yaml" -d "Alternate URL or relative / absolute path for stack dependencies" -r
@@ -747,7 +756,7 @@ complete -c stack -n "__fish_seen_subcommand_from runhaskell" -l "help" -d "Show
 
 
 
-complete -c stack -n "__fish_seen_subcommand_from script" -l "package" -d "Additional package(s) that must be installed" -x
+complete -c stack -n "__fish_seen_subcommand_from script" -l "package" -d "Add a package (can be specified multiple times)" -x
 complete -c stack -n "__fish_seen_subcommand_from script" -l "compile" -d "Compile the script without optimization and run the executable"
 complete -c stack -n "__fish_seen_subcommand_from script" -l "optimize" -d "Compile the script with optimization and run the executable"
 complete -c stack -n "__fish_seen_subcommand_from script" -l "ghc-options" -d "Additional options passed to GHC" -x
@@ -763,7 +772,7 @@ complete -c stack -n "__fish_seen_subcommand_from eval" -l "ghc-package-path" -d
 complete -c stack -n "__fish_seen_subcommand_from eval" -l "no-ghc-package-path" -d "Enable/disable setting the GHC_PACKAGE_PATH variable for the subprocess (default: enabled)"
 complete -c stack -n "__fish_seen_subcommand_from eval" -l "stack-exe" -d "Enable/disable setting the STACK_EXE environment variable to the path for the stack executable (default: enabled)"
 complete -c stack -n "__fish_seen_subcommand_from eval" -l "no-stack-exe" -d "Enable/disable setting the STACK_EXE environment variable to the path for the stack executable (default: enabled)"
-complete -c stack -n "__fish_seen_subcommand_from eval" -l "package" -d "Additional package(s) that must be installed" -x
+complete -c stack -n "__fish_seen_subcommand_from eval" -l "package" -d "Add a package (can be specified multiple times)" -x
 complete -c stack -n "__fish_seen_subcommand_from eval" -l "rts-options" -d "Explicit RTS options to pass to application" -x
 complete -c stack -n "__fish_seen_subcommand_from eval" -l "cwd" -d "Sets the working directory before executing" -r
 complete -c stack -n "__fish_seen_subcommand_from eval" -l "setup-info-yaml" -d "Alternate URL or relative / absolute path for stack dependencies" -r

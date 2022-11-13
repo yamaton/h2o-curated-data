@@ -1,5 +1,6 @@
 name: stack
 description: stack
+usage: stack [--help] [--version] [--numeric-version] [--hpack-numeric-version] [--docker*] [--nix*] [--verbosity VERBOSITY | (-v|--verbose) | --silent] [--[no-]time-in-log] [--[no-]rsl-in-log] [--stack-root STACK-ROOT] [--work-dir WORK-DIR] [--[no-]system-ghc] [--[no-]install-ghc] [--arch ARCH] [--ghc-variant VARIANT] [--ghc-build BUILD] [-j|--jobs JOBS] [--extra-include-dirs DIR] [--extra-lib-dirs DIR] \n      [--custom-preprocessor-extensions EXT] [--with-gcc PATH-TO-GCC] \n      [--with-hpack HPACK] [--[no-]skip-ghc-check] [--[no-]skip-msys] \n      [--local-bin-path DIR] [--setup-info-yaml URL] \n      [--[no-]modify-code-page] [--[no-]allow-different-user] \n      [--[no-]dump-logs] [--color|--colour WHEN] \n      [--snapshot-location-base URL] [--[no-]script-no-run-compile] \n      [--resolver RESOLVER] [--compiler COMPILER] [--[no-]terminal] \n      [--stack-colors|--stack-colours STYLES] [--terminal-width INT] \n      [--stack-yaml STACK-YAML] [--lock-file ARG] COMMAND|FILE"
 options:
   - names:
       - --help
@@ -47,6 +48,14 @@ options:
     argument: ""
     description: 'Enable/disable inclusion of timings in logs, for the purposes of using diff with logs (default: enabled)'
   - names:
+      - --rsl-in-log
+    argument: ""
+    description: 'Enable/disable inclusion of raw snapshot layer (rsl) in logs (default: disabled)'
+  - names:
+      - --no-rsl-in-log
+    argument: ""
+    description: 'Enable/disable inclusion of raw snapshot layer (rsl) in logs (default: disabled)'
+  - names:
       - --stack-root
     argument: STACK-ROOT
     description: Absolute path to the global stack root directory (Overrides any STACK_ROOT environment variable)
@@ -77,7 +86,7 @@ options:
   - names:
       - --ghc-variant
     argument: VARIANT
-    description: Specialized GHC variant, e.g. integersimple (incompatible with --system-ghc)
+    description: Specialized GHC variant, e.g. int-native or integersimple (incompatible with --system-ghc)
   - names:
       - --ghc-build
     argument: BUILD
@@ -165,6 +174,14 @@ options:
     argument: URL
     description: The base location of LTS/Nightly snapshots
   - names:
+      - --script-no-run-compile
+    argument: ""
+    description: 'Enable/disable the use of options `--no-run --compile` with `stack script` (default: disabled)'
+  - names:
+      - --no-script-no-run-compile
+    argument: ""
+    description: 'Enable/disable the use of options `--no-run --compile` with `stack script` (default: disabled)'
+  - names:
       - --resolver
     argument: RESOLVER
     description: Override resolver in project file
@@ -204,6 +221,7 @@ options:
 subcommands:
   - name: build
     description: Build the package(s) in this directory/configuration
+    usage: "stack build [TARGET] [--dry-run] [--pedantic] [--fast] [--ghc-options OPTIONS] [--flag PACKAGE:[-]FLAG] [--dependencies-only | --only-snapshot | \n              --only-dependencies | --only-locals] [--file-watch | --file-watch-poll] [--watch-all] [--exec COMMAND [ARGUMENT(S)]] [--only-configure] [--trace] [--profile] [--no-strip] [--[no-]library-profiling] [--[no-]executable-profiling] [--[no-]library-stripping] [--[no-]executable-stripping] [--[no-]haddock] [--haddock-arguments HADDOCK_ARGS] [--[no-]open] [--[no-]haddock-deps] [--[no-]haddock-internal] [--[no-]haddock-hyperlink-source] [--[no-]copy-bins] [--[no-]copy-compiler-tool] [--[no-]prefetch] [--[no-]keep-going] [--[no-]keep-tmp-files] [--[no-]force-dirty] [--[no-]test] [--[no-]rerun-tests] [--ta|--test-arguments TEST_ARGS] [--coverage] [--no-run-tests] [--test-suite-timeout ARG] [--[no-]bench] [--ba|--benchmark-arguments BENCH_ARGS] [--no-run-benchmarks]\n            [--[no-]reconfigure] [--cabal-verbosity VERBOSITY | --[no-]cabal-verbose] [--[no-]split-objs] [--skip ARG] [--[no-]interleaved-output] [--ddump-dir ARG] [--setup-info-yaml URL] [--snapshot-location-base URL] [--help]"
     options:
       - names:
           - --dry-run
@@ -456,6 +474,10 @@ subcommands:
         argument: ""
         description: 'Enable/disable Perform the configure step even if unnecessary. Useful in some corner cases with custom Setup.hs files (default: disabled)'
       - names:
+          - --cabal-verbosity
+        argument: VERBOSITY
+        description: Cabal verbosity (accepts Cabal's numerical and extended syntax)
+      - names:
           - --cabal-verbose
         argument: ""
         description: 'Enable/disable Ask Cabal to be verbose in its output (default: disabled)'
@@ -474,7 +496,7 @@ subcommands:
       - names:
           - --skip
         argument: ARG
-        description: Skip given component, can be specified multiple times
+        description: Skip given component (can be specified multiple times)
       - names:
           - --interleaved-output
         argument: ""
@@ -501,6 +523,7 @@ subcommands:
         description: Show this help text
   - name: install
     description: Shortcut for 'build --copy-bins'
+    usage: "stack install [TARGET] [--dry-run] [--pedantic] [--fast] \n              [--ghc-options OPTIONS] [--flag PACKAGE:[-]FLAG] \n              [--dependencies-only | --only-snapshot | \n                --only-dependencies | --only-locals] \n              [--file-watch | --file-watch-poll] [--watch-all] \n              [--exec COMMAND [ARGUMENT(S)]] [--only-configure] [--trace]\n              [--profile] [--no-strip] [--[no-]library-profiling] \n              [--[no-]executable-profiling] [--[no-]library-stripping] \n              [--[no-]executable-stripping] [--[no-]haddock] \n              [--haddock-arguments HADDOCK_ARGS] [--[no-]open] \n              [--[no-]haddock-deps] [--[no-]haddock-internal] \n              [--[no-]haddock-hyperlink-source] [--[no-]copy-bins] \n              [--[no-]copy-compiler-tool] [--[no-]prefetch] \n              [--[no-]keep-going] [--[no-]keep-tmp-files] \n              [--[no-]force-dirty] [--[no-]test] [--[no-]rerun-tests] \n              [--ta|--test-arguments TEST_ARGS] [--coverage] \n              [--no-run-tests] [--test-suite-timeout ARG] [--[no-]bench] \n              [--ba|--benchmark-arguments BENCH_ARGS] \n              [--no-run-benchmarks] [--[no-]reconfigure] \n              [--cabal-verbosity VERBOSITY | --[no-]cabal-verbose] \n              [--[no-]split-objs] [--skip ARG] \n              [--[no-]interleaved-output] [--ddump-dir ARG] \n              [--setup-info-yaml URL] [--snapshot-location-base URL] \n              [--help]"
     options:
       - names:
           - --dry-run
@@ -753,6 +776,10 @@ subcommands:
         argument: ""
         description: 'Enable/disable Perform the configure step even if unnecessary. Useful in some corner cases with custom Setup.hs files (default: disabled)'
       - names:
+          - --cabal-verbosity
+        argument: VERBOSITY
+        description: Cabal verbosity (accepts Cabal's numerical and extended syntax)
+      - names:
           - --cabal-verbose
         argument: ""
         description: 'Enable/disable Ask Cabal to be verbose in its output (default: disabled)'
@@ -771,7 +798,7 @@ subcommands:
       - names:
           - --skip
         argument: ARG
-        description: Skip given component, can be specified multiple times
+        description: Skip given component (can be specified multiple times)
       - names:
           - --interleaved-output
         argument: ""
@@ -797,7 +824,8 @@ subcommands:
         argument: ""
         description: Show this help text
   - name: uninstall
-    description: 'DEPRECATED: This command performs no actions, and is'
+    description: Show how to uninstall Stack. This command does not
+    usage: "stack uninstall [--setup-info-yaml URL] [--snapshot-location-base URL] \n                [--help]"
     options:
       - names:
           - --setup-info-yaml
@@ -813,6 +841,7 @@ subcommands:
         description: Show this help text
   - name: test
     description: Shortcut for 'build --test'
+    usage: "stack test [TARGET] [--dry-run] [--pedantic] [--fast] \n           [--ghc-options OPTIONS] [--flag PACKAGE:[-]FLAG] \n           [--dependencies-only | --only-snapshot | --only-dependencies |\n             --only-locals] [--file-watch | --file-watch-poll] \n           [--watch-all] [--exec COMMAND [ARGUMENT(S)]] \n           [--only-configure] [--trace] [--profile] [--no-strip] \n           [--[no-]library-profiling] [--[no-]executable-profiling] \n           [--[no-]library-stripping] [--[no-]executable-stripping] \n           [--[no-]haddock] [--haddock-arguments HADDOCK_ARGS] \n           [--[no-]open] [--[no-]haddock-deps] [--[no-]haddock-internal] \n           [--[no-]haddock-hyperlink-source] [--[no-]copy-bins] \n           [--[no-]copy-compiler-tool] [--[no-]prefetch] \n           [--[no-]keep-going] [--[no-]keep-tmp-files] \n           [--[no-]force-dirty] [--[no-]test] [--[no-]rerun-tests] \n           [--ta|--test-arguments TEST_ARGS] [--coverage] \n           [--no-run-tests] [--test-suite-timeout ARG] [--[no-]bench] \n           [--ba|--benchmark-arguments BENCH_ARGS] [--no-run-benchmarks] \n           [--[no-]reconfigure] \n           [--cabal-verbosity VERBOSITY | --[no-]cabal-verbose] \n           [--[no-]split-objs] [--skip ARG] [--[no-]interleaved-output] \n           [--ddump-dir ARG] [--setup-info-yaml URL] \n           [--snapshot-location-base URL] [--help]"
     options:
       - names:
           - --dry-run
@@ -1065,6 +1094,10 @@ subcommands:
         argument: ""
         description: 'Enable/disable Perform the configure step even if unnecessary. Useful in some corner cases with custom Setup.hs files (default: disabled)'
       - names:
+          - --cabal-verbosity
+        argument: VERBOSITY
+        description: Cabal verbosity (accepts Cabal's numerical and extended syntax)
+      - names:
           - --cabal-verbose
         argument: ""
         description: 'Enable/disable Ask Cabal to be verbose in its output (default: disabled)'
@@ -1083,7 +1116,7 @@ subcommands:
       - names:
           - --skip
         argument: ARG
-        description: Skip given component, can be specified multiple times
+        description: Skip given component (can be specified multiple times)
       - names:
           - --interleaved-output
         argument: ""
@@ -1110,6 +1143,7 @@ subcommands:
         description: Show this help text
   - name: bench
     description: Shortcut for 'build --bench'
+    usage: "stack bench [TARGET] [--dry-run] [--pedantic] [--fast] [--ghc-options OPTIONS] [--flag PACKAGE:[-]FLAG] [--dependencies-only | --only-snapshot | \n              --only-dependencies | --only-locals] [--file-watch | --file-watch-poll] [--watch-all] [--exec COMMAND [ARGUMENT(S)]] [--only-configure] [--trace] [--profile] [--no-strip] [--[no-]library-profiling] [--[no-]executable-profiling] [--[no-]library-stripping] [--[no-]executable-stripping] [--[no-]haddock] [--haddock-arguments HADDOCK_ARGS] [--[no-]open] [--[no-]haddock-deps] [--[no-]haddock-internal] [--[no-]haddock-hyperlink-source] [--[no-]copy-bins] [--[no-]copy-compiler-tool] [--[no-]prefetch] [--[no-]keep-going] [--[no-]keep-tmp-files] [--[no-]force-dirty] [--[no-]test] [--[no-]rerun-tests] [--ta|--test-arguments TEST_ARGS] [--coverage] [--no-run-tests] [--test-suite-timeout ARG] [--[no-]bench] [--ba|--benchmark-arguments BENCH_ARGS] [--no-run-benchmarks]\n            [--[no-]reconfigure] [--cabal-verbosity VERBOSITY | --[no-]cabal-verbose] [--[no-]split-objs] [--skip ARG] [--[no-]interleaved-output] [--ddump-dir ARG] [--setup-info-yaml URL] [--snapshot-location-base URL] [--help]"
     options:
       - names:
           - --dry-run
@@ -1362,6 +1396,10 @@ subcommands:
         argument: ""
         description: 'Enable/disable Perform the configure step even if unnecessary. Useful in some corner cases with custom Setup.hs files (default: disabled)'
       - names:
+          - --cabal-verbosity
+        argument: VERBOSITY
+        description: Cabal verbosity (accepts Cabal's numerical and extended syntax)
+      - names:
           - --cabal-verbose
         argument: ""
         description: 'Enable/disable Ask Cabal to be verbose in its output (default: disabled)'
@@ -1380,7 +1418,7 @@ subcommands:
       - names:
           - --skip
         argument: ARG
-        description: Skip given component, can be specified multiple times
+        description: Skip given component (can be specified multiple times)
       - names:
           - --interleaved-output
         argument: ""
@@ -1407,6 +1445,7 @@ subcommands:
         description: Show this help text
   - name: haddock
     description: Shortcut for 'build --haddock'
+    usage: "stack haddock [TARGET] [--dry-run] [--pedantic] [--fast] \n              [--ghc-options OPTIONS] [--flag PACKAGE:[-]FLAG] \n              [--dependencies-only | --only-snapshot | \n                --only-dependencies | --only-locals] \n              [--file-watch | --file-watch-poll] [--watch-all] \n              [--exec COMMAND [ARGUMENT(S)]] [--only-configure] [--trace]\n              [--profile] [--no-strip] [--[no-]library-profiling] \n              [--[no-]executable-profiling] [--[no-]library-stripping] \n              [--[no-]executable-stripping] [--[no-]haddock] \n              [--haddock-arguments HADDOCK_ARGS] [--[no-]open] \n              [--[no-]haddock-deps] [--[no-]haddock-internal] \n              [--[no-]haddock-hyperlink-source] [--[no-]copy-bins] \n              [--[no-]copy-compiler-tool] [--[no-]prefetch] \n              [--[no-]keep-going] [--[no-]keep-tmp-files] \n              [--[no-]force-dirty] [--[no-]test] [--[no-]rerun-tests] \n              [--ta|--test-arguments TEST_ARGS] [--coverage] \n              [--no-run-tests] [--test-suite-timeout ARG] [--[no-]bench] \n              [--ba|--benchmark-arguments BENCH_ARGS] \n              [--no-run-benchmarks] [--[no-]reconfigure] \n              [--cabal-verbosity VERBOSITY | --[no-]cabal-verbose] \n              [--[no-]split-objs] [--skip ARG] \n              [--[no-]interleaved-output] [--ddump-dir ARG] \n              [--setup-info-yaml URL] [--snapshot-location-base URL] \n              [--help]"
     options:
       - names:
           - --dry-run
@@ -1659,6 +1698,10 @@ subcommands:
         argument: ""
         description: 'Enable/disable Perform the configure step even if unnecessary. Useful in some corner cases with custom Setup.hs files (default: disabled)'
       - names:
+          - --cabal-verbosity
+        argument: VERBOSITY
+        description: Cabal verbosity (accepts Cabal's numerical and extended syntax)
+      - names:
           - --cabal-verbose
         argument: ""
         description: 'Enable/disable Ask Cabal to be verbose in its output (default: disabled)'
@@ -1677,7 +1720,7 @@ subcommands:
       - names:
           - --skip
         argument: ARG
-        description: Skip given component, can be specified multiple times
+        description: Skip given component (can be specified multiple times)
       - names:
           - --interleaved-output
         argument: ""
@@ -1704,6 +1747,7 @@ subcommands:
         description: Show this help text
   - name: new
     description: Create a new project from a template. Run `stack
+    usage: "stack new PACKAGE_NAME [--bare] [TEMPLATE_NAME] [-p|--param KEY:VALUE] \n          [DIR(S)] [--omit-packages] [--force] [--ignore-subdirs] \n          [--setup-info-yaml URL] [--snapshot-location-base URL] [--help]"
     options:
       - names:
           - --bare
@@ -1717,15 +1761,15 @@ subcommands:
       - names:
           - --omit-packages
         argument: ""
-        description: Exclude conflicting or incompatible user packages
+        description: Exclude conflicting or incompatible user packages, when initialising.
       - names:
           - --force
         argument: ""
-        description: Force overwriting an existing stack.yaml
+        description: Force an initialisation that overwrites any existing stack.yaml file.
       - names:
           - --ignore-subdirs
         argument: ""
-        description: Do not search for .cabal files in sub directories
+        description: Do not search for .cabal files in subdirectories, when initialising.
       - names:
           - --setup-info-yaml
         argument: URL
@@ -1740,6 +1784,7 @@ subcommands:
         description: Show this help text
   - name: templates
     description: Show how to find templates available for `stack new'.
+    usage: "stack templates [--setup-info-yaml URL] [--snapshot-location-base URL] \n                [--help]"
     options:
       - names:
           - --setup-info-yaml
@@ -1755,19 +1800,20 @@ subcommands:
         description: Show this help text
   - name: init
     description: Create stack project config from cabal or hpack
+    usage: "stack init [DIR(S)] [--omit-packages] [--force] [--ignore-subdirs] \n           [--setup-info-yaml URL] [--snapshot-location-base URL] \n           [--help]"
     options:
       - names:
           - --omit-packages
         argument: ""
-        description: Exclude conflicting or incompatible user packages
+        description: Exclude conflicting or incompatible user packages, when initialising.
       - names:
           - --force
         argument: ""
-        description: Force overwriting an existing stack.yaml
+        description: Force an initialisation that overwrites any existing stack.yaml file.
       - names:
           - --ignore-subdirs
         argument: ""
-        description: Do not search for .cabal files in sub directories
+        description: Do not search for .cabal files in subdirectories, when initialising.
       - names:
           - --setup-info-yaml
         argument: URL
@@ -1782,6 +1828,7 @@ subcommands:
         description: Show this help text
   - name: setup
     description: Get the appropriate GHC for your project
+    usage: "stack setup [GHC_VERSION] [--[no-]reinstall] [--ghc-bindist URL] [--ghcjs-boot-options GHCJS_BOOT] [--[no-]ghcjs-boot-clean] [--setup-info-yaml URL] [--snapshot-location-base URL] [--help]"
     options:
       - names:
           - --reinstall
@@ -1821,6 +1868,7 @@ subcommands:
         description: Show this help text
   - name: path
     description: Print out handy path information
+    usage: "stack path [--stack-root] [--project-root] [--config-location] \n           [--bin-path] [--programs] [--compiler-exe] [--compiler-bin] \n           [--compiler-tools-bin] [--local-bin] [--extra-include-dirs] \n           [--extra-library-dirs] [--snapshot-pkg-db] [--local-pkg-db] \n           [--global-pkg-db] [--ghc-package-path] \n           [--snapshot-install-root] [--local-install-root] \n           [--snapshot-doc-root] [--local-doc-root] [--local-hoogle-root]\n           [--dist-dir] [--local-hpc-root] [--local-bin-path] \n           [--ghc-paths] [--global-stack-root] [--setup-info-yaml URL] \n           [--snapshot-location-base URL] [--help]"
     options:
       - names:
           - --stack-root
@@ -1841,7 +1889,7 @@ subcommands:
       - names:
           - --programs
         argument: ""
-        description: Install location for GHC and other core tools
+        description: Install location for GHC and other core tools (see 'stack ls tools' command)
       - names:
           - --compiler-exe
         argument: ""
@@ -1935,7 +1983,8 @@ subcommands:
         argument: ""
         description: Show this help text
   - name: ls
-    description: List command. (Supports snapshots, dependencies and
+    description: List command. (Supports snapshots, dependencies,
+    usage: "stack ls COMMAND [--setup-info-yaml URL] [--snapshot-location-base URL] \n         [--help]"
     options:
       - names:
           - --setup-info-yaml
@@ -1951,7 +2000,8 @@ subcommands:
         description: Show this help text
     subcommands:
       - name: snapshots
-        description: View local snapshot (default option)
+        description: View snapshots (local by default)
+        usage: stack ls snapshots [COMMAND] [-l|--lts] [-n|--nightly]
         options:
           - names:
               - -l
@@ -1970,13 +2020,26 @@ subcommands:
             description: Show this help text
         subcommands:
           - name: remote
-            description: View remote snapshot
-            options: []
+            description: View remote snapshots
+            usage: stack ls snapshots remote
+            options:
+              - names:
+                  - -h
+                  - --help
+                argument: ""
+                description: Show this help text
           - name: local
-            description: View local snapshot
-            options: []
+            description: View local snapshots
+            usage: stack ls snapshots local
+            options:
+              - names:
+                  - -h
+                  - --help
+                argument: ""
+                description: Show this help text
       - name: dependencies
         description: View the dependencies
+        usage: "stack ls dependencies [COMMAND | [--separator SEP] [--[no-]license] \n                        [--[no-]external] [--[no-]include-base] \n                        [--depth DEPTH] [--prune PACKAGES] [TARGET] \n                        [--flag PACKAGE:[-]FLAG] [--test] [--bench] \n                        [--global-hints]]"
         options:
           - names:
               - --separator
@@ -2037,6 +2100,7 @@ subcommands:
             description: Show this help text
       - name: stack-colors
         description: View stack's output styles
+        usage: stack ls stack-colors [--[no-]basic] [--[no-]sgr] [--[no-]example]
         options:
           - names:
               - --basic
@@ -2069,6 +2133,7 @@ subcommands:
             description: Show this help text
       - name: stack-colours
         description: View stack's output styles (alias for 'stack-colors')
+        usage: stack ls stack-colours [--[no-]basic] [--[no-]sgr] [--[no-]example]
         options:
           - names:
               - --basic
@@ -2099,8 +2164,22 @@ subcommands:
               - --help
             argument: ""
             description: Show this help text
+      - name: tools
+        description: View stack's installed tools
+        usage: stack ls tools [--filter TOOL_NAME]
+        options:
+          - names:
+              - --filter
+            argument: TOOL_NAME
+            description: Filter by a tool name (eg 'ghc', 'ghc-git' or 'msys2') - case sensitive. The default is no filter
+          - names:
+              - -h
+              - --help
+            argument: ""
+            description: Show this help text
   - name: unpack
     description: Unpack one or more packages locally
+    usage: "stack unpack PACKAGE [--to ARG] [--setup-info-yaml URL] \n             [--snapshot-location-base URL] [--help]"
     options:
       - names:
           - --to
@@ -2120,6 +2199,7 @@ subcommands:
         description: Show this help text
   - name: update
     description: Update the package index
+    usage: "stack update [--setup-info-yaml URL] [--snapshot-location-base URL] \n             [--help]"
     options:
       - names:
           - --setup-info-yaml
@@ -2135,6 +2215,7 @@ subcommands:
         description: Show this help text
   - name: upgrade
     description: Upgrade to the latest stack
+    usage: "stack upgrade [--source-only | [--binary-platform ARG] [--force-download]\n                [--binary-version ARG] [--github-org ARG] \n                [--github-repo ARG]] \n              [--binary-only | [--git] [--git-repo ARG] \n                [--git-branch ARG]] [--setup-info-yaml URL] \n              [--snapshot-location-base URL] [--help]"
     options:
       - names:
           - --source-only
@@ -2155,11 +2236,11 @@ subcommands:
       - names:
           - --github-org
         argument: ARG
-        description: Github organization name
+        description: GitHub organization name
       - names:
           - --github-repo
         argument: ARG
-        description: Github repository name
+        description: GitHub repository name
       - names:
           - --binary-only
         argument: ""
@@ -2190,6 +2271,7 @@ subcommands:
         description: Show this help text
   - name: upload
     description: Upload a package to Hackage
+    usage: "stack upload [DIR] [--pvp-bounds PVP-BOUNDS] [--ignore-check] \n             [--[no-]test-tarball] [--tar-dir ARG] [--candidate] \n             [--setup-info-yaml URL] [--snapshot-location-base URL] \n             [--help]"
     options:
       - names:
           - --pvp-bounds
@@ -2229,6 +2311,7 @@ subcommands:
         description: Show this help text
   - name: sdist
     description: Create source distribution tarballs
+    usage: "stack sdist [DIR] [--pvp-bounds PVP-BOUNDS] [--ignore-check] [--[no-]test-tarball] [--tar-dir ARG] [--setup-info-yaml URL]\n            [--snapshot-location-base URL] [--help]"
     options:
       - names:
           - --pvp-bounds
@@ -2264,6 +2347,7 @@ subcommands:
         description: Show this help text
   - name: dot
     description: Visualize your project's dependency graph using
+    usage: "stack dot [--[no-]external] [--[no-]include-base] [--depth DEPTH] \n          [--prune PACKAGES] [TARGET] [--flag PACKAGE:[-]FLAG] [--test] \n          [--bench] [--global-hints] [--setup-info-yaml URL] \n          [--snapshot-location-base URL] [--help]"
     options:
       - names:
           - --external
@@ -2319,6 +2403,7 @@ subcommands:
         description: Show this help text
   - name: ghc
     description: Run ghc
+    usage: "stack ghc [-- ARGUMENT(S) (e.g. stack runghc -- X.hs -o x)] \n          [--[no-]ghc-package-path] [--[no-]stack-exe] \n          [--package PACKAGE] [--rts-options RTSFLAG] [--cwd DIR] \n          [--setup-info-yaml URL] [--snapshot-location-base URL] [--help]"
     options:
       - names:
           - --ghc-package-path
@@ -2338,8 +2423,8 @@ subcommands:
         description: 'Enable/disable setting the STACK_EXE environment variable to the path for the stack executable (default: enabled)'
       - names:
           - --package
-        argument: PACKAGE(S)
-        description: Additional package(s) that must be installed
+        argument: PACKAGE
+        description: Add a package (can be specified multiple times)
       - names:
           - --rts-options
         argument: RTSFLAG
@@ -2362,6 +2447,7 @@ subcommands:
         description: Show this help text
   - name: hoogle
     description: Run hoogle, the Haskell API search engine. Use the
+    usage: "stack hoogle [-- ARGUMENT(S) (e.g. stack hoogle -- server --local)] \n             [--[no-]setup] [--rebuild] [--server] \n             [--setup-info-yaml URL] [--snapshot-location-base URL] \n             [--help]"
     options:
       - names:
           - --setup
@@ -2393,6 +2479,7 @@ subcommands:
         description: Show this help text
   - name: exec
     description: Execute a command. If the command is absent, the
+    usage: "stack exec COMMAND \n           [-- ARGUMENT(S) (e.g. stack exec ghc-pkg -- describe base)] \n           [--[no-]ghc-package-path] [--[no-]stack-exe] \n           [--package PACKAGE] [--rts-options RTSFLAG] [--cwd DIR] \n           [--setup-info-yaml URL] [--snapshot-location-base URL] \n           [--help]"
     options:
       - names:
           - --ghc-package-path
@@ -2412,8 +2499,8 @@ subcommands:
         description: 'Enable/disable setting the STACK_EXE environment variable to the path for the stack executable (default: enabled)'
       - names:
           - --package
-        argument: PACKAGE(S)
-        description: Additional package(s) that must be installed
+        argument: PACKAGE
+        description: Add a package (can be specified multiple times)
       - names:
           - --rts-options
         argument: RTSFLAG
@@ -2436,6 +2523,7 @@ subcommands:
         description: Show this help text
   - name: run
     description: Build and run an executable. Defaults to the first
+    usage: "stack run [-- ARGUMENT(S) (e.g. stack run -- file.txt)] \n          [--[no-]ghc-package-path] [--[no-]stack-exe] \n          [--package PACKAGE] [--rts-options RTSFLAG] [--cwd DIR] \n          [--setup-info-yaml URL] [--snapshot-location-base URL] [--help]"
     options:
       - names:
           - --ghc-package-path
@@ -2455,8 +2543,8 @@ subcommands:
         description: 'Enable/disable setting the STACK_EXE environment variable to the path for the stack executable (default: enabled)'
       - names:
           - --package
-        argument: PACKAGE(S)
-        description: Additional package(s) that must be installed
+        argument: PACKAGE
+        description: Add a package (can be specified multiple times)
       - names:
           - --rts-options
         argument: RTSFLAG
@@ -2479,6 +2567,7 @@ subcommands:
         description: Show this help text
   - name: ghci
     description: Run ghci in the context of package(s) (experimental)
+    usage: "stack ghci [TARGET/FILE] [--pedantic] [--ghci-options OPTIONS] \n           [--ghc-options OPTIONS] [--flag PACKAGE:[-]FLAG] \n           [--with-ghc GHC] [--[no-]load] [--package PACKAGE] \n           [--main-is TARGET] [--load-local-deps] [--[no-]package-hiding]\n           [--only-main] [--trace] [--profile] [--no-strip] [--[no-]test]\n           [--[no-]bench] [--setup-info-yaml URL] \n           [--snapshot-location-base URL] [--help]"
     options:
       - names:
           - --pedantic
@@ -2510,8 +2599,8 @@ subcommands:
         description: 'Enable/disable load modules on start-up (default: enabled)'
       - names:
           - --package
-        argument: PACKAGE(S)
-        description: Additional package(s) that must be installed
+        argument: PACKAGE
+        description: Add a package (can be specified multiple times)
       - names:
           - --main-is
         argument: TARGET
@@ -2574,6 +2663,7 @@ subcommands:
         description: Show this help text
   - name: repl
     description: Run ghci in the context of package(s) (experimental)
+    usage: "stack repl [TARGET/FILE] [--pedantic] [--ghci-options OPTIONS] \n           [--ghc-options OPTIONS] [--flag PACKAGE:[-]FLAG] \n           [--with-ghc GHC] [--[no-]load] [--package PACKAGE] \n           [--main-is TARGET] [--load-local-deps] [--[no-]package-hiding]\n           [--only-main] [--trace] [--profile] [--no-strip] [--[no-]test]\n           [--[no-]bench] [--setup-info-yaml URL] \n           [--snapshot-location-base URL] [--help]"
     options:
       - names:
           - --pedantic
@@ -2605,8 +2695,8 @@ subcommands:
         description: 'Enable/disable load modules on start-up (default: enabled)'
       - names:
           - --package
-        argument: PACKAGE(S)
-        description: Additional package(s) that must be installed
+        argument: PACKAGE
+        description: Add a package (can be specified multiple times)
       - names:
           - --main-is
         argument: TARGET
@@ -2669,6 +2759,7 @@ subcommands:
         description: Show this help text
   - name: runghc
     description: Run runghc
+    usage: "stack runghc [-- ARGUMENT(S) (e.g. stack runghc -- X.hs)] \n             [--[no-]ghc-package-path] [--[no-]stack-exe] \n             [--package PACKAGE] [--rts-options RTSFLAG] [--cwd DIR] \n             [--setup-info-yaml URL] [--snapshot-location-base URL] \n             [--help]"
     options:
       - names:
           - --ghc-package-path
@@ -2688,8 +2779,8 @@ subcommands:
         description: 'Enable/disable setting the STACK_EXE environment variable to the path for the stack executable (default: enabled)'
       - names:
           - --package
-        argument: PACKAGE(S)
-        description: Additional package(s) that must be installed
+        argument: PACKAGE
+        description: Add a package (can be specified multiple times)
       - names:
           - --rts-options
         argument: RTSFLAG
@@ -2712,6 +2803,7 @@ subcommands:
         description: Show this help text
   - name: runhaskell
     description: Run runghc (alias for 'runghc')
+    usage: "stack runhaskell [-- ARGUMENT(S) (e.g. stack runghc -- X.hs)] \n                 [--[no-]ghc-package-path] [--[no-]stack-exe] \n                 [--package PACKAGE] [--rts-options RTSFLAG] [--cwd DIR] \n                 [--setup-info-yaml URL] [--snapshot-location-base URL] \n                 [--help]"
     options:
       - names:
           - --ghc-package-path
@@ -2731,8 +2823,8 @@ subcommands:
         description: 'Enable/disable setting the STACK_EXE environment variable to the path for the stack executable (default: enabled)'
       - names:
           - --package
-        argument: PACKAGE(S)
-        description: Additional package(s) that must be installed
+        argument: PACKAGE
+        description: Add a package (can be specified multiple times)
       - names:
           - --rts-options
         argument: RTSFLAG
@@ -2755,11 +2847,12 @@ subcommands:
         description: Show this help text
   - name: script
     description: Run a Stack Script
+    usage: "stack script [--package PACKAGE] FILE \n             [-- ARGUMENT(S) (e.g. stack script X.hs -- argument(s) to program)]\n             [--compile | --optimize] [--ghc-options OPTIONS] \n             [--extra-dep PACKAGE-VERSION] [--no-run] \n             [--setup-info-yaml URL] [--snapshot-location-base URL] \n             [--help]"
     options:
       - names:
           - --package
-        argument: PACKAGE(S)
-        description: Additional package(s) that must be installed
+        argument: PACKAGE
+        description: Add a package (can be specified multiple times)
       - names:
           - --compile
         argument: ""
@@ -2794,6 +2887,7 @@ subcommands:
         description: Show this help text
   - name: eval
     description: Evaluate some haskell code inline. Shortcut for
+    usage: "stack eval CODE [--[no-]ghc-package-path] [--[no-]stack-exe] \n           [--package PACKAGE] [--rts-options RTSFLAG] [--cwd DIR] \n           [--setup-info-yaml URL] [--snapshot-location-base URL] \n           [--help]"
     options:
       - names:
           - --ghc-package-path
@@ -2813,8 +2907,8 @@ subcommands:
         description: 'Enable/disable setting the STACK_EXE environment variable to the path for the stack executable (default: enabled)'
       - names:
           - --package
-        argument: PACKAGE(S)
-        description: Additional package(s) that must be installed
+        argument: PACKAGE
+        description: Add a package (can be specified multiple times)
       - names:
           - --rts-options
         argument: RTSFLAG
@@ -2837,6 +2931,7 @@ subcommands:
         description: Show this help text
   - name: clean
     description: Delete build artefacts for the project packages.
+    usage: "stack clean [[PACKAGE] | --full] [--setup-info-yaml URL] [--snapshot-location-base URL] [--help]"
     options:
       - names:
           - --full
@@ -2856,6 +2951,7 @@ subcommands:
         description: Show this help text
   - name: purge
     description: Delete the project stack working directories
+    usage: "stack purge [--setup-info-yaml URL] [--snapshot-location-base URL] [--help]"
     options:
       - names:
           - --setup-info-yaml
@@ -2871,6 +2967,7 @@ subcommands:
         description: Show this help text
   - name: query
     description: Query general build information (experimental)
+    usage: "stack query [SELECTOR...] [--setup-info-yaml URL] [--snapshot-location-base URL] [--help]"
     options:
       - names:
           - --setup-info-yaml
@@ -2886,6 +2983,7 @@ subcommands:
         description: Show this help text
   - name: list
     description: List package id's in snapshot (experimental)
+    usage: "stack list [PACKAGE] [--setup-info-yaml URL] \n           [--snapshot-location-base URL] [--help]"
     options:
       - names:
           - --setup-info-yaml
@@ -2901,6 +2999,7 @@ subcommands:
         description: Show this help text
   - name: ide
     description: IDE-specific commands
+    usage: "stack ide [--setup-info-yaml URL] [--snapshot-location-base URL] COMMAND \n          [--setup-info-yaml URL] [--snapshot-location-base URL] [--help]"
     options:
       - names:
           - --setup-info-yaml
@@ -2917,6 +3016,7 @@ subcommands:
     subcommands:
       - name: packages
         description: List all available local loadable packages
+        usage: "stack ide packages [--stdout] [--cabal-files] [--setup-info-yaml URL] \n                   [--snapshot-location-base URL] [--help]"
         options:
           - names:
               - --stdout
@@ -2940,6 +3040,7 @@ subcommands:
             description: Show this help text
       - name: targets
         description: List all available stack targets
+        usage: "stack ide targets [--stdout] [--setup-info-yaml URL] \n                  [--snapshot-location-base URL] [--help]"
         options:
           - names:
               - --stdout
@@ -2959,6 +3060,7 @@ subcommands:
             description: Show this help text
   - name: docker
     description: Subcommands specific to Docker use
+    usage: "stack docker [--setup-info-yaml URL] [--snapshot-location-base URL]\n             COMMAND [--setup-info-yaml URL] \n             [--snapshot-location-base URL] [--help]"
     options:
       - names:
           - --setup-info-yaml
@@ -2975,6 +3077,7 @@ subcommands:
     subcommands:
       - name: pull
         description: Pull latest version of Docker image from registry
+        usage: "stack docker pull [--setup-info-yaml URL] [--snapshot-location-base URL] \n                  [--help]"
         options:
           - names:
               - --setup-info-yaml
@@ -2990,6 +3093,7 @@ subcommands:
             description: Show this help text
       - name: reset
         description: Reset the Docker sandbox
+        usage: "stack docker reset [--keep-home] [--setup-info-yaml URL] \n                   [--snapshot-location-base URL] [--help]"
         options:
           - names:
               - --keep-home
@@ -3009,6 +3113,7 @@ subcommands:
             description: Show this help text
   - name: config
     description: Subcommands for accessing and modifying configuration
+    usage: "stack config [--setup-info-yaml URL] [--snapshot-location-base URL]\n             COMMAND [--setup-info-yaml URL] \n             [--snapshot-location-base URL] [--help]"
     options:
       - names:
           - --setup-info-yaml
@@ -3024,7 +3129,8 @@ subcommands:
         description: Show this help text
     subcommands:
       - name: set
-        description: Sets a field in the project's stack.yaml to value
+        description: Sets a key in YAML configuration file to value
+        usage: "stack config set COMMAND [--setup-info-yaml URL] \n                 [--snapshot-location-base URL] [--help]"
         options:
           - names:
               - --setup-info-yaml
@@ -3040,7 +3146,8 @@ subcommands:
             description: Show this help text
         subcommands:
           - name: resolver
-            description: Change the resolver of the current project. See
+            description: Change the resolver of the current project.
+            usage: stack config set resolver SNAPSHOT
             options:
               - names:
                   - -h
@@ -3048,24 +3155,26 @@ subcommands:
                 argument: ""
                 description: Show this help text
           - name: system-ghc
-            description: Configure whether stack should use a system GHC
+            description: Configure whether Stack should use a system GHC
+            usage: stack config set system-ghc [--global] true|false
             options:
               - names:
                   - --global
                 argument: ""
-                description: Modify the global configuration (typically at "~/.stack/config.yaml") instead of the project stack.yaml.
+                description: Modify the user-specific global configuration file ('config.yaml') instead of the project-level configuration file ('stack.yaml').
               - names:
                   - -h
                   - --help
                 argument: ""
                 description: Show this help text
           - name: install-ghc
-            description: Configure whether stack should automatically install
+            description: Configure whether Stack should automatically install
+            usage: stack config set install-ghc [--global] true|false
             options:
               - names:
                   - --global
                 argument: ""
-                description: Modify the global configuration (typically at "~/.stack/config.yaml") instead of the project stack.yaml.
+                description: Modify the user-specific global configuration file ('config.yaml') instead of the project-level configuration file ('stack.yaml').
               - names:
                   - -h
                   - --help
@@ -3073,6 +3182,7 @@ subcommands:
                 description: Show this help text
       - name: env
         description: Print environment variables for use in a shell
+        usage: "stack config env [--[no-]locals] [--[no-]ghc-package-path] \n                 [--[no-]stack-exe] [--[no-]locale-utf8] \n                 [--[no-]keep-ghc-rts] [--setup-info-yaml URL] \n                 [--snapshot-location-base URL] [--help]"
         options:
           - names:
               - --locals
@@ -3085,11 +3195,11 @@ subcommands:
           - names:
               - --ghc-package-path
             argument: ""
-            description: 'Enable/disable set GHC_PACKAGE_PATH variable (default: enabled)'
+            description: 'Enable/disable set GHC_PACKAGE_PATH environment variable (default: enabled)'
           - names:
               - --no-ghc-package-path
             argument: ""
-            description: 'Enable/disable set GHC_PACKAGE_PATH variable (default: enabled)'
+            description: 'Enable/disable set GHC_PACKAGE_PATH environment variable (default: enabled)'
           - names:
               - --stack-exe
             argument: ""
@@ -3101,19 +3211,19 @@ subcommands:
           - names:
               - --locale-utf8
             argument: ""
-            description: 'Enable/disable set the GHC_CHARENC environment variable to UTF8 (default: disabled)'
+            description: 'Enable/disable set the GHC_CHARENC environment variable to UTF-8 (default: disabled)'
           - names:
               - --no-locale-utf8
             argument: ""
-            description: 'Enable/disable set the GHC_CHARENC environment variable to UTF8 (default: disabled)'
+            description: 'Enable/disable set the GHC_CHARENC environment variable to UTF-8 (default: disabled)'
           - names:
               - --keep-ghc-rts
             argument: ""
-            description: 'Enable/disable keep any GHC_RTS environment variables (default: disabled)'
+            description: 'Enable/disable keep any GHCRTS environment variable (default: disabled)'
           - names:
               - --no-keep-ghc-rts
             argument: ""
-            description: 'Enable/disable keep any GHC_RTS environment variables (default: disabled)'
+            description: 'Enable/disable keep any GHCRTS environment variable (default: disabled)'
           - names:
               - --setup-info-yaml
             argument: URL
@@ -3128,6 +3238,7 @@ subcommands:
             description: Show this help text
   - name: hpc
     description: Subcommands specific to Haskell Program Coverage
+    usage: "stack hpc [--setup-info-yaml URL] [--snapshot-location-base URL] COMMAND \n          [--setup-info-yaml URL] [--snapshot-location-base URL] [--help]"
     options:
       - names:
           - --setup-info-yaml
@@ -3144,6 +3255,7 @@ subcommands:
     subcommands:
       - name: report
         description: Generate unified HPC coverage report from tix files
+        usage: "stack hpc report [TARGET_OR_TIX] [--all] [--destdir DIR] [--open] \n                 [--setup-info-yaml URL] [--snapshot-location-base URL] \n                 [--help]"
         options:
           - names:
               - --all
@@ -3169,6 +3281,7 @@ subcommands:
               - --help
             argument: ""
             description: Show this help text
+version: Version 2.9.1, Git revision 409d56031b4240221d656db09b2ba476fe6bb5b1 x86_64 hpack-0.35.0
 tldr: |
   > Tool for managing Haskell projects.
   > More information: <https://github.com/commercialhaskell/stack>.

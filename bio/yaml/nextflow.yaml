@@ -1,5 +1,6 @@
 name: nextflow
 description: A DSL for data-driven computational pipelines
+usage: nextflow [options] COMMAND [arg...]
 options:
   - names:
       - -C
@@ -18,6 +19,10 @@ options:
       - -config
     argument: ""
     description: Add the specified file to configuration set
+  - names:
+      - -config-ignore-includes
+    argument: ""
+    description: Disable the parsing of config includes
   - names:
       - -d
       - -dockerize
@@ -48,6 +53,7 @@ options:
 subcommands:
   - name: clean
     description: Clean up project cache and work directories
+    usage: nextflow clean [options]
     options:
       - names:
           - -after
@@ -88,6 +94,7 @@ subcommands:
         description: 'Do not print names of files removed Default: false'
   - name: clone
     description: Clone a project into a folder
+    usage: nextflow clone [options] name of the project to clone
     options:
       - names:
           - -h
@@ -108,6 +115,7 @@ subcommands:
         description: Private repository user name
   - name: config
     description: Print a project configuration
+    usage: nextflow config [options] project name
     options:
       - names:
           - -flat
@@ -137,6 +145,7 @@ subcommands:
         description: 'Sort config attributes Default: false'
   - name: console
     description: Launch Nextflow interactive console
+    usage: nextflow console [options] Nextflow console arguments
     options:
       - names:
           - -h
@@ -145,6 +154,7 @@ subcommands:
         description: 'Print the command usage Default: false'
   - name: drop
     description: Delete the local copy of a project
+    usage: nextflow drop [options] name of the project to drop
     options:
       - names:
           - -f
@@ -157,6 +167,7 @@ subcommands:
         description: 'Print the command usage Default: false'
   - name: help
     description: Print the usage help for a command
+    usage: nextflow help [options] command name
     options:
       - names:
           - -h
@@ -165,6 +176,7 @@ subcommands:
         description: 'Print the command usage Default: false'
   - name: info
     description: Print project and system runtime information
+    usage: nextflow info [options] project name
     options:
       - names:
           - -u
@@ -186,6 +198,7 @@ subcommands:
         description: 'Output format, either: text (default), json, yaml'
   - name: kuberun
     description: Execute a workflow in a Kubernetes cluster (experimental)
+    usage: nextflow kuberun [options] Project name or repository url
     options:
       - names:
           - -E
@@ -225,7 +238,7 @@ subcommands:
         description: 'Dump task hash keys for debugging purpose Default: false'
       - names:
           - -e.
-        argument: ""
+        argument: "key=value"
         description: 'Add the specified variable to execution environment Syntax: -e.key=value Default: {}'
       - names:
           - -entry
@@ -234,11 +247,19 @@ subcommands:
       - names:
           - -head-cpus
         argument: ""
-        description: 'Specify number of CPUs requested for the Nextflow pod Default: 0'
+        description: 'Specify number of CPUs requested for the Nextflow driver pod Default: 0'
+      - names:
+          - -head-image
+        argument: ""
+        description: Specify the container image for the Nextflow driver pod
       - names:
           - -head-memory
         argument: ""
-        description: Specify amount of memory requested for the Nextflow pod
+        description: Specify amount of memory requested for the Nextflow driver pod
+      - names:
+          - -head-prescript
+        argument: ""
+        description: Specify script to be run before nextflow run starts
       - names:
           - -h
           - -help
@@ -284,10 +305,14 @@ subcommands:
       - names:
           - -pod-image
         argument: ""
-        description: Specify the container image for the Nextflow pod
+        description: Alias for -head-image (deprecated)
+      - names:
+          - -preview
+        argument: ""
+        description: 'Run the workflow script skipping the execution of all processes Default: false'
       - names:
           - -process.
-        argument: ""
+        argument: "key=value"
         description: 'Set process options Syntax: -process.key=value Default: {}'
       - names:
           - -profile
@@ -379,6 +404,10 @@ subcommands:
         argument: ""
         description: Send workflow status messages via HTTP to target URL
       - names:
+          - -without-conda
+        argument: ""
+        description: Disable the use of Conda environments
+      - names:
           - -without-docker
         argument: ""
         description: 'Disable process execution with Docker Default: false'
@@ -393,6 +422,7 @@ subcommands:
         description: Directory where intermediate result files are stored
   - name: list
     description: List all downloaded projects
+    usage: nextflow list [options]
     options:
       - names:
           - -h
@@ -401,6 +431,7 @@ subcommands:
         description: 'Print the command usage Default: false'
   - name: log
     description: Print executions log and runtime info
+    usage: nextflow log [options]
     options:
       - names:
           - -after
@@ -450,6 +481,7 @@ subcommands:
         description: Text template used to each record in the log
   - name: pull
     description: Download or update a project
+    usage: nextflow pull [options] project name or repository url to pull
     options:
       - names:
           - -all
@@ -475,6 +507,7 @@ subcommands:
         description: Private repository user name
   - name: run
     description: Execute a pipeline project
+    usage: nextflow run [options] Project name or repository url
     options:
       - names:
           - -E
@@ -514,7 +547,7 @@ subcommands:
         description: 'Dump task hash keys for debugging purpose Default: false'
       - names:
           - -e.
-        argument: ""
+        argument: "key=vakue"
         description: 'Add the specified variable to execution environment Syntax: -e.key=value Default: {}'
       - names:
           - -entry
@@ -558,8 +591,12 @@ subcommands:
         argument: ""
         description: Specify the plugins to be applied for this run e.g. nf-amazon,nf-tower
       - names:
-          - -process.
+          - -preview
         argument: ""
+        description: 'Run the workflow script skipping the execution of all processes Default: false'
+      - names:
+          - -process.
+        argument: "key=value"
         description: 'Set process options Syntax: -process.key=value Default: {}'
       - names:
           - -profile
@@ -642,6 +679,10 @@ subcommands:
         argument: ""
         description: Send workflow status messages via HTTP to target URL
       - names:
+          - -without-conda
+        argument: ""
+        description: Disable the use of Conda environments
+      - names:
           - -without-docker
         argument: ""
         description: 'Disable process execution with Docker Default: false'
@@ -654,8 +695,13 @@ subcommands:
           - -work-dir
         argument: ""
         description: Directory where intermediate result files are stored
+  - name: secrets
+    description: Manage pipeline secrets (preview)
+    usage: nextflow secrets <sub-command> [options]
+    options: []
   - name: self-update
     description: Update nextflow runtime to the latest available version
+    usage: nextflow self-update [options]
     options:
       - names:
           - -h
@@ -664,6 +710,7 @@ subcommands:
         description: 'Print the command usage Default: false'
   - name: view
     description: View project script file(s)
+    usage: nextflow view [options] project name
     options:
       - names:
           - -h
@@ -678,7 +725,7 @@ subcommands:
           - -q
         argument: ""
         description: 'Hide header line Default: false'
-version: 'nextflow version 22.04.3.5703'
+version: nextflow version 22.10.1.5828
 tldr: |
   > Tool for running computational pipelines. Mostly used for bioinformatics workflows.
   > More information: <https://www.nextflow.io>.

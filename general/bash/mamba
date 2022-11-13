@@ -66,7 +66,7 @@ _mamba()
             return
             ;;
 
-          uninstall) _mamba_uninstall
+          rename) _mamba_rename
             return
             ;;
 
@@ -78,11 +78,19 @@ _mamba()
             return
             ;;
 
+          uninstall) _mamba_uninstall
+            return
+            ;;
+
           update) _mamba_update
             return
             ;;
 
           upgrade) _mamba_upgrade
+            return
+            ;;
+
+          notices) _mamba_notices
             return
             ;;
 
@@ -95,7 +103,7 @@ _mamba()
             ;;
 
       *)
-          word_list=" activate deactivate clean compare config create info init install list package remove uninstall run search update upgrade repoquery env -h --help -V --version"
+          word_list=" activate deactivate clean compare config create info init install list package remove rename run search uninstall update upgrade notices repoquery env -h --help -V --version"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac
@@ -145,7 +153,7 @@ _mamba_info ()
 _mamba_init ()
 {
     local cur word_list
-    word_list=" -h --help --all -d --dry-run --reverse --json -v --verbose -q --quiet" 
+    word_list=" -h --help --all -d --dry-run --user --no-user --system --reverse --json -v --verbose -q --quiet" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -182,10 +190,10 @@ _mamba_remove ()
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
 
-_mamba_uninstall ()
+_mamba_rename ()
 {
     local cur word_list
-    word_list=" -h --help --dev -n --name -p --prefix -c --channel --use-local --override-channels --repodata-fn --all --features --force-remove --force --no-pin --experimental-solver -C --use-index-cache -k --insecure --offline -d --dry-run --json -q --quiet -v --verbose -y --yes" 
+    word_list=" -h --help --force -d --dry-run -n --name -p --prefix" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -206,6 +214,14 @@ _mamba_search ()
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
 
+_mamba_uninstall ()
+{
+    local cur word_list
+    word_list=" -h --help --dev -n --name -p --prefix -c --channel --use-local --override-channels --repodata-fn --all --features --force-remove --force --no-pin --experimental-solver -C --use-index-cache -k --insecure --offline -d --dry-run --json -q --quiet -v --verbose -y --yes" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
 _mamba_update ()
 {
     local cur word_list
@@ -218,6 +234,14 @@ _mamba_upgrade ()
 {
     local cur word_list
     word_list=" -h --help --file -n --name -p --prefix -c --channel --use-local --override-channels --repodata-fn --strict-channel-priority --no-channel-priority --no-deps --only-deps --no-pin --experimental-solver --force-reinstall --freeze-installed --no-update-deps --update-deps -S --satisfied-skip-solve --update-all --all --update-specs --copy --clobber -C --use-index-cache -k --insecure --offline -d --dry-run --json -q --quiet -v --verbose -y --yes --download-only --show-channel-urls" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_mamba_notices ()
+{
+    local cur word_list
+    word_list=" -h --help -c --channel --use-local --override-channels --repodata-fn" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -385,7 +409,33 @@ _env_update ()
 _env_config ()
 {
     local cur word_list
-    word_list=" -h --help" 
+    local i=1 subcommand_index
+
+    # take the last word that's NOT starting with -
+    while [[ ( $i < $COMP_CWORD ) ]]; do
+        local s="${COMP_WORDS[i]}"
+        case "$s" in
+          config)
+            subcommand_index=$i
+            break
+            ;;
+        esac
+        (( i++ ))
+    done
+
+    while [[ ( $subcommand_index < $COMP_CWORD ) ]]; do
+        local s="${COMP_WORDS[subcommand_index}"
+        case "$s" in
+          conda) _env_conda
+            return
+            ;;
+
+          *)  ;; 
+        esac
+        (( subcommand_index++ ))
+    done
+
+    word_list=" conda -h --help" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }

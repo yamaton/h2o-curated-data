@@ -22,14 +22,14 @@
             {-p,--packages}'[Remove unused packages from writable package caches. WARNING: This does not check for packages installed using symlinks back to the package cache.]' \
             {-t,--tarballs}'[Remove cached package tarballs.]' \
             {-f,--force-pkgs-dirs}'[Remove *all* writable package caches. This option is not included with the --all flag. WARNING: This will break environments with packages installed using symlinks back to the package cache.]' \
-            {-c,--tempfiles}'[Remove temporary files that could not be deleted earlier due to being in-use. Argument is path(s) to prefix(es) where files should be found and removed.]':file:_files \
+            {-c,--tempfiles}'[Remove temporary files that could not be deleted earlier due to being in-use. The argument for the --tempfiles flag is a path (or list of paths) to the environment(s) where the tempfiles should be found and removed.]':file:_files \
             {-l,--logfiles}'[Remove log files.]' \
             '--locks[Remove lock files.]' \
             {-d,--dry-run}'[Only display what would have been done.]' \
             '--json[Report all output as json. Suitable for using conda programmatically.]' \
             {-q,--quiet}'[Do not display progress bar.]' \
             {-v,--verbose}'[Can be used multiple times. Once for INFO, twice for DEBUG, three times for TRACE.]' \
-            {-y,--yes}'[Do not ask for confirmation.]' \
+            {-y,--yes}'[Sets any confirmation values to '\''yes'\'' automatically. Users will not be asked to confirm any adding, deleting, backups, etc.]' \
             "*: :_files"
 
     }
@@ -52,18 +52,18 @@
             '--json[Report all output as json. Suitable for using conda programmatically.]' \
             {-v,--verbose}'[Use once for info, twice for debug, three times for trace.]' \
             {-q,--quiet}'[Do not display progress bar.]' \
-            '--system[Write to the system .condarc file at '\''~/miniconda3/.condarc'\''.]' \
-            '--env[Write to the active conda environment .condarc file (~/miniconda3). If no environment is active, write to the user config file (~/.condarc).]' \
+            '--system[Write to the system .condarc file at '\''$CONDA_PREFIX/.condarc'\''.]' \
+            '--env[Write to the active conda environment .condarc file ($CONDA_PREFIX). If no environment is active, write to the user config file (~/.condarc).]' \
             '--file[Write to the given file.]':file:_files \
             '--show[Display configuration values as calculated and compiled. If no arguments given, show information for all configuration values.]' \
             '--show-sources[Display all identified configuration sources.]' \
-            '--validate[Validate all configuration sources.]' \
+            '--validate[Validate all configuration sources. Iterates over all .condarc files and checks for parsing errors.]' \
             '--describe[Describe given configuration parameters. If no arguments given, show information for all configuration parameters.]' \
             '--write-default[Write the default configuration to a file. Equivalent to `conda config --describe > ~/.condarc`.]' \
             '--get[Get a configuration value.]' \
             '--append[Add one configuration value to the end of a list key.]' \
             {--prepend,--add}'[Add one configuration value to the beginning of a list key.]' \
-            '--set[Set a boolean or string key]' \
+            '--set[Set a boolean or string key.]' \
             '--remove[Remove a configuration value from a list key. This removes all instances of the value.]' \
             '--remove-key[Remove a configuration key (and all its values).]' \
             '--stdin[Apply configuration information given in yaml format piped through stdin.]' \
@@ -74,15 +74,15 @@
     function _mamba_create {
         _arguments \
             {-h,--help}'[Show this help message and exit.]' \
-            '--clone[Path to (or name of) existing local environment.]' \
+            '--clone[Create a new environment as a copy of an existing local environment.]' \
             '--file[Read package versions from the given file. Repeated file specifications can be passed (e.g. --file=file1 --file=file2).]':file:_files \
-            '--dev[Use `sys.executable -m conda` in wrapper scripts instead of CONDA_EXE. This is mainly for use during tests where we test new conda source against old Python versions.]' \
+            '--dev[Use `sys.executable -m conda` in wrapper scripts instead of CONDA_EXE. This is mainly for use during tests where we test new conda sources against old Python versions.]' \
             {-n,--name}'[Name of environment.]' \
             {-p,--prefix}'[Full path to environment location (i.e. prefix).]':file:_files \
             {-c,--channel}'[Additional channel to search for packages. These are URLs searched in the order they are given (including local directories using the '\''file://'\'' syntax or simply a path like '\''/home/conda/mychan'\'' or '\''../mychan'\''). Then, the defaults or channels from .condarc are searched (unless --override-channels is given). You can use '\''defaults'\'' to get the default packages for conda. You can also use any name and the .condarc channel_alias value will be prepended. The default channel_alias is https://conda.anaconda.org/.]' \
             '--use-local[Use locally built packages. Identical to '\''-c local'\''.]' \
             '--override-channels[Do not search default or .condarc channels. Requires --channel.]' \
-            '--repodata-fn[Specify name of repodata on remote server. Conda will try whatever you specify, but will ultimately fall back to repodata.json if your specs are not satisfiable with what you specify here. This is used to employ repodata that is reduced in time scope. You may pass this flag more than once. Leftmost entries are tried first, and the fallback to repodata.json is added for you automatically.]' \
+            '--repodata-fn[Specify file name of repodata on the remote server where your channels are configured or within local backups. Conda will try whatever you specify, but will ultimately fall back to repodata.json if your specs are not satisfiable with what you specify here. This is used to employ repodata that is smaller and reduced in time scope. You may pass this flag more than once. Leftmost entries are tried first, and the fallback to repodata.json is added for you automatically. For more information, see conda config --describe repodata_fns.]' \
             '--strict-channel-priority[Packages in lower priority channels are not considered if a package with the same name appears in a higher priority channel.]' \
             '--no-channel-priority[Package version takes precedence over channel priority. Overrides the value given by `conda config --show channel_priority`.]' \
             '--no-deps[Do not install, update, remove, or change dependencies. This WILL lead to broken environments and inconsistent behavior. Use at your own risk.]' \
@@ -91,14 +91,14 @@
             '--no-default-packages[Ignore create_default_packages in the .condarc file.]' \
             '--experimental-solver[EXPERIMENTAL. Choose which solver backend to use.]' \
             '--copy[Install all packages using copies instead of hard- or soft-linking.]' \
-            {-C,--use-index-cache}'[Use cache of channel index files, even if it has expired.]' \
+            {-C,--use-index-cache}'[Use cache of channel index files, even if it has expired. This is useful if you don'\''t want conda to check whether a new version of the repodata file exists, which will save bandwidth.]' \
             {-k,--insecure}'[Allow conda to perform "insecure" SSL connections and transfers. Equivalent to setting '\''ssl_verify'\'' to '\''false'\''.]' \
             '--offline[Offline mode. Don'\''t connect to the Internet.]' \
             {-d,--dry-run}'[Only display what would have been done.]' \
             '--json[Report all output as json. Suitable for using conda programmatically.]' \
             {-q,--quiet}'[Do not display progress bar.]' \
             {-v,--verbose}'[Can be used multiple times. Once for INFO, twice for DEBUG, three times for TRACE.]' \
-            {-y,--yes}'[Do not ask for confirmation.]' \
+            {-y,--yes}'[Sets any confirmation values to '\''yes'\'' automatically. Users will not be asked to confirm any adding, deleting, backups, etc.]' \
             '--download-only[Solve an environment and ensure package caches are populated, but exit prior to unlinking and linking packages into the prefix.]' \
             '--show-channel-urls[Show channel urls. Overrides the value given by `conda config --show show_channel_urls`.]' \
             "*: :_files"
@@ -125,7 +125,10 @@
             {-h,--help}'[Show this help message and exit.]' \
             '--all[Initialize all currently available shells.]' \
             {-d,--dry-run}'[Only display what would have been done.]' \
-            '--reverse[Undo past effects of conda init.]' \
+            '--user[Initialize conda for the current user (default).]' \
+            '--no-user[Don'\''t initialize conda for the current user (default).]' \
+            '--system[Initialize conda for all users on the system.]' \
+            '--reverse[Undo effects of last conda init.]' \
             '--json[Report all output as json. Suitable for using conda programmatically.]' \
             {-v,--verbose}'[Use once for info, twice for debug, three times for trace.]' \
             {-q,--quiet}'[Do not display progress bar.]' \
@@ -138,13 +141,13 @@
             {-h,--help}'[Show this help message and exit.]' \
             '--revision[Revert to the specified REVISION.]' \
             '--file[Read package versions from the given file. Repeated file specifications can be passed (e.g. --file=file1 --file=file2).]':file:_files \
-            '--dev[Use `sys.executable -m conda` in wrapper scripts instead of CONDA_EXE. This is mainly for use during tests where we test new conda source against old Python versions.]' \
+            '--dev[Use `sys.executable -m conda` in wrapper scripts instead of CONDA_EXE. This is mainly for use during tests where we test new conda sources against old Python versions.]' \
             {-n,--name}'[Name of environment.]' \
             {-p,--prefix}'[Full path to environment location (i.e. prefix).]':file:_files \
             {-c,--channel}'[Additional channel to search for packages. These are URLs searched in the order they are given (including local directories using the '\''file://'\'' syntax or simply a path like '\''/home/conda/mychan'\'' or '\''../mychan'\''). Then, the defaults or channels from .condarc are searched (unless --override-channels is given). You can use '\''defaults'\'' to get the default packages for conda. You can also use any name and the .condarc channel_alias value will be prepended. The default channel_alias is https://conda.anaconda.org/.]' \
             '--use-local[Use locally built packages. Identical to '\''-c local'\''.]' \
             '--override-channels[Do not search default or .condarc channels. Requires --channel.]' \
-            '--repodata-fn[Specify name of repodata on remote server. Conda will try whatever you specify, but will ultimately fall back to repodata.json if your specs are not satisfiable with what you specify here. This is used to employ repodata that is reduced in time scope. You may pass this flag more than once. Leftmost entries are tried first, and the fallback to repodata.json is added for you automatically.]' \
+            '--repodata-fn[Specify file name of repodata on the remote server where your channels are configured or within local backups. Conda will try whatever you specify, but will ultimately fall back to repodata.json if your specs are not satisfiable with what you specify here. This is used to employ repodata that is smaller and reduced in time scope. You may pass this flag more than once. Leftmost entries are tried first, and the fallback to repodata.json is added for you automatically. For more information, see conda config --describe repodata_fns.]' \
             '--strict-channel-priority[Packages in lower priority channels are not considered if a package with the same name appears in a higher priority channel.]' \
             '--no-channel-priority[Package version takes precedence over channel priority. Overrides the value given by `conda config --show channel_priority`.]' \
             '--no-deps[Do not install, update, remove, or change dependencies. This WILL lead to broken environments and inconsistent behavior. Use at your own risk.]' \
@@ -153,21 +156,21 @@
             '--experimental-solver[EXPERIMENTAL. Choose which solver backend to use.]' \
             '--force-reinstall[Ensure that any user-requested package for the current operation is uninstalled and reinstalled, even if that package already exists in the environment.]' \
             {--freeze-installed,--no-update-deps}'[Do not update or change already-installed dependencies.]' \
-            '--update-deps[Update dependencies.]' \
-            {-S,--satisfied-skip-solve}'[Exit early and do not run the solver if the requested specs are satisfied. Also skips aggressive updates as configured by '\''aggressive_update_packages'\''. Similar to the default behavior of '\''pip install'\''.]' \
+            '--update-deps[Update dependencies that have available updates.]' \
+            {-S,--satisfied-skip-solve}'[Exit early and do not run the solver if the requested specs are satisfied. Also skips aggressive updates as configured by the '\''aggressive_update_packages'\'' config setting. Use '\''conda info --describe aggressive_update_packages'\'' to view your setting. --satisfied-skip-solve is similar to the default behavior of '\''pip install'\''.]' \
             {--update-all,--all}'[Update all installed packages in the environment.]' \
             '--update-specs[Update based on provided specifications.]' \
             '--copy[Install all packages using copies instead of hard- or soft-linking.]' \
-            {-m,--mkdir}'[Create the environment directory if necessary.]' \
-            '--clobber[Allow clobbering of overlapping file paths within packages, and suppress related warnings.]' \
-            {-C,--use-index-cache}'[Use cache of channel index files, even if it has expired.]' \
+            {-m,--mkdir}'[Create the environment directory, if necessary.]' \
+            '--clobber[Allow clobbering (i.e. overwriting) of overlapping file paths within packages and suppress related warnings.]' \
+            {-C,--use-index-cache}'[Use cache of channel index files, even if it has expired. This is useful if you don'\''t want conda to check whether a new version of the repodata file exists, which will save bandwidth.]' \
             {-k,--insecure}'[Allow conda to perform "insecure" SSL connections and transfers. Equivalent to setting '\''ssl_verify'\'' to '\''false'\''.]' \
             '--offline[Offline mode. Don'\''t connect to the Internet.]' \
             {-d,--dry-run}'[Only display what would have been done.]' \
             '--json[Report all output as json. Suitable for using conda programmatically.]' \
             {-q,--quiet}'[Do not display progress bar.]' \
             {-v,--verbose}'[Can be used multiple times. Once for INFO, twice for DEBUG, three times for TRACE.]' \
-            {-y,--yes}'[Do not ask for confirmation.]' \
+            {-y,--yes}'[Sets any confirmation values to '\''yes'\'' automatically. Users will not be asked to confirm any adding, deleting, backups, etc.]' \
             '--download-only[Solve an environment and ensure package caches are populated, but exit prior to unlinking and linking packages into the prefix.]' \
             '--show-channel-urls[Show channel urls. Overrides the value given by `conda config --show show_channel_urls`.]' \
             "*: :_files"
@@ -178,12 +181,12 @@
         _arguments \
             {-h,--help}'[Show this help message and exit.]' \
             '--show-channel-urls[Show channel urls. Overrides the value given by `conda config --show show_channel_urls`.]' \
-            {-c,--canonical}'[Output canonical names of packages only. Implies --no-pip.]' \
-            {-f,--full-name}'[Only search for full names, i.e., ^<regex>$.]' \
-            '--explicit[List explicitly all installed conda packaged with URL (output may be used by conda create --file).]' \
-            '--md5[Add MD5 hashsum when using --explicit]' \
-            {-e,--export}'[Output requirement string only (output may be used by conda create --file).]' \
-            {-r,--revisions}'[List the revision history and exit.]' \
+            {-c,--canonical}'[Output canonical names of packages only.]' \
+            {-f,--full-name}'[Only search for full names, i.e., ^<regex>$. --full-name NAME is identical to regex '\''^NAME$'\''.]' \
+            '--explicit[List explicitly all installed conda packages with URL (output may be used by conda create --file).]' \
+            '--md5[Add MD5 hashsum when using --explicit.]' \
+            {-e,--export}'[Output explicit, machine-readable requirement strings instead of human-readable lists of packages. This output may be used by conda create --file.]' \
+            {-r,--revisions}'[List the revision history.]' \
             '--no-pip[Do not include pip-only installed packages.]' \
             {-n,--name}'[Name of environment.]' \
             {-p,--prefix}'[Full path to environment location (i.e. prefix).]':file:_files \
@@ -197,12 +200,12 @@
     function _mamba_package {
         _arguments \
             {-h,--help}'[Show this help message and exit.]' \
-            {-w,--which}'[Given some PATH print which conda package the file came from.]':file:_files \
+            {-w,--which}'[Given some file'\''s PATH, print which conda package the file came from.]':file:_files \
             {-r,--reset}'[Remove all untracked files and exit.]' \
             {-u,--untracked}'[Display all untracked files and exit.]' \
-            '--pkg-name[Package name of the created package.]' \
-            '--pkg-version[Package version of the created package.]' \
-            '--pkg-build[Package build number of the created package.]' \
+            '--pkg-name[Designate package name of the package being created.]' \
+            '--pkg-version[Designate package version of the package being created.]' \
+            '--pkg-build[Designate package build number of the package being created.]' \
             {-n,--name}'[Name of environment.]' \
             {-p,--prefix}'[Full path to environment location (i.e. prefix).]':file:_files \
             "*: :_files"
@@ -212,53 +215,37 @@
     function _mamba_remove {
         _arguments \
             {-h,--help}'[Show this help message and exit.]' \
-            '--dev[Use `sys.executable -m conda` in wrapper scripts instead of CONDA_EXE. This is mainly for use during tests where we test new conda source against old Python versions.]' \
+            '--dev[Use `sys.executable -m conda` in wrapper scripts instead of CONDA_EXE. This is mainly for use during tests where we test new conda sources against old Python versions.]' \
             {-n,--name}'[Name of environment.]' \
             {-p,--prefix}'[Full path to environment location (i.e. prefix).]':file:_files \
             {-c,--channel}'[Additional channel to search for packages. These are URLs searched in the order they are given (including local directories using the '\''file://'\'' syntax or simply a path like '\''/home/conda/mychan'\'' or '\''../mychan'\''). Then, the defaults or channels from .condarc are searched (unless --override-channels is given). You can use '\''defaults'\'' to get the default packages for conda. You can also use any name and the .condarc channel_alias value will be prepended. The default channel_alias is https://conda.anaconda.org/.]' \
             '--use-local[Use locally built packages. Identical to '\''-c local'\''.]' \
             '--override-channels[Do not search default or .condarc channels. Requires --channel.]' \
-            '--repodata-fn[Specify name of repodata on remote server. Conda will try whatever you specify, but will ultimately fall back to repodata.json if your specs are not satisfiable with what you specify here. This is used to employ repodata that is reduced in time scope. You may pass this flag more than once. Leftmost entries are tried first, and the fallback to repodata.json is added for you automatically.]' \
+            '--repodata-fn[Specify file name of repodata on the remote server where your channels are configured or within local backups. Conda will try whatever you specify, but will ultimately fall back to repodata.json if your specs are not satisfiable with what you specify here. This is used to employ repodata that is smaller and reduced in time scope. You may pass this flag more than once. Leftmost entries are tried first, and the fallback to repodata.json is added for you automatically. For more information, see conda config --describe repodata_fns.]' \
             '--all[Remove all packages, i.e., the entire environment.]' \
             '--features[Remove features (instead of packages).]' \
             {--force-remove,--force}'[Forces removal of a package without removing packages that depend on it. Using this option will usually leave your environment in a broken and inconsistent state.]' \
-            '--no-pin[Ignore pinned file.]' \
+            '--no-pin[Ignore pinned package(s) that apply to the current operation. These pinned packages might come from a .condarc file or a file in <TARGET_ENVIRONMENT>/conda-meta/pinned.]' \
             '--experimental-solver[EXPERIMENTAL. Choose which solver backend to use.]' \
-            {-C,--use-index-cache}'[Use cache of channel index files, even if it has expired.]' \
+            {-C,--use-index-cache}'[Use cache of channel index files, even if it has expired. This is useful if you don'\''t want conda to check whether a new version of the repodata file exists, which will save bandwidth.]' \
             {-k,--insecure}'[Allow conda to perform "insecure" SSL connections and transfers. Equivalent to setting '\''ssl_verify'\'' to '\''false'\''.]' \
             '--offline[Offline mode. Don'\''t connect to the Internet.]' \
             {-d,--dry-run}'[Only display what would have been done.]' \
             '--json[Report all output as json. Suitable for using conda programmatically.]' \
             {-q,--quiet}'[Do not display progress bar.]' \
             {-v,--verbose}'[Can be used multiple times. Once for INFO, twice for DEBUG, three times for TRACE.]' \
-            {-y,--yes}'[Do not ask for confirmation.]' \
+            {-y,--yes}'[Sets any confirmation values to '\''yes'\'' automatically. Users will not be asked to confirm any adding, deleting, backups, etc.]' \
             "*: :_files"
 
     }
 
-    function _mamba_uninstall {
+    function _mamba_rename {
         _arguments \
             {-h,--help}'[Show this help message and exit.]' \
-            '--dev[Use `sys.executable -m conda` in wrapper scripts instead of CONDA_EXE. This is mainly for use during tests where we test new conda source against old Python versions.]' \
+            '--force[Force rename of an environment.]' \
+            {-d,--dry-run}'[Only display what would have been done by the current command, arguments, and other flags.]' \
             {-n,--name}'[Name of environment.]' \
             {-p,--prefix}'[Full path to environment location (i.e. prefix).]':file:_files \
-            {-c,--channel}'[Additional channel to search for packages. These are URLs searched in the order they are given (including local directories using the '\''file://'\'' syntax or simply a path like '\''/home/conda/mychan'\'' or '\''../mychan'\''). Then, the defaults or channels from .condarc are searched (unless --override-channels is given). You can use '\''defaults'\'' to get the default packages for conda. You can also use any name and the .condarc channel_alias value will be prepended. The default channel_alias is https://conda.anaconda.org/.]' \
-            '--use-local[Use locally built packages. Identical to '\''-c local'\''.]' \
-            '--override-channels[Do not search default or .condarc channels. Requires --channel.]' \
-            '--repodata-fn[Specify name of repodata on remote server. Conda will try whatever you specify, but will ultimately fall back to repodata.json if your specs are not satisfiable with what you specify here. This is used to employ repodata that is reduced in time scope. You may pass this flag more than once. Leftmost entries are tried first, and the fallback to repodata.json is added for you automatically.]' \
-            '--all[Uninstall all packages, i.e., the entire environment.]' \
-            '--features[Uninstall features (instead of packages).]' \
-            {--force-remove,--force}'[Forces removal of a package without removing packages that depend on it. Using this option will usually leave your environment in a broken and inconsistent state.]' \
-            '--no-pin[Ignore pinned file.]' \
-            '--experimental-solver[EXPERIMENTAL. Choose which solver backend to use.]' \
-            {-C,--use-index-cache}'[Use cache of channel index files, even if it has expired.]' \
-            {-k,--insecure}'[Allow conda to perform "insecure" SSL connections and transfers. Equivalent to setting '\''ssl_verify'\'' to '\''false'\''.]' \
-            '--offline[Offline mode. Don'\''t connect to the Internet.]' \
-            {-d,--dry-run}'[Only display what would have been done.]' \
-            '--json[Report all output as json. Suitable for using conda programmatically.]' \
-            {-q,--quiet}'[Do not display progress bar.]' \
-            {-v,--verbose}'[Can be used multiple times. Once for INFO, twice for DEBUG, three times for TRACE.]' \
-            {-y,--yes}'[Do not ask for confirmation.]' \
             "*: :_files"
 
     }
@@ -267,10 +254,10 @@
         _arguments \
             {-h,--help}'[Show this help message and exit.]' \
             {-v,--verbose}'[Use once for info, twice for debug, three times for trace.]' \
-            '--dev[Sets `CONDA_EXE` to `python -m conda`, assuming the CWD contains the root of conda development sources. This is mainly for use during tests where we test new conda source against old Python versions.]' \
-            '--debug-wrapper-scripts[When this is set, where implemented, the shell wrapper scriptswill echo to stderr a lot of debugging information.]' \
-            '--cwd[Current working directory for command to run in. Defaults to cwd]' \
-            {--no-capture-output,--live-stream}'[Don'\''t capture stdout/stderr.]' \
+            '--dev[Sets `CONDA_EXE` to `python -m conda`, assuming the current working directory contains the root of conda development sources. This is mainly for use during tests where we test new conda sources against old Python versions.]' \
+            '--debug-wrapper-scripts[When this is set, where implemented, the shell wrapper scriptswill use the echo command to print debugging information to stderr (standard error).]' \
+            '--cwd[Current working directory for command to run in. Defaults to the user'\''s current working directory if no directory is specified.]' \
+            {--no-capture-output,--live-stream}'[Don'\''t capture stdout/stderr (standard out/standard error).]' \
             {-n,--name}'[Name of environment.]' \
             {-p,--prefix}'[Full path to environment location (i.e. prefix).]':file:_files \
             "*: :_files"
@@ -286,13 +273,40 @@
             {-c,--channel}'[Additional channel to search for packages. These are URLs searched in the order they are given (including local directories using the '\''file://'\'' syntax or simply a path like '\''/home/conda/mychan'\'' or '\''../mychan'\''). Then, the defaults or channels from .condarc are searched (unless --override-channels is given). You can use '\''defaults'\'' to get the default packages for conda. You can also use any name and the .condarc channel_alias value will be prepended. The default channel_alias is https://conda.anaconda.org/.]' \
             '--use-local[Use locally built packages. Identical to '\''-c local'\''.]' \
             '--override-channels[Do not search default or .condarc channels. Requires --channel.]' \
-            '--repodata-fn[Specify name of repodata on remote server. Conda will try whatever you specify, but will ultimately fall back to repodata.json if your specs are not satisfiable with what you specify here. This is used to employ repodata that is reduced in time scope. You may pass this flag more than once. Leftmost entries are tried first, and the fallback to repodata.json is added for you automatically.]' \
-            {-C,--use-index-cache}'[Use cache of channel index files, even if it has expired.]' \
+            '--repodata-fn[Specify file name of repodata on the remote server where your channels are configured or within local backups. Conda will try whatever you specify, but will ultimately fall back to repodata.json if your specs are not satisfiable with what you specify here. This is used to employ repodata that is smaller and reduced in time scope. You may pass this flag more than once. Leftmost entries are tried first, and the fallback to repodata.json is added for you automatically. For more information, see conda config --describe repodata_fns.]' \
+            {-C,--use-index-cache}'[Use cache of channel index files, even if it has expired. This is useful if you don'\''t want conda to check whether a new version of the repodata file exists, which will save bandwidth.]' \
             {-k,--insecure}'[Allow conda to perform "insecure" SSL connections and transfers. Equivalent to setting '\''ssl_verify'\'' to '\''false'\''.]' \
             '--offline[Offline mode. Don'\''t connect to the Internet.]' \
             '--json[Report all output as json. Suitable for using conda programmatically.]' \
             {-v,--verbose}'[Use once for info, twice for debug, three times for trace.]' \
             {-q,--quiet}'[Do not display progress bar.]' \
+            "*: :_files"
+
+    }
+
+    function _mamba_uninstall {
+        _arguments \
+            {-h,--help}'[Show this help message and exit.]' \
+            '--dev[Use `sys.executable -m conda` in wrapper scripts instead of CONDA_EXE. This is mainly for use during tests where we test new conda sources against old Python versions.]' \
+            {-n,--name}'[Name of environment.]' \
+            {-p,--prefix}'[Full path to environment location (i.e. prefix).]':file:_files \
+            {-c,--channel}'[Additional channel to search for packages. These are URLs searched in the order they are given (including local directories using the '\''file://'\'' syntax or simply a path like '\''/home/conda/mychan'\'' or '\''../mychan'\''). Then, the defaults or channels from .condarc are searched (unless --override-channels is given). You can use '\''defaults'\'' to get the default packages for conda. You can also use any name and the .condarc channel_alias value will be prepended. The default channel_alias is https://conda.anaconda.org/.]' \
+            '--use-local[Use locally built packages. Identical to '\''-c local'\''.]' \
+            '--override-channels[Do not search default or .condarc channels. Requires --channel.]' \
+            '--repodata-fn[Specify file name of repodata on the remote server where your channels are configured or within local backups. Conda will try whatever you specify, but will ultimately fall back to repodata.json if your specs are not satisfiable with what you specify here. This is used to employ repodata that is smaller and reduced in time scope. You may pass this flag more than once. Leftmost entries are tried first, and the fallback to repodata.json is added for you automatically. For more information, see conda config --describe repodata_fns.]' \
+            '--all[Uninstall all packages, i.e., the entire environment.]' \
+            '--features[Uninstall features (instead of packages).]' \
+            {--force-remove,--force}'[Forces removal of a package without removing packages that depend on it. Using this option will usually leave your environment in a broken and inconsistent state.]' \
+            '--no-pin[Ignore pinned package(s) that apply to the current operation. These pinned packages might come from a .condarc file or a file in <TARGET_ENVIRONMENT>/conda-meta/pinned.]' \
+            '--experimental-solver[EXPERIMENTAL. Choose which solver backend to use.]' \
+            {-C,--use-index-cache}'[Use cache of channel index files, even if it has expired. This is useful if you don'\''t want conda to check whether a new version of the repodata file exists, which will save bandwidth.]' \
+            {-k,--insecure}'[Allow conda to perform "insecure" SSL connections and transfers. Equivalent to setting '\''ssl_verify'\'' to '\''false'\''.]' \
+            '--offline[Offline mode. Don'\''t connect to the Internet.]' \
+            {-d,--dry-run}'[Only display what would have been done.]' \
+            '--json[Report all output as json. Suitable for using conda programmatically.]' \
+            {-q,--quiet}'[Do not display progress bar.]' \
+            {-v,--verbose}'[Can be used multiple times. Once for INFO, twice for DEBUG, three times for TRACE.]' \
+            {-y,--yes}'[Sets any confirmation values to '\''yes'\'' automatically. Users will not be asked to confirm any adding, deleting, backups, etc.]' \
             "*: :_files"
 
     }
@@ -306,7 +320,7 @@
             {-c,--channel}'[Additional channel to search for packages. These are URLs searched in the order they are given (including local directories using the '\''file://'\'' syntax or simply a path like '\''/home/conda/mychan'\'' or '\''../mychan'\''). Then, the defaults or channels from .condarc are searched (unless --override-channels is given). You can use '\''defaults'\'' to get the default packages for conda. You can also use any name and the .condarc channel_alias value will be prepended. The default channel_alias is https://conda.anaconda.org/.]' \
             '--use-local[Use locally built packages. Identical to '\''-c local'\''.]' \
             '--override-channels[Do not search default or .condarc channels. Requires --channel.]' \
-            '--repodata-fn[Specify name of repodata on remote server. Conda will try whatever you specify, but will ultimately fall back to repodata.json if your specs are not satisfiable with what you specify here. This is used to employ repodata that is reduced in time scope. You may pass this flag more than once. Leftmost entries are tried first, and the fallback to repodata.json is added for you automatically.]' \
+            '--repodata-fn[Specify file name of repodata on the remote server where your channels are configured or within local backups. Conda will try whatever you specify, but will ultimately fall back to repodata.json if your specs are not satisfiable with what you specify here. This is used to employ repodata that is smaller and reduced in time scope. You may pass this flag more than once. Leftmost entries are tried first, and the fallback to repodata.json is added for you automatically. For more information, see conda config --describe repodata_fns.]' \
             '--strict-channel-priority[Packages in lower priority channels are not considered if a package with the same name appears in a higher priority channel.]' \
             '--no-channel-priority[Package version takes precedence over channel priority. Overrides the value given by `conda config --show channel_priority`.]' \
             '--no-deps[Do not install, update, remove, or change dependencies. This WILL lead to broken environments and inconsistent behavior. Use at your own risk.]' \
@@ -315,20 +329,20 @@
             '--experimental-solver[EXPERIMENTAL. Choose which solver backend to use.]' \
             '--force-reinstall[Ensure that any user-requested package for the current operation is uninstalled and reinstalled, even if that package already exists in the environment.]' \
             {--freeze-installed,--no-update-deps}'[Do not update or change already-installed dependencies.]' \
-            '--update-deps[Update dependencies.]' \
-            {-S,--satisfied-skip-solve}'[Exit early and do not run the solver if the requested specs are satisfied. Also skips aggressive updates as configured by '\''aggressive_update_packages'\''. Similar to the default behavior of '\''pip install'\''.]' \
+            '--update-deps[Update dependencies that have available updates.]' \
+            {-S,--satisfied-skip-solve}'[Exit early and do not run the solver if the requested specs are satisfied. Also skips aggressive updates as configured by the '\''aggressive_update_packages'\'' config setting. Use '\''conda info --describe aggressive_update_packages'\'' to view your setting. --satisfied-skip-solve is similar to the default behavior of '\''pip install'\''.]' \
             {--update-all,--all}'[Update all installed packages in the environment.]' \
             '--update-specs[Update based on provided specifications.]' \
             '--copy[Install all packages using copies instead of hard- or soft-linking.]' \
             '--clobber[Allow clobbering of overlapping file paths within packages, and suppress related warnings.]' \
-            {-C,--use-index-cache}'[Use cache of channel index files, even if it has expired.]' \
+            {-C,--use-index-cache}'[Use cache of channel index files, even if it has expired. This is useful if you don'\''t want conda to check whether a new version of the repodata file exists, which will save bandwidth.]' \
             {-k,--insecure}'[Allow conda to perform "insecure" SSL connections and transfers. Equivalent to setting '\''ssl_verify'\'' to '\''false'\''.]' \
             '--offline[Offline mode. Don'\''t connect to the Internet.]' \
             {-d,--dry-run}'[Only display what would have been done.]' \
             '--json[Report all output as json. Suitable for using conda programmatically.]' \
             {-q,--quiet}'[Do not display progress bar.]' \
             {-v,--verbose}'[Can be used multiple times. Once for INFO, twice for DEBUG, three times for TRACE.]' \
-            {-y,--yes}'[Do not ask for confirmation.]' \
+            {-y,--yes}'[Sets any confirmation values to '\''yes'\'' automatically. Users will not be asked to confirm any adding, deleting, backups, etc.]' \
             '--download-only[Solve an environment and ensure package caches are populated, but exit prior to unlinking and linking packages into the prefix.]' \
             '--show-channel-urls[Show channel urls. Overrides the value given by `conda config --show show_channel_urls`.]' \
             "*: :_files"
@@ -344,7 +358,7 @@
             {-c,--channel}'[Additional channel to search for packages. These are URLs searched in the order they are given (including local directories using the '\''file://'\'' syntax or simply a path like '\''/home/conda/mychan'\'' or '\''../mychan'\''). Then, the defaults or channels from .condarc are searched (unless --override-channels is given). You can use '\''defaults'\'' to get the default packages for conda. You can also use any name and the .condarc channel_alias value will be prepended. The default channel_alias is https://conda.anaconda.org/.]' \
             '--use-local[Use locally built packages. Identical to '\''-c local'\''.]' \
             '--override-channels[Do not search default or .condarc channels. Requires --channel.]' \
-            '--repodata-fn[Specify name of repodata on remote server. Conda will try whatever you specify, but will ultimately fall back to repodata.json if your specs are not satisfiable with what you specify here. This is used to employ repodata that is reduced in time scope. You may pass this flag more than once. Leftmost entries are tried first, and the fallback to repodata.json is added for you automatically.]' \
+            '--repodata-fn[Specify file name of repodata on the remote server where your channels are configured or within local backups. Conda will try whatever you specify, but will ultimately fall back to repodata.json if your specs are not satisfiable with what you specify here. This is used to employ repodata that is smaller and reduced in time scope. You may pass this flag more than once. Leftmost entries are tried first, and the fallback to repodata.json is added for you automatically. For more information, see conda config --describe repodata_fns.]' \
             '--strict-channel-priority[Packages in lower priority channels are not considered if a package with the same name appears in a higher priority channel.]' \
             '--no-channel-priority[Package version takes precedence over channel priority. Overrides the value given by `conda config --show channel_priority`.]' \
             '--no-deps[Do not install, update, remove, or change dependencies. This WILL lead to broken environments and inconsistent behavior. Use at your own risk.]' \
@@ -353,22 +367,33 @@
             '--experimental-solver[EXPERIMENTAL. Choose which solver backend to use.]' \
             '--force-reinstall[Ensure that any user-requested package for the current operation is uninstalled and reinstalled, even if that package already exists in the environment.]' \
             {--freeze-installed,--no-update-deps}'[Do not update or change already-installed dependencies.]' \
-            '--update-deps[Update dependencies.]' \
-            {-S,--satisfied-skip-solve}'[Exit early and do not run the solver if the requested specs are satisfied. Also skips aggressive updates as configured by '\''aggressive_update_packages'\''. Similar to the default behavior of '\''pip install'\''.]' \
+            '--update-deps[Update dependencies that have available updates.]' \
+            {-S,--satisfied-skip-solve}'[Exit early and do not run the solver if the requested specs are satisfied. Also skips aggressive updates as configured by the '\''aggressive_update_packages'\'' config setting. Use '\''conda info --describe aggressive_update_packages'\'' to view your setting. --satisfied-skip-solve is similar to the default behavior of '\''pip install'\''.]' \
             {--update-all,--all}'[Update all installed packages in the environment.]' \
             '--update-specs[Update based on provided specifications.]' \
             '--copy[Install all packages using copies instead of hard- or soft-linking.]' \
             '--clobber[Allow clobbering of overlapping file paths within packages, and suppress related warnings.]' \
-            {-C,--use-index-cache}'[Use cache of channel index files, even if it has expired.]' \
+            {-C,--use-index-cache}'[Use cache of channel index files, even if it has expired. This is useful if you don'\''t want conda to check whether a new version of the repodata file exists, which will save bandwidth.]' \
             {-k,--insecure}'[Allow conda to perform "insecure" SSL connections and transfers. Equivalent to setting '\''ssl_verify'\'' to '\''false'\''.]' \
             '--offline[Offline mode. Don'\''t connect to the Internet.]' \
             {-d,--dry-run}'[Only display what would have been done.]' \
             '--json[Report all output as json. Suitable for using conda programmatically.]' \
             {-q,--quiet}'[Do not display progress bar.]' \
             {-v,--verbose}'[Can be used multiple times. Once for INFO, twice for DEBUG, three times for TRACE.]' \
-            {-y,--yes}'[Do not ask for confirmation.]' \
+            {-y,--yes}'[Sets any confirmation values to '\''yes'\'' automatically. Users will not be asked to confirm any adding, deleting, backups, etc.]' \
             '--download-only[Solve an environment and ensure package caches are populated, but exit prior to unlinking and linking packages into the prefix.]' \
             '--show-channel-urls[Show channel urls. Overrides the value given by `conda config --show show_channel_urls`.]' \
+            "*: :_files"
+
+    }
+
+    function _mamba_notices {
+        _arguments \
+            {-h,--help}'[Show this help message and exit.]' \
+            {-c,--channel}'[Additional channel to search for packages. These are URLs searched in the order they are given (including local directories using the '\''file://'\'' syntax or simply a path like '\''/home/conda/mychan'\'' or '\''../mychan'\''). Then, the defaults or channels from .condarc are searched (unless --override-channels is given). You can use '\''defaults'\'' to get the default packages for conda. You can also use any name and the .condarc channel_alias value will be prepended. The default channel_alias is https://conda.anaconda.org/.]' \
+            '--use-local[Use locally built packages. Identical to '\''-c local'\''.]' \
+            '--override-channels[Do not search default or .condarc channels. Requires --channel.]' \
+            '--repodata-fn[Specify file name of repodata on the remote server where your channels are configured or within local backups. Conda will try whatever you specify, but will ultimately fall back to repodata.json if your specs are not satisfiable with what you specify here. This is used to employ repodata that is smaller and reduced in time scope. You may pass this flag more than once. Leftmost entries are tried first, and the fallback to repodata.json is added for you automatically. For more information, see conda config --describe repodata_fns.]' \
             "*: :_files"
 
     }
@@ -398,21 +423,23 @@ function _mamba {
             'deactivate:Dectivate a conda environment'
             'clean:Remove unused packages and caches.'
             'compare:Compare packages between conda environments.'
-            'config:Modify configuration values in .condarc. This is modeled after the git config command. Writes to the user .condarc file (~/.condarc) by default.'
+            'config:Modify configuration values in .condarc. This is modeled after the git config command. Writes to the user .condarc file (~/.condarc) by default. Use the --show-sources flag to display all identified configuration locations on your computer.'
             'create:Create a new conda environment from a list of specified packages.'
             'info:Display information about current conda install.'
-            'init:Initialize conda for shell interaction. \[Experimental\]'
+            'init:Initialize conda for shell interaction.'
             'install:Installs a list of packages into a specified conda environment.'
-            'list:List linked packages in a conda environment.'
+            'list:List installed packages in a conda environment.'
             'package:Low-level conda package utility. (EXPERIMENTAL)'
             'remove:Remove a list of packages from a specified conda environment.'
-            'uninstall:Alias for conda remove.'
+            'rename:Renames an existing environment.'
             'run:Run an executable in a conda environment.'
-            'search:Search for packages and display associated information. The input is a MatchSpec, a query language for conda packages. See examples below.'
+            'search:Search for packages and display associated information.The input is a MatchSpec, a query language for conda packages. See examples below.'
+            'uninstall:Alias for conda remove.'
             'update:Updates conda packages to the latest compatible version.'
             'upgrade:Alias for conda update.'
+            'notices:Retrieves latest channel notifications.'
             'repoquery:Query repositories using mamba.'
-            'env:Equivalent to conda-env'
+            'env:conda environment'
         )
         _describe 'command' commands
     }
@@ -478,8 +505,8 @@ function _mamba {
             _mamba_remove
             ;;
 
-        (uninstall)
-            _mamba_uninstall
+        (rename)
+            _mamba_rename
             ;;
 
         (run)
@@ -490,12 +517,20 @@ function _mamba {
             _mamba_search
             ;;
 
+        (uninstall)
+            _mamba_uninstall
+            ;;
+
         (update)
             _mamba_update
             ;;
 
         (upgrade)
             _mamba_upgrade
+            ;;
+
+        (notices)
+            _mamba_notices
             ;;
 
         (repoquery)

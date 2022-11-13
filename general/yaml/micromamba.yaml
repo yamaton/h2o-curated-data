@@ -1,5 +1,6 @@
 name: micromamba
 description: micromamba
+usage: micromamba [OPTIONS] [SUBCOMMAND]
 options:
   - names:
       - -h
@@ -24,6 +25,10 @@ options:
     argument: ""
     description: Set verbosity (higher verbosity with multiple -v, e.g. -vvv)
   - names:
+      - --log-level
+    argument: ENUM:value in {critical->5,debug->1,error->4,info->2,off->6,trace->0,warning->3}
+    description: OR {5,1,4,2,6,0,3}   Set the log level
+  - names:
       - -q
       - --quiet
     argument: ""
@@ -46,6 +51,10 @@ options:
     argument: ""
     description: Only display what would have been done
   - names:
+      - --download-only
+    argument: ""
+    description: Only download and extract packages, do not link them into environment.
+  - names:
       - --experimental
     argument: ""
     description: Enable experimental features
@@ -67,6 +76,7 @@ options:
 subcommands:
   - name: shell
     description: Generate shell init scripts
+    usage: micromamba shell [OPTIONS] [action] [prefix]
     options:
       - names:
           - -h
@@ -76,7 +86,7 @@ subcommands:
       - names:
           - -s
           - --shell
-        argument: TEXT:{bash,cmd.exe,fish,posix,powershell,xonsh,zsh}
+        argument: TEXT:{bash,cmd.exe,dash,fish,posix,powershell,tcsh,xonsh,zsh}
         description: A shell type
       - names:
           - --stack
@@ -107,6 +117,10 @@ subcommands:
         argument: ""
         description: Set verbosity (higher verbosity with multiple -v, e.g. -vvv)
       - names:
+          - --log-level
+        argument: ENUM:value in {critical->5,debug->1,error->4,info->2,off->6,trace->0,warning->3}
+        description: OR {5,1,4,2,6,0,3}   Set the log level
+      - names:
           - -q
           - --quiet
         argument: ""
@@ -129,35 +143,16 @@ subcommands:
         argument: ""
         description: Only display what would have been done
       - names:
+          - --download-only
+        argument: ""
+        description: Only download and extract packages, do not link them into environment.
+      - names:
           - --experimental
         argument: ""
         description: Enable experimental features
-    subcommands:
-      - name: init
-        description: ""
-        options: []
-    subcommands:
-      - name: deinit
-        description: ""
-        options: []
-    subcommands:
-      - name: hook
-        description: ""
-        options: []
-    subcommands:
-      - name: activate
-        description: ""
-        options: []
-    subcommands:
-      - name: deactivate
-        description: ""
-        options: []
-    subcommands:
-      - name: reactivate
-        description: ""
-        options: []
   - name: create
     description: Create new environment
+    usage: micromamba create [OPTIONS] [specs...]
     options:
       - names:
           - -h
@@ -242,7 +237,7 @@ subcommands:
       - names:
           - --lock-timeout
         argument: UINT
-        description: LockFile timeout
+        description: Lockfile timeout
       - names:
           - --shortcuts
           - --no-shortcuts
@@ -269,6 +264,10 @@ subcommands:
         argument: ""
         description: Only install dependencies
       - names:
+          - --category
+        argument: TEXT ...
+        description: Categories of package to install from environment lockfile
+      - names:
           - --rc-file
         argument: TEXT ...
         description: Paths to the configuration files to use
@@ -285,6 +284,10 @@ subcommands:
           - --verbose
         argument: ""
         description: Set verbosity (higher verbosity with multiple -v, e.g. -vvv)
+      - names:
+          - --log-level
+        argument: ENUM:value in {critical->5,debug->1,error->4,info->2,off->6,trace->0,warning->3}
+        description: OR {5,1,4,2,6,0,3}   Set the log level
       - names:
           - -q
           - --quiet
@@ -307,6 +310,10 @@ subcommands:
           - --dry-run
         argument: ""
         description: Only display what would have been done
+      - names:
+          - --download-only
+        argument: ""
+        description: Only download and extract packages, do not link them into environment.
       - names:
           - --experimental
         argument: ""
@@ -348,6 +355,7 @@ subcommands:
         description: If solve fails, try to fetch updated repodata
   - name: install
     description: Install packages in active environment
+    usage: micromamba install [OPTIONS] [specs...]
     options:
       - names:
           - -h
@@ -432,7 +440,7 @@ subcommands:
       - names:
           - --lock-timeout
         argument: UINT
-        description: LockFile timeout
+        description: Lockfile timeout
       - names:
           - --shortcuts
           - --no-shortcuts
@@ -459,6 +467,10 @@ subcommands:
         argument: ""
         description: Only install dependencies
       - names:
+          - --category
+        argument: TEXT ...
+        description: Categories of package to install from environment lockfile
+      - names:
           - --freeze-installed
         argument: ""
         description: Freeze already installed dependencies
@@ -484,6 +496,10 @@ subcommands:
         argument: ""
         description: Set verbosity (higher verbosity with multiple -v, e.g. -vvv)
       - names:
+          - --log-level
+        argument: ENUM:value in {critical->5,debug->1,error->4,info->2,off->6,trace->0,warning->3}
+        description: OR {5,1,4,2,6,0,3}   Set the log level
+      - names:
           - -q
           - --quiet
         argument: ""
@@ -505,6 +521,10 @@ subcommands:
           - --dry-run
         argument: ""
         description: Only display what would have been done
+      - names:
+          - --download-only
+        argument: ""
+        description: Only download and extract packages, do not link them into environment.
       - names:
           - --experimental
         argument: ""
@@ -546,6 +566,7 @@ subcommands:
         description: If solve fails, try to fetch updated repodata
   - name: update
     description: Update packages in active environment
+    usage: micromamba update [OPTIONS] [specs...]
     options:
       - names:
           - -h
@@ -630,7 +651,7 @@ subcommands:
       - names:
           - --lock-timeout
         argument: UINT
-        description: LockFile timeout
+        description: Lockfile timeout
       - names:
           - --shortcuts
           - --no-shortcuts
@@ -656,6 +677,10 @@ subcommands:
           - --only-deps
         argument: ""
         description: Only install dependencies
+      - names:
+          - --category
+        argument: TEXT ...
+        description: Categories of package to install from environment lockfile
       - names:
           - --prune
           - --no-prune
@@ -684,6 +709,10 @@ subcommands:
         argument: ""
         description: Set verbosity (higher verbosity with multiple -v, e.g. -vvv)
       - names:
+          - --log-level
+        argument: ENUM:value in {critical->5,debug->1,error->4,info->2,off->6,trace->0,warning->3}
+        description: OR {5,1,4,2,6,0,3}   Set the log level
+      - names:
           - -q
           - --quiet
         argument: ""
@@ -705,6 +734,217 @@ subcommands:
           - --dry-run
         argument: ""
         description: Only display what would have been done
+      - names:
+          - --download-only
+        argument: ""
+        description: Only download and extract packages, do not link them into environment.
+      - names:
+          - --experimental
+        argument: ""
+        description: Enable experimental features
+      - names:
+          - -r
+          - --root-prefix
+        argument: TEXT
+        description: Path to the root prefix
+      - names:
+          - -p
+          - --prefix
+        argument: TEXT
+        description: Path to the target prefix
+      - names:
+          - -n
+          - --name
+        argument: TEXT
+        description: Name of the target prefix
+      - names:
+          - --ssl-verify
+        argument: TEXT
+        description: Verify SSL certificates for HTTPS requests
+      - names:
+          - --ssl-no-revoke
+        argument: ""
+        description: SSL certificate revocation checks
+      - names:
+          - --cacert-path
+        argument: TEXT
+        description: Path (file or directory) SSL certificate(s)
+      - names:
+          - --repodata-ttl
+        argument: UINT
+        description: Repodata time-to-live
+      - names:
+          - --retry-clean-cache
+        argument: ""
+        description: If solve fails, try to fetch updated repodata
+  - name: self-update
+    description: Update micromamba
+    usage: micromamba self-update [OPTIONS] [specs...]
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: Print this help message and exit
+      - names:
+          - -c
+          - --channel
+        argument: TEXT ...
+        description: Define the list of channels
+      - names:
+          - --override-channels
+        argument: ""
+        description: Override channels
+      - names:
+          - --channel-priority
+        argument: ENUM:valu
+        description: e in {disabled->0,flexible->1,strict->2} OR {0,1,2} Define the channel priority ('strict' or 'disabled')
+      - names:
+          - --channel-alias
+        argument: TEXT
+        description: The prepended url location to associate with channel names
+      - names:
+          - --strict-channel-priority
+        argument: ""
+        description: Enable strict channel priority
+      - names:
+          - --no-channel-priority
+        argument: ""
+        description: Disable channel priority
+      - names:
+          - -f
+          - --file
+        argument: TEXT ...
+        description: File (yaml, explicit or plain)
+      - names:
+          - --no-pin
+          - --pin
+        argument: '{false}'
+        description: Ignore pinned packages
+      - names:
+          - --no-py-pin
+          - --py-pin
+        argument: '{false}'
+        description: Do not automatically pin Python
+      - names:
+          - --pyc
+          - --no-pyc
+        argument: '{false}'
+        description: Defines if PYC files will be compiled or not
+      - names:
+          - --allow-uninstall
+          - --no-allow-uninstall
+        argument: '{false}'
+        description: Allow uninstall when installing or updating packages. Default is true.
+      - names:
+          - --allow-downgrade
+          - --no-allow-downgrade
+        argument: '{false}'
+        description: Allow downgrade when installing packages. Default is false.
+      - names:
+          - --allow-softlinks
+          - --no-allow-softlinks
+        argument: '{false}'
+        description: Allow to use soft-links when hard-links are not possible
+      - names:
+          - --always-softlink
+          - --no-always-softlink
+        argument: '{false}'
+        description: Use soft-link instead of hard-link
+      - names:
+          - --always-copy
+          - --no-always-copy
+        argument: '{false}'
+        description: Use copy instead of hard-link
+      - names:
+          - --extra-safety-checks
+          - --no-extra-safety-checks
+        argument: '{false}'
+        description: Run extra verifications on packages
+      - names:
+          - --lock-timeout
+        argument: UINT
+        description: Lockfile timeout
+      - names:
+          - --shortcuts
+          - --no-shortcuts
+        argument: '{false}'
+        description: Install start-menu shortcuts on Windows (not implemented on Linux / macOS)
+      - names:
+          - --safety-checks
+        argument: ENUM:value in {disabled->0,enabled->2,warn->1}
+        description: OR {0,2,1}   Safety checks policy ('enabled', 'warn', or 'disabled')
+      - names:
+          - --verify-artifacts
+        argument: ""
+        description: Run verifications on packages signatures
+      - names:
+          - --platform
+        argument: TEXT
+        description: The platform description
+      - names:
+          - --no-deps
+        argument: ""
+        description: Do not install dependencies. This WILL lead to broken environments and inconsistent behavior. Use at your own risk
+      - names:
+          - --only-deps
+        argument: ""
+        description: Only install dependencies
+      - names:
+          - --category
+        argument: TEXT ...
+        description: Categories of package to install from environment lockfile
+      - names:
+          - --version
+        argument: TEXT
+        description: Install specific micromamba version
+      - names:
+          - --rc-file
+        argument: TEXT ...
+        description: Paths to the configuration files to use
+      - names:
+          - --no-rc
+        argument: ""
+        description: Disable the use of configuration files
+      - names:
+          - --no-env
+        argument: ""
+        description: Disable the use of environment variables
+      - names:
+          - -v
+          - --verbose
+        argument: ""
+        description: Set verbosity (higher verbosity with multiple -v, e.g. -vvv)
+      - names:
+          - --log-level
+        argument: ENUM:value in {critical->5,debug->1,error->4,info->2,off->6,trace->0,warning->3}
+        description: OR {5,1,4,2,6,0,3}   Set the log level
+      - names:
+          - -q
+          - --quiet
+        argument: ""
+        description: Set quiet mode (print less output)
+      - names:
+          - -y
+          - --yes
+        argument: ""
+        description: Automatically answer yes on prompted questions
+      - names:
+          - --json
+        argument: ""
+        description: Report all output as json
+      - names:
+          - --offline
+        argument: ""
+        description: Force use cached repodata
+      - names:
+          - --dry-run
+        argument: ""
+        description: Only display what would have been done
+      - names:
+          - --download-only
+        argument: ""
+        description: Only download and extract packages, do not link them into environment.
       - names:
           - --experimental
         argument: ""
@@ -746,6 +986,7 @@ subcommands:
         description: If solve fails, try to fetch updated repodata
   - name: repoquery
     description: Find and analyze packages in active environment or channels
+    usage: micromamba repoquery [OPTIONS] query_type specs...
     options:
       - names:
           - -h
@@ -813,6 +1054,10 @@ subcommands:
         argument: ""
         description: Set verbosity (higher verbosity with multiple -v, e.g. -vvv)
       - names:
+          - --log-level
+        argument: ENUM:value in {critical->5,debug->1,error->4,info->2,off->6,trace->0,warning->3}
+        description: OR {5,1,4,2,6,0,3}   Set the log level
+      - names:
           - -q
           - --quiet
         argument: ""
@@ -834,6 +1079,10 @@ subcommands:
           - --dry-run
         argument: ""
         description: Only display what would have been done
+      - names:
+          - --download-only
+        argument: ""
+        description: Only download and extract packages, do not link them into environment.
       - names:
           - --experimental
         argument: ""
@@ -873,18 +1122,9 @@ subcommands:
           - --retry-clean-cache
         argument: ""
         description: If solve fails, try to fetch updated repodata
-    subcommands:
-      - name: search
-        description: ""
-        options: []
-      - name: depends
-        description: ""
-        options: []
-      - name: whoneeds
-        description: ""
-        options: []
   - name: remove
     description: Remove packages from active environment
+    usage: micromamba remove [OPTIONS] [specs...]
     options:
       - names:
           - -h
@@ -924,6 +1164,10 @@ subcommands:
         argument: ""
         description: Set verbosity (higher verbosity with multiple -v, e.g. -vvv)
       - names:
+          - --log-level
+        argument: ENUM:value in {critical->5,debug->1,error->4,info->2,off->6,trace->0,warning->3}
+        description: OR {5,1,4,2,6,0,3}   Set the log level
+      - names:
           - -q
           - --quiet
         argument: ""
@@ -946,6 +1190,10 @@ subcommands:
         argument: ""
         description: Only display what would have been done
       - names:
+          - --download-only
+        argument: ""
+        description: Only download and extract packages, do not link them into environment.
+      - names:
           - --experimental
         argument: ""
         description: Enable experimental features
@@ -966,6 +1214,7 @@ subcommands:
         description: Name of the target prefix
   - name: list
     description: List packages in active environment
+    usage: micromamba list [OPTIONS] [regex]
     options:
       - names:
           - -h
@@ -990,6 +1239,10 @@ subcommands:
         argument: ""
         description: Set verbosity (higher verbosity with multiple -v, e.g. -vvv)
       - names:
+          - --log-level
+        argument: ENUM:value in {critical->5,debug->1,error->4,info->2,off->6,trace->0,warning->3}
+        description: OR {5,1,4,2,6,0,3}   Set the log level
+      - names:
           - -q
           - --quiet
         argument: ""
@@ -1012,6 +1265,10 @@ subcommands:
         argument: ""
         description: Only display what would have been done
       - names:
+          - --download-only
+        argument: ""
+        description: Only download and extract packages, do not link them into environment.
+      - names:
           - --experimental
         argument: ""
         description: Enable experimental features
@@ -1032,6 +1289,7 @@ subcommands:
         description: Name of the target prefix
   - name: package
     description: Extract a package or bundle files into an archive
+    usage: micromamba package [OPTIONS] [SUBCOMMAND]
     options:
       - names:
           - -h
@@ -1040,6 +1298,7 @@ subcommands:
         description: Print this help message and exit
   - name: clean
     description: Clean package cache
+    usage: micromamba clean [OPTIONS]
     options:
       - names:
           - -h
@@ -1098,6 +1357,10 @@ subcommands:
         argument: ""
         description: Set verbosity (higher verbosity with multiple -v, e.g. -vvv)
       - names:
+          - --log-level
+        argument: ENUM:value in {critical->5,debug->1,error->4,info->2,off->6,trace->0,warning->3}
+        description: OR {5,1,4,2,6,0,3}   Set the log level
+      - names:
           - -q
           - --quiet
         argument: ""
@@ -1120,11 +1383,16 @@ subcommands:
         argument: ""
         description: Only display what would have been done
       - names:
+          - --download-only
+        argument: ""
+        description: Only download and extract packages, do not link them into environment.
+      - names:
           - --experimental
         argument: ""
         description: Enable experimental features
   - name: config
     description: Configuration of micromamba
+    usage: micromamba config [OPTIONS] [SUBCOMMAND]
     options:
       - names:
           - -h
@@ -1149,6 +1417,10 @@ subcommands:
         argument: ""
         description: Set verbosity (higher verbosity with multiple -v, e.g. -vvv)
       - names:
+          - --log-level
+        argument: ENUM:value in {critical->5,debug->1,error->4,info->2,off->6,trace->0,warning->3}
+        description: OR {5,1,4,2,6,0,3}   Set the log level
+      - names:
           - -q
           - --quiet
         argument: ""
@@ -1171,6 +1443,10 @@ subcommands:
         argument: ""
         description: Only display what would have been done
       - names:
+          - --download-only
+        argument: ""
+        description: Only download and extract packages, do not link them into environment.
+      - names:
           - --experimental
         argument: ""
         description: Enable experimental features
@@ -1192,6 +1468,7 @@ subcommands:
     subcommands:
       - name: list
         description: List configuration values
+        usage: micromamba config list [OPTIONS] [configs...]
         options:
           - names:
               - -h
@@ -1241,6 +1518,10 @@ subcommands:
             argument: ""
             description: Set verbosity (higher verbosity with multiple -v, e.g. -vvv)
           - names:
+              - --log-level
+            argument: ENUM:value in {critical->5,debug->1,error->4,info->2,off->6,trace->0,warning->3}
+            description: OR {5,1,4,2,6,0,3}   Set the log level
+          - names:
               - -q
               - --quiet
             argument: ""
@@ -1263,6 +1544,10 @@ subcommands:
             argument: ""
             description: Only display what would have been done
           - names:
+              - --download-only
+            argument: ""
+            description: Only download and extract packages, do not link them into environment.
+          - names:
               - --experimental
             argument: ""
             description: Enable experimental features
@@ -1283,6 +1568,7 @@ subcommands:
             description: Name of the target prefix
       - name: sources
         description: Show configuration sources
+        usage: micromamba config sources [OPTIONS]
         options:
           - names:
               - -h
@@ -1307,6 +1593,10 @@ subcommands:
             argument: ""
             description: Set verbosity (higher verbosity with multiple -v, e.g. -vvv)
           - names:
+              - --log-level
+            argument: ENUM:value in {critical->5,debug->1,error->4,info->2,off->6,trace->0,warning->3}
+            description: OR {5,1,4,2,6,0,3}   Set the log level
+          - names:
               - -q
               - --quiet
             argument: ""
@@ -1329,6 +1619,10 @@ subcommands:
             argument: ""
             description: Only display what would have been done
           - names:
+              - --download-only
+            argument: ""
+            description: Only download and extract packages, do not link them into environment.
+          - names:
               - --experimental
             argument: ""
             description: Enable experimental features
@@ -1349,6 +1643,7 @@ subcommands:
             description: Name of the target prefix
       - name: describe
         description: Describe given configuration parameters
+        usage: micromamba config describe [OPTIONS] [configs...]
         options:
           - names:
               - -h
@@ -1367,6 +1662,7 @@ subcommands:
             description: Display configs groups
       - name: prepend
         description: Add one configuration value to the beginning of a list key
+        usage: micromamba config prepend [OPTIONS] specs...
         options:
           - names:
               - -h
@@ -1385,8 +1681,14 @@ subcommands:
               - --file
             argument: 'Excludes:'
             description: Set configuration on env's rc file
+        subcommands:
+          - name: specs
+            description: '[TEXT,TEXT] ... REQUIRED'
+            usage: ""
+            options: []
       - name: append
         description: Add one configuration value to the end of a list key
+        usage: micromamba config append [OPTIONS] specs...
         options:
           - names:
               - -h
@@ -1405,8 +1707,14 @@ subcommands:
               - --file
             argument: 'Excludes:'
             description: Set configuration on env's rc file
+        subcommands:
+          - name: specs
+            description: '[TEXT,TEXT] ... REQUIRED'
+            usage: ""
+            options: []
       - name: remove-key
         description: Remove a configuration key and its values
+        usage: micromamba config remove-key [OPTIONS] [remove_key]
         options:
           - names:
               - -h
@@ -1427,6 +1735,7 @@ subcommands:
             description: Set configuration on env's rc file
       - name: remove
         description: Remove a configuration value from a list key. This removes all instances of the value.
+        usage: micromamba config remove [OPTIONS] [remove...]
         options:
           - names:
               - -h
@@ -1447,6 +1756,7 @@ subcommands:
             description: Set configuration on env's rc file
       - name: set
         description: Set a configuration value
+        usage: micromamba config set [OPTIONS] [set_value...]
         options:
           - names:
               - -h
@@ -1467,6 +1777,7 @@ subcommands:
             description: Set configuration on env's rc file
       - name: get
         description: Get a configuration value
+        usage: micromamba config get [OPTIONS] [get_value]
         options:
           - names:
               - -h
@@ -1487,12 +1798,17 @@ subcommands:
             description: Set configuration on env's rc file
   - name: info
     description: Information about micromamba
+    usage: micromamba info [OPTIONS]
     options:
       - names:
           - -h
           - --help
         argument: ""
         description: Print this help message and exit
+      - names:
+          - --licenses
+        argument: ""
+        description: Print licenses
       - names:
           - --rc-file
         argument: TEXT ...
@@ -1510,6 +1826,10 @@ subcommands:
           - --verbose
         argument: ""
         description: Set verbosity (higher verbosity with multiple -v, e.g. -vvv)
+      - names:
+          - --log-level
+        argument: ENUM:value in {critical->5,debug->1,error->4,info->2,off->6,trace->0,warning->3}
+        description: OR {5,1,4,2,6,0,3}   Set the log level
       - names:
           - -q
           - --quiet
@@ -1532,6 +1852,10 @@ subcommands:
           - --dry-run
         argument: ""
         description: Only display what would have been done
+      - names:
+          - --download-only
+        argument: ""
+        description: Only download and extract packages, do not link them into environment.
       - names:
           - --experimental
         argument: ""
@@ -1553,6 +1877,7 @@ subcommands:
         description: Name of the target prefix
   - name: constructor
     description: Commands to support using micromamba in constructor
+    usage: micromamba constructor [OPTIONS]
     options:
       - names:
           - -h
@@ -1574,6 +1899,7 @@ subcommands:
         description: Extract given tarball into prefix
   - name: env
     description: List environments
+    usage: micromamba env [OPTIONS] [SUBCOMMAND]
     options:
       - names:
           - -h
@@ -1598,6 +1924,10 @@ subcommands:
         argument: ""
         description: Set verbosity (higher verbosity with multiple -v, e.g. -vvv)
       - names:
+          - --log-level
+        argument: ENUM:value in {critical->5,debug->1,error->4,info->2,off->6,trace->0,warning->3}
+        description: OR {5,1,4,2,6,0,3}   Set the log level
+      - names:
           - -q
           - --quiet
         argument: ""
@@ -1619,6 +1949,10 @@ subcommands:
           - --dry-run
         argument: ""
         description: Only display what would have been done
+      - names:
+          - --download-only
+        argument: ""
+        description: Only download and extract packages, do not link them into environment.
       - names:
           - --experimental
         argument: ""
@@ -1641,6 +1975,7 @@ subcommands:
     subcommands:
       - name: list
         description: List known environments
+        usage: micromamba env list [OPTIONS]
         options:
           - names:
               - -h
@@ -1665,6 +2000,10 @@ subcommands:
             argument: ""
             description: Set verbosity (higher verbosity with multiple -v, e.g. -vvv)
           - names:
+              - --log-level
+            argument: ENUM:value in {critical->5,debug->1,error->4,info->2,off->6,trace->0,warning->3}
+            description: OR {5,1,4,2,6,0,3}   Set the log level
+          - names:
               - -q
               - --quiet
             argument: ""
@@ -1687,6 +2026,10 @@ subcommands:
             argument: ""
             description: Only display what would have been done
           - names:
+              - --download-only
+            argument: ""
+            description: Only download and extract packages, do not link them into environment.
+          - names:
               - --experimental
             argument: ""
             description: Enable experimental features
@@ -1707,6 +2050,7 @@ subcommands:
             description: Name of the target prefix
       - name: export
         description: Export environment
+        usage: micromamba env export [OPTIONS]
         options:
           - names:
               - -h
@@ -1750,6 +2094,10 @@ subcommands:
             argument: ""
             description: Set verbosity (higher verbosity with multiple -v, e.g. -vvv)
           - names:
+              - --log-level
+            argument: ENUM:value in {critical->5,debug->1,error->4,info->2,off->6,trace->0,warning->3}
+            description: OR {5,1,4,2,6,0,3}   Set the log level
+          - names:
               - -q
               - --quiet
             argument: ""
@@ -1772,6 +2120,85 @@ subcommands:
             argument: ""
             description: Only display what would have been done
           - names:
+              - --download-only
+            argument: ""
+            description: Only download and extract packages, do not link them into environment.
+          - names:
+              - --experimental
+            argument: ""
+            description: Enable experimental features
+          - names:
+              - -r
+              - --root-prefix
+            argument: TEXT
+            description: Path to the root prefix
+          - names:
+              - -p
+              - --prefix
+            argument: TEXT
+            description: Path to the target prefix
+          - names:
+              - -n
+              - --name
+            argument: TEXT
+            description: Name of the target prefix
+      - name: remove
+        description: Remove an environment
+        usage: micromamba env remove [OPTIONS]
+        options:
+          - names:
+              - -h
+              - --help
+            argument: ""
+            description: Print this help message and exit
+          - names:
+              - --rc-file
+            argument: TEXT ...
+            description: Paths to the configuration files to use
+          - names:
+              - --no-rc
+            argument: ""
+            description: Disable the use of configuration files
+          - names:
+              - --no-env
+            argument: ""
+            description: Disable the use of environment variables
+          - names:
+              - -v
+              - --verbose
+            argument: ""
+            description: Set verbosity (higher verbosity with multiple -v, e.g. -vvv)
+          - names:
+              - --log-level
+            argument: ENUM:value in {critical->5,debug->1,error->4,info->2,off->6,trace->0,warning->3}
+            description: OR {5,1,4,2,6,0,3}   Set the log level
+          - names:
+              - -q
+              - --quiet
+            argument: ""
+            description: Set quiet mode (print less output)
+          - names:
+              - -y
+              - --yes
+            argument: ""
+            description: Automatically answer yes on prompted questions
+          - names:
+              - --json
+            argument: ""
+            description: Report all output as json
+          - names:
+              - --offline
+            argument: ""
+            description: Force use cached repodata
+          - names:
+              - --dry-run
+            argument: ""
+            description: Only display what would have been done
+          - names:
+              - --download-only
+            argument: ""
+            description: Only download and extract packages, do not link them into environment.
+          - names:
               - --experimental
             argument: ""
             description: Enable experimental features
@@ -1792,6 +2219,7 @@ subcommands:
             description: Name of the target prefix
   - name: activate
     description: Activate an environment
+    usage: micromamba activate [OPTIONS] [prefix]
     options:
       - names:
           - -h
@@ -1804,6 +2232,7 @@ subcommands:
         description: Activate the specified environment without first deactivating the current one
   - name: run
     description: Run an executable in an environment
+    usage: micromamba run [OPTIONS]
     options:
       - names:
           - -h
@@ -1854,6 +2283,7 @@ subcommands:
         description: Name of the target prefix
   - name: ps
     description: Show, inspect or kill running processes
+    usage: micromamba ps [OPTIONS] [SUBCOMMAND]
     options:
       - names:
           - -h
@@ -1862,6 +2292,7 @@ subcommands:
         description: Print this help message and exit
   - name: auth
     description: Login or logout of a given host
+    usage: micromamba auth [OPTIONS] [SUBCOMMAND]
     options:
       - names:
           - -h
@@ -1871,6 +2302,7 @@ subcommands:
     subcommands:
       - name: login
         description: Store login information for a specific host
+        usage: micromamba auth login [OPTIONS] [host]
         options:
           - names:
               - -h
@@ -1902,6 +2334,7 @@ subcommands:
             description: Read token from stdin
       - name: logout
         description: Erase login information for a specific host
+        usage: micromamba auth logout [OPTIONS] [host]
         options:
           - names:
               - -h
@@ -1914,6 +2347,7 @@ subcommands:
             description: Log out from all hosts
   - name: search
     description: Find packages in active environment or channels
+    usage: micromamba search [OPTIONS] specs...
     options:
       - names:
           - -h
@@ -1981,6 +2415,10 @@ subcommands:
         argument: ""
         description: Set verbosity (higher verbosity with multiple -v, e.g. -vvv)
       - names:
+          - --log-level
+        argument: ENUM:value in {critical->5,debug->1,error->4,info->2,off->6,trace->0,warning->3}
+        description: OR {5,1,4,2,6,0,3}   Set the log level
+      - names:
           - -q
           - --quiet
         argument: ""
@@ -2002,6 +2440,10 @@ subcommands:
           - --dry-run
         argument: ""
         description: Only display what would have been done
+      - names:
+          - --download-only
+        argument: ""
+        description: Only download and extract packages, do not link them into environment.
       - names:
           - --experimental
         argument: ""
@@ -2041,4 +2483,4 @@ subcommands:
           - --retry-clean-cache
         argument: ""
         description: If solve fails, try to fetch updated repodata
-version: 0.25.1
+version: 1.0.0

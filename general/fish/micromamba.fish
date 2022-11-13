@@ -1,19 +1,21 @@
 # Auto-generated with h2o
 
-complete -c micromamba -n "not __fish_seen_subcommand_from shell create install update repoquery remove list package clean config info constructor env activate run ps auth search" -s "h" -l "help" -d "Print this help message and exit"
-complete -c micromamba -n "not __fish_seen_subcommand_from shell create install update repoquery remove list package clean config info constructor env activate run ps auth search" -l "rc-file" -d "Paths to the configuration files to use" -r
-complete -c micromamba -n "not __fish_seen_subcommand_from shell create install update repoquery remove list package clean config info constructor env activate run ps auth search" -l "no-rc" -d "Disable the use of configuration files"
-complete -c micromamba -n "not __fish_seen_subcommand_from shell create install update repoquery remove list package clean config info constructor env activate run ps auth search" -l "no-env" -d "Disable the use of environment variables"
-complete -c micromamba -n "not __fish_seen_subcommand_from shell create install update repoquery remove list package clean config info constructor env activate run ps auth search" -s "v" -l "verbose" -d "Set verbosity (higher verbosity with multiple -v, e.g. -vvv)"
-complete -c micromamba -n "not __fish_seen_subcommand_from shell create install update repoquery remove list package clean config info constructor env activate run ps auth search" -s "q" -l "quiet" -d "Set quiet mode (print less output)"
-complete -c micromamba -n "not __fish_seen_subcommand_from shell create install update repoquery remove list package clean config info constructor env activate run ps auth search" -s "y" -l "yes" -d "Automatically answer yes on prompted questions"
-complete -c micromamba -n "not __fish_seen_subcommand_from shell create install update repoquery remove list package clean config info constructor env activate run ps auth search" -l "json" -d "Report all output as json"
-complete -c micromamba -n "not __fish_seen_subcommand_from shell create install update repoquery remove list package clean config info constructor env activate run ps auth search" -l "offline" -d "Force use cached repodata"
-complete -c micromamba -n "not __fish_seen_subcommand_from shell create install update repoquery remove list package clean config info constructor env activate run ps auth search" -l "dry-run" -d "Only display what would have been done"
-complete -c micromamba -n "not __fish_seen_subcommand_from shell create install update repoquery remove list package clean config info constructor env activate run ps auth search" -l "experimental" -d "Enable experimental features"
-complete -c micromamba -n "not __fish_seen_subcommand_from shell create install update repoquery remove list package clean config info constructor env activate run ps auth search" -s "r" -l "root-prefix" -d "Path to the root prefix" -r
-complete -c micromamba -n "not __fish_seen_subcommand_from shell create install update repoquery remove list package clean config info constructor env activate run ps auth search" -s "p" -l "prefix" -d "Path to the target prefix" -r
-complete -c micromamba -n "not __fish_seen_subcommand_from shell create install update repoquery remove list package clean config info constructor env activate run ps auth search" -s "n" -l "name" -d "Name of the target prefix" -x
+complete -c micromamba -n "not __fish_seen_subcommand_from shell create install update self-update repoquery remove list package clean config info constructor env activate run ps auth search" -s "h" -l "help" -d "Print this help message and exit"
+complete -c micromamba -n "not __fish_seen_subcommand_from shell create install update self-update repoquery remove list package clean config info constructor env activate run ps auth search" -l "rc-file" -d "Paths to the configuration files to use" -r
+complete -c micromamba -n "not __fish_seen_subcommand_from shell create install update self-update repoquery remove list package clean config info constructor env activate run ps auth search" -l "no-rc" -d "Disable the use of configuration files"
+complete -c micromamba -n "not __fish_seen_subcommand_from shell create install update self-update repoquery remove list package clean config info constructor env activate run ps auth search" -l "no-env" -d "Disable the use of environment variables"
+complete -c micromamba -n "not __fish_seen_subcommand_from shell create install update self-update repoquery remove list package clean config info constructor env activate run ps auth search" -s "v" -l "verbose" -d "Set verbosity (higher verbosity with multiple -v, e.g. -vvv)"
+complete -c micromamba -n "not __fish_seen_subcommand_from shell create install update self-update repoquery remove list package clean config info constructor env activate run ps auth search" -l "log-level" -d "OR {5,1,4,2,6,0,3}   Set the log level" -x
+complete -c micromamba -n "not __fish_seen_subcommand_from shell create install update self-update repoquery remove list package clean config info constructor env activate run ps auth search" -s "q" -l "quiet" -d "Set quiet mode (print less output)"
+complete -c micromamba -n "not __fish_seen_subcommand_from shell create install update self-update repoquery remove list package clean config info constructor env activate run ps auth search" -s "y" -l "yes" -d "Automatically answer yes on prompted questions"
+complete -c micromamba -n "not __fish_seen_subcommand_from shell create install update self-update repoquery remove list package clean config info constructor env activate run ps auth search" -l "json" -d "Report all output as json"
+complete -c micromamba -n "not __fish_seen_subcommand_from shell create install update self-update repoquery remove list package clean config info constructor env activate run ps auth search" -l "offline" -d "Force use cached repodata"
+complete -c micromamba -n "not __fish_seen_subcommand_from shell create install update self-update repoquery remove list package clean config info constructor env activate run ps auth search" -l "dry-run" -d "Only display what would have been done"
+complete -c micromamba -n "not __fish_seen_subcommand_from shell create install update self-update repoquery remove list package clean config info constructor env activate run ps auth search" -l "download-only" -d "Only download and extract packages, do not link them into environment."
+complete -c micromamba -n "not __fish_seen_subcommand_from shell create install update self-update repoquery remove list package clean config info constructor env activate run ps auth search" -l "experimental" -d "Enable experimental features"
+complete -c micromamba -n "not __fish_seen_subcommand_from shell create install update self-update repoquery remove list package clean config info constructor env activate run ps auth search" -s "r" -l "root-prefix" -d "Path to the root prefix" -r
+complete -c micromamba -n "not __fish_seen_subcommand_from shell create install update self-update repoquery remove list package clean config info constructor env activate run ps auth search" -s "p" -l "prefix" -d "Path to the target prefix" -r
+complete -c micromamba -n "not __fish_seen_subcommand_from shell create install update self-update repoquery remove list package clean config info constructor env activate run ps auth search" -s "n" -l "name" -d "Name of the target prefix" -x
 
 
 
@@ -31,6 +33,7 @@ complete -k -c micromamba -n __fish_use_subcommand -x -a package -d "Extract a p
 complete -k -c micromamba -n __fish_use_subcommand -x -a list -d "List packages in active environment"
 complete -k -c micromamba -n __fish_use_subcommand -x -a remove -d "Remove packages from active environment"
 complete -k -c micromamba -n __fish_use_subcommand -x -a repoquery -d "Find and analyze packages in active environment or channels"
+complete -k -c micromamba -n __fish_use_subcommand -x -a self-update -d "Update micromamba"
 complete -k -c micromamba -n __fish_use_subcommand -x -a update -d "Update packages in active environment"
 complete -k -c micromamba -n __fish_use_subcommand -x -a install -d "Install packages in active environment"
 complete -k -c micromamba -n __fish_use_subcommand -x -a create -d "Create new environment"
@@ -46,11 +49,13 @@ complete -c micromamba -n "__fish_seen_subcommand_from shell" -l "rc-file" -d "P
 complete -c micromamba -n "__fish_seen_subcommand_from shell" -l "no-rc" -d "Disable the use of configuration files"
 complete -c micromamba -n "__fish_seen_subcommand_from shell" -l "no-env" -d "Disable the use of environment variables"
 complete -c micromamba -n "__fish_seen_subcommand_from shell" -s "v" -l "verbose" -d "Set verbosity (higher verbosity with multiple -v, e.g. -vvv)"
+complete -c micromamba -n "__fish_seen_subcommand_from shell" -l "log-level" -d "OR {5,1,4,2,6,0,3}   Set the log level" -x
 complete -c micromamba -n "__fish_seen_subcommand_from shell" -s "q" -l "quiet" -d "Set quiet mode (print less output)"
 complete -c micromamba -n "__fish_seen_subcommand_from shell" -s "y" -l "yes" -d "Automatically answer yes on prompted questions"
 complete -c micromamba -n "__fish_seen_subcommand_from shell" -l "json" -d "Report all output as json"
 complete -c micromamba -n "__fish_seen_subcommand_from shell" -l "offline" -d "Force use cached repodata"
 complete -c micromamba -n "__fish_seen_subcommand_from shell" -l "dry-run" -d "Only display what would have been done"
+complete -c micromamba -n "__fish_seen_subcommand_from shell" -l "download-only" -d "Only download and extract packages, do not link them into environment."
 complete -c micromamba -n "__fish_seen_subcommand_from shell" -l "experimental" -d "Enable experimental features"
 
 
@@ -72,22 +77,25 @@ complete -c micromamba -n "__fish_seen_subcommand_from create" -l "allow-softlin
 complete -c micromamba -n "__fish_seen_subcommand_from create" -l "always-softlink" -l "no-always-softlink" -d "Use soft-link instead of hard-link" -x
 complete -c micromamba -n "__fish_seen_subcommand_from create" -l "always-copy" -l "no-always-copy" -d "Use copy instead of hard-link" -x
 complete -c micromamba -n "__fish_seen_subcommand_from create" -l "extra-safety-checks" -l "no-extra-safety-checks" -d "Run extra verifications on packages" -x
-complete -c micromamba -n "__fish_seen_subcommand_from create" -l "lock-timeout" -d "LockFile timeout" -r
+complete -c micromamba -n "__fish_seen_subcommand_from create" -l "lock-timeout" -d "Lockfile timeout" -r
 complete -c micromamba -n "__fish_seen_subcommand_from create" -l "shortcuts" -l "no-shortcuts" -d "Install start-menu shortcuts on Windows (not implemented on Linux / macOS)" -x
 complete -c micromamba -n "__fish_seen_subcommand_from create" -l "safety-checks" -d "OR {0,2,1}   Safety checks policy ('enabled', 'warn', or 'disabled')" -x
 complete -c micromamba -n "__fish_seen_subcommand_from create" -l "verify-artifacts" -d "Run verifications on packages signatures"
 complete -c micromamba -n "__fish_seen_subcommand_from create" -l "platform" -d "The platform description" -x
 complete -c micromamba -n "__fish_seen_subcommand_from create" -l "no-deps" -d "Do not install dependencies."
 complete -c micromamba -n "__fish_seen_subcommand_from create" -l "only-deps" -d "Only install dependencies"
+complete -c micromamba -n "__fish_seen_subcommand_from create" -l "category" -d "Categories of package to install from environment lockfile" -r
 complete -c micromamba -n "__fish_seen_subcommand_from create" -l "rc-file" -d "Paths to the configuration files to use" -r
 complete -c micromamba -n "__fish_seen_subcommand_from create" -l "no-rc" -d "Disable the use of configuration files"
 complete -c micromamba -n "__fish_seen_subcommand_from create" -l "no-env" -d "Disable the use of environment variables"
 complete -c micromamba -n "__fish_seen_subcommand_from create" -s "v" -l "verbose" -d "Set verbosity (higher verbosity with multiple -v, e.g. -vvv)"
+complete -c micromamba -n "__fish_seen_subcommand_from create" -l "log-level" -d "OR {5,1,4,2,6,0,3}   Set the log level" -x
 complete -c micromamba -n "__fish_seen_subcommand_from create" -s "q" -l "quiet" -d "Set quiet mode (print less output)"
 complete -c micromamba -n "__fish_seen_subcommand_from create" -s "y" -l "yes" -d "Automatically answer yes on prompted questions"
 complete -c micromamba -n "__fish_seen_subcommand_from create" -l "json" -d "Report all output as json"
 complete -c micromamba -n "__fish_seen_subcommand_from create" -l "offline" -d "Force use cached repodata"
 complete -c micromamba -n "__fish_seen_subcommand_from create" -l "dry-run" -d "Only display what would have been done"
+complete -c micromamba -n "__fish_seen_subcommand_from create" -l "download-only" -d "Only download and extract packages, do not link them into environment."
 complete -c micromamba -n "__fish_seen_subcommand_from create" -l "experimental" -d "Enable experimental features"
 complete -c micromamba -n "__fish_seen_subcommand_from create" -s "r" -l "root-prefix" -d "Path to the root prefix" -r
 complete -c micromamba -n "__fish_seen_subcommand_from create" -s "p" -l "prefix" -d "Path to the target prefix" -r
@@ -117,24 +125,27 @@ complete -c micromamba -n "__fish_seen_subcommand_from install" -l "allow-softli
 complete -c micromamba -n "__fish_seen_subcommand_from install" -l "always-softlink" -l "no-always-softlink" -d "Use soft-link instead of hard-link" -x
 complete -c micromamba -n "__fish_seen_subcommand_from install" -l "always-copy" -l "no-always-copy" -d "Use copy instead of hard-link" -x
 complete -c micromamba -n "__fish_seen_subcommand_from install" -l "extra-safety-checks" -l "no-extra-safety-checks" -d "Run extra verifications on packages" -x
-complete -c micromamba -n "__fish_seen_subcommand_from install" -l "lock-timeout" -d "LockFile timeout" -r
+complete -c micromamba -n "__fish_seen_subcommand_from install" -l "lock-timeout" -d "Lockfile timeout" -r
 complete -c micromamba -n "__fish_seen_subcommand_from install" -l "shortcuts" -l "no-shortcuts" -d "Install start-menu shortcuts on Windows (not implemented on Linux / macOS)" -x
 complete -c micromamba -n "__fish_seen_subcommand_from install" -l "safety-checks" -d "OR {0,2,1}   Safety checks policy ('enabled', 'warn', or 'disabled')" -x
 complete -c micromamba -n "__fish_seen_subcommand_from install" -l "verify-artifacts" -d "Run verifications on packages signatures"
 complete -c micromamba -n "__fish_seen_subcommand_from install" -l "platform" -d "The platform description" -x
 complete -c micromamba -n "__fish_seen_subcommand_from install" -l "no-deps" -d "Do not install dependencies."
 complete -c micromamba -n "__fish_seen_subcommand_from install" -l "only-deps" -d "Only install dependencies"
+complete -c micromamba -n "__fish_seen_subcommand_from install" -l "category" -d "Categories of package to install from environment lockfile" -r
 complete -c micromamba -n "__fish_seen_subcommand_from install" -l "freeze-installed" -d "Freeze already installed dependencies"
 complete -c micromamba -n "__fish_seen_subcommand_from install" -l "force-reinstall" -d "Force reinstall of package"
 complete -c micromamba -n "__fish_seen_subcommand_from install" -l "rc-file" -d "Paths to the configuration files to use" -r
 complete -c micromamba -n "__fish_seen_subcommand_from install" -l "no-rc" -d "Disable the use of configuration files"
 complete -c micromamba -n "__fish_seen_subcommand_from install" -l "no-env" -d "Disable the use of environment variables"
 complete -c micromamba -n "__fish_seen_subcommand_from install" -s "v" -l "verbose" -d "Set verbosity (higher verbosity with multiple -v, e.g. -vvv)"
+complete -c micromamba -n "__fish_seen_subcommand_from install" -l "log-level" -d "OR {5,1,4,2,6,0,3}   Set the log level" -x
 complete -c micromamba -n "__fish_seen_subcommand_from install" -s "q" -l "quiet" -d "Set quiet mode (print less output)"
 complete -c micromamba -n "__fish_seen_subcommand_from install" -s "y" -l "yes" -d "Automatically answer yes on prompted questions"
 complete -c micromamba -n "__fish_seen_subcommand_from install" -l "json" -d "Report all output as json"
 complete -c micromamba -n "__fish_seen_subcommand_from install" -l "offline" -d "Force use cached repodata"
 complete -c micromamba -n "__fish_seen_subcommand_from install" -l "dry-run" -d "Only display what would have been done"
+complete -c micromamba -n "__fish_seen_subcommand_from install" -l "download-only" -d "Only download and extract packages, do not link them into environment."
 complete -c micromamba -n "__fish_seen_subcommand_from install" -l "experimental" -d "Enable experimental features"
 complete -c micromamba -n "__fish_seen_subcommand_from install" -s "r" -l "root-prefix" -d "Path to the root prefix" -r
 complete -c micromamba -n "__fish_seen_subcommand_from install" -s "p" -l "prefix" -d "Path to the target prefix" -r
@@ -164,24 +175,27 @@ complete -c micromamba -n "__fish_seen_subcommand_from update" -l "allow-softlin
 complete -c micromamba -n "__fish_seen_subcommand_from update" -l "always-softlink" -l "no-always-softlink" -d "Use soft-link instead of hard-link" -x
 complete -c micromamba -n "__fish_seen_subcommand_from update" -l "always-copy" -l "no-always-copy" -d "Use copy instead of hard-link" -x
 complete -c micromamba -n "__fish_seen_subcommand_from update" -l "extra-safety-checks" -l "no-extra-safety-checks" -d "Run extra verifications on packages" -x
-complete -c micromamba -n "__fish_seen_subcommand_from update" -l "lock-timeout" -d "LockFile timeout" -r
+complete -c micromamba -n "__fish_seen_subcommand_from update" -l "lock-timeout" -d "Lockfile timeout" -r
 complete -c micromamba -n "__fish_seen_subcommand_from update" -l "shortcuts" -l "no-shortcuts" -d "Install start-menu shortcuts on Windows (not implemented on Linux / macOS)" -x
 complete -c micromamba -n "__fish_seen_subcommand_from update" -l "safety-checks" -d "OR {0,2,1}   Safety checks policy ('enabled', 'warn', or 'disabled')" -x
 complete -c micromamba -n "__fish_seen_subcommand_from update" -l "verify-artifacts" -d "Run verifications on packages signatures"
 complete -c micromamba -n "__fish_seen_subcommand_from update" -l "platform" -d "The platform description" -x
 complete -c micromamba -n "__fish_seen_subcommand_from update" -l "no-deps" -d "Do not install dependencies."
 complete -c micromamba -n "__fish_seen_subcommand_from update" -l "only-deps" -d "Only install dependencies"
+complete -c micromamba -n "__fish_seen_subcommand_from update" -l "category" -d "Categories of package to install from environment lockfile" -r
 complete -c micromamba -n "__fish_seen_subcommand_from update" -l "prune" -l "no-prune" -d "Prune dependencies (default)" -x
 complete -c micromamba -n "__fish_seen_subcommand_from update" -s "a" -l "all" -d "Update all packages in the environment"
 complete -c micromamba -n "__fish_seen_subcommand_from update" -l "rc-file" -d "Paths to the configuration files to use" -r
 complete -c micromamba -n "__fish_seen_subcommand_from update" -l "no-rc" -d "Disable the use of configuration files"
 complete -c micromamba -n "__fish_seen_subcommand_from update" -l "no-env" -d "Disable the use of environment variables"
 complete -c micromamba -n "__fish_seen_subcommand_from update" -s "v" -l "verbose" -d "Set verbosity (higher verbosity with multiple -v, e.g. -vvv)"
+complete -c micromamba -n "__fish_seen_subcommand_from update" -l "log-level" -d "OR {5,1,4,2,6,0,3}   Set the log level" -x
 complete -c micromamba -n "__fish_seen_subcommand_from update" -s "q" -l "quiet" -d "Set quiet mode (print less output)"
 complete -c micromamba -n "__fish_seen_subcommand_from update" -s "y" -l "yes" -d "Automatically answer yes on prompted questions"
 complete -c micromamba -n "__fish_seen_subcommand_from update" -l "json" -d "Report all output as json"
 complete -c micromamba -n "__fish_seen_subcommand_from update" -l "offline" -d "Force use cached repodata"
 complete -c micromamba -n "__fish_seen_subcommand_from update" -l "dry-run" -d "Only display what would have been done"
+complete -c micromamba -n "__fish_seen_subcommand_from update" -l "download-only" -d "Only download and extract packages, do not link them into environment."
 complete -c micromamba -n "__fish_seen_subcommand_from update" -l "experimental" -d "Enable experimental features"
 complete -c micromamba -n "__fish_seen_subcommand_from update" -s "r" -l "root-prefix" -d "Path to the root prefix" -r
 complete -c micromamba -n "__fish_seen_subcommand_from update" -s "p" -l "prefix" -d "Path to the target prefix" -r
@@ -191,6 +205,55 @@ complete -c micromamba -n "__fish_seen_subcommand_from update" -l "ssl-no-revoke
 complete -c micromamba -n "__fish_seen_subcommand_from update" -l "cacert-path" -d "Path (file or directory) SSL certificate(s)" -r
 complete -c micromamba -n "__fish_seen_subcommand_from update" -l "repodata-ttl" -d "Repodata time-to-live" -x
 complete -c micromamba -n "__fish_seen_subcommand_from update" -l "retry-clean-cache" -d "If solve fails, try to fetch updated repodata"
+
+
+
+complete -c micromamba -n "__fish_seen_subcommand_from self-update" -s "h" -l "help" -d "Print this help message and exit"
+complete -c micromamba -n "__fish_seen_subcommand_from self-update" -s "c" -l "channel" -d "Define the list of channels" -x
+complete -c micromamba -n "__fish_seen_subcommand_from self-update" -l "override-channels" -d "Override channels"
+complete -c micromamba -n "__fish_seen_subcommand_from self-update" -l "channel-priority" -d "e in {disabled->0,flexible->1,strict->2} OR {0,1,2} Define the channel priority ('strict' or 'disabled')" -x
+complete -c micromamba -n "__fish_seen_subcommand_from self-update" -l "channel-alias" -d "The prepended url location to associate with channel names" -x
+complete -c micromamba -n "__fish_seen_subcommand_from self-update" -l "strict-channel-priority" -d "Enable strict channel priority"
+complete -c micromamba -n "__fish_seen_subcommand_from self-update" -l "no-channel-priority" -d "Disable channel priority"
+complete -c micromamba -n "__fish_seen_subcommand_from self-update" -s "f" -l "file" -d "File (yaml, explicit or plain)" -r
+complete -c micromamba -n "__fish_seen_subcommand_from self-update" -l "no-pin" -l "pin" -d "Ignore pinned packages" -x
+complete -c micromamba -n "__fish_seen_subcommand_from self-update" -l "no-py-pin" -l "py-pin" -d "Do not automatically pin Python" -x
+complete -c micromamba -n "__fish_seen_subcommand_from self-update" -l "pyc" -l "no-pyc" -d "Defines if PYC files will be compiled or not" -r
+complete -c micromamba -n "__fish_seen_subcommand_from self-update" -l "allow-uninstall" -l "no-allow-uninstall" -d "Allow uninstall when installing or updating packages." -x
+complete -c micromamba -n "__fish_seen_subcommand_from self-update" -l "allow-downgrade" -l "no-allow-downgrade" -d "Allow downgrade when installing packages." -x
+complete -c micromamba -n "__fish_seen_subcommand_from self-update" -l "allow-softlinks" -l "no-allow-softlinks" -d "Allow to use soft-links when hard-links are not possible" -x
+complete -c micromamba -n "__fish_seen_subcommand_from self-update" -l "always-softlink" -l "no-always-softlink" -d "Use soft-link instead of hard-link" -x
+complete -c micromamba -n "__fish_seen_subcommand_from self-update" -l "always-copy" -l "no-always-copy" -d "Use copy instead of hard-link" -x
+complete -c micromamba -n "__fish_seen_subcommand_from self-update" -l "extra-safety-checks" -l "no-extra-safety-checks" -d "Run extra verifications on packages" -x
+complete -c micromamba -n "__fish_seen_subcommand_from self-update" -l "lock-timeout" -d "Lockfile timeout" -r
+complete -c micromamba -n "__fish_seen_subcommand_from self-update" -l "shortcuts" -l "no-shortcuts" -d "Install start-menu shortcuts on Windows (not implemented on Linux / macOS)" -x
+complete -c micromamba -n "__fish_seen_subcommand_from self-update" -l "safety-checks" -d "OR {0,2,1}   Safety checks policy ('enabled', 'warn', or 'disabled')" -x
+complete -c micromamba -n "__fish_seen_subcommand_from self-update" -l "verify-artifacts" -d "Run verifications on packages signatures"
+complete -c micromamba -n "__fish_seen_subcommand_from self-update" -l "platform" -d "The platform description" -x
+complete -c micromamba -n "__fish_seen_subcommand_from self-update" -l "no-deps" -d "Do not install dependencies."
+complete -c micromamba -n "__fish_seen_subcommand_from self-update" -l "only-deps" -d "Only install dependencies"
+complete -c micromamba -n "__fish_seen_subcommand_from self-update" -l "category" -d "Categories of package to install from environment lockfile" -r
+complete -c micromamba -n "__fish_seen_subcommand_from self-update" -l "version" -d "Install specific micromamba version" -x
+complete -c micromamba -n "__fish_seen_subcommand_from self-update" -l "rc-file" -d "Paths to the configuration files to use" -r
+complete -c micromamba -n "__fish_seen_subcommand_from self-update" -l "no-rc" -d "Disable the use of configuration files"
+complete -c micromamba -n "__fish_seen_subcommand_from self-update" -l "no-env" -d "Disable the use of environment variables"
+complete -c micromamba -n "__fish_seen_subcommand_from self-update" -s "v" -l "verbose" -d "Set verbosity (higher verbosity with multiple -v, e.g. -vvv)"
+complete -c micromamba -n "__fish_seen_subcommand_from self-update" -l "log-level" -d "OR {5,1,4,2,6,0,3}   Set the log level" -x
+complete -c micromamba -n "__fish_seen_subcommand_from self-update" -s "q" -l "quiet" -d "Set quiet mode (print less output)"
+complete -c micromamba -n "__fish_seen_subcommand_from self-update" -s "y" -l "yes" -d "Automatically answer yes on prompted questions"
+complete -c micromamba -n "__fish_seen_subcommand_from self-update" -l "json" -d "Report all output as json"
+complete -c micromamba -n "__fish_seen_subcommand_from self-update" -l "offline" -d "Force use cached repodata"
+complete -c micromamba -n "__fish_seen_subcommand_from self-update" -l "dry-run" -d "Only display what would have been done"
+complete -c micromamba -n "__fish_seen_subcommand_from self-update" -l "download-only" -d "Only download and extract packages, do not link them into environment."
+complete -c micromamba -n "__fish_seen_subcommand_from self-update" -l "experimental" -d "Enable experimental features"
+complete -c micromamba -n "__fish_seen_subcommand_from self-update" -s "r" -l "root-prefix" -d "Path to the root prefix" -r
+complete -c micromamba -n "__fish_seen_subcommand_from self-update" -s "p" -l "prefix" -d "Path to the target prefix" -r
+complete -c micromamba -n "__fish_seen_subcommand_from self-update" -s "n" -l "name" -d "Name of the target prefix" -x
+complete -c micromamba -n "__fish_seen_subcommand_from self-update" -l "ssl-verify" -d "Verify SSL certificates for HTTPS requests" -x
+complete -c micromamba -n "__fish_seen_subcommand_from self-update" -l "ssl-no-revoke" -d "SSL certificate revocation checks"
+complete -c micromamba -n "__fish_seen_subcommand_from self-update" -l "cacert-path" -d "Path (file or directory) SSL certificate(s)" -r
+complete -c micromamba -n "__fish_seen_subcommand_from self-update" -l "repodata-ttl" -d "Repodata time-to-live" -x
+complete -c micromamba -n "__fish_seen_subcommand_from self-update" -l "retry-clean-cache" -d "If solve fails, try to fetch updated repodata"
 
 
 
@@ -209,11 +272,13 @@ complete -c micromamba -n "__fish_seen_subcommand_from repoquery" -l "rc-file" -
 complete -c micromamba -n "__fish_seen_subcommand_from repoquery" -l "no-rc" -d "Disable the use of configuration files"
 complete -c micromamba -n "__fish_seen_subcommand_from repoquery" -l "no-env" -d "Disable the use of environment variables"
 complete -c micromamba -n "__fish_seen_subcommand_from repoquery" -s "v" -l "verbose" -d "Set verbosity (higher verbosity with multiple -v, e.g. -vvv)"
+complete -c micromamba -n "__fish_seen_subcommand_from repoquery" -l "log-level" -d "OR {5,1,4,2,6,0,3}   Set the log level" -x
 complete -c micromamba -n "__fish_seen_subcommand_from repoquery" -s "q" -l "quiet" -d "Set quiet mode (print less output)"
 complete -c micromamba -n "__fish_seen_subcommand_from repoquery" -s "y" -l "yes" -d "Automatically answer yes on prompted questions"
 complete -c micromamba -n "__fish_seen_subcommand_from repoquery" -l "json" -d "Report all output as json"
 complete -c micromamba -n "__fish_seen_subcommand_from repoquery" -l "offline" -d "Force use cached repodata"
 complete -c micromamba -n "__fish_seen_subcommand_from repoquery" -l "dry-run" -d "Only display what would have been done"
+complete -c micromamba -n "__fish_seen_subcommand_from repoquery" -l "download-only" -d "Only download and extract packages, do not link them into environment."
 complete -c micromamba -n "__fish_seen_subcommand_from repoquery" -l "experimental" -d "Enable experimental features"
 complete -c micromamba -n "__fish_seen_subcommand_from repoquery" -s "r" -l "root-prefix" -d "Path to the root prefix" -r
 complete -c micromamba -n "__fish_seen_subcommand_from repoquery" -s "p" -l "prefix" -d "Path to the target prefix" -r
@@ -234,11 +299,13 @@ complete -c micromamba -n "__fish_seen_subcommand_from remove" -l "rc-file" -d "
 complete -c micromamba -n "__fish_seen_subcommand_from remove" -l "no-rc" -d "Disable the use of configuration files"
 complete -c micromamba -n "__fish_seen_subcommand_from remove" -l "no-env" -d "Disable the use of environment variables"
 complete -c micromamba -n "__fish_seen_subcommand_from remove" -s "v" -l "verbose" -d "Set verbosity (higher verbosity with multiple -v, e.g. -vvv)"
+complete -c micromamba -n "__fish_seen_subcommand_from remove" -l "log-level" -d "OR {5,1,4,2,6,0,3}   Set the log level" -x
 complete -c micromamba -n "__fish_seen_subcommand_from remove" -s "q" -l "quiet" -d "Set quiet mode (print less output)"
 complete -c micromamba -n "__fish_seen_subcommand_from remove" -s "y" -l "yes" -d "Automatically answer yes on prompted questions"
 complete -c micromamba -n "__fish_seen_subcommand_from remove" -l "json" -d "Report all output as json"
 complete -c micromamba -n "__fish_seen_subcommand_from remove" -l "offline" -d "Force use cached repodata"
 complete -c micromamba -n "__fish_seen_subcommand_from remove" -l "dry-run" -d "Only display what would have been done"
+complete -c micromamba -n "__fish_seen_subcommand_from remove" -l "download-only" -d "Only download and extract packages, do not link them into environment."
 complete -c micromamba -n "__fish_seen_subcommand_from remove" -l "experimental" -d "Enable experimental features"
 complete -c micromamba -n "__fish_seen_subcommand_from remove" -s "r" -l "root-prefix" -d "Path to the root prefix" -r
 complete -c micromamba -n "__fish_seen_subcommand_from remove" -s "p" -l "prefix" -d "Path to the target prefix" -r
@@ -251,11 +318,13 @@ complete -c micromamba -n "__fish_seen_subcommand_from list" -l "rc-file" -d "Pa
 complete -c micromamba -n "__fish_seen_subcommand_from list" -l "no-rc" -d "Disable the use of configuration files"
 complete -c micromamba -n "__fish_seen_subcommand_from list" -l "no-env" -d "Disable the use of environment variables"
 complete -c micromamba -n "__fish_seen_subcommand_from list" -s "v" -l "verbose" -d "Set verbosity (higher verbosity with multiple -v, e.g. -vvv)"
+complete -c micromamba -n "__fish_seen_subcommand_from list" -l "log-level" -d "OR {5,1,4,2,6,0,3}   Set the log level" -x
 complete -c micromamba -n "__fish_seen_subcommand_from list" -s "q" -l "quiet" -d "Set quiet mode (print less output)"
 complete -c micromamba -n "__fish_seen_subcommand_from list" -s "y" -l "yes" -d "Automatically answer yes on prompted questions"
 complete -c micromamba -n "__fish_seen_subcommand_from list" -l "json" -d "Report all output as json"
 complete -c micromamba -n "__fish_seen_subcommand_from list" -l "offline" -d "Force use cached repodata"
 complete -c micromamba -n "__fish_seen_subcommand_from list" -l "dry-run" -d "Only display what would have been done"
+complete -c micromamba -n "__fish_seen_subcommand_from list" -l "download-only" -d "Only download and extract packages, do not link them into environment."
 complete -c micromamba -n "__fish_seen_subcommand_from list" -l "experimental" -d "Enable experimental features"
 complete -c micromamba -n "__fish_seen_subcommand_from list" -s "r" -l "root-prefix" -d "Path to the root prefix" -r
 complete -c micromamba -n "__fish_seen_subcommand_from list" -s "p" -l "prefix" -d "Path to the target prefix" -r
@@ -279,11 +348,13 @@ complete -c micromamba -n "__fish_seen_subcommand_from clean" -l "rc-file" -d "P
 complete -c micromamba -n "__fish_seen_subcommand_from clean" -l "no-rc" -d "Disable the use of configuration files"
 complete -c micromamba -n "__fish_seen_subcommand_from clean" -l "no-env" -d "Disable the use of environment variables"
 complete -c micromamba -n "__fish_seen_subcommand_from clean" -s "v" -l "verbose" -d "Set verbosity (higher verbosity with multiple -v, e.g. -vvv)"
+complete -c micromamba -n "__fish_seen_subcommand_from clean" -l "log-level" -d "OR {5,1,4,2,6,0,3}   Set the log level" -x
 complete -c micromamba -n "__fish_seen_subcommand_from clean" -s "q" -l "quiet" -d "Set quiet mode (print less output)"
 complete -c micromamba -n "__fish_seen_subcommand_from clean" -s "y" -l "yes" -d "Automatically answer yes on prompted questions"
 complete -c micromamba -n "__fish_seen_subcommand_from clean" -l "json" -d "Report all output as json"
 complete -c micromamba -n "__fish_seen_subcommand_from clean" -l "offline" -d "Force use cached repodata"
 complete -c micromamba -n "__fish_seen_subcommand_from clean" -l "dry-run" -d "Only display what would have been done"
+complete -c micromamba -n "__fish_seen_subcommand_from clean" -l "download-only" -d "Only download and extract packages, do not link them into environment."
 complete -c micromamba -n "__fish_seen_subcommand_from clean" -l "experimental" -d "Enable experimental features"
 
 
@@ -293,11 +364,13 @@ complete -c micromamba -n "__fish_seen_subcommand_from config" -l "rc-file" -d "
 complete -c micromamba -n "__fish_seen_subcommand_from config" -l "no-rc" -d "Disable the use of configuration files"
 complete -c micromamba -n "__fish_seen_subcommand_from config" -l "no-env" -d "Disable the use of environment variables"
 complete -c micromamba -n "__fish_seen_subcommand_from config" -s "v" -l "verbose" -d "Set verbosity (higher verbosity with multiple -v, e.g. -vvv)"
+complete -c micromamba -n "__fish_seen_subcommand_from config" -l "log-level" -d "OR {5,1,4,2,6,0,3}   Set the log level" -x
 complete -c micromamba -n "__fish_seen_subcommand_from config" -s "q" -l "quiet" -d "Set quiet mode (print less output)"
 complete -c micromamba -n "__fish_seen_subcommand_from config" -s "y" -l "yes" -d "Automatically answer yes on prompted questions"
 complete -c micromamba -n "__fish_seen_subcommand_from config" -l "json" -d "Report all output as json"
 complete -c micromamba -n "__fish_seen_subcommand_from config" -l "offline" -d "Force use cached repodata"
 complete -c micromamba -n "__fish_seen_subcommand_from config" -l "dry-run" -d "Only display what would have been done"
+complete -c micromamba -n "__fish_seen_subcommand_from config" -l "download-only" -d "Only download and extract packages, do not link them into environment."
 complete -c micromamba -n "__fish_seen_subcommand_from config" -l "experimental" -d "Enable experimental features"
 complete -c micromamba -n "__fish_seen_subcommand_from config" -s "r" -l "root-prefix" -d "Path to the root prefix" -r
 complete -c micromamba -n "__fish_seen_subcommand_from config" -s "p" -l "prefix" -d "Path to the target prefix" -r
@@ -306,15 +379,18 @@ complete -c micromamba -n "__fish_seen_subcommand_from config" -s "n" -l "name" 
 
 
 complete -c micromamba -n "__fish_seen_subcommand_from info" -s "h" -l "help" -d "Print this help message and exit"
+complete -c micromamba -n "__fish_seen_subcommand_from info" -l "licenses" -d "Print licenses"
 complete -c micromamba -n "__fish_seen_subcommand_from info" -l "rc-file" -d "Paths to the configuration files to use" -r
 complete -c micromamba -n "__fish_seen_subcommand_from info" -l "no-rc" -d "Disable the use of configuration files"
 complete -c micromamba -n "__fish_seen_subcommand_from info" -l "no-env" -d "Disable the use of environment variables"
 complete -c micromamba -n "__fish_seen_subcommand_from info" -s "v" -l "verbose" -d "Set verbosity (higher verbosity with multiple -v, e.g. -vvv)"
+complete -c micromamba -n "__fish_seen_subcommand_from info" -l "log-level" -d "OR {5,1,4,2,6,0,3}   Set the log level" -x
 complete -c micromamba -n "__fish_seen_subcommand_from info" -s "q" -l "quiet" -d "Set quiet mode (print less output)"
 complete -c micromamba -n "__fish_seen_subcommand_from info" -s "y" -l "yes" -d "Automatically answer yes on prompted questions"
 complete -c micromamba -n "__fish_seen_subcommand_from info" -l "json" -d "Report all output as json"
 complete -c micromamba -n "__fish_seen_subcommand_from info" -l "offline" -d "Force use cached repodata"
 complete -c micromamba -n "__fish_seen_subcommand_from info" -l "dry-run" -d "Only display what would have been done"
+complete -c micromamba -n "__fish_seen_subcommand_from info" -l "download-only" -d "Only download and extract packages, do not link them into environment."
 complete -c micromamba -n "__fish_seen_subcommand_from info" -l "experimental" -d "Enable experimental features"
 complete -c micromamba -n "__fish_seen_subcommand_from info" -s "r" -l "root-prefix" -d "Path to the root prefix" -r
 complete -c micromamba -n "__fish_seen_subcommand_from info" -s "p" -l "prefix" -d "Path to the target prefix" -r
@@ -334,11 +410,13 @@ complete -c micromamba -n "__fish_seen_subcommand_from env" -l "rc-file" -d "Pat
 complete -c micromamba -n "__fish_seen_subcommand_from env" -l "no-rc" -d "Disable the use of configuration files"
 complete -c micromamba -n "__fish_seen_subcommand_from env" -l "no-env" -d "Disable the use of environment variables"
 complete -c micromamba -n "__fish_seen_subcommand_from env" -s "v" -l "verbose" -d "Set verbosity (higher verbosity with multiple -v, e.g. -vvv)"
+complete -c micromamba -n "__fish_seen_subcommand_from env" -l "log-level" -d "OR {5,1,4,2,6,0,3}   Set the log level" -x
 complete -c micromamba -n "__fish_seen_subcommand_from env" -s "q" -l "quiet" -d "Set quiet mode (print less output)"
 complete -c micromamba -n "__fish_seen_subcommand_from env" -s "y" -l "yes" -d "Automatically answer yes on prompted questions"
 complete -c micromamba -n "__fish_seen_subcommand_from env" -l "json" -d "Report all output as json"
 complete -c micromamba -n "__fish_seen_subcommand_from env" -l "offline" -d "Force use cached repodata"
 complete -c micromamba -n "__fish_seen_subcommand_from env" -l "dry-run" -d "Only display what would have been done"
+complete -c micromamba -n "__fish_seen_subcommand_from env" -l "download-only" -d "Only download and extract packages, do not link them into environment."
 complete -c micromamba -n "__fish_seen_subcommand_from env" -l "experimental" -d "Enable experimental features"
 complete -c micromamba -n "__fish_seen_subcommand_from env" -s "r" -l "root-prefix" -d "Path to the root prefix" -r
 complete -c micromamba -n "__fish_seen_subcommand_from env" -s "p" -l "prefix" -d "Path to the target prefix" -r
@@ -387,11 +465,13 @@ complete -c micromamba -n "__fish_seen_subcommand_from search" -l "rc-file" -d "
 complete -c micromamba -n "__fish_seen_subcommand_from search" -l "no-rc" -d "Disable the use of configuration files"
 complete -c micromamba -n "__fish_seen_subcommand_from search" -l "no-env" -d "Disable the use of environment variables"
 complete -c micromamba -n "__fish_seen_subcommand_from search" -s "v" -l "verbose" -d "Set verbosity (higher verbosity with multiple -v, e.g. -vvv)"
+complete -c micromamba -n "__fish_seen_subcommand_from search" -l "log-level" -d "OR {5,1,4,2,6,0,3}   Set the log level" -x
 complete -c micromamba -n "__fish_seen_subcommand_from search" -s "q" -l "quiet" -d "Set quiet mode (print less output)"
 complete -c micromamba -n "__fish_seen_subcommand_from search" -s "y" -l "yes" -d "Automatically answer yes on prompted questions"
 complete -c micromamba -n "__fish_seen_subcommand_from search" -l "json" -d "Report all output as json"
 complete -c micromamba -n "__fish_seen_subcommand_from search" -l "offline" -d "Force use cached repodata"
 complete -c micromamba -n "__fish_seen_subcommand_from search" -l "dry-run" -d "Only display what would have been done"
+complete -c micromamba -n "__fish_seen_subcommand_from search" -l "download-only" -d "Only download and extract packages, do not link them into environment."
 complete -c micromamba -n "__fish_seen_subcommand_from search" -l "experimental" -d "Enable experimental features"
 complete -c micromamba -n "__fish_seen_subcommand_from search" -s "r" -l "root-prefix" -d "Path to the root prefix" -r
 complete -c micromamba -n "__fish_seen_subcommand_from search" -s "p" -l "prefix" -d "Path to the target prefix" -r

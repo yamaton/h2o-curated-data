@@ -1,5 +1,6 @@
 name: ansible-config
 description: View ansible configuration
+usage: ansible-config [-h] [--version] [-v] {list,dump,view,init} ...
 options:
   - names:
       - --version
@@ -14,10 +15,11 @@ options:
       - -v
       - --verbose
     argument: ""
-    description: verbose mode (-vvv for more, -vvvv to enable connection debugging)
+    description: Causes Ansible to print more debug messages. Adding multiple -v will increase the verbosity, the builtin plugins currently evaluate up to -vvvvvv. A reasonable level to start is -vvv, connection debugging might require -vvvv.
 subcommands:
   - name: list
     description: Print all config options
+    usage: ansible-config list [-h] [-v] [-c CONFIG_FILE] [-t {all,base,become,cache,callback,cliconf,connection,httpapi,inventory,lookup,netconf,shell,vars}] [--format {json,yaml}] [args ...]
     options:
       - names:
           - -h
@@ -28,7 +30,7 @@ subcommands:
           - -v
           - --verbose
         argument: ""
-        description: verbose mode (-vvv for more, -vvvv to enable connection debugging)
+        description: Causes Ansible to print more debug messages. Adding multiple -v will increase the verbosity, the builtin plugins currently evaluate up to -vvvvvv. A reasonable level to start is -vvv, connection debugging might require -vvvv.
       - names:
           - -c
           - --config
@@ -39,8 +41,14 @@ subcommands:
           - --type
         argument: '{all,base,become,cache,callback,cliconf,connection,httpapi,inventory,lookup,netconf,shell,vars}'
         description: Filter down to a specific plugin type.
+      - names:
+          - --format
+          - -f
+        argument: '{json,yaml}'
+        description: Output format for list
   - name: dump
     description: Dump configuration
+    usage: ansible-config dump [-h] [-v] [-c CONFIG_FILE] [-t {all,base,become,cache,callback,cliconf,connection,httpapi,inventory,lookup,netconf,shell,vars}] [--only-changed] [--format {json,yaml,display}] [args ...]
     options:
       - names:
           - -h
@@ -51,7 +59,7 @@ subcommands:
           - -v
           - --verbose
         argument: ""
-        description: verbose mode (-vvv for more, -vvvv to enable connection debugging)
+        description: Causes Ansible to print more debug messages. Adding multiple -v will increase the verbosity, the builtin plugins currently evaluate up to -vvvvvv. A reasonable level to start is -vvv, connection debugging might require -vvvv.
       - names:
           - -c
           - --config
@@ -67,8 +75,14 @@ subcommands:
           - --changed-only
         argument: ""
         description: Only show configurations that have changed from the default
+      - names:
+          - --format
+          - -f
+        argument: '{json,yaml,display}'
+        description: Output format for dump
   - name: view
     description: View configuration file
+    usage: ansible-config view [-h] [-v] [-c CONFIG_FILE] [-t {all,base,become,cache,callback,cliconf,connection,httpapi,inventory,lookup,netconf,shell,vars}] [args ...]
     options:
       - names:
           - -h
@@ -79,7 +93,7 @@ subcommands:
           - -v
           - --verbose
         argument: ""
-        description: verbose mode (-vvv for more, -vvvv to enable connection debugging)
+        description: Causes Ansible to print more debug messages. Adding multiple -v will increase the verbosity, the builtin plugins currently evaluate up to -vvvvvv. A reasonable level to start is -vvv, connection debugging might require -vvvv.
       - names:
           - -c
           - --config
@@ -92,6 +106,7 @@ subcommands:
         description: Filter down to a specific plugin type.
   - name: init
     description: Create initial configuration
+    usage: ansible-config init [-h] [-v] [-c CONFIG_FILE] [-t {all,base,become,cache,callback,cliconf,connection,httpapi,inventory,lookup,netconf,shell,vars}] [--format {ini,env,vars}] [--disabled] [args ...]
     options:
       - names:
           - -h
@@ -102,7 +117,7 @@ subcommands:
           - -v
           - --verbose
         argument: ""
-        description: verbose mode (-vvv for more, -vvvv to enable connection debugging)
+        description: Causes Ansible to print more debug messages. Adding multiple -v will increase the verbosity, the builtin plugins currently evaluate up to -vvvvvv. A reasonable level to start is -vvv, connection debugging might require -vvvv.
       - names:
           - -c
           - --config
@@ -122,4 +137,4 @@ subcommands:
           - --disabled
         argument: ""
         description: Prefixes all entries with a comment character to disable them
-version: 'ansible-config [core 2.12.2]'
+version: ansible-config [core 2.14.0]

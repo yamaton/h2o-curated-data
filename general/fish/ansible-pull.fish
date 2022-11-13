@@ -18,7 +18,7 @@ complete -c ansible-pull -l "verify-commit" -d "verify GPG signature of checked 
 complete -c ansible-pull -l "version" -d "show program's version number, config file location, configured module search path, module location, executable location and exit"
 complete -c ansible-pull -s "C" -l "checkout" -d "branch/tag/commit to checkout." -x
 complete -c ansible-pull -s "K" -l "ask-become-pass" -d "ask for privilege escalation password"
-complete -c ansible-pull -s "M" -l "module-path" -d "prepend colon-separated path(s) to module library (default=~/.ansible/plugins/modules:/usr/share/ansible/plugins/modules)" -r
+complete -c ansible-pull -s "M" -l "module-path" -d "prepend colon-separated path(s) to module library (default={{ ANSIBLE_HOME ~ \"/plugins/modules:/usr/share/ansible/plugins/modules\" }})" -r
 complete -c ansible-pull -s "U" -l "url" -d "URL of the playbook repository" -x
 complete -c ansible-pull -s "d" -l "directory" -d "absolute path of repository checkout directory (relative paths are not supported)" -r
 complete -c ansible-pull -s "e" -l "extra-vars" -d "set additional variables as key=value or YAML/JSON, if filename prepend with @" -r

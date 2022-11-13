@@ -18,7 +18,7 @@ complete -c ansible-playbook -l "version" -d "show program's version number, con
 complete -c ansible-playbook -s "C" -l "check" -d "don't make any changes; instead, try to predict some of the changes that may occur"
 complete -c ansible-playbook -s "D" -l "diff" -d "when changing (small) files and templates, show the differences in those files; works great with --check"
 complete -c ansible-playbook -s "K" -l "ask-become-pass" -d "ask for privilege escalation password"
-complete -c ansible-playbook -s "M" -l "module-path" -d "prepend colon-separated path(s) to module library (default=~/.ansible/plugins/modules:/usr/share/ansible/plugins/modules)" -r
+complete -c ansible-playbook -s "M" -l "module-path" -d "prepend colon-separated path(s) to module library (default={{ ANSIBLE_HOME ~ \"/plugins/modules:/usr/share/ansible/plugins/modules\" }})" -r
 complete -c ansible-playbook -s "e" -l "extra-vars" -d "set additional variables as key=value or YAML/JSON, if filename prepend with @" -r
 complete -c ansible-playbook -s "f" -l "forks" -d "specify number of parallel processes to use (default=5)" -x
 complete -c ansible-playbook -s "h" -l "help" -d "show this help message and exit"

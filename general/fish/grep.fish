@@ -44,5 +44,7 @@ complete -c grep -s "B" -l "before-context" -d "print NUM lines of leading conte
 complete -c grep -s "A" -l "after-context" -d "print NUM lines of trailing context" -x
 complete -c grep -s "C" -l "context" -d "print NUM lines of output context" -x
 complete -c grep -o "NUM" -d "same as --context=NUM"
+complete -c grep -l "group-separator" -d "print SEP on line between matches with context" -x
+complete -c grep -l "no-group-separator" -d "do not print separator for matches with context"
 complete -c grep -l "color" -l "colour" -d "use markers to highlight the matching strings; WHEN is 'always', 'never', or 'auto'" -x
 complete -c grep -s "U" -l "binary" -d "do not strip CR characters at EOL (MSDOS/Windows)"

@@ -1,9 +1,11 @@
 name: kubectl
 description: kubectl
+usage: kubectl [flags] [options]
 options: []
 subcommands:
   - name: create
     description: Create a resource from a file or from stdin
+    usage: kubectl create -f FILENAME [options]
     options:
       - names:
           - --allow-missing-template-keys
@@ -22,6 +24,11 @@ subcommands:
         argument: '''kubectl-create'''
         description: Name of the manager used to track field ownership.
       - names:
+          - -f
+          - --filename
+        argument: '[]'
+        description: Filename, directory, or URL to files to use to create the resource
+      - names:
           - -k
           - --kustomize
         argument: ''''''
@@ -30,7 +37,7 @@ subcommands:
           - -o
           - --output
         argument: ''''''
-        description: 'Output format. One of: json|yaml|name|go-template|go-template-file|template|templatefile|jsonpath|jsonpath-as-json|jsonpath-file.'
+        description: 'Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).'
       - names:
           - --raw
         argument: ''''''
@@ -48,7 +55,7 @@ subcommands:
           - -l
           - --selector
         argument: ''''''
-        description: Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2)
+        description: Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2). Matching objects must satisfy all of the specified label constraints.
       - names:
           - --show-managed-fields
         argument: "false"
@@ -59,8 +66,8 @@ subcommands:
         description: Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
       - names:
           - --validate
-        argument: "true"
-        description: If true, use a schema to validate the input before sending it
+        argument: '''strict'''
+        description: 'Must be one of: strict (or true), warn, ignore (or false). "true" or "strict" will use a schema to validate the input and fail the request if invalid. It will perform server side validation if ServerSideFieldValidation is enabled on the api-server, but will fall back to less reliable client-side validation if not. "warn" will warn about unknown or duplicate fields without blocking the request if server-side field validation is enabled on the API server, and behave as "ignore" otherwise. "false" or "ignore" will not perform any schema validation, silently dropping any unknown or duplicate fields.'
       - names:
           - --windows-line-endings
         argument: "false"
@@ -68,6 +75,7 @@ subcommands:
     subcommands:
       - name: clusterrole
         description: Create a cluster role
+        usage: kubectl create clusterrole NAME --verb=verb --resource=resource.group [--resource-name=resourcename] [--dry-run=server|client|none] [options]
         options:
           - names:
               - --aggregation-rule
@@ -86,10 +94,22 @@ subcommands:
             argument: '''kubectl-create'''
             description: Name of the manager used to track field ownership.
           - names:
+              - --non-resource-url
+            argument: '[]'
+            description: A partial url that user should have access to.
+          - names:
               - -o
               - --output
             argument: ''''''
-            description: 'Output format. One of: json|yaml|name|go-template|go-template-file|template|templatefile|jsonpath|jsonpath-as-json|jsonpath-file.'
+            description: 'Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).'
+          - names:
+              - --resource
+            argument: '[]'
+            description: Resource that the rule applies to
+          - names:
+              - --resource-name
+            argument: '[]'
+            description: Resource in the white list that the rule applies to, repeat this flag for multiple items
           - names:
               - --save-config
             argument: "false"
@@ -104,10 +124,15 @@ subcommands:
             description: Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
           - names:
               - --validate
-            argument: "true"
-            description: If true, use a schema to validate the input before sending it
+            argument: '''strict'''
+            description: 'Must be one of: strict (or true), warn, ignore (or false). "true" or "strict" will use a schema to validate the input and fail the request if invalid. It will perform server side validation if ServerSideFieldValidation is enabled on the api-server, but will fall back to less reliable client-side validation if not. "warn" will warn about unknown or duplicate fields without blocking the request if server-side field validation is enabled on the API server, and behave as "ignore" otherwise. "false" or "ignore" will not perform any schema validation, silently dropping any unknown or duplicate fields.'
+          - names:
+              - --verb
+            argument: '[]'
+            description: Verb that applies to the resources contained in the rule
       - name: clusterrolebinding
         description: Create a cluster role binding for a particular cluster role
+        usage: kubectl create clusterrolebinding NAME --clusterrole=NAME [--user=username] [--group=groupname] [--serviceaccount=namespace:serviceaccountname] [--dry-run=server|client|none] [options]
         options:
           - names:
               - --allow-missing-template-keys
@@ -126,14 +151,22 @@ subcommands:
             argument: '''kubectl-create'''
             description: Name of the manager used to track field ownership.
           - names:
+              - --group
+            argument: '[]'
+            description: Groups to bind to the clusterrole. The flag can be repeated to add multiple groups.
+          - names:
               - -o
               - --output
             argument: ''''''
-            description: 'Output format. One of: json|yaml|name|go-template|go-template-file|template|templatefile|jsonpath|jsonpath-as-json|jsonpath-file.'
+            description: 'Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).'
           - names:
               - --save-config
             argument: "false"
             description: If true, the configuration of current object will be saved in its annotation. Otherwise, the annotation will be unchanged. This flag is useful when you want to perform kubectl apply on this object in the future.
+          - names:
+              - --serviceaccount
+            argument: '[]'
+            description: Service accounts to bind to the clusterrole, in the format <namespace>:<name>. The flag can be repeated to add multiple service accounts.
           - names:
               - --show-managed-fields
             argument: "false"
@@ -144,10 +177,11 @@ subcommands:
             description: Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
           - names:
               - --validate
-            argument: "true"
-            description: If true, use a schema to validate the input before sending it
+            argument: '''strict'''
+            description: 'Must be one of: strict (or true), warn, ignore (or false). "true" or "strict" will use a schema to validate the input and fail the request if invalid. It will perform server side validation if ServerSideFieldValidation is enabled on the api-server, but will fall back to less reliable client-side validation if not. "warn" will warn about unknown or duplicate fields without blocking the request if server-side field validation is enabled on the API server, and behave as "ignore" otherwise. "false" or "ignore" will not perform any schema validation, silently dropping any unknown or duplicate fields.'
       - name: configmap
         description: Create a config map from a local file, directory or literal value
+        usage: kubectl create configmap NAME [--from-file=[key=]source] [--from-literal=key1=value1] [--dry-run=server|client|none] [options]
         options:
           - names:
               - --allow-missing-template-keys
@@ -166,10 +200,22 @@ subcommands:
             argument: '''kubectl-create'''
             description: Name of the manager used to track field ownership.
           - names:
+              - --from-env-file
+            argument: '[]'
+            description: Specify the path to a file to read lines of key=val pairs to create a configmap.
+          - names:
+              - --from-file
+            argument: '[]'
+            description: Key file can be specified using its file path, in which case file basename will be used as configmap key, or optionally with a key and file path, in which case the given key will be used. Specifying a directory will iterate each named file in the directory whose basename is a valid configmap key.
+          - names:
+              - --from-literal
+            argument: '[]'
+            description: Specify a key and literal value to insert in configmap (i.e. mykey=somevalue)
+          - names:
               - -o
               - --output
             argument: ''''''
-            description: 'Output format. One of: json|yaml|name|go-template|go-template-file|template|templatefile|jsonpath|jsonpath-as-json|jsonpath-file.'
+            description: 'Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).'
           - names:
               - --save-config
             argument: "false"
@@ -184,10 +230,11 @@ subcommands:
             description: Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
           - names:
               - --validate
-            argument: "true"
-            description: If true, use a schema to validate the input before sending it
+            argument: '''strict'''
+            description: 'Must be one of: strict (or true), warn, ignore (or false). "true" or "strict" will use a schema to validate the input and fail the request if invalid. It will perform server side validation if ServerSideFieldValidation is enabled on the api-server, but will fall back to less reliable client-side validation if not. "warn" will warn about unknown or duplicate fields without blocking the request if server-side field validation is enabled on the API server, and behave as "ignore" otherwise. "false" or "ignore" will not perform any schema validation, silently dropping any unknown or duplicate fields.'
       - name: cronjob
         description: Create a cron job with the specified name
+        usage: kubectl create cronjob NAME --image=image --schedule='0/5 * * * ?' -- [COMMAND] [args...] [flags] [options]
         options:
           - names:
               - --allow-missing-template-keys
@@ -209,7 +256,7 @@ subcommands:
               - -o
               - --output
             argument: ''''''
-            description: 'Output format. One of: json|yaml|name|go-template|go-template-file|template|templatefile|jsonpath|jsonpath-as-json|jsonpath-file.'
+            description: 'Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).'
           - names:
               - --restart
             argument: ''''''
@@ -232,10 +279,11 @@ subcommands:
             description: Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
           - names:
               - --validate
-            argument: "true"
-            description: If true, use a schema to validate the input before sending it
+            argument: '''strict'''
+            description: 'Must be one of: strict (or true), warn, ignore (or false). "true" or "strict" will use a schema to validate the input and fail the request if invalid. It will perform server side validation if ServerSideFieldValidation is enabled on the api-server, but will fall back to less reliable client-side validation if not. "warn" will warn about unknown or duplicate fields without blocking the request if server-side field validation is enabled on the API server, and behave as "ignore" otherwise. "false" or "ignore" will not perform any schema validation, silently dropping any unknown or duplicate fields.'
       - name: deployment
         description: Create a deployment with the specified name
+        usage: kubectl create deployment NAME --image=image -- [COMMAND] [args...] [options]
         options:
           - names:
               - --allow-missing-template-keys
@@ -250,10 +298,14 @@ subcommands:
             argument: '''kubectl-create'''
             description: Name of the manager used to track field ownership.
           - names:
+              - --image
+            argument: '[]'
+            description: Image names to run.
+          - names:
               - -o
               - --output
             argument: ''''''
-            description: 'Output format. One of: json|yaml|name|go-template|go-template-file|template|templatefile|jsonpath|jsonpath-as-json|jsonpath-file.'
+            description: 'Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).'
           - names:
               - --port
             argument: "-1"
@@ -277,10 +329,11 @@ subcommands:
             description: Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
           - names:
               - --validate
-            argument: "true"
-            description: If true, use a schema to validate the input before sending it
+            argument: '''strict'''
+            description: 'Must be one of: strict (or true), warn, ignore (or false). "true" or "strict" will use a schema to validate the input and fail the request if invalid. It will perform server side validation if ServerSideFieldValidation is enabled on the api-server, but will fall back to less reliable client-side validation if not. "warn" will warn about unknown or duplicate fields without blocking the request if server-side field validation is enabled on the API server, and behave as "ignore" otherwise. "false" or "ignore" will not perform any schema validation, silently dropping any unknown or duplicate fields.'
       - name: ingress
         description: Create an ingress with the specified name
+        usage: kubectl create ingress NAME --rule=host/path=service:port[,tls[=secret]]  [options]
         options:
           - names:
               - --rule
@@ -290,6 +343,10 @@ subcommands:
               - --allow-missing-template-keys
             argument: "true"
             description: If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.
+          - names:
+              - --annotation
+            argument: '[]'
+            description: Annotation to insert in the ingress object, in the format annotation=value
           - names:
               - --class
             argument: ''''''
@@ -310,7 +367,11 @@ subcommands:
               - -o
               - --output
             argument: ''''''
-            description: 'Output format. One of: json|yaml|name|go-template|go-template-file|template|templatefile|jsonpath|jsonpath-as-json|jsonpath-file.'
+            description: 'Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).'
+          - names:
+              - --rule
+            argument: '[]'
+            description: Rule in format host/path=service:port[,tls=secretname]. Paths containing the leading character '*' are considered pathType=Prefix. tls argument is optional.
           - names:
               - --save-config
             argument: "false"
@@ -325,10 +386,11 @@ subcommands:
             description: Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
           - names:
               - --validate
-            argument: "true"
-            description: If true, use a schema to validate the input before sending it
+            argument: '''strict'''
+            description: 'Must be one of: strict (or true), warn, ignore (or false). "true" or "strict" will use a schema to validate the input and fail the request if invalid. It will perform server side validation if ServerSideFieldValidation is enabled on the api-server, but will fall back to less reliable client-side validation if not. "warn" will warn about unknown or duplicate fields without blocking the request if server-side field validation is enabled on the API server, and behave as "ignore" otherwise. "false" or "ignore" will not perform any schema validation, silently dropping any unknown or duplicate fields.'
       - name: job
         description: Create a job with the specified name
+        usage: kubectl create job NAME --image=image [--from=cronjob/name] -- [COMMAND] [args...] [options]
         options:
           - names:
               - --allow-missing-template-keys
@@ -354,7 +416,7 @@ subcommands:
               - -o
               - --output
             argument: ''''''
-            description: 'Output format. One of: json|yaml|name|go-template|go-template-file|template|templatefile|jsonpath|jsonpath-as-json|jsonpath-file.'
+            description: 'Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).'
           - names:
               - --save-config
             argument: "false"
@@ -369,10 +431,11 @@ subcommands:
             description: Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
           - names:
               - --validate
-            argument: "true"
-            description: If true, use a schema to validate the input before sending it
+            argument: '''strict'''
+            description: 'Must be one of: strict (or true), warn, ignore (or false). "true" or "strict" will use a schema to validate the input and fail the request if invalid. It will perform server side validation if ServerSideFieldValidation is enabled on the api-server, but will fall back to less reliable client-side validation if not. "warn" will warn about unknown or duplicate fields without blocking the request if server-side field validation is enabled on the API server, and behave as "ignore" otherwise. "false" or "ignore" will not perform any schema validation, silently dropping any unknown or duplicate fields.'
       - name: namespace
         description: Create a namespace with the specified name
+        usage: kubectl create namespace NAME [--dry-run=server|client|none] [options]
         options:
           - names:
               - --allow-missing-template-keys
@@ -390,7 +453,7 @@ subcommands:
               - -o
               - --output
             argument: ''''''
-            description: 'Output format. One of: json|yaml|name|go-template|go-template-file|template|templatefile|jsonpath|jsonpath-as-json|jsonpath-file.'
+            description: 'Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).'
           - names:
               - --save-config
             argument: "false"
@@ -405,10 +468,11 @@ subcommands:
             description: Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
           - names:
               - --validate
-            argument: "true"
-            description: If true, use a schema to validate the input before sending it
+            argument: '''strict'''
+            description: 'Must be one of: strict (or true), warn, ignore (or false). "true" or "strict" will use a schema to validate the input and fail the request if invalid. It will perform server side validation if ServerSideFieldValidation is enabled on the api-server, but will fall back to less reliable client-side validation if not. "warn" will warn about unknown or duplicate fields without blocking the request if server-side field validation is enabled on the API server, and behave as "ignore" otherwise. "false" or "ignore" will not perform any schema validation, silently dropping any unknown or duplicate fields.'
       - name: poddisruptionbudget
         description: Create a pod disruption budget with the specified name
+        usage: kubectl create poddisruptionbudget NAME --selector=SELECTOR --min-available=N [--dry-run=server|client|none] [options]
         options:
           - names:
               - --allow-missing-template-keys
@@ -434,7 +498,7 @@ subcommands:
               - -o
               - --output
             argument: ''''''
-            description: 'Output format. One of: json|yaml|name|go-template|go-template-file|template|templatefile|jsonpath|jsonpath-as-json|jsonpath-file.'
+            description: 'Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).'
           - names:
               - --save-config
             argument: "false"
@@ -453,10 +517,11 @@ subcommands:
             description: Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
           - names:
               - --validate
-            argument: "true"
-            description: If true, use a schema to validate the input before sending it
+            argument: '''strict'''
+            description: 'Must be one of: strict (or true), warn, ignore (or false). "true" or "strict" will use a schema to validate the input and fail the request if invalid. It will perform server side validation if ServerSideFieldValidation is enabled on the api-server, but will fall back to less reliable client-side validation if not. "warn" will warn about unknown or duplicate fields without blocking the request if server-side field validation is enabled on the API server, and behave as "ignore" otherwise. "false" or "ignore" will not perform any schema validation, silently dropping any unknown or duplicate fields.'
       - name: priorityclass
         description: Create a priority class with the specified name
+        usage: kubectl create priorityclass NAME --value=VALUE --global-default=BOOL [--dry-run=server|client|none] [options]
         options:
           - names:
               - --allow-missing-template-keys
@@ -482,7 +547,7 @@ subcommands:
               - -o
               - --output
             argument: ''''''
-            description: 'Output format. One of: json|yaml|name|go-template|go-template-file|template|templatefile|jsonpath|jsonpath-as-json|jsonpath-file.'
+            description: 'Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).'
           - names:
               - --preemption-policy
             argument: '''PreemptLowerPriority'''
@@ -501,14 +566,15 @@ subcommands:
             description: Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
           - names:
               - --validate
-            argument: "true"
-            description: If true, use a schema to validate the input before sending it
+            argument: '''strict'''
+            description: 'Must be one of: strict (or true), warn, ignore (or false). "true" or "strict" will use a schema to validate the input and fail the request if invalid. It will perform server side validation if ServerSideFieldValidation is enabled on the api-server, but will fall back to less reliable client-side validation if not. "warn" will warn about unknown or duplicate fields without blocking the request if server-side field validation is enabled on the API server, and behave as "ignore" otherwise. "false" or "ignore" will not perform any schema validation, silently dropping any unknown or duplicate fields.'
           - names:
               - --value
             argument: "0"
             description: the value of this priority class.
       - name: quota
         description: Create a quota with the specified name
+        usage: kubectl create quota NAME [--hard=key1=value1,key2=value2] [--scopes=Scope1,Scope2] [--dry-run=server|client|none] [options]
         options:
           - names:
               - --allow-missing-template-keys
@@ -530,7 +596,7 @@ subcommands:
               - -o
               - --output
             argument: ''''''
-            description: 'Output format. One of: json|yaml|name|go-template|go-template-file|template|templatefile|jsonpath|jsonpath-as-json|jsonpath-file.'
+            description: 'Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).'
           - names:
               - --save-config
             argument: "false"
@@ -549,10 +615,11 @@ subcommands:
             description: Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
           - names:
               - --validate
-            argument: "true"
-            description: If true, use a schema to validate the input before sending it
+            argument: '''strict'''
+            description: 'Must be one of: strict (or true), warn, ignore (or false). "true" or "strict" will use a schema to validate the input and fail the request if invalid. It will perform server side validation if ServerSideFieldValidation is enabled on the api-server, but will fall back to less reliable client-side validation if not. "warn" will warn about unknown or duplicate fields without blocking the request if server-side field validation is enabled on the API server, and behave as "ignore" otherwise. "false" or "ignore" will not perform any schema validation, silently dropping any unknown or duplicate fields.'
       - name: role
         description: Create a role with single rule
+        usage: kubectl create role NAME --verb=verb --resource=resource.group/subresource [--resource-name=resourcename] [--dry-run=server|client|none] [options]
         options:
           - names:
               - --allow-missing-template-keys
@@ -570,7 +637,15 @@ subcommands:
               - -o
               - --output
             argument: ''''''
-            description: 'Output format. One of: json|yaml|name|go-template|go-template-file|template|templatefile|jsonpath|jsonpath-as-json|jsonpath-file.'
+            description: 'Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).'
+          - names:
+              - --resource
+            argument: '[]'
+            description: Resource that the rule applies to
+          - names:
+              - --resource-name
+            argument: '[]'
+            description: Resource in the white list that the rule applies to, repeat this flag for multiple items
           - names:
               - --save-config
             argument: "false"
@@ -585,10 +660,15 @@ subcommands:
             description: Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
           - names:
               - --validate
-            argument: "true"
-            description: If true, use a schema to validate the input before sending it
+            argument: '''strict'''
+            description: 'Must be one of: strict (or true), warn, ignore (or false). "true" or "strict" will use a schema to validate the input and fail the request if invalid. It will perform server side validation if ServerSideFieldValidation is enabled on the api-server, but will fall back to less reliable client-side validation if not. "warn" will warn about unknown or duplicate fields without blocking the request if server-side field validation is enabled on the API server, and behave as "ignore" otherwise. "false" or "ignore" will not perform any schema validation, silently dropping any unknown or duplicate fields.'
+          - names:
+              - --verb
+            argument: '[]'
+            description: Verb that applies to the resources contained in the rule
       - name: rolebinding
         description: Create a role binding for a particular role or cluster role
+        usage: kubectl create rolebinding NAME --clusterrole=NAME|--role=NAME [--user=username] [--group=groupname] [--serviceaccount=namespace:serviceaccountname] [--dry-run=server|client|none] [options]
         options:
           - names:
               - --allow-missing-template-keys
@@ -607,10 +687,14 @@ subcommands:
             argument: '''kubectl-create'''
             description: Name of the manager used to track field ownership.
           - names:
+              - --group
+            argument: '[]'
+            description: Groups to bind to the role. The flag can be repeated to add multiple groups.
+          - names:
               - -o
               - --output
             argument: ''''''
-            description: 'Output format. One of: json|yaml|name|go-template|go-template-file|template|templatefile|jsonpath|jsonpath-as-json|jsonpath-file.'
+            description: 'Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).'
           - names:
               - --role
             argument: ''''''
@@ -619,6 +703,10 @@ subcommands:
               - --save-config
             argument: "false"
             description: If true, the configuration of current object will be saved in its annotation. Otherwise, the annotation will be unchanged. This flag is useful when you want to perform kubectl apply on this object in the future.
+          - names:
+              - --serviceaccount
+            argument: '[]'
+            description: Service accounts to bind to the role, in the format <namespace>:<name>. The flag can be repeated to add multiple service accounts.
           - names:
               - --show-managed-fields
             argument: "false"
@@ -629,14 +717,16 @@ subcommands:
             description: Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
           - names:
               - --validate
-            argument: "true"
-            description: If true, use a schema to validate the input before sending it
+            argument: '''strict'''
+            description: 'Must be one of: strict (or true), warn, ignore (or false). "true" or "strict" will use a schema to validate the input and fail the request if invalid. It will perform server side validation if ServerSideFieldValidation is enabled on the api-server, but will fall back to less reliable client-side validation if not. "warn" will warn about unknown or duplicate fields without blocking the request if server-side field validation is enabled on the API server, and behave as "ignore" otherwise. "false" or "ignore" will not perform any schema validation, silently dropping any unknown or duplicate fields.'
       - name: secret
         description: Create a secret using specified subcommand
+        usage: kubectl create secret [flags] [options]
         options: []
         subcommands:
           - name: docker-registry
             description: Create a secret for use with a Docker registry
+            usage: kubectl create secret docker-registry NAME --docker-username=user --docker-password=password --docker-email=email [--docker-server=string] [--from-file=[key=]source] [--dry-run=server|client|none] [options]
             options:
               - names:
                   - --allow-missing-template-keys
@@ -671,10 +761,14 @@ subcommands:
                 argument: '''kubectl-create'''
                 description: Name of the manager used to track field ownership.
               - names:
+                  - --from-file
+                argument: '[]'
+                description: Key files can be specified using their file path, in which case a default name will be given to them, or optionally with a name and file path, in which case the given name will be used. Specifying a directory will iterate each named file in the directory that is a valid secret key.
+              - names:
                   - -o
                   - --output
                 argument: ''''''
-                description: 'Output format. One of: json|yaml|name|go-template|go-template-file|template|templatefile|jsonpath|jsonpath-as-json|jsonpath-file.'
+                description: 'Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).'
               - names:
                   - --save-config
                 argument: "false"
@@ -689,10 +783,11 @@ subcommands:
                 description: Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
               - names:
                   - --validate
-                argument: "true"
-                description: If true, use a schema to validate the input before sending it
+                argument: '''strict'''
+                description: 'Must be one of: strict (or true), warn, ignore (or false). "true" or "strict" will use a schema to validate the input and fail the request if invalid. It will perform server side validation if ServerSideFieldValidation is enabled on the api-server, but will fall back to less reliable client-side validation if not. "warn" will warn about unknown or duplicate fields without blocking the request if server-side field validation is enabled on the API server, and behave as "ignore" otherwise. "false" or "ignore" will not perform any schema validation, silently dropping any unknown or duplicate fields.'
           - name: generic
             description: Create a secret from a local file, directory, or literal value
+            usage: kubectl create secret generic NAME [--type=string] [--from-file=[key=]source] [--from-literal=key1=value1] [--dry-run=server|client|none] [options]
             options:
               - names:
                   - --allow-missing-template-keys
@@ -711,10 +806,22 @@ subcommands:
                 argument: '''kubectl-create'''
                 description: Name of the manager used to track field ownership.
               - names:
+                  - --from-env-file
+                argument: '[]'
+                description: Specify the path to a file to read lines of key=val pairs to create a secret.
+              - names:
+                  - --from-file
+                argument: '[]'
+                description: Key files can be specified using their file path, in which case a default name will be given to them, or optionally with a name and file path, in which case the given name will be used. Specifying a directory will iterate each named file in the directory that is a valid secret key.
+              - names:
+                  - --from-literal
+                argument: '[]'
+                description: Specify a key and literal value to insert in secret (i.e. mykey=somevalue)
+              - names:
                   - -o
                   - --output
                 argument: ''''''
-                description: 'Output format. One of: json|yaml|name|go-template|go-template-file|template|templatefile|jsonpath|jsonpath-as-json|jsonpath-file.'
+                description: 'Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).'
               - names:
                   - --save-config
                 argument: "false"
@@ -733,10 +840,11 @@ subcommands:
                 description: The type of secret to create
               - names:
                   - --validate
-                argument: "true"
-                description: If true, use a schema to validate the input before sending it
+                argument: '''strict'''
+                description: 'Must be one of: strict (or true), warn, ignore (or false). "true" or "strict" will use a schema to validate the input and fail the request if invalid. It will perform server side validation if ServerSideFieldValidation is enabled on the api-server, but will fall back to less reliable client-side validation if not. "warn" will warn about unknown or duplicate fields without blocking the request if server-side field validation is enabled on the API server, and behave as "ignore" otherwise. "false" or "ignore" will not perform any schema validation, silently dropping any unknown or duplicate fields.'
           - name: tls
             description: Create a TLS secret
+            usage: kubectl create secret tls NAME --cert=path/to/cert/file --key=path/to/key/file [--dry-run=server|client|none] [options]
             options:
               - names:
                   - --allow-missing-template-keys
@@ -766,7 +874,7 @@ subcommands:
                   - -o
                   - --output
                 argument: ''''''
-                description: 'Output format. One of: json|yaml|name|go-template|go-template-file|template|templatefile|jsonpath|jsonpath-as-json|jsonpath-file.'
+                description: 'Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).'
               - names:
                   - --save-config
                 argument: "false"
@@ -781,14 +889,16 @@ subcommands:
                 description: Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
               - names:
                   - --validate
-                argument: "true"
-                description: If true, use a schema to validate the input before sending it
+                argument: '''strict'''
+                description: 'Must be one of: strict (or true), warn, ignore (or false). "true" or "strict" will use a schema to validate the input and fail the request if invalid. It will perform server side validation if ServerSideFieldValidation is enabled on the api-server, but will fall back to less reliable client-side validation if not. "warn" will warn about unknown or duplicate fields without blocking the request if server-side field validation is enabled on the API server, and behave as "ignore" otherwise. "false" or "ignore" will not perform any schema validation, silently dropping any unknown or duplicate fields.'
       - name: service
         description: Create a service using a specified subcommand
+        usage: kubectl create service [flags] [options]
         options: []
         subcommands:
           - name: clusterip
             description: Create a ClusterIP service
+            usage: kubectl create service clusterip NAME [--tcp=<port>:<targetPort>] [--dry-run=server|client|none] [options]
             options:
               - names:
                   - --allow-missing-template-keys
@@ -810,7 +920,7 @@ subcommands:
                   - -o
                   - --output
                 argument: ''''''
-                description: 'Output format. One of: json|yaml|name|go-template|go-template-file|template|templatefile|jsonpath|jsonpath-as-json|jsonpath-file.'
+                description: 'Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).'
               - names:
                   - --save-config
                 argument: "false"
@@ -820,15 +930,20 @@ subcommands:
                 argument: "false"
                 description: If true, keep the managedFields when printing objects in JSON or YAML format.
               - names:
+                  - --tcp
+                argument: '[]'
+                description: Port pairs can be specified as '<port>:<targetPort>'.
+              - names:
                   - --template
                 argument: ''''''
                 description: Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
               - names:
                   - --validate
-                argument: "true"
-                description: If true, use a schema to validate the input before sending it
+                argument: '''strict'''
+                description: 'Must be one of: strict (or true), warn, ignore (or false). "true" or "strict" will use a schema to validate the input and fail the request if invalid. It will perform server side validation if ServerSideFieldValidation is enabled on the api-server, but will fall back to less reliable client-side validation if not. "warn" will warn about unknown or duplicate fields without blocking the request if server-side field validation is enabled on the API server, and behave as "ignore" otherwise. "false" or "ignore" will not perform any schema validation, silently dropping any unknown or duplicate fields.'
           - name: externalname
             description: Create an ExternalName service
+            usage: kubectl create service externalname NAME --external-name external.name [--dry-run=server|client|none] [options]
             options:
               - names:
                   - --allow-missing-template-keys
@@ -850,7 +965,7 @@ subcommands:
                   - -o
                   - --output
                 argument: ''''''
-                description: 'Output format. One of: json|yaml|name|go-template|go-template-file|template|templatefile|jsonpath|jsonpath-as-json|jsonpath-file.'
+                description: 'Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).'
               - names:
                   - --save-config
                 argument: "false"
@@ -860,15 +975,20 @@ subcommands:
                 argument: "false"
                 description: If true, keep the managedFields when printing objects in JSON or YAML format.
               - names:
+                  - --tcp
+                argument: '[]'
+                description: Port pairs can be specified as '<port>:<targetPort>'.
+              - names:
                   - --template
                 argument: ''''''
                 description: Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
               - names:
                   - --validate
-                argument: "true"
-                description: If true, use a schema to validate the input before sending it
+                argument: '''strict'''
+                description: 'Must be one of: strict (or true), warn, ignore (or false). "true" or "strict" will use a schema to validate the input and fail the request if invalid. It will perform server side validation if ServerSideFieldValidation is enabled on the api-server, but will fall back to less reliable client-side validation if not. "warn" will warn about unknown or duplicate fields without blocking the request if server-side field validation is enabled on the API server, and behave as "ignore" otherwise. "false" or "ignore" will not perform any schema validation, silently dropping any unknown or duplicate fields.'
           - name: loadbalancer
             description: Create a LoadBalancer service
+            usage: kubectl create service loadbalancer NAME [--tcp=port:targetPort] [--dry-run=server|client|none] [options]
             options:
               - names:
                   - --allow-missing-template-keys
@@ -886,7 +1006,7 @@ subcommands:
                   - -o
                   - --output
                 argument: ''''''
-                description: 'Output format. One of: json|yaml|name|go-template|go-template-file|template|templatefile|jsonpath|jsonpath-as-json|jsonpath-file.'
+                description: 'Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).'
               - names:
                   - --save-config
                 argument: "false"
@@ -896,15 +1016,20 @@ subcommands:
                 argument: "false"
                 description: If true, keep the managedFields when printing objects in JSON or YAML format.
               - names:
+                  - --tcp
+                argument: '[]'
+                description: Port pairs can be specified as '<port>:<targetPort>'.
+              - names:
                   - --template
                 argument: ''''''
                 description: Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
               - names:
                   - --validate
-                argument: "true"
-                description: If true, use a schema to validate the input before sending it
+                argument: '''strict'''
+                description: 'Must be one of: strict (or true), warn, ignore (or false). "true" or "strict" will use a schema to validate the input and fail the request if invalid. It will perform server side validation if ServerSideFieldValidation is enabled on the api-server, but will fall back to less reliable client-side validation if not. "warn" will warn about unknown or duplicate fields without blocking the request if server-side field validation is enabled on the API server, and behave as "ignore" otherwise. "false" or "ignore" will not perform any schema validation, silently dropping any unknown or duplicate fields.'
           - name: nodeport
             description: Create a NodePort service
+            usage: kubectl create service nodeport NAME [--tcp=port:targetPort] [--dry-run=server|client|none] [options]
             options:
               - names:
                   - --allow-missing-template-keys
@@ -926,7 +1051,7 @@ subcommands:
                   - -o
                   - --output
                 argument: ''''''
-                description: 'Output format. One of: json|yaml|name|go-template|go-template-file|template|templatefile|jsonpath|jsonpath-as-json|jsonpath-file.'
+                description: 'Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).'
               - names:
                   - --save-config
                 argument: "false"
@@ -936,15 +1061,20 @@ subcommands:
                 argument: "false"
                 description: If true, keep the managedFields when printing objects in JSON or YAML format.
               - names:
+                  - --tcp
+                argument: '[]'
+                description: Port pairs can be specified as '<port>:<targetPort>'.
+              - names:
                   - --template
                 argument: ''''''
                 description: Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
               - names:
                   - --validate
-                argument: "true"
-                description: If true, use a schema to validate the input before sending it
+                argument: '''strict'''
+                description: 'Must be one of: strict (or true), warn, ignore (or false). "true" or "strict" will use a schema to validate the input and fail the request if invalid. It will perform server side validation if ServerSideFieldValidation is enabled on the api-server, but will fall back to less reliable client-side validation if not. "warn" will warn about unknown or duplicate fields without blocking the request if server-side field validation is enabled on the API server, and behave as "ignore" otherwise. "false" or "ignore" will not perform any schema validation, silently dropping any unknown or duplicate fields.'
       - name: serviceaccount
         description: Create a service account with the specified name
+        usage: kubectl create serviceaccount NAME [--dry-run=server|client|none] [options]
         options:
           - names:
               - --allow-missing-template-keys
@@ -962,7 +1092,7 @@ subcommands:
               - -o
               - --output
             argument: ''''''
-            description: 'Output format. One of: json|yaml|name|go-template|go-template-file|template|templatefile|jsonpath|jsonpath-as-json|jsonpath-file.'
+            description: 'Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).'
           - names:
               - --save-config
             argument: "false"
@@ -977,10 +1107,52 @@ subcommands:
             description: Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
           - names:
               - --validate
+            argument: '''strict'''
+            description: 'Must be one of: strict (or true), warn, ignore (or false). "true" or "strict" will use a schema to validate the input and fail the request if invalid. It will perform server side validation if ServerSideFieldValidation is enabled on the api-server, but will fall back to less reliable client-side validation if not. "warn" will warn about unknown or duplicate fields without blocking the request if server-side field validation is enabled on the API server, and behave as "ignore" otherwise. "false" or "ignore" will not perform any schema validation, silently dropping any unknown or duplicate fields.'
+      - name: token
+        description: Request a service account token
+        usage: kubectl create token SERVICE_ACCOUNT_NAME [options]
+        options:
+          - names:
+              - --allow-missing-template-keys
             argument: "true"
-            description: If true, use a schema to validate the input before sending it
+            description: If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.
+          - names:
+              - --audience
+            argument: '[]'
+            description: Audience of the requested token. If unset, defaults to requesting a token for use with the Kubernetes API server. May be repeated to request a token valid for multiple audiences.
+          - names:
+              - --bound-object-kind
+            argument: ''''''
+            description: Kind of an object to bind the token to. Supported kinds are Pod, Secret. If set, --bound-object-name must be provided.
+          - names:
+              - --bound-object-name
+            argument: ''''''
+            description: Name of an object to bind the token to. The token will expire when the object is deleted. Requires --bound-object-kind.
+          - names:
+              - --bound-object-uid
+            argument: ''''''
+            description: UID of an object to bind the token to. Requires --bound-object-kind and --bound-object-name. If unset, the UID of the existing object is used.
+          - names:
+              - --duration
+            argument: 0s
+            description: Requested lifetime of the issued token. The server may return a token with a longer or shorter lifetime.
+          - names:
+              - -o
+              - --output
+            argument: ''''''
+            description: 'Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).'
+          - names:
+              - --show-managed-fields
+            argument: "false"
+            description: If true, keep the managedFields when printing objects in JSON or YAML format.
+          - names:
+              - --template
+            argument: ''''''
+            description: Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
   - name: expose
     description: Take a replication controller, service, deployment or pod and expose it as a new Kubernetes service
+    usage: kubectl expose (-f FILENAME | TYPE NAME) [--port=port] [--protocol=TCP|UDP|SCTP] [--target-port=number-or-name] [--name=name] [--external-ip=external-ip-of-service] [--type=type] [options]
     options:
       - names:
           - --allow-missing-template-keys
@@ -1003,9 +1175,10 @@ subcommands:
         argument: '''kubectl-expose'''
         description: Name of the manager used to track field ownership.
       - names:
-          - --generator
-        argument: '''service/v2'''
-        description: 'The name of the API generator to use. There are 2 generators: ''service/v1'' and ''service/v2''. The only difference between them is that service port in v1 is named ''default'', while it is left unnamed in v2. Default is ''service/v2''.'
+          - -f
+          - --filename
+        argument: '[]'
+        description: Filename, directory, or URL to files identifying the resource to expose a service
       - names:
           - -k
           - --kustomize
@@ -1028,7 +1201,7 @@ subcommands:
           - -o
           - --output
         argument: ''''''
-        description: 'Output format. One of: json|yaml|name|go-template|go-template-file|template|templatefile|jsonpath|jsonpath-as-json|jsonpath-file.'
+        description: 'Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).'
       - names:
           - --override-type
         argument: '''merge'''
@@ -1080,11 +1253,16 @@ subcommands:
         description: 'Type for this service: ClusterIP, NodePort, LoadBalancer, or ExternalName. Default is ''ClusterIP''.'
   - name: run
     description: Run a particular image on the cluster
+    usage: kubectl run NAME --image=image [--env="key=value"] [--port=port] [--dry-run=server|client] [--overrides=inline-json] [--command] -- [COMMAND] [args...] [options]
     options:
       - names:
           - --allow-missing-template-keys
         argument: "true"
         description: If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.
+      - names:
+          - --annotations
+        argument: '[]'
+        description: Annotations to apply to the pod.
       - names:
           - --attach
         argument: "false"
@@ -1102,6 +1280,10 @@ subcommands:
         argument: '''none'''
         description: Must be "none", "server", or "client". If client strategy, only print the object that would be sent, without sending it. If server strategy, submit server-side request without persisting the resource.
       - names:
+          - --env
+        argument: '[]'
+        description: Environment variables to set in the container.
+      - names:
           - --expose
         argument: "false"
         description: If true, create a ClusterIP service associated with the pod. Requires `--port`.
@@ -1109,6 +1291,11 @@ subcommands:
           - --field-manager
         argument: '''kubectl-run'''
         description: Name of the manager used to track field ownership.
+      - names:
+          - -f
+          - --filename
+        argument: '[]'
+        description: to use to replace the resource.
       - names:
           - --force
         argument: "false"
@@ -1143,7 +1330,7 @@ subcommands:
           - -o
           - --output
         argument: ''''''
-        description: 'Output format. One of: json|yaml|name|go-template|go-template-file|template|templatefile|jsonpath|jsonpath-as-json|jsonpath-file.'
+        description: 'Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).'
       - names:
           - --override-type
         argument: '''merge'''
@@ -1214,10 +1401,12 @@ subcommands:
         description: If true, wait for resources to be gone before returning. This waits for finalizers.
   - name: set
     description: Set specific features on objects
+    usage: kubectl set SUBCOMMAND [options]
     options: []
     subcommands:
       - name: env
         description: Update environment variables on a pod template
+        usage: kubectl set env RESOURCE/NAME KEY_1=VAL_1 ... KEY_N=VAL_N [options]
         options:
           - names:
               - --all
@@ -1237,13 +1426,27 @@ subcommands:
             argument: '''none'''
             description: Must be "none", "server", or "client". If client strategy, only print the object that would be sent, without sending it. If server strategy, submit server-side request without persisting the resource.
           - names:
+              - -e
+              - --env
+            argument: '[]'
+            description: Specify a key-value pair for an environment variable to set into each container.
+          - names:
               - --field-manager
             argument: '''kubectl-set'''
             description: Name of the manager used to track field ownership.
           - names:
+              - -f
+              - --filename
+            argument: '[]'
+            description: Filename, directory, or URL to files the resource to update the env
+          - names:
               - --from
             argument: ''''''
             description: The name of a resource from which to inject environment variables
+          - names:
+              - --keys
+            argument: '[]'
+            description: Comma-separated list of keys to import from specified resource
           - names:
               - -k
               - --kustomize
@@ -1261,7 +1464,7 @@ subcommands:
               - -o
               - --output
             argument: ''''''
-            description: 'Output format. One of: json|yaml|name|go-template|go-template-file|template|templatefile|jsonpath|jsonpath-as-json|jsonpath-file.'
+            description: 'Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).'
           - names:
               - --overwrite
             argument: "true"
@@ -1283,7 +1486,7 @@ subcommands:
               - -l
               - --selector
             argument: ''''''
-            description: Selector (label query) to filter on
+            description: Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2). Matching objects must satisfy all of the specified label constraints.
           - names:
               - --show-managed-fields
             argument: "false"
@@ -1294,6 +1497,7 @@ subcommands:
             description: Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
       - name: image
         description: Update the image of a pod template
+        usage: kubectl set image (-f FILENAME | TYPE NAME) CONTAINER_NAME_1=CONTAINER_IMAGE_1 ... CONTAINER_NAME_N=CONTAINER_IMAGE_N [options]
         options:
           - names:
               - --all
@@ -1312,6 +1516,11 @@ subcommands:
             argument: '''kubectl-set'''
             description: Name of the manager used to track field ownership.
           - names:
+              - -f
+              - --filename
+            argument: '[]'
+            description: Filename, directory, or URL to files identifying the resource to get from a server.
+          - names:
               - -k
               - --kustomize
             argument: ''''''
@@ -1324,7 +1533,7 @@ subcommands:
               - -o
               - --output
             argument: ''''''
-            description: 'Output format. One of: json|yaml|name|go-template|go-template-file|template|templatefile|jsonpath|jsonpath-as-json|jsonpath-file.'
+            description: 'Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).'
           - names:
               - -R
               - --recursive
@@ -1334,7 +1543,7 @@ subcommands:
               - -l
               - --selector
             argument: ''''''
-            description: Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2)
+            description: Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2). Matching objects must satisfy all of the specified label constraints.
           - names:
               - --show-managed-fields
             argument: "false"
@@ -1345,6 +1554,7 @@ subcommands:
             description: Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
       - name: resources
         description: Update resource requests/limits on objects with pod templates
+        usage: kubectl set resources (-f FILENAME | TYPE NAME)  ([--limits=LIMITS & --requests=REQUESTS] [options]
         options:
           - names:
               - --all
@@ -1368,6 +1578,11 @@ subcommands:
             argument: '''kubectl-set'''
             description: Name of the manager used to track field ownership.
           - names:
+              - -f
+              - --filename
+            argument: '[]'
+            description: Filename, directory, or URL to files identifying the resource to get from a server.
+          - names:
               - -k
               - --kustomize
             argument: ''''''
@@ -1384,7 +1599,7 @@ subcommands:
               - -o
               - --output
             argument: ''''''
-            description: 'Output format. One of: json|yaml|name|go-template|go-template-file|template|templatefile|jsonpath|jsonpath-as-json|jsonpath-file.'
+            description: 'Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).'
           - names:
               - -R
               - --recursive
@@ -1398,7 +1613,7 @@ subcommands:
               - -l
               - --selector
             argument: ''''''
-            description: Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2)
+            description: Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2). Matching objects must satisfy all of the specified label constraints.
           - names:
               - --show-managed-fields
             argument: "false"
@@ -1409,6 +1624,7 @@ subcommands:
             description: Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
       - name: selector
         description: Set the selector on a resource
+        usage: kubectl set selector (-f FILENAME | TYPE NAME) EXPRESSIONS [--resource-version=version] [options]
         options:
           - names:
               - --all
@@ -1427,6 +1643,11 @@ subcommands:
             argument: '''kubectl-set'''
             description: Name of the manager used to track field ownership.
           - names:
+              - -f
+              - --filename
+            argument: '[]'
+            description: identifying the resource.
+          - names:
               - --local
             argument: "false"
             description: If true, annotation will NOT contact api-server but run locally.
@@ -1434,7 +1655,7 @@ subcommands:
               - -o
               - --output
             argument: ''''''
-            description: 'Output format. One of: json|yaml|name|go-template|go-template-file|template|templatefile|jsonpath|jsonpath-as-json|jsonpath-file.'
+            description: 'Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).'
           - names:
               - -R
               - --recursive
@@ -1454,6 +1675,7 @@ subcommands:
             description: Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
       - name: serviceaccount
         description: Update the service account of a resource
+        usage: kubectl set serviceaccount (-f FILENAME | TYPE NAME) SERVICE_ACCOUNT [options]
         options:
           - names:
               - --all
@@ -1472,6 +1694,11 @@ subcommands:
             argument: '''kubectl-set'''
             description: Name of the manager used to track field ownership.
           - names:
+              - -f
+              - --filename
+            argument: '[]'
+            description: Filename, directory, or URL to files identifying the resource to get from a server.
+          - names:
               - -k
               - --kustomize
             argument: ''''''
@@ -1484,7 +1711,7 @@ subcommands:
               - -o
               - --output
             argument: ''''''
-            description: 'Output format. One of: json|yaml|name|go-template|go-template-file|template|templatefile|jsonpath|jsonpath-as-json|jsonpath-file.'
+            description: 'Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).'
           - names:
               - -R
               - --recursive
@@ -1500,6 +1727,7 @@ subcommands:
             description: Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
       - name: subject
         description: Update the user, group, or service account in a role binding or cluster role binding
+        usage: kubectl set subject (-f FILENAME | TYPE NAME) [--user=username] [--group=groupname] [--serviceaccount=namespace:serviceaccountname] [--dry-run=server|client|none] [options]
         options:
           - names:
               - --all
@@ -1518,6 +1746,15 @@ subcommands:
             argument: '''kubectl-set'''
             description: Name of the manager used to track field ownership.
           - names:
+              - -f
+              - --filename
+            argument: '[]'
+            description: Filename, directory, or URL to files the resource to update the subjects
+          - names:
+              - --group
+            argument: '[]'
+            description: Groups to bind to the role
+          - names:
               - -k
               - --kustomize
             argument: ''''''
@@ -1530,7 +1767,7 @@ subcommands:
               - -o
               - --output
             argument: ''''''
-            description: 'Output format. One of: json|yaml|name|go-template|go-template-file|template|templatefile|jsonpath|jsonpath-as-json|jsonpath-file.'
+            description: 'Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).'
           - names:
               - -R
               - --recursive
@@ -1540,7 +1777,11 @@ subcommands:
               - -l
               - --selector
             argument: ''''''
-            description: Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2)
+            description: Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2). Matching objects must satisfy all of the specified label constraints.
+          - names:
+              - --serviceaccount
+            argument: '[]'
+            description: Service accounts to bind to the role
           - names:
               - --show-managed-fields
             argument: "false"
@@ -1551,6 +1792,7 @@ subcommands:
             description: Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
   - name: explain
     description: Get documentation for a resource
+    usage: kubectl explain RESOURCE [options]
     options:
       - names:
           - --api-version
@@ -1562,6 +1804,7 @@ subcommands:
         description: Print the fields of fields (Currently only 1 level deep)
   - name: get
     description: Display one or many resources
+    usage: kubectl get [(-o|--output=)json|yaml|name|go-template|go-template-file|template|templatefile|jsonpath|jsonpath-as-json|jsonpath-file|custom-columns|custom-columns-file|wide] (TYPE[.VERSION][.GROUP] [NAME | -l label] | TYPE[.VERSION][.GROUP]/NAME ...) [flags] [options]
     options:
       - names:
           - -A
@@ -1581,6 +1824,11 @@ subcommands:
         argument: ''''''
         description: Selector (field query) to filter on, supports '=', '==', and '!='.(e.g. --field-selector key1=value1,key2=value2). The server only supports a limited number of field queries per type.
       - names:
+          - -f
+          - --filename
+        argument: '[]'
+        description: Filename, directory, or URL to files identifying the resource to get from a server.
+      - names:
           - --ignore-not-found
         argument: "false"
         description: If the requested object does not exist the command will return exit code 0.
@@ -1590,6 +1838,11 @@ subcommands:
         argument: ''''''
         description: Process the kustomization directory. This flag can't be used together with -f or -R.
       - names:
+          - -L
+          - --label-columns
+        argument: '[]'
+        description: Accepts a comma separated list of labels that are going to be presented as columns. Names are case-sensitive. You can also use multiple flag options like -L label1 -L label2...
+      - names:
           - --no-headers
         argument: "false"
         description: When using the default or custom-column output format, don't print headers (default print headers).
@@ -1597,7 +1850,7 @@ subcommands:
           - -o
           - --output
         argument: ''''''
-        description: 'Output format. One of: json|yaml|name|go-template|go-template-file|template|templatefile|jsonpath|jsonpath-as-json|jsonpath-file|custom-columns-file|custom-columns|wide See custom columns [https://kubernetes.io/docs/reference/kubectl/overview/#custom-columns], golang template [http://golang.org/pkg/text/template/#pkg-overview] and jsonpath template [https://kubernetes.io/docs/reference/kubectl/jsonpath/].'
+        description: 'Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file, custom-columns, custom-columns-file, wide). See custom columns [https://kubernetes.io/docs/reference/kubectl/#custom-columns], golang template [http://golang.org/pkg/text/template/#pkg-overview] and jsonpath template [https://kubernetes.io/docs/reference/kubectl/jsonpath/].'
       - names:
           - --output-watch-events
         argument: "false"
@@ -1615,7 +1868,7 @@ subcommands:
           - -l
           - --selector
         argument: ''''''
-        description: Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2)
+        description: Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2). Matching objects must satisfy all of the specified label constraints.
       - names:
           - --server-print
         argument: "true"
@@ -1637,6 +1890,10 @@ subcommands:
         argument: ''''''
         description: If non-empty, sort list types using this field specification. The field specification is expressed as a JSONPath expression (e.g. '{.metadata.name}'). The field in the API resource specified by this JSONPath expression must be an integer or a string.
       - names:
+          - --subresource
+        argument: ''''''
+        description: If specified, gets the subresource of the requested object. Must be one of [status scale]. This flag is alpha and may change in the future.
+      - names:
           - --template
         argument: ''''''
         description: Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
@@ -1651,6 +1908,7 @@ subcommands:
         description: Watch for changes to the requested object(s), without listing/getting first.
   - name: edit
     description: Edit a resource on the server
+    usage: kubectl edit (RESOURCE/NAME | -f FILENAME) [options]
     options:
       - names:
           - --allow-missing-template-keys
@@ -1661,6 +1919,11 @@ subcommands:
         argument: '''kubectl-edit'''
         description: Name of the manager used to track field ownership.
       - names:
+          - -f
+          - --filename
+        argument: '[]'
+        description: Filename, directory, or URL to files to use to edit the resource
+      - names:
           - -k
           - --kustomize
         argument: ''''''
@@ -1669,7 +1932,7 @@ subcommands:
           - -o
           - --output
         argument: ''''''
-        description: 'Output format. One of: json|yaml|name|go-template|go-template-file|template|templatefile|jsonpath|jsonpath-as-json|jsonpath-file.'
+        description: 'Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).'
       - names:
           - --output-patch
         argument: "false"
@@ -1688,19 +1951,24 @@ subcommands:
         argument: "false"
         description: If true, keep the managedFields when printing objects in JSON or YAML format.
       - names:
+          - --subresource
+        argument: ''''''
+        description: If specified, edit will operate on the subresource of the requested object. Must be one of [status]. This flag is alpha and may change in the future.
+      - names:
           - --template
         argument: ''''''
         description: Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
       - names:
           - --validate
-        argument: "true"
-        description: If true, use a schema to validate the input before sending it
+        argument: '''strict'''
+        description: 'Must be one of: strict (or true), warn, ignore (or false). "true" or "strict" will use a schema to validate the input and fail the request if invalid. It will perform server side validation if ServerSideFieldValidation is enabled on the api-server, but will fall back to less reliable client-side validation if not. "warn" will warn about unknown or duplicate fields without blocking the request if server-side field validation is enabled on the API server, and behave as "ignore" otherwise. "false" or "ignore" will not perform any schema validation, silently dropping any unknown or duplicate fields.'
       - names:
           - --windows-line-endings
         argument: "false"
         description: Defaults to the line ending native to your platform.
   - name: delete
     description: Delete resources by file names, stdin, resources and names, or by resources and label selector
+    usage: kubectl delete ([-f FILENAME] | [-k DIRECTORY] | TYPE [(NAME | -l label | --all)]) [options]
     options:
       - names:
           - --all
@@ -1723,6 +1991,11 @@ subcommands:
           - --field-selector
         argument: ''''''
         description: Selector (field query) to filter on, supports '=', '==', and '!='.(e.g. --field-selector key1=value1,key2=value2). The server only supports a limited number of field queries per type.
+      - names:
+          - -f
+          - --filename
+        argument: '[]'
+        description: containing the resource to delete.
       - names:
           - --force
         argument: "false"
@@ -1762,7 +2035,7 @@ subcommands:
           - -l
           - --selector
         argument: ''''''
-        description: Selector (label query) to filter on.
+        description: Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2). Matching objects must satisfy all of the specified label constraints.
       - names:
           - --timeout
         argument: 0s
@@ -1773,15 +2046,22 @@ subcommands:
         description: If true, wait for resources to be gone before returning. This waits for finalizers.
   - name: rollout
     description: Manage the rollout of a resource
+    usage: kubectl rollout SUBCOMMAND [options]
     options: []
     subcommands:
       - name: history
         description: View rollout history
+        usage: kubectl rollout history (TYPE NAME | TYPE/NAME) [flags] [options]
         options:
           - names:
               - --allow-missing-template-keys
             argument: "true"
             description: If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.
+          - names:
+              - -f
+              - --filename
+            argument: '[]'
+            description: Filename, directory, or URL to files identifying the resource to get from a server.
           - names:
               - -k
               - --kustomize
@@ -1791,7 +2071,7 @@ subcommands:
               - -o
               - --output
             argument: ''''''
-            description: 'Output format. One of: json|yaml|name|go-template|go-template-file|template|templatefile|jsonpath|jsonpath-as-json|jsonpath-file.'
+            description: 'Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).'
           - names:
               - -R
               - --recursive
@@ -1802,6 +2082,11 @@ subcommands:
             argument: "0"
             description: See the details, including podTemplate of the revision specified
           - names:
+              - -l
+              - --selector
+            argument: ''''''
+            description: Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2). Matching objects must satisfy all of the specified label constraints.
+          - names:
               - --show-managed-fields
             argument: "false"
             description: If true, keep the managedFields when printing objects in JSON or YAML format.
@@ -1811,6 +2096,7 @@ subcommands:
             description: Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
       - name: pause
         description: Mark the provided resource as paused
+        usage: kubectl rollout pause RESOURCE [options]
         options:
           - names:
               - --allow-missing-template-keys
@@ -1821,6 +2107,11 @@ subcommands:
             argument: '''kubectl-rollout'''
             description: Name of the manager used to track field ownership.
           - names:
+              - -f
+              - --filename
+            argument: '[]'
+            description: Filename, directory, or URL to files identifying the resource to get from a server.
+          - names:
               - -k
               - --kustomize
             argument: ''''''
@@ -1829,12 +2120,17 @@ subcommands:
               - -o
               - --output
             argument: ''''''
-            description: 'Output format. One of: json|yaml|name|go-template|go-template-file|template|templatefile|jsonpath|jsonpath-as-json|jsonpath-file.'
+            description: 'Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).'
           - names:
               - -R
               - --recursive
             argument: "false"
             description: Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.
+          - names:
+              - -l
+              - --selector
+            argument: ''''''
+            description: Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2). Matching objects must satisfy all of the specified label constraints.
           - names:
               - --show-managed-fields
             argument: "false"
@@ -1845,6 +2141,7 @@ subcommands:
             description: Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
       - name: restart
         description: Restart a resource
+        usage: kubectl rollout restart RESOURCE [options]
         options:
           - names:
               - --allow-missing-template-keys
@@ -1855,6 +2152,11 @@ subcommands:
             argument: '''kubectl-rollout'''
             description: Name of the manager used to track field ownership.
           - names:
+              - -f
+              - --filename
+            argument: '[]'
+            description: Filename, directory, or URL to files identifying the resource to get from a server.
+          - names:
               - -k
               - --kustomize
             argument: ''''''
@@ -1863,12 +2165,17 @@ subcommands:
               - -o
               - --output
             argument: ''''''
-            description: 'Output format. One of: json|yaml|name|go-template|go-template-file|template|templatefile|jsonpath|jsonpath-as-json|jsonpath-file.'
+            description: 'Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).'
           - names:
               - -R
               - --recursive
             argument: "false"
             description: Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.
+          - names:
+              - -l
+              - --selector
+            argument: ''''''
+            description: Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2). Matching objects must satisfy all of the specified label constraints.
           - names:
               - --show-managed-fields
             argument: "false"
@@ -1879,6 +2186,7 @@ subcommands:
             description: Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
       - name: resume
         description: Resume a paused resource
+        usage: kubectl rollout resume RESOURCE [options]
         options:
           - names:
               - --allow-missing-template-keys
@@ -1889,6 +2197,11 @@ subcommands:
             argument: '''kubectl-rollout'''
             description: Name of the manager used to track field ownership.
           - names:
+              - -f
+              - --filename
+            argument: '[]'
+            description: Filename, directory, or URL to files identifying the resource to get from a server.
+          - names:
               - -k
               - --kustomize
             argument: ''''''
@@ -1897,12 +2210,17 @@ subcommands:
               - -o
               - --output
             argument: ''''''
-            description: 'Output format. One of: json|yaml|name|go-template|go-template-file|template|templatefile|jsonpath|jsonpath-as-json|jsonpath-file.'
+            description: 'Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).'
           - names:
               - -R
               - --recursive
             argument: "false"
             description: Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.
+          - names:
+              - -l
+              - --selector
+            argument: ''''''
+            description: Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2). Matching objects must satisfy all of the specified label constraints.
           - names:
               - --show-managed-fields
             argument: "false"
@@ -1913,7 +2231,13 @@ subcommands:
             description: Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
       - name: status
         description: Show the status of the rollout
+        usage: kubectl rollout status (TYPE NAME | TYPE/NAME) [flags] [options]
         options:
+          - names:
+              - -f
+              - --filename
+            argument: '[]'
+            description: Filename, directory, or URL to files identifying the resource to get from a server.
           - names:
               - -k
               - --kustomize
@@ -1929,6 +2253,11 @@ subcommands:
             argument: "0"
             description: Pin to a specific revision for showing its status. Defaults to 0 (last revision).
           - names:
+              - -l
+              - --selector
+            argument: ''''''
+            description: Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2). Matching objects must satisfy all of the specified label constraints.
+          - names:
               - --timeout
             argument: 0s
             description: The length of time to wait before ending watch, zero means never. Any other values should contain a corresponding time unit (e.g. 1s, 2m, 3h).
@@ -1939,6 +2268,7 @@ subcommands:
             description: Watch the status of the rollout until it's done.
       - name: undo
         description: Undo a previous rollout
+        usage: kubectl rollout undo (TYPE NAME | TYPE/NAME) [flags] [options]
         options:
           - names:
               - --allow-missing-template-keys
@@ -1949,6 +2279,11 @@ subcommands:
             argument: '''none'''
             description: Must be "none", "server", or "client". If client strategy, only print the object that would be sent, without sending it. If server strategy, submit server-side request without persisting the resource.
           - names:
+              - -f
+              - --filename
+            argument: '[]'
+            description: Filename, directory, or URL to files identifying the resource to get from a server.
+          - names:
               - -k
               - --kustomize
             argument: ''''''
@@ -1957,12 +2292,17 @@ subcommands:
               - -o
               - --output
             argument: ''''''
-            description: 'Output format. One of: json|yaml|name|go-template|go-template-file|template|templatefile|jsonpath|jsonpath-as-json|jsonpath-file.'
+            description: 'Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).'
           - names:
               - -R
               - --recursive
             argument: "false"
             description: Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.
+          - names:
+              - -l
+              - --selector
+            argument: ''''''
+            description: Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2). Matching objects must satisfy all of the specified label constraints.
           - names:
               - --show-managed-fields
             argument: "false"
@@ -1977,6 +2317,7 @@ subcommands:
             description: The revision to rollback to. Default to 0 (last revision).
   - name: scale
     description: Set a new size for a deployment, replica set, or replication controller
+    usage: kubectl scale [--resource-version=version] [--current-replicas=count] --replicas=COUNT (-f FILENAME | TYPE NAME) [options]
     options:
       - names:
           - --all
@@ -1995,6 +2336,11 @@ subcommands:
         argument: '''none'''
         description: Must be "none", "server", or "client". If client strategy, only print the object that would be sent, without sending it. If server strategy, submit server-side request without persisting the resource.
       - names:
+          - -f
+          - --filename
+        argument: '[]'
+        description: Filename, directory, or URL to files identifying the resource to set a new size
+      - names:
           - -k
           - --kustomize
         argument: ''''''
@@ -2003,7 +2349,7 @@ subcommands:
           - -o
           - --output
         argument: ''''''
-        description: 'Output format. One of: json|yaml|name|go-template|go-template-file|template|templatefile|jsonpath|jsonpath-as-json|jsonpath-file.'
+        description: 'Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).'
       - names:
           - -R
           - --recursive
@@ -2021,7 +2367,7 @@ subcommands:
           - -l
           - --selector
         argument: ''''''
-        description: Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2)
+        description: Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2). Matching objects must satisfy all of the specified label constraints.
       - names:
           - --show-managed-fields
         argument: "false"
@@ -2036,6 +2382,7 @@ subcommands:
         description: The length of time to wait before giving up on a scale operation, zero means don't wait. Any other values should contain a corresponding time unit (e.g. 1s, 2m, 3h).
   - name: autoscale
     description: Auto-scale a deployment, replica set, stateful set, or replication controller
+    usage: kubectl autoscale (-f FILENAME | TYPE NAME | TYPE/NAME) [--min=MINPODS] --max=MAXPODS [--cpu-percent=CPU] [options]
     options:
       - names:
           - --allow-missing-template-keys
@@ -2053,6 +2400,11 @@ subcommands:
           - --field-manager
         argument: '''kubectl-autoscale'''
         description: Name of the manager used to track field ownership.
+      - names:
+          - -f
+          - --filename
+        argument: '[]'
+        description: Filename, directory, or URL to files identifying the resource to autoscale.
       - names:
           - -k
           - --kustomize
@@ -2074,7 +2426,7 @@ subcommands:
           - -o
           - --output
         argument: ''''''
-        description: 'Output format. One of: json|yaml|name|go-template|go-template-file|template|templatefile|jsonpath|jsonpath-as-json|jsonpath-file.'
+        description: 'Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).'
       - names:
           - -R
           - --recursive
@@ -2094,15 +2446,22 @@ subcommands:
         description: Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
   - name: certificate
     description: Modify certificate resources.
+    usage: kubectl certificate SUBCOMMAND [options]
     options: []
     subcommands:
       - name: approve
         description: Approve a certificate signing request
+        usage: kubectl certificate approve (-f FILENAME | NAME) [options]
         options:
           - names:
               - --allow-missing-template-keys
             argument: "true"
             description: If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.
+          - names:
+              - -f
+              - --filename
+            argument: '[]'
+            description: Filename, directory, or URL to files identifying the resource to update
           - names:
               - --force
             argument: "false"
@@ -2116,7 +2475,7 @@ subcommands:
               - -o
               - --output
             argument: ''''''
-            description: 'Output format. One of: json|yaml|name|go-template|go-template-file|template|templatefile|jsonpath|jsonpath-as-json|jsonpath-file.'
+            description: 'Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).'
           - names:
               - -R
               - --recursive
@@ -2132,11 +2491,17 @@ subcommands:
             description: Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
       - name: deny
         description: Deny a certificate signing request
+        usage: kubectl certificate deny (-f FILENAME | NAME) [options]
         options:
           - names:
               - --allow-missing-template-keys
             argument: "true"
             description: If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.
+          - names:
+              - -f
+              - --filename
+            argument: '[]'
+            description: Filename, directory, or URL to files identifying the resource to update
           - names:
               - --force
             argument: "false"
@@ -2150,7 +2515,7 @@ subcommands:
               - -o
               - --output
             argument: ''''''
-            description: 'Output format. One of: json|yaml|name|go-template|go-template-file|template|templatefile|jsonpath|jsonpath-as-json|jsonpath-file.'
+            description: 'Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).'
           - names:
               - -R
               - --recursive
@@ -2166,13 +2531,16 @@ subcommands:
             description: Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
   - name: cluster-info
     description: Display cluster information
+    usage: kubectl cluster-info [flags] [options]
     options: []
   - name: top
     description: Display resource (CPU/memory) usage
+    usage: kubectl top [flags] [options]
     options: []
     subcommands:
       - name: node
         description: Display resource (CPU/memory) usage of nodes
+        usage: kubectl top node [NAME | -l label] [options]
         options:
           - names:
               - --no-headers
@@ -2182,7 +2550,7 @@ subcommands:
               - -l
               - --selector
             argument: ''''''
-            description: Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2)
+            description: Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2). Matching objects must satisfy all of the specified label constraints.
           - names:
               - --show-capacity
             argument: "false"
@@ -2197,6 +2565,7 @@ subcommands:
             description: Enables using protocol-buffers to access Metrics API.
       - name: pod
         description: Display resource (CPU/memory) usage of pods
+        usage: kubectl top pod [NAME | -l label] [options]
         options:
           - names:
               - -A
@@ -2219,17 +2588,22 @@ subcommands:
               - -l
               - --selector
             argument: ''''''
-            description: Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2)
+            description: Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2). Matching objects must satisfy all of the specified label constraints.
           - names:
               - --sort-by
             argument: ''''''
             description: If non-empty, sort pods list using specified field. The field can be either 'cpu' or 'memory'.
+          - names:
+              - --sum
+            argument: "false"
+            description: Print the sum of the resource usage
           - names:
               - --use-protocol-buffers
             argument: "true"
             description: Enables using protocol-buffers to access Metrics API.
   - name: cordon
     description: Mark node as unschedulable
+    usage: kubectl cordon NODE [options]
     options:
       - names:
           - --dry-run
@@ -2239,9 +2613,10 @@ subcommands:
           - -l
           - --selector
         argument: ''''''
-        description: Selector (label query) to filter on
+        description: Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2). Matching objects must satisfy all of the specified label constraints.
   - name: uncordon
     description: Mark node as schedulable
+    usage: kubectl uncordon NODE [options]
     options:
       - names:
           - --dry-run
@@ -2251,9 +2626,10 @@ subcommands:
           - -l
           - --selector
         argument: ''''''
-        description: Selector (label query) to filter on
+        description: Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2). Matching objects must satisfy all of the specified label constraints.
   - name: drain
     description: Drain node in preparation for maintenance
+    usage: kubectl drain NODE [options]
     options:
       - names:
           - --chunk-size
@@ -2274,7 +2650,7 @@ subcommands:
       - names:
           - --force
         argument: "false"
-        description: Continue even if there are pods not managed by a ReplicationController, ReplicaSet, Job, DaemonSet or StatefulSet.
+        description: Continue even if there are pods that do not declare a controller.
       - names:
           - --grace-period
         argument: "-1"
@@ -2291,7 +2667,7 @@ subcommands:
           - -l
           - --selector
         argument: ''''''
-        description: Selector (label query) to filter on
+        description: Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2). Matching objects must satisfy all of the specified label constraints.
       - names:
           - --skip-wait-for-delete-timeout
         argument: "0"
@@ -2302,6 +2678,7 @@ subcommands:
         description: The length of time to wait before giving up, zero means infinite
   - name: taint
     description: Update the taints on one or more nodes
+    usage: kubectl taint NODE NAME KEY_1=VAL_1:TAINT_EFFECT_1 ... KEY_N=VAL_N:TAINT_EFFECT_N [options]
     options:
       - names:
           - --all
@@ -2323,7 +2700,7 @@ subcommands:
           - -o
           - --output
         argument: ''''''
-        description: 'Output format. One of: json|yaml|name|go-template|go-template-file|template|templatefile|jsonpath|jsonpath-as-json|jsonpath-file.'
+        description: 'Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).'
       - names:
           - --overwrite
         argument: "false"
@@ -2332,7 +2709,7 @@ subcommands:
           - -l
           - --selector
         argument: ''''''
-        description: Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2)
+        description: Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2). Matching objects must satisfy all of the specified label constraints.
       - names:
           - --show-managed-fields
         argument: "false"
@@ -2343,10 +2720,11 @@ subcommands:
         description: Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
       - names:
           - --validate
-        argument: "true"
-        description: If true, use a schema to validate the input before sending it
+        argument: '''strict'''
+        description: 'Must be one of: strict (or true), warn, ignore (or false). "true" or "strict" will use a schema to validate the input and fail the request if invalid. It will perform server side validation if ServerSideFieldValidation is enabled on the api-server, but will fall back to less reliable client-side validation if not. "warn" will warn about unknown or duplicate fields without blocking the request if server-side field validation is enabled on the API server, and behave as "ignore" otherwise. "false" or "ignore" will not perform any schema validation, silently dropping any unknown or duplicate fields.'
   - name: describe
     description: Show details of a specific resource or group of resources
+    usage: kubectl describe (-f FILENAME | TYPE [NAME_PREFIX | -l label] | TYPE/NAME) [options]
     options:
       - names:
           - -A
@@ -2357,6 +2735,11 @@ subcommands:
           - --chunk-size
         argument: "500"
         description: Return large lists in chunks rather than all at once. Pass 0 to disable. This flag is beta and may change in the future.
+      - names:
+          - -f
+          - --filename
+        argument: '[]'
+        description: Filename, directory, or URL to files containing the resource to describe
       - names:
           - -k
           - --kustomize
@@ -2371,13 +2754,14 @@ subcommands:
           - -l
           - --selector
         argument: ''''''
-        description: Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2)
+        description: Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2). Matching objects must satisfy all of the specified label constraints.
       - names:
           - --show-events
         argument: "true"
         description: If true, display events related to the described object.
   - name: logs
     description: Print the logs for a container in a pod
+    usage: kubectl logs [-f] [-p] (POD | TYPE/NAME) [-c CONTAINER] [options]
     options:
       - names:
           - --all-containers
@@ -2426,7 +2810,7 @@ subcommands:
           - -l
           - --selector
         argument: ''''''
-        description: Selector (label query) to filter on.
+        description: Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2). Matching objects must satisfy all of the specified label constraints.
       - names:
           - --since
         argument: 0s
@@ -2445,6 +2829,7 @@ subcommands:
         description: Include timestamps on each line in the log output
   - name: attach
     description: Attach to a running container
+    usage: kubectl attach (POD | TYPE/NAME) -c CONTAINER [options]
     options:
       - names:
           - -c
@@ -2472,12 +2857,18 @@ subcommands:
         description: Stdin is a TTY
   - name: exec
     description: Execute a command in a container
+    usage: kubectl exec (POD | TYPE/NAME) [-c CONTAINER] [flags] -- COMMAND [args...] [options]
     options:
       - names:
           - -c
           - --container
         argument: ''''''
         description: Container name. If omitted, use the kubectl.kubernetes.io/default-container annotation for selecting the container to be attached or the first container in the pod will be chosen
+      - names:
+          - -f
+          - --filename
+        argument: '[]'
+        description: to use to exec into the resource
       - names:
           - --pod-running-timeout
         argument: 1m0s
@@ -2499,14 +2890,11 @@ subcommands:
         description: Stdin is a TTY
   - name: port-forward
     description: Forward one or more local ports to a pod
+    usage: kubectl port-forward TYPE/NAME [options] [LOCAL_PORT:]REMOTE_PORT [...[LOCAL_PORT_N:]REMOTE_PORT_N]
     options:
       - names:
           - --address
-        argument: ""
-        description: Addresses to listen on (comma separated). Only accepts IP addresses or localhost as a value. When localhost is supplied, kubectl will try to bind on both 127.0.0.1 and ::1 and will fail if neither of these addresses are available to bind.
-      - names:
-          - --address
-        argument: localhost
+        argument: '[localhost]'
         description: Addresses to listen on (comma separated). Only accepts IP addresses or localhost as a value. When localhost is supplied, kubectl will try to bind on both 127.0.0.1 and ::1 and will fail if neither of these addresses are available to bind.
       - names:
           - --pod-running-timeout
@@ -2514,14 +2902,11 @@ subcommands:
         description: The length of time (like 5s, 2m, or 3h, higher than zero) to wait until at least one pod is running
   - name: proxy
     description: Run a proxy to the Kubernetes API server
+    usage: kubectl proxy [--port=PORT] [--www=static-dir] [--www-prefix=prefix] [--api-prefix=prefix] [options]
     options:
       - names:
           - --accept-hosts
-        argument: '''^localhost$,^127\.0\.0\.1$,^\$'''
-        description: Regular expression for hosts that the proxy should accept.
-      - names:
-          - --accept-hosts
-        argument: '''^localhost$,^127\.0\.0\.1$,^\::1\$'''
+        argument: '''^localhost$,^127\.0\.0\.1$,^\[::1\]$'''
         description: Regular expression for hosts that the proxy should accept.
       - names:
           - --accept-paths
@@ -2577,6 +2962,7 @@ subcommands:
         description: Prefix to serve static files under, if static file directory is specified.
   - name: cp
     description: Copy files and directories to and from containers
+    usage: kubectl cp <file-spec-src> <file-spec-dest> [options]
     options:
       - names:
           - -c
@@ -2593,10 +2979,12 @@ subcommands:
         description: Set number of retries to complete a copy operation from a container. Specify 0 to disable or any negative value for infinite retrying. The default is 0 (no retry).
   - name: auth
     description: Inspect authorization
+    usage: kubectl auth [flags] [options]
     options: []
     subcommands:
       - name: can-i
         description: Check whether an action is allowed
+        usage: kubectl auth can-i VERB [TYPE | TYPE/NAME | NONRESOURCEURL] [options]
         options:
           - names:
               - -A
@@ -2622,6 +3010,7 @@ subcommands:
             description: SubResource such as pod/log or deployment/scale
       - name: reconcile
         description: Reconciles rules for RBAC role, role binding, cluster role, and cluster role binding objects
+        usage: kubectl auth reconcile -f FILENAME [options]
         options:
           - names:
               - --allow-missing-template-keys
@@ -2632,6 +3021,11 @@ subcommands:
             argument: '''none'''
             description: Must be "none", "server", or "client". If client strategy, only print the object that would be sent, without sending it. If server strategy, submit server-side request without persisting the resource.
           - names:
+              - -f
+              - --filename
+            argument: '[]'
+            description: Filename, directory, or URL to files identifying the resource to reconcile.
+          - names:
               - -k
               - --kustomize
             argument: ''''''
@@ -2640,7 +3034,7 @@ subcommands:
               - -o
               - --output
             argument: ''''''
-            description: 'Output format. One of: json|yaml|name|go-template|go-template-file|template|templatefile|jsonpath|jsonpath-as-json|jsonpath-file.'
+            description: 'Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).'
           - names:
               - -R
               - --recursive
@@ -2664,6 +3058,7 @@ subcommands:
             description: Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
   - name: debug
     description: Create debugging sessions for troubleshooting workloads and nodes
+    usage: kubectl debug (POD | TYPE[[.VERSION].GROUP]/NAME) [ -- COMMAND [args...] ] [options]
     options:
       - names:
           - --arguments-only
@@ -2682,6 +3077,10 @@ subcommands:
           - --copy-to
         argument: ''''''
         description: Create a copy of the target Pod with this name.
+      - names:
+          - --env
+        argument: '[]'
+        description: Environment variables to set in the container.
       - names:
           - --image
         argument: ''''''
@@ -2704,6 +3103,10 @@ subcommands:
         argument: "false"
         description: When used with '--copy-to', schedule the copy of target Pod on the same node.
       - names:
+          - --set-image
+        argument: '[]'
+        description: When used with '--copy-to', a list of name=image pairs for changing container images, similar to how 'kubectl set image' works.
+      - names:
           - --share-processes
         argument: "true"
         description: When used with '--copy-to', enable process namespace sharing in the copy.
@@ -2723,11 +3126,17 @@ subcommands:
         description: Allocate a TTY for the debugging container.
   - name: diff
     description: Diff the live version against a would-be applied version
+    usage: kubectl diff -f FILENAME [options]
     options:
       - names:
           - --field-manager
         argument: '''kubectl-client-side-apply'''
         description: Name of the manager used to track field ownership.
+      - names:
+          - -f
+          - --filename
+        argument: '[]'
+        description: Filename, directory, or URL to files contains the configuration to diff
       - names:
           - --force-conflicts
         argument: "false"
@@ -2738,6 +3147,14 @@ subcommands:
         argument: ''''''
         description: Process the kustomization directory. This flag can't be used together with -f or -R.
       - names:
+          - --prune
+        argument: "false"
+        description: Include resources that would be deleted by pruning. Can be used with -l and default shows all resources would be pruned
+      - names:
+          - --prune-allowlist
+        argument: '[]'
+        description: Overwrite the default whitelist with <group/version/kind> for --prune
+      - names:
           - -R
           - --recursive
         argument: "false"
@@ -2746,13 +3163,18 @@ subcommands:
           - -l
           - --selector
         argument: ''''''
-        description: Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2)
+        description: Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2). Matching objects must satisfy all of the specified label constraints.
       - names:
           - --server-side
         argument: "false"
         description: If true, apply runs in the server instead of the client.
+      - names:
+          - --show-managed-fields
+        argument: "false"
+        description: If true, include managed fields in the diff.
   - name: apply
     description: Apply a configuration to a resource by file name or stdin
+    usage: kubectl apply (-f FILENAME | -k DIRECTORY) [options]
     options:
       - names:
           - --all
@@ -2774,6 +3196,11 @@ subcommands:
           - --field-manager
         argument: '''kubectl-client-side-apply'''
         description: Name of the manager used to track field ownership.
+      - names:
+          - -f
+          - --filename
+        argument: '[]'
+        description: The files that contain the configurations to apply.
       - names:
           - --force
         argument: "false"
@@ -2799,7 +3226,7 @@ subcommands:
           - -o
           - --output
         argument: ''''''
-        description: 'Output format. One of: json|yaml|name|go-template|go-template-file|template|templatefile|jsonpath|jsonpath-as-json|jsonpath-file.'
+        description: 'Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).'
       - names:
           - --overwrite
         argument: "true"
@@ -2809,6 +3236,10 @@ subcommands:
         argument: "false"
         description: Automatically delete resource objects, that do not appear in the configs and are created by either apply or create --save-config. Should be used with either -l or --all.
       - names:
+          - --prune-whitelist
+        argument: '[]'
+        description: Overwrite the default whitelist with <group/version/kind> for --prune
+      - names:
           - -R
           - --recursive
         argument: "false"
@@ -2817,7 +3248,7 @@ subcommands:
           - -l
           - --selector
         argument: ''''''
-        description: Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2)
+        description: Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2). Matching objects must satisfy all of the specified label constraints.
       - names:
           - --server-side
         argument: "false"
@@ -2836,14 +3267,15 @@ subcommands:
         description: The length of time to wait before giving up on a delete, zero means determine a timeout from the size of the object
       - names:
           - --validate
-        argument: "true"
-        description: If true, use a schema to validate the input before sending it
+        argument: '''strict'''
+        description: 'Must be one of: strict (or true), warn, ignore (or false). "true" or "strict" will use a schema to validate the input and fail the request if invalid. It will perform server side validation if ServerSideFieldValidation is enabled on the api-server, but will fall back to less reliable client-side validation if not. "warn" will warn about unknown or duplicate fields without blocking the request if server-side field validation is enabled on the API server, and behave as "ignore" otherwise. "false" or "ignore" will not perform any schema validation, silently dropping any unknown or duplicate fields.'
       - names:
           - --wait
         argument: "false"
         description: If true, wait for resources to be gone before returning. This waits for finalizers.
   - name: patch
     description: Update fields of a resource
+    usage: kubectl patch (-f FILENAME | TYPE NAME) [-p PATCH|--patch-file FILE] [options]
     options:
       - names:
           - --allow-missing-template-keys
@@ -2858,6 +3290,11 @@ subcommands:
         argument: '''kubectl-patch'''
         description: Name of the manager used to track field ownership.
       - names:
+          - -f
+          - --filename
+        argument: '[]'
+        description: Filename, directory, or URL to files identifying the resource to update
+      - names:
           - -k
           - --kustomize
         argument: ''''''
@@ -2870,7 +3307,7 @@ subcommands:
           - -o
           - --output
         argument: ''''''
-        description: 'Output format. One of: json|yaml|name|go-template|go-template-file|template|templatefile|jsonpath|jsonpath-as-json|jsonpath-file.'
+        description: 'Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).'
       - names:
           - -p
           - --patch
@@ -2890,6 +3327,10 @@ subcommands:
         argument: "false"
         description: If true, keep the managedFields when printing objects in JSON or YAML format.
       - names:
+          - --subresource
+        argument: ''''''
+        description: If specified, patch will operate on the subresource of the requested object. Must be one of [status scale]. This flag is alpha and may change in the future.
+      - names:
           - --template
         argument: ''''''
         description: Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
@@ -2899,6 +3340,7 @@ subcommands:
         description: The type of patch being provided; one of [json merge strategic]
   - name: replace
     description: Replace a resource by file name or stdin
+    usage: kubectl replace -f FILENAME [options]
     options:
       - names:
           - --allow-missing-template-keys
@@ -2917,6 +3359,11 @@ subcommands:
         argument: '''kubectl-replace'''
         description: Name of the manager used to track field ownership.
       - names:
+          - -f
+          - --filename
+        argument: '[]'
+        description: The files that contain the configurations to replace.
+      - names:
           - --force
         argument: "false"
         description: If true, immediately remove resources from API and bypass graceful deletion. Note that immediate deletion of some resources may result in inconsistency or data loss and requires confirmation.
@@ -2933,7 +3380,7 @@ subcommands:
           - -o
           - --output
         argument: ''''''
-        description: 'Output format. One of: json|yaml|name|go-template|go-template-file|template|templatefile|jsonpath|jsonpath-as-json|jsonpath-file.'
+        description: 'Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).'
       - names:
           - --raw
         argument: ''''''
@@ -2952,6 +3399,10 @@ subcommands:
         argument: "false"
         description: If true, keep the managedFields when printing objects in JSON or YAML format.
       - names:
+          - --subresource
+        argument: ''''''
+        description: If specified, replace will operate on the subresource of the requested object. Must be one of [status scale]. This flag is alpha and may change in the future.
+      - names:
           - --template
         argument: ''''''
         description: Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
@@ -2961,14 +3412,15 @@ subcommands:
         description: The length of time to wait before giving up on a delete, zero means determine a timeout from the size of the object
       - names:
           - --validate
-        argument: "true"
-        description: If true, use a schema to validate the input before sending it
+        argument: '''strict'''
+        description: 'Must be one of: strict (or true), warn, ignore (or false). "true" or "strict" will use a schema to validate the input and fail the request if invalid. It will perform server side validation if ServerSideFieldValidation is enabled on the api-server, but will fall back to less reliable client-side validation if not. "warn" will warn about unknown or duplicate fields without blocking the request if server-side field validation is enabled on the API server, and behave as "ignore" otherwise. "false" or "ignore" will not perform any schema validation, silently dropping any unknown or duplicate fields.'
       - names:
           - --wait
         argument: "false"
         description: If true, wait for resources to be gone before returning. This waits for finalizers.
   - name: wait
     description: 'Experimental: Wait for a specific condition on one or many resources'
+    usage: kubectl wait ([-f FILENAME] | resource.group/resource.name | resource.group [(-l label | --all)]) [--for=delete|--for condition=available|--for=jsonpath='{}'=value] [options]
     options:
       - names:
           - --all
@@ -2988,9 +3440,14 @@ subcommands:
         argument: ''''''
         description: Selector (field query) to filter on, supports '=', '==', and '!='.(e.g. --field-selector key1=value1,key2=value2). The server only supports a limited number of field queries per type.
       - names:
+          - -f
+          - --filename
+        argument: '[]'
+        description: identifying the resource.
+      - names:
           - --for
         argument: ''''''
-        description: 'The condition to wait on: [delete|condition=condition-name|jsonpath=''{JSONPath expression}''=JSONPath Condition]. The default status value of condition-name is true, you can set false with condition=condition-name=false.'
+        description: 'The condition to wait on: [delete|condition=condition-name[=condition-value]|jsonpath=''{JSONPath expression}''=JSONPath Condition]. The default condition-value is true. Condition values are compared after Unicode simple case folding, which is a more general form of case-insensitivity.'
       - names:
           - --local
         argument: "false"
@@ -2999,7 +3456,7 @@ subcommands:
           - -o
           - --output
         argument: ''''''
-        description: 'Output format. One of: json|yaml|name|go-template|go-template-file|template|templatefile|jsonpath|jsonpath-as-json|jsonpath-file.'
+        description: 'Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).'
       - names:
           - -R
           - --recursive
@@ -3024,6 +3481,7 @@ subcommands:
         description: The length of time to wait before giving up. Zero means check once and don't wait, negative means wait for a week.
   - name: kustomize
     description: Build a kustomization target from a directory or URL.
+    usage: kubectl kustomize DIR [flags] [options]
     options:
       - names:
           - --as-current-user
@@ -3038,9 +3496,10 @@ subcommands:
         argument: "false"
         description: Enable use of the Helm chart inflator generator.
       - names:
-          - --enable-managedby-label
-        argument: "false"
-        description: enable adding app.kubernetes.io/managed-by
+          - -e
+          - --env
+        argument: '[]'
+        description: a list of environment variables to be used by functions
       - names:
           - --helm-command
         argument: '''helm'''
@@ -3049,6 +3508,10 @@ subcommands:
           - --load-restrictor
         argument: '''LoadRestrictionsRootOnly'''
         description: if set to 'LoadRestrictionsNone', local kustomizations may load files from outside their root. This does, however, break the relocatability of the kustomization.
+      - names:
+          - --mount
+        argument: '[]'
+        description: a list of storage options read from the filesystem
       - names:
           - --network
         argument: "false"
@@ -3068,6 +3531,7 @@ subcommands:
         description: Reorder the resources just before output. Use 'legacy' to apply a legacy reordering (Namespaces first, Webhooks last, etc). Use 'none' to suppress a final reordering.
   - name: label
     description: Update the labels on a resource
+    usage: kubectl label [--overwrite] (-f FILENAME | TYPE NAME) KEY_1=VAL_1 ... KEY_N=VAL_N [--resource-version=version] [options]
     options:
       - names:
           - --all
@@ -3095,6 +3559,11 @@ subcommands:
         argument: ''''''
         description: Selector (field query) to filter on, supports '=', '==', and '!='.(e.g. --field-selector key1=value1,key2=value2). The server only supports a limited number of field queries per type.
       - names:
+          - -f
+          - --filename
+        argument: '[]'
+        description: Filename, directory, or URL to files identifying the resource to update the labels
+      - names:
           - -k
           - --kustomize
         argument: ''''''
@@ -3111,7 +3580,7 @@ subcommands:
           - -o
           - --output
         argument: ''''''
-        description: 'Output format. One of: json|yaml|name|go-template|go-template-file|template|templatefile|jsonpath|jsonpath-as-json|jsonpath-file.'
+        description: 'Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).'
       - names:
           - --overwrite
         argument: "false"
@@ -3129,7 +3598,7 @@ subcommands:
           - -l
           - --selector
         argument: ''''''
-        description: Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2).
+        description: Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2). Matching objects must satisfy all of the specified label constraints.
       - names:
           - --show-managed-fields
         argument: "false"
@@ -3140,6 +3609,7 @@ subcommands:
         description: Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
   - name: annotate
     description: Update the annotations on a resource
+    usage: kubectl annotate [--overwrite] (-f FILENAME | TYPE NAME) KEY_1=VAL_1 ... KEY_N=VAL_N [--resource-version=version] [options]
     options:
       - names:
           - --all
@@ -3167,6 +3637,11 @@ subcommands:
         argument: ''''''
         description: Selector (field query) to filter on, supports '=', '==', and '!='.(e.g. --field-selector key1=value1,key2=value2). The server only supports a limited number of field queries per type.
       - names:
+          - -f
+          - --filename
+        argument: '[]'
+        description: Filename, directory, or URL to files identifying the resource to update the annotation
+      - names:
           - -k
           - --kustomize
         argument: ''''''
@@ -3183,7 +3658,7 @@ subcommands:
           - -o
           - --output
         argument: ''''''
-        description: 'Output format. One of: json|yaml|name|go-template|go-template-file|template|templatefile|jsonpath|jsonpath-as-json|jsonpath-file.'
+        description: 'Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).'
       - names:
           - --overwrite
         argument: "false"
@@ -3201,7 +3676,7 @@ subcommands:
           - -l
           - --selector
         argument: ''''''
-        description: Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2).
+        description: Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2). Matching objects must satisfy all of the specified label constraints.
       - names:
           - --show-managed-fields
         argument: "false"
@@ -3211,20 +3686,27 @@ subcommands:
         argument: ''''''
         description: Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
   - name: completion
-    description: Output shell completion code for the specified shell (bash, zsh or fish)
+    description: Output shell completion code for the specified shell (bash, zsh, fish, or powershell)
+    usage: kubectl completion SHELL [options]
     options: []
   - name: alpha
     description: Commands for features in alpha
+    usage: ""
     options: []
     subcommands:
       - name: events
         description: 'Experimental: List events'
+        usage: kubectl alpha events [(-o|--output=)json|yaml|name|go-template|go-template-file|template|templatefile|jsonpath|jsonpath-as-json|jsonpath-file] [--for TYPE/NAME] [--watch] [--event=Normal,Warning] [options]
         options:
           - names:
               - -A
               - --all-namespaces
             argument: "false"
             description: If present, list the requested object(s) across all namespaces. Namespace in current context is ignored even if specified with --namespace.
+          - names:
+              - --allow-missing-template-keys
+            argument: "true"
+            description: If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.
           - names:
               - --chunk-size
             argument: "500"
@@ -3234,12 +3716,34 @@ subcommands:
             argument: ''''''
             description: Filter events to only those pertaining to the specified resource.
           - names:
+              - --no-headers
+            argument: "false"
+            description: When using the default output format, don't print headers.
+          - names:
+              - -o
+              - --output
+            argument: ''''''
+            description: 'Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).'
+          - names:
+              - --show-managed-fields
+            argument: "false"
+            description: If true, keep the managedFields when printing objects in JSON or YAML format.
+          - names:
+              - --template
+            argument: ''''''
+            description: Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
+          - names:
+              - --types
+            argument: '[]'
+            description: Output only events of given types.
+          - names:
               - -w
               - --watch
             argument: "false"
             description: After listing the requested events, watch for more events.
   - name: api-resources
     description: Print the supported API resources on the server
+    usage: kubectl api-resources [flags] [options]
     options:
       - names:
           - --api-group
@@ -3261,35 +3765,47 @@ subcommands:
           - -o
           - --output
         argument: ''''''
-        description: 'Output format. One of: wide|name.'
+        description: 'Output format. One of: (wide, name).'
       - names:
           - --sort-by
         argument: ''''''
         description: If non-empty, sort list of resources using specified field. The field can be either 'name' or 'kind'.
+      - names:
+          - --verbs
+        argument: '[]'
+        description: Limit to resources that support the specified verbs.
   - name: api-versions
     description: Print the supported API versions on the server, in the form of "group/version"
+    usage: kubectl api-versions [options]
     options: []
   - name: config
     description: Modify kubeconfig files
+    usage: kubectl config SUBCOMMAND [options]
     options: []
     subcommands:
       - name: current-context
         description: Display the current-context
+        usage: kubectl config current-context [flags] [options]
         options: []
       - name: delete-cluster
         description: Delete the specified cluster from the kubeconfig
+        usage: kubectl config delete-cluster NAME [options]
         options: []
       - name: delete-context
         description: Delete the specified context from the kubeconfig
+        usage: kubectl config delete-context NAME [options]
         options: []
       - name: delete-user
         description: Delete the specified user from the kubeconfig
+        usage: kubectl config delete-user NAME [options]
         options: []
       - name: get-clusters
         description: Display clusters defined in the kubeconfig
+        usage: kubectl config get-clusters [flags] [options]
         options: []
       - name: get-contexts
         description: Describe one or many contexts
+        usage: kubectl config get-contexts [(-o|--output=)name)] [options]
         options:
           - names:
               - --no-headers
@@ -3299,15 +3815,18 @@ subcommands:
               - -o
               - --output
             argument: ''''''
-            description: 'Output format. One of: name'
+            description: 'Output format. One of: (name).'
       - name: get-users
         description: Display users defined in the kubeconfig
+        usage: kubectl config get-users [flags] [options]
         options: []
       - name: rename-context
         description: Rename a context from the kubeconfig file
+        usage: kubectl config rename-context CONTEXT_NAME NEW_NAME [options]
         options: []
       - name: set
         description: Set an individual value in a kubeconfig file
+        usage: kubectl config set PROPERTY_NAME PROPERTY_VALUE [options]
         options:
           - names:
               - --set-raw-bytes
@@ -3315,13 +3834,19 @@ subcommands:
             description: When writing a []byte PROPERTY_VALUE, write the given string directly without base64 decoding.
       - name: set-cluster
         description: Set a cluster entry in kubeconfig
+        usage: kubectl config set-cluster NAME [--server=server] [--certificate-authority=path/to/certificate/authority] [--insecure-skip-tls-verify=true] [--tls-server-name=example.com] [options]
         options:
           - names:
               - --embed-certs
             argument: "false"
             description: embed-certs for the cluster entry in kubeconfig
+          - names:
+              - --proxy-url
+            argument: ''''''
+            description: proxy-url for the cluster entry in kubeconfig
       - name: set-context
         description: Set a context entry in kubeconfig
+        usage: kubectl config set-context [NAME | --current] [--cluster=cluster_nickname] [--user=user_nickname] [--namespace=namespace] [options]
         options:
           - names:
               - --current
@@ -3329,6 +3854,7 @@ subcommands:
             description: Modify the current context
       - name: set-credentials
         description: Set a user entry in kubeconfig
+        usage: kubectl config set-credentials NAME [--client-certificate=path/to/certfile] [--client-key=path/to/keyfile] [--token=bearer_token] [--username=basic_user] [--password=basic_password] [--auth-provider=provider_name] [--auth-provider-arg=key=value] [--exec-command=exec_command] [--exec-api-version=exec_api_version] [--exec-arg=arg] [--exec-env=key=value] [options]
         options:
           - names:
               - --client-certificate
@@ -3349,6 +3875,10 @@ subcommands:
             argument: ''''''
             description: Auth provider for the user entry in kubeconfig
           - names:
+              - --auth-provider-arg
+            argument: '[]'
+            description: '''key=value'' arguments for the auth provider'
+          - names:
               - --embed-certs
             argument: "false"
             description: Embed client cert/key for the user entry in kubeconfig
@@ -3357,17 +3887,28 @@ subcommands:
             argument: ''''''
             description: API version of the exec credential plugin for the user entry in kubeconfig
           - names:
+              - --exec-arg
+            argument: '[]'
+            description: New arguments for the exec credential plugin command for the user entry in kubeconfig
+          - names:
               - --exec-command
             argument: ''''''
             description: Command for the exec credential plugin for the user entry in kubeconfig
+          - names:
+              - --exec-env
+            argument: '[]'
+            description: '''key=value'' environment values for the exec credential plugin'
       - name: unset
         description: Unset an individual value in a kubeconfig file
+        usage: kubectl config unset PROPERTY_NAME [options]
         options: []
       - name: use-context
         description: Set the current-context in a kubeconfig file
+        usage: kubectl config use-context CONTEXT_NAME [options]
         options: []
       - name: view
         description: Display merged kubeconfig settings or a specified kubeconfig file
+        usage: kubectl config view [flags] [options]
         options:
           - names:
               - --allow-missing-template-keys
@@ -3389,7 +3930,7 @@ subcommands:
               - -o
               - --output
             argument: '''yaml'''
-            description: 'Output format. One of: json|yaml|name|go-template|go-template-file|template|templatefile|jsonpath|jsonpath-as-json|jsonpath-file.'
+            description: 'Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).'
           - names:
               - --raw
             argument: "false"
@@ -3404,10 +3945,12 @@ subcommands:
             description: Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
   - name: plugin
     description: Provides utilities for interacting with plugins
+    usage: kubectl plugin [flags] [options]
     options: []
     subcommands:
       - name: list
         description: List all visible plugin executables on a user's PATH
+        usage: kubectl plugin list [flags] [options]
         options:
           - names:
               - --name-only
@@ -3415,6 +3958,7 @@ subcommands:
             description: If true, display only the binary name of each plugin, rather than its full path
   - name: version
     description: Print the client and server version information
+    usage: kubectl version [flags] [options]
     options:
       - names:
           - --client
@@ -3425,19 +3969,15 @@ subcommands:
           - --output
         argument: ''''''
         description: One of 'yaml' or 'json'.
-      - names:
-          - --short
-        argument: "false"
-        description: If true, print just the version number.
 inheritedOptions:
   - names:
       - --add-dir-header
     argument: "false"
-    description: If true, adds the file directory to the header of the log messages (DEPRECATED will be removed in a future release, see https://github.com/kubernetes/enhancements/tree/master/keps/sig-instrumentation/2845-deprecate-klog-specific-flags-in-k8s-components)
+    description: 'If true, adds the file directory to the header of the log messages (DEPRECATED: will be removed in a future release, see https://github.com/kubernetes/enhancements/tree/master/keps/sig-instrumentation/2845-deprecate-klog-specific-flags-in-k8s-components)'
   - names:
       - --alsologtostderr
     argument: "false"
-    description: log to standard error as well as files (DEPRECATED will be removed in a future release, see https://github.com/kubernetes/enhancements/tree/master/keps/sig-instrumentation/2845-deprecate-klog-specific-flags-in-k8s-components)
+    description: 'log to standard error as well as files (no effect when -logtostderr=true) (DEPRECATED: will be removed in a future release, see https://github.com/kubernetes/enhancements/tree/master/keps/sig-instrumentation/2845-deprecate-klog-specific-flags-in-k8s-components)'
   - names:
       - --as
     argument: ''''''
@@ -3485,19 +4025,19 @@ inheritedOptions:
   - names:
       - --log-backtrace-at
     argument: :0
-    description: when logging hits line file:N, emit a stack trace (DEPRECATED will be removed in a future release, see https://github.com/kubernetes/enhancements/tree/master/keps/sig-instrumentation/2845-deprecate-klog-specific-flags-in-k8s-components)
+    description: 'when logging hits line file:N, emit a stack trace (DEPRECATED: will be removed in a future release, see https://github.com/kubernetes/enhancements/tree/master/keps/sig-instrumentation/2845-deprecate-klog-specific-flags-in-k8s-components)'
   - names:
       - --log-dir
     argument: ''''''
-    description: If non-empty, write log files in this directory (DEPRECATED will be removed in a future release, see https://github.com/kubernetes/enhancements/tree/master/keps/sig-instrumentation/2845-deprecate-klog-specific-flags-in-k8s-components)
+    description: 'If non-empty, write log files in this directory (no effect when -logtostderr=true) (DEPRECATED: will be removed in a future release, see https://github.com/kubernetes/enhancements/tree/master/keps/sig-instrumentation/2845-deprecate-klog-specific-flags-in-k8s-components)'
   - names:
       - --log-file
     argument: ''''''
-    description: If non-empty, use this log file (DEPRECATED will be removed in a future release, see https://github.com/kubernetes/enhancements/tree/master/keps/sig-instrumentation/2845-deprecate-klog-specific-flags-in-k8s-components)
+    description: 'If non-empty, use this log file (no effect when -logtostderr=true) (DEPRECATED: will be removed in a future release, see https://github.com/kubernetes/enhancements/tree/master/keps/sig-instrumentation/2845-deprecate-klog-specific-flags-in-k8s-components)'
   - names:
       - --log-file-max-size
     argument: "1800"
-    description: Defines the maximum size a log file can grow to. Unit is megabytes. If the value is 0, the maximum file size is unlimited. (DEPRECATED will be removed in a future release, see https://github.com/kubernetes/enhancements/tree/master/keps/sig-instrumentation/2845-deprecate-klog-specific-flags-in-k8s-components)
+    description: 'Defines the maximum size a log file can grow to (no effect when -logtostderr=true). Unit is megabytes. If the value is 0, the maximum file size is unlimited. (DEPRECATED: will be removed in a future release, see https://github.com/kubernetes/enhancements/tree/master/keps/sig-instrumentation/2845-deprecate-klog-specific-flags-in-k8s-components)'
   - names:
       - --log-flush-frequency
     argument: 5s
@@ -3505,7 +4045,7 @@ inheritedOptions:
   - names:
       - --logtostderr
     argument: "true"
-    description: log to standard error instead of files (DEPRECATED will be removed in a future release, see https://github.com/kubernetes/enhancements/tree/master/keps/sig-instrumentation/2845-deprecate-klog-specific-flags-in-k8s-components)
+    description: 'log to standard error instead of files (DEPRECATED: will be removed in a future release, see https://github.com/kubernetes/enhancements/tree/master/keps/sig-instrumentation/2845-deprecate-klog-specific-flags-in-k8s-components)'
   - names:
       - --match-server-version
     argument: "false"
@@ -3518,7 +4058,7 @@ inheritedOptions:
   - names:
       - --one-output
     argument: "false"
-    description: If true, only write logs to their native severity level (vs also writing to each lower severity level) (DEPRECATED will be removed in a future release, see https://github.com/kubernetes/enhancements/tree/master/keps/sig-instrumentation/2845-deprecate-klog-specific-flags-in-k8s-components)
+    description: 'If true, only write logs to their native severity level (vs also writing to each lower severity level; no effect when -logtostderr=true) (DEPRECATED: will be removed in a future release, see https://github.com/kubernetes/enhancements/tree/master/keps/sig-instrumentation/2845-deprecate-klog-specific-flags-in-k8s-components)'
   - names:
       - --password
     argument: ''''''
@@ -3543,15 +4083,15 @@ inheritedOptions:
   - names:
       - --skip-headers
     argument: "false"
-    description: If true, avoid header prefixes in the log messages (DEPRECATED will be removed in a future release, see https://github.com/kubernetes/enhancements/tree/master/keps/sig-instrumentation/2845-deprecate-klog-specific-flags-in-k8s-components)
+    description: 'If true, avoid header prefixes in the log messages (DEPRECATED: will be removed in a future release, see https://github.com/kubernetes/enhancements/tree/master/keps/sig-instrumentation/2845-deprecate-klog-specific-flags-in-k8s-components)'
   - names:
       - --skip-log-headers
     argument: "false"
-    description: If true, avoid headers when opening log files (DEPRECATED will be removed in a future release, see https://github.com/kubernetes/enhancements/tree/master/keps/sig-instrumentation/2845-deprecate-klog-specific-flags-in-k8s-components)
+    description: 'If true, avoid headers when opening log files (no effect when -logtostderr=true) (DEPRECATED: will be removed in a future release, see https://github.com/kubernetes/enhancements/tree/master/keps/sig-instrumentation/2845-deprecate-klog-specific-flags-in-k8s-components)'
   - names:
       - --stderrthreshold
     argument: "2"
-    description: logs at or above this threshold go to stderr (DEPRECATED will be removed in a future release, see https://github.com/kubernetes/enhancements/tree/master/keps/sig-instrumentation/2845-deprecate-klog-specific-flags-in-k8s-components)
+    description: 'logs at or above this threshold go to stderr when writing to files and stderr (no effect when -logtostderr=true or -alsologtostderr=false) (DEPRECATED: will be removed in a future release, see https://github.com/kubernetes/enhancements/tree/master/keps/sig-instrumentation/2845-deprecate-klog-specific-flags-in-k8s-components)'
   - names:
       - --tls-server-name
     argument: ''''''
@@ -3581,7 +4121,7 @@ inheritedOptions:
       - --warnings-as-errors
     argument: "false"
     description: Treat warnings received from the server as errors and exit with a non-zero exit code
-version: 'Client Version: version.Info{Major:"1", Minor:"23", GitVersion:"v1.23.0", GitCommit:"ab69524f795c42094a6630298ff53f3c3ebab7f4", GitTreeState:"clean", BuildDate:"2021-12-07T18:16:20Z", GoVersion:"go1.17.3", Compiler:"gc", Platform:"linux/amd64"}'
+version: 'Client Version: version.Info{Major:"1", Minor:"25", GitVersion:"v1.25.2", GitCommit:"5835544ca568b757a8ecae5c153f317e5736700e", GitTreeState:"clean", BuildDate:"2022-09-21T14:33:49Z", GoVersion:"go1.19.1", Compiler:"gc", Platform:"linux/amd64"}'
 tldr: |
   > Command-line interface for running commands against Kubernetes clusters.
   > Some subcommands such as `kubectl run` have their own usage documentation.

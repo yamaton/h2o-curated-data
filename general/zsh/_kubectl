@@ -8,15 +8,16 @@
             '--dry-run[Must be "none", "server", or "client". If client strategy, only print the object that would be sent, without sending it. If server strategy, submit server-side request without persisting the resource.]' \
             '--edit[Edit the API resource before creating]' \
             '--field-manager[Name of the manager used to track field ownership.]' \
+            {-f,--filename}'[Filename, directory, or URL to files to use to create the resource]' \
             {-k,--kustomize}'[Process the kustomization directory. This flag can'\''t be used together with -f or -R.]' \
-            {-o,--output}'[Output format. One of: json|yaml|name|go-template|go-template-file|template|templatefile|jsonpath|jsonpath-as-json|jsonpath-file.]' \
+            {-o,--output}'[Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).]' \
             '--raw[Raw URI to POST to the server. Uses the transport specified by the kubeconfig file.]' \
             {-R,--recursive}'[Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.]' \
             '--save-config[If true, the configuration of current object will be saved in its annotation. Otherwise, the annotation will be unchanged. This flag is useful when you want to perform kubectl apply on this object in the future.]' \
-            {-l,--selector}'[Selector (label query) to filter on, supports '\''='\'', '\''=='\'', and '\''!='\''.(e.g. -l key1=value1,key2=value2)]' \
+            {-l,--selector}'[Selector (label query) to filter on, supports '\''='\'', '\''=='\'', and '\''!='\''.(e.g. -l key1=value1,key2=value2). Matching objects must satisfy all of the specified label constraints.]' \
             '--show-managed-fields[If true, keep the managedFields when printing objects in JSON or YAML format.]' \
             '--template[Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates \[http://golang.org/pkg/text/template/#pkg-overview\].]' \
-            '--validate[If true, use a schema to validate the input before sending it]' \
+            '--validate[Must be one of: strict (or true), warn, ignore (or false). "true" or "strict" will use a schema to validate the input and fail the request if invalid. It will perform server side validation if ServerSideFieldValidation is enabled on the api-server, but will fall back to less reliable client-side validation if not. "warn" will warn about unknown or duplicate fields without blocking the request if server-side field validation is enabled on the API server, and behave as "ignore" otherwise. "false" or "ignore" will not perform any schema validation, silently dropping any unknown or duplicate fields.]' \
             '--windows-line-endings[Only relevant if --edit=true. Defaults to the line ending native to your platform.]' \
             "*: :_files"
 
@@ -29,12 +30,12 @@
             '--dry-run[Must be "none", "server", or "client". If client strategy, only print the object that would be sent, without sending it. If server strategy, submit server-side request without persisting the resource.]' \
             '--external-ip[Additional external IP address (not managed by Kubernetes) to accept for the service. If this IP is routed to a node, the service can be accessed by this IP in addition to its generated service IP.]' \
             '--field-manager[Name of the manager used to track field ownership.]' \
-            '--generator[The name of the API generator to use. There are 2 generators: '\''service/v1'\'' and '\''service/v2'\''. The only difference between them is that service port in v1 is named '\''default'\'', while it is left unnamed in v2. Default is '\''service/v2'\''.]' \
+            {-f,--filename}'[Filename, directory, or URL to files identifying the resource to expose a service]' \
             {-k,--kustomize}'[Process the kustomization directory. This flag can'\''t be used together with -f or -R.]' \
             {-l,--labels}'[Labels to apply to the service created by this call.]' \
             '--load-balancer-ip[IP to assign to the LoadBalancer. If empty, an ephemeral IP will be created and used (cloud-provider specific).]' \
             '--name[The name for the newly created object.]' \
-            {-o,--output}'[Output format. One of: json|yaml|name|go-template|go-template-file|template|templatefile|jsonpath|jsonpath-as-json|jsonpath-file.]' \
+            {-o,--output}'[Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).]' \
             '--override-type[The method used to override the generated object: json, merge, or strategic.]' \
             '--overrides[An inline JSON override for the generated object. If this is non-empty, it is used to override the generated object. Requires that the object supply a valid apiVersion field.]' \
             '--port[The port that the service should serve on. Copied from the resource being exposed, if unspecified]' \
@@ -54,12 +55,15 @@
     function _kubectl_run {
         _arguments \
             '--allow-missing-template-keys[If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.]' \
+            '--annotations[Annotations to apply to the pod.]' \
             '--attach[If true, wait for the Pod to start running, and then attach to the Pod as if '\''kubectl attach ...'\'' were called. Default false, unless '\''-i/--stdin'\'' is set, in which case the default is true. With '\''--restart=Never'\'' the exit code of the container process is returned.]' \
             '--cascade[Must be "background", "orphan", or "foreground". Selects the deletion cascading strategy for the dependents (e.g. Pods created by a ReplicationController). Defaults to background.]' \
             '--command[If true and extra arguments are present, use them as the '\''command'\'' field in the container, rather than the '\''args'\'' field which is the default.]' \
             '--dry-run[Must be "none", "server", or "client". If client strategy, only print the object that would be sent, without sending it. If server strategy, submit server-side request without persisting the resource.]' \
+            '--env[Environment variables to set in the container.]' \
             '--expose[If true, create a ClusterIP service associated with the pod. Requires `--port`.]' \
             '--field-manager[Name of the manager used to track field ownership.]' \
+            {-f,--filename}'[to use to replace the resource.]' \
             '--force[If true, immediately remove resources from API and bypass graceful deletion. Note that immediate deletion of some resources may result in inconsistency or data loss and requires confirmation.]' \
             '--grace-period[Period of time in seconds given to the resource to terminate gracefully. Ignored if negative. Set to 1 for immediate shutdown. Can only be set to 0 when --force is true (force deletion).]' \
             '--image[The image for the container to run.]' \
@@ -67,7 +71,7 @@
             {-k,--kustomize}'[Process a kustomization directory. This flag can'\''t be used together with -f or -R.]' \
             {-l,--labels}'[Comma separated labels to apply to the pod. Will override previous values.]' \
             '--leave-stdin-open[If the pod is started in interactive mode or with stdin, leave stdin open after the first attach completes. By default, stdin will be closed after the first attach completes.]' \
-            {-o,--output}'[Output format. One of: json|yaml|name|go-template|go-template-file|template|templatefile|jsonpath|jsonpath-as-json|jsonpath-file.]' \
+            {-o,--output}'[Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).]' \
             '--override-type[The method used to override the generated object: json, merge, or strategic.]' \
             '--overrides[An inline JSON override for the generated object. If this is non-empty, it is used to override the generated object. Requires that the object supply a valid apiVersion field.]' \
             '--pod-running-timeout[The length of time (like 5s, 2m, or 3h, higher than zero) to wait until at least one pod is running]' \
@@ -108,19 +112,22 @@
             '--allow-missing-template-keys[If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.]' \
             '--chunk-size[Return large lists in chunks rather than all at once. Pass 0 to disable. This flag is beta and may change in the future.]' \
             '--field-selector[Selector (field query) to filter on, supports '\''='\'', '\''=='\'', and '\''!='\''.(e.g. --field-selector key1=value1,key2=value2). The server only supports a limited number of field queries per type.]' \
+            {-f,--filename}'[Filename, directory, or URL to files identifying the resource to get from a server.]' \
             '--ignore-not-found[If the requested object does not exist the command will return exit code 0.]' \
             {-k,--kustomize}'[Process the kustomization directory. This flag can'\''t be used together with -f or -R.]' \
+            {-L,--label-columns}'[Accepts a comma separated list of labels that are going to be presented as columns. Names are case-sensitive. You can also use multiple flag options like -L label1 -L label2...]' \
             '--no-headers[When using the default or custom-column output format, don'\''t print headers (default print headers).]' \
-            {-o,--output}'[Output format. One of: json|yaml|name|go-template|go-template-file|template|templatefile|jsonpath|jsonpath-as-json|jsonpath-file|custom-columns-file|custom-columns|wide See custom columns \[https://kubernetes.io/docs/reference/kubectl/overview/#custom-columns\], golang template \[http://golang.org/pkg/text/template/#pkg-overview\] and jsonpath template \[https://kubernetes.io/docs/reference/kubectl/jsonpath/\].]' \
+            {-o,--output}'[Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file, custom-columns, custom-columns-file, wide). See custom columns \[https://kubernetes.io/docs/reference/kubectl/#custom-columns\], golang template \[http://golang.org/pkg/text/template/#pkg-overview\] and jsonpath template \[https://kubernetes.io/docs/reference/kubectl/jsonpath/\].]' \
             '--output-watch-events[Output watch event objects when --watch or --watch-only is used. Existing objects are output as initial ADDED events.]' \
             '--raw[Raw URI to request from the server. Uses the transport specified by the kubeconfig file.]' \
             {-R,--recursive}'[Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.]' \
-            {-l,--selector}'[Selector (label query) to filter on, supports '\''='\'', '\''=='\'', and '\''!='\''.(e.g. -l key1=value1,key2=value2)]' \
+            {-l,--selector}'[Selector (label query) to filter on, supports '\''='\'', '\''=='\'', and '\''!='\''.(e.g. -l key1=value1,key2=value2). Matching objects must satisfy all of the specified label constraints.]' \
             '--server-print[If true, have the server return the appropriate table output. Supports extension APIs and CRDs.]' \
             '--show-kind[If present, list the resource type for the requested object(s).]' \
             '--show-labels[When printing, show all labels as the last column (default hide labels column)]' \
             '--show-managed-fields[If true, keep the managedFields when printing objects in JSON or YAML format.]' \
             '--sort-by[If non-empty, sort list types using this field specification. The field specification is expressed as a JSONPath expression (e.g. '\''{.metadata.name}'\''). The field in the API resource specified by this JSONPath expression must be an integer or a string.]' \
+            '--subresource[If specified, gets the subresource of the requested object. Must be one of \[status scale\]. This flag is alpha and may change in the future.]' \
             '--template[Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates \[http://golang.org/pkg/text/template/#pkg-overview\].]' \
             {-w,--watch}'[After listing/getting the requested object, watch for changes.]' \
             '--watch-only[Watch for changes to the requested object(s), without listing/getting first.]' \
@@ -132,14 +139,16 @@
         _arguments \
             '--allow-missing-template-keys[If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.]' \
             '--field-manager[Name of the manager used to track field ownership.]' \
+            {-f,--filename}'[Filename, directory, or URL to files to use to edit the resource]' \
             {-k,--kustomize}'[Process the kustomization directory. This flag can'\''t be used together with -f or -R.]' \
-            {-o,--output}'[Output format. One of: json|yaml|name|go-template|go-template-file|template|templatefile|jsonpath|jsonpath-as-json|jsonpath-file.]' \
+            {-o,--output}'[Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).]' \
             '--output-patch[Output the patch if the resource is edited.]' \
             {-R,--recursive}'[Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.]' \
             '--save-config[If true, the configuration of current object will be saved in its annotation. Otherwise, the annotation will be unchanged. This flag is useful when you want to perform kubectl apply on this object in the future.]' \
             '--show-managed-fields[If true, keep the managedFields when printing objects in JSON or YAML format.]' \
+            '--subresource[If specified, edit will operate on the subresource of the requested object. Must be one of \[status\]. This flag is alpha and may change in the future.]' \
             '--template[Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates \[http://golang.org/pkg/text/template/#pkg-overview\].]' \
-            '--validate[If true, use a schema to validate the input before sending it]' \
+            '--validate[Must be one of: strict (or true), warn, ignore (or false). "true" or "strict" will use a schema to validate the input and fail the request if invalid. It will perform server side validation if ServerSideFieldValidation is enabled on the api-server, but will fall back to less reliable client-side validation if not. "warn" will warn about unknown or duplicate fields without blocking the request if server-side field validation is enabled on the API server, and behave as "ignore" otherwise. "false" or "ignore" will not perform any schema validation, silently dropping any unknown or duplicate fields.]' \
             '--windows-line-endings[Defaults to the line ending native to your platform.]' \
             "*: :_files"
 
@@ -152,6 +161,7 @@
             '--cascade[Must be "background", "orphan", or "foreground". Selects the deletion cascading strategy for the dependents (e.g. Pods created by a ReplicationController). Defaults to background.]' \
             '--dry-run[Must be "none", "server", or "client". If client strategy, only print the object that would be sent, without sending it. If server strategy, submit server-side request without persisting the resource.]' \
             '--field-selector[Selector (field query) to filter on, supports '\''='\'', '\''=='\'', and '\''!='\''.(e.g. --field-selector key1=value1,key2=value2). The server only supports a limited number of field queries per type.]' \
+            {-f,--filename}'[containing the resource to delete.]' \
             '--force[If true, immediately remove resources from API and bypass graceful deletion. Note that immediate deletion of some resources may result in inconsistency or data loss and requires confirmation.]' \
             '--grace-period[Period of time in seconds given to the resource to terminate gracefully. Ignored if negative. Set to 1 for immediate shutdown. Can only be set to 0 when --force is true (force deletion).]' \
             '--ignore-not-found[Treat "resource not found" as a successful delete. Defaults to "true" when --all is specified.]' \
@@ -160,7 +170,7 @@
             {-o,--output}'[Output mode. Use "-o name" for shorter output (resource/name).]' \
             '--raw[Raw URI to DELETE to the server. Uses the transport specified by the kubeconfig file.]' \
             {-R,--recursive}'[Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.]' \
-            {-l,--selector}'[Selector (label query) to filter on.]' \
+            {-l,--selector}'[Selector (label query) to filter on, supports '\''='\'', '\''=='\'', and '\''!='\''.(e.g. -l key1=value1,key2=value2). Matching objects must satisfy all of the specified label constraints.]' \
             '--timeout[The length of time to wait before giving up on a delete, zero means determine a timeout from the size of the object]' \
             '--wait[If true, wait for resources to be gone before returning. This waits for finalizers.]' \
             "*: :_files"
@@ -179,12 +189,13 @@
             '--allow-missing-template-keys[If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.]' \
             '--current-replicas[Precondition for current size. Requires that the current size of the resource match this value in order to scale. -1 (default) for no condition.]' \
             '--dry-run[Must be "none", "server", or "client". If client strategy, only print the object that would be sent, without sending it. If server strategy, submit server-side request without persisting the resource.]' \
+            {-f,--filename}'[Filename, directory, or URL to files identifying the resource to set a new size]' \
             {-k,--kustomize}'[Process the kustomization directory. This flag can'\''t be used together with -f or -R.]' \
-            {-o,--output}'[Output format. One of: json|yaml|name|go-template|go-template-file|template|templatefile|jsonpath|jsonpath-as-json|jsonpath-file.]' \
+            {-o,--output}'[Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).]' \
             {-R,--recursive}'[Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.]' \
             '--replicas[The new desired number of replicas. Required.]' \
             '--resource-version[Precondition for resource version. Requires that the current resource version match this value in order to scale.]' \
-            {-l,--selector}'[Selector (label query) to filter on, supports '\''='\'', '\''=='\'', and '\''!='\''.(e.g. -l key1=value1,key2=value2)]' \
+            {-l,--selector}'[Selector (label query) to filter on, supports '\''='\'', '\''=='\'', and '\''!='\''.(e.g. -l key1=value1,key2=value2). Matching objects must satisfy all of the specified label constraints.]' \
             '--show-managed-fields[If true, keep the managedFields when printing objects in JSON or YAML format.]' \
             '--template[Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates \[http://golang.org/pkg/text/template/#pkg-overview\].]' \
             '--timeout[The length of time to wait before giving up on a scale operation, zero means don'\''t wait. Any other values should contain a corresponding time unit (e.g. 1s, 2m, 3h).]' \
@@ -198,11 +209,12 @@
             '--cpu-percent[The target average CPU utilization (represented as a percent of requested CPU) over all the pods. If it'\''s not specified or negative, a default autoscaling policy will be used.]' \
             '--dry-run[Must be "none", "server", or "client". If client strategy, only print the object that would be sent, without sending it. If server strategy, submit server-side request without persisting the resource.]' \
             '--field-manager[Name of the manager used to track field ownership.]' \
+            {-f,--filename}'[Filename, directory, or URL to files identifying the resource to autoscale.]' \
             {-k,--kustomize}'[Process the kustomization directory. This flag can'\''t be used together with -f or -R.]' \
             '--max[The upper limit for the number of pods that can be set by the autoscaler. Required.]' \
             '--min[The lower limit for the number of pods that can be set by the autoscaler. If it'\''s not specified or negative, the server will apply a default value.]' \
             '--name[The name for the newly created object. If not specified, the name of the input resource will be used.]' \
-            {-o,--output}'[Output format. One of: json|yaml|name|go-template|go-template-file|template|templatefile|jsonpath|jsonpath-as-json|jsonpath-file.]' \
+            {-o,--output}'[Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).]' \
             {-R,--recursive}'[Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.]' \
             '--save-config[If true, the configuration of current object will be saved in its annotation. Otherwise, the annotation will be unchanged. This flag is useful when you want to perform kubectl apply on this object in the future.]' \
             '--show-managed-fields[If true, keep the managedFields when printing objects in JSON or YAML format.]' \
@@ -232,7 +244,7 @@
     function _kubectl_cordon {
         _arguments \
             '--dry-run[Must be "none", "server", or "client". If client strategy, only print the object that would be sent, without sending it. If server strategy, submit server-side request without persisting the resource.]' \
-            {-l,--selector}'[Selector (label query) to filter on]' \
+            {-l,--selector}'[Selector (label query) to filter on, supports '\''='\'', '\''=='\'', and '\''!='\''.(e.g. -l key1=value1,key2=value2). Matching objects must satisfy all of the specified label constraints.]' \
             "*: :_files"
 
     }
@@ -240,7 +252,7 @@
     function _kubectl_uncordon {
         _arguments \
             '--dry-run[Must be "none", "server", or "client". If client strategy, only print the object that would be sent, without sending it. If server strategy, submit server-side request without persisting the resource.]' \
-            {-l,--selector}'[Selector (label query) to filter on]' \
+            {-l,--selector}'[Selector (label query) to filter on, supports '\''='\'', '\''=='\'', and '\''!='\''.(e.g. -l key1=value1,key2=value2). Matching objects must satisfy all of the specified label constraints.]' \
             "*: :_files"
 
     }
@@ -251,11 +263,11 @@
             '--delete-emptydir-data[Continue even if there are pods using emptyDir (local data that will be deleted when the node is drained).]' \
             '--disable-eviction[Force drain to use delete, even if eviction is supported. This will bypass checking PodDisruptionBudgets, use with caution.]' \
             '--dry-run[Must be "none", "server", or "client". If client strategy, only print the object that would be sent, without sending it. If server strategy, submit server-side request without persisting the resource.]' \
-            '--force[Continue even if there are pods not managed by a ReplicationController, ReplicaSet, Job, DaemonSet or StatefulSet.]' \
+            '--force[Continue even if there are pods that do not declare a controller.]' \
             '--grace-period[Period of time in seconds given to each pod to terminate gracefully. If negative, the default value specified in the pod will be used.]' \
             '--ignore-daemonsets[Ignore DaemonSet-managed pods.]' \
             '--pod-selector[Label selector to filter pods on the node]' \
-            {-l,--selector}'[Selector (label query) to filter on]' \
+            {-l,--selector}'[Selector (label query) to filter on, supports '\''='\'', '\''=='\'', and '\''!='\''.(e.g. -l key1=value1,key2=value2). Matching objects must satisfy all of the specified label constraints.]' \
             '--skip-wait-for-delete-timeout[If pod DeletionTimestamp older than N seconds, skip waiting for the pod. Seconds must be greater than 0 to skip.]' \
             '--timeout[The length of time to wait before giving up, zero means infinite]' \
             "*: :_files"
@@ -268,12 +280,12 @@
             '--allow-missing-template-keys[If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.]' \
             '--dry-run[Must be "none", "server", or "client". If client strategy, only print the object that would be sent, without sending it. If server strategy, submit server-side request without persisting the resource.]' \
             '--field-manager[Name of the manager used to track field ownership.]' \
-            {-o,--output}'[Output format. One of: json|yaml|name|go-template|go-template-file|template|templatefile|jsonpath|jsonpath-as-json|jsonpath-file.]' \
+            {-o,--output}'[Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).]' \
             '--overwrite[If true, allow taints to be overwritten, otherwise reject taint updates that overwrite existing taints.]' \
-            {-l,--selector}'[Selector (label query) to filter on, supports '\''='\'', '\''=='\'', and '\''!='\''.(e.g. -l key1=value1,key2=value2)]' \
+            {-l,--selector}'[Selector (label query) to filter on, supports '\''='\'', '\''=='\'', and '\''!='\''.(e.g. -l key1=value1,key2=value2). Matching objects must satisfy all of the specified label constraints.]' \
             '--show-managed-fields[If true, keep the managedFields when printing objects in JSON or YAML format.]' \
             '--template[Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates \[http://golang.org/pkg/text/template/#pkg-overview\].]' \
-            '--validate[If true, use a schema to validate the input before sending it]' \
+            '--validate[Must be one of: strict (or true), warn, ignore (or false). "true" or "strict" will use a schema to validate the input and fail the request if invalid. It will perform server side validation if ServerSideFieldValidation is enabled on the api-server, but will fall back to less reliable client-side validation if not. "warn" will warn about unknown or duplicate fields without blocking the request if server-side field validation is enabled on the API server, and behave as "ignore" otherwise. "false" or "ignore" will not perform any schema validation, silently dropping any unknown or duplicate fields.]' \
             "*: :_files"
 
     }
@@ -282,9 +294,10 @@
         _arguments \
             {-A,--all-namespaces}'[If present, list the requested object(s) across all namespaces. Namespace in current context is ignored even if specified with --namespace.]' \
             '--chunk-size[Return large lists in chunks rather than all at once. Pass 0 to disable. This flag is beta and may change in the future.]' \
+            {-f,--filename}'[Filename, directory, or URL to files containing the resource to describe]' \
             {-k,--kustomize}'[Process the kustomization directory. This flag can'\''t be used together with -f or -R.]' \
             {-R,--recursive}'[Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.]' \
-            {-l,--selector}'[Selector (label query) to filter on, supports '\''='\'', '\''=='\'', and '\''!='\''.(e.g. -l key1=value1,key2=value2)]' \
+            {-l,--selector}'[Selector (label query) to filter on, supports '\''='\'', '\''=='\'', and '\''!='\''.(e.g. -l key1=value1,key2=value2). Matching objects must satisfy all of the specified label constraints.]' \
             '--show-events[If true, display events related to the described object.]' \
             "*: :_files"
 
@@ -302,7 +315,7 @@
             '--pod-running-timeout[The length of time (like 5s, 2m, or 3h, higher than zero) to wait until at least one pod is running]' \
             '--prefix[Prefix each log line with the log source (pod name and container name)]' \
             {-p,--previous}'[If true, print the logs for the previous instance of the container in a pod if it exists.]' \
-            {-l,--selector}'[Selector (label query) to filter on.]' \
+            {-l,--selector}'[Selector (label query) to filter on, supports '\''='\'', '\''=='\'', and '\''!='\''.(e.g. -l key1=value1,key2=value2). Matching objects must satisfy all of the specified label constraints.]' \
             '--since[Only return logs newer than a relative duration like 5s, 2m, or 3h. Defaults to all logs. Only one of since-time / since may be used.]' \
             '--since-time[Only return logs after a specific date (RFC3339). Defaults to all logs. Only one of since-time / since may be used.]' \
             '--tail[Lines of recent log file to display. Defaults to -1 with no selector, showing all log lines otherwise 10, if a selector is provided.]' \
@@ -325,6 +338,7 @@
     function _kubectl_exec {
         _arguments \
             {-c,--container}'[Container name. If omitted, use the kubectl.kubernetes.io/default-container annotation for selecting the container to be attached or the first container in the pod will be chosen]' \
+            {-f,--filename}'[to use to exec into the resource]' \
             '--pod-running-timeout[The length of time (like 5s, 2m, or 3h, higher than zero) to wait until at least one pod is running]' \
             {-q,--quiet}'[Only print output from the remote session]' \
             {-i,--stdin}'[Pass stdin to the container]' \
@@ -336,7 +350,6 @@
     function _kubectl_port-forward {
         _arguments \
             '--address[Addresses to listen on (comma separated). Only accepts IP addresses or localhost as a value. When localhost is supplied, kubectl will try to bind on both 127.0.0.1 and ::1 and will fail if neither of these addresses are available to bind.]' \
-            '--address[Addresses to listen on (comma separated). Only accepts IP addresses or localhost as a value. When localhost is supplied, kubectl will try to bind on both 127.0.0.1 and ::1 and will fail if neither of these addresses are available to bind.]' \
             '--pod-running-timeout[The length of time (like 5s, 2m, or 3h, higher than zero) to wait until at least one pod is running]' \
             "*: :_files"
 
@@ -344,7 +357,6 @@
 
     function _kubectl_proxy {
         _arguments \
-            '--accept-hosts[Regular expression for hosts that the proxy should accept.]' \
             '--accept-hosts[Regular expression for hosts that the proxy should accept.]' \
             '--accept-paths[Regular expression for paths that the proxy should accept.]' \
             '--address[The IP address on which to serve on.]' \
@@ -383,11 +395,13 @@
             '--attach[If true, wait for the container to start running, and then attach as if '\''kubectl attach ...'\'' were called. Default false, unless '\''-i/--stdin'\'' is set, in which case the default is true.]' \
             {-c,--container}'[Container name to use for debug container.]' \
             '--copy-to[Create a copy of the target Pod with this name.]' \
+            '--env[Environment variables to set in the container.]' \
             '--image[Container image to use for debug container.]' \
             '--image-pull-policy[The image pull policy for the container. If left empty, this value will not be specified by the client and defaulted by the server.]' \
             {-q,--quiet}'[If true, suppress informational messages.]' \
             '--replace[When used with '\''--copy-to'\'', delete the original Pod.]' \
             '--same-node[When used with '\''--copy-to'\'', schedule the copy of target Pod on the same node.]' \
+            '--set-image[When used with '\''--copy-to'\'', a list of name=image pairs for changing container images, similar to how '\''kubectl set image'\'' works.]' \
             '--share-processes[When used with '\''--copy-to'\'', enable process namespace sharing in the copy.]' \
             {-i,--stdin}'[Keep stdin open on the container(s) in the pod, even if nothing is attached.]' \
             '--target[When using an ephemeral container, target processes in this container name.]' \
@@ -399,11 +413,15 @@
     function _kubectl_diff {
         _arguments \
             '--field-manager[Name of the manager used to track field ownership.]' \
+            {-f,--filename}'[Filename, directory, or URL to files contains the configuration to diff]' \
             '--force-conflicts[If true, server-side apply will force the changes against conflicts.]' \
             {-k,--kustomize}'[Process the kustomization directory. This flag can'\''t be used together with -f or -R.]' \
+            '--prune[Include resources that would be deleted by pruning. Can be used with -l and default shows all resources would be pruned]' \
+            '--prune-allowlist[Overwrite the default whitelist with <group/version/kind> for --prune]' \
             {-R,--recursive}'[Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.]' \
-            {-l,--selector}'[Selector (label query) to filter on, supports '\''='\'', '\''=='\'', and '\''!='\''.(e.g. -l key1=value1,key2=value2)]' \
+            {-l,--selector}'[Selector (label query) to filter on, supports '\''='\'', '\''=='\'', and '\''!='\''.(e.g. -l key1=value1,key2=value2). Matching objects must satisfy all of the specified label constraints.]' \
             '--server-side[If true, apply runs in the server instead of the client.]' \
+            '--show-managed-fields[If true, include managed fields in the diff.]' \
             "*: :_files"
 
     }
@@ -415,21 +433,23 @@
             '--cascade[Must be "background", "orphan", or "foreground". Selects the deletion cascading strategy for the dependents (e.g. Pods created by a ReplicationController). Defaults to background.]' \
             '--dry-run[Must be "none", "server", or "client". If client strategy, only print the object that would be sent, without sending it. If server strategy, submit server-side request without persisting the resource.]' \
             '--field-manager[Name of the manager used to track field ownership.]' \
+            {-f,--filename}'[The files that contain the configurations to apply.]' \
             '--force[If true, immediately remove resources from API and bypass graceful deletion. Note that immediate deletion of some resources may result in inconsistency or data loss and requires confirmation.]' \
             '--force-conflicts[If true, server-side apply will force the changes against conflicts.]' \
             '--grace-period[Period of time in seconds given to the resource to terminate gracefully. Ignored if negative. Set to 1 for immediate shutdown. Can only be set to 0 when --force is true (force deletion).]' \
             {-k,--kustomize}'[Process a kustomization directory. This flag can'\''t be used together with -f or -R.]' \
             '--openapi-patch[If true, use openapi to calculate diff when the openapi presents and the resource can be found in the openapi spec. Otherwise, fall back to use baked-in types.]' \
-            {-o,--output}'[Output format. One of: json|yaml|name|go-template|go-template-file|template|templatefile|jsonpath|jsonpath-as-json|jsonpath-file.]' \
+            {-o,--output}'[Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).]' \
             '--overwrite[Automatically resolve conflicts between the modified and live configuration by using values from the modified configuration]' \
             '--prune[Automatically delete resource objects, that do not appear in the configs and are created by either apply or create --save-config. Should be used with either -l or --all.]' \
+            '--prune-whitelist[Overwrite the default whitelist with <group/version/kind> for --prune]' \
             {-R,--recursive}'[Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.]' \
-            {-l,--selector}'[Selector (label query) to filter on, supports '\''='\'', '\''=='\'', and '\''!='\''.(e.g. -l key1=value1,key2=value2)]' \
+            {-l,--selector}'[Selector (label query) to filter on, supports '\''='\'', '\''=='\'', and '\''!='\''.(e.g. -l key1=value1,key2=value2). Matching objects must satisfy all of the specified label constraints.]' \
             '--server-side[If true, apply runs in the server instead of the client.]' \
             '--show-managed-fields[If true, keep the managedFields when printing objects in JSON or YAML format.]' \
             '--template[Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates \[http://golang.org/pkg/text/template/#pkg-overview\].]' \
             '--timeout[The length of time to wait before giving up on a delete, zero means determine a timeout from the size of the object]' \
-            '--validate[If true, use a schema to validate the input before sending it]' \
+            '--validate[Must be one of: strict (or true), warn, ignore (or false). "true" or "strict" will use a schema to validate the input and fail the request if invalid. It will perform server side validation if ServerSideFieldValidation is enabled on the api-server, but will fall back to less reliable client-side validation if not. "warn" will warn about unknown or duplicate fields without blocking the request if server-side field validation is enabled on the API server, and behave as "ignore" otherwise. "false" or "ignore" will not perform any schema validation, silently dropping any unknown or duplicate fields.]' \
             '--wait[If true, wait for resources to be gone before returning. This waits for finalizers.]' \
             "*: :_files"
 
@@ -440,13 +460,15 @@
             '--allow-missing-template-keys[If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.]' \
             '--dry-run[Must be "none", "server", or "client". If client strategy, only print the object that would be sent, without sending it. If server strategy, submit server-side request without persisting the resource.]' \
             '--field-manager[Name of the manager used to track field ownership.]' \
+            {-f,--filename}'[Filename, directory, or URL to files identifying the resource to update]' \
             {-k,--kustomize}'[Process the kustomization directory. This flag can'\''t be used together with -f or -R.]' \
             '--local[If true, patch will operate on the content of the file, not the server-side resource.]' \
-            {-o,--output}'[Output format. One of: json|yaml|name|go-template|go-template-file|template|templatefile|jsonpath|jsonpath-as-json|jsonpath-file.]' \
+            {-o,--output}'[Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).]' \
             {-p,--patch}'[The patch to be applied to the resource JSON file.]' \
             '--patch-file[A file containing a patch to be applied to the resource.]' \
             {-R,--recursive}'[Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.]' \
             '--show-managed-fields[If true, keep the managedFields when printing objects in JSON or YAML format.]' \
+            '--subresource[If specified, patch will operate on the subresource of the requested object. Must be one of \[status scale\]. This flag is alpha and may change in the future.]' \
             '--template[Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates \[http://golang.org/pkg/text/template/#pkg-overview\].]' \
             '--type[The type of patch being provided; one of \[json merge strategic\]]' \
             "*: :_files"
@@ -459,17 +481,19 @@
             '--cascade[Must be "background", "orphan", or "foreground". Selects the deletion cascading strategy for the dependents (e.g. Pods created by a ReplicationController). Defaults to background.]' \
             '--dry-run[Must be "none", "server", or "client". If client strategy, only print the object that would be sent, without sending it. If server strategy, submit server-side request without persisting the resource.]' \
             '--field-manager[Name of the manager used to track field ownership.]' \
+            {-f,--filename}'[The files that contain the configurations to replace.]' \
             '--force[If true, immediately remove resources from API and bypass graceful deletion. Note that immediate deletion of some resources may result in inconsistency or data loss and requires confirmation.]' \
             '--grace-period[Period of time in seconds given to the resource to terminate gracefully. Ignored if negative. Set to 1 for immediate shutdown. Can only be set to 0 when --force is true (force deletion).]' \
             {-k,--kustomize}'[Process a kustomization directory. This flag can'\''t be used together with -f or -R.]' \
-            {-o,--output}'[Output format. One of: json|yaml|name|go-template|go-template-file|template|templatefile|jsonpath|jsonpath-as-json|jsonpath-file.]' \
+            {-o,--output}'[Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).]' \
             '--raw[Raw URI to PUT to the server. Uses the transport specified by the kubeconfig file.]' \
             {-R,--recursive}'[Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.]' \
             '--save-config[If true, the configuration of current object will be saved in its annotation. Otherwise, the annotation will be unchanged. This flag is useful when you want to perform kubectl apply on this object in the future.]' \
             '--show-managed-fields[If true, keep the managedFields when printing objects in JSON or YAML format.]' \
+            '--subresource[If specified, replace will operate on the subresource of the requested object. Must be one of \[status scale\]. This flag is alpha and may change in the future.]' \
             '--template[Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates \[http://golang.org/pkg/text/template/#pkg-overview\].]' \
             '--timeout[The length of time to wait before giving up on a delete, zero means determine a timeout from the size of the object]' \
-            '--validate[If true, use a schema to validate the input before sending it]' \
+            '--validate[Must be one of: strict (or true), warn, ignore (or false). "true" or "strict" will use a schema to validate the input and fail the request if invalid. It will perform server side validation if ServerSideFieldValidation is enabled on the api-server, but will fall back to less reliable client-side validation if not. "warn" will warn about unknown or duplicate fields without blocking the request if server-side field validation is enabled on the API server, and behave as "ignore" otherwise. "false" or "ignore" will not perform any schema validation, silently dropping any unknown or duplicate fields.]' \
             '--wait[If true, wait for resources to be gone before returning. This waits for finalizers.]' \
             "*: :_files"
 
@@ -481,9 +505,10 @@
             {-A,--all-namespaces}'[If present, list the requested object(s) across all namespaces. Namespace in current context is ignored even if specified with --namespace.]' \
             '--allow-missing-template-keys[If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.]' \
             '--field-selector[Selector (field query) to filter on, supports '\''='\'', '\''=='\'', and '\''!='\''.(e.g. --field-selector key1=value1,key2=value2). The server only supports a limited number of field queries per type.]' \
-            '--for[The condition to wait on: \[delete|condition=condition-name|jsonpath='\''{JSONPath expression}'\''=JSONPath Condition\]. The default status value of condition-name is true, you can set false with condition=condition-name=false.]' \
+            {-f,--filename}'[identifying the resource.]' \
+            '--for[The condition to wait on: \[delete|condition=condition-name\[=condition-value\]|jsonpath='\''{JSONPath expression}'\''=JSONPath Condition\]. The default condition-value is true. Condition values are compared after Unicode simple case folding, which is a more general form of case-insensitivity.]' \
             '--local[If true, annotation will NOT contact api-server but run locally.]' \
-            {-o,--output}'[Output format. One of: json|yaml|name|go-template|go-template-file|template|templatefile|jsonpath|jsonpath-as-json|jsonpath-file.]' \
+            {-o,--output}'[Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).]' \
             {-R,--recursive}'[Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.]' \
             {-l,--selector}'[Selector (label query) to filter on, supports '\''='\'', '\''=='\'', and '\''!='\''.(e.g. -l key1=value1,key2=value2)]' \
             '--show-managed-fields[If true, keep the managedFields when printing objects in JSON or YAML format.]' \
@@ -498,9 +523,10 @@
             '--as-current-user[use the uid and gid of the command executor to run the function in the container]' \
             '--enable-alpha-plugins[enable kustomize plugins]' \
             '--enable-helm[Enable use of the Helm chart inflator generator.]' \
-            '--enable-managedby-label[enable adding app.kubernetes.io/managed-by]' \
+            {-e,--env}'[a list of environment variables to be used by functions]' \
             '--helm-command[helm command (path to executable)]' \
             '--load-restrictor[if set to '\''LoadRestrictionsNone'\'', local kustomizations may load files from outside their root. This does, however, break the relocatability of the kustomization.]' \
+            '--mount[a list of storage options read from the filesystem]' \
             '--network[enable network access for functions that declare it]' \
             '--network-name[the docker network to run the container in]' \
             {-o,--output}'[If specified, write output to this path.]' \
@@ -517,14 +543,15 @@
             '--dry-run[Must be "none", "server", or "client". If client strategy, only print the object that would be sent, without sending it. If server strategy, submit server-side request without persisting the resource.]' \
             '--field-manager[Name of the manager used to track field ownership.]' \
             '--field-selector[Selector (field query) to filter on, supports '\''='\'', '\''=='\'', and '\''!='\''.(e.g. --field-selector key1=value1,key2=value2). The server only supports a limited number of field queries per type.]' \
+            {-f,--filename}'[Filename, directory, or URL to files identifying the resource to update the labels]' \
             {-k,--kustomize}'[Process the kustomization directory. This flag can'\''t be used together with -f or -R.]' \
             '--list[If true, display the labels for a given resource.]' \
             '--local[If true, label will NOT contact api-server but run locally.]' \
-            {-o,--output}'[Output format. One of: json|yaml|name|go-template|go-template-file|template|templatefile|jsonpath|jsonpath-as-json|jsonpath-file.]' \
+            {-o,--output}'[Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).]' \
             '--overwrite[If true, allow labels to be overwritten, otherwise reject label updates that overwrite existing labels.]' \
             {-R,--recursive}'[Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.]' \
             '--resource-version[If non-empty, the labels update will only succeed if this is the current resource-version for the object. Only valid when specifying a single resource.]' \
-            {-l,--selector}'[Selector (label query) to filter on, supports '\''='\'', '\''=='\'', and '\''!='\''.(e.g. -l key1=value1,key2=value2).]' \
+            {-l,--selector}'[Selector (label query) to filter on, supports '\''='\'', '\''=='\'', and '\''!='\''.(e.g. -l key1=value1,key2=value2). Matching objects must satisfy all of the specified label constraints.]' \
             '--show-managed-fields[If true, keep the managedFields when printing objects in JSON or YAML format.]' \
             '--template[Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates \[http://golang.org/pkg/text/template/#pkg-overview\].]' \
             "*: :_files"
@@ -539,14 +566,15 @@
             '--dry-run[Must be "none", "server", or "client". If client strategy, only print the object that would be sent, without sending it. If server strategy, submit server-side request without persisting the resource.]' \
             '--field-manager[Name of the manager used to track field ownership.]' \
             '--field-selector[Selector (field query) to filter on, supports '\''='\'', '\''=='\'', and '\''!='\''.(e.g. --field-selector key1=value1,key2=value2). The server only supports a limited number of field queries per type.]' \
+            {-f,--filename}'[Filename, directory, or URL to files identifying the resource to update the annotation]' \
             {-k,--kustomize}'[Process the kustomization directory. This flag can'\''t be used together with -f or -R.]' \
             '--list[If true, display the annotations for a given resource.]' \
             '--local[If true, annotation will NOT contact api-server but run locally.]' \
-            {-o,--output}'[Output format. One of: json|yaml|name|go-template|go-template-file|template|templatefile|jsonpath|jsonpath-as-json|jsonpath-file.]' \
+            {-o,--output}'[Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).]' \
             '--overwrite[If true, allow annotations to be overwritten, otherwise reject annotation updates that overwrite existing annotations.]' \
             {-R,--recursive}'[Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.]' \
             '--resource-version[If non-empty, the annotation update will only succeed if this is the current resource-version for the object. Only valid when specifying a single resource.]' \
-            {-l,--selector}'[Selector (label query) to filter on, supports '\''='\'', '\''=='\'', and '\''!='\''.(e.g. -l key1=value1,key2=value2).]' \
+            {-l,--selector}'[Selector (label query) to filter on, supports '\''='\'', '\''=='\'', and '\''!='\''.(e.g. -l key1=value1,key2=value2). Matching objects must satisfy all of the specified label constraints.]' \
             '--show-managed-fields[If true, keep the managedFields when printing objects in JSON or YAML format.]' \
             '--template[Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates \[http://golang.org/pkg/text/template/#pkg-overview\].]' \
             "*: :_files"
@@ -571,8 +599,9 @@
             '--cached[Use the cached list of resources if available.]' \
             '--namespaced[If false, non-namespaced resources will be returned, otherwise returning namespaced resources by default.]' \
             '--no-headers[When using the default or custom-column output format, don'\''t print headers (default print headers).]' \
-            {-o,--output}'[Output format. One of: wide|name.]' \
+            {-o,--output}'[Output format. One of: (wide, name).]' \
             '--sort-by[If non-empty, sort list of resources using specified field. The field can be either '\''name'\'' or '\''kind'\''.]' \
+            '--verbs[Limit to resources that support the specified verbs.]' \
             "*: :_files"
 
     }
@@ -599,7 +628,6 @@
         _arguments \
             '--client[If true, shows client version only (no server required).]' \
             {-o,--output}'[One of '\''yaml'\'' or '\''json'\''.]' \
-            '--short[If true, print just the version number.]' \
             "*: :_files"
 
     }
@@ -646,7 +674,7 @@ function _kubectl {
             'kustomize:Build a kustomization target from a directory or URL.'
             'label:Update the labels on a resource'
             'annotate:Update the annotations on a resource'
-            'completion:Output shell completion code for the specified shell (bash, zsh or fish)'
+            'completion:Output shell completion code for the specified shell (bash, zsh, fish, or powershell)'
             'alpha:Commands for features in alpha'
             'api-resources:Print the supported API resources on the server'
             'api-versions:Print the supported API versions on the server, in the form of "group/version"'

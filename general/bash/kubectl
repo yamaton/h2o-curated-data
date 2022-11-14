@@ -278,12 +278,16 @@ _kubectl_create ()
             return
             ;;
 
+          token) _kubectl_token
+            return
+            ;;
+
           *)  ;; 
         esac
         (( subcommand_index++ ))
     done
 
-    word_list=" clusterrole clusterrolebinding configmap cronjob deployment ingress job namespace poddisruptionbudget priorityclass quota role rolebinding secret service serviceaccount --allow-missing-template-keys --dry-run --edit --field-manager -k --kustomize -o --output --raw -R --recursive --save-config -l --selector --show-managed-fields --template --validate --windows-line-endings" 
+    word_list=" clusterrole clusterrolebinding configmap cronjob deployment ingress job namespace poddisruptionbudget priorityclass quota role rolebinding secret service serviceaccount token --allow-missing-template-keys --dry-run --edit --field-manager -f --filename -k --kustomize -o --output --raw -R --recursive --save-config -l --selector --show-managed-fields --template --validate --windows-line-endings" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -291,7 +295,7 @@ _kubectl_create ()
 _create_clusterrole ()
 {
     local cur word_list
-    word_list=" --aggregation-rule --allow-missing-template-keys --dry-run --field-manager -o --output --save-config --show-managed-fields --template --validate" 
+    word_list=" --aggregation-rule --allow-missing-template-keys --dry-run --field-manager --non-resource-url -o --output --resource --resource-name --save-config --show-managed-fields --template --validate --verb" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -299,7 +303,7 @@ _create_clusterrole ()
 _create_clusterrolebinding ()
 {
     local cur word_list
-    word_list=" --allow-missing-template-keys --clusterrole --dry-run --field-manager -o --output --save-config --show-managed-fields --template --validate" 
+    word_list=" --allow-missing-template-keys --clusterrole --dry-run --field-manager --group -o --output --save-config --serviceaccount --show-managed-fields --template --validate" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -307,7 +311,7 @@ _create_clusterrolebinding ()
 _create_configmap ()
 {
     local cur word_list
-    word_list=" --allow-missing-template-keys --append-hash --dry-run --field-manager -o --output --save-config --show-managed-fields --template --validate" 
+    word_list=" --allow-missing-template-keys --append-hash --dry-run --field-manager --from-env-file --from-file --from-literal -o --output --save-config --show-managed-fields --template --validate" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -323,7 +327,7 @@ _create_cronjob ()
 _create_deployment ()
 {
     local cur word_list
-    word_list=" --allow-missing-template-keys --dry-run --field-manager -o --output --port -r --replicas --save-config --show-managed-fields --template --validate" 
+    word_list=" --allow-missing-template-keys --dry-run --field-manager --image -o --output --port -r --replicas --save-config --show-managed-fields --template --validate" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -331,7 +335,7 @@ _create_deployment ()
 _create_ingress ()
 {
     local cur word_list
-    word_list=" --rule --allow-missing-template-keys --class --default-backend --dry-run --field-manager -o --output --save-config --show-managed-fields --template --validate" 
+    word_list=" --rule --allow-missing-template-keys --annotation --class --default-backend --dry-run --field-manager -o --output --rule --save-config --show-managed-fields --template --validate" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -379,7 +383,7 @@ _create_quota ()
 _create_role ()
 {
     local cur word_list
-    word_list=" --allow-missing-template-keys --dry-run --field-manager -o --output --save-config --show-managed-fields --template --validate" 
+    word_list=" --allow-missing-template-keys --dry-run --field-manager -o --output --resource --resource-name --save-config --show-managed-fields --template --validate --verb" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -387,7 +391,7 @@ _create_role ()
 _create_rolebinding ()
 {
     local cur word_list
-    word_list=" --allow-missing-template-keys --clusterrole --dry-run --field-manager -o --output --role --save-config --show-managed-fields --template --validate" 
+    word_list=" --allow-missing-template-keys --clusterrole --dry-run --field-manager --group -o --output --role --save-config --serviceaccount --show-managed-fields --template --validate" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -437,7 +441,7 @@ _create_secret ()
 _secret_dockerregistry ()
 {
     local cur word_list
-    word_list=" --allow-missing-template-keys --append-hash --docker-email --docker-password --docker-server --docker-username --dry-run --field-manager -o --output --save-config --show-managed-fields --template --validate" 
+    word_list=" --allow-missing-template-keys --append-hash --docker-email --docker-password --docker-server --docker-username --dry-run --field-manager --from-file -o --output --save-config --show-managed-fields --template --validate" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -445,7 +449,7 @@ _secret_dockerregistry ()
 _secret_generic ()
 {
     local cur word_list
-    word_list=" --allow-missing-template-keys --append-hash --dry-run --field-manager -o --output --save-config --show-managed-fields --template --type --validate" 
+    word_list=" --allow-missing-template-keys --append-hash --dry-run --field-manager --from-env-file --from-file --from-literal -o --output --save-config --show-managed-fields --template --type --validate" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -507,7 +511,7 @@ _create_service ()
 _service_clusterip ()
 {
     local cur word_list
-    word_list=" --allow-missing-template-keys --clusterip --dry-run --field-manager -o --output --save-config --show-managed-fields --template --validate" 
+    word_list=" --allow-missing-template-keys --clusterip --dry-run --field-manager -o --output --save-config --show-managed-fields --tcp --template --validate" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -515,7 +519,7 @@ _service_clusterip ()
 _service_externalname ()
 {
     local cur word_list
-    word_list=" --allow-missing-template-keys --dry-run --external-name --field-manager -o --output --save-config --show-managed-fields --template --validate" 
+    word_list=" --allow-missing-template-keys --dry-run --external-name --field-manager -o --output --save-config --show-managed-fields --tcp --template --validate" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -523,7 +527,7 @@ _service_externalname ()
 _service_loadbalancer ()
 {
     local cur word_list
-    word_list=" --allow-missing-template-keys --dry-run --field-manager -o --output --save-config --show-managed-fields --template --validate" 
+    word_list=" --allow-missing-template-keys --dry-run --field-manager -o --output --save-config --show-managed-fields --tcp --template --validate" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -531,7 +535,7 @@ _service_loadbalancer ()
 _service_nodeport ()
 {
     local cur word_list
-    word_list=" --allow-missing-template-keys --dry-run --field-manager --node-port -o --output --save-config --show-managed-fields --template --validate" 
+    word_list=" --allow-missing-template-keys --dry-run --field-manager --node-port -o --output --save-config --show-managed-fields --tcp --template --validate" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -544,10 +548,18 @@ _create_serviceaccount ()
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
 
+_create_token ()
+{
+    local cur word_list
+    word_list=" --allow-missing-template-keys --audience --bound-object-kind --bound-object-name --bound-object-uid --duration -o --output --show-managed-fields --template" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
 _kubectl_expose ()
 {
     local cur word_list
-    word_list=" --allow-missing-template-keys --cluster-ip --dry-run --external-ip --field-manager --generator -k --kustomize -l --labels --load-balancer-ip --name -o --output --override-type --overrides --port --protocol -R --recursive --save-config --selector --session-affinity --show-managed-fields --target-port --template --type" 
+    word_list=" --allow-missing-template-keys --cluster-ip --dry-run --external-ip --field-manager -f --filename -k --kustomize -l --labels --load-balancer-ip --name -o --output --override-type --overrides --port --protocol -R --recursive --save-config --selector --session-affinity --show-managed-fields --target-port --template --type" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -555,7 +567,7 @@ _kubectl_expose ()
 _kubectl_run ()
 {
     local cur word_list
-    word_list=" --allow-missing-template-keys --attach --cascade --command --dry-run --expose --field-manager --force --grace-period --image --image-pull-policy -k --kustomize -l --labels --leave-stdin-open -o --output --override-type --overrides --pod-running-timeout --port --privileged -q --quiet -R --recursive --restart --rm --save-config --show-managed-fields -i --stdin --template --timeout -t --tty --wait" 
+    word_list=" --allow-missing-template-keys --annotations --attach --cascade --command --dry-run --env --expose --field-manager -f --filename --force --grace-period --image --image-pull-policy -k --kustomize -l --labels --leave-stdin-open -o --output --override-type --overrides --pod-running-timeout --port --privileged -q --quiet -R --recursive --restart --rm --save-config --show-managed-fields -i --stdin --template --timeout -t --tty --wait" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -617,7 +629,7 @@ _kubectl_set ()
 _set_env ()
 {
     local cur word_list
-    word_list=" --all --allow-missing-template-keys -c --containers --dry-run --field-manager --from -k --kustomize --list --local -o --output --overwrite --prefix -R --recursive --resolve -l --selector --show-managed-fields --template" 
+    word_list=" --all --allow-missing-template-keys -c --containers --dry-run -e --env --field-manager -f --filename --from --keys -k --kustomize --list --local -o --output --overwrite --prefix -R --recursive --resolve -l --selector --show-managed-fields --template" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -625,7 +637,7 @@ _set_env ()
 _set_image ()
 {
     local cur word_list
-    word_list=" --all --allow-missing-template-keys --dry-run --field-manager -k --kustomize --local -o --output -R --recursive -l --selector --show-managed-fields --template" 
+    word_list=" --all --allow-missing-template-keys --dry-run --field-manager -f --filename -k --kustomize --local -o --output -R --recursive -l --selector --show-managed-fields --template" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -633,7 +645,7 @@ _set_image ()
 _set_resources ()
 {
     local cur word_list
-    word_list=" --all --allow-missing-template-keys -c --containers --dry-run --field-manager -k --kustomize --limits --local -o --output -R --recursive --requests -l --selector --show-managed-fields --template" 
+    word_list=" --all --allow-missing-template-keys -c --containers --dry-run --field-manager -f --filename -k --kustomize --limits --local -o --output -R --recursive --requests -l --selector --show-managed-fields --template" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -641,7 +653,7 @@ _set_resources ()
 _set_selector ()
 {
     local cur word_list
-    word_list=" --all --allow-missing-template-keys --dry-run --field-manager --local -o --output -R --recursive --resource-version --show-managed-fields --template" 
+    word_list=" --all --allow-missing-template-keys --dry-run --field-manager -f --filename --local -o --output -R --recursive --resource-version --show-managed-fields --template" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -649,7 +661,7 @@ _set_selector ()
 _set_serviceaccount ()
 {
     local cur word_list
-    word_list=" --all --allow-missing-template-keys --dry-run --field-manager -k --kustomize --local -o --output -R --recursive --show-managed-fields --template" 
+    word_list=" --all --allow-missing-template-keys --dry-run --field-manager -f --filename -k --kustomize --local -o --output -R --recursive --show-managed-fields --template" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -657,7 +669,7 @@ _set_serviceaccount ()
 _set_subject ()
 {
     local cur word_list
-    word_list=" --all --allow-missing-template-keys --dry-run --field-manager -k --kustomize --local -o --output -R --recursive -l --selector --show-managed-fields --template" 
+    word_list=" --all --allow-missing-template-keys --dry-run --field-manager -f --filename --group -k --kustomize --local -o --output -R --recursive -l --selector --serviceaccount --show-managed-fields --template" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -673,7 +685,7 @@ _kubectl_explain ()
 _kubectl_get ()
 {
     local cur word_list
-    word_list=" -A --all-namespaces --allow-missing-template-keys --chunk-size --field-selector --ignore-not-found -k --kustomize --no-headers -o --output --output-watch-events --raw -R --recursive -l --selector --server-print --show-kind --show-labels --show-managed-fields --sort-by --template -w --watch --watch-only" 
+    word_list=" -A --all-namespaces --allow-missing-template-keys --chunk-size --field-selector -f --filename --ignore-not-found -k --kustomize -L --label-columns --no-headers -o --output --output-watch-events --raw -R --recursive -l --selector --server-print --show-kind --show-labels --show-managed-fields --sort-by --subresource --template -w --watch --watch-only" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -681,7 +693,7 @@ _kubectl_get ()
 _kubectl_edit ()
 {
     local cur word_list
-    word_list=" --allow-missing-template-keys --field-manager -k --kustomize -o --output --output-patch -R --recursive --save-config --show-managed-fields --template --validate --windows-line-endings" 
+    word_list=" --allow-missing-template-keys --field-manager -f --filename -k --kustomize -o --output --output-patch -R --recursive --save-config --show-managed-fields --subresource --template --validate --windows-line-endings" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -689,7 +701,7 @@ _kubectl_edit ()
 _kubectl_delete ()
 {
     local cur word_list
-    word_list=" --all -A --all-namespaces --cascade --dry-run --field-selector --force --grace-period --ignore-not-found -k --kustomize --now -o --output --raw -R --recursive -l --selector --timeout --wait" 
+    word_list=" --all -A --all-namespaces --cascade --dry-run --field-selector -f --filename --force --grace-period --ignore-not-found -k --kustomize --now -o --output --raw -R --recursive -l --selector --timeout --wait" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -751,7 +763,7 @@ _kubectl_rollout ()
 _rollout_history ()
 {
     local cur word_list
-    word_list=" --allow-missing-template-keys -k --kustomize -o --output -R --recursive --revision --show-managed-fields --template" 
+    word_list=" --allow-missing-template-keys -f --filename -k --kustomize -o --output -R --recursive --revision -l --selector --show-managed-fields --template" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -759,7 +771,7 @@ _rollout_history ()
 _rollout_pause ()
 {
     local cur word_list
-    word_list=" --allow-missing-template-keys --field-manager -k --kustomize -o --output -R --recursive --show-managed-fields --template" 
+    word_list=" --allow-missing-template-keys --field-manager -f --filename -k --kustomize -o --output -R --recursive -l --selector --show-managed-fields --template" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -767,7 +779,7 @@ _rollout_pause ()
 _rollout_restart ()
 {
     local cur word_list
-    word_list=" --allow-missing-template-keys --field-manager -k --kustomize -o --output -R --recursive --show-managed-fields --template" 
+    word_list=" --allow-missing-template-keys --field-manager -f --filename -k --kustomize -o --output -R --recursive -l --selector --show-managed-fields --template" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -775,7 +787,7 @@ _rollout_restart ()
 _rollout_resume ()
 {
     local cur word_list
-    word_list=" --allow-missing-template-keys --field-manager -k --kustomize -o --output -R --recursive --show-managed-fields --template" 
+    word_list=" --allow-missing-template-keys --field-manager -f --filename -k --kustomize -o --output -R --recursive -l --selector --show-managed-fields --template" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -783,7 +795,7 @@ _rollout_resume ()
 _rollout_status ()
 {
     local cur word_list
-    word_list=" -k --kustomize -R --recursive --revision --timeout -w --watch" 
+    word_list=" -f --filename -k --kustomize -R --recursive --revision -l --selector --timeout -w --watch" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -791,7 +803,7 @@ _rollout_status ()
 _rollout_undo ()
 {
     local cur word_list
-    word_list=" --allow-missing-template-keys --dry-run -k --kustomize -o --output -R --recursive --show-managed-fields --template --to-revision" 
+    word_list=" --allow-missing-template-keys --dry-run -f --filename -k --kustomize -o --output -R --recursive -l --selector --show-managed-fields --template --to-revision" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -799,7 +811,7 @@ _rollout_undo ()
 _kubectl_scale ()
 {
     local cur word_list
-    word_list=" --all --allow-missing-template-keys --current-replicas --dry-run -k --kustomize -o --output -R --recursive --replicas --resource-version -l --selector --show-managed-fields --template --timeout" 
+    word_list=" --all --allow-missing-template-keys --current-replicas --dry-run -f --filename -k --kustomize -o --output -R --recursive --replicas --resource-version -l --selector --show-managed-fields --template --timeout" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -807,7 +819,7 @@ _kubectl_scale ()
 _kubectl_autoscale ()
 {
     local cur word_list
-    word_list=" --allow-missing-template-keys --cpu-percent --dry-run --field-manager -k --kustomize --max --min --name -o --output -R --recursive --save-config --show-managed-fields --template" 
+    word_list=" --allow-missing-template-keys --cpu-percent --dry-run --field-manager -f --filename -k --kustomize --max --min --name -o --output -R --recursive --save-config --show-managed-fields --template" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -853,7 +865,7 @@ _kubectl_certificate ()
 _certificate_approve ()
 {
     local cur word_list
-    word_list=" --allow-missing-template-keys --force -k --kustomize -o --output -R --recursive --show-managed-fields --template" 
+    word_list=" --allow-missing-template-keys -f --filename --force -k --kustomize -o --output -R --recursive --show-managed-fields --template" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -861,7 +873,7 @@ _certificate_approve ()
 _certificate_deny ()
 {
     local cur word_list
-    word_list=" --allow-missing-template-keys --force -k --kustomize -o --output -R --recursive --show-managed-fields --template" 
+    word_list=" --allow-missing-template-keys -f --filename --force -k --kustomize -o --output -R --recursive --show-managed-fields --template" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -915,7 +927,7 @@ _top_node ()
 _top_pod ()
 {
     local cur word_list
-    word_list=" -A --all-namespaces --containers --field-selector --no-headers -l --selector --sort-by --use-protocol-buffers" 
+    word_list=" -A --all-namespaces --containers --field-selector --no-headers -l --selector --sort-by --sum --use-protocol-buffers" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -955,7 +967,7 @@ _kubectl_taint ()
 _kubectl_describe ()
 {
     local cur word_list
-    word_list=" -A --all-namespaces --chunk-size -k --kustomize -R --recursive -l --selector --show-events" 
+    word_list=" -A --all-namespaces --chunk-size -f --filename -k --kustomize -R --recursive -l --selector --show-events" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -979,7 +991,7 @@ _kubectl_attach ()
 _kubectl_exec ()
 {
     local cur word_list
-    word_list=" -c --container --pod-running-timeout -q --quiet -i --stdin -t --tty" 
+    word_list=" -c --container -f --filename --pod-running-timeout -q --quiet -i --stdin -t --tty" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -987,7 +999,7 @@ _kubectl_exec ()
 _kubectl_portforward ()
 {
     local cur word_list
-    word_list=" --address --address --pod-running-timeout" 
+    word_list=" --address --pod-running-timeout" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -995,7 +1007,7 @@ _kubectl_portforward ()
 _kubectl_proxy ()
 {
     local cur word_list
-    word_list=" --accept-hosts --accept-hosts --accept-paths --address --api-prefix --append-server-path --disable-filter --keepalive -p --port --reject-methods --reject-paths -u --unix-socket -w --www -P --www-prefix" 
+    word_list=" --accept-hosts --accept-paths --address --api-prefix --append-server-path --disable-filter --keepalive -p --port --reject-methods --reject-paths -u --unix-socket -w --www -P --www-prefix" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -1057,7 +1069,7 @@ _auth_cani ()
 _auth_reconcile ()
 {
     local cur word_list
-    word_list=" --allow-missing-template-keys --dry-run -k --kustomize -o --output -R --recursive --remove-extra-permissions --remove-extra-subjects --show-managed-fields --template" 
+    word_list=" --allow-missing-template-keys --dry-run -f --filename -k --kustomize -o --output -R --recursive --remove-extra-permissions --remove-extra-subjects --show-managed-fields --template" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -1065,7 +1077,7 @@ _auth_reconcile ()
 _kubectl_debug ()
 {
     local cur word_list
-    word_list=" --arguments-only --attach -c --container --copy-to --image --image-pull-policy -q --quiet --replace --same-node --share-processes -i --stdin --target -t --tty" 
+    word_list=" --arguments-only --attach -c --container --copy-to --env --image --image-pull-policy -q --quiet --replace --same-node --set-image --share-processes -i --stdin --target -t --tty" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -1073,7 +1085,7 @@ _kubectl_debug ()
 _kubectl_diff ()
 {
     local cur word_list
-    word_list=" --field-manager --force-conflicts -k --kustomize -R --recursive -l --selector --server-side" 
+    word_list=" --field-manager -f --filename --force-conflicts -k --kustomize --prune --prune-allowlist -R --recursive -l --selector --server-side --show-managed-fields" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -1081,7 +1093,7 @@ _kubectl_diff ()
 _kubectl_apply ()
 {
     local cur word_list
-    word_list=" --all --allow-missing-template-keys --cascade --dry-run --field-manager --force --force-conflicts --grace-period -k --kustomize --openapi-patch -o --output --overwrite --prune -R --recursive -l --selector --server-side --show-managed-fields --template --timeout --validate --wait" 
+    word_list=" --all --allow-missing-template-keys --cascade --dry-run --field-manager -f --filename --force --force-conflicts --grace-period -k --kustomize --openapi-patch -o --output --overwrite --prune --prune-whitelist -R --recursive -l --selector --server-side --show-managed-fields --template --timeout --validate --wait" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -1089,7 +1101,7 @@ _kubectl_apply ()
 _kubectl_patch ()
 {
     local cur word_list
-    word_list=" --allow-missing-template-keys --dry-run --field-manager -k --kustomize --local -o --output -p --patch --patch-file -R --recursive --show-managed-fields --template --type" 
+    word_list=" --allow-missing-template-keys --dry-run --field-manager -f --filename -k --kustomize --local -o --output -p --patch --patch-file -R --recursive --show-managed-fields --subresource --template --type" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -1097,7 +1109,7 @@ _kubectl_patch ()
 _kubectl_replace ()
 {
     local cur word_list
-    word_list=" --allow-missing-template-keys --cascade --dry-run --field-manager --force --grace-period -k --kustomize -o --output --raw -R --recursive --save-config --show-managed-fields --template --timeout --validate --wait" 
+    word_list=" --allow-missing-template-keys --cascade --dry-run --field-manager -f --filename --force --grace-period -k --kustomize -o --output --raw -R --recursive --save-config --show-managed-fields --subresource --template --timeout --validate --wait" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -1105,7 +1117,7 @@ _kubectl_replace ()
 _kubectl_wait ()
 {
     local cur word_list
-    word_list=" --all -A --all-namespaces --allow-missing-template-keys --field-selector --for --local -o --output -R --recursive -l --selector --show-managed-fields --template --timeout" 
+    word_list=" --all -A --all-namespaces --allow-missing-template-keys --field-selector -f --filename --for --local -o --output -R --recursive -l --selector --show-managed-fields --template --timeout" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -1113,7 +1125,7 @@ _kubectl_wait ()
 _kubectl_kustomize ()
 {
     local cur word_list
-    word_list=" --as-current-user --enable-alpha-plugins --enable-helm --enable-managedby-label --helm-command --load-restrictor --network --network-name -o --output --reorder" 
+    word_list=" --as-current-user --enable-alpha-plugins --enable-helm -e --env --helm-command --load-restrictor --mount --network --network-name -o --output --reorder" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -1121,7 +1133,7 @@ _kubectl_kustomize ()
 _kubectl_label ()
 {
     local cur word_list
-    word_list=" --all -A --all-namespaces --allow-missing-template-keys --dry-run --field-manager --field-selector -k --kustomize --list --local -o --output --overwrite -R --recursive --resource-version -l --selector --show-managed-fields --template" 
+    word_list=" --all -A --all-namespaces --allow-missing-template-keys --dry-run --field-manager --field-selector -f --filename -k --kustomize --list --local -o --output --overwrite -R --recursive --resource-version -l --selector --show-managed-fields --template" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -1129,7 +1141,7 @@ _kubectl_label ()
 _kubectl_annotate ()
 {
     local cur word_list
-    word_list=" --all -A --all-namespaces --allow-missing-template-keys --dry-run --field-manager --field-selector -k --kustomize --list --local -o --output --overwrite -R --recursive --resource-version -l --selector --show-managed-fields --template" 
+    word_list=" --all -A --all-namespaces --allow-missing-template-keys --dry-run --field-manager --field-selector -f --filename -k --kustomize --list --local -o --output --overwrite -R --recursive --resource-version -l --selector --show-managed-fields --template" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -1171,7 +1183,7 @@ _kubectl_alpha ()
 _alpha_events ()
 {
     local cur word_list
-    word_list=" -A --all-namespaces --chunk-size --for -w --watch" 
+    word_list=" -A --all-namespaces --allow-missing-template-keys --chunk-size --for --no-headers -o --output --show-managed-fields --template --types -w --watch" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -1179,7 +1191,7 @@ _alpha_events ()
 _kubectl_apiresources ()
 {
     local cur word_list
-    word_list=" --api-group --cached --namespaced --no-headers -o --output --sort-by" 
+    word_list=" --api-group --cached --namespaced --no-headers -o --output --sort-by --verbs" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -1293,7 +1305,7 @@ _config_set ()
 _config_setcluster ()
 {
     local cur word_list
-    word_list=" --embed-certs" 
+    word_list=" --embed-certs --proxy-url" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -1309,7 +1321,7 @@ _config_setcontext ()
 _config_setcredentials ()
 {
     local cur word_list
-    word_list=" --client-certificate --client-key --token --username --password --auth-provider --embed-certs --exec-api-version --exec-command" 
+    word_list=" --client-certificate --client-key --token --username --password --auth-provider --auth-provider-arg --embed-certs --exec-api-version --exec-arg --exec-command --exec-env" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -1367,7 +1379,7 @@ _plugin_list ()
 _kubectl_version ()
 {
     local cur word_list
-    word_list=" --client -o --output --short" 
+    word_list=" --client -o --output" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }

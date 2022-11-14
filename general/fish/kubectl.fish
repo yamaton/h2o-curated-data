@@ -6,7 +6,7 @@ complete -k -c kubectl -n __fish_use_subcommand -x -a config -d "Modify kubeconf
 complete -k -c kubectl -n __fish_use_subcommand -x -a api-versions -d "Print the supported API versions on the server, in the form of \"group/version\""
 complete -k -c kubectl -n __fish_use_subcommand -x -a api-resources -d "Print the supported API resources on the server"
 complete -k -c kubectl -n __fish_use_subcommand -x -a alpha -d "Commands for features in alpha"
-complete -k -c kubectl -n __fish_use_subcommand -x -a completion -d "Output shell completion code for the specified shell (bash, zsh or fish)"
+complete -k -c kubectl -n __fish_use_subcommand -x -a completion -d "Output shell completion code for the specified shell (bash, zsh, fish, or powershell)"
 complete -k -c kubectl -n __fish_use_subcommand -x -a annotate -d "Update the annotations on a resource"
 complete -k -c kubectl -n __fish_use_subcommand -x -a label -d "Update the labels on a resource"
 complete -k -c kubectl -n __fish_use_subcommand -x -a kustomize -d "Build a kustomization target from a directory or URL."
@@ -49,15 +49,16 @@ complete -c kubectl -n "__fish_seen_subcommand_from create" -l "allow-missing-te
 complete -c kubectl -n "__fish_seen_subcommand_from create" -l "dry-run" -d "Must be \"none\", \"server\", or \"client\"." -x
 complete -c kubectl -n "__fish_seen_subcommand_from create" -l "edit" -d "Edit the API resource before creating" -x
 complete -c kubectl -n "__fish_seen_subcommand_from create" -l "field-manager" -d "Name of the manager used to track field ownership." -x
+complete -c kubectl -n "__fish_seen_subcommand_from create" -s "f" -l "filename" -d "Filename, directory, or URL to files to use to create the resource" -r
 complete -c kubectl -n "__fish_seen_subcommand_from create" -s "k" -l "kustomize" -d "Process the kustomization directory." -r
 complete -c kubectl -n "__fish_seen_subcommand_from create" -s "o" -l "output" -d "Output format." -r
 complete -c kubectl -n "__fish_seen_subcommand_from create" -l "raw" -d "Raw URI to POST to the server." -r
 complete -c kubectl -n "__fish_seen_subcommand_from create" -s "R" -l "recursive" -d "Process the directory used in -f, --filename recursively." -r
 complete -c kubectl -n "__fish_seen_subcommand_from create" -l "save-config" -d "If true, the configuration of current object will be saved in its annotation." -x
-complete -c kubectl -n "__fish_seen_subcommand_from create" -s "l" -l "selector" -d "Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2)" -x
+complete -c kubectl -n "__fish_seen_subcommand_from create" -s "l" -l "selector" -d "Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2)." -x
 complete -c kubectl -n "__fish_seen_subcommand_from create" -l "show-managed-fields" -d "If true, keep the managedFields when printing objects in JSON or YAML format." -x
 complete -c kubectl -n "__fish_seen_subcommand_from create" -l "template" -d "Template string or path to template file to use when -o=go-template, -o=go-template-file." -r
-complete -c kubectl -n "__fish_seen_subcommand_from create" -l "validate" -d "If true, use a schema to validate the input before sending it" -x
+complete -c kubectl -n "__fish_seen_subcommand_from create" -l "validate" -d "Must be one of: strict (or true), warn, ignore (or false)." -x
 complete -c kubectl -n "__fish_seen_subcommand_from create" -l "windows-line-endings" -d "Only relevant if --edit=true." -x
 
 
@@ -67,7 +68,7 @@ complete -c kubectl -n "__fish_seen_subcommand_from expose" -l "cluster-ip" -d "
 complete -c kubectl -n "__fish_seen_subcommand_from expose" -l "dry-run" -d "Must be \"none\", \"server\", or \"client\"." -x
 complete -c kubectl -n "__fish_seen_subcommand_from expose" -l "external-ip" -d "Additional external IP address (not managed by Kubernetes) to accept for the service." -x
 complete -c kubectl -n "__fish_seen_subcommand_from expose" -l "field-manager" -d "Name of the manager used to track field ownership." -x
-complete -c kubectl -n "__fish_seen_subcommand_from expose" -l "generator" -d "The name of the API generator to use." -x
+complete -c kubectl -n "__fish_seen_subcommand_from expose" -s "f" -l "filename" -d "Filename, directory, or URL to files identifying the resource to expose a service" -r
 complete -c kubectl -n "__fish_seen_subcommand_from expose" -s "k" -l "kustomize" -d "Process the kustomization directory." -r
 complete -c kubectl -n "__fish_seen_subcommand_from expose" -s "l" -l "labels" -d "Labels to apply to the service created by this call." -x
 complete -c kubectl -n "__fish_seen_subcommand_from expose" -l "load-balancer-ip" -d "IP to assign to the LoadBalancer." -x
@@ -89,12 +90,15 @@ complete -c kubectl -n "__fish_seen_subcommand_from expose" -l "type" -d "Type f
 
 
 complete -c kubectl -n "__fish_seen_subcommand_from run" -l "allow-missing-template-keys" -d "If true, ignore any errors in templates when a field or map key is missing in the template." -r
+complete -c kubectl -n "__fish_seen_subcommand_from run" -l "annotations" -d "Annotations to apply to the pod." -x
 complete -c kubectl -n "__fish_seen_subcommand_from run" -l "attach" -d "If true, wait for the Pod to start running, and then attach to the Pod as if 'kubectl attach ...' were called." -x
 complete -c kubectl -n "__fish_seen_subcommand_from run" -l "cascade" -d "Must be \"background\", \"orphan\", or \"foreground\"." -x
 complete -c kubectl -n "__fish_seen_subcommand_from run" -l "command" -d "If true and extra arguments are present, use them as the 'command' field in the container, rather than the 'args' field which is the default." -x
 complete -c kubectl -n "__fish_seen_subcommand_from run" -l "dry-run" -d "Must be \"none\", \"server\", or \"client\"." -x
+complete -c kubectl -n "__fish_seen_subcommand_from run" -l "env" -d "Environment variables to set in the container." -x
 complete -c kubectl -n "__fish_seen_subcommand_from run" -l "expose" -d "If true, create a ClusterIP service associated with the pod." -x
 complete -c kubectl -n "__fish_seen_subcommand_from run" -l "field-manager" -d "Name of the manager used to track field ownership." -x
+complete -c kubectl -n "__fish_seen_subcommand_from run" -s "f" -l "filename" -d "to use to replace the resource." -x
 complete -c kubectl -n "__fish_seen_subcommand_from run" -l "force" -d "If true, immediately remove resources from API and bypass graceful deletion." -x
 complete -c kubectl -n "__fish_seen_subcommand_from run" -l "grace-period" -d "Period of time in seconds given to the resource to terminate gracefully." -x
 complete -c kubectl -n "__fish_seen_subcommand_from run" -l "image" -d "The image for the container to run." -x
@@ -131,19 +135,22 @@ complete -c kubectl -n "__fish_seen_subcommand_from get" -s "A" -l "all-namespac
 complete -c kubectl -n "__fish_seen_subcommand_from get" -l "allow-missing-template-keys" -d "If true, ignore any errors in templates when a field or map key is missing in the template." -r
 complete -c kubectl -n "__fish_seen_subcommand_from get" -l "chunk-size" -d "Return large lists in chunks rather than all at once." -x
 complete -c kubectl -n "__fish_seen_subcommand_from get" -l "field-selector" -d "Selector (field query) to filter on, supports '=', '==', and '!='.(e.g. --field-selector key1=value1,key2=value2)." -x
+complete -c kubectl -n "__fish_seen_subcommand_from get" -s "f" -l "filename" -d "Filename, directory, or URL to files identifying the resource to get from a server." -r
 complete -c kubectl -n "__fish_seen_subcommand_from get" -l "ignore-not-found" -d "If the requested object does not exist the command will return exit code 0." -x
 complete -c kubectl -n "__fish_seen_subcommand_from get" -s "k" -l "kustomize" -d "Process the kustomization directory." -r
+complete -c kubectl -n "__fish_seen_subcommand_from get" -s "L" -l "label-columns" -d "Accepts a comma separated list of labels that are going to be presented as columns." -x
 complete -c kubectl -n "__fish_seen_subcommand_from get" -l "no-headers" -d "When using the default or custom-column output format, don't print headers (default print headers)." -x
 complete -c kubectl -n "__fish_seen_subcommand_from get" -s "o" -l "output" -d "Output format." -r
 complete -c kubectl -n "__fish_seen_subcommand_from get" -l "output-watch-events" -d "Output watch event objects when --watch or --watch-only is used." -x
 complete -c kubectl -n "__fish_seen_subcommand_from get" -l "raw" -d "Raw URI to request from the server." -r
 complete -c kubectl -n "__fish_seen_subcommand_from get" -s "R" -l "recursive" -d "Process the directory used in -f, --filename recursively." -r
-complete -c kubectl -n "__fish_seen_subcommand_from get" -s "l" -l "selector" -d "Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2)" -x
+complete -c kubectl -n "__fish_seen_subcommand_from get" -s "l" -l "selector" -d "Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2)." -x
 complete -c kubectl -n "__fish_seen_subcommand_from get" -l "server-print" -d "If true, have the server return the appropriate table output." -x
 complete -c kubectl -n "__fish_seen_subcommand_from get" -l "show-kind" -d "If present, list the resource type for the requested object(s)." -x
 complete -c kubectl -n "__fish_seen_subcommand_from get" -l "show-labels" -d "When printing, show all labels as the last column (default hide labels column)" -x
 complete -c kubectl -n "__fish_seen_subcommand_from get" -l "show-managed-fields" -d "If true, keep the managedFields when printing objects in JSON or YAML format." -x
 complete -c kubectl -n "__fish_seen_subcommand_from get" -l "sort-by" -d "If non-empty, sort list types using this field specification." -r
+complete -c kubectl -n "__fish_seen_subcommand_from get" -l "subresource" -d "If specified, gets the subresource of the requested object." -x
 complete -c kubectl -n "__fish_seen_subcommand_from get" -l "template" -d "Template string or path to template file to use when -o=go-template, -o=go-template-file." -r
 complete -c kubectl -n "__fish_seen_subcommand_from get" -s "w" -l "watch" -d "After listing/getting the requested object, watch for changes." -x
 complete -c kubectl -n "__fish_seen_subcommand_from get" -l "watch-only" -d "Watch for changes to the requested object(s), without listing/getting first." -x
@@ -152,14 +159,16 @@ complete -c kubectl -n "__fish_seen_subcommand_from get" -l "watch-only" -d "Wat
 
 complete -c kubectl -n "__fish_seen_subcommand_from edit" -l "allow-missing-template-keys" -d "If true, ignore any errors in templates when a field or map key is missing in the template." -r
 complete -c kubectl -n "__fish_seen_subcommand_from edit" -l "field-manager" -d "Name of the manager used to track field ownership." -x
+complete -c kubectl -n "__fish_seen_subcommand_from edit" -s "f" -l "filename" -d "Filename, directory, or URL to files to use to edit the resource" -r
 complete -c kubectl -n "__fish_seen_subcommand_from edit" -s "k" -l "kustomize" -d "Process the kustomization directory." -r
 complete -c kubectl -n "__fish_seen_subcommand_from edit" -s "o" -l "output" -d "Output format." -r
 complete -c kubectl -n "__fish_seen_subcommand_from edit" -l "output-patch" -d "Output the patch if the resource is edited." -x
 complete -c kubectl -n "__fish_seen_subcommand_from edit" -s "R" -l "recursive" -d "Process the directory used in -f, --filename recursively." -r
 complete -c kubectl -n "__fish_seen_subcommand_from edit" -l "save-config" -d "If true, the configuration of current object will be saved in its annotation." -x
 complete -c kubectl -n "__fish_seen_subcommand_from edit" -l "show-managed-fields" -d "If true, keep the managedFields when printing objects in JSON or YAML format." -x
+complete -c kubectl -n "__fish_seen_subcommand_from edit" -l "subresource" -d "If specified, edit will operate on the subresource of the requested object." -x
 complete -c kubectl -n "__fish_seen_subcommand_from edit" -l "template" -d "Template string or path to template file to use when -o=go-template, -o=go-template-file." -r
-complete -c kubectl -n "__fish_seen_subcommand_from edit" -l "validate" -d "If true, use a schema to validate the input before sending it" -x
+complete -c kubectl -n "__fish_seen_subcommand_from edit" -l "validate" -d "Must be one of: strict (or true), warn, ignore (or false)." -x
 complete -c kubectl -n "__fish_seen_subcommand_from edit" -l "windows-line-endings" -d "Defaults to the line ending native to your platform." -x
 
 
@@ -169,6 +178,7 @@ complete -c kubectl -n "__fish_seen_subcommand_from delete" -s "A" -l "all-names
 complete -c kubectl -n "__fish_seen_subcommand_from delete" -l "cascade" -d "Must be \"background\", \"orphan\", or \"foreground\"." -x
 complete -c kubectl -n "__fish_seen_subcommand_from delete" -l "dry-run" -d "Must be \"none\", \"server\", or \"client\"." -x
 complete -c kubectl -n "__fish_seen_subcommand_from delete" -l "field-selector" -d "Selector (field query) to filter on, supports '=', '==', and '!='.(e.g. --field-selector key1=value1,key2=value2)." -x
+complete -c kubectl -n "__fish_seen_subcommand_from delete" -s "f" -l "filename" -d "containing the resource to delete." -x
 complete -c kubectl -n "__fish_seen_subcommand_from delete" -l "force" -d "If true, immediately remove resources from API and bypass graceful deletion." -x
 complete -c kubectl -n "__fish_seen_subcommand_from delete" -l "grace-period" -d "Period of time in seconds given to the resource to terminate gracefully." -x
 complete -c kubectl -n "__fish_seen_subcommand_from delete" -l "ignore-not-found" -d "Treat \"resource not found\" as a successful delete." -x
@@ -177,7 +187,7 @@ complete -c kubectl -n "__fish_seen_subcommand_from delete" -l "now" -d "If true
 complete -c kubectl -n "__fish_seen_subcommand_from delete" -s "o" -l "output" -d "Output mode." -x
 complete -c kubectl -n "__fish_seen_subcommand_from delete" -l "raw" -d "Raw URI to DELETE to the server." -r
 complete -c kubectl -n "__fish_seen_subcommand_from delete" -s "R" -l "recursive" -d "Process the directory used in -f, --filename recursively." -r
-complete -c kubectl -n "__fish_seen_subcommand_from delete" -s "l" -l "selector" -d "Selector (label query) to filter on." -x
+complete -c kubectl -n "__fish_seen_subcommand_from delete" -s "l" -l "selector" -d "Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2)." -x
 complete -c kubectl -n "__fish_seen_subcommand_from delete" -l "timeout" -d "The length of time to wait before giving up on a delete, zero means determine a timeout from the size of the object" -x
 complete -c kubectl -n "__fish_seen_subcommand_from delete" -l "wait" -d "If true, wait for resources to be gone before returning." -x
 
@@ -187,12 +197,13 @@ complete -c kubectl -n "__fish_seen_subcommand_from scale" -l "all" -d "Select a
 complete -c kubectl -n "__fish_seen_subcommand_from scale" -l "allow-missing-template-keys" -d "If true, ignore any errors in templates when a field or map key is missing in the template." -r
 complete -c kubectl -n "__fish_seen_subcommand_from scale" -l "current-replicas" -d "Precondition for current size." -x
 complete -c kubectl -n "__fish_seen_subcommand_from scale" -l "dry-run" -d "Must be \"none\", \"server\", or \"client\"." -x
+complete -c kubectl -n "__fish_seen_subcommand_from scale" -s "f" -l "filename" -d "Filename, directory, or URL to files identifying the resource to set a new size" -r
 complete -c kubectl -n "__fish_seen_subcommand_from scale" -s "k" -l "kustomize" -d "Process the kustomization directory." -r
 complete -c kubectl -n "__fish_seen_subcommand_from scale" -s "o" -l "output" -d "Output format." -r
 complete -c kubectl -n "__fish_seen_subcommand_from scale" -s "R" -l "recursive" -d "Process the directory used in -f, --filename recursively." -r
 complete -c kubectl -n "__fish_seen_subcommand_from scale" -l "replicas" -d "The new desired number of replicas." -x
 complete -c kubectl -n "__fish_seen_subcommand_from scale" -l "resource-version" -d "Precondition for resource version." -x
-complete -c kubectl -n "__fish_seen_subcommand_from scale" -s "l" -l "selector" -d "Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2)" -x
+complete -c kubectl -n "__fish_seen_subcommand_from scale" -s "l" -l "selector" -d "Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2)." -x
 complete -c kubectl -n "__fish_seen_subcommand_from scale" -l "show-managed-fields" -d "If true, keep the managedFields when printing objects in JSON or YAML format." -x
 complete -c kubectl -n "__fish_seen_subcommand_from scale" -l "template" -d "Template string or path to template file to use when -o=go-template, -o=go-template-file." -r
 complete -c kubectl -n "__fish_seen_subcommand_from scale" -l "timeout" -d "The length of time to wait before giving up on a scale operation, zero means don't wait." -x
@@ -203,6 +214,7 @@ complete -c kubectl -n "__fish_seen_subcommand_from autoscale" -l "allow-missing
 complete -c kubectl -n "__fish_seen_subcommand_from autoscale" -l "cpu-percent" -d "The target average CPU utilization (represented as a percent of requested CPU) over all the pods." -x
 complete -c kubectl -n "__fish_seen_subcommand_from autoscale" -l "dry-run" -d "Must be \"none\", \"server\", or \"client\"." -x
 complete -c kubectl -n "__fish_seen_subcommand_from autoscale" -l "field-manager" -d "Name of the manager used to track field ownership." -x
+complete -c kubectl -n "__fish_seen_subcommand_from autoscale" -s "f" -l "filename" -d "Filename, directory, or URL to files identifying the resource to autoscale." -r
 complete -c kubectl -n "__fish_seen_subcommand_from autoscale" -s "k" -l "kustomize" -d "Process the kustomization directory." -r
 complete -c kubectl -n "__fish_seen_subcommand_from autoscale" -l "max" -d "The upper limit for the number of pods that can be set by the autoscaler." -x
 complete -c kubectl -n "__fish_seen_subcommand_from autoscale" -l "min" -d "The lower limit for the number of pods that can be set by the autoscaler." -x
@@ -216,12 +228,12 @@ complete -c kubectl -n "__fish_seen_subcommand_from autoscale" -l "template" -d 
 
 
 complete -c kubectl -n "__fish_seen_subcommand_from cordon" -l "dry-run" -d "Must be \"none\", \"server\", or \"client\"." -x
-complete -c kubectl -n "__fish_seen_subcommand_from cordon" -s "l" -l "selector" -d "Selector (label query) to filter on" -x
+complete -c kubectl -n "__fish_seen_subcommand_from cordon" -s "l" -l "selector" -d "Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2)." -x
 
 
 
 complete -c kubectl -n "__fish_seen_subcommand_from uncordon" -l "dry-run" -d "Must be \"none\", \"server\", or \"client\"." -x
-complete -c kubectl -n "__fish_seen_subcommand_from uncordon" -s "l" -l "selector" -d "Selector (label query) to filter on" -x
+complete -c kubectl -n "__fish_seen_subcommand_from uncordon" -s "l" -l "selector" -d "Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2)." -x
 
 
 
@@ -229,11 +241,11 @@ complete -c kubectl -n "__fish_seen_subcommand_from drain" -l "chunk-size" -d "R
 complete -c kubectl -n "__fish_seen_subcommand_from drain" -l "delete-emptydir-data" -d "Continue even if there are pods using emptyDir (local data that will be deleted when the node is drained)." -r
 complete -c kubectl -n "__fish_seen_subcommand_from drain" -l "disable-eviction" -d "Force drain to use delete, even if eviction is supported." -x
 complete -c kubectl -n "__fish_seen_subcommand_from drain" -l "dry-run" -d "Must be \"none\", \"server\", or \"client\"." -x
-complete -c kubectl -n "__fish_seen_subcommand_from drain" -l "force" -d "Continue even if there are pods not managed by a ReplicationController, ReplicaSet, Job, DaemonSet or StatefulSet." -x
+complete -c kubectl -n "__fish_seen_subcommand_from drain" -l "force" -d "Continue even if there are pods that do not declare a controller." -x
 complete -c kubectl -n "__fish_seen_subcommand_from drain" -l "grace-period" -d "Period of time in seconds given to each pod to terminate gracefully." -x
 complete -c kubectl -n "__fish_seen_subcommand_from drain" -l "ignore-daemonsets" -d "Ignore DaemonSet-managed pods." -x
 complete -c kubectl -n "__fish_seen_subcommand_from drain" -l "pod-selector" -d "Label selector to filter pods on the node" -x
-complete -c kubectl -n "__fish_seen_subcommand_from drain" -s "l" -l "selector" -d "Selector (label query) to filter on" -x
+complete -c kubectl -n "__fish_seen_subcommand_from drain" -s "l" -l "selector" -d "Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2)." -x
 complete -c kubectl -n "__fish_seen_subcommand_from drain" -l "skip-wait-for-delete-timeout" -d "If pod DeletionTimestamp older than N seconds, skip waiting for the pod." -x
 complete -c kubectl -n "__fish_seen_subcommand_from drain" -l "timeout" -d "The length of time to wait before giving up, zero means infinite" -x
 
@@ -245,18 +257,19 @@ complete -c kubectl -n "__fish_seen_subcommand_from taint" -l "dry-run" -d "Must
 complete -c kubectl -n "__fish_seen_subcommand_from taint" -l "field-manager" -d "Name of the manager used to track field ownership." -x
 complete -c kubectl -n "__fish_seen_subcommand_from taint" -s "o" -l "output" -d "Output format." -r
 complete -c kubectl -n "__fish_seen_subcommand_from taint" -l "overwrite" -d "If true, allow taints to be overwritten, otherwise reject taint updates that overwrite existing taints." -x
-complete -c kubectl -n "__fish_seen_subcommand_from taint" -s "l" -l "selector" -d "Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2)" -x
+complete -c kubectl -n "__fish_seen_subcommand_from taint" -s "l" -l "selector" -d "Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2)." -x
 complete -c kubectl -n "__fish_seen_subcommand_from taint" -l "show-managed-fields" -d "If true, keep the managedFields when printing objects in JSON or YAML format." -x
 complete -c kubectl -n "__fish_seen_subcommand_from taint" -l "template" -d "Template string or path to template file to use when -o=go-template, -o=go-template-file." -r
-complete -c kubectl -n "__fish_seen_subcommand_from taint" -l "validate" -d "If true, use a schema to validate the input before sending it" -x
+complete -c kubectl -n "__fish_seen_subcommand_from taint" -l "validate" -d "Must be one of: strict (or true), warn, ignore (or false)." -x
 
 
 
 complete -c kubectl -n "__fish_seen_subcommand_from describe" -s "A" -l "all-namespaces" -d "If present, list the requested object(s) across all namespaces." -x
 complete -c kubectl -n "__fish_seen_subcommand_from describe" -l "chunk-size" -d "Return large lists in chunks rather than all at once." -x
+complete -c kubectl -n "__fish_seen_subcommand_from describe" -s "f" -l "filename" -d "Filename, directory, or URL to files containing the resource to describe" -r
 complete -c kubectl -n "__fish_seen_subcommand_from describe" -s "k" -l "kustomize" -d "Process the kustomization directory." -r
 complete -c kubectl -n "__fish_seen_subcommand_from describe" -s "R" -l "recursive" -d "Process the directory used in -f, --filename recursively." -r
-complete -c kubectl -n "__fish_seen_subcommand_from describe" -s "l" -l "selector" -d "Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2)" -x
+complete -c kubectl -n "__fish_seen_subcommand_from describe" -s "l" -l "selector" -d "Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2)." -x
 complete -c kubectl -n "__fish_seen_subcommand_from describe" -l "show-events" -d "If true, display events related to the described object." -x
 
 
@@ -271,7 +284,7 @@ complete -c kubectl -n "__fish_seen_subcommand_from logs" -l "max-log-requests" 
 complete -c kubectl -n "__fish_seen_subcommand_from logs" -l "pod-running-timeout" -d "The length of time (like 5s, 2m, or 3h, higher than zero) to wait until at least one pod is running" -x
 complete -c kubectl -n "__fish_seen_subcommand_from logs" -l "prefix" -d "Prefix each log line with the log source (pod name and container name)" -x
 complete -c kubectl -n "__fish_seen_subcommand_from logs" -s "p" -l "previous" -d "If true, print the logs for the previous instance of the container in a pod if it exists." -x
-complete -c kubectl -n "__fish_seen_subcommand_from logs" -s "l" -l "selector" -d "Selector (label query) to filter on." -x
+complete -c kubectl -n "__fish_seen_subcommand_from logs" -s "l" -l "selector" -d "Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2)." -x
 complete -c kubectl -n "__fish_seen_subcommand_from logs" -l "since" -d "Only return logs newer than a relative duration like 5s, 2m, or 3h." -x
 complete -c kubectl -n "__fish_seen_subcommand_from logs" -l "since-time" -d "Only return logs after a specific date (RFC3339)." -x
 complete -c kubectl -n "__fish_seen_subcommand_from logs" -l "tail" -d "Lines of recent log file to display." -r
@@ -288,6 +301,7 @@ complete -c kubectl -n "__fish_seen_subcommand_from attach" -s "t" -l "tty" -d "
 
 
 complete -c kubectl -n "__fish_seen_subcommand_from exec" -s "c" -l "container" -d "Container name." -x
+complete -c kubectl -n "__fish_seen_subcommand_from exec" -s "f" -l "filename" -d "to use to exec into the resource" -x
 complete -c kubectl -n "__fish_seen_subcommand_from exec" -l "pod-running-timeout" -d "The length of time (like 5s, 2m, or 3h, higher than zero) to wait until at least one pod is running" -x
 complete -c kubectl -n "__fish_seen_subcommand_from exec" -s "q" -l "quiet" -d "Only print output from the remote session" -x
 complete -c kubectl -n "__fish_seen_subcommand_from exec" -s "i" -l "stdin" -d "Pass stdin to the container" -x
@@ -295,7 +309,6 @@ complete -c kubectl -n "__fish_seen_subcommand_from exec" -s "t" -l "tty" -d "St
 
 
 
-complete -c kubectl -n "__fish_seen_subcommand_from port-forward" -l "address" -d "Addresses to listen on (comma separated)."
 complete -c kubectl -n "__fish_seen_subcommand_from port-forward" -l "address" -d "Addresses to listen on (comma separated)." -x
 complete -c kubectl -n "__fish_seen_subcommand_from port-forward" -l "pod-running-timeout" -d "The length of time (like 5s, 2m, or 3h, higher than zero) to wait until at least one pod is running" -x
 
@@ -327,11 +340,13 @@ complete -c kubectl -n "__fish_seen_subcommand_from debug" -l "arguments-only" -
 complete -c kubectl -n "__fish_seen_subcommand_from debug" -l "attach" -d "If true, wait for the container to start running, and then attach as if 'kubectl attach ...' were called." -x
 complete -c kubectl -n "__fish_seen_subcommand_from debug" -s "c" -l "container" -d "Container name to use for debug container." -x
 complete -c kubectl -n "__fish_seen_subcommand_from debug" -l "copy-to" -d "Create a copy of the target Pod with this name." -x
+complete -c kubectl -n "__fish_seen_subcommand_from debug" -l "env" -d "Environment variables to set in the container." -x
 complete -c kubectl -n "__fish_seen_subcommand_from debug" -l "image" -d "Container image to use for debug container." -x
 complete -c kubectl -n "__fish_seen_subcommand_from debug" -l "image-pull-policy" -d "The image pull policy for the container." -x
 complete -c kubectl -n "__fish_seen_subcommand_from debug" -s "q" -l "quiet" -d "If true, suppress informational messages." -x
 complete -c kubectl -n "__fish_seen_subcommand_from debug" -l "replace" -d "When used with '--copy-to', delete the original Pod." -x
 complete -c kubectl -n "__fish_seen_subcommand_from debug" -l "same-node" -d "When used with '--copy-to', schedule the copy of target Pod on the same node." -x
+complete -c kubectl -n "__fish_seen_subcommand_from debug" -l "set-image" -d "When used with '--copy-to', a list of name=image pairs for changing container images, similar to how 'kubectl set image' works." -x
 complete -c kubectl -n "__fish_seen_subcommand_from debug" -l "share-processes" -d "When used with '--copy-to', enable process namespace sharing in the copy." -x
 complete -c kubectl -n "__fish_seen_subcommand_from debug" -s "i" -l "stdin" -d "Keep stdin open on the container(s) in the pod, even if nothing is attached." -x
 complete -c kubectl -n "__fish_seen_subcommand_from debug" -l "target" -d "When using an ephemeral container, target processes in this container name." -x
@@ -340,11 +355,15 @@ complete -c kubectl -n "__fish_seen_subcommand_from debug" -s "t" -l "tty" -d "A
 
 
 complete -c kubectl -n "__fish_seen_subcommand_from diff" -l "field-manager" -d "Name of the manager used to track field ownership." -x
+complete -c kubectl -n "__fish_seen_subcommand_from diff" -s "f" -l "filename" -d "Filename, directory, or URL to files contains the configuration to diff" -r
 complete -c kubectl -n "__fish_seen_subcommand_from diff" -l "force-conflicts" -d "If true, server-side apply will force the changes against conflicts." -x
 complete -c kubectl -n "__fish_seen_subcommand_from diff" -s "k" -l "kustomize" -d "Process the kustomization directory." -r
+complete -c kubectl -n "__fish_seen_subcommand_from diff" -l "prune" -d "Include resources that would be deleted by pruning." -x
+complete -c kubectl -n "__fish_seen_subcommand_from diff" -l "prune-allowlist" -d "Overwrite the default whitelist with <group/version/kind> for --prune" -x
 complete -c kubectl -n "__fish_seen_subcommand_from diff" -s "R" -l "recursive" -d "Process the directory used in -f, --filename recursively." -r
-complete -c kubectl -n "__fish_seen_subcommand_from diff" -s "l" -l "selector" -d "Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2)" -x
+complete -c kubectl -n "__fish_seen_subcommand_from diff" -s "l" -l "selector" -d "Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2)." -x
 complete -c kubectl -n "__fish_seen_subcommand_from diff" -l "server-side" -d "If true, apply runs in the server instead of the client." -x
+complete -c kubectl -n "__fish_seen_subcommand_from diff" -l "show-managed-fields" -d "If true, include managed fields in the diff." -x
 
 
 
@@ -353,6 +372,7 @@ complete -c kubectl -n "__fish_seen_subcommand_from apply" -l "allow-missing-tem
 complete -c kubectl -n "__fish_seen_subcommand_from apply" -l "cascade" -d "Must be \"background\", \"orphan\", or \"foreground\"." -x
 complete -c kubectl -n "__fish_seen_subcommand_from apply" -l "dry-run" -d "Must be \"none\", \"server\", or \"client\"." -x
 complete -c kubectl -n "__fish_seen_subcommand_from apply" -l "field-manager" -d "Name of the manager used to track field ownership." -x
+complete -c kubectl -n "__fish_seen_subcommand_from apply" -s "f" -l "filename" -d "The files that contain the configurations to apply." -r
 complete -c kubectl -n "__fish_seen_subcommand_from apply" -l "force" -d "If true, immediately remove resources from API and bypass graceful deletion." -x
 complete -c kubectl -n "__fish_seen_subcommand_from apply" -l "force-conflicts" -d "If true, server-side apply will force the changes against conflicts." -x
 complete -c kubectl -n "__fish_seen_subcommand_from apply" -l "grace-period" -d "Period of time in seconds given to the resource to terminate gracefully." -x
@@ -361,13 +381,14 @@ complete -c kubectl -n "__fish_seen_subcommand_from apply" -l "openapi-patch" -d
 complete -c kubectl -n "__fish_seen_subcommand_from apply" -s "o" -l "output" -d "Output format." -r
 complete -c kubectl -n "__fish_seen_subcommand_from apply" -l "overwrite" -d "Automatically resolve conflicts between the modified and live configuration by using values from the modified configuration" -x
 complete -c kubectl -n "__fish_seen_subcommand_from apply" -l "prune" -d "Automatically delete resource objects, that do not appear in the configs and are created by either apply or create --save-config." -x
+complete -c kubectl -n "__fish_seen_subcommand_from apply" -l "prune-whitelist" -d "Overwrite the default whitelist with <group/version/kind> for --prune" -x
 complete -c kubectl -n "__fish_seen_subcommand_from apply" -s "R" -l "recursive" -d "Process the directory used in -f, --filename recursively." -r
-complete -c kubectl -n "__fish_seen_subcommand_from apply" -s "l" -l "selector" -d "Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2)" -x
+complete -c kubectl -n "__fish_seen_subcommand_from apply" -s "l" -l "selector" -d "Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2)." -x
 complete -c kubectl -n "__fish_seen_subcommand_from apply" -l "server-side" -d "If true, apply runs in the server instead of the client." -x
 complete -c kubectl -n "__fish_seen_subcommand_from apply" -l "show-managed-fields" -d "If true, keep the managedFields when printing objects in JSON or YAML format." -x
 complete -c kubectl -n "__fish_seen_subcommand_from apply" -l "template" -d "Template string or path to template file to use when -o=go-template, -o=go-template-file." -r
 complete -c kubectl -n "__fish_seen_subcommand_from apply" -l "timeout" -d "The length of time to wait before giving up on a delete, zero means determine a timeout from the size of the object" -x
-complete -c kubectl -n "__fish_seen_subcommand_from apply" -l "validate" -d "If true, use a schema to validate the input before sending it" -x
+complete -c kubectl -n "__fish_seen_subcommand_from apply" -l "validate" -d "Must be one of: strict (or true), warn, ignore (or false)." -x
 complete -c kubectl -n "__fish_seen_subcommand_from apply" -l "wait" -d "If true, wait for resources to be gone before returning." -x
 
 
@@ -375,6 +396,7 @@ complete -c kubectl -n "__fish_seen_subcommand_from apply" -l "wait" -d "If true
 complete -c kubectl -n "__fish_seen_subcommand_from patch" -l "allow-missing-template-keys" -d "If true, ignore any errors in templates when a field or map key is missing in the template." -r
 complete -c kubectl -n "__fish_seen_subcommand_from patch" -l "dry-run" -d "Must be \"none\", \"server\", or \"client\"." -x
 complete -c kubectl -n "__fish_seen_subcommand_from patch" -l "field-manager" -d "Name of the manager used to track field ownership." -x
+complete -c kubectl -n "__fish_seen_subcommand_from patch" -s "f" -l "filename" -d "Filename, directory, or URL to files identifying the resource to update" -r
 complete -c kubectl -n "__fish_seen_subcommand_from patch" -s "k" -l "kustomize" -d "Process the kustomization directory." -r
 complete -c kubectl -n "__fish_seen_subcommand_from patch" -l "local" -d "If true, patch will operate on the content of the file, not the server-side resource." -r
 complete -c kubectl -n "__fish_seen_subcommand_from patch" -s "o" -l "output" -d "Output format." -r
@@ -382,6 +404,7 @@ complete -c kubectl -n "__fish_seen_subcommand_from patch" -s "p" -l "patch" -d 
 complete -c kubectl -n "__fish_seen_subcommand_from patch" -l "patch-file" -d "A file containing a patch to be applied to the resource." -r
 complete -c kubectl -n "__fish_seen_subcommand_from patch" -s "R" -l "recursive" -d "Process the directory used in -f, --filename recursively." -r
 complete -c kubectl -n "__fish_seen_subcommand_from patch" -l "show-managed-fields" -d "If true, keep the managedFields when printing objects in JSON or YAML format." -x
+complete -c kubectl -n "__fish_seen_subcommand_from patch" -l "subresource" -d "If specified, patch will operate on the subresource of the requested object." -x
 complete -c kubectl -n "__fish_seen_subcommand_from patch" -l "template" -d "Template string or path to template file to use when -o=go-template, -o=go-template-file." -r
 complete -c kubectl -n "__fish_seen_subcommand_from patch" -l "type" -d "The type of patch being provided; one of [json merge strategic]" -x
 
@@ -391,6 +414,7 @@ complete -c kubectl -n "__fish_seen_subcommand_from replace" -l "allow-missing-t
 complete -c kubectl -n "__fish_seen_subcommand_from replace" -l "cascade" -d "Must be \"background\", \"orphan\", or \"foreground\"." -x
 complete -c kubectl -n "__fish_seen_subcommand_from replace" -l "dry-run" -d "Must be \"none\", \"server\", or \"client\"." -x
 complete -c kubectl -n "__fish_seen_subcommand_from replace" -l "field-manager" -d "Name of the manager used to track field ownership." -x
+complete -c kubectl -n "__fish_seen_subcommand_from replace" -s "f" -l "filename" -d "The files that contain the configurations to replace." -r
 complete -c kubectl -n "__fish_seen_subcommand_from replace" -l "force" -d "If true, immediately remove resources from API and bypass graceful deletion." -x
 complete -c kubectl -n "__fish_seen_subcommand_from replace" -l "grace-period" -d "Period of time in seconds given to the resource to terminate gracefully." -x
 complete -c kubectl -n "__fish_seen_subcommand_from replace" -s "k" -l "kustomize" -d "Process a kustomization directory." -r
@@ -399,9 +423,10 @@ complete -c kubectl -n "__fish_seen_subcommand_from replace" -l "raw" -d "Raw UR
 complete -c kubectl -n "__fish_seen_subcommand_from replace" -s "R" -l "recursive" -d "Process the directory used in -f, --filename recursively." -r
 complete -c kubectl -n "__fish_seen_subcommand_from replace" -l "save-config" -d "If true, the configuration of current object will be saved in its annotation." -x
 complete -c kubectl -n "__fish_seen_subcommand_from replace" -l "show-managed-fields" -d "If true, keep the managedFields when printing objects in JSON or YAML format." -x
+complete -c kubectl -n "__fish_seen_subcommand_from replace" -l "subresource" -d "If specified, replace will operate on the subresource of the requested object." -x
 complete -c kubectl -n "__fish_seen_subcommand_from replace" -l "template" -d "Template string or path to template file to use when -o=go-template, -o=go-template-file." -r
 complete -c kubectl -n "__fish_seen_subcommand_from replace" -l "timeout" -d "The length of time to wait before giving up on a delete, zero means determine a timeout from the size of the object" -x
-complete -c kubectl -n "__fish_seen_subcommand_from replace" -l "validate" -d "If true, use a schema to validate the input before sending it" -x
+complete -c kubectl -n "__fish_seen_subcommand_from replace" -l "validate" -d "Must be one of: strict (or true), warn, ignore (or false)." -x
 complete -c kubectl -n "__fish_seen_subcommand_from replace" -l "wait" -d "If true, wait for resources to be gone before returning." -x
 
 
@@ -410,7 +435,8 @@ complete -c kubectl -n "__fish_seen_subcommand_from wait" -l "all" -d "Select al
 complete -c kubectl -n "__fish_seen_subcommand_from wait" -s "A" -l "all-namespaces" -d "If present, list the requested object(s) across all namespaces." -x
 complete -c kubectl -n "__fish_seen_subcommand_from wait" -l "allow-missing-template-keys" -d "If true, ignore any errors in templates when a field or map key is missing in the template." -r
 complete -c kubectl -n "__fish_seen_subcommand_from wait" -l "field-selector" -d "Selector (field query) to filter on, supports '=', '==', and '!='.(e.g. --field-selector key1=value1,key2=value2)." -x
-complete -c kubectl -n "__fish_seen_subcommand_from wait" -l "for" -d "The condition to wait on: [delete|condition=condition-name|jsonpath='{JSONPath expression}'=JSONPath Condition]." -r
+complete -c kubectl -n "__fish_seen_subcommand_from wait" -s "f" -l "filename" -d "identifying the resource." -x
+complete -c kubectl -n "__fish_seen_subcommand_from wait" -l "for" -d "The condition to wait on: [delete|condition=condition-name[=condition-value]|jsonpath='{JSONPath expression}'=JSONPath Condition]." -r
 complete -c kubectl -n "__fish_seen_subcommand_from wait" -l "local" -d "If true, annotation will NOT contact api-server but run locally." -x
 complete -c kubectl -n "__fish_seen_subcommand_from wait" -s "o" -l "output" -d "Output format." -r
 complete -c kubectl -n "__fish_seen_subcommand_from wait" -s "R" -l "recursive" -d "Process the directory used in -f, --filename recursively." -r
@@ -424,9 +450,10 @@ complete -c kubectl -n "__fish_seen_subcommand_from wait" -l "timeout" -d "The l
 complete -c kubectl -n "__fish_seen_subcommand_from kustomize" -l "as-current-user" -d "use the uid and gid of the command executor to run the function in the container" -x
 complete -c kubectl -n "__fish_seen_subcommand_from kustomize" -l "enable-alpha-plugins" -d "enable kustomize plugins" -x
 complete -c kubectl -n "__fish_seen_subcommand_from kustomize" -l "enable-helm" -d "Enable use of the Helm chart inflator generator." -x
-complete -c kubectl -n "__fish_seen_subcommand_from kustomize" -l "enable-managedby-label" -d "enable adding app.kubernetes.io/managed-by" -x
+complete -c kubectl -n "__fish_seen_subcommand_from kustomize" -s "e" -l "env" -d "a list of environment variables to be used by functions" -x
 complete -c kubectl -n "__fish_seen_subcommand_from kustomize" -l "helm-command" -d "helm command (path to executable)" -r
 complete -c kubectl -n "__fish_seen_subcommand_from kustomize" -l "load-restrictor" -d "if set to 'LoadRestrictionsNone', local kustomizations may load files from outside their root." -r
+complete -c kubectl -n "__fish_seen_subcommand_from kustomize" -l "mount" -d "a list of storage options read from the filesystem" -r
 complete -c kubectl -n "__fish_seen_subcommand_from kustomize" -l "network" -d "enable network access for functions that declare it" -x
 complete -c kubectl -n "__fish_seen_subcommand_from kustomize" -l "network-name" -d "the docker network to run the container in" -x
 complete -c kubectl -n "__fish_seen_subcommand_from kustomize" -s "o" -l "output" -d "If specified, write output to this path." -r
@@ -440,6 +467,7 @@ complete -c kubectl -n "__fish_seen_subcommand_from label" -l "allow-missing-tem
 complete -c kubectl -n "__fish_seen_subcommand_from label" -l "dry-run" -d "Must be \"none\", \"server\", or \"client\"." -x
 complete -c kubectl -n "__fish_seen_subcommand_from label" -l "field-manager" -d "Name of the manager used to track field ownership." -x
 complete -c kubectl -n "__fish_seen_subcommand_from label" -l "field-selector" -d "Selector (field query) to filter on, supports '=', '==', and '!='.(e.g. --field-selector key1=value1,key2=value2)." -x
+complete -c kubectl -n "__fish_seen_subcommand_from label" -s "f" -l "filename" -d "Filename, directory, or URL to files identifying the resource to update the labels" -r
 complete -c kubectl -n "__fish_seen_subcommand_from label" -s "k" -l "kustomize" -d "Process the kustomization directory." -r
 complete -c kubectl -n "__fish_seen_subcommand_from label" -l "list" -d "If true, display the labels for a given resource." -x
 complete -c kubectl -n "__fish_seen_subcommand_from label" -l "local" -d "If true, label will NOT contact api-server but run locally." -x
@@ -459,6 +487,7 @@ complete -c kubectl -n "__fish_seen_subcommand_from annotate" -l "allow-missing-
 complete -c kubectl -n "__fish_seen_subcommand_from annotate" -l "dry-run" -d "Must be \"none\", \"server\", or \"client\"." -x
 complete -c kubectl -n "__fish_seen_subcommand_from annotate" -l "field-manager" -d "Name of the manager used to track field ownership." -x
 complete -c kubectl -n "__fish_seen_subcommand_from annotate" -l "field-selector" -d "Selector (field query) to filter on, supports '=', '==', and '!='.(e.g. --field-selector key1=value1,key2=value2)." -x
+complete -c kubectl -n "__fish_seen_subcommand_from annotate" -s "f" -l "filename" -d "Filename, directory, or URL to files identifying the resource to update the annotation" -r
 complete -c kubectl -n "__fish_seen_subcommand_from annotate" -s "k" -l "kustomize" -d "Process the kustomization directory." -r
 complete -c kubectl -n "__fish_seen_subcommand_from annotate" -l "list" -d "If true, display the annotations for a given resource." -x
 complete -c kubectl -n "__fish_seen_subcommand_from annotate" -l "local" -d "If true, annotation will NOT contact api-server but run locally." -x
@@ -478,9 +507,9 @@ complete -c kubectl -n "__fish_seen_subcommand_from api-resources" -l "namespace
 complete -c kubectl -n "__fish_seen_subcommand_from api-resources" -l "no-headers" -d "When using the default or custom-column output format, don't print headers (default print headers)." -x
 complete -c kubectl -n "__fish_seen_subcommand_from api-resources" -s "o" -l "output" -d "Output format." -x
 complete -c kubectl -n "__fish_seen_subcommand_from api-resources" -l "sort-by" -d "If non-empty, sort list of resources using specified field." -x
+complete -c kubectl -n "__fish_seen_subcommand_from api-resources" -l "verbs" -d "Limit to resources that support the specified verbs." -x
 
 
 
 complete -c kubectl -n "__fish_seen_subcommand_from version" -l "client" -d "If true, shows client version only (no server required)." -x
 complete -c kubectl -n "__fish_seen_subcommand_from version" -s "o" -l "output" -d "One of 'yaml' or 'json'." -x
-complete -c kubectl -n "__fish_seen_subcommand_from version" -l "short" -d "If true, print just the version number." -x

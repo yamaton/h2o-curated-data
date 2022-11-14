@@ -1,18 +1,21 @@
 # Auto-generated with h2o
 
-complete -c helm -n "not __fish_seen_subcommand_from completion create dependency env get history install lint list package plugin pull push registry repo rollback search show status template test uninstall upgrade verify version" -l "debug" -d "enable verbose output"
-complete -c helm -n "not __fish_seen_subcommand_from completion create dependency env get history install lint list package plugin pull push registry repo rollback search show status template test uninstall upgrade verify version" -s "h" -l "help" -d "help for helm"
-complete -c helm -n "not __fish_seen_subcommand_from completion create dependency env get history install lint list package plugin pull push registry repo rollback search show status template test uninstall upgrade verify version" -l "kube-apiserver" -d "the address and the port for the Kubernetes API server" -x
-complete -c helm -n "not __fish_seen_subcommand_from completion create dependency env get history install lint list package plugin pull push registry repo rollback search show status template test uninstall upgrade verify version" -l "kube-as-group" -d "group to impersonate for the operation, this flag can be repeated to specify multiple groups." -x
-complete -c helm -n "not __fish_seen_subcommand_from completion create dependency env get history install lint list package plugin pull push registry repo rollback search show status template test uninstall upgrade verify version" -l "kube-as-user" -d "username to impersonate for the operation" -x
-complete -c helm -n "not __fish_seen_subcommand_from completion create dependency env get history install lint list package plugin pull push registry repo rollback search show status template test uninstall upgrade verify version" -l "kube-ca-file" -d "the certificate authority file for the Kubernetes API server connection" -r
-complete -c helm -n "not __fish_seen_subcommand_from completion create dependency env get history install lint list package plugin pull push registry repo rollback search show status template test uninstall upgrade verify version" -l "kube-context" -d "name of the kubeconfig context to use" -x
-complete -c helm -n "not __fish_seen_subcommand_from completion create dependency env get history install lint list package plugin pull push registry repo rollback search show status template test uninstall upgrade verify version" -l "kube-token" -d "bearer token used for authentication" -x
-complete -c helm -n "not __fish_seen_subcommand_from completion create dependency env get history install lint list package plugin pull push registry repo rollback search show status template test uninstall upgrade verify version" -l "kubeconfig" -d "path to the kubeconfig file" -r
-complete -c helm -n "not __fish_seen_subcommand_from completion create dependency env get history install lint list package plugin pull push registry repo rollback search show status template test uninstall upgrade verify version" -s "n" -l "namespace" -d "namespace scope for this request" -x
-complete -c helm -n "not __fish_seen_subcommand_from completion create dependency env get history install lint list package plugin pull push registry repo rollback search show status template test uninstall upgrade verify version" -l "registry-config" -d "path to the registry config file (default \"~/.config/helm/registry/config.json\")" -r
-complete -c helm -n "not __fish_seen_subcommand_from completion create dependency env get history install lint list package plugin pull push registry repo rollback search show status template test uninstall upgrade verify version" -l "repository-cache" -d "path to the file containing cached repository indexes (default \"~/.cache/helm/repository\")" -r
-complete -c helm -n "not __fish_seen_subcommand_from completion create dependency env get history install lint list package plugin pull push registry repo rollback search show status template test uninstall upgrade verify version" -l "repository-config" -d "path to the file containing repository names and URLs (default \"~/.config/helm/repositories.yaml\")" -r
+complete -c helm -n "not __fish_seen_subcommand_from completion create dependency env get help history install lint list package plugin pull push registry repo rollback search show status template test uninstall upgrade verify version" -l "burst-limit" -d "client-side default throttling limit (default 100)" -x
+complete -c helm -n "not __fish_seen_subcommand_from completion create dependency env get help history install lint list package plugin pull push registry repo rollback search show status template test uninstall upgrade verify version" -l "debug" -d "enable verbose output"
+complete -c helm -n "not __fish_seen_subcommand_from completion create dependency env get help history install lint list package plugin pull push registry repo rollback search show status template test uninstall upgrade verify version" -s "h" -l "help" -d "help for helm"
+complete -c helm -n "not __fish_seen_subcommand_from completion create dependency env get help history install lint list package plugin pull push registry repo rollback search show status template test uninstall upgrade verify version" -l "kube-apiserver" -d "the address and the port for the Kubernetes API server" -x
+complete -c helm -n "not __fish_seen_subcommand_from completion create dependency env get help history install lint list package plugin pull push registry repo rollback search show status template test uninstall upgrade verify version" -l "kube-as-group" -d "group to impersonate for the operation, this flag can be repeated to specify multiple groups." -x
+complete -c helm -n "not __fish_seen_subcommand_from completion create dependency env get help history install lint list package plugin pull push registry repo rollback search show status template test uninstall upgrade verify version" -l "kube-as-user" -d "username to impersonate for the operation" -x
+complete -c helm -n "not __fish_seen_subcommand_from completion create dependency env get help history install lint list package plugin pull push registry repo rollback search show status template test uninstall upgrade verify version" -l "kube-ca-file" -d "the certificate authority file for the Kubernetes API server connection" -r
+complete -c helm -n "not __fish_seen_subcommand_from completion create dependency env get help history install lint list package plugin pull push registry repo rollback search show status template test uninstall upgrade verify version" -l "kube-context" -d "name of the kubeconfig context to use" -x
+complete -c helm -n "not __fish_seen_subcommand_from completion create dependency env get help history install lint list package plugin pull push registry repo rollback search show status template test uninstall upgrade verify version" -l "kube-insecure-skip-tls-verify" -d "if true, the Kubernetes API server's certificate will not be checked for validity."
+complete -c helm -n "not __fish_seen_subcommand_from completion create dependency env get help history install lint list package plugin pull push registry repo rollback search show status template test uninstall upgrade verify version" -l "kube-tls-server-name" -d "server name to use for Kubernetes API server certificate validation." -x
+complete -c helm -n "not __fish_seen_subcommand_from completion create dependency env get help history install lint list package plugin pull push registry repo rollback search show status template test uninstall upgrade verify version" -l "kube-token" -d "bearer token used for authentication" -x
+complete -c helm -n "not __fish_seen_subcommand_from completion create dependency env get help history install lint list package plugin pull push registry repo rollback search show status template test uninstall upgrade verify version" -l "kubeconfig" -d "path to the kubeconfig file" -r
+complete -c helm -n "not __fish_seen_subcommand_from completion create dependency env get help history install lint list package plugin pull push registry repo rollback search show status template test uninstall upgrade verify version" -s "n" -l "namespace" -d "namespace scope for this request" -x
+complete -c helm -n "not __fish_seen_subcommand_from completion create dependency env get help history install lint list package plugin pull push registry repo rollback search show status template test uninstall upgrade verify version" -l "registry-config" -d "path to the registry config file (default \"~/.config/helm/registry/config.json\")" -r
+complete -c helm -n "not __fish_seen_subcommand_from completion create dependency env get help history install lint list package plugin pull push registry repo rollback search show status template test uninstall upgrade verify version" -l "repository-cache" -d "path to the file containing cached repository indexes (default \"~/.cache/helm/repository\")" -r
+complete -c helm -n "not __fish_seen_subcommand_from completion create dependency env get help history install lint list package plugin pull push registry repo rollback search show status template test uninstall upgrade verify version" -l "repository-config" -d "path to the file containing repository names and URLs (default \"~/.config/helm/repositories.yaml\")" -r
 
 
 
@@ -36,6 +39,7 @@ complete -k -c helm -n __fish_use_subcommand -x -a list -d "list releases"
 complete -k -c helm -n __fish_use_subcommand -x -a lint -d "examine a chart for possible issues"
 complete -k -c helm -n __fish_use_subcommand -x -a install -d "install a chart"
 complete -k -c helm -n __fish_use_subcommand -x -a history -d "fetch release history"
+complete -k -c helm -n __fish_use_subcommand -x -a help -d "Help about any command"
 complete -k -c helm -n __fish_use_subcommand -x -a get -d "download extended information of a named release"
 complete -k -c helm -n __fish_use_subcommand -x -a env -d "helm client environment information"
 complete -k -c helm -n __fish_use_subcommand -x -a dependency -d "manage a chart's dependencies"
@@ -45,12 +49,15 @@ complete -k -c helm -n __fish_use_subcommand -x -a completion -d "generate autoc
 
 
 complete -c helm -n "__fish_seen_subcommand_from completion" -s "h" -l "help" -d "help for completion"
+complete -c helm -n "__fish_seen_subcommand_from completion" -l "burst-limit" -d "client-side default throttling limit (default 100)" -x
 complete -c helm -n "__fish_seen_subcommand_from completion" -l "debug" -d "enable verbose output"
 complete -c helm -n "__fish_seen_subcommand_from completion" -l "kube-apiserver" -d "the address and the port for the Kubernetes API server" -x
 complete -c helm -n "__fish_seen_subcommand_from completion" -l "kube-as-group" -d "group to impersonate for the operation, this flag can be repeated to specify multiple groups." -x
 complete -c helm -n "__fish_seen_subcommand_from completion" -l "kube-as-user" -d "username to impersonate for the operation" -x
 complete -c helm -n "__fish_seen_subcommand_from completion" -l "kube-ca-file" -d "the certificate authority file for the Kubernetes API server connection" -r
 complete -c helm -n "__fish_seen_subcommand_from completion" -l "kube-context" -d "name of the kubeconfig context to use" -x
+complete -c helm -n "__fish_seen_subcommand_from completion" -l "kube-insecure-skip-tls-verify" -d "if true, the Kubernetes API server's certificate will not be checked for validity."
+complete -c helm -n "__fish_seen_subcommand_from completion" -l "kube-tls-server-name" -d "server name to use for Kubernetes API server certificate validation." -x
 complete -c helm -n "__fish_seen_subcommand_from completion" -l "kube-token" -d "bearer token used for authentication" -x
 complete -c helm -n "__fish_seen_subcommand_from completion" -l "kubeconfig" -d "path to the kubeconfig file" -r
 complete -c helm -n "__fish_seen_subcommand_from completion" -s "n" -l "namespace" -d "namespace scope for this request" -x
@@ -62,12 +69,15 @@ complete -c helm -n "__fish_seen_subcommand_from completion" -l "repository-conf
 
 complete -c helm -n "__fish_seen_subcommand_from create" -s "h" -l "help" -d "help for create"
 complete -c helm -n "__fish_seen_subcommand_from create" -s "p" -l "starter" -d "the name or absolute path to Helm starter scaffold" -r
+complete -c helm -n "__fish_seen_subcommand_from create" -l "burst-limit" -d "client-side default throttling limit (default 100)" -x
 complete -c helm -n "__fish_seen_subcommand_from create" -l "debug" -d "enable verbose output"
 complete -c helm -n "__fish_seen_subcommand_from create" -l "kube-apiserver" -d "the address and the port for the Kubernetes API server" -x
 complete -c helm -n "__fish_seen_subcommand_from create" -l "kube-as-group" -d "group to impersonate for the operation, this flag can be repeated to specify multiple groups." -x
 complete -c helm -n "__fish_seen_subcommand_from create" -l "kube-as-user" -d "username to impersonate for the operation" -x
 complete -c helm -n "__fish_seen_subcommand_from create" -l "kube-ca-file" -d "the certificate authority file for the Kubernetes API server connection" -r
 complete -c helm -n "__fish_seen_subcommand_from create" -l "kube-context" -d "name of the kubeconfig context to use" -x
+complete -c helm -n "__fish_seen_subcommand_from create" -l "kube-insecure-skip-tls-verify" -d "if true, the Kubernetes API server's certificate will not be checked for validity."
+complete -c helm -n "__fish_seen_subcommand_from create" -l "kube-tls-server-name" -d "server name to use for Kubernetes API server certificate validation." -x
 complete -c helm -n "__fish_seen_subcommand_from create" -l "kube-token" -d "bearer token used for authentication" -x
 complete -c helm -n "__fish_seen_subcommand_from create" -l "kubeconfig" -d "path to the kubeconfig file" -r
 complete -c helm -n "__fish_seen_subcommand_from create" -s "n" -l "namespace" -d "namespace scope for this request" -x
@@ -79,12 +89,15 @@ complete -c helm -n "__fish_seen_subcommand_from create" -l "repository-config" 
 
 complete -c helm -n "__fish_seen_subcommand_from dependency"  -d "name: nginx version: \"1.2.3\" repository: \"file://../dependency_chart/nginx\""
 complete -c helm -n "__fish_seen_subcommand_from dependency" -s "h" -l "help" -d "help for dependency"
+complete -c helm -n "__fish_seen_subcommand_from dependency" -l "burst-limit" -d "client-side default throttling limit (default 100)" -x
 complete -c helm -n "__fish_seen_subcommand_from dependency" -l "debug" -d "enable verbose output"
 complete -c helm -n "__fish_seen_subcommand_from dependency" -l "kube-apiserver" -d "the address and the port for the Kubernetes API server" -x
 complete -c helm -n "__fish_seen_subcommand_from dependency" -l "kube-as-group" -d "group to impersonate for the operation, this flag can be repeated to specify multiple groups." -x
 complete -c helm -n "__fish_seen_subcommand_from dependency" -l "kube-as-user" -d "username to impersonate for the operation" -x
 complete -c helm -n "__fish_seen_subcommand_from dependency" -l "kube-ca-file" -d "the certificate authority file for the Kubernetes API server connection" -r
 complete -c helm -n "__fish_seen_subcommand_from dependency" -l "kube-context" -d "name of the kubeconfig context to use" -x
+complete -c helm -n "__fish_seen_subcommand_from dependency" -l "kube-insecure-skip-tls-verify" -d "if true, the Kubernetes API server's certificate will not be checked for validity."
+complete -c helm -n "__fish_seen_subcommand_from dependency" -l "kube-tls-server-name" -d "server name to use for Kubernetes API server certificate validation." -x
 complete -c helm -n "__fish_seen_subcommand_from dependency" -l "kube-token" -d "bearer token used for authentication" -x
 complete -c helm -n "__fish_seen_subcommand_from dependency" -l "kubeconfig" -d "path to the kubeconfig file" -r
 complete -c helm -n "__fish_seen_subcommand_from dependency" -s "n" -l "namespace" -d "namespace scope for this request" -x
@@ -95,12 +108,15 @@ complete -c helm -n "__fish_seen_subcommand_from dependency" -l "repository-conf
 
 
 complete -c helm -n "__fish_seen_subcommand_from env" -s "h" -l "help" -d "help for env"
+complete -c helm -n "__fish_seen_subcommand_from env" -l "burst-limit" -d "client-side default throttling limit (default 100)" -x
 complete -c helm -n "__fish_seen_subcommand_from env" -l "debug" -d "enable verbose output"
 complete -c helm -n "__fish_seen_subcommand_from env" -l "kube-apiserver" -d "the address and the port for the Kubernetes API server" -x
 complete -c helm -n "__fish_seen_subcommand_from env" -l "kube-as-group" -d "group to impersonate for the operation, this flag can be repeated to specify multiple groups." -x
 complete -c helm -n "__fish_seen_subcommand_from env" -l "kube-as-user" -d "username to impersonate for the operation" -x
 complete -c helm -n "__fish_seen_subcommand_from env" -l "kube-ca-file" -d "the certificate authority file for the Kubernetes API server connection" -r
 complete -c helm -n "__fish_seen_subcommand_from env" -l "kube-context" -d "name of the kubeconfig context to use" -x
+complete -c helm -n "__fish_seen_subcommand_from env" -l "kube-insecure-skip-tls-verify" -d "if true, the Kubernetes API server's certificate will not be checked for validity."
+complete -c helm -n "__fish_seen_subcommand_from env" -l "kube-tls-server-name" -d "server name to use for Kubernetes API server certificate validation." -x
 complete -c helm -n "__fish_seen_subcommand_from env" -l "kube-token" -d "bearer token used for authentication" -x
 complete -c helm -n "__fish_seen_subcommand_from env" -l "kubeconfig" -d "path to the kubeconfig file" -r
 complete -c helm -n "__fish_seen_subcommand_from env" -s "n" -l "namespace" -d "namespace scope for this request" -x
@@ -111,12 +127,15 @@ complete -c helm -n "__fish_seen_subcommand_from env" -l "repository-config" -d 
 
 
 complete -c helm -n "__fish_seen_subcommand_from get" -s "h" -l "help" -d "help for get"
+complete -c helm -n "__fish_seen_subcommand_from get" -l "burst-limit" -d "client-side default throttling limit (default 100)" -x
 complete -c helm -n "__fish_seen_subcommand_from get" -l "debug" -d "enable verbose output"
 complete -c helm -n "__fish_seen_subcommand_from get" -l "kube-apiserver" -d "the address and the port for the Kubernetes API server" -x
 complete -c helm -n "__fish_seen_subcommand_from get" -l "kube-as-group" -d "group to impersonate for the operation, this flag can be repeated to specify multiple groups." -x
 complete -c helm -n "__fish_seen_subcommand_from get" -l "kube-as-user" -d "username to impersonate for the operation" -x
 complete -c helm -n "__fish_seen_subcommand_from get" -l "kube-ca-file" -d "the certificate authority file for the Kubernetes API server connection" -r
 complete -c helm -n "__fish_seen_subcommand_from get" -l "kube-context" -d "name of the kubeconfig context to use" -x
+complete -c helm -n "__fish_seen_subcommand_from get" -l "kube-insecure-skip-tls-verify" -d "if true, the Kubernetes API server's certificate will not be checked for validity."
+complete -c helm -n "__fish_seen_subcommand_from get" -l "kube-tls-server-name" -d "server name to use for Kubernetes API server certificate validation." -x
 complete -c helm -n "__fish_seen_subcommand_from get" -l "kube-token" -d "bearer token used for authentication" -x
 complete -c helm -n "__fish_seen_subcommand_from get" -l "kubeconfig" -d "path to the kubeconfig file" -r
 complete -c helm -n "__fish_seen_subcommand_from get" -s "n" -l "namespace" -d "namespace scope for this request" -x
@@ -126,15 +145,37 @@ complete -c helm -n "__fish_seen_subcommand_from get" -l "repository-config" -d 
 
 
 
+complete -c helm -n "__fish_seen_subcommand_from help" -s "h" -l "help" -d "help for help"
+complete -c helm -n "__fish_seen_subcommand_from help" -l "burst-limit" -d "client-side default throttling limit (default 100)" -x
+complete -c helm -n "__fish_seen_subcommand_from help" -l "debug" -d "enable verbose output"
+complete -c helm -n "__fish_seen_subcommand_from help" -l "kube-apiserver" -d "the address and the port for the Kubernetes API server" -x
+complete -c helm -n "__fish_seen_subcommand_from help" -l "kube-as-group" -d "group to impersonate for the operation, this flag can be repeated to specify multiple groups." -x
+complete -c helm -n "__fish_seen_subcommand_from help" -l "kube-as-user" -d "username to impersonate for the operation" -x
+complete -c helm -n "__fish_seen_subcommand_from help" -l "kube-ca-file" -d "the certificate authority file for the Kubernetes API server connection" -r
+complete -c helm -n "__fish_seen_subcommand_from help" -l "kube-context" -d "name of the kubeconfig context to use" -x
+complete -c helm -n "__fish_seen_subcommand_from help" -l "kube-insecure-skip-tls-verify" -d "if true, the Kubernetes API server's certificate will not be checked for validity."
+complete -c helm -n "__fish_seen_subcommand_from help" -l "kube-tls-server-name" -d "server name to use for Kubernetes API server certificate validation." -x
+complete -c helm -n "__fish_seen_subcommand_from help" -l "kube-token" -d "bearer token used for authentication" -x
+complete -c helm -n "__fish_seen_subcommand_from help" -l "kubeconfig" -d "path to the kubeconfig file" -r
+complete -c helm -n "__fish_seen_subcommand_from help" -s "n" -l "namespace" -d "namespace scope for this request" -x
+complete -c helm -n "__fish_seen_subcommand_from help" -l "registry-config" -d "path to the registry config file (default \"~/.config/helm/registry/config.json\")" -r
+complete -c helm -n "__fish_seen_subcommand_from help" -l "repository-cache" -d "path to the file containing cached repository indexes (default \"~/.cache/helm/repository\")" -r
+complete -c helm -n "__fish_seen_subcommand_from help" -l "repository-config" -d "path to the file containing repository names and URLs (default \"~/.config/helm/repositories.yaml\")" -r
+
+
+
 complete -c helm -n "__fish_seen_subcommand_from history" -s "h" -l "help" -d "help for history"
 complete -c helm -n "__fish_seen_subcommand_from history" -l "max" -d "maximum number of revision to include in history (default 256)" -x
 complete -c helm -n "__fish_seen_subcommand_from history" -s "o" -l "output" -d "prints the output in the specified format." -x
+complete -c helm -n "__fish_seen_subcommand_from history" -l "burst-limit" -d "client-side default throttling limit (default 100)" -x
 complete -c helm -n "__fish_seen_subcommand_from history" -l "debug" -d "enable verbose output"
 complete -c helm -n "__fish_seen_subcommand_from history" -l "kube-apiserver" -d "the address and the port for the Kubernetes API server" -x
 complete -c helm -n "__fish_seen_subcommand_from history" -l "kube-as-group" -d "group to impersonate for the operation, this flag can be repeated to specify multiple groups." -x
 complete -c helm -n "__fish_seen_subcommand_from history" -l "kube-as-user" -d "username to impersonate for the operation" -x
 complete -c helm -n "__fish_seen_subcommand_from history" -l "kube-ca-file" -d "the certificate authority file for the Kubernetes API server connection" -r
 complete -c helm -n "__fish_seen_subcommand_from history" -l "kube-context" -d "name of the kubeconfig context to use" -x
+complete -c helm -n "__fish_seen_subcommand_from history" -l "kube-insecure-skip-tls-verify" -d "if true, the Kubernetes API server's certificate will not be checked for validity."
+complete -c helm -n "__fish_seen_subcommand_from history" -l "kube-tls-server-name" -d "server name to use for Kubernetes API server certificate validation." -x
 complete -c helm -n "__fish_seen_subcommand_from history" -l "kube-token" -d "bearer token used for authentication" -x
 complete -c helm -n "__fish_seen_subcommand_from history" -l "kubeconfig" -d "path to the kubeconfig file" -r
 complete -c helm -n "__fish_seen_subcommand_from history" -s "n" -l "namespace" -d "namespace scope for this request" -x
@@ -170,6 +211,7 @@ complete -c helm -n "__fish_seen_subcommand_from install" -l "replace" -d "re-us
 complete -c helm -n "__fish_seen_subcommand_from install" -l "repo" -d "chart repository url where to locate the requested chart" -x
 complete -c helm -n "__fish_seen_subcommand_from install" -l "set" -d "set values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2)" -x
 complete -c helm -n "__fish_seen_subcommand_from install" -l "set-file" -d "set values from respective files specified via the command line (can specify multiple or separate values with commas: key1=path1,key2=path2)" -r
+complete -c helm -n "__fish_seen_subcommand_from install" -l "set-json" -d "set JSON values on the command line (can specify multiple or separate values with commas: key1=jsonval1,key2=jsonval2)" -x
 complete -c helm -n "__fish_seen_subcommand_from install" -l "set-string" -d "set STRING values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2)" -x
 complete -c helm -n "__fish_seen_subcommand_from install" -l "skip-crds" -d "if set, no CRDs will be installed."
 complete -c helm -n "__fish_seen_subcommand_from install" -l "timeout" -d "time to wait for any individual Kubernetes operation (like Jobs for hooks) (default 5m0s)" -x
@@ -179,12 +221,15 @@ complete -c helm -n "__fish_seen_subcommand_from install" -l "verify" -d "verify
 complete -c helm -n "__fish_seen_subcommand_from install" -l "version" -d "specify a version constraint for the chart version to use." -x
 complete -c helm -n "__fish_seen_subcommand_from install" -l "wait" -d "if set, will wait until all Pods, PVCs, Services, and minimum number of Pods of a Deployment, StatefulSet, or ReplicaSet are in a ready state before marking the release as successful."
 complete -c helm -n "__fish_seen_subcommand_from install" -l "wait-for-jobs" -d "if set and --wait enabled, will wait until all Jobs have been completed before marking the release as successful."
+complete -c helm -n "__fish_seen_subcommand_from install" -l "burst-limit" -d "client-side default throttling limit (default 100)" -x
 complete -c helm -n "__fish_seen_subcommand_from install" -l "debug" -d "enable verbose output"
 complete -c helm -n "__fish_seen_subcommand_from install" -l "kube-apiserver" -d "the address and the port for the Kubernetes API server" -x
 complete -c helm -n "__fish_seen_subcommand_from install" -l "kube-as-group" -d "group to impersonate for the operation, this flag can be repeated to specify multiple groups." -x
 complete -c helm -n "__fish_seen_subcommand_from install" -l "kube-as-user" -d "username to impersonate for the operation" -x
 complete -c helm -n "__fish_seen_subcommand_from install" -l "kube-ca-file" -d "the certificate authority file for the Kubernetes API server connection" -r
 complete -c helm -n "__fish_seen_subcommand_from install" -l "kube-context" -d "name of the kubeconfig context to use" -x
+complete -c helm -n "__fish_seen_subcommand_from install" -l "kube-insecure-skip-tls-verify" -d "if true, the Kubernetes API server's certificate will not be checked for validity."
+complete -c helm -n "__fish_seen_subcommand_from install" -l "kube-tls-server-name" -d "server name to use for Kubernetes API server certificate validation." -x
 complete -c helm -n "__fish_seen_subcommand_from install" -l "kube-token" -d "bearer token used for authentication" -x
 complete -c helm -n "__fish_seen_subcommand_from install" -l "kubeconfig" -d "path to the kubeconfig file" -r
 complete -c helm -n "__fish_seen_subcommand_from install" -s "n" -l "namespace" -d "namespace scope for this request" -x
@@ -198,16 +243,20 @@ complete -c helm -n "__fish_seen_subcommand_from lint" -s "h" -l "help" -d "help
 complete -c helm -n "__fish_seen_subcommand_from lint" -l "quiet" -d "print only warnings and errors"
 complete -c helm -n "__fish_seen_subcommand_from lint" -l "set" -d "set values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2)" -x
 complete -c helm -n "__fish_seen_subcommand_from lint" -l "set-file" -d "set values from respective files specified via the command line (can specify multiple or separate values with commas: key1=path1,key2=path2)" -r
+complete -c helm -n "__fish_seen_subcommand_from lint" -l "set-json" -d "set JSON values on the command line (can specify multiple or separate values with commas: key1=jsonval1,key2=jsonval2)" -x
 complete -c helm -n "__fish_seen_subcommand_from lint" -l "set-string" -d "set STRING values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2)" -x
 complete -c helm -n "__fish_seen_subcommand_from lint" -l "strict" -d "fail on lint warnings"
 complete -c helm -n "__fish_seen_subcommand_from lint" -s "f" -l "values" -d "specify values in a YAML file or a URL (can specify multiple)" -r
 complete -c helm -n "__fish_seen_subcommand_from lint" -l "with-subcharts" -d "lint dependent charts"
+complete -c helm -n "__fish_seen_subcommand_from lint" -l "burst-limit" -d "client-side default throttling limit (default 100)" -x
 complete -c helm -n "__fish_seen_subcommand_from lint" -l "debug" -d "enable verbose output"
 complete -c helm -n "__fish_seen_subcommand_from lint" -l "kube-apiserver" -d "the address and the port for the Kubernetes API server" -x
 complete -c helm -n "__fish_seen_subcommand_from lint" -l "kube-as-group" -d "group to impersonate for the operation, this flag can be repeated to specify multiple groups." -x
 complete -c helm -n "__fish_seen_subcommand_from lint" -l "kube-as-user" -d "username to impersonate for the operation" -x
 complete -c helm -n "__fish_seen_subcommand_from lint" -l "kube-ca-file" -d "the certificate authority file for the Kubernetes API server connection" -r
 complete -c helm -n "__fish_seen_subcommand_from lint" -l "kube-context" -d "name of the kubeconfig context to use" -x
+complete -c helm -n "__fish_seen_subcommand_from lint" -l "kube-insecure-skip-tls-verify" -d "if true, the Kubernetes API server's certificate will not be checked for validity."
+complete -c helm -n "__fish_seen_subcommand_from lint" -l "kube-tls-server-name" -d "server name to use for Kubernetes API server certificate validation." -x
 complete -c helm -n "__fish_seen_subcommand_from lint" -l "kube-token" -d "bearer token used for authentication" -x
 complete -c helm -n "__fish_seen_subcommand_from lint" -l "kubeconfig" -d "path to the kubeconfig file" -r
 complete -c helm -n "__fish_seen_subcommand_from lint" -s "n" -l "namespace" -d "namespace scope for this request" -x
@@ -225,6 +274,7 @@ complete -c helm -n "__fish_seen_subcommand_from list" -l "failed" -d "show fail
 complete -c helm -n "__fish_seen_subcommand_from list" -s "f" -l "filter" -d "a regular expression (Perl compatible)." -x
 complete -c helm -n "__fish_seen_subcommand_from list" -s "h" -l "help" -d "help for list"
 complete -c helm -n "__fish_seen_subcommand_from list" -s "m" -l "max" -d "maximum number of releases to fetch (default 256)" -x
+complete -c helm -n "__fish_seen_subcommand_from list" -l "no-headers" -d "don't print headers when using the default output format"
 complete -c helm -n "__fish_seen_subcommand_from list" -l "offset" -d "next release index in the list, used to offset from start value" -x
 complete -c helm -n "__fish_seen_subcommand_from list" -s "o" -l "output" -d "prints the output in the specified format." -x
 complete -c helm -n "__fish_seen_subcommand_from list" -l "pending" -d "show pending releases"
@@ -235,12 +285,15 @@ complete -c helm -n "__fish_seen_subcommand_from list" -l "superseded" -d "show 
 complete -c helm -n "__fish_seen_subcommand_from list" -l "time-format" -d "format time using golang time formatter." -x
 complete -c helm -n "__fish_seen_subcommand_from list" -l "uninstalled" -d "show uninstalled releases (if 'helm uninstall --keep-history' was used)"
 complete -c helm -n "__fish_seen_subcommand_from list" -l "uninstalling" -d "show releases that are currently being uninstalled"
+complete -c helm -n "__fish_seen_subcommand_from list" -l "burst-limit" -d "client-side default throttling limit (default 100)" -x
 complete -c helm -n "__fish_seen_subcommand_from list" -l "debug" -d "enable verbose output"
 complete -c helm -n "__fish_seen_subcommand_from list" -l "kube-apiserver" -d "the address and the port for the Kubernetes API server" -x
 complete -c helm -n "__fish_seen_subcommand_from list" -l "kube-as-group" -d "group to impersonate for the operation, this flag can be repeated to specify multiple groups." -x
 complete -c helm -n "__fish_seen_subcommand_from list" -l "kube-as-user" -d "username to impersonate for the operation" -x
 complete -c helm -n "__fish_seen_subcommand_from list" -l "kube-ca-file" -d "the certificate authority file for the Kubernetes API server connection" -r
 complete -c helm -n "__fish_seen_subcommand_from list" -l "kube-context" -d "name of the kubeconfig context to use" -x
+complete -c helm -n "__fish_seen_subcommand_from list" -l "kube-insecure-skip-tls-verify" -d "if true, the Kubernetes API server's certificate will not be checked for validity."
+complete -c helm -n "__fish_seen_subcommand_from list" -l "kube-tls-server-name" -d "server name to use for Kubernetes API server certificate validation." -x
 complete -c helm -n "__fish_seen_subcommand_from list" -l "kube-token" -d "bearer token used for authentication" -x
 complete -c helm -n "__fish_seen_subcommand_from list" -l "kubeconfig" -d "path to the kubeconfig file" -r
 complete -c helm -n "__fish_seen_subcommand_from list" -s "n" -l "namespace" -d "namespace scope for this request" -x
@@ -259,12 +312,15 @@ complete -c helm -n "__fish_seen_subcommand_from package" -l "keyring" -d "locat
 complete -c helm -n "__fish_seen_subcommand_from package" -l "passphrase-file" -d "location of a file which contains the passphrase for the signing key." -r
 complete -c helm -n "__fish_seen_subcommand_from package" -l "sign" -d "use a PGP private key to sign this package"
 complete -c helm -n "__fish_seen_subcommand_from package" -l "version" -d "set the version on the chart to this semver version" -x
+complete -c helm -n "__fish_seen_subcommand_from package" -l "burst-limit" -d "client-side default throttling limit (default 100)" -x
 complete -c helm -n "__fish_seen_subcommand_from package" -l "debug" -d "enable verbose output"
 complete -c helm -n "__fish_seen_subcommand_from package" -l "kube-apiserver" -d "the address and the port for the Kubernetes API server" -x
 complete -c helm -n "__fish_seen_subcommand_from package" -l "kube-as-group" -d "group to impersonate for the operation, this flag can be repeated to specify multiple groups." -x
 complete -c helm -n "__fish_seen_subcommand_from package" -l "kube-as-user" -d "username to impersonate for the operation" -x
 complete -c helm -n "__fish_seen_subcommand_from package" -l "kube-ca-file" -d "the certificate authority file for the Kubernetes API server connection" -r
 complete -c helm -n "__fish_seen_subcommand_from package" -l "kube-context" -d "name of the kubeconfig context to use" -x
+complete -c helm -n "__fish_seen_subcommand_from package" -l "kube-insecure-skip-tls-verify" -d "if true, the Kubernetes API server's certificate will not be checked for validity."
+complete -c helm -n "__fish_seen_subcommand_from package" -l "kube-tls-server-name" -d "server name to use for Kubernetes API server certificate validation." -x
 complete -c helm -n "__fish_seen_subcommand_from package" -l "kube-token" -d "bearer token used for authentication" -x
 complete -c helm -n "__fish_seen_subcommand_from package" -l "kubeconfig" -d "path to the kubeconfig file" -r
 complete -c helm -n "__fish_seen_subcommand_from package" -s "n" -l "namespace" -d "namespace scope for this request" -x
@@ -275,12 +331,15 @@ complete -c helm -n "__fish_seen_subcommand_from package" -l "repository-config"
 
 
 complete -c helm -n "__fish_seen_subcommand_from plugin" -s "h" -l "help" -d "help for plugin"
+complete -c helm -n "__fish_seen_subcommand_from plugin" -l "burst-limit" -d "client-side default throttling limit (default 100)" -x
 complete -c helm -n "__fish_seen_subcommand_from plugin" -l "debug" -d "enable verbose output"
 complete -c helm -n "__fish_seen_subcommand_from plugin" -l "kube-apiserver" -d "the address and the port for the Kubernetes API server" -x
 complete -c helm -n "__fish_seen_subcommand_from plugin" -l "kube-as-group" -d "group to impersonate for the operation, this flag can be repeated to specify multiple groups." -x
 complete -c helm -n "__fish_seen_subcommand_from plugin" -l "kube-as-user" -d "username to impersonate for the operation" -x
 complete -c helm -n "__fish_seen_subcommand_from plugin" -l "kube-ca-file" -d "the certificate authority file for the Kubernetes API server connection" -r
 complete -c helm -n "__fish_seen_subcommand_from plugin" -l "kube-context" -d "name of the kubeconfig context to use" -x
+complete -c helm -n "__fish_seen_subcommand_from plugin" -l "kube-insecure-skip-tls-verify" -d "if true, the Kubernetes API server's certificate will not be checked for validity."
+complete -c helm -n "__fish_seen_subcommand_from plugin" -l "kube-tls-server-name" -d "server name to use for Kubernetes API server certificate validation." -x
 complete -c helm -n "__fish_seen_subcommand_from plugin" -l "kube-token" -d "bearer token used for authentication" -x
 complete -c helm -n "__fish_seen_subcommand_from plugin" -l "kubeconfig" -d "path to the kubeconfig file" -r
 complete -c helm -n "__fish_seen_subcommand_from plugin" -s "n" -l "namespace" -d "namespace scope for this request" -x
@@ -307,12 +366,15 @@ complete -c helm -n "__fish_seen_subcommand_from pull" -l "untardir" -d "if unta
 complete -c helm -n "__fish_seen_subcommand_from pull" -l "username" -d "chart repository username where to locate the requested chart" -x
 complete -c helm -n "__fish_seen_subcommand_from pull" -l "verify" -d "verify the package before using it"
 complete -c helm -n "__fish_seen_subcommand_from pull" -l "version" -d "specify a version constraint for the chart version to use." -x
+complete -c helm -n "__fish_seen_subcommand_from pull" -l "burst-limit" -d "client-side default throttling limit (default 100)" -x
 complete -c helm -n "__fish_seen_subcommand_from pull" -l "debug" -d "enable verbose output"
 complete -c helm -n "__fish_seen_subcommand_from pull" -l "kube-apiserver" -d "the address and the port for the Kubernetes API server" -x
 complete -c helm -n "__fish_seen_subcommand_from pull" -l "kube-as-group" -d "group to impersonate for the operation, this flag can be repeated to specify multiple groups." -x
 complete -c helm -n "__fish_seen_subcommand_from pull" -l "kube-as-user" -d "username to impersonate for the operation" -x
 complete -c helm -n "__fish_seen_subcommand_from pull" -l "kube-ca-file" -d "the certificate authority file for the Kubernetes API server connection" -r
 complete -c helm -n "__fish_seen_subcommand_from pull" -l "kube-context" -d "name of the kubeconfig context to use" -x
+complete -c helm -n "__fish_seen_subcommand_from pull" -l "kube-insecure-skip-tls-verify" -d "if true, the Kubernetes API server's certificate will not be checked for validity."
+complete -c helm -n "__fish_seen_subcommand_from pull" -l "kube-tls-server-name" -d "server name to use for Kubernetes API server certificate validation." -x
 complete -c helm -n "__fish_seen_subcommand_from pull" -l "kube-token" -d "bearer token used for authentication" -x
 complete -c helm -n "__fish_seen_subcommand_from pull" -l "kubeconfig" -d "path to the kubeconfig file" -r
 complete -c helm -n "__fish_seen_subcommand_from pull" -s "n" -l "namespace" -d "namespace scope for this request" -x
@@ -323,12 +385,15 @@ complete -c helm -n "__fish_seen_subcommand_from pull" -l "repository-config" -d
 
 
 complete -c helm -n "__fish_seen_subcommand_from push" -s "h" -l "help" -d "help for push"
+complete -c helm -n "__fish_seen_subcommand_from push" -l "burst-limit" -d "client-side default throttling limit (default 100)" -x
 complete -c helm -n "__fish_seen_subcommand_from push" -l "debug" -d "enable verbose output"
 complete -c helm -n "__fish_seen_subcommand_from push" -l "kube-apiserver" -d "the address and the port for the Kubernetes API server" -x
 complete -c helm -n "__fish_seen_subcommand_from push" -l "kube-as-group" -d "group to impersonate for the operation, this flag can be repeated to specify multiple groups." -x
 complete -c helm -n "__fish_seen_subcommand_from push" -l "kube-as-user" -d "username to impersonate for the operation" -x
 complete -c helm -n "__fish_seen_subcommand_from push" -l "kube-ca-file" -d "the certificate authority file for the Kubernetes API server connection" -r
 complete -c helm -n "__fish_seen_subcommand_from push" -l "kube-context" -d "name of the kubeconfig context to use" -x
+complete -c helm -n "__fish_seen_subcommand_from push" -l "kube-insecure-skip-tls-verify" -d "if true, the Kubernetes API server's certificate will not be checked for validity."
+complete -c helm -n "__fish_seen_subcommand_from push" -l "kube-tls-server-name" -d "server name to use for Kubernetes API server certificate validation." -x
 complete -c helm -n "__fish_seen_subcommand_from push" -l "kube-token" -d "bearer token used for authentication" -x
 complete -c helm -n "__fish_seen_subcommand_from push" -l "kubeconfig" -d "path to the kubeconfig file" -r
 complete -c helm -n "__fish_seen_subcommand_from push" -s "n" -l "namespace" -d "namespace scope for this request" -x
@@ -339,12 +404,15 @@ complete -c helm -n "__fish_seen_subcommand_from push" -l "repository-config" -d
 
 
 complete -c helm -n "__fish_seen_subcommand_from registry" -s "h" -l "help" -d "help for registry"
+complete -c helm -n "__fish_seen_subcommand_from registry" -l "burst-limit" -d "client-side default throttling limit (default 100)" -x
 complete -c helm -n "__fish_seen_subcommand_from registry" -l "debug" -d "enable verbose output"
 complete -c helm -n "__fish_seen_subcommand_from registry" -l "kube-apiserver" -d "the address and the port for the Kubernetes API server" -x
 complete -c helm -n "__fish_seen_subcommand_from registry" -l "kube-as-group" -d "group to impersonate for the operation, this flag can be repeated to specify multiple groups." -x
 complete -c helm -n "__fish_seen_subcommand_from registry" -l "kube-as-user" -d "username to impersonate for the operation" -x
 complete -c helm -n "__fish_seen_subcommand_from registry" -l "kube-ca-file" -d "the certificate authority file for the Kubernetes API server connection" -r
 complete -c helm -n "__fish_seen_subcommand_from registry" -l "kube-context" -d "name of the kubeconfig context to use" -x
+complete -c helm -n "__fish_seen_subcommand_from registry" -l "kube-insecure-skip-tls-verify" -d "if true, the Kubernetes API server's certificate will not be checked for validity."
+complete -c helm -n "__fish_seen_subcommand_from registry" -l "kube-tls-server-name" -d "server name to use for Kubernetes API server certificate validation." -x
 complete -c helm -n "__fish_seen_subcommand_from registry" -l "kube-token" -d "bearer token used for authentication" -x
 complete -c helm -n "__fish_seen_subcommand_from registry" -l "kubeconfig" -d "path to the kubeconfig file" -r
 complete -c helm -n "__fish_seen_subcommand_from registry" -s "n" -l "namespace" -d "namespace scope for this request" -x
@@ -355,12 +423,15 @@ complete -c helm -n "__fish_seen_subcommand_from registry" -l "repository-config
 
 
 complete -c helm -n "__fish_seen_subcommand_from repo" -s "h" -l "help" -d "help for repo"
+complete -c helm -n "__fish_seen_subcommand_from repo" -l "burst-limit" -d "client-side default throttling limit (default 100)" -x
 complete -c helm -n "__fish_seen_subcommand_from repo" -l "debug" -d "enable verbose output"
 complete -c helm -n "__fish_seen_subcommand_from repo" -l "kube-apiserver" -d "the address and the port for the Kubernetes API server" -x
 complete -c helm -n "__fish_seen_subcommand_from repo" -l "kube-as-group" -d "group to impersonate for the operation, this flag can be repeated to specify multiple groups." -x
 complete -c helm -n "__fish_seen_subcommand_from repo" -l "kube-as-user" -d "username to impersonate for the operation" -x
 complete -c helm -n "__fish_seen_subcommand_from repo" -l "kube-ca-file" -d "the certificate authority file for the Kubernetes API server connection" -r
 complete -c helm -n "__fish_seen_subcommand_from repo" -l "kube-context" -d "name of the kubeconfig context to use" -x
+complete -c helm -n "__fish_seen_subcommand_from repo" -l "kube-insecure-skip-tls-verify" -d "if true, the Kubernetes API server's certificate will not be checked for validity."
+complete -c helm -n "__fish_seen_subcommand_from repo" -l "kube-tls-server-name" -d "server name to use for Kubernetes API server certificate validation." -x
 complete -c helm -n "__fish_seen_subcommand_from repo" -l "kube-token" -d "bearer token used for authentication" -x
 complete -c helm -n "__fish_seen_subcommand_from repo" -l "kubeconfig" -d "path to the kubeconfig file" -r
 complete -c helm -n "__fish_seen_subcommand_from repo" -s "n" -l "namespace" -d "namespace scope for this request" -x
@@ -380,12 +451,15 @@ complete -c helm -n "__fish_seen_subcommand_from rollback" -l "recreate-pods" -d
 complete -c helm -n "__fish_seen_subcommand_from rollback" -l "timeout" -d "time to wait for any individual Kubernetes operation (like Jobs for hooks) (default 5m0s)" -x
 complete -c helm -n "__fish_seen_subcommand_from rollback" -l "wait" -d "if set, will wait until all Pods, PVCs, Services, and minimum number of Pods of a Deployment, StatefulSet, or ReplicaSet are in a ready state before marking the release as successful."
 complete -c helm -n "__fish_seen_subcommand_from rollback" -l "wait-for-jobs" -d "if set and --wait enabled, will wait until all Jobs have been completed before marking the release as successful."
+complete -c helm -n "__fish_seen_subcommand_from rollback" -l "burst-limit" -d "client-side default throttling limit (default 100)" -x
 complete -c helm -n "__fish_seen_subcommand_from rollback" -l "debug" -d "enable verbose output"
 complete -c helm -n "__fish_seen_subcommand_from rollback" -l "kube-apiserver" -d "the address and the port for the Kubernetes API server" -x
 complete -c helm -n "__fish_seen_subcommand_from rollback" -l "kube-as-group" -d "group to impersonate for the operation, this flag can be repeated to specify multiple groups." -x
 complete -c helm -n "__fish_seen_subcommand_from rollback" -l "kube-as-user" -d "username to impersonate for the operation" -x
 complete -c helm -n "__fish_seen_subcommand_from rollback" -l "kube-ca-file" -d "the certificate authority file for the Kubernetes API server connection" -r
 complete -c helm -n "__fish_seen_subcommand_from rollback" -l "kube-context" -d "name of the kubeconfig context to use" -x
+complete -c helm -n "__fish_seen_subcommand_from rollback" -l "kube-insecure-skip-tls-verify" -d "if true, the Kubernetes API server's certificate will not be checked for validity."
+complete -c helm -n "__fish_seen_subcommand_from rollback" -l "kube-tls-server-name" -d "server name to use for Kubernetes API server certificate validation." -x
 complete -c helm -n "__fish_seen_subcommand_from rollback" -l "kube-token" -d "bearer token used for authentication" -x
 complete -c helm -n "__fish_seen_subcommand_from rollback" -l "kubeconfig" -d "path to the kubeconfig file" -r
 complete -c helm -n "__fish_seen_subcommand_from rollback" -s "n" -l "namespace" -d "namespace scope for this request" -x
@@ -396,12 +470,15 @@ complete -c helm -n "__fish_seen_subcommand_from rollback" -l "repository-config
 
 
 complete -c helm -n "__fish_seen_subcommand_from search" -s "h" -l "help" -d "help for search"
+complete -c helm -n "__fish_seen_subcommand_from search" -l "burst-limit" -d "client-side default throttling limit (default 100)" -x
 complete -c helm -n "__fish_seen_subcommand_from search" -l "debug" -d "enable verbose output"
 complete -c helm -n "__fish_seen_subcommand_from search" -l "kube-apiserver" -d "the address and the port for the Kubernetes API server" -x
 complete -c helm -n "__fish_seen_subcommand_from search" -l "kube-as-group" -d "group to impersonate for the operation, this flag can be repeated to specify multiple groups." -x
 complete -c helm -n "__fish_seen_subcommand_from search" -l "kube-as-user" -d "username to impersonate for the operation" -x
 complete -c helm -n "__fish_seen_subcommand_from search" -l "kube-ca-file" -d "the certificate authority file for the Kubernetes API server connection" -r
 complete -c helm -n "__fish_seen_subcommand_from search" -l "kube-context" -d "name of the kubeconfig context to use" -x
+complete -c helm -n "__fish_seen_subcommand_from search" -l "kube-insecure-skip-tls-verify" -d "if true, the Kubernetes API server's certificate will not be checked for validity."
+complete -c helm -n "__fish_seen_subcommand_from search" -l "kube-tls-server-name" -d "server name to use for Kubernetes API server certificate validation." -x
 complete -c helm -n "__fish_seen_subcommand_from search" -l "kube-token" -d "bearer token used for authentication" -x
 complete -c helm -n "__fish_seen_subcommand_from search" -l "kubeconfig" -d "path to the kubeconfig file" -r
 complete -c helm -n "__fish_seen_subcommand_from search" -s "n" -l "namespace" -d "namespace scope for this request" -x
@@ -412,12 +489,15 @@ complete -c helm -n "__fish_seen_subcommand_from search" -l "repository-config" 
 
 
 complete -c helm -n "__fish_seen_subcommand_from show" -s "h" -l "help" -d "help for show"
+complete -c helm -n "__fish_seen_subcommand_from show" -l "burst-limit" -d "client-side default throttling limit (default 100)" -x
 complete -c helm -n "__fish_seen_subcommand_from show" -l "debug" -d "enable verbose output"
 complete -c helm -n "__fish_seen_subcommand_from show" -l "kube-apiserver" -d "the address and the port for the Kubernetes API server" -x
 complete -c helm -n "__fish_seen_subcommand_from show" -l "kube-as-group" -d "group to impersonate for the operation, this flag can be repeated to specify multiple groups." -x
 complete -c helm -n "__fish_seen_subcommand_from show" -l "kube-as-user" -d "username to impersonate for the operation" -x
 complete -c helm -n "__fish_seen_subcommand_from show" -l "kube-ca-file" -d "the certificate authority file for the Kubernetes API server connection" -r
 complete -c helm -n "__fish_seen_subcommand_from show" -l "kube-context" -d "name of the kubeconfig context to use" -x
+complete -c helm -n "__fish_seen_subcommand_from show" -l "kube-insecure-skip-tls-verify" -d "if true, the Kubernetes API server's certificate will not be checked for validity."
+complete -c helm -n "__fish_seen_subcommand_from show" -l "kube-tls-server-name" -d "server name to use for Kubernetes API server certificate validation." -x
 complete -c helm -n "__fish_seen_subcommand_from show" -l "kube-token" -d "bearer token used for authentication" -x
 complete -c helm -n "__fish_seen_subcommand_from show" -l "kubeconfig" -d "path to the kubeconfig file" -r
 complete -c helm -n "__fish_seen_subcommand_from show" -s "n" -l "namespace" -d "namespace scope for this request" -x
@@ -431,12 +511,15 @@ complete -c helm -n "__fish_seen_subcommand_from status" -s "h" -l "help" -d "he
 complete -c helm -n "__fish_seen_subcommand_from status" -s "o" -l "output" -d "prints the output in the specified format." -x
 complete -c helm -n "__fish_seen_subcommand_from status" -l "revision" -d "if set, display the status of the named release with revision" -x
 complete -c helm -n "__fish_seen_subcommand_from status" -l "show-desc" -d "if set, display the description message of the named release"
+complete -c helm -n "__fish_seen_subcommand_from status" -l "burst-limit" -d "client-side default throttling limit (default 100)" -x
 complete -c helm -n "__fish_seen_subcommand_from status" -l "debug" -d "enable verbose output"
 complete -c helm -n "__fish_seen_subcommand_from status" -l "kube-apiserver" -d "the address and the port for the Kubernetes API server" -x
 complete -c helm -n "__fish_seen_subcommand_from status" -l "kube-as-group" -d "group to impersonate for the operation, this flag can be repeated to specify multiple groups." -x
 complete -c helm -n "__fish_seen_subcommand_from status" -l "kube-as-user" -d "username to impersonate for the operation" -x
 complete -c helm -n "__fish_seen_subcommand_from status" -l "kube-ca-file" -d "the certificate authority file for the Kubernetes API server connection" -r
 complete -c helm -n "__fish_seen_subcommand_from status" -l "kube-context" -d "name of the kubeconfig context to use" -x
+complete -c helm -n "__fish_seen_subcommand_from status" -l "kube-insecure-skip-tls-verify" -d "if true, the Kubernetes API server's certificate will not be checked for validity."
+complete -c helm -n "__fish_seen_subcommand_from status" -l "kube-tls-server-name" -d "server name to use for Kubernetes API server certificate validation." -x
 complete -c helm -n "__fish_seen_subcommand_from status" -l "kube-token" -d "bearer token used for authentication" -x
 complete -c helm -n "__fish_seen_subcommand_from status" -l "kubeconfig" -d "path to the kubeconfig file" -r
 complete -c helm -n "__fish_seen_subcommand_from status" -s "n" -l "namespace" -d "namespace scope for this request" -x
@@ -477,6 +560,7 @@ complete -c helm -n "__fish_seen_subcommand_from template" -l "replace" -d "re-u
 complete -c helm -n "__fish_seen_subcommand_from template" -l "repo" -d "chart repository url where to locate the requested chart" -x
 complete -c helm -n "__fish_seen_subcommand_from template" -l "set" -d "set values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2)" -x
 complete -c helm -n "__fish_seen_subcommand_from template" -l "set-file" -d "set values from respective files specified via the command line (can specify multiple or separate values with commas: key1=path1,key2=path2)" -r
+complete -c helm -n "__fish_seen_subcommand_from template" -l "set-json" -d "set JSON values on the command line (can specify multiple or separate values with commas: key1=jsonval1,key2=jsonval2)" -x
 complete -c helm -n "__fish_seen_subcommand_from template" -l "set-string" -d "set STRING values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2)" -x
 complete -c helm -n "__fish_seen_subcommand_from template" -s "s" -l "show-only" -d "only show manifests rendered from the given templates" -x
 complete -c helm -n "__fish_seen_subcommand_from template" -l "skip-crds" -d "if set, no CRDs will be installed."
@@ -489,12 +573,15 @@ complete -c helm -n "__fish_seen_subcommand_from template" -l "verify" -d "verif
 complete -c helm -n "__fish_seen_subcommand_from template" -l "version" -d "specify a version constraint for the chart version to use." -x
 complete -c helm -n "__fish_seen_subcommand_from template" -l "wait" -d "if set, will wait until all Pods, PVCs, Services, and minimum number of Pods of a Deployment, StatefulSet, or ReplicaSet are in a ready state before marking the release as successful."
 complete -c helm -n "__fish_seen_subcommand_from template" -l "wait-for-jobs" -d "if set and --wait enabled, will wait until all Jobs have been completed before marking the release as successful."
+complete -c helm -n "__fish_seen_subcommand_from template" -l "burst-limit" -d "client-side default throttling limit (default 100)" -x
 complete -c helm -n "__fish_seen_subcommand_from template" -l "debug" -d "enable verbose output"
 complete -c helm -n "__fish_seen_subcommand_from template" -l "kube-apiserver" -d "the address and the port for the Kubernetes API server" -x
 complete -c helm -n "__fish_seen_subcommand_from template" -l "kube-as-group" -d "group to impersonate for the operation, this flag can be repeated to specify multiple groups." -x
 complete -c helm -n "__fish_seen_subcommand_from template" -l "kube-as-user" -d "username to impersonate for the operation" -x
 complete -c helm -n "__fish_seen_subcommand_from template" -l "kube-ca-file" -d "the certificate authority file for the Kubernetes API server connection" -r
 complete -c helm -n "__fish_seen_subcommand_from template" -l "kube-context" -d "name of the kubeconfig context to use" -x
+complete -c helm -n "__fish_seen_subcommand_from template" -l "kube-insecure-skip-tls-verify" -d "if true, the Kubernetes API server's certificate will not be checked for validity."
+complete -c helm -n "__fish_seen_subcommand_from template" -l "kube-tls-server-name" -d "server name to use for Kubernetes API server certificate validation." -x
 complete -c helm -n "__fish_seen_subcommand_from template" -l "kube-token" -d "bearer token used for authentication" -x
 complete -c helm -n "__fish_seen_subcommand_from template" -l "kubeconfig" -d "path to the kubeconfig file" -r
 complete -c helm -n "__fish_seen_subcommand_from template" -s "n" -l "namespace" -d "namespace scope for this request" -x
@@ -508,12 +595,15 @@ complete -c helm -n "__fish_seen_subcommand_from test" -l "filter" -d "specify t
 complete -c helm -n "__fish_seen_subcommand_from test" -s "h" -l "help" -d "help for test"
 complete -c helm -n "__fish_seen_subcommand_from test" -l "logs" -d "dump the logs from test pods (this runs after all tests are complete, but before any cleanup)"
 complete -c helm -n "__fish_seen_subcommand_from test" -l "timeout" -d "time to wait for any individual Kubernetes operation (like Jobs for hooks) (default 5m0s)" -x
+complete -c helm -n "__fish_seen_subcommand_from test" -l "burst-limit" -d "client-side default throttling limit (default 100)" -x
 complete -c helm -n "__fish_seen_subcommand_from test" -l "debug" -d "enable verbose output"
 complete -c helm -n "__fish_seen_subcommand_from test" -l "kube-apiserver" -d "the address and the port for the Kubernetes API server" -x
 complete -c helm -n "__fish_seen_subcommand_from test" -l "kube-as-group" -d "group to impersonate for the operation, this flag can be repeated to specify multiple groups." -x
 complete -c helm -n "__fish_seen_subcommand_from test" -l "kube-as-user" -d "username to impersonate for the operation" -x
 complete -c helm -n "__fish_seen_subcommand_from test" -l "kube-ca-file" -d "the certificate authority file for the Kubernetes API server connection" -r
 complete -c helm -n "__fish_seen_subcommand_from test" -l "kube-context" -d "name of the kubeconfig context to use" -x
+complete -c helm -n "__fish_seen_subcommand_from test" -l "kube-insecure-skip-tls-verify" -d "if true, the Kubernetes API server's certificate will not be checked for validity."
+complete -c helm -n "__fish_seen_subcommand_from test" -l "kube-tls-server-name" -d "server name to use for Kubernetes API server certificate validation." -x
 complete -c helm -n "__fish_seen_subcommand_from test" -l "kube-token" -d "bearer token used for authentication" -x
 complete -c helm -n "__fish_seen_subcommand_from test" -l "kubeconfig" -d "path to the kubeconfig file" -r
 complete -c helm -n "__fish_seen_subcommand_from test" -s "n" -l "namespace" -d "namespace scope for this request" -x
@@ -530,12 +620,15 @@ complete -c helm -n "__fish_seen_subcommand_from uninstall" -l "keep-history" -d
 complete -c helm -n "__fish_seen_subcommand_from uninstall" -l "no-hooks" -d "prevent hooks from running during uninstallation"
 complete -c helm -n "__fish_seen_subcommand_from uninstall" -l "timeout" -d "time to wait for any individual Kubernetes operation (like Jobs for hooks) (default 5m0s)" -x
 complete -c helm -n "__fish_seen_subcommand_from uninstall" -l "wait" -d "if set, will wait until all the resources are deleted before returning."
+complete -c helm -n "__fish_seen_subcommand_from uninstall" -l "burst-limit" -d "client-side default throttling limit (default 100)" -x
 complete -c helm -n "__fish_seen_subcommand_from uninstall" -l "debug" -d "enable verbose output"
 complete -c helm -n "__fish_seen_subcommand_from uninstall" -l "kube-apiserver" -d "the address and the port for the Kubernetes API server" -x
 complete -c helm -n "__fish_seen_subcommand_from uninstall" -l "kube-as-group" -d "group to impersonate for the operation, this flag can be repeated to specify multiple groups." -x
 complete -c helm -n "__fish_seen_subcommand_from uninstall" -l "kube-as-user" -d "username to impersonate for the operation" -x
 complete -c helm -n "__fish_seen_subcommand_from uninstall" -l "kube-ca-file" -d "the certificate authority file for the Kubernetes API server connection" -r
 complete -c helm -n "__fish_seen_subcommand_from uninstall" -l "kube-context" -d "name of the kubeconfig context to use" -x
+complete -c helm -n "__fish_seen_subcommand_from uninstall" -l "kube-insecure-skip-tls-verify" -d "if true, the Kubernetes API server's certificate will not be checked for validity."
+complete -c helm -n "__fish_seen_subcommand_from uninstall" -l "kube-tls-server-name" -d "server name to use for Kubernetes API server certificate validation." -x
 complete -c helm -n "__fish_seen_subcommand_from uninstall" -l "kube-token" -d "bearer token used for authentication" -x
 complete -c helm -n "__fish_seen_subcommand_from uninstall" -l "kubeconfig" -d "path to the kubeconfig file" -r
 complete -c helm -n "__fish_seen_subcommand_from uninstall" -s "n" -l "namespace" -d "namespace scope for this request" -x
@@ -574,6 +667,7 @@ complete -c helm -n "__fish_seen_subcommand_from upgrade" -l "reset-values" -d "
 complete -c helm -n "__fish_seen_subcommand_from upgrade" -l "reuse-values" -d "when upgrading, reuse the last release's values and merge in any overrides from the command line via --set and -f."
 complete -c helm -n "__fish_seen_subcommand_from upgrade" -l "set" -d "set values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2)" -x
 complete -c helm -n "__fish_seen_subcommand_from upgrade" -l "set-file" -d "set values from respective files specified via the command line (can specify multiple or separate values with commas: key1=path1,key2=path2)" -r
+complete -c helm -n "__fish_seen_subcommand_from upgrade" -l "set-json" -d "set JSON values on the command line (can specify multiple or separate values with commas: key1=jsonval1,key2=jsonval2)" -x
 complete -c helm -n "__fish_seen_subcommand_from upgrade" -l "set-string" -d "set STRING values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2)" -x
 complete -c helm -n "__fish_seen_subcommand_from upgrade" -l "skip-crds" -d "if set, no CRDs will be installed when an upgrade is performed with install flag enabled."
 complete -c helm -n "__fish_seen_subcommand_from upgrade" -l "timeout" -d "time to wait for any individual Kubernetes operation (like Jobs for hooks) (default 5m0s)" -x
@@ -583,12 +677,15 @@ complete -c helm -n "__fish_seen_subcommand_from upgrade" -l "verify" -d "verify
 complete -c helm -n "__fish_seen_subcommand_from upgrade" -l "version" -d "specify a version constraint for the chart version to use." -x
 complete -c helm -n "__fish_seen_subcommand_from upgrade" -l "wait" -d "if set, will wait until all Pods, PVCs, Services, and minimum number of Pods of a Deployment, StatefulSet, or ReplicaSet are in a ready state before marking the release as successful."
 complete -c helm -n "__fish_seen_subcommand_from upgrade" -l "wait-for-jobs" -d "if set and --wait enabled, will wait until all Jobs have been completed before marking the release as successful."
+complete -c helm -n "__fish_seen_subcommand_from upgrade" -l "burst-limit" -d "client-side default throttling limit (default 100)" -x
 complete -c helm -n "__fish_seen_subcommand_from upgrade" -l "debug" -d "enable verbose output"
 complete -c helm -n "__fish_seen_subcommand_from upgrade" -l "kube-apiserver" -d "the address and the port for the Kubernetes API server" -x
 complete -c helm -n "__fish_seen_subcommand_from upgrade" -l "kube-as-group" -d "group to impersonate for the operation, this flag can be repeated to specify multiple groups." -x
 complete -c helm -n "__fish_seen_subcommand_from upgrade" -l "kube-as-user" -d "username to impersonate for the operation" -x
 complete -c helm -n "__fish_seen_subcommand_from upgrade" -l "kube-ca-file" -d "the certificate authority file for the Kubernetes API server connection" -r
 complete -c helm -n "__fish_seen_subcommand_from upgrade" -l "kube-context" -d "name of the kubeconfig context to use" -x
+complete -c helm -n "__fish_seen_subcommand_from upgrade" -l "kube-insecure-skip-tls-verify" -d "if true, the Kubernetes API server's certificate will not be checked for validity."
+complete -c helm -n "__fish_seen_subcommand_from upgrade" -l "kube-tls-server-name" -d "server name to use for Kubernetes API server certificate validation." -x
 complete -c helm -n "__fish_seen_subcommand_from upgrade" -l "kube-token" -d "bearer token used for authentication" -x
 complete -c helm -n "__fish_seen_subcommand_from upgrade" -l "kubeconfig" -d "path to the kubeconfig file" -r
 complete -c helm -n "__fish_seen_subcommand_from upgrade" -s "n" -l "namespace" -d "namespace scope for this request" -x
@@ -600,12 +697,15 @@ complete -c helm -n "__fish_seen_subcommand_from upgrade" -l "repository-config"
 
 complete -c helm -n "__fish_seen_subcommand_from verify" -s "h" -l "help" -d "help for verify"
 complete -c helm -n "__fish_seen_subcommand_from verify" -l "keyring" -d "keyring containing public keys (default \"~/.gnupg/pubring.gpg\")" -x
+complete -c helm -n "__fish_seen_subcommand_from verify" -l "burst-limit" -d "client-side default throttling limit (default 100)" -x
 complete -c helm -n "__fish_seen_subcommand_from verify" -l "debug" -d "enable verbose output"
 complete -c helm -n "__fish_seen_subcommand_from verify" -l "kube-apiserver" -d "the address and the port for the Kubernetes API server" -x
 complete -c helm -n "__fish_seen_subcommand_from verify" -l "kube-as-group" -d "group to impersonate for the operation, this flag can be repeated to specify multiple groups." -x
 complete -c helm -n "__fish_seen_subcommand_from verify" -l "kube-as-user" -d "username to impersonate for the operation" -x
 complete -c helm -n "__fish_seen_subcommand_from verify" -l "kube-ca-file" -d "the certificate authority file for the Kubernetes API server connection" -r
 complete -c helm -n "__fish_seen_subcommand_from verify" -l "kube-context" -d "name of the kubeconfig context to use" -x
+complete -c helm -n "__fish_seen_subcommand_from verify" -l "kube-insecure-skip-tls-verify" -d "if true, the Kubernetes API server's certificate will not be checked for validity."
+complete -c helm -n "__fish_seen_subcommand_from verify" -l "kube-tls-server-name" -d "server name to use for Kubernetes API server certificate validation." -x
 complete -c helm -n "__fish_seen_subcommand_from verify" -l "kube-token" -d "bearer token used for authentication" -x
 complete -c helm -n "__fish_seen_subcommand_from verify" -l "kubeconfig" -d "path to the kubeconfig file" -r
 complete -c helm -n "__fish_seen_subcommand_from verify" -s "n" -l "namespace" -d "namespace scope for this request" -x
@@ -618,12 +718,15 @@ complete -c helm -n "__fish_seen_subcommand_from verify" -l "repository-config" 
 complete -c helm -n "__fish_seen_subcommand_from version" -s "h" -l "help" -d "help for version"
 complete -c helm -n "__fish_seen_subcommand_from version" -l "short" -d "print the version number"
 complete -c helm -n "__fish_seen_subcommand_from version" -l "template" -d "template for version string format" -x
+complete -c helm -n "__fish_seen_subcommand_from version" -l "burst-limit" -d "client-side default throttling limit (default 100)" -x
 complete -c helm -n "__fish_seen_subcommand_from version" -l "debug" -d "enable verbose output"
 complete -c helm -n "__fish_seen_subcommand_from version" -l "kube-apiserver" -d "the address and the port for the Kubernetes API server" -x
 complete -c helm -n "__fish_seen_subcommand_from version" -l "kube-as-group" -d "group to impersonate for the operation, this flag can be repeated to specify multiple groups." -x
 complete -c helm -n "__fish_seen_subcommand_from version" -l "kube-as-user" -d "username to impersonate for the operation" -x
 complete -c helm -n "__fish_seen_subcommand_from version" -l "kube-ca-file" -d "the certificate authority file for the Kubernetes API server connection" -r
 complete -c helm -n "__fish_seen_subcommand_from version" -l "kube-context" -d "name of the kubeconfig context to use" -x
+complete -c helm -n "__fish_seen_subcommand_from version" -l "kube-insecure-skip-tls-verify" -d "if true, the Kubernetes API server's certificate will not be checked for validity."
+complete -c helm -n "__fish_seen_subcommand_from version" -l "kube-tls-server-name" -d "server name to use for Kubernetes API server certificate validation." -x
 complete -c helm -n "__fish_seen_subcommand_from version" -l "kube-token" -d "bearer token used for authentication" -x
 complete -c helm -n "__fish_seen_subcommand_from version" -l "kubeconfig" -d "path to the kubeconfig file" -r
 complete -c helm -n "__fish_seen_subcommand_from version" -s "n" -l "namespace" -d "namespace scope for this request" -x

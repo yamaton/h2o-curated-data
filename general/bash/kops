@@ -46,6 +46,10 @@ _kops()
             return
             ;;
 
+          help) _kops_help
+            return
+            ;;
+
           promote) _kops_promote
             return
             ;;
@@ -83,7 +87,7 @@ _kops()
             ;;
 
       *)
-          word_list=" completion create delete distrust edit export get promote replace rolling-update toolbox trust update upgrade validate version --add_dir_header --alsologtostderr --config -h --help --log_backtrace_at --log_dir --log_file --log_file_max_size --logtostderr --name --one_output --skip_headers --skip_log_headers --state --stderrthreshold -v --v --vmodule"
+          word_list=" completion create delete distrust edit export get help promote replace rolling-update toolbox trust update upgrade validate version "
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac
@@ -118,6 +122,10 @@ _kops_completion ()
             return
             ;;
 
+          powershell) _kops_powershell
+            return
+            ;;
+
           zsh) _kops_zsh
             return
             ;;
@@ -127,7 +135,7 @@ _kops_completion ()
         (( subcommand_index++ ))
     done
 
-    word_list=" bash fish zsh -h --help --add_dir_header --alsologtostderr --config --log_backtrace_at --log_dir --log_file --log_file_max_size --logtostderr --name --one_output --skip_headers --skip_log_headers --state --stderrthreshold -v --v --vmodule" 
+    word_list=" bash fish powershell zsh -h --help --config --name --state -v --v" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -135,7 +143,7 @@ _kops_completion ()
 _completion_bash ()
 {
     local cur word_list
-    word_list=" -h --help --no-descriptions --add_dir_header --alsologtostderr --config --log_backtrace_at --log_dir --log_file --log_file_max_size --logtostderr --name --one_output --skip_headers --skip_log_headers --state --stderrthreshold -v --v --vmodule" 
+    word_list=" -h --help --no-descriptions --config --name --state -v --v" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -143,7 +151,15 @@ _completion_bash ()
 _completion_fish ()
 {
     local cur word_list
-    word_list=" -h --help --no-descriptions --add_dir_header --alsologtostderr --config --log_backtrace_at --log_dir --log_file --log_file_max_size --logtostderr --name --one_output --skip_headers --skip_log_headers --state --stderrthreshold -v --v --vmodule" 
+    word_list=" -h --help --no-descriptions --config --name --state -v --v" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_completion_powershell ()
+{
+    local cur word_list
+    word_list=" -h --help --no-descriptions --config --name --state -v --v" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -151,7 +167,7 @@ _completion_fish ()
 _completion_zsh ()
 {
     local cur word_list
-    word_list=" -h --help --no-descriptions --add_dir_header --alsologtostderr --config --log_backtrace_at --log_dir --log_file --log_file_max_size --logtostderr --name --one_output --skip_headers --skip_log_headers --state --stderrthreshold -v --v --vmodule" 
+    word_list=" -h --help --no-descriptions --config --name --state -v --v" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -192,12 +208,16 @@ _kops_create ()
             return
             ;;
 
+          sshpublickey) _kops_sshpublickey
+            return
+            ;;
+
           *)  ;; 
         esac
         (( subcommand_index++ ))
     done
 
-    word_list=" cluster instancegroup keypair secret -f --filename -h --help --add_dir_header --alsologtostderr --config --log_backtrace_at --log_dir --log_file --log_file_max_size --logtostderr --name --one_output --skip_headers --skip_log_headers --state --stderrthreshold -v --v --vmodule" 
+    word_list=" cluster instancegroup keypair secret sshpublickey -f --filename -h --help --config --name --state -v --v" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -205,7 +225,7 @@ _kops_create ()
 _create_cluster ()
 {
     local cur word_list
-    word_list=" --node-count --yes --yes --admin-access --api-loadbalancer-class --api-loadbalancer-type --api-ssl-certificate --associate-public-ip --authorization --bastion --channel --cloud --cloud-labels --container-runtime --disable-subnet-tags --discovery-store --dns --dns-zone --dry-run --encrypt-etcd-storage --etcd-storage-type --gce-service-account -h --help --image --kubernetes-version --master-count --master-image --master-public-name --master-security-groups --master-size --master-tenancy --master-volume-size --master-zones --network-cidr --networking --node-count --node-image --node-security-groups --node-size --node-tenancy --node-volume-size --os-dns-servers --os-ext-net --os-ext-subnet --os-kubelet-ignore-az --os-lb-floating-subnet --os-network --os-octavia --os-octavia-provider --out -o --output --project --ssh-access --ssh-public-key --subnets --target -t --topology --utility-subnets --vpc -y --yes --zones --add_dir_header --alsologtostderr --config --log_backtrace_at --log_dir --log_file --log_file_max_size --logtostderr --name --one_output --skip_headers --skip_log_headers --state --stderrthreshold -v --v --vmodule" 
+    word_list=" --node-count --yes --yes --admin-access --api-loadbalancer-class --api-loadbalancer-type --api-ssl-certificate --associate-public-ip --authorization --bastion --channel --cloud --cloud-labels --container-runtime --disable-subnet-tags --discovery-store --dns --dns-zone --dry-run --encrypt-etcd-storage --etcd-storage-type --gce-service-account -h --help --image --ipv6 --kubernetes-version --master-count --master-image --master-public-name --master-security-groups --master-size --master-tenancy --master-volume-size --master-zones --network-cidr --network-id --networking --node-count --node-image --node-security-groups --node-size --node-tenancy --node-volume-size --os-dns-servers --os-ext-net --os-ext-subnet --os-kubelet-ignore-az --os-lb-floating-subnet --os-network --os-octavia --os-octavia-provider --out -o --output --project --set --ssh-access --ssh-public-key --subnets --target -t --topology --unset --utility-subnets --vpc -y --yes --zones --config --name --state -v --v" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -213,7 +233,7 @@ _create_cluster ()
 _create_instancegroup ()
 {
     local cur word_list
-    word_list=" --role --subnet --dry-run --edit -h --help -o --output --role --subnet --add_dir_header --alsologtostderr --config --log_backtrace_at --log_dir --log_file --log_file_max_size --logtostderr --name --one_output --skip_headers --skip_log_headers --state --stderrthreshold -v --v --vmodule" 
+    word_list=" --role --subnet --dry-run --edit -h --help -o --output --role --subnet --config --name --state -v --v" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -221,7 +241,7 @@ _create_instancegroup ()
 _create_keypair ()
 {
     local cur word_list
-    word_list=" --cert -h --help --key --primary --add_dir_header --alsologtostderr --config --log_backtrace_at --log_dir --log_file --log_file_max_size --logtostderr --name --one_output --skip_headers --skip_log_headers --state --stderrthreshold -v --v --vmodule" 
+    word_list=" --cert -h --help --key --primary --config --name --state -v --v" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -254,6 +274,10 @@ _create_secret ()
             return
             ;;
 
+          encryptionconfig) _create_encryptionconfig
+            return
+            ;;
+
           weavepassword) _create_weavepassword
             return
             ;;
@@ -263,7 +287,7 @@ _create_secret ()
         (( subcommand_index++ ))
     done
 
-    word_list=" ciliumpassword dockerconfig weavepassword -h --help --add_dir_header --alsologtostderr --config --log_backtrace_at --log_dir --log_file --log_file_max_size --logtostderr --name --one_output --skip_headers --skip_log_headers --state --stderrthreshold -v --v --vmodule" 
+    word_list=" ciliumpassword dockerconfig encryptionconfig weavepassword -h --help --config --name --state -v --v" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -271,7 +295,7 @@ _create_secret ()
 _secret_ciliumpassword ()
 {
     local cur word_list
-    word_list=" --name --state -f --filename --force -h --help --add_dir_header --alsologtostderr --config --log_backtrace_at --log_dir --log_file --log_file_max_size --logtostderr --name --one_output --skip_headers --skip_log_headers --state --stderrthreshold -v --v --vmodule" 
+    word_list=" --name --state -f --filename --force -h --help --config --name --state -v --v" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -279,7 +303,15 @@ _secret_ciliumpassword ()
 _secret_dockerconfig ()
 {
     local cur word_list
-    word_list=" --name --state --name --state -f --filename --force -h --help --add_dir_header --alsologtostderr --config --log_backtrace_at --log_dir --log_file --log_file_max_size --logtostderr --name --one_output --skip_headers --skip_log_headers --state --stderrthreshold -v --v --vmodule" 
+    word_list=" --name --state --name --state -f --filename --force -h --help --config --name --state -v --v" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_secret_encryptionconfig ()
+{
+    local cur word_list
+    word_list=" --name --state --name --state -f --filename --force -h --help --config --name --state -v --v" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -287,7 +319,15 @@ _secret_dockerconfig ()
 _secret_weavepassword ()
 {
     local cur word_list
-    word_list=" --name --state --name --state --name --state -f --filename --force -h --help --add_dir_header --alsologtostderr --config --log_backtrace_at --log_dir --log_file --log_file_max_size --logtostderr --name --one_output --skip_headers --skip_log_headers --state --stderrthreshold -v --v --vmodule" 
+    word_list=" --name --state --name --state --name --state -f --filename --force -h --help --config --name --state -v --v" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_create_sshpublickey ()
+{
+    local cur word_list
+    word_list=" -h --help -i --ssh-public-key --config --name --state -v --v" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -337,7 +377,7 @@ _kops_delete ()
         (( subcommand_index++ ))
     done
 
-    word_list=" cluster instance instancegroup secret sshpublickey -f --filename -h --help -y --yes --add_dir_header --alsologtostderr --config --log_backtrace_at --log_dir --log_file --log_file_max_size --logtostderr --name --one_output --skip_headers --skip_log_headers --state --stderrthreshold -v --v --vmodule" 
+    word_list=" cluster instance instancegroup secret sshpublickey -f --filename -h --help -y --yes --config --name --state -v --v" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -345,7 +385,7 @@ _kops_delete ()
 _delete_cluster ()
 {
     local cur word_list
-    word_list=" --external -h --help --region --unregister -y --yes --add_dir_header --alsologtostderr --config --log_backtrace_at --log_dir --log_file --log_file_max_size --logtostderr --name --one_output --skip_headers --skip_log_headers --state --stderrthreshold -v --v --vmodule" 
+    word_list=" --external -h --help --region --unregister -y --yes --config --name --state -v --v" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -353,7 +393,7 @@ _delete_cluster ()
 _delete_instance ()
 {
     local cur word_list
-    word_list=" --cloudonly --fail-on-drain-error --fail-on-validate-error -h --help --post-drain-delay --surge --validate-count --validation-timeout -y --yes --add_dir_header --alsologtostderr --config --log_backtrace_at --log_dir --log_file --log_file_max_size --logtostderr --name --one_output --skip_headers --skip_log_headers --state --stderrthreshold -v --v --vmodule" 
+    word_list=" --cloudonly --fail-on-drain-error --fail-on-validate-error -h --help --post-drain-delay --surge --validate-count --validation-timeout -y --yes --config --name --state -v --v" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -361,7 +401,7 @@ _delete_instance ()
 _delete_instancegroup ()
 {
     local cur word_list
-    word_list=" -h --help -y --yes --add_dir_header --alsologtostderr --config --log_backtrace_at --log_dir --log_file --log_file_max_size --logtostderr --name --one_output --skip_headers --skip_log_headers --state --stderrthreshold -v --v --vmodule" 
+    word_list=" -h --help -y --yes --config --name --state -v --v" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -369,7 +409,7 @@ _delete_instancegroup ()
 _delete_secret ()
 {
     local cur word_list
-    word_list=" -h --help --add_dir_header --alsologtostderr --config --log_backtrace_at --log_dir --log_file --log_file_max_size --logtostderr --name --one_output --skip_headers --skip_log_headers --state --stderrthreshold -v --v --vmodule" 
+    word_list=" -h --help --config --name --state -v --v" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -377,7 +417,7 @@ _delete_secret ()
 _delete_sshpublickey ()
 {
     local cur word_list
-    word_list=" -h --help --add_dir_header --alsologtostderr --config --log_backtrace_at --log_dir --log_file --log_file_max_size --logtostderr --name --one_output --skip_headers --skip_log_headers --state --stderrthreshold -v --v --vmodule" 
+    word_list=" -h --help --config --name --state -v --v" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -385,7 +425,41 @@ _delete_sshpublickey ()
 _kops_distrust ()
 {
     local cur word_list
-    word_list=" -h --help --add_dir_header --alsologtostderr --config --log_backtrace_at --log_dir --log_file --log_file_max_size --logtostderr --name --one_output --skip_headers --skip_log_headers --state --stderrthreshold -v --v --vmodule" 
+    local i=1 subcommand_index
+
+    # take the last word that's NOT starting with -
+    while [[ ( $i < $COMP_CWORD ) ]]; do
+        local s="${COMP_WORDS[i]}"
+        case "$s" in
+          distrust)
+            subcommand_index=$i
+            break
+            ;;
+        esac
+        (( i++ ))
+    done
+
+    while [[ ( $subcommand_index < $COMP_CWORD ) ]]; do
+        local s="${COMP_WORDS[subcommand_index}"
+        case "$s" in
+          keypair) _kops_keypair
+            return
+            ;;
+
+          *)  ;; 
+        esac
+        (( subcommand_index++ ))
+    done
+
+    word_list=" keypair -h --help --config --name --state -v --v" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_distrust_keypair ()
+{
+    local cur word_list
+    word_list=" -h --help --config --name --state -v --v" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -423,7 +497,7 @@ _kops_edit ()
         (( subcommand_index++ ))
     done
 
-    word_list=" cluster instancegroup -h --help --add_dir_header --alsologtostderr --config --log_backtrace_at --log_dir --log_file --log_file_max_size --logtostderr --name --one_output --skip_headers --skip_log_headers --state --stderrthreshold -v --v --vmodule" 
+    word_list=" cluster instancegroup -h --help --config --name --state -v --v" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -431,7 +505,7 @@ _kops_edit ()
 _edit_cluster ()
 {
     local cur word_list
-    word_list=" -h --help --add_dir_header --alsologtostderr --config --log_backtrace_at --log_dir --log_file --log_file_max_size --logtostderr --name --one_output --skip_headers --skip_log_headers --state --stderrthreshold -v --v --vmodule" 
+    word_list=" -h --help --set --unset --config --name --state -v --v" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -439,7 +513,7 @@ _edit_cluster ()
 _edit_instancegroup ()
 {
     local cur word_list
-    word_list=" -h --help --add_dir_header --alsologtostderr --config --log_backtrace_at --log_dir --log_file --log_file_max_size --logtostderr --name --one_output --skip_headers --skip_log_headers --state --stderrthreshold -v --v --vmodule" 
+    word_list=" -h --help --set --unset --config --name --state -v --v" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -473,7 +547,7 @@ _kops_export ()
         (( subcommand_index++ ))
     done
 
-    word_list=" kubeconfig -h --help --add_dir_header --alsologtostderr --config --log_backtrace_at --log_dir --log_file --log_file_max_size --logtostderr --name --one_output --skip_headers --skip_log_headers --state --stderrthreshold -v --v --vmodule" 
+    word_list=" kubeconfig -h --help --config --name --state -v --v" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -481,7 +555,7 @@ _kops_export ()
 _export_kubeconfig ()
 {
     local cur word_list
-    word_list=" --admin --all --auth-plugin -h --help --internal --kubeconfig --user --add_dir_header --alsologtostderr --config --log_backtrace_at --log_dir --log_file --log_file_max_size --logtostderr --name --one_output --skip_headers --skip_log_headers --state --stderrthreshold -v --v --vmodule" 
+    word_list=" --admin --all --auth-plugin -h --help --internal --kubeconfig --user --config --name --state -v --v" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -514,11 +588,11 @@ _kops_get ()
             return
             ;;
 
-          instances) _kops_instances
+          instancegroups) _kops_instancegroups
             return
             ;;
 
-          instancegroup) _kops_instancegroup
+          instances) _kops_instances
             return
             ;;
 
@@ -530,7 +604,7 @@ _kops_get ()
             return
             ;;
 
-          sshpublickey) _kops_sshpublickey
+          sshpublickeys) _kops_sshpublickeys
             return
             ;;
 
@@ -539,7 +613,7 @@ _kops_get ()
         (( subcommand_index++ ))
     done
 
-    word_list=" assets clusters instances instancegroup keypairs secrets sshpublickey -h --help -o --output --add_dir_header --alsologtostderr --config --log_backtrace_at --log_dir --log_file --log_file_max_size --logtostderr --name --one_output --skip_headers --skip_log_headers --state --stderrthreshold -v --v --vmodule" 
+    word_list=" assets clusters instancegroups instances keypairs secrets sshpublickeys -h --help -o --output --config --name --state -v --v" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -547,7 +621,7 @@ _kops_get ()
 _get_assets ()
 {
     local cur word_list
-    word_list=" --copy -h --help --add_dir_header --alsologtostderr --config --log_backtrace_at --log_dir --log_file --log_file_max_size --logtostderr --name --one_output -o --output --skip_headers --skip_log_headers --state --stderrthreshold -v --v --vmodule" 
+    word_list=" --copy -h --help --config --name -o --output --state -v --v" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -555,7 +629,15 @@ _get_assets ()
 _get_clusters ()
 {
     local cur word_list
-    word_list=" --full -h --help --add_dir_header --alsologtostderr --config --log_backtrace_at --log_dir --log_file --log_file_max_size --logtostderr --name --one_output -o --output --skip_headers --skip_log_headers --state --stderrthreshold -v --v --vmodule" 
+    word_list=" --full -h --help --config --name -o --output --state -v --v" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_get_instancegroups ()
+{
+    local cur word_list
+    word_list=" -h --help --config --name -o --output --state -v --v" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -563,15 +645,7 @@ _get_clusters ()
 _get_instances ()
 {
     local cur word_list
-    word_list=" -h --help --add_dir_header --alsologtostderr --config --log_backtrace_at --log_dir --log_file --log_file_max_size --logtostderr --name --one_output -o --output --skip_headers --skip_log_headers --state --stderrthreshold -v --v --vmodule" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
-}
-
-_get_instancegroup ()
-{
-    local cur word_list
-    word_list=" -h --help --add_dir_header --alsologtostderr --config --log_backtrace_at --log_dir --log_file --log_file_max_size --logtostderr --name --one_output --skip_headers --skip_log_headers --state --stderrthreshold -v --v --vmodule" 
+    word_list=" -h --help --config --name -o --output --state -v --v" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -579,7 +653,7 @@ _get_instancegroup ()
 _get_keypairs ()
 {
     local cur word_list
-    word_list=" --distrusted -h --help --add_dir_header --alsologtostderr --config --log_backtrace_at --log_dir --log_file --log_file_max_size --logtostderr --name --one_output -o --output --skip_headers --skip_log_headers --state --stderrthreshold -v --v --vmodule" 
+    word_list=" --distrusted -h --help --config --name -o --output --state -v --v" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -587,15 +661,23 @@ _get_keypairs ()
 _get_secrets ()
 {
     local cur word_list
-    word_list=" -h --help --add_dir_header --alsologtostderr --config --log_backtrace_at --log_dir --log_file --log_file_max_size --logtostderr --name --one_output -o --output --skip_headers --skip_log_headers --state --stderrthreshold -v --v --vmodule" 
+    word_list=" -h --help --config --name -o --output --state -v --v" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
 
-_get_sshpublickey ()
+_get_sshpublickeys ()
 {
     local cur word_list
-    word_list=" -h --help --add_dir_header --alsologtostderr --config --log_backtrace_at --log_dir --log_file --log_file_max_size --logtostderr --name --one_output -o --output --skip_headers --skip_log_headers --state --stderrthreshold -v --v --vmodule" 
+    word_list=" -h --help --config --name -o --output --state -v --v" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_kops_help ()
+{
+    local cur word_list
+    word_list=" -h --help --config --name --state -v --v" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -603,7 +685,41 @@ _get_sshpublickey ()
 _kops_promote ()
 {
     local cur word_list
-    word_list=" -h --help --add_dir_header --alsologtostderr --config --log_backtrace_at --log_dir --log_file --log_file_max_size --logtostderr --name --one_output --skip_headers --skip_log_headers --state --stderrthreshold -v --v --vmodule" 
+    local i=1 subcommand_index
+
+    # take the last word that's NOT starting with -
+    while [[ ( $i < $COMP_CWORD ) ]]; do
+        local s="${COMP_WORDS[i]}"
+        case "$s" in
+          promote)
+            subcommand_index=$i
+            break
+            ;;
+        esac
+        (( i++ ))
+    done
+
+    while [[ ( $subcommand_index < $COMP_CWORD ) ]]; do
+        local s="${COMP_WORDS[subcommand_index}"
+        case "$s" in
+          keypair) _kops_keypair
+            return
+            ;;
+
+          *)  ;; 
+        esac
+        (( subcommand_index++ ))
+    done
+
+    word_list=" keypair -h --help --config --name --state -v --v" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_promote_keypair ()
+{
+    local cur word_list
+    word_list=" --name --state --name --state -h --help --config --name --state -v --v" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -611,7 +727,7 @@ _kops_promote ()
 _kops_replace ()
 {
     local cur word_list
-    word_list=" -f --filename --force -h --help --add_dir_header --alsologtostderr --config --log_backtrace_at --log_dir --log_file --log_file_max_size --logtostderr --name --one_output --skip_headers --skip_log_headers --state --stderrthreshold -v --v --vmodule" 
+    word_list=" -f --filename --force -h --help --config --name --state -v --v" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -645,7 +761,7 @@ _kops_rollingupdate ()
         (( subcommand_index++ ))
     done
 
-    word_list=" cluster -h --help --add_dir_header --alsologtostderr --config --log_backtrace_at --log_dir --log_file --log_file_max_size --logtostderr --name --one_output --skip_headers --skip_log_headers --state --stderrthreshold -v --v --vmodule" 
+    word_list=" cluster -h --help --config --name --state -v --v" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -653,7 +769,7 @@ _kops_rollingupdate ()
 _rollingupdate_cluster ()
 {
     local cur word_list
-    word_list=" --fail-on-validate-error --bastion-interval --cloudonly --drain-timeout --fail-on-drain-error --fail-on-validate-error --force -h --help --instance-group --instance-group-roles -i --interactive --master-interval --node-interval --post-drain-delay --validate-count --validation-timeout -y --yes --add_dir_header --alsologtostderr --config --log_backtrace_at --log_dir --log_file --log_file_max_size --logtostderr --name --one_output --skip_headers --skip_log_headers --state --stderrthreshold -v --v --vmodule" 
+    word_list=" --fail-on-validate-error --bastion-interval --cloudonly --drain-timeout --fail-on-drain-error --fail-on-validate-error --force -h --help --instance-group --instance-group-roles -i --interactive --master-interval --node-interval --post-drain-delay --validate-count --validation-timeout -y --yes --config --name --state -v --v" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -682,6 +798,10 @@ _kops_toolbox ()
             return
             ;;
 
+          instance-selector) _kops_instanceselector
+            return
+            ;;
+
           template) _kops_template
             return
             ;;
@@ -691,7 +811,7 @@ _kops_toolbox ()
         (( subcommand_index++ ))
     done
 
-    word_list=" dump template -h --help --add_dir_header --alsologtostderr --config --log_backtrace_at --log_dir --log_file --log_file_max_size --logtostderr --name --one_output --skip_headers --skip_log_headers --state --stderrthreshold -v --v --vmodule" 
+    word_list=" dump instance-selector template -h --help --config --name --state -v --v" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -699,7 +819,15 @@ _kops_toolbox ()
 _toolbox_dump ()
 {
     local cur word_list
-    word_list=" --dir -h --help -o --output --private-key --ssh-user --add_dir_header --alsologtostderr --config --log_backtrace_at --log_dir --log_file --log_file_max_size --logtostderr --name --one_output --skip_headers --skip_log_headers --state --stderrthreshold -v --v --vmodule" 
+    word_list=" --dir -h --help -o --output --private-key --ssh-user --config --name --state -v --v" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_toolbox_instanceselector ()
+{
+    local cur word_list
+    word_list=" --allow-list --base-instance-type --burst-support --cluster-autoscaler --cpu-architecture --deny-list --dry-run --ena-support --flexible --gpu-memory --gpu-memory-max --gpu-memory-min --gpus --gpus-max --gpus-min -h --help --ig-count --max-results --memory --memory-max --memory-min --network-interfaces --network-interfaces-max --network-interfaces-min --node-count-max --node-count-min --node-security-groups --node-volume-size -o --output --placement-group-strategy --subnets --usage-class --vcpus --vcpus-max --vcpus-min --vcpus-to-memory-ratio --config --name --state -v --v" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -707,7 +835,7 @@ _toolbox_dump ()
 _toolbox_template ()
 {
     local cur word_list
-    word_list=" --channel --config-value --fail-on-missing --format-yaml -h --help --out --set --set-string --snippets --template --values --add_dir_header --alsologtostderr --config --log_backtrace_at --log_dir --log_file --log_file_max_size --logtostderr --name --one_output --skip_headers --skip_log_headers --state --stderrthreshold -v --v --vmodule" 
+    word_list=" --channel --config-value --fail-on-missing --format-yaml -h --help --out --set --set-string --snippets --template --values --config --name --state -v --v" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -715,7 +843,41 @@ _toolbox_template ()
 _kops_trust ()
 {
     local cur word_list
-    word_list=" -h --help --add_dir_header --alsologtostderr --config --log_backtrace_at --log_dir --log_file --log_file_max_size --logtostderr --name --one_output --skip_headers --skip_log_headers --state --stderrthreshold -v --v --vmodule" 
+    local i=1 subcommand_index
+
+    # take the last word that's NOT starting with -
+    while [[ ( $i < $COMP_CWORD ) ]]; do
+        local s="${COMP_WORDS[i]}"
+        case "$s" in
+          trust)
+            subcommand_index=$i
+            break
+            ;;
+        esac
+        (( i++ ))
+    done
+
+    while [[ ( $subcommand_index < $COMP_CWORD ) ]]; do
+        local s="${COMP_WORDS[subcommand_index}"
+        case "$s" in
+          keypair) _kops_keypair
+            return
+            ;;
+
+          *)  ;; 
+        esac
+        (( subcommand_index++ ))
+    done
+
+    word_list=" keypair -h --help --config --name --state -v --v" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_trust_keypair ()
+{
+    local cur word_list
+    word_list=" -h --help --config --name --state -v --v" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -749,7 +911,7 @@ _kops_update ()
         (( subcommand_index++ ))
     done
 
-    word_list=" cluster -h --help --add_dir_header --alsologtostderr --config --log_backtrace_at --log_dir --log_file --log_file_max_size --logtostderr --name --one_output --skip_headers --skip_log_headers --state --stderrthreshold -v --v --vmodule" 
+    word_list=" cluster -h --help --config --name --state -v --v" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -757,7 +919,7 @@ _kops_update ()
 _update_cluster ()
 {
     local cur word_list
-    word_list=" --admin --allow-kops-downgrade --create-kube-config -h --help --internal --lifecycle-overrides --out --phase --ssh-public-key --target --user -y --yes --add_dir_header --alsologtostderr --config --log_backtrace_at --log_dir --log_file --log_file_max_size --logtostderr --name --one_output --skip_headers --skip_log_headers --state --stderrthreshold -v --v --vmodule" 
+    word_list=" --admin --allow-kops-downgrade --create-kube-config -h --help --internal --lifecycle-overrides --out --phase --ssh-public-key --target --user -y --yes --config --name --state -v --v" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -791,7 +953,7 @@ _kops_upgrade ()
         (( subcommand_index++ ))
     done
 
-    word_list=" cluster -h --help --add_dir_header --alsologtostderr --config --log_backtrace_at --log_dir --log_file --log_file_max_size --logtostderr --name --one_output --skip_headers --skip_log_headers --state --stderrthreshold -v --v --vmodule" 
+    word_list=" cluster -h --help --config --name --state -v --v" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -799,7 +961,7 @@ _kops_upgrade ()
 _upgrade_cluster ()
 {
     local cur word_list
-    word_list=" --channel -h --help -y --yes --add_dir_header --alsologtostderr --config --log_backtrace_at --log_dir --log_file --log_file_max_size --logtostderr --name --one_output --skip_headers --skip_log_headers --state --stderrthreshold -v --v --vmodule" 
+    word_list=" --channel -h --help --kubernetes-version -y --yes --config --name --state -v --v" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -833,7 +995,7 @@ _kops_validate ()
         (( subcommand_index++ ))
     done
 
-    word_list=" cluster -h --help --add_dir_header --alsologtostderr --config --log_backtrace_at --log_dir --log_file --log_file_max_size --logtostderr --name --one_output --skip_headers --skip_log_headers --state --stderrthreshold -v --v --vmodule" 
+    word_list=" cluster -h --help --config --name --state -v --v" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -841,7 +1003,7 @@ _kops_validate ()
 _validate_cluster ()
 {
     local cur word_list
-    word_list=" --count -h --help --kubeconfig -o --output --wait --add_dir_header --alsologtostderr --config --log_backtrace_at --log_dir --log_file --log_file_max_size --logtostderr --name --one_output --skip_headers --skip_log_headers --state --stderrthreshold -v --v --vmodule" 
+    word_list=" --count -h --help --kubeconfig -o --output --wait --config --name --state -v --v" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -849,7 +1011,7 @@ _validate_cluster ()
 _kops_version ()
 {
     local cur word_list
-    word_list=" -h --help --short --add_dir_header --alsologtostderr --config --log_backtrace_at --log_dir --log_file --log_file_max_size --logtostderr --name --one_output --skip_headers --skip_log_headers --state --stderrthreshold -v --v --vmodule" 
+    word_list=" -h --help --server --short --config --name --state -v --v" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }

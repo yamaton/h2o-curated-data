@@ -5,7 +5,7 @@ complete -c micromamba -n "not __fish_seen_subcommand_from shell create install 
 complete -c micromamba -n "not __fish_seen_subcommand_from shell create install update self-update repoquery remove list package clean config info constructor env activate run ps auth search" -l "no-rc" -d "Disable the use of configuration files"
 complete -c micromamba -n "not __fish_seen_subcommand_from shell create install update self-update repoquery remove list package clean config info constructor env activate run ps auth search" -l "no-env" -d "Disable the use of environment variables"
 complete -c micromamba -n "not __fish_seen_subcommand_from shell create install update self-update repoquery remove list package clean config info constructor env activate run ps auth search" -s "v" -l "verbose" -d "Set verbosity (higher verbosity with multiple -v, e.g. -vvv)"
-complete -c micromamba -n "not __fish_seen_subcommand_from shell create install update self-update repoquery remove list package clean config info constructor env activate run ps auth search" -l "log-level" -d "OR {5,1,4,2,6,0,3}   Set the log level" -x
+complete -c micromamba -n "not __fish_seen_subcommand_from shell create install update self-update repoquery remove list package clean config info constructor env activate run ps auth search" -l "log-level" -d "Set the log level" -x
 complete -c micromamba -n "not __fish_seen_subcommand_from shell create install update self-update repoquery remove list package clean config info constructor env activate run ps auth search" -s "q" -l "quiet" -d "Set quiet mode (print less output)"
 complete -c micromamba -n "not __fish_seen_subcommand_from shell create install update self-update repoquery remove list package clean config info constructor env activate run ps auth search" -s "y" -l "yes" -d "Automatically answer yes on prompted questions"
 complete -c micromamba -n "not __fish_seen_subcommand_from shell create install update self-update repoquery remove list package clean config info constructor env activate run ps auth search" -l "json" -d "Report all output as json"
@@ -49,7 +49,7 @@ complete -c micromamba -n "__fish_seen_subcommand_from shell" -l "rc-file" -d "P
 complete -c micromamba -n "__fish_seen_subcommand_from shell" -l "no-rc" -d "Disable the use of configuration files"
 complete -c micromamba -n "__fish_seen_subcommand_from shell" -l "no-env" -d "Disable the use of environment variables"
 complete -c micromamba -n "__fish_seen_subcommand_from shell" -s "v" -l "verbose" -d "Set verbosity (higher verbosity with multiple -v, e.g. -vvv)"
-complete -c micromamba -n "__fish_seen_subcommand_from shell" -l "log-level" -d "OR {5,1,4,2,6,0,3}   Set the log level" -x
+complete -c micromamba -n "__fish_seen_subcommand_from shell" -l "log-level" -d "Set the log level" -x
 complete -c micromamba -n "__fish_seen_subcommand_from shell" -s "q" -l "quiet" -d "Set quiet mode (print less output)"
 complete -c micromamba -n "__fish_seen_subcommand_from shell" -s "y" -l "yes" -d "Automatically answer yes on prompted questions"
 complete -c micromamba -n "__fish_seen_subcommand_from shell" -l "json" -d "Report all output as json"
@@ -89,7 +89,7 @@ complete -c micromamba -n "__fish_seen_subcommand_from create" -l "rc-file" -d "
 complete -c micromamba -n "__fish_seen_subcommand_from create" -l "no-rc" -d "Disable the use of configuration files"
 complete -c micromamba -n "__fish_seen_subcommand_from create" -l "no-env" -d "Disable the use of environment variables"
 complete -c micromamba -n "__fish_seen_subcommand_from create" -s "v" -l "verbose" -d "Set verbosity (higher verbosity with multiple -v, e.g. -vvv)"
-complete -c micromamba -n "__fish_seen_subcommand_from create" -l "log-level" -d "OR {5,1,4,2,6,0,3}   Set the log level" -x
+complete -c micromamba -n "__fish_seen_subcommand_from create" -l "log-level" -d "Set the log level" -x
 complete -c micromamba -n "__fish_seen_subcommand_from create" -s "q" -l "quiet" -d "Set quiet mode (print less output)"
 complete -c micromamba -n "__fish_seen_subcommand_from create" -s "y" -l "yes" -d "Automatically answer yes on prompted questions"
 complete -c micromamba -n "__fish_seen_subcommand_from create" -l "json" -d "Report all output as json"
@@ -139,7 +139,7 @@ complete -c micromamba -n "__fish_seen_subcommand_from install" -l "rc-file" -d 
 complete -c micromamba -n "__fish_seen_subcommand_from install" -l "no-rc" -d "Disable the use of configuration files"
 complete -c micromamba -n "__fish_seen_subcommand_from install" -l "no-env" -d "Disable the use of environment variables"
 complete -c micromamba -n "__fish_seen_subcommand_from install" -s "v" -l "verbose" -d "Set verbosity (higher verbosity with multiple -v, e.g. -vvv)"
-complete -c micromamba -n "__fish_seen_subcommand_from install" -l "log-level" -d "OR {5,1,4,2,6,0,3}   Set the log level" -x
+complete -c micromamba -n "__fish_seen_subcommand_from install" -l "log-level" -d "Set the log level" -x
 complete -c micromamba -n "__fish_seen_subcommand_from install" -s "q" -l "quiet" -d "Set quiet mode (print less output)"
 complete -c micromamba -n "__fish_seen_subcommand_from install" -s "y" -l "yes" -d "Automatically answer yes on prompted questions"
 complete -c micromamba -n "__fish_seen_subcommand_from install" -l "json" -d "Report all output as json"
@@ -189,7 +189,7 @@ complete -c micromamba -n "__fish_seen_subcommand_from update" -l "rc-file" -d "
 complete -c micromamba -n "__fish_seen_subcommand_from update" -l "no-rc" -d "Disable the use of configuration files"
 complete -c micromamba -n "__fish_seen_subcommand_from update" -l "no-env" -d "Disable the use of environment variables"
 complete -c micromamba -n "__fish_seen_subcommand_from update" -s "v" -l "verbose" -d "Set verbosity (higher verbosity with multiple -v, e.g. -vvv)"
-complete -c micromamba -n "__fish_seen_subcommand_from update" -l "log-level" -d "OR {5,1,4,2,6,0,3}   Set the log level" -x
+complete -c micromamba -n "__fish_seen_subcommand_from update" -l "log-level" -d "Set the log level" -x
 complete -c micromamba -n "__fish_seen_subcommand_from update" -s "q" -l "quiet" -d "Set quiet mode (print less output)"
 complete -c micromamba -n "__fish_seen_subcommand_from update" -s "y" -l "yes" -d "Automatically answer yes on prompted questions"
 complete -c micromamba -n "__fish_seen_subcommand_from update" -l "json" -d "Report all output as json"
@@ -238,7 +238,7 @@ complete -c micromamba -n "__fish_seen_subcommand_from self-update" -l "rc-file"
 complete -c micromamba -n "__fish_seen_subcommand_from self-update" -l "no-rc" -d "Disable the use of configuration files"
 complete -c micromamba -n "__fish_seen_subcommand_from self-update" -l "no-env" -d "Disable the use of environment variables"
 complete -c micromamba -n "__fish_seen_subcommand_from self-update" -s "v" -l "verbose" -d "Set verbosity (higher verbosity with multiple -v, e.g. -vvv)"
-complete -c micromamba -n "__fish_seen_subcommand_from self-update" -l "log-level" -d "OR {5,1,4,2,6,0,3}   Set the log level" -x
+complete -c micromamba -n "__fish_seen_subcommand_from self-update" -l "log-level" -d "Set the log level" -x
 complete -c micromamba -n "__fish_seen_subcommand_from self-update" -s "q" -l "quiet" -d "Set quiet mode (print less output)"
 complete -c micromamba -n "__fish_seen_subcommand_from self-update" -s "y" -l "yes" -d "Automatically answer yes on prompted questions"
 complete -c micromamba -n "__fish_seen_subcommand_from self-update" -l "json" -d "Report all output as json"
@@ -272,7 +272,7 @@ complete -c micromamba -n "__fish_seen_subcommand_from repoquery" -l "rc-file" -
 complete -c micromamba -n "__fish_seen_subcommand_from repoquery" -l "no-rc" -d "Disable the use of configuration files"
 complete -c micromamba -n "__fish_seen_subcommand_from repoquery" -l "no-env" -d "Disable the use of environment variables"
 complete -c micromamba -n "__fish_seen_subcommand_from repoquery" -s "v" -l "verbose" -d "Set verbosity (higher verbosity with multiple -v, e.g. -vvv)"
-complete -c micromamba -n "__fish_seen_subcommand_from repoquery" -l "log-level" -d "OR {5,1,4,2,6,0,3}   Set the log level" -x
+complete -c micromamba -n "__fish_seen_subcommand_from repoquery" -l "log-level" -d "Set the log level" -x
 complete -c micromamba -n "__fish_seen_subcommand_from repoquery" -s "q" -l "quiet" -d "Set quiet mode (print less output)"
 complete -c micromamba -n "__fish_seen_subcommand_from repoquery" -s "y" -l "yes" -d "Automatically answer yes on prompted questions"
 complete -c micromamba -n "__fish_seen_subcommand_from repoquery" -l "json" -d "Report all output as json"
@@ -299,7 +299,7 @@ complete -c micromamba -n "__fish_seen_subcommand_from remove" -l "rc-file" -d "
 complete -c micromamba -n "__fish_seen_subcommand_from remove" -l "no-rc" -d "Disable the use of configuration files"
 complete -c micromamba -n "__fish_seen_subcommand_from remove" -l "no-env" -d "Disable the use of environment variables"
 complete -c micromamba -n "__fish_seen_subcommand_from remove" -s "v" -l "verbose" -d "Set verbosity (higher verbosity with multiple -v, e.g. -vvv)"
-complete -c micromamba -n "__fish_seen_subcommand_from remove" -l "log-level" -d "OR {5,1,4,2,6,0,3}   Set the log level" -x
+complete -c micromamba -n "__fish_seen_subcommand_from remove" -l "log-level" -d "Set the log level" -x
 complete -c micromamba -n "__fish_seen_subcommand_from remove" -s "q" -l "quiet" -d "Set quiet mode (print less output)"
 complete -c micromamba -n "__fish_seen_subcommand_from remove" -s "y" -l "yes" -d "Automatically answer yes on prompted questions"
 complete -c micromamba -n "__fish_seen_subcommand_from remove" -l "json" -d "Report all output as json"
@@ -318,7 +318,7 @@ complete -c micromamba -n "__fish_seen_subcommand_from list" -l "rc-file" -d "Pa
 complete -c micromamba -n "__fish_seen_subcommand_from list" -l "no-rc" -d "Disable the use of configuration files"
 complete -c micromamba -n "__fish_seen_subcommand_from list" -l "no-env" -d "Disable the use of environment variables"
 complete -c micromamba -n "__fish_seen_subcommand_from list" -s "v" -l "verbose" -d "Set verbosity (higher verbosity with multiple -v, e.g. -vvv)"
-complete -c micromamba -n "__fish_seen_subcommand_from list" -l "log-level" -d "OR {5,1,4,2,6,0,3}   Set the log level" -x
+complete -c micromamba -n "__fish_seen_subcommand_from list" -l "log-level" -d "Set the log level" -x
 complete -c micromamba -n "__fish_seen_subcommand_from list" -s "q" -l "quiet" -d "Set quiet mode (print less output)"
 complete -c micromamba -n "__fish_seen_subcommand_from list" -s "y" -l "yes" -d "Automatically answer yes on prompted questions"
 complete -c micromamba -n "__fish_seen_subcommand_from list" -l "json" -d "Report all output as json"
@@ -348,7 +348,7 @@ complete -c micromamba -n "__fish_seen_subcommand_from clean" -l "rc-file" -d "P
 complete -c micromamba -n "__fish_seen_subcommand_from clean" -l "no-rc" -d "Disable the use of configuration files"
 complete -c micromamba -n "__fish_seen_subcommand_from clean" -l "no-env" -d "Disable the use of environment variables"
 complete -c micromamba -n "__fish_seen_subcommand_from clean" -s "v" -l "verbose" -d "Set verbosity (higher verbosity with multiple -v, e.g. -vvv)"
-complete -c micromamba -n "__fish_seen_subcommand_from clean" -l "log-level" -d "OR {5,1,4,2,6,0,3}   Set the log level" -x
+complete -c micromamba -n "__fish_seen_subcommand_from clean" -l "log-level" -d "Set the log level" -x
 complete -c micromamba -n "__fish_seen_subcommand_from clean" -s "q" -l "quiet" -d "Set quiet mode (print less output)"
 complete -c micromamba -n "__fish_seen_subcommand_from clean" -s "y" -l "yes" -d "Automatically answer yes on prompted questions"
 complete -c micromamba -n "__fish_seen_subcommand_from clean" -l "json" -d "Report all output as json"
@@ -364,7 +364,7 @@ complete -c micromamba -n "__fish_seen_subcommand_from config" -l "rc-file" -d "
 complete -c micromamba -n "__fish_seen_subcommand_from config" -l "no-rc" -d "Disable the use of configuration files"
 complete -c micromamba -n "__fish_seen_subcommand_from config" -l "no-env" -d "Disable the use of environment variables"
 complete -c micromamba -n "__fish_seen_subcommand_from config" -s "v" -l "verbose" -d "Set verbosity (higher verbosity with multiple -v, e.g. -vvv)"
-complete -c micromamba -n "__fish_seen_subcommand_from config" -l "log-level" -d "OR {5,1,4,2,6,0,3}   Set the log level" -x
+complete -c micromamba -n "__fish_seen_subcommand_from config" -l "log-level" -d "Set the log level" -x
 complete -c micromamba -n "__fish_seen_subcommand_from config" -s "q" -l "quiet" -d "Set quiet mode (print less output)"
 complete -c micromamba -n "__fish_seen_subcommand_from config" -s "y" -l "yes" -d "Automatically answer yes on prompted questions"
 complete -c micromamba -n "__fish_seen_subcommand_from config" -l "json" -d "Report all output as json"
@@ -384,7 +384,7 @@ complete -c micromamba -n "__fish_seen_subcommand_from info" -l "rc-file" -d "Pa
 complete -c micromamba -n "__fish_seen_subcommand_from info" -l "no-rc" -d "Disable the use of configuration files"
 complete -c micromamba -n "__fish_seen_subcommand_from info" -l "no-env" -d "Disable the use of environment variables"
 complete -c micromamba -n "__fish_seen_subcommand_from info" -s "v" -l "verbose" -d "Set verbosity (higher verbosity with multiple -v, e.g. -vvv)"
-complete -c micromamba -n "__fish_seen_subcommand_from info" -l "log-level" -d "OR {5,1,4,2,6,0,3}   Set the log level" -x
+complete -c micromamba -n "__fish_seen_subcommand_from info" -l "log-level" -d "Set the log level" -x
 complete -c micromamba -n "__fish_seen_subcommand_from info" -s "q" -l "quiet" -d "Set quiet mode (print less output)"
 complete -c micromamba -n "__fish_seen_subcommand_from info" -s "y" -l "yes" -d "Automatically answer yes on prompted questions"
 complete -c micromamba -n "__fish_seen_subcommand_from info" -l "json" -d "Report all output as json"
@@ -410,7 +410,7 @@ complete -c micromamba -n "__fish_seen_subcommand_from env" -l "rc-file" -d "Pat
 complete -c micromamba -n "__fish_seen_subcommand_from env" -l "no-rc" -d "Disable the use of configuration files"
 complete -c micromamba -n "__fish_seen_subcommand_from env" -l "no-env" -d "Disable the use of environment variables"
 complete -c micromamba -n "__fish_seen_subcommand_from env" -s "v" -l "verbose" -d "Set verbosity (higher verbosity with multiple -v, e.g. -vvv)"
-complete -c micromamba -n "__fish_seen_subcommand_from env" -l "log-level" -d "OR {5,1,4,2,6,0,3}   Set the log level" -x
+complete -c micromamba -n "__fish_seen_subcommand_from env" -l "log-level" -d "Set the log level" -x
 complete -c micromamba -n "__fish_seen_subcommand_from env" -s "q" -l "quiet" -d "Set quiet mode (print less output)"
 complete -c micromamba -n "__fish_seen_subcommand_from env" -s "y" -l "yes" -d "Automatically answer yes on prompted questions"
 complete -c micromamba -n "__fish_seen_subcommand_from env" -l "json" -d "Report all output as json"
@@ -465,7 +465,7 @@ complete -c micromamba -n "__fish_seen_subcommand_from search" -l "rc-file" -d "
 complete -c micromamba -n "__fish_seen_subcommand_from search" -l "no-rc" -d "Disable the use of configuration files"
 complete -c micromamba -n "__fish_seen_subcommand_from search" -l "no-env" -d "Disable the use of environment variables"
 complete -c micromamba -n "__fish_seen_subcommand_from search" -s "v" -l "verbose" -d "Set verbosity (higher verbosity with multiple -v, e.g. -vvv)"
-complete -c micromamba -n "__fish_seen_subcommand_from search" -l "log-level" -d "OR {5,1,4,2,6,0,3}   Set the log level" -x
+complete -c micromamba -n "__fish_seen_subcommand_from search" -l "log-level" -d "Set the log level" -x
 complete -c micromamba -n "__fish_seen_subcommand_from search" -s "q" -l "quiet" -d "Set quiet mode (print less output)"
 complete -c micromamba -n "__fish_seen_subcommand_from search" -s "y" -l "yes" -d "Automatically answer yes on prompted questions"
 complete -c micromamba -n "__fish_seen_subcommand_from search" -l "json" -d "Report all output as json"

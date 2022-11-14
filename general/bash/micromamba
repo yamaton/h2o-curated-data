@@ -105,7 +105,57 @@ _micromamba()
 _micromamba_shell ()
 {
     local cur word_list
-    word_list=" -h --help -s --shell --stack -p -n --prefix --name --rc-file --no-rc --no-env -v --verbose --log-level -q --quiet -y --yes --json --offline --dry-run --download-only --experimental" 
+    local i=1 subcommand_index
+
+    # take the last word that's NOT starting with -
+    while [[ ( $i < $COMP_CWORD ) ]]; do
+        local s="${COMP_WORDS[i]}"
+        case "$s" in
+          shell)
+            subcommand_index=$i
+            break
+            ;;
+        esac
+        (( i++ ))
+    done
+
+    while [[ ( $subcommand_index < $COMP_CWORD ) ]]; do
+        local s="${COMP_WORDS[subcommand_index}"
+        case "$s" in
+          init) _micromamba_init
+            return
+            ;;
+
+          deinit) _micromamba_deinit
+            return
+            ;;
+
+          reinit) _micromamba_reinit
+            return
+            ;;
+
+          hook) _micromamba_hook
+            return
+            ;;
+
+          activate) _micromamba_activate
+            return
+            ;;
+
+          deactivate) _micromamba_deactivate
+            return
+            ;;
+
+          reactivate) _micromamba_reactivate
+            return
+            ;;
+
+          *)  ;; 
+        esac
+        (( subcommand_index++ ))
+    done
+
+    word_list=" init deinit reinit hook activate deactivate reactivate -h --help -s --shell --stack -p -n --prefix --name --rc-file --no-rc --no-env -v --verbose --log-level -q --quiet -y --yes --json --offline --dry-run --download-only --experimental" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -145,7 +195,41 @@ _micromamba_selfupdate ()
 _micromamba_repoquery ()
 {
     local cur word_list
-    word_list=" -h --help -c --channel --override-channels --channel-priority --channel-alias --strict-channel-priority --no-channel-priority -t --tree --pretty --local --remote --platform --rc-file --no-rc --no-env -v --verbose --log-level -q --quiet -y --yes --json --offline --dry-run --download-only --experimental -r --root-prefix -p --prefix -n --name --ssl-verify --ssl-no-revoke --cacert-path --repodata-ttl --retry-clean-cache" 
+    local i=1 subcommand_index
+
+    # take the last word that's NOT starting with -
+    while [[ ( $i < $COMP_CWORD ) ]]; do
+        local s="${COMP_WORDS[i]}"
+        case "$s" in
+          repoquery)
+            subcommand_index=$i
+            break
+            ;;
+        esac
+        (( i++ ))
+    done
+
+    while [[ ( $subcommand_index < $COMP_CWORD ) ]]; do
+        local s="${COMP_WORDS[subcommand_index}"
+        case "$s" in
+          search) _micromamba_search
+            return
+            ;;
+
+          depends) _micromamba_depends
+            return
+            ;;
+
+          whoneeds) _micromamba_whoneeds
+            return
+            ;;
+
+          *)  ;; 
+        esac
+        (( subcommand_index++ ))
+    done
+
+    word_list=" search depends whoneeds -h --help -c --channel --override-channels --channel-priority --channel-alias --strict-channel-priority --no-channel-priority -t --tree --pretty --local --remote --platform --rc-file --no-rc --no-env -v --verbose --log-level -q --quiet -y --yes --json --offline --dry-run --download-only --experimental -r --root-prefix -p --prefix -n --name --ssl-verify --ssl-no-revoke --cacert-path --repodata-ttl --retry-clean-cache" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -301,7 +385,7 @@ _config_prepend ()
         (( subcommand_index++ ))
     done
 
-    word_list=" specs -h --help --system --env --file --env --system --file" 
+    word_list=" specs -h --help --system --env --file" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -335,7 +419,7 @@ _config_append ()
         (( subcommand_index++ ))
     done
 
-    word_list=" specs -h --help --system --env --file --env --system --file" 
+    word_list=" specs -h --help --system --env --file" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -343,7 +427,7 @@ _config_append ()
 _config_removekey ()
 {
     local cur word_list
-    word_list=" -h --help --system --env --file --env --system --file" 
+    word_list=" -h --help --system --env --file" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -351,7 +435,7 @@ _config_removekey ()
 _config_remove ()
 {
     local cur word_list
-    word_list=" -h --help --system --env --file --env --system --file" 
+    word_list=" -h --help --system --env --file" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -359,7 +443,7 @@ _config_remove ()
 _config_set ()
 {
     local cur word_list
-    word_list=" -h --help --system --env --file --env --system --file" 
+    word_list=" -h --help --system --env --file" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -367,7 +451,7 @@ _config_set ()
 _config_get ()
 {
     local cur word_list
-    word_list=" -h --help --system --env --file --env --system --file" 
+    word_list=" -h --help --system --env --file" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }

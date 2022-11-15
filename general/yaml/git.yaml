@@ -1,9 +1,26 @@
 name: git
 description: git
+usage: |-
+  git [-v | --version] [-h | --help] [-C <path>] [-c <name>=<value>]
+      [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]
+      [-p | --paginate | -P | --no-pager] [--no-replace-objects] [--bare]
+      [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>]
+      [--super-prefix=<path>] [--config-env=<name>=<envvar>]
+      <command> [<args>]
 options: []
 subcommands:
   - name: clone
     description: Clone a repository into a new directory
+    usage: |-
+      git clone [--template=<template-directory>]
+                [-l] [-s] [--no-hardlinks] [-q] [-n] [--bare] [--mirror]
+                [-o <name>] [-b <name>] [-u <upload-pack>] [--reference <repository>]
+                [--dissociate] [--separate-git-dir <git-dir>]
+                [--depth <depth>] [--[no-]single-branch] [--no-tags]
+                [--recurse-submodules[=<pathspec>]] [--[no-]shallow-submodules]
+                [--[no-]remote-submodules] [--jobs <n>] [--sparse] [--[no-]reject-shallow]
+                [--filter=<filter> [--also-filter-submodules]] [--] <repository>
+                [<directory>]
     options:
       - names:
           - -l
@@ -70,6 +87,10 @@ subcommands:
           - --filter
         argument: <filter-spec>
         description: Use the partial clone feature and request that the server sends a subset of reachable objects according to a given object filter. When using --filter, the supplied <filter-spec> is used for the partial clone filter. For example, --filter=blob:none will filter out all blobs (file contents) until needed by Git. Also, --filter=blob:limit=<size> will filter out all blobs of size at least <size>. For more details on filter specifications, see the --filter option in git-rev-list(1).
+      - names:
+          - --also-filter-submodules
+        argument: ""
+        description: Also apply the partial clone filter to any submodules in the repository. Requires --filter and --recurse-submodules. This can be turned on by default by setting the clone.filterSubmodules config option.
       - names:
           - --mirror
         argument: ""
@@ -153,6 +174,11 @@ subcommands:
         description: The number of submodules fetched at the same time. Defaults to the submodule.fetchJobs option.
   - name: init
     description: Create an empty Git repository or reinitialize an existing one
+    usage: |-
+      git init [-q | --quiet] [--bare] [--template=<template-directory>]
+                [--separate-git-dir <git-dir>] [--object-format=<format>]
+                [-b <branch-name> | --initial-branch=<branch-name>]
+                [--shared[=<permissions>]] [<directory>]
     options:
       - names:
           - -q
@@ -186,6 +212,12 @@ subcommands:
         description: Specify that the Git repository is to be shared amongst several users. This allows users belonging to the same group to push into that repository. When specified, the config variable "core.sharedRepository" is set so that files and directories under $GIT_DIR are created with the requested permissions. When not specified, Git will use permissions reported by umask(2).
   - name: add
     description: Add file contents to the index
+    usage: |-
+      git add [--verbose | -v] [--dry-run | -n] [--force | -f] [--interactive | -i] [--patch | -p]
+                [--edit | -e] [--[no-]all | --[no-]ignore-removal | [--update | -u]] [--sparse]
+                [--intent-to-add | -N] [--refresh] [--ignore-errors] [--ignore-missing] [--renormalize]
+                [--chmod=(+|-)x] [--pathspec-from-file=<file> [--pathspec-file-nul]]
+                [--] [<pathspec>...]
     options:
       - names:
           - -n
@@ -280,6 +312,7 @@ subcommands:
         description: This option can be used to separate command-line options from the list of files, (useful when filenames might be mistaken for command-line options).
   - name: mv
     description: Move or rename a file, a directory, or a symlink
+    usage: git mv <options>... <args>...
     options:
       - names:
           - -f
@@ -302,6 +335,10 @@ subcommands:
         description: Report the names of files as they are moved.
   - name: restore
     description: Restore working tree files
+    usage: |-
+      git restore [<options>] [--source=<tree>] [--staged] [--worktree] [--] <pathspec>...
+      git restore [<options>] [--source=<tree>] [--staged] [--worktree] --pathspec-from-file=<file> [--pathspec-file-nul]
+      git restore (-p|--patch) [<options>] [--source=<tree>] [--staged] [--worktree] [--] [<pathspec>...]
     options:
       - names:
           - -s
@@ -376,6 +413,10 @@ subcommands:
         description: Do not interpret any more arguments as options.
   - name: rm
     description: Remove files from the working tree and from the index
+    usage: |-
+      git rm [-f | --force] [-n] [-r] [--cached] [--ignore-unmatch]
+                [--quiet] [--pathspec-from-file=<file> [--pathspec-file-nul]]
+                [--] [<pathspec>...]
     options:
       - names:
           - -f
@@ -422,6 +463,7 @@ subcommands:
         description: Only meaningful with --pathspec-from-file. Pathspec elements are separated with NUL character and all other characters are taken literally (including newlines and quotes).
   - name: bisect
     description: Use binary search to find the commit that introduced a bug
+    usage: git bisect <subcommand> <options>
     options:
       - names:
           - --no-checkout
@@ -433,6 +475,13 @@ subcommands:
         description: Follow only the first parent commit upon seeing a merge commit.
   - name: diff
     description: Show changes between commits, commit and working tree, etc
+    usage: |-
+      git diff [<options>] [<commit>] [--] [<path>...]
+      git diff [<options>] --cached [--merge-base] [<commit>] [--] [<path>...]
+      git diff [<options>] [--merge-base] <commit> [<commit>...] <commit> [--] [<path>...]
+      git diff [<options>] <commit>...<commit> [--] [<path>...]
+      git diff [<options>] <blob> <blob>
+      git diff [<options>] --no-index [--] <path> <path>
     options:
       - names:
           - -p
@@ -786,8 +835,33 @@ subcommands:
           - "-0"
         argument: ""
         description: Omit diff output for unmerged entries and just show "Unmerged". Can be used only when comparing the working tree with the index.
+      - names:
+          - -static
+        argument: void describe(struct commit *cmit, int last_one)
+        description: ++static void describe(char *arg, int last_one)
   - name: grep
     description: Print lines matching a pattern
+    usage: |-
+      git grep [-a | --text] [-I] [--textconv] [-i | --ignore-case] [-w | --word-regexp]
+                 [-v | --invert-match] [-h|-H] [--full-name]
+                 [-E | --extended-regexp] [-G | --basic-regexp]
+                 [-P | --perl-regexp]
+                 [-F | --fixed-strings] [-n | --line-number] [--column]
+                 [-l | --files-with-matches] [-L | --files-without-match]
+                 [(-O | --open-files-in-pager) [<pager>]]
+                 [-z | --null]
+                 [ -o | --only-matching ] [-c | --count] [--all-match] [-q | --quiet]
+                 [--max-depth <depth>] [--[no-]recursive]
+                 [--color[=<when>] | --no-color]
+                 [--break] [--heading] [-p | --show-function]
+                 [-A <post-context>] [-B <pre-context>] [-C <context>]
+                 [-W | --function-context]
+                 [--threads <num>]
+                 [-f <file>] [-e] <pattern>
+                 [--and|--or|--not|(|)|-e <pattern>...]
+                 [--recurse-submodules] [--parent-basename <basename>]
+                 [ [--[no-]exclude-standard] [--cached | --no-index | --untracked] | <tree>...]
+                 [--] [<pathspec>...]
     options:
       - names:
           - --cached
@@ -989,6 +1063,7 @@ subcommands:
         description: Signals the end of options; the rest of the parameters are <pathspec> limiters.
   - name: log
     description: Show commit logs
+    usage: git log [<options>] [<revision-range>] [[--] <path>...]
     options:
       - names:
           - --follow
@@ -1030,6 +1105,10 @@ subcommands:
           - --after
         argument: <date>
         description: Show commits more recent than a specific date.
+      - names:
+          - --since-as-filter
+        argument: <date>
+        description: Show all commits more recent than a specific date. This visits all commits in the range, rather than stopping at the first commit which is older than a specific date.
       - names:
           - --until
           - --before
@@ -1102,7 +1181,11 @@ subcommands:
       - names:
           - --first-parent
         argument: ""
-        description: Follow only the first parent commit upon seeing a merge commit. This option can give a better overview when viewing the evolution of a particular topic branch, because merges into a topic branch tend to be only about adjusting to updated upstream from time to time, and this option allows you to ignore the individual commits brought in to your history by such a merge.
+        description: When finding commits to include, follow only the first parent commit upon seeing a merge commit. This option can give a better overview when viewing the evolution of a particular topic branch, because merges into a topic branch tend to be only about adjusting to updated upstream from time to time, and this option allows you to ignore the individual commits brought in to your history by such a merge.
+      - names:
+          - --exclude-first-parent-only
+        argument: ""
+        description: When finding commits to exclude (with a ^), follow only the first parent commit upon seeing a merge commit. This can be used to find the set of changes in a topic branch from the point where it diverged from the remote branch, given that arbitrary merges can be valid topic branch changes.
       - names:
           - --not
         argument: ""
@@ -1226,10 +1309,6 @@ subcommands:
         argument: ""
         description: First, build a history graph in the same way that --full-history with parent rewriting does (see above).
       - names:
-          - --ancestry-path
-        argument: ""
-        description: Limit the displayed commits to those directly on the ancestry chain between the “from” and “to” commits in the given commit range. I.e. only display commits that are ancestor of the “to” commit and descendants of the “from” commit.
-      - names:
           - --show-pulls
         argument: ""
         description: In addition to the commits shown in the default history, show each merge commit that is not TREESAME to its first parent but is TREESAME to a later parent.
@@ -1337,7 +1416,7 @@ subcommands:
       - names:
           - --diff-merges
           - --no-diff-merges
-        argument: (off|none|on|first-parent|1|separate|m|combined|c|dense-combined|cc)
+        argument: (off|none|on|first-parent|1|separate|m|combined|c|dense-combined|cc|remerge|r)
         description: Specify diff format to be used for merge commits. Default is off unless --first-parent is in use, in which case first-parent is the default.
       - names:
           - --combined-all-paths
@@ -1667,8 +1746,13 @@ subcommands:
           - --ita-invisible-in-index
         argument: ""
         description: By default entries added by "git add -N" appear as an existing empty file in "git diff" and a new file in "git diff --cached". This option makes the entry appear as a new file in "git diff" and non-existent in "git diff --cached". This option could be reverted with --ita-visible-in-index. Both options are experimental and could be removed in future.
+      - names:
+          - -static
+        argument: void describe(struct commit *cmit, int last_one)
+        description: ++static void describe(char *arg, int last_one)
   - name: show
     description: Show various types of objects
+    usage: git show [<options>] [<object>...]
     options:
       - names:
           - --pretty
@@ -1722,7 +1806,7 @@ subcommands:
       - names:
           - --diff-merges
           - --no-diff-merges
-        argument: (off|none|on|first-parent|1|separate|m|combined|c|dense-combined|cc)
+        argument: (off|none|on|first-parent|1|separate|m|combined|c|dense-combined|cc|remerge|r)
         description: Specify diff format to be used for merge commits. Default is dense-combined unless --first-parent is in use, in which case first-parent is the default.
       - names:
           - --combined-all-paths
@@ -2052,8 +2136,13 @@ subcommands:
           - --ita-invisible-in-index
         argument: ""
         description: By default entries added by "git add -N" appear as an existing empty file in "git diff" and a new file in "git diff --cached". This option makes the entry appear as a new file in "git diff" and non-existent in "git diff --cached". This option could be reverted with --ita-visible-in-index. Both options are experimental and could be removed in future.
+      - names:
+          - -static
+        argument: void describe(struct commit *cmit, int last_one)
+        description: ++static void describe(char *arg, int last_one)
   - name: status
     description: Show the working tree status
+    usage: git status [<options>...] [--] [<pathspec>...]
     options:
       - names:
           - -s
@@ -2120,6 +2209,23 @@ subcommands:
         description: Turn on rename detection, optionally setting the similarity threshold. See also git-diff(1) --find-renames.
   - name: branch
     description: List, create, or delete branches
+    usage: |-
+      git branch [--color[=<when>] | --no-color] [--show-current]
+              [-v [--abbrev=<n> | --no-abbrev]]
+              [--column[=<options>] | --no-column] [--sort=<key>]
+              [--merged [<commit>]] [--no-merged [<commit>]]
+              [--contains [<commit>]] [--no-contains [<commit>]]
+              [--points-at <object>] [--format=<format>]
+              [(-r | --remotes) | (-a | --all)]
+              [--list] [<pattern>...]
+      git branch [--track[=(direct|inherit)] | --no-track] [-f]
+              [--recurse-submodules] <branchname> [<start-point>]
+      git branch (--set-upstream-to=<upstream> | -u <upstream>) [<branchname>]
+      git branch --unset-upstream [<branchname>]
+      git branch (-m | -M) [<oldbranch>] <newbranch>
+      git branch (-c | -C) [<oldbranch>] <newbranch>
+      git branch (-d | -D) [-r] <branchname>...
+      git branch --edit-description [<branchname>]
     options:
       - names:
           - -d
@@ -2223,6 +2329,10 @@ subcommands:
         argument: ""
         description: Do not set up "upstream" configuration, even if the branch.autoSetupMerge configuration variable is set.
       - names:
+          - --recurse-submodules
+        argument: ""
+        description: THIS OPTION IS EXPERIMENTAL! Causes the current command to recurse into submodules if submodule.propagateBranches is enabled. See submodule.propagateBranches in git-config(1). Currently, only branch creation is supported.
+      - names:
           - --set-upstream
         argument: ""
         description: As this option had confusing syntax, it is no longer supported. Please use --track or --set-upstream-to instead.
@@ -2269,6 +2379,15 @@ subcommands:
         description: A string that interpolates %(fieldname) from a branch ref being shown and the object it points at. The format is the same as that of git-for-each-ref(1).
   - name: commit
     description: Record changes to the repository
+    usage: |-
+      git commit [-a | --interactive | --patch] [-s] [-v] [-u<mode>] [--amend]
+                 [--dry-run] [(-c | -C | --squash) <commit> | --fixup [(amend|reword):]<commit>)]
+                 [-F <file> | -m <msg>] [--reset-author] [--allow-empty]
+                 [--allow-empty-message] [--no-verify] [-e] [--author=<author>]
+                 [--date=<date>] [--cleanup=<mode>] [--[no-]status]
+                 [-i | -o] [--pathspec-from-file=<file> [--pathspec-file-nul]]
+                 [(--trailer <token>[(=|:)<value>])...] [-S[<keyid>]]
+                 [--] [<pathspec>...]
     options:
       - names:
           - -a
@@ -2452,6 +2571,13 @@ subcommands:
         description: Do not interpret any more arguments as options.
   - name: merge
     description: Join two or more development histories together
+    usage: |-
+      git merge [-n] [--stat] [--no-commit] [--squash] [--[no-]edit]
+              [--no-verify] [-s <strategy>] [-X <strategy-option>] [-S[<keyid>]]
+              [--[no-]allow-unrelated-histories]
+              [--[no-]rerere-autoupdate] [-m <msg>] [-F <file>]
+              [--into-name <branch>] [<commit>...]
+      git merge (--continue | --abort | --quit)
     options:
       - names:
           - --commit
@@ -2590,7 +2716,17 @@ subcommands:
         description: After a git merge stops due to conflicts you can conclude the merge by running git merge --continue (see "HOW TO RESOLVE CONFLICTS" section below).
   - name: rebase
     description: Reapply commits on top of another base tip
+    usage: |-
+      git rebase [-i | --interactive] [<options>] [--exec <cmd>]
+              [--onto <newbase> | --keep-base] [<upstream> [<branch>]]
+      git rebase [-i | --interactive] [<options>] [--exec <cmd>] [--onto <newbase>]
+              --root [<branch>]
+      git rebase (--continue | --skip | --abort | --quit | --edit-todo | --show-current-patch)
     options:
+      - names:
+          - --root
+        argument: <branch>
+        description: git rebase (--continue | --skip | --abort | --quit | --edit-todo | --show-current-patch)
       - names:
           - --onto
         argument: <newbase>
@@ -2598,7 +2734,7 @@ subcommands:
       - names:
           - --keep-base
         argument: ""
-        description: Set the starting point at which to create the new commits to the merge base of <upstream> <branch>. Running git rebase --keep-base <upstream> <branch> is equivalent to running git rebase --onto <upstream>... <upstream>.
+        description: Set the starting point at which to create the new commits to the merge base of <upstream> and <branch>. Running git rebase --keep-base <upstream> <branch> is equivalent to running git rebase --onto <upstream>...<branch> <upstream> <branch>.
       - names:
           - --continue
         argument: ""
@@ -2750,10 +2886,6 @@ subcommands:
         argument: <cmd>
         description: Append "exec <cmd>" after each line creating a commit in the final history. <cmd> will be interpreted as one or more shell commands. Any command that fails will interrupt the rebase, with exit code 1.
       - names:
-          - --root
-        argument: ""
-        description: Rebase all commits reachable from <branch>, instead of limiting them with an <upstream>. This allows you to rebase the root commit(s) on a branch. When used with --onto, it will skip changes already contained in <newbase> (instead of <upstream>) whereas without --onto it will operate on every change.
-      - names:
           - --autosquash
           - --no-autosquash
         argument: ""
@@ -2770,6 +2902,11 @@ subcommands:
         description: Automatically reschedule exec commands that failed. This only makes sense in interactive mode (or when an --exec option was provided).
   - name: reset
     description: Reset current HEAD to the specified state
+    usage: |-
+      git reset [-q] [<tree-ish>] [--] <pathspec>...
+      git reset [-q] [--pathspec-from-file=<file> [--pathspec-file-nul]] [<tree-ish>]
+      git reset (--patch | -p) [<tree-ish>] [--] [<pathspec>...]
+      git reset [--soft | --mixed [-N] | --hard | --merge | --keep] [-q] [<commit>]
     options:
       - names:
           - --soft
@@ -2802,9 +2939,13 @@ subcommands:
       - names:
           - -q
           - --quiet
-          - --no-quiet
         argument: ""
-        description: Be quiet, only report errors. The default behavior is set by the reset.quiet config option. --quiet and --no-quiet will override the default behavior.
+        description: Be quiet, only report errors.
+      - names:
+          - --refresh
+          - --no-refresh
+        argument: ""
+        description: Refresh the index after a mixed reset. Enabled by default.
       - names:
           - --pathspec-from-file
         argument: <file>
@@ -2819,6 +2960,11 @@ subcommands:
         description: Do not interpret any more arguments as options.
   - name: switch
     description: Switch branches
+    usage: |-
+      git switch [<options>] [--no-guess] <branch>
+      git switch [<options>] --detach [<start-point>]
+      git switch [<options>] (-c|-C) <new-branch> [<start-point>]
+      git switch [<options>] --orphan <new-branch>
     options:
       - names:
           - -c
@@ -2892,6 +3038,15 @@ subcommands:
         description: Using --recurse-submodules will update the content of all active submodules according to the commit recorded in the superproject. If nothing (or --no-recurse-submodules) is used, submodules working trees will not be updated. Just like git-submodule(1), this will detach HEAD of the submodules.
   - name: tag
     description: Create, list, delete or verify a tag object signed with GPG
+    usage: |-
+      git tag [-a | -s | -u <keyid>] [-f] [-m <msg> | -F <file>] [-e]
+              <tagname> [<commit> | <object>]
+      git tag -d <tagname>...
+      git tag [-n[<num>]] -l [--contains <commit>] [--no-contains <commit>]
+              [--points-at <object>] [--column[=<options>] | --no-column]
+              [--create-reflog] [--sort=<key>] [--format=<format>]
+              [--merged <commit>] [--no-merged <commit>] [<pattern>...]
+      git tag -v [--format=<format>] <tagname>...
     options:
       - names:
           - -a
@@ -3003,6 +3158,11 @@ subcommands:
         description: A string that interpolates %(fieldname) from a tag ref being shown and the object it points at. The format is the same as that of git-for-each-ref(1). When unspecified, defaults to %(refname:strip=2).
   - name: fetch
     description: Download objects and refs from another repository
+    usage: |-
+      git fetch [<options>] [<repository> [<refspec>...]]
+      git fetch [<options>] <group>
+      git fetch --multiple [<options>] [(<repository> | <group>)...]
+      git fetch --all [<options>]
     options:
       - names:
           - --all
@@ -3103,6 +3263,10 @@ subcommands:
         argument: ""
         description: By default, tags that point at objects that are downloaded from the remote repository are fetched and stored locally. This option disables this automatic tag following. The default behavior for a remote may be specified with the remote.<name>.tagOpt setting. See git-config(1).
       - names:
+          - --refetch
+        argument: ""
+        description: Instead of negotiating with the server to avoid transferring commits and associated objects that are already present locally, this option fetches all objects as a fresh clone would. Use this to reapply a partial clone filter from configuration or using --filter= when the filter definition has changed. Automatic post-fetch maintenance will perform object database pack consolidation to remove any duplicate objects.
+      - names:
           - --refmap
         argument: <refspec>
         description: When fetching refs listed on the command line, use the specified refspec (can be given more than once) to map the refs to remote-tracking branches, instead of the values of remote.*.fetch configuration variables for the remote repository. Providing an empty <refspec> to the --refmap option causes Git to ignore the configured refspecs and rely entirely on the refspecs supplied as command-line arguments. See section on "Configured Remote-tracking Branches" for details.
@@ -3114,7 +3278,7 @@ subcommands:
       - names:
           - --recurse-submodules
         argument: '[=yes|on-demand|no]'
-        description: This option controls if and under what conditions new commits of populated submodules should be fetched too. It can be used as a boolean option to completely disable recursion when set to no or to unconditionally recurse into all populated submodules when set to yes, which is the default when this option is used without any value. Use on-demand to only recurse into a populated submodule when the superproject retrieves a commit that updates the submodule’s reference to a commit that isn’t already in the local submodule clone. By default, on-demand is used, unless fetch.recurseSubmodules is set (see git-config(1)).
+        description: This option controls if and under what conditions new commits of submodules should be fetched too. When recursing through submodules, git fetch always attempts to fetch "changed" submodules, that is, a submodule that has commits that are referenced by a newly fetched superproject commit but are missing in the local submodule clone. A changed submodule can be fetched as long as it is present locally e.g. in $GIT_DIR/modules/ (see gitsubmodules(7)); if the upstream adds a new submodule, that submodule cannot be fetched until it is cloned e.g. by git submodule update.
       - names:
           - -j
           - --jobs
@@ -3188,6 +3352,7 @@ subcommands:
         description: Read refspecs, one per line, from stdin in addition to those provided as arguments. The "tag <name>" format is not supported.
   - name: pull
     description: Fetch from and integrate with another repository or a local branch
+    usage: git pull [<options>] [<repository> [<refspec>...]]
     options:
       - names:
           - -q
@@ -3419,6 +3584,13 @@ subcommands:
         description: Use IPv6 addresses only, ignoring IPv4 addresses.
   - name: push
     description: Update remote refs along with associated objects
+    usage: |-
+      git push [--all | --mirror | --tags] [--follow-tags] [--atomic] [-n | --dry-run] [--receive-pack=<git-receive-pack>]
+                 [--repo=<repository>] [-f | --force] [-d | --delete] [--prune] [-v | --verbose]
+                 [-u | --set-upstream] [-o <string> | --push-option=<string>]
+                 [--[no-]signed|--signed=(true|false|if-asked)]
+                 [--force-with-lease[=<refname>[:<expect>]] [--force-if-includes]]
+                 [--no-verify] [<repository> [<refspec>...]]
     options:
       - names:
           - --all
@@ -3557,6 +3729,7 @@ subcommands:
           - --ipv6
         argument: ""
         description: Use IPv6 addresses only, ignoring IPv4 addresses.
+version: git version 2.37.2
 tldr: |
   > Distributed version control system.
   > Some subcommands such as `commit`, `add`, `branch`, `checkout`, `push`, etc. have their own usage documentation, accessible via `tldr git subcommand`.

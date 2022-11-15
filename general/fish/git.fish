@@ -40,6 +40,7 @@ complete -c git -n "__fish_seen_subcommand_from clone" -l "no-reject-shallow" -d
 complete -c git -n "__fish_seen_subcommand_from clone" -l "bare" -d "Make a bare Git repository."
 complete -c git -n "__fish_seen_subcommand_from clone" -l "sparse" -d "Employ a sparse-checkout, with only files in the toplevel directory initially being present."
 complete -c git -n "__fish_seen_subcommand_from clone" -l "filter" -d "Use the partial clone feature and request that the server sends a subset of reachable objects according to a given object filter." -r
+complete -c git -n "__fish_seen_subcommand_from clone" -l "also-filter-submodules" -d "Also apply the partial clone filter to any submodules in the repository."
 complete -c git -n "__fish_seen_subcommand_from clone" -l "mirror" -d "Set up a mirror of the source repository."
 complete -c git -n "__fish_seen_subcommand_from clone" -s "o" -l "origin" -d "Instead of using the remote name origin to keep track of the upstream repository, use <name>." -x
 complete -c git -n "__fish_seen_subcommand_from clone" -s "b" -l "branch" -d "Instead of pointing the newly created HEAD to the branch pointed to by the cloned repository\8217s HEAD, point to <name> branch instead." -x
@@ -220,6 +221,7 @@ complete -c git -n "__fish_seen_subcommand_from diff" -l "line-prefix" -d "Prepe
 complete -c git -n "__fish_seen_subcommand_from diff" -l "ita-invisible-in-index" -d "By default entries added by \"git add -N\" appear as an existing empty file in \"git diff\" and a new file in \"git diff --cached\"."
 complete -c git -n "__fish_seen_subcommand_from diff" -s "1" -l "base" -s "2" -l "ours" -s "3" -l "theirs" -d "Compare the working tree with the \"base\" version (stage #1), \"our branch\" (stage #2) or \"their branch\" (stage #3)."
 complete -c git -n "__fish_seen_subcommand_from diff" -s "0" -d "Omit diff output for unmerged entries and just show \"Unmerged\"."
+complete -c git -n "__fish_seen_subcommand_from diff" -o "static" -d "++static void describe(char *arg, int last_one)" -x
 
 
 
@@ -278,6 +280,7 @@ complete -c git -n "__fish_seen_subcommand_from log" -l "log-size" -d "Include a
 complete -c git -n "__fish_seen_subcommand_from log" -s "n" -l "max-count" -d "Limit the number of commits to output." -x
 complete -c git -n "__fish_seen_subcommand_from log" -l "skip" -d "Skip number commits before starting to show the commit output." -x
 complete -c git -n "__fish_seen_subcommand_from log" -l "since" -l "after" -d "Show commits more recent than a specific date." -x
+complete -c git -n "__fish_seen_subcommand_from log" -l "since-as-filter" -d "Show all commits more recent than a specific date." -x
 complete -c git -n "__fish_seen_subcommand_from log" -l "until" -l "before" -d "Show commits older than a specific date." -x
 complete -c git -n "__fish_seen_subcommand_from log" -l "author" -l "committer" -d "Limit the commits output to ones with author/committer header lines that match the specified pattern (regular expression)." -x
 complete -c git -n "__fish_seen_subcommand_from log" -l "grep-reflog" -d "Limit the commits output to ones with reflog entries that match the specified pattern (regular expression)." -x
@@ -293,7 +296,8 @@ complete -c git -n "__fish_seen_subcommand_from log" -l "remove-empty" -d "Stop 
 complete -c git -n "__fish_seen_subcommand_from log" -l "merges" -d "Print only merge commits."
 complete -c git -n "__fish_seen_subcommand_from log" -l "no-merges" -d "Do not print commits with more than one parent."
 complete -c git -n "__fish_seen_subcommand_from log" -l "min-parents" -l "max-parents" -l "no-min-parents" -l "no-max-parents" -d "Show only commits which have at least (or at most) that many parent commits." -x
-complete -c git -n "__fish_seen_subcommand_from log" -l "first-parent" -d "Follow only the first parent commit upon seeing a merge commit."
+complete -c git -n "__fish_seen_subcommand_from log" -l "first-parent" -d "When finding commits to include, follow only the first parent commit upon seeing a merge commit."
+complete -c git -n "__fish_seen_subcommand_from log" -l "exclude-first-parent-only" -d "When finding commits to exclude (with a ^), follow only the first parent commit upon seeing a merge commit."
 complete -c git -n "__fish_seen_subcommand_from log" -l "not" -d "Reverses the meaning of the ^ prefix (or lack thereof) for all following revision specifiers, up to the next --not."
 complete -c git -n "__fish_seen_subcommand_from log" -l "all" -d "Pretend as if all the refs in refs/, along with HEAD, are listed on the command line as <commit>."
 complete -c git -n "__fish_seen_subcommand_from log" -l "branches" -d "Pretend as if all the refs in refs/heads are listed on the command line as <commit>." -x
@@ -324,7 +328,6 @@ complete -c git -n "__fish_seen_subcommand_from log" -l "ancestry-path" -d "When
 complete -c git -n "__fish_seen_subcommand_from log" -l "dense" -d "Commits that are walked are included if they are not TREESAME to any parent."
 complete -c git -n "__fish_seen_subcommand_from log" -l "sparse" -d "All commits that are walked are included."
 complete -c git -n "__fish_seen_subcommand_from log" -l "simplify-merges" -d "First, build a history graph in the same way that --full-history with parent rewriting does (see above)."
-complete -c git -n "__fish_seen_subcommand_from log" -l "ancestry-path" -d "Limit the displayed commits to those directly on the ancestry chain between the \8220from\8221 and \8220to\8221 commits in the given commit range."
 complete -c git -n "__fish_seen_subcommand_from log" -l "show-pulls" -d "In addition to the commits shown in the default history, show each merge commit that is not TREESAME to its first parent but is TREESAME to a later parent."
 complete -c git -n "__fish_seen_subcommand_from log" -l "date-order" -d "Show no parents before all of its children are shown, but otherwise show commits in the commit timestamp order."
 complete -c git -n "__fish_seen_subcommand_from log" -l "author-date-order" -d "Show no parents before all of its children are shown, but otherwise show commits in the author timestamp order."
@@ -429,6 +432,7 @@ complete -c git -n "__fish_seen_subcommand_from log" -l "dst-prefix" -d "Show th
 complete -c git -n "__fish_seen_subcommand_from log" -l "no-prefix" -d "Do not show any source or destination prefix."
 complete -c git -n "__fish_seen_subcommand_from log" -l "line-prefix" -d "Prepend an additional prefix to every line of output." -x
 complete -c git -n "__fish_seen_subcommand_from log" -l "ita-invisible-in-index" -d "By default entries added by \"git add -N\" appear as an existing empty file in \"git diff\" and a new file in \"git diff --cached\"."
+complete -c git -n "__fish_seen_subcommand_from log" -o "static" -d "++static void describe(char *arg, int last_one)" -x
 
 
 
@@ -522,6 +526,7 @@ complete -c git -n "__fish_seen_subcommand_from show" -l "dst-prefix" -d "Show t
 complete -c git -n "__fish_seen_subcommand_from show" -l "no-prefix" -d "Do not show any source or destination prefix."
 complete -c git -n "__fish_seen_subcommand_from show" -l "line-prefix" -d "Prepend an additional prefix to every line of output." -x
 complete -c git -n "__fish_seen_subcommand_from show" -l "ita-invisible-in-index" -d "By default entries added by \"git add -N\" appear as an existing empty file in \"git diff\" and a new file in \"git diff --cached\"."
+complete -c git -n "__fish_seen_subcommand_from show" -o "static" -d "++static void describe(char *arg, int last_one)" -x
 
 
 
@@ -564,6 +569,7 @@ complete -c git -n "__fish_seen_subcommand_from branch" -l "abbrev" -d "In the v
 complete -c git -n "__fish_seen_subcommand_from branch" -l "no-abbrev" -d "Display the full sha1s in the output listing rather than abbreviating them."
 complete -c git -n "__fish_seen_subcommand_from branch" -s "t" -l "track" -d "When creating a new branch, set up branch.<name>.remote and branch.<name>.merge configuration entries to set \"upstream\" tracking configuration for the new branch." -r
 complete -c git -n "__fish_seen_subcommand_from branch" -l "no-track" -d "Do not set up \"upstream\" configuration, even if the branch.autoSetupMerge configuration variable is set."
+complete -c git -n "__fish_seen_subcommand_from branch" -l "recurse-submodules" -d "THIS OPTION IS EXPERIMENTAL! Causes the current command to recurse into submodules if submodule.propagateBranches is enabled."
 complete -c git -n "__fish_seen_subcommand_from branch" -l "set-upstream" -d "As this option had confusing syntax, it is no longer supported."
 complete -c git -n "__fish_seen_subcommand_from branch" -s "u" -l "set-upstream-to" -d "Set up <branchname>'s tracking information so <upstream> is considered <branchname>'s upstream branch." -x
 complete -c git -n "__fish_seen_subcommand_from branch" -l "unset-upstream" -d "Remove the upstream information for <branchname>."
@@ -652,8 +658,9 @@ complete -c git -n "__fish_seen_subcommand_from merge" -l "continue" -d "After a
 
 
 
+complete -c git -n "__fish_seen_subcommand_from rebase" -l "root" -d "git rebase (--continue | --skip | --abort | --quit | --edit-todo | --show-current-patch)" -x
 complete -c git -n "__fish_seen_subcommand_from rebase" -l "onto" -d "Starting point at which to create the new commits." -x
-complete -c git -n "__fish_seen_subcommand_from rebase" -l "keep-base" -d "Set the starting point at which to create the new commits to the merge base of <upstream> <branch>."
+complete -c git -n "__fish_seen_subcommand_from rebase" -l "keep-base" -d "Set the starting point at which to create the new commits to the merge base of <upstream> and <branch>."
 complete -c git -n "__fish_seen_subcommand_from rebase" -l "continue" -d "Restart the rebasing process after having resolved a merge conflict."
 complete -c git -n "__fish_seen_subcommand_from rebase" -l "abort" -d "Abort the rebase operation and reset HEAD to the original branch."
 complete -c git -n "__fish_seen_subcommand_from rebase" -l "quit" -d "Abort the rebase operation but HEAD is not reset back to the original branch."
@@ -687,7 +694,6 @@ complete -c git -n "__fish_seen_subcommand_from rebase" -l "signoff" -d "Add a S
 complete -c git -n "__fish_seen_subcommand_from rebase" -s "i" -l "interactive" -d "Make a list of the commits which are about to be rebased."
 complete -c git -n "__fish_seen_subcommand_from rebase" -s "r" -l "rebase-merges" -d "By default, a rebase will simply drop merge commits from the todo list, and put the rebased commits into a single, linear branch." -x
 complete -c git -n "__fish_seen_subcommand_from rebase" -s "x" -l "exec" -d "Append \"exec <cmd>\" after each line creating a commit in the final history." -x
-complete -c git -n "__fish_seen_subcommand_from rebase" -l "root" -d "Rebase all commits reachable from <branch>, instead of limiting them with an <upstream>."
 complete -c git -n "__fish_seen_subcommand_from rebase" -l "autosquash" -l "no-autosquash" -d "When the commit log message begins with \"squash! ...\" or \"fixup! ...\" or \"amend! ...\", and there is already a commit in the todo list that matches the same ..., automatically modify the todo list of rebase -i, so that the commit marked for squashing comes right after the commit to be modified, and change the action of the moved commit from pick to squash or fixup or fixup -C respectively."
 complete -c git -n "__fish_seen_subcommand_from rebase" -l "autostash" -l "no-autostash" -d "Automatically create a temporary stash entry before the operation begins, and apply it after the operation ends."
 complete -c git -n "__fish_seen_subcommand_from rebase" -l "reschedule-failed-exec" -l "no-reschedule-failed-exec" -d "Automatically reschedule exec commands that failed."
@@ -701,7 +707,8 @@ complete -c git -n "__fish_seen_subcommand_from reset" -l "merge" -d "Resets the
 complete -c git -n "__fish_seen_subcommand_from reset" -l "keep" -d "Resets index entries and updates files in the working tree that are different between <commit> and HEAD."
 complete -c git -n "__fish_seen_subcommand_from reset" -l "recurse-submodules" -d "When the working tree is updated, using --recurse-submodules will also recursively reset the working tree of all active submodules according to the commit recorded in the superproject, also setting the submodules' HEAD to be detached at that commit."
 complete -c git -n "__fish_seen_subcommand_from reset" -l "no-recurse-submodules" -d "When the working tree is updated, using --recurse-submodules will also recursively reset the working tree of all active submodules according to the commit recorded in the superproject, also setting the submodules' HEAD to be detached at that commit."
-complete -c git -n "__fish_seen_subcommand_from reset" -s "q" -l "quiet" -l "no-quiet" -d "Be quiet, only report errors."
+complete -c git -n "__fish_seen_subcommand_from reset" -s "q" -l "quiet" -d "Be quiet, only report errors."
+complete -c git -n "__fish_seen_subcommand_from reset" -l "refresh" -l "no-refresh" -d "Refresh the index after a mixed reset."
 complete -c git -n "__fish_seen_subcommand_from reset" -l "pathspec-from-file" -d "Pathspec is passed in <file> instead of commandline args." -r
 complete -c git -n "__fish_seen_subcommand_from reset" -l "pathspec-file-nul" -d "Only meaningful with --pathspec-from-file."
 complete -c git -n "__fish_seen_subcommand_from reset"  -d "Do not interpret any more arguments as options."
@@ -776,9 +783,10 @@ complete -c git -n "__fish_seen_subcommand_from fetch" -l "prefetch" -d "Modify 
 complete -c git -n "__fish_seen_subcommand_from fetch" -s "p" -l "prune" -d "Before fetching, remove any remote-tracking references that no longer exist on the remote."
 complete -c git -n "__fish_seen_subcommand_from fetch" -s "P" -l "prune-tags" -d "Before fetching, remove any local tags that no longer exist on the remote if --prune is enabled."
 complete -c git -n "__fish_seen_subcommand_from fetch" -s "n" -l "no-tags" -d "By default, tags that point at objects that are downloaded from the remote repository are fetched and stored locally."
+complete -c git -n "__fish_seen_subcommand_from fetch" -l "refetch" -d "Instead of negotiating with the server to avoid transferring commits and associated objects that are already present locally, this option fetches all objects as a fresh clone would."
 complete -c git -n "__fish_seen_subcommand_from fetch" -l "refmap" -d "When fetching refs listed on the command line, use the specified refspec (can be given more than once) to map the refs to remote-tracking branches, instead of the values of remote.*.fetch configuration variables for the remote repository." -x
 complete -c git -n "__fish_seen_subcommand_from fetch" -s "t" -l "tags" -d "Fetch all tags from the remote (i.e., fetch remote tags refs/tags/* into local tags with the same name), in addition to whatever else would otherwise be fetched."
-complete -c git -n "__fish_seen_subcommand_from fetch" -l "recurse-submodules" -d "This option controls if and under what conditions new commits of populated submodules should be fetched too." -x
+complete -c git -n "__fish_seen_subcommand_from fetch" -l "recurse-submodules" -d "This option controls if and under what conditions new commits of submodules should be fetched too." -r
 complete -c git -n "__fish_seen_subcommand_from fetch" -s "j" -l "jobs" -d "Number of parallel children to be used for all forms of fetching." -x
 complete -c git -n "__fish_seen_subcommand_from fetch" -l "no-recurse-submodules" -d "Disable recursive fetching of submodules (this has the same effect as using the --recurse-submodules=no option)."
 complete -c git -n "__fish_seen_subcommand_from fetch" -l "set-upstream" -d "If the remote is fetched successfully, add upstream (tracking) reference, used by argument-less git-pull(1) and other commands."

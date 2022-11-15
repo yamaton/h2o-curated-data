@@ -1,5 +1,6 @@
 name: fzf
 description: fzf
+usage: fzf [options]
 options:
   - names:
       - -x
@@ -12,13 +13,13 @@ options:
     argument: ""
     description: Enable Exact-match
   - names:
-      - --algo
-    argument: TYPE
-    description: 'Fuzzy matching algorithm: [v1|v2] (default: v2)'
-  - names:
       - -i
     argument: ""
     description: 'Case-insensitive match (default: smart-case match)'
+  - names:
+      - --scheme
+    argument: SCHEME
+    description: Scoring scheme [default|path|history]
   - names:
       - --literal
     argument: ""
@@ -48,7 +49,7 @@ options:
   - names:
       - --tiebreak
     argument: CRI[,..]
-    description: 'Comma-separated list of sort criteria to apply when the scores are tied [length|begin|end|index] (default: length)'
+    description: 'Comma-separated list of sort criteria to apply when the scores are tied [length|chunk|begin|end|index] (default: length)'
   - names:
       - -m
       - --multi
@@ -92,8 +93,8 @@ options:
     description: Label characters for jump and jump-accept
   - names:
       - --height
-    argument: HEIGHT
-    description: Display fzf window below the cursor with the given height instead of using fullscreen
+    argument: '[~]HEIGHT[%]'
+    description: Display fzf window below the cursor with the given height instead of using fullscreen. If prefixed with '~', fzf will determine the height according to the input size.
   - names:
       - --min-height
     argument: HEIGHT
@@ -107,6 +108,14 @@ options:
     argument: '[=STYLE]'
     description: Draw border around the finder [rounded|sharp|horizontal|vertical|
   - names:
+      - --border-label
+    argument: LABEL
+    description: Label to print on the border
+  - names:
+      - --border-label-pos
+    argument: COL
+    description: 'Position of the border label [POSITIVE_INTEGER: columns from left|'
+  - names:
       - --margin
     argument: MARGIN
     description: Screen margin (TRBL | TB,RL | T,RL,B | T,R,B,L)
@@ -118,6 +127,14 @@ options:
       - --info
     argument: STYLE
     description: Finder info style [default|inline|hidden]
+  - names:
+      - --separator
+    argument: STR
+    description: String to form horizontal separator on info line
+  - names:
+      - --no-separator
+    argument: ""
+    description: Hide info line separator
   - names:
       - --prompt
     argument: STR
@@ -177,7 +194,15 @@ options:
   - names:
       - --preview-window
     argument: OPT
-    description: 'Preview window layout (default: right:50%) [up|down|left|right][,SIZE[%]] [,[no]wrap][,[no]cycle][,[no]follow][,[no]hidden] [,border-BORDER_OPT] [,+SCROLL[OFFSETS][/DENOM]][,~HEADER_LINES] [,default]'
+    description: 'Preview window layout (default: right:50%) [up|down|left|right][,SIZE[%]] [,[no]wrap][,[no]cycle][,[no]follow][,[no]hidden] [,border-BORDER_OPT] [,+SCROLL[OFFSETS][/DENOM]][,~HEADER_LINES] [,default][,<SIZE_THRESHOLD(ALTERNATIVE_LAYOUT)]'
+  - names:
+      - --preview-label
+    argument: LABEL
+    description: Same as --border-label and --border-label-pos, but for preview window
+  - names:
+      - --preview-label-pos
+    argument: 'N'
+    description: Same as --border-label and --border-label-pos, but for preview window
   - names:
       - -q
       - --query
@@ -222,7 +247,7 @@ options:
       - --version
     argument: ""
     description: Display version information and exit
-version: 0.30.0 (2093667)
+version: 0.35.0 (d01ae55)
 tldr: |
   > Command-line fuzzy finder.
   > Similar to `sk`.

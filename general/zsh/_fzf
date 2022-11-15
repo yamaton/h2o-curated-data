@@ -17,15 +17,15 @@ function _fzf {
     _arguments -C \
         {-x,--extended}'[(enabled by default; +x or --no-extended to disable)]' \
         {-e,--exact}'[Enable Exact-match]' \
-        '--algo[Fuzzy matching algorithm: \[v1|v2\] (default: v2)]' \
         '-i[Case-insensitive match (default: smart-case match)]' \
+        '--scheme[Scoring scheme \[default|path|history\]]' \
         '--literal[Do not normalize latin script letters before matching]' \
         {-n,--nth}'[Comma-separated list of field index expressions for limiting search scope. Each can be a non-zero integer or a range expression (\[BEGIN\]..\[END\]).]' \
         '--with-nth[Transform the presentation of each line using field index expressions]' \
         {-d,--delimiter}'[Field delimiter regex (default: AWK-style)]' \
         '--tac[Reverse the order of the input]' \
         '--disabled[Do not perform search]' \
-        '--tiebreak[Comma-separated list of sort criteria to apply when the scores are tied \[length|begin|end|index\] (default: length)]' \
+        '--tiebreak[Comma-separated list of sort criteria to apply when the scores are tied \[length|chunk|begin|end|index\] (default: length)]' \
         {-m,--multi}'[Enable multi-select with tab/shift-tab]' \
         '--no-mouse[Disable mouse]' \
         '--bind[Custom key bindings. Refer to the man page.]' \
@@ -36,13 +36,17 @@ function _fzf {
         '--hscroll-off[Number of screen columns to keep to the right of the highlighted substring (default: 10)]' \
         '--filepath-word[Make word-wise movements respect path separators]' \
         '--jump-labels[Label characters for jump and jump-accept]' \
-        '--height[Display fzf window below the cursor with the given height instead of using fullscreen]' \
+        '--height[Display fzf window below the cursor with the given height instead of using fullscreen. If prefixed with '\''~'\'', fzf will determine the height according to the input size.]' \
         '--min-height[Minimum height when --height is given in percent (default: 10)]' \
         '--layout[Choose layout: \[default|reverse|reverse-list\]]' \
         '--border[Draw border around the finder \[rounded|sharp|horizontal|vertical|]' \
+        '--border-label[Label to print on the border]' \
+        '--border-label-pos[Position of the border label \[POSITIVE_INTEGER: columns from left|]' \
         '--margin[Screen margin (TRBL | TB,RL | T,RL,B | T,R,B,L)]' \
         '--padding[Padding inside border (TRBL | TB,RL | T,RL,B | T,R,B,L)]' \
         '--info[Finder info style \[default|inline|hidden\]]' \
+        '--separator[String to form horizontal separator on info line]' \
+        '--no-separator[Hide info line separator]' \
         '--prompt[Input prompt (default: '\''> '\'')]' \
         '--pointer[Pointer to the current line (default: '\''>'\'')]' \
         '--marker[Multi-select marker (default: '\''>'\'')]' \
@@ -57,7 +61,9 @@ function _fzf {
         '--history[History file]':file:_files \
         '--history-size[Maximum number of history entries (default: 1000)]' \
         '--preview[Command to preview highlighted line ({})]' \
-        '--preview-window[Preview window layout (default: right:50%) \[up|down|left|right\]\[,SIZE\[%\]\] \[,\[no\]wrap\]\[,\[no\]cycle\]\[,\[no\]follow\]\[,\[no\]hidden\] \[,border-BORDER_OPT\] \[,+SCROLL\[OFFSETS\]\[/DENOM\]\]\[,~HEADER_LINES\] \[,default\]]' \
+        '--preview-window[Preview window layout (default: right:50%) \[up|down|left|right\]\[,SIZE\[%\]\] \[,\[no\]wrap\]\[,\[no\]cycle\]\[,\[no\]follow\]\[,\[no\]hidden\] \[,border-BORDER_OPT\] \[,+SCROLL\[OFFSETS\]\[/DENOM\]\]\[,~HEADER_LINES\] \[,default\]\[,<SIZE_THRESHOLD(ALTERNATIVE_LAYOUT)\]]' \
+        '--preview-label[Same as --border-label and --border-label-pos, but for preview window]' \
+        '--preview-label-pos[Same as --border-label and --border-label-pos, but for preview window]' \
         {-q,--query}'[Start the finder with the given query]' \
         {-1,--select-1}'[Automatically select the only match]' \
         {-0,--exit-0}'[Exit immediately when there'\''s no match]' \

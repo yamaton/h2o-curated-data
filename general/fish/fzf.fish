@@ -2,15 +2,15 @@
 
 complete -c fzf -s "x" -l "extended" -d "(enabled by default; +x or --no-extended to disable)" -x
 complete -c fzf -s "e" -l "exact" -d "Enable Exact-match"
-complete -c fzf -l "algo" -d "Fuzzy matching algorithm: [v1|v2] (default: v2)" -x
 complete -c fzf -s "i" -d "Case-insensitive match (default: smart-case match)"
+complete -c fzf -l "scheme" -d "Scoring scheme [default|path|history]" -r
 complete -c fzf -l "literal" -d "Do not normalize latin script letters before matching"
 complete -c fzf -s "n" -l "nth" -d "Comma-separated list of field index expressions for limiting search scope." -x
 complete -c fzf -l "with-nth" -d "Transform the presentation of each line using field index expressions" -x
 complete -c fzf -s "d" -l "delimiter" -d "Field delimiter regex (default: AWK-style)" -x
 complete -c fzf -l "tac" -d "Reverse the order of the input"
 complete -c fzf -l "disabled" -d "Do not perform search"
-complete -c fzf -l "tiebreak" -d "Comma-separated list of sort criteria to apply when the scores are tied [length|begin|end|index] (default: length)" -x
+complete -c fzf -l "tiebreak" -d "Comma-separated list of sort criteria to apply when the scores are tied [length|chunk|begin|end|index] (default: length)" -x
 complete -c fzf -s "m" -l "multi" -d "Enable multi-select with tab/shift-tab" -x
 complete -c fzf -l "no-mouse" -d "Disable mouse"
 complete -c fzf -l "bind" -d "Custom key bindings." -x
@@ -21,13 +21,17 @@ complete -c fzf -l "no-hscroll" -d "Disable horizontal scroll"
 complete -c fzf -l "hscroll-off" -d "Number of screen columns to keep to the right of the highlighted substring (default: 10)" -x
 complete -c fzf -l "filepath-word" -d "Make word-wise movements respect path separators"
 complete -c fzf -l "jump-labels" -d "Label characters for jump and jump-accept" -x
-complete -c fzf -l "height" -d "Display fzf window below the cursor with the given height instead of using fullscreen" -x
+complete -c fzf -l "height" -d "Display fzf window below the cursor with the given height instead of using fullscreen." -x
 complete -c fzf -l "min-height" -d "Minimum height when --height is given in percent (default: 10)" -x
 complete -c fzf -l "layout" -d "Choose layout: [default|reverse|reverse-list]" -x
 complete -c fzf -l "border" -d "Draw border around the finder [rounded|sharp|horizontal|vertical|" -x
+complete -c fzf -l "border-label" -d "Label to print on the border" -x
+complete -c fzf -l "border-label-pos" -d "Position of the border label [POSITIVE_INTEGER: columns from left|" -x
 complete -c fzf -l "margin" -d "Screen margin (TRBL | TB,RL | T,RL,B | T,R,B,L)" -x
 complete -c fzf -l "padding" -d "Padding inside border (TRBL | TB,RL | T,RL,B | T,R,B,L)" -x
 complete -c fzf -l "info" -d "Finder info style [default|inline|hidden]" -x
+complete -c fzf -l "separator" -d "String to form horizontal separator on info line" -x
+complete -c fzf -l "no-separator" -d "Hide info line separator"
 complete -c fzf -l "prompt" -d "Input prompt (default: '> ')" -x
 complete -c fzf -l "pointer" -d "Pointer to the current line (default: '>')" -x
 complete -c fzf -l "marker" -d "Multi-select marker (default: '>')" -x
@@ -42,7 +46,9 @@ complete -c fzf -l "no-bold" -d "Do not use bold text"
 complete -c fzf -l "history" -d "History file" -r
 complete -c fzf -l "history-size" -d "Maximum number of history entries (default: 1000)" -x
 complete -c fzf -l "preview" -d "Command to preview highlighted line ({})" -x
-complete -c fzf -l "preview-window" -d "Preview window layout (default: right:50%) [up|down|left|right][,SIZE[%]] [,[no]wrap][,[no]cycle][,[no]follow][,[no]hidden] [,border-BORDER_OPT] [,+SCROLL[OFFSETS][/DENOM]][,~HEADER_LINES] [,default]" -x
+complete -c fzf -l "preview-window" -d "Preview window layout (default: right:50%) [up|down|left|right][,SIZE[%]] [,[no]wrap][,[no]cycle][,[no]follow][,[no]hidden] [,border-BORDER_OPT] [,+SCROLL[OFFSETS][/DENOM]][,~HEADER_LINES] [,default][,<SIZE_THRESHOLD(ALTERNATIVE_LAYOUT)]" -x
+complete -c fzf -l "preview-label" -d "Same as --border-label and --border-label-pos, but for preview window" -x
+complete -c fzf -l "preview-label-pos" -d "Same as --border-label and --border-label-pos, but for preview window" -x
 complete -c fzf -s "q" -l "query" -d "Start the finder with the given query" -x
 complete -c fzf -s "1" -l "select-1" -d "Automatically select the only match"
 complete -c fzf -s "0" -l "exit-0" -d "Exit immediately when there's no match"

@@ -1,31 +1,33 @@
 # Auto-generated with h2o
 
-complete -c pip -n "not __fish_seen_subcommand_from install download uninstall freeze list show check config search cache index wheel hash completion debug" -s "h" -l "help" -d "Show help."
-complete -c pip -n "not __fish_seen_subcommand_from install download uninstall freeze list show check config search cache index wheel hash completion debug" -l "debug" -d "Let unhandled exceptions propagate outside the main subroutine, instead of logging them to stderr."
-complete -c pip -n "not __fish_seen_subcommand_from install download uninstall freeze list show check config search cache index wheel hash completion debug" -l "isolated" -d "Run pip in an isolated mode, ignoring environment variables and user configuration."
-complete -c pip -n "not __fish_seen_subcommand_from install download uninstall freeze list show check config search cache index wheel hash completion debug" -l "require-virtualenv" -d "Allow pip to only run in a virtual environment; exit with an error otherwise."
-complete -c pip -n "not __fish_seen_subcommand_from install download uninstall freeze list show check config search cache index wheel hash completion debug" -s "v" -l "verbose" -d "Give more output."
-complete -c pip -n "not __fish_seen_subcommand_from install download uninstall freeze list show check config search cache index wheel hash completion debug" -s "V" -l "version" -d "Show version and exit."
-complete -c pip -n "not __fish_seen_subcommand_from install download uninstall freeze list show check config search cache index wheel hash completion debug" -s "q" -l "quiet" -d "Give less output."
-complete -c pip -n "not __fish_seen_subcommand_from install download uninstall freeze list show check config search cache index wheel hash completion debug" -l "log" -d "Path to a verbose appending log." -r
-complete -c pip -n "not __fish_seen_subcommand_from install download uninstall freeze list show check config search cache index wheel hash completion debug" -l "no-input" -d "Disable prompting for input."
-complete -c pip -n "not __fish_seen_subcommand_from install download uninstall freeze list show check config search cache index wheel hash completion debug" -l "proxy" -d "Specify a proxy in the form scheme://[user:passwd@]proxy.server:port." -x
-complete -c pip -n "not __fish_seen_subcommand_from install download uninstall freeze list show check config search cache index wheel hash completion debug" -l "retries" -d "Maximum number of retries each connection should attempt (default 5 times)." -x
-complete -c pip -n "not __fish_seen_subcommand_from install download uninstall freeze list show check config search cache index wheel hash completion debug" -l "timeout" -d "Set the socket timeout (default 15 seconds)." -x
-complete -c pip -n "not __fish_seen_subcommand_from install download uninstall freeze list show check config search cache index wheel hash completion debug" -l "exists-action" -d "Default action when a path already exists: (s)witch, (i)gnore, (w)ipe, (b)ackup, (a)bort." -r
-complete -c pip -n "not __fish_seen_subcommand_from install download uninstall freeze list show check config search cache index wheel hash completion debug" -l "trusted-host" -d "Mark this host or host:port pair as trusted, even though it does not have valid or any HTTPS." -x
-complete -c pip -n "not __fish_seen_subcommand_from install download uninstall freeze list show check config search cache index wheel hash completion debug" -l "cert" -d "Path to PEM-encoded CA certificate bundle." -r
-complete -c pip -n "not __fish_seen_subcommand_from install download uninstall freeze list show check config search cache index wheel hash completion debug" -l "client-cert" -d "Path to SSL client certificate, a single file containing the private key and the certificate in PEM format." -r
-complete -c pip -n "not __fish_seen_subcommand_from install download uninstall freeze list show check config search cache index wheel hash completion debug" -l "cache-dir" -d "Store the cache data in <dir>." -r
-complete -c pip -n "not __fish_seen_subcommand_from install download uninstall freeze list show check config search cache index wheel hash completion debug" -l "no-cache-dir" -d "Disable the cache."
-complete -c pip -n "not __fish_seen_subcommand_from install download uninstall freeze list show check config search cache index wheel hash completion debug" -l "disable-pip-version-check" -d "Don't periodically check PyPI to determine whether a new version of pip is available for download."
-complete -c pip -n "not __fish_seen_subcommand_from install download uninstall freeze list show check config search cache index wheel hash completion debug" -l "no-color" -d "Suppress colored output."
-complete -c pip -n "not __fish_seen_subcommand_from install download uninstall freeze list show check config search cache index wheel hash completion debug" -l "no-python-version-warning" -d "Silence deprecation warnings for upcoming unsupported Pythons."
-complete -c pip -n "not __fish_seen_subcommand_from install download uninstall freeze list show check config search cache index wheel hash completion debug" -l "use-feature" -d "Enable new functionality, that may be backward incompatible." -x
-complete -c pip -n "not __fish_seen_subcommand_from install download uninstall freeze list show check config search cache index wheel hash completion debug" -l "use-deprecated" -d "Enable deprecated functionality, that will be removed in the future." -x
+complete -c pip -n "not __fish_seen_subcommand_from install download uninstall freeze inspect list show check config search cache index wheel hash completion debug help" -s "h" -l "help" -d "Show help."
+complete -c pip -n "not __fish_seen_subcommand_from install download uninstall freeze inspect list show check config search cache index wheel hash completion debug help" -l "debug" -d "Let unhandled exceptions propagate outside the main subroutine, instead of logging them to stderr."
+complete -c pip -n "not __fish_seen_subcommand_from install download uninstall freeze inspect list show check config search cache index wheel hash completion debug help" -l "isolated" -d "Run pip in an isolated mode, ignoring environment variables and user configuration."
+complete -c pip -n "not __fish_seen_subcommand_from install download uninstall freeze inspect list show check config search cache index wheel hash completion debug help" -l "require-virtualenv" -d "Allow pip to only run in a virtual environment; exit with an error otherwise."
+complete -c pip -n "not __fish_seen_subcommand_from install download uninstall freeze inspect list show check config search cache index wheel hash completion debug help" -l "python" -d "Run pip with the specified Python interpreter." -x
+complete -c pip -n "not __fish_seen_subcommand_from install download uninstall freeze inspect list show check config search cache index wheel hash completion debug help" -s "v" -l "verbose" -d "Give more output."
+complete -c pip -n "not __fish_seen_subcommand_from install download uninstall freeze inspect list show check config search cache index wheel hash completion debug help" -s "V" -l "version" -d "Show version and exit."
+complete -c pip -n "not __fish_seen_subcommand_from install download uninstall freeze inspect list show check config search cache index wheel hash completion debug help" -s "q" -l "quiet" -d "Give less output."
+complete -c pip -n "not __fish_seen_subcommand_from install download uninstall freeze inspect list show check config search cache index wheel hash completion debug help" -l "log" -d "Path to a verbose appending log." -r
+complete -c pip -n "not __fish_seen_subcommand_from install download uninstall freeze inspect list show check config search cache index wheel hash completion debug help" -l "no-input" -d "Disable prompting for input."
+complete -c pip -n "not __fish_seen_subcommand_from install download uninstall freeze inspect list show check config search cache index wheel hash completion debug help" -l "proxy" -d "Specify a proxy in the form scheme://[user:passwd@]proxy.server:port." -x
+complete -c pip -n "not __fish_seen_subcommand_from install download uninstall freeze inspect list show check config search cache index wheel hash completion debug help" -l "retries" -d "Maximum number of retries each connection should attempt (default 5 times)." -x
+complete -c pip -n "not __fish_seen_subcommand_from install download uninstall freeze inspect list show check config search cache index wheel hash completion debug help" -l "timeout" -d "Set the socket timeout (default 15 seconds)." -x
+complete -c pip -n "not __fish_seen_subcommand_from install download uninstall freeze inspect list show check config search cache index wheel hash completion debug help" -l "exists-action" -d "Default action when a path already exists: (s)witch, (i)gnore, (w)ipe, (b)ackup, (a)bort." -r
+complete -c pip -n "not __fish_seen_subcommand_from install download uninstall freeze inspect list show check config search cache index wheel hash completion debug help" -l "trusted-host" -d "Mark this host or host:port pair as trusted, even though it does not have valid or any HTTPS." -x
+complete -c pip -n "not __fish_seen_subcommand_from install download uninstall freeze inspect list show check config search cache index wheel hash completion debug help" -l "cert" -d "Path to PEM-encoded CA certificate bundle." -r
+complete -c pip -n "not __fish_seen_subcommand_from install download uninstall freeze inspect list show check config search cache index wheel hash completion debug help" -l "client-cert" -d "Path to SSL client certificate, a single file containing the private key and the certificate in PEM format." -r
+complete -c pip -n "not __fish_seen_subcommand_from install download uninstall freeze inspect list show check config search cache index wheel hash completion debug help" -l "cache-dir" -d "Store the cache data in <dir>." -r
+complete -c pip -n "not __fish_seen_subcommand_from install download uninstall freeze inspect list show check config search cache index wheel hash completion debug help" -l "no-cache-dir" -d "Disable the cache."
+complete -c pip -n "not __fish_seen_subcommand_from install download uninstall freeze inspect list show check config search cache index wheel hash completion debug help" -l "disable-pip-version-check" -d "Don't periodically check PyPI to determine whether a new version of pip is available for download."
+complete -c pip -n "not __fish_seen_subcommand_from install download uninstall freeze inspect list show check config search cache index wheel hash completion debug help" -l "no-color" -d "Suppress colored output."
+complete -c pip -n "not __fish_seen_subcommand_from install download uninstall freeze inspect list show check config search cache index wheel hash completion debug help" -l "no-python-version-warning" -d "Silence deprecation warnings for upcoming unsupported Pythons."
+complete -c pip -n "not __fish_seen_subcommand_from install download uninstall freeze inspect list show check config search cache index wheel hash completion debug help" -l "use-feature" -d "Enable new functionality, that may be backward incompatible." -x
+complete -c pip -n "not __fish_seen_subcommand_from install download uninstall freeze inspect list show check config search cache index wheel hash completion debug help" -l "use-deprecated" -d "Enable deprecated functionality, that will be removed in the future." -x
 
 
 
+complete -k -c pip -n __fish_use_subcommand -x -a help -d "Show help for commands."
 complete -k -c pip -n __fish_use_subcommand -x -a debug -d "Show information useful for debugging."
 complete -k -c pip -n __fish_use_subcommand -x -a completion -d "A helper command used for command completion."
 complete -k -c pip -n __fish_use_subcommand -x -a hash -d "Compute hashes of package archives."
@@ -37,6 +39,7 @@ complete -k -c pip -n __fish_use_subcommand -x -a config -d "Manage local and gl
 complete -k -c pip -n __fish_use_subcommand -x -a check -d "Verify installed packages have compatible dependencies."
 complete -k -c pip -n __fish_use_subcommand -x -a show -d "Show information about installed packages."
 complete -k -c pip -n __fish_use_subcommand -x -a list -d "List installed packages."
+complete -k -c pip -n __fish_use_subcommand -x -a inspect -d "Inspect the python environment."
 complete -k -c pip -n __fish_use_subcommand -x -a freeze -d "Output installed packages in requirements format."
 complete -k -c pip -n __fish_use_subcommand -x -a uninstall -d "Uninstall packages."
 complete -k -c pip -n __fish_use_subcommand -x -a download -d "Download packages."
@@ -49,6 +52,7 @@ complete -c pip -n "__fish_seen_subcommand_from install" -s "c" -l "constraint" 
 complete -c pip -n "__fish_seen_subcommand_from install" -l "no-deps" -d "Don't install package dependencies."
 complete -c pip -n "__fish_seen_subcommand_from install" -l "pre" -d "Include pre-release and development versions."
 complete -c pip -n "__fish_seen_subcommand_from install" -s "e" -l "editable" -d "Install a project in editable mode (i.e. setuptools \"develop mode\") from a local project path or a VCS url." -r
+complete -c pip -n "__fish_seen_subcommand_from install" -l "dry-run" -d "Don't actually install anything, just print what would be."
 complete -c pip -n "__fish_seen_subcommand_from install" -s "t" -l "target" -d "Install packages into <dir>." -r
 complete -c pip -n "__fish_seen_subcommand_from install" -l "platform" -d "Only use wheels compatible with <platform>." -x
 complete -c pip -n "__fish_seen_subcommand_from install" -l "python-version" -d "The Python interpreter version to use for wheel and \"Requires-Python\" compatibility checks." -x
@@ -79,6 +83,7 @@ complete -c pip -n "__fish_seen_subcommand_from install" -l "prefer-binary" -d "
 complete -c pip -n "__fish_seen_subcommand_from install" -l "require-hashes" -d "Require a hash to check each requirement against, for repeatable installs."
 complete -c pip -n "__fish_seen_subcommand_from install" -l "progress-bar" -d "Specify whether the progress bar should be used [on, off] (default: on)" -x
 complete -c pip -n "__fish_seen_subcommand_from install" -l "root-user-action" -d "Action if pip is run as a root user." -x
+complete -c pip -n "__fish_seen_subcommand_from install" -l "report" -d "Generate a JSON file describing what pip did to install the provided requirements." -r
 complete -c pip -n "__fish_seen_subcommand_from install" -l "no-clean" -d "Don't clean up build directories."
 complete -c pip -n "__fish_seen_subcommand_from install" -s "i" -l "index-url" -d "Base URL of the Python Package Index (default https://pypi.org/simple)." -r
 complete -c pip -n "__fish_seen_subcommand_from install" -l "extra-index-url" -d "Extra URLs of package indexes to use in addition to --index-url." -x
@@ -88,6 +93,7 @@ complete -c pip -n "__fish_seen_subcommand_from install" -s "h" -l "help" -d "Sh
 complete -c pip -n "__fish_seen_subcommand_from install" -l "debug" -d "Let unhandled exceptions propagate outside the main subroutine, instead of logging them to stderr."
 complete -c pip -n "__fish_seen_subcommand_from install" -l "isolated" -d "Run pip in an isolated mode, ignoring environment variables and user configuration."
 complete -c pip -n "__fish_seen_subcommand_from install" -l "require-virtualenv" -d "Allow pip to only run in a virtual environment; exit with an error otherwise."
+complete -c pip -n "__fish_seen_subcommand_from install" -l "python" -d "Run pip with the specified Python interpreter." -x
 complete -c pip -n "__fish_seen_subcommand_from install" -s "v" -l "verbose" -d "Give more output."
 complete -c pip -n "__fish_seen_subcommand_from install" -s "V" -l "version" -d "Show version and exit."
 complete -c pip -n "__fish_seen_subcommand_from install" -s "q" -l "quiet" -d "Give less output."
@@ -139,6 +145,7 @@ complete -c pip -n "__fish_seen_subcommand_from download" -s "h" -l "help" -d "S
 complete -c pip -n "__fish_seen_subcommand_from download" -l "debug" -d "Let unhandled exceptions propagate outside the main subroutine, instead of logging them to stderr."
 complete -c pip -n "__fish_seen_subcommand_from download" -l "isolated" -d "Run pip in an isolated mode, ignoring environment variables and user configuration."
 complete -c pip -n "__fish_seen_subcommand_from download" -l "require-virtualenv" -d "Allow pip to only run in a virtual environment; exit with an error otherwise."
+complete -c pip -n "__fish_seen_subcommand_from download" -l "python" -d "Run pip with the specified Python interpreter." -x
 complete -c pip -n "__fish_seen_subcommand_from download" -s "v" -l "verbose" -d "Give more output."
 complete -c pip -n "__fish_seen_subcommand_from download" -s "V" -l "version" -d "Show version and exit."
 complete -c pip -n "__fish_seen_subcommand_from download" -s "q" -l "quiet" -d "Give less output."
@@ -161,6 +168,8 @@ complete -c pip -n "__fish_seen_subcommand_from download" -l "use-deprecated" -d
 
 
 
+complete -c pip -n "__fish_seen_subcommand_from uninstall"  -d "Pure distutils packages installed with ``python setup.py install``, which leave behind no metadata to determine what files were installed."
+complete -c pip -n "__fish_seen_subcommand_from uninstall"  -d "Script wrappers installed by ``python setup.py develop``."
 complete -c pip -n "__fish_seen_subcommand_from uninstall" -s "r" -l "requirement" -d "Uninstall all the packages listed in the given requirements file." -r
 complete -c pip -n "__fish_seen_subcommand_from uninstall" -s "y" -l "yes" -d "Don't ask for confirmation of uninstall deletions."
 complete -c pip -n "__fish_seen_subcommand_from uninstall" -l "root-user-action" -d "Action if pip is run as a root user." -x
@@ -168,6 +177,7 @@ complete -c pip -n "__fish_seen_subcommand_from uninstall" -s "h" -l "help" -d "
 complete -c pip -n "__fish_seen_subcommand_from uninstall" -l "debug" -d "Let unhandled exceptions propagate outside the main subroutine, instead of logging them to stderr."
 complete -c pip -n "__fish_seen_subcommand_from uninstall" -l "isolated" -d "Run pip in an isolated mode, ignoring environment variables and user configuration."
 complete -c pip -n "__fish_seen_subcommand_from uninstall" -l "require-virtualenv" -d "Allow pip to only run in a virtual environment; exit with an error otherwise."
+complete -c pip -n "__fish_seen_subcommand_from uninstall" -l "python" -d "Run pip with the specified Python interpreter." -x
 complete -c pip -n "__fish_seen_subcommand_from uninstall" -s "v" -l "verbose" -d "Give more output."
 complete -c pip -n "__fish_seen_subcommand_from uninstall" -s "V" -l "version" -d "Show version and exit."
 complete -c pip -n "__fish_seen_subcommand_from uninstall" -s "q" -l "quiet" -d "Give less output."
@@ -194,13 +204,14 @@ complete -c pip -n "__fish_seen_subcommand_from freeze" -s "r" -l "requirement" 
 complete -c pip -n "__fish_seen_subcommand_from freeze" -s "l" -l "local" -d "If in a virtualenv that has global access, do not output globally-installed packages."
 complete -c pip -n "__fish_seen_subcommand_from freeze" -l "user" -d "Only output packages installed in user-site."
 complete -c pip -n "__fish_seen_subcommand_from freeze" -l "path" -d "Restrict to the specified installation path for listing packages (can be used multiple times)." -r
-complete -c pip -n "__fish_seen_subcommand_from freeze" -l "all" -d "Do not skip these packages in the output: wheel, setuptools, pip, distribute"
+complete -c pip -n "__fish_seen_subcommand_from freeze" -l "all" -d "Do not skip these packages in the output: setuptools, distribute, pip, wheel"
 complete -c pip -n "__fish_seen_subcommand_from freeze" -l "exclude-editable" -d "Exclude editable package from output."
 complete -c pip -n "__fish_seen_subcommand_from freeze" -l "exclude" -d "Exclude specified package from the output" -x
 complete -c pip -n "__fish_seen_subcommand_from freeze" -s "h" -l "help" -d "Show help."
 complete -c pip -n "__fish_seen_subcommand_from freeze" -l "debug" -d "Let unhandled exceptions propagate outside the main subroutine, instead of logging them to stderr."
 complete -c pip -n "__fish_seen_subcommand_from freeze" -l "isolated" -d "Run pip in an isolated mode, ignoring environment variables and user configuration."
 complete -c pip -n "__fish_seen_subcommand_from freeze" -l "require-virtualenv" -d "Allow pip to only run in a virtual environment; exit with an error otherwise."
+complete -c pip -n "__fish_seen_subcommand_from freeze" -l "python" -d "Run pip with the specified Python interpreter." -x
 complete -c pip -n "__fish_seen_subcommand_from freeze" -s "v" -l "verbose" -d "Give more output."
 complete -c pip -n "__fish_seen_subcommand_from freeze" -s "V" -l "version" -d "Show version and exit."
 complete -c pip -n "__fish_seen_subcommand_from freeze" -s "q" -l "quiet" -d "Give less output."
@@ -220,6 +231,36 @@ complete -c pip -n "__fish_seen_subcommand_from freeze" -l "no-color" -d "Suppre
 complete -c pip -n "__fish_seen_subcommand_from freeze" -l "no-python-version-warning" -d "Silence deprecation warnings for upcoming unsupported Pythons."
 complete -c pip -n "__fish_seen_subcommand_from freeze" -l "use-feature" -d "Enable new functionality, that may be backward incompatible." -x
 complete -c pip -n "__fish_seen_subcommand_from freeze" -l "use-deprecated" -d "Enable deprecated functionality, that will be removed in the future." -x
+
+
+
+complete -c pip -n "__fish_seen_subcommand_from inspect" -l "local" -d "If in a virtualenv that has global access, do not list globally-installed packages."
+complete -c pip -n "__fish_seen_subcommand_from inspect" -l "user" -d "Only output packages installed in user-site."
+complete -c pip -n "__fish_seen_subcommand_from inspect" -l "path" -d "Restrict to the specified installation path for listing packages (can be used multiple times)." -r
+complete -c pip -n "__fish_seen_subcommand_from inspect" -s "h" -l "help" -d "Show help."
+complete -c pip -n "__fish_seen_subcommand_from inspect" -l "debug" -d "Let unhandled exceptions propagate outside the main subroutine, instead of logging them to stderr."
+complete -c pip -n "__fish_seen_subcommand_from inspect" -l "isolated" -d "Run pip in an isolated mode, ignoring environment variables and user configuration."
+complete -c pip -n "__fish_seen_subcommand_from inspect" -l "require-virtualenv" -d "Allow pip to only run in a virtual environment; exit with an error otherwise."
+complete -c pip -n "__fish_seen_subcommand_from inspect" -l "python" -d "Run pip with the specified Python interpreter." -x
+complete -c pip -n "__fish_seen_subcommand_from inspect" -s "v" -l "verbose" -d "Give more output."
+complete -c pip -n "__fish_seen_subcommand_from inspect" -s "V" -l "version" -d "Show version and exit."
+complete -c pip -n "__fish_seen_subcommand_from inspect" -s "q" -l "quiet" -d "Give less output."
+complete -c pip -n "__fish_seen_subcommand_from inspect" -l "log" -d "Path to a verbose appending log." -r
+complete -c pip -n "__fish_seen_subcommand_from inspect" -l "no-input" -d "Disable prompting for input."
+complete -c pip -n "__fish_seen_subcommand_from inspect" -l "proxy" -d "Specify a proxy in the form scheme://[user:passwd@]proxy.server:port." -x
+complete -c pip -n "__fish_seen_subcommand_from inspect" -l "retries" -d "Maximum number of retries each connection should attempt (default 5 times)." -x
+complete -c pip -n "__fish_seen_subcommand_from inspect" -l "timeout" -d "Set the socket timeout (default 15 seconds)." -x
+complete -c pip -n "__fish_seen_subcommand_from inspect" -l "exists-action" -d "Default action when a path already exists: (s)witch, (i)gnore, (w)ipe, (b)ackup, (a)bort." -r
+complete -c pip -n "__fish_seen_subcommand_from inspect" -l "trusted-host" -d "Mark this host or host:port pair as trusted, even though it does not have valid or any HTTPS." -x
+complete -c pip -n "__fish_seen_subcommand_from inspect" -l "cert" -d "Path to PEM-encoded CA certificate bundle." -r
+complete -c pip -n "__fish_seen_subcommand_from inspect" -l "client-cert" -d "Path to SSL client certificate, a single file containing the private key and the certificate in PEM format." -r
+complete -c pip -n "__fish_seen_subcommand_from inspect" -l "cache-dir" -d "Store the cache data in <dir>." -r
+complete -c pip -n "__fish_seen_subcommand_from inspect" -l "no-cache-dir" -d "Disable the cache."
+complete -c pip -n "__fish_seen_subcommand_from inspect" -l "disable-pip-version-check" -d "Don't periodically check PyPI to determine whether a new version of pip is available for download."
+complete -c pip -n "__fish_seen_subcommand_from inspect" -l "no-color" -d "Suppress colored output."
+complete -c pip -n "__fish_seen_subcommand_from inspect" -l "no-python-version-warning" -d "Silence deprecation warnings for upcoming unsupported Pythons."
+complete -c pip -n "__fish_seen_subcommand_from inspect" -l "use-feature" -d "Enable new functionality, that may be backward incompatible." -x
+complete -c pip -n "__fish_seen_subcommand_from inspect" -l "use-deprecated" -d "Enable deprecated functionality, that will be removed in the future." -x
 
 
 
@@ -243,6 +284,7 @@ complete -c pip -n "__fish_seen_subcommand_from list" -s "h" -l "help" -d "Show 
 complete -c pip -n "__fish_seen_subcommand_from list" -l "debug" -d "Let unhandled exceptions propagate outside the main subroutine, instead of logging them to stderr."
 complete -c pip -n "__fish_seen_subcommand_from list" -l "isolated" -d "Run pip in an isolated mode, ignoring environment variables and user configuration."
 complete -c pip -n "__fish_seen_subcommand_from list" -l "require-virtualenv" -d "Allow pip to only run in a virtual environment; exit with an error otherwise."
+complete -c pip -n "__fish_seen_subcommand_from list" -l "python" -d "Run pip with the specified Python interpreter." -x
 complete -c pip -n "__fish_seen_subcommand_from list" -s "v" -l "verbose" -d "Give more output."
 complete -c pip -n "__fish_seen_subcommand_from list" -s "V" -l "version" -d "Show version and exit."
 complete -c pip -n "__fish_seen_subcommand_from list" -s "q" -l "quiet" -d "Give less output."
@@ -270,6 +312,7 @@ complete -c pip -n "__fish_seen_subcommand_from show" -s "h" -l "help" -d "Show 
 complete -c pip -n "__fish_seen_subcommand_from show" -l "debug" -d "Let unhandled exceptions propagate outside the main subroutine, instead of logging them to stderr."
 complete -c pip -n "__fish_seen_subcommand_from show" -l "isolated" -d "Run pip in an isolated mode, ignoring environment variables and user configuration."
 complete -c pip -n "__fish_seen_subcommand_from show" -l "require-virtualenv" -d "Allow pip to only run in a virtual environment; exit with an error otherwise."
+complete -c pip -n "__fish_seen_subcommand_from show" -l "python" -d "Run pip with the specified Python interpreter." -x
 complete -c pip -n "__fish_seen_subcommand_from show" -s "v" -l "verbose" -d "Give more output."
 complete -c pip -n "__fish_seen_subcommand_from show" -s "V" -l "version" -d "Show version and exit."
 complete -c pip -n "__fish_seen_subcommand_from show" -s "q" -l "quiet" -d "Give less output."
@@ -296,6 +339,7 @@ complete -c pip -n "__fish_seen_subcommand_from check" -s "h" -l "help" -d "Show
 complete -c pip -n "__fish_seen_subcommand_from check" -l "debug" -d "Let unhandled exceptions propagate outside the main subroutine, instead of logging them to stderr."
 complete -c pip -n "__fish_seen_subcommand_from check" -l "isolated" -d "Run pip in an isolated mode, ignoring environment variables and user configuration."
 complete -c pip -n "__fish_seen_subcommand_from check" -l "require-virtualenv" -d "Allow pip to only run in a virtual environment; exit with an error otherwise."
+complete -c pip -n "__fish_seen_subcommand_from check" -l "python" -d "Run pip with the specified Python interpreter." -x
 complete -c pip -n "__fish_seen_subcommand_from check" -s "v" -l "verbose" -d "Give more output."
 complete -c pip -n "__fish_seen_subcommand_from check" -s "V" -l "version" -d "Show version and exit."
 complete -c pip -n "__fish_seen_subcommand_from check" -s "q" -l "quiet" -d "Give less output."
@@ -326,6 +370,7 @@ complete -c pip -n "__fish_seen_subcommand_from config" -s "h" -l "help" -d "Sho
 complete -c pip -n "__fish_seen_subcommand_from config" -l "debug" -d "Let unhandled exceptions propagate outside the main subroutine, instead of logging them to stderr."
 complete -c pip -n "__fish_seen_subcommand_from config" -l "isolated" -d "Run pip in an isolated mode, ignoring environment variables and user configuration."
 complete -c pip -n "__fish_seen_subcommand_from config" -l "require-virtualenv" -d "Allow pip to only run in a virtual environment; exit with an error otherwise."
+complete -c pip -n "__fish_seen_subcommand_from config" -l "python" -d "Run pip with the specified Python interpreter." -x
 complete -c pip -n "__fish_seen_subcommand_from config" -s "v" -l "verbose" -d "Give more output."
 complete -c pip -n "__fish_seen_subcommand_from config" -s "V" -l "version" -d "Show version and exit."
 complete -c pip -n "__fish_seen_subcommand_from config" -s "q" -l "quiet" -d "Give less output."
@@ -353,6 +398,7 @@ complete -c pip -n "__fish_seen_subcommand_from search" -s "h" -l "help" -d "Sho
 complete -c pip -n "__fish_seen_subcommand_from search" -l "debug" -d "Let unhandled exceptions propagate outside the main subroutine, instead of logging them to stderr."
 complete -c pip -n "__fish_seen_subcommand_from search" -l "isolated" -d "Run pip in an isolated mode, ignoring environment variables and user configuration."
 complete -c pip -n "__fish_seen_subcommand_from search" -l "require-virtualenv" -d "Allow pip to only run in a virtual environment; exit with an error otherwise."
+complete -c pip -n "__fish_seen_subcommand_from search" -l "python" -d "Run pip with the specified Python interpreter." -x
 complete -c pip -n "__fish_seen_subcommand_from search" -s "v" -l "verbose" -d "Give more output."
 complete -c pip -n "__fish_seen_subcommand_from search" -s "V" -l "version" -d "Show version and exit."
 complete -c pip -n "__fish_seen_subcommand_from search" -s "q" -l "quiet" -d "Give less output."
@@ -380,6 +426,7 @@ complete -c pip -n "__fish_seen_subcommand_from cache" -s "h" -l "help" -d "Show
 complete -c pip -n "__fish_seen_subcommand_from cache" -l "debug" -d "Let unhandled exceptions propagate outside the main subroutine, instead of logging them to stderr."
 complete -c pip -n "__fish_seen_subcommand_from cache" -l "isolated" -d "Run pip in an isolated mode, ignoring environment variables and user configuration."
 complete -c pip -n "__fish_seen_subcommand_from cache" -l "require-virtualenv" -d "Allow pip to only run in a virtual environment; exit with an error otherwise."
+complete -c pip -n "__fish_seen_subcommand_from cache" -l "python" -d "Run pip with the specified Python interpreter." -x
 complete -c pip -n "__fish_seen_subcommand_from cache" -s "v" -l "verbose" -d "Give more output."
 complete -c pip -n "__fish_seen_subcommand_from cache" -s "V" -l "version" -d "Show version and exit."
 complete -c pip -n "__fish_seen_subcommand_from cache" -s "q" -l "quiet" -d "Give less output."
@@ -418,6 +465,7 @@ complete -c pip -n "__fish_seen_subcommand_from index" -s "h" -l "help" -d "Show
 complete -c pip -n "__fish_seen_subcommand_from index" -l "debug" -d "Let unhandled exceptions propagate outside the main subroutine, instead of logging them to stderr."
 complete -c pip -n "__fish_seen_subcommand_from index" -l "isolated" -d "Run pip in an isolated mode, ignoring environment variables and user configuration."
 complete -c pip -n "__fish_seen_subcommand_from index" -l "require-virtualenv" -d "Allow pip to only run in a virtual environment; exit with an error otherwise."
+complete -c pip -n "__fish_seen_subcommand_from index" -l "python" -d "Run pip with the specified Python interpreter." -x
 complete -c pip -n "__fish_seen_subcommand_from index" -s "v" -l "verbose" -d "Give more output."
 complete -c pip -n "__fish_seen_subcommand_from index" -s "V" -l "version" -d "Show version and exit."
 complete -c pip -n "__fish_seen_subcommand_from index" -s "q" -l "quiet" -d "Give less output."
@@ -469,6 +517,7 @@ complete -c pip -n "__fish_seen_subcommand_from wheel" -s "h" -l "help" -d "Show
 complete -c pip -n "__fish_seen_subcommand_from wheel" -l "debug" -d "Let unhandled exceptions propagate outside the main subroutine, instead of logging them to stderr."
 complete -c pip -n "__fish_seen_subcommand_from wheel" -l "isolated" -d "Run pip in an isolated mode, ignoring environment variables and user configuration."
 complete -c pip -n "__fish_seen_subcommand_from wheel" -l "require-virtualenv" -d "Allow pip to only run in a virtual environment; exit with an error otherwise."
+complete -c pip -n "__fish_seen_subcommand_from wheel" -l "python" -d "Run pip with the specified Python interpreter." -x
 complete -c pip -n "__fish_seen_subcommand_from wheel" -s "v" -l "verbose" -d "Give more output."
 complete -c pip -n "__fish_seen_subcommand_from wheel" -s "V" -l "version" -d "Show version and exit."
 complete -c pip -n "__fish_seen_subcommand_from wheel" -s "q" -l "quiet" -d "Give less output."
@@ -496,6 +545,7 @@ complete -c pip -n "__fish_seen_subcommand_from hash" -s "h" -l "help" -d "Show 
 complete -c pip -n "__fish_seen_subcommand_from hash" -l "debug" -d "Let unhandled exceptions propagate outside the main subroutine, instead of logging them to stderr."
 complete -c pip -n "__fish_seen_subcommand_from hash" -l "isolated" -d "Run pip in an isolated mode, ignoring environment variables and user configuration."
 complete -c pip -n "__fish_seen_subcommand_from hash" -l "require-virtualenv" -d "Allow pip to only run in a virtual environment; exit with an error otherwise."
+complete -c pip -n "__fish_seen_subcommand_from hash" -l "python" -d "Run pip with the specified Python interpreter." -x
 complete -c pip -n "__fish_seen_subcommand_from hash" -s "v" -l "verbose" -d "Give more output."
 complete -c pip -n "__fish_seen_subcommand_from hash" -s "V" -l "version" -d "Show version and exit."
 complete -c pip -n "__fish_seen_subcommand_from hash" -s "q" -l "quiet" -d "Give less output."
@@ -526,6 +576,7 @@ complete -c pip -n "__fish_seen_subcommand_from completion" -s "h" -l "help" -d 
 complete -c pip -n "__fish_seen_subcommand_from completion" -l "debug" -d "Let unhandled exceptions propagate outside the main subroutine, instead of logging them to stderr."
 complete -c pip -n "__fish_seen_subcommand_from completion" -l "isolated" -d "Run pip in an isolated mode, ignoring environment variables and user configuration."
 complete -c pip -n "__fish_seen_subcommand_from completion" -l "require-virtualenv" -d "Allow pip to only run in a virtual environment; exit with an error otherwise."
+complete -c pip -n "__fish_seen_subcommand_from completion" -l "python" -d "Run pip with the specified Python interpreter." -x
 complete -c pip -n "__fish_seen_subcommand_from completion" -s "v" -l "verbose" -d "Give more output."
 complete -c pip -n "__fish_seen_subcommand_from completion" -s "V" -l "version" -d "Show version and exit."
 complete -c pip -n "__fish_seen_subcommand_from completion" -s "q" -l "quiet" -d "Give less output."
@@ -556,6 +607,7 @@ complete -c pip -n "__fish_seen_subcommand_from debug" -s "h" -l "help" -d "Show
 complete -c pip -n "__fish_seen_subcommand_from debug" -l "debug" -d "Let unhandled exceptions propagate outside the main subroutine, instead of logging them to stderr."
 complete -c pip -n "__fish_seen_subcommand_from debug" -l "isolated" -d "Run pip in an isolated mode, ignoring environment variables and user configuration."
 complete -c pip -n "__fish_seen_subcommand_from debug" -l "require-virtualenv" -d "Allow pip to only run in a virtual environment; exit with an error otherwise."
+complete -c pip -n "__fish_seen_subcommand_from debug" -l "python" -d "Run pip with the specified Python interpreter." -x
 complete -c pip -n "__fish_seen_subcommand_from debug" -s "v" -l "verbose" -d "Give more output."
 complete -c pip -n "__fish_seen_subcommand_from debug" -s "V" -l "version" -d "Show version and exit."
 complete -c pip -n "__fish_seen_subcommand_from debug" -s "q" -l "quiet" -d "Give less output."
@@ -575,3 +627,30 @@ complete -c pip -n "__fish_seen_subcommand_from debug" -l "no-color" -d "Suppres
 complete -c pip -n "__fish_seen_subcommand_from debug" -l "no-python-version-warning" -d "Silence deprecation warnings for upcoming unsupported Pythons."
 complete -c pip -n "__fish_seen_subcommand_from debug" -l "use-feature" -d "Enable new functionality, that may be backward incompatible." -x
 complete -c pip -n "__fish_seen_subcommand_from debug" -l "use-deprecated" -d "Enable deprecated functionality, that will be removed in the future." -x
+
+
+
+complete -c pip -n "__fish_seen_subcommand_from help" -s "h" -l "help" -d "Show help."
+complete -c pip -n "__fish_seen_subcommand_from help" -l "debug" -d "Let unhandled exceptions propagate outside the main subroutine, instead of logging them to stderr."
+complete -c pip -n "__fish_seen_subcommand_from help" -l "isolated" -d "Run pip in an isolated mode, ignoring environment variables and user configuration."
+complete -c pip -n "__fish_seen_subcommand_from help" -l "require-virtualenv" -d "Allow pip to only run in a virtual environment; exit with an error otherwise."
+complete -c pip -n "__fish_seen_subcommand_from help" -l "python" -d "Run pip with the specified Python interpreter." -x
+complete -c pip -n "__fish_seen_subcommand_from help" -s "v" -l "verbose" -d "Give more output."
+complete -c pip -n "__fish_seen_subcommand_from help" -s "V" -l "version" -d "Show version and exit."
+complete -c pip -n "__fish_seen_subcommand_from help" -s "q" -l "quiet" -d "Give less output."
+complete -c pip -n "__fish_seen_subcommand_from help" -l "log" -d "Path to a verbose appending log." -r
+complete -c pip -n "__fish_seen_subcommand_from help" -l "no-input" -d "Disable prompting for input."
+complete -c pip -n "__fish_seen_subcommand_from help" -l "proxy" -d "Specify a proxy in the form scheme://[user:passwd@]proxy.server:port." -x
+complete -c pip -n "__fish_seen_subcommand_from help" -l "retries" -d "Maximum number of retries each connection should attempt (default 5 times)." -x
+complete -c pip -n "__fish_seen_subcommand_from help" -l "timeout" -d "Set the socket timeout (default 15 seconds)." -x
+complete -c pip -n "__fish_seen_subcommand_from help" -l "exists-action" -d "Default action when a path already exists: (s)witch, (i)gnore, (w)ipe, (b)ackup, (a)bort." -r
+complete -c pip -n "__fish_seen_subcommand_from help" -l "trusted-host" -d "Mark this host or host:port pair as trusted, even though it does not have valid or any HTTPS." -x
+complete -c pip -n "__fish_seen_subcommand_from help" -l "cert" -d "Path to PEM-encoded CA certificate bundle." -r
+complete -c pip -n "__fish_seen_subcommand_from help" -l "client-cert" -d "Path to SSL client certificate, a single file containing the private key and the certificate in PEM format." -r
+complete -c pip -n "__fish_seen_subcommand_from help" -l "cache-dir" -d "Store the cache data in <dir>." -r
+complete -c pip -n "__fish_seen_subcommand_from help" -l "no-cache-dir" -d "Disable the cache."
+complete -c pip -n "__fish_seen_subcommand_from help" -l "disable-pip-version-check" -d "Don't periodically check PyPI to determine whether a new version of pip is available for download."
+complete -c pip -n "__fish_seen_subcommand_from help" -l "no-color" -d "Suppress colored output."
+complete -c pip -n "__fish_seen_subcommand_from help" -l "no-python-version-warning" -d "Silence deprecation warnings for upcoming unsupported Pythons."
+complete -c pip -n "__fish_seen_subcommand_from help" -l "use-feature" -d "Enable new functionality, that may be backward incompatible." -x
+complete -c pip -n "__fish_seen_subcommand_from help" -l "use-deprecated" -d "Enable deprecated functionality, that will be removed in the future." -x

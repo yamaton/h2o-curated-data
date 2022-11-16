@@ -9,6 +9,7 @@
             '--no-deps[Don'\''t install package dependencies.]' \
             '--pre[Include pre-release and development versions. By default, pip only finds stable versions.]' \
             {-e,--editable}'[Install a project in editable mode (i.e. setuptools "develop mode") from a local project path or a VCS url.]':file:_files \
+            '--dry-run[Don'\''t actually install anything, just print what would be. Can be used in combination with --ignore-installed to '\''resolve'\'' the requirements.]' \
             {-t,--target}'[Install packages into <dir>. By default this will not replace existing files/folders in <dir>. Use --upgrade to replace existing packages in <dir> with new versions.]':file:_files \
             '--platform[Only use wheels compatible with <platform>. Defaults to the platform of the running system. Use this option multiple times to specify multiple platforms supported by the target interpreter.]' \
             '--python-version[The Python interpreter version to use for wheel and "Requires-Python" compatibility checks. Defaults to a version derived from the running interpreter. The version can be specified using up to three dot-separated integers (e.g. "3" for 3.0.0, "3.7" for 3.7.0, or "3.7.3"). A major-minor version can also be given as a string without dots (e.g. "37" for 3.7.0).]' \
@@ -39,6 +40,7 @@
             '--require-hashes[Require a hash to check each requirement against, for repeatable installs. This option is implied when any package in a requirements file has a --hash option.]' \
             '--progress-bar[Specify whether the progress bar should be used \[on, off\] (default: on)]' \
             '--root-user-action[Action if pip is run as a root user. By default, a warning message is shown.]' \
+            '--report[Generate a JSON file describing what pip did to install the provided requirements. Can be used in combination with --dry-run and --ignore-installed to '\''resolve'\'' the requirements. When - is used as file name it writes to stdout. When writing to stdout, please combine with the --quiet option to avoid mixing pip logging output with JSON output.]':file:_files \
             '--no-clean[Don'\''t clean up build directories.]' \
             {-i,--index-url}'[Base URL of the Python Package Index (default https://pypi.org/simple). This should point to a repository compliant with PEP 503 (the simple repository API) or a local directory laid out in the same format.]' \
             '--extra-index-url[Extra URLs of package indexes to use in addition to --index-url. Should follow the same rules as --index-url.]' \
@@ -48,6 +50,7 @@
             '--debug[Let unhandled exceptions propagate outside the main subroutine, instead of logging them to stderr.]' \
             '--isolated[Run pip in an isolated mode, ignoring environment variables and user configuration.]' \
             '--require-virtualenv[Allow pip to only run in a virtual environment; exit with an error otherwise.]' \
+            '--python[Run pip with the specified Python interpreter.]' \
             {-v,--verbose}'[Give more output. Option is additive, and can be used up to 3 times.]' \
             {-V,--version}'[Show version and exit.]' \
             {-q,--quiet}'[Give less output. Option is additive, and can be used up to 3 times (corresponding to WARNING, ERROR, and CRITICAL logging levels).]' \
@@ -102,6 +105,7 @@
             '--debug[Let unhandled exceptions propagate outside the main subroutine, instead of logging them to stderr.]' \
             '--isolated[Run pip in an isolated mode, ignoring environment variables and user configuration.]' \
             '--require-virtualenv[Allow pip to only run in a virtual environment; exit with an error otherwise.]' \
+            '--python[Run pip with the specified Python interpreter.]' \
             {-v,--verbose}'[Give more output. Option is additive, and can be used up to 3 times.]' \
             {-V,--version}'[Show version and exit.]' \
             {-q,--quiet}'[Give less output. Option is additive, and can be used up to 3 times (corresponding to WARNING, ERROR, and CRITICAL logging levels).]' \
@@ -127,6 +131,8 @@
 
     function _pip_uninstall {
         _arguments \
+            '-[Pure distutils packages installed with ``python setup.py install``, which leave behind no metadata to determine what files were installed.]' \
+            '-[Script wrappers installed by ``python setup.py develop``.]' \
             {-r,--requirement}'[Uninstall all the packages listed in the given requirements file. This option can be used multiple times.]':file:_files \
             {-y,--yes}'[Don'\''t ask for confirmation of uninstall deletions.]' \
             '--root-user-action[Action if pip is run as a root user. By default, a warning message is shown.]' \
@@ -134,6 +140,7 @@
             '--debug[Let unhandled exceptions propagate outside the main subroutine, instead of logging them to stderr.]' \
             '--isolated[Run pip in an isolated mode, ignoring environment variables and user configuration.]' \
             '--require-virtualenv[Allow pip to only run in a virtual environment; exit with an error otherwise.]' \
+            '--python[Run pip with the specified Python interpreter.]' \
             {-v,--verbose}'[Give more output. Option is additive, and can be used up to 3 times.]' \
             {-V,--version}'[Show version and exit.]' \
             {-q,--quiet}'[Give less output. Option is additive, and can be used up to 3 times (corresponding to WARNING, ERROR, and CRITICAL logging levels).]' \
@@ -163,13 +170,47 @@
             {-l,--local}'[If in a virtualenv that has global access, do not output globally-installed packages.]' \
             '--user[Only output packages installed in user-site.]' \
             '--path[Restrict to the specified installation path for listing packages (can be used multiple times).]':file:_files \
-            '--all[Do not skip these packages in the output: wheel, setuptools, pip, distribute]' \
+            '--all[Do not skip these packages in the output: setuptools, distribute, pip, wheel]' \
             '--exclude-editable[Exclude editable package from output.]' \
             '--exclude[Exclude specified package from the output]' \
             {-h,--help}'[Show help.]' \
             '--debug[Let unhandled exceptions propagate outside the main subroutine, instead of logging them to stderr.]' \
             '--isolated[Run pip in an isolated mode, ignoring environment variables and user configuration.]' \
             '--require-virtualenv[Allow pip to only run in a virtual environment; exit with an error otherwise.]' \
+            '--python[Run pip with the specified Python interpreter.]' \
+            {-v,--verbose}'[Give more output. Option is additive, and can be used up to 3 times.]' \
+            {-V,--version}'[Show version and exit.]' \
+            {-q,--quiet}'[Give less output. Option is additive, and can be used up to 3 times (corresponding to WARNING, ERROR, and CRITICAL logging levels).]' \
+            '--log[Path to a verbose appending log.]':file:_files \
+            '--no-input[Disable prompting for input.]' \
+            '--proxy[Specify a proxy in the form scheme://\[user:passwd@\]proxy.server:port.]' \
+            '--retries[Maximum number of retries each connection should attempt (default 5 times).]' \
+            '--timeout[Set the socket timeout (default 15 seconds).]' \
+            '--exists-action[Default action when a path already exists: (s)witch, (i)gnore, (w)ipe, (b)ackup, (a)bort.]' \
+            '--trusted-host[Mark this host or host:port pair as trusted, even though it does not have valid or any HTTPS.]' \
+            '--cert[Path to PEM-encoded CA certificate bundle. If provided, overrides the default. See '\''SSL Certificate Verification'\'' in pip documentation for more information.]':file:_files \
+            '--client-cert[Path to SSL client certificate, a single file containing the private key and the certificate in PEM format.]':file:_files \
+            '--cache-dir[Store the cache data in <dir>.]':file:_files \
+            '--no-cache-dir[Disable the cache.]' \
+            '--disable-pip-version-check[Don'\''t periodically check PyPI to determine whether a new version of pip is available for download. Implied with --no-index.]' \
+            '--no-color[Suppress colored output.]' \
+            '--no-python-version-warning[Silence deprecation warnings for upcoming unsupported Pythons.]' \
+            '--use-feature[Enable new functionality, that may be backward incompatible.]' \
+            '--use-deprecated[Enable deprecated functionality, that will be removed in the future.]' \
+            "*: :_files"
+
+    }
+
+    function _pip_inspect {
+        _arguments \
+            '--local[If in a virtualenv that has global access, do not list globally-installed packages.]' \
+            '--user[Only output packages installed in user-site.]' \
+            '--path[Restrict to the specified installation path for listing packages (can be used multiple times).]':file:_files \
+            {-h,--help}'[Show help.]' \
+            '--debug[Let unhandled exceptions propagate outside the main subroutine, instead of logging them to stderr.]' \
+            '--isolated[Run pip in an isolated mode, ignoring environment variables and user configuration.]' \
+            '--require-virtualenv[Allow pip to only run in a virtual environment; exit with an error otherwise.]' \
+            '--python[Run pip with the specified Python interpreter.]' \
             {-v,--verbose}'[Give more output. Option is additive, and can be used up to 3 times.]' \
             {-V,--version}'[Show version and exit.]' \
             {-q,--quiet}'[Give less output. Option is additive, and can be used up to 3 times (corresponding to WARNING, ERROR, and CRITICAL logging levels).]' \
@@ -215,6 +256,7 @@
             '--debug[Let unhandled exceptions propagate outside the main subroutine, instead of logging them to stderr.]' \
             '--isolated[Run pip in an isolated mode, ignoring environment variables and user configuration.]' \
             '--require-virtualenv[Allow pip to only run in a virtual environment; exit with an error otherwise.]' \
+            '--python[Run pip with the specified Python interpreter.]' \
             {-v,--verbose}'[Give more output. Option is additive, and can be used up to 3 times.]' \
             {-V,--version}'[Show version and exit.]' \
             {-q,--quiet}'[Give less output. Option is additive, and can be used up to 3 times (corresponding to WARNING, ERROR, and CRITICAL logging levels).]' \
@@ -245,6 +287,7 @@
             '--debug[Let unhandled exceptions propagate outside the main subroutine, instead of logging them to stderr.]' \
             '--isolated[Run pip in an isolated mode, ignoring environment variables and user configuration.]' \
             '--require-virtualenv[Allow pip to only run in a virtual environment; exit with an error otherwise.]' \
+            '--python[Run pip with the specified Python interpreter.]' \
             {-v,--verbose}'[Give more output. Option is additive, and can be used up to 3 times.]' \
             {-V,--version}'[Show version and exit.]' \
             {-q,--quiet}'[Give less output. Option is additive, and can be used up to 3 times (corresponding to WARNING, ERROR, and CRITICAL logging levels).]' \
@@ -274,6 +317,7 @@
             '--debug[Let unhandled exceptions propagate outside the main subroutine, instead of logging them to stderr.]' \
             '--isolated[Run pip in an isolated mode, ignoring environment variables and user configuration.]' \
             '--require-virtualenv[Allow pip to only run in a virtual environment; exit with an error otherwise.]' \
+            '--python[Run pip with the specified Python interpreter.]' \
             {-v,--verbose}'[Give more output. Option is additive, and can be used up to 3 times.]' \
             {-V,--version}'[Show version and exit.]' \
             {-q,--quiet}'[Give less output. Option is additive, and can be used up to 3 times (corresponding to WARNING, ERROR, and CRITICAL logging levels).]' \
@@ -307,6 +351,7 @@
             '--debug[Let unhandled exceptions propagate outside the main subroutine, instead of logging them to stderr.]' \
             '--isolated[Run pip in an isolated mode, ignoring environment variables and user configuration.]' \
             '--require-virtualenv[Allow pip to only run in a virtual environment; exit with an error otherwise.]' \
+            '--python[Run pip with the specified Python interpreter.]' \
             {-v,--verbose}'[Give more output. Option is additive, and can be used up to 3 times.]' \
             {-V,--version}'[Show version and exit.]' \
             {-q,--quiet}'[Give less output. Option is additive, and can be used up to 3 times (corresponding to WARNING, ERROR, and CRITICAL logging levels).]' \
@@ -337,6 +382,7 @@
             '--debug[Let unhandled exceptions propagate outside the main subroutine, instead of logging them to stderr.]' \
             '--isolated[Run pip in an isolated mode, ignoring environment variables and user configuration.]' \
             '--require-virtualenv[Allow pip to only run in a virtual environment; exit with an error otherwise.]' \
+            '--python[Run pip with the specified Python interpreter.]' \
             {-v,--verbose}'[Give more output. Option is additive, and can be used up to 3 times.]' \
             {-V,--version}'[Show version and exit.]' \
             {-q,--quiet}'[Give less output. Option is additive, and can be used up to 3 times (corresponding to WARNING, ERROR, and CRITICAL logging levels).]' \
@@ -367,6 +413,7 @@
             '--debug[Let unhandled exceptions propagate outside the main subroutine, instead of logging them to stderr.]' \
             '--isolated[Run pip in an isolated mode, ignoring environment variables and user configuration.]' \
             '--require-virtualenv[Allow pip to only run in a virtual environment; exit with an error otherwise.]' \
+            '--python[Run pip with the specified Python interpreter.]' \
             {-v,--verbose}'[Give more output. Option is additive, and can be used up to 3 times.]' \
             {-V,--version}'[Show version and exit.]' \
             {-q,--quiet}'[Give less output. Option is additive, and can be used up to 3 times (corresponding to WARNING, ERROR, and CRITICAL logging levels).]' \
@@ -408,6 +455,7 @@
             '--debug[Let unhandled exceptions propagate outside the main subroutine, instead of logging them to stderr.]' \
             '--isolated[Run pip in an isolated mode, ignoring environment variables and user configuration.]' \
             '--require-virtualenv[Allow pip to only run in a virtual environment; exit with an error otherwise.]' \
+            '--python[Run pip with the specified Python interpreter.]' \
             {-v,--verbose}'[Give more output. Option is additive, and can be used up to 3 times.]' \
             {-V,--version}'[Show version and exit.]' \
             {-q,--quiet}'[Give less output. Option is additive, and can be used up to 3 times (corresponding to WARNING, ERROR, and CRITICAL logging levels).]' \
@@ -462,6 +510,7 @@
             '--debug[Let unhandled exceptions propagate outside the main subroutine, instead of logging them to stderr.]' \
             '--isolated[Run pip in an isolated mode, ignoring environment variables and user configuration.]' \
             '--require-virtualenv[Allow pip to only run in a virtual environment; exit with an error otherwise.]' \
+            '--python[Run pip with the specified Python interpreter.]' \
             {-v,--verbose}'[Give more output. Option is additive, and can be used up to 3 times.]' \
             {-V,--version}'[Show version and exit.]' \
             {-q,--quiet}'[Give less output. Option is additive, and can be used up to 3 times (corresponding to WARNING, ERROR, and CRITICAL logging levels).]' \
@@ -492,6 +541,7 @@
             '--debug[Let unhandled exceptions propagate outside the main subroutine, instead of logging them to stderr.]' \
             '--isolated[Run pip in an isolated mode, ignoring environment variables and user configuration.]' \
             '--require-virtualenv[Allow pip to only run in a virtual environment; exit with an error otherwise.]' \
+            '--python[Run pip with the specified Python interpreter.]' \
             {-v,--verbose}'[Give more output. Option is additive, and can be used up to 3 times.]' \
             {-V,--version}'[Show version and exit.]' \
             {-q,--quiet}'[Give less output. Option is additive, and can be used up to 3 times (corresponding to WARNING, ERROR, and CRITICAL logging levels).]' \
@@ -525,6 +575,7 @@
             '--debug[Let unhandled exceptions propagate outside the main subroutine, instead of logging them to stderr.]' \
             '--isolated[Run pip in an isolated mode, ignoring environment variables and user configuration.]' \
             '--require-virtualenv[Allow pip to only run in a virtual environment; exit with an error otherwise.]' \
+            '--python[Run pip with the specified Python interpreter.]' \
             {-v,--verbose}'[Give more output. Option is additive, and can be used up to 3 times.]' \
             {-V,--version}'[Show version and exit.]' \
             {-q,--quiet}'[Give less output. Option is additive, and can be used up to 3 times (corresponding to WARNING, ERROR, and CRITICAL logging levels).]' \
@@ -558,6 +609,37 @@
             '--debug[Let unhandled exceptions propagate outside the main subroutine, instead of logging them to stderr.]' \
             '--isolated[Run pip in an isolated mode, ignoring environment variables and user configuration.]' \
             '--require-virtualenv[Allow pip to only run in a virtual environment; exit with an error otherwise.]' \
+            '--python[Run pip with the specified Python interpreter.]' \
+            {-v,--verbose}'[Give more output. Option is additive, and can be used up to 3 times.]' \
+            {-V,--version}'[Show version and exit.]' \
+            {-q,--quiet}'[Give less output. Option is additive, and can be used up to 3 times (corresponding to WARNING, ERROR, and CRITICAL logging levels).]' \
+            '--log[Path to a verbose appending log.]':file:_files \
+            '--no-input[Disable prompting for input.]' \
+            '--proxy[Specify a proxy in the form scheme://\[user:passwd@\]proxy.server:port.]' \
+            '--retries[Maximum number of retries each connection should attempt (default 5 times).]' \
+            '--timeout[Set the socket timeout (default 15 seconds).]' \
+            '--exists-action[Default action when a path already exists: (s)witch, (i)gnore, (w)ipe, (b)ackup, (a)bort.]' \
+            '--trusted-host[Mark this host or host:port pair as trusted, even though it does not have valid or any HTTPS.]' \
+            '--cert[Path to PEM-encoded CA certificate bundle. If provided, overrides the default. See '\''SSL Certificate Verification'\'' in pip documentation for more information.]':file:_files \
+            '--client-cert[Path to SSL client certificate, a single file containing the private key and the certificate in PEM format.]':file:_files \
+            '--cache-dir[Store the cache data in <dir>.]':file:_files \
+            '--no-cache-dir[Disable the cache.]' \
+            '--disable-pip-version-check[Don'\''t periodically check PyPI to determine whether a new version of pip is available for download. Implied with --no-index.]' \
+            '--no-color[Suppress colored output.]' \
+            '--no-python-version-warning[Silence deprecation warnings for upcoming unsupported Pythons.]' \
+            '--use-feature[Enable new functionality, that may be backward incompatible.]' \
+            '--use-deprecated[Enable deprecated functionality, that will be removed in the future.]' \
+            "*: :_files"
+
+    }
+
+    function _pip_help {
+        _arguments \
+            {-h,--help}'[Show help.]' \
+            '--debug[Let unhandled exceptions propagate outside the main subroutine, instead of logging them to stderr.]' \
+            '--isolated[Run pip in an isolated mode, ignoring environment variables and user configuration.]' \
+            '--require-virtualenv[Allow pip to only run in a virtual environment; exit with an error otherwise.]' \
+            '--python[Run pip with the specified Python interpreter.]' \
             {-v,--verbose}'[Give more output. Option is additive, and can be used up to 3 times.]' \
             {-V,--version}'[Show version and exit.]' \
             {-q,--quiet}'[Give less output. Option is additive, and can be used up to 3 times (corresponding to WARNING, ERROR, and CRITICAL logging levels).]' \
@@ -592,6 +674,7 @@ function _pip {
             'download:Download packages.'
             'uninstall:Uninstall packages.'
             'freeze:Output installed packages in requirements format.'
+            'inspect:Inspect the python environment.'
             'list:List installed packages.'
             'show:Show information about installed packages.'
             'check:Verify installed packages have compatible dependencies.'
@@ -603,6 +686,7 @@ function _pip {
             'hash:Compute hashes of package archives.'
             'completion:A helper command used for command completion.'
             'debug:Show information useful for debugging.'
+            'help:Show help for commands.'
         )
         _describe 'command' commands
     }
@@ -613,6 +697,7 @@ function _pip {
         '--debug[Let unhandled exceptions propagate outside the main subroutine, instead of logging them to stderr.]' \
         '--isolated[Run pip in an isolated mode, ignoring environment variables and user configuration.]' \
         '--require-virtualenv[Allow pip to only run in a virtual environment; exit with an error otherwise.]' \
+        '--python[Run pip with the specified Python interpreter.]' \
         {-v,--verbose}'[Give more output. Option is additive, and can be used up to 3 times.]' \
         {-V,--version}'[Show version and exit.]' \
         {-q,--quiet}'[Give less output. Option is additive, and can be used up to 3 times (corresponding to WARNING, ERROR, and CRITICAL logging levels).]' \
@@ -657,6 +742,10 @@ function _pip {
             _pip_freeze
             ;;
 
+        (inspect)
+            _pip_inspect
+            ;;
+
         (list)
             _pip_list
             ;;
@@ -699,6 +788,10 @@ function _pip {
 
         (debug)
             _pip_debug
+            ;;
+
+        (help)
+            _pip_help
             ;;
 
         esac

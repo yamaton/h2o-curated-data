@@ -1,37 +1,39 @@
-name: blastx
-description: blastx
+name: psiblast
+description: psiblast
 usage: |-
-  blastx [-h] [-help] [-import_search_strategy filename]
-    [-export_search_strategy filename] [-task task_name] [-db database_name]
+  psiblast [-h] [-help] [-import_search_strategy filename]
+    [-export_search_strategy filename] [-db database_name]
     [-dbsize num_letters] [-gilist filename] [-seqidlist filename]
     [-negative_gilist filename] [-negative_seqidlist filename]
     [-taxids taxids] [-negative_taxids taxids] [-taxidlist filename]
     [-negative_taxidlist filename] [-ipglist filename]
     [-negative_ipglist filename] [-entrez_query entrez_query]
-    [-db_soft_mask filtering_algorithm] [-db_hard_mask filtering_algorithm]
     [-subject subject_input_file] [-subject_loc range] [-query input_file]
     [-out output_file] [-evalue evalue] [-word_size int_value]
     [-gapopen open_penalty] [-gapextend extend_penalty]
     [-qcov_hsp_perc float_value] [-max_hsps int_value]
     [-xdrop_ungap float_value] [-xdrop_gap float_value]
     [-xdrop_gap_final float_value] [-searchsp int_value]
-    [-sum_stats bool_value] [-max_intron_length length] [-seg SEG_options]
-    [-soft_masking soft_masking] [-matrix matrix_name]
-    [-threshold float_value] [-culling_limit int_value]
+    [-sum_stats bool_value] [-seg SEG_options] [-soft_masking soft_masking]
+    [-matrix matrix_name] [-threshold float_value] [-culling_limit int_value]
     [-best_hit_overhang float_value] [-best_hit_score_edge float_value]
-    [-subject_besthit] [-window_size int_value] [-ungapped] [-lcase_masking]
-    [-query_loc range] [-strand strand] [-parse_deflines]
-    [-query_gencode int_value] [-outfmt format] [-show_gis]
+    [-subject_besthit] [-window_size int_value] [-lcase_masking]
+    [-query_loc range] [-parse_deflines] [-outfmt format] [-show_gis]
     [-num_descriptions int_value] [-num_alignments int_value]
     [-line_length line_length] [-html] [-sorthits sort_hits]
     [-sorthsps sort_hsps] [-max_target_seqs num_sequences]
-    [-num_threads int_value] [-mt_mode int_value] [-remote]
-    [-comp_based_stats compo] [-use_sw_tback] [-version]
+    [-num_threads int_value] [-remote] [-comp_based_stats compo]
+    [-use_sw_tback] [-gap_trigger float_value] [-num_iterations int_value]
+    [-out_pssm checkpoint_file] [-out_ascii_pssm ascii_mtx_file]
+    [-save_pssm_after_last_round] [-save_each_pssm] [-in_msa align_restart]
+    [-msa_master_idx index] [-ignore_msa_master] [-in_pssm psi_chkpt_file]
+    [-pseudocount pseudocount] [-inclusion_ethresh ethresh]
+    [-phi_pattern file] [-version]
 options:
   - names:
       - -h
     argument: ""
-    description: Print USAGE and DESCRIPTION;  ignore all other parameters
+    description: Print USAGE and DESCRIPTION; ignore all other parameters
   - names:
       - -help
     argument: ""
@@ -39,7 +41,7 @@ options:
   - names:
       - -version
     argument: ""
-    description: Print version number;  ignore other arguments
+    description: Print version number; ignore other arguments
   - names:
       - -query
     argument: <File_In>
@@ -49,32 +51,20 @@ options:
     argument: <String>
     description: 'Location on the query sequence in 1-based offsets (Format: start-stop)'
   - names:
-      - -strand
-    argument: <String, `both', `minus', `plus'>
-    description: Query strand(s) to search against database/subject (Default = `both')
-  - names:
-      - -query_gencode
-    argument: "<Integer, values between: 1-6, 9-16, 21-31, 33>"
-    description: Genetic code to use to translate query (see  https://www.ncbi.nlm.nih.gov/Taxonomy/taxonomyhome.html/index.cgi?chapter=cgencodes for details) (Default = `1')
-  - names:
-      - -task
-    argument: "<String, Permissible values: 'blastx' 'blastx-fast' >"
-    description: Task to execute (Default = `blastx')
-  - names:
       - -db
     argument: <String>
     description: BLAST database name
   - names:
       - -out
-    argument: <File_Out>
-    description: Output file name (Default = `-')
+    argument: <File_Out, file name length < 256>
+    description: Output file name
   - names:
       - -evalue
     argument: <Real>
-    description: Expectation value (E) threshold for saving hits (Default = `10')
+    description: Expectation value (E) threshold for saving hits
   - names:
       - -word_size
-    argument: '"<Integer, >=2>"'
+    argument: <Integer, >=2>
     description: Word size for wordfinder algorithm
   - names:
       - -gapopen
@@ -85,21 +75,17 @@ options:
     argument: <Integer>
     description: Cost to extend a gap
   - names:
-      - -max_intron_length
-    argument: '"<Integer, >=0>"'
-    description: Length of the largest intron allowed in a translated nucleotide sequence when linking multiple distinct alignments (Default = `0')
-  - names:
       - -matrix
     argument: <String>
     description: Scoring matrix name (normally BLOSUM62)
   - names:
-      - --threshold
-    argument: "<Real, >=0>"
+      - -threshold
+    argument: <Real, >=0>
     description: Minimum word score such that the word is added to the BLAST lookup table
   - names:
       - -comp_based_stats
     argument: <String>
-    description: Use composition-based statistics (Default = `2')
+    description: 'Use composition-based statistics:'
   - names:
       - -subject
     argument: <File_In>
@@ -111,43 +97,43 @@ options:
   - names:
       - -outfmt
     argument: <String>
-    description: 'alignment view options:'
+    description: alignment view options.
   - names:
       - -show_gis
     argument: ""
     description: Show NCBI GIs in deflines?
   - names:
       - -num_descriptions
-    argument: '"<Integer, >=0>"'
-    description: Number of database sequences to show one-line descriptions for. Not applicable for outfmt > 4. (Default = `500')
+    argument: <Integer, >=0>
+    description: Number of database sequences to show one-line descriptions for
   - names:
       - -num_alignments
-    argument: '"<Integer, >=0>"'
-    description: Number of database sequences to show alignments for. (Default = `250')
+    argument: <Integer, >=0>
+    description: Number of database sequences to show alignments for
   - names:
       - -line_length
-    argument: '"<Integer, >=1>"'
-    description: Line length for formatting alignments. Not applicable for outfmt > 4. (Default = `60')
+    argument: <Integer, >=1>
+    description: Line length for formatting alignments
   - names:
       - -html
     argument: ""
     description: Produce HTML output?
   - names:
       - -sorthits
-    argument: '"<Integer, (>=0 and =<4)>"'
+    argument: <Integer, (>=0 and =<4)>
     description: 'Sorting option for hits:'
   - names:
       - -sorthsps
-    argument: '"<Integer, (>=0 and =<4)>"'
+    argument: <Integer, (>=0 and =<4)>
     description: 'Sorting option for hps:'
   - names:
       - -seg
     argument: <String>
-    description: 'Filter query sequence with SEG (Format: ''yes'', ''window locut hicut'', or ''no'' to disable) (Default = `12 2.2 2.5'')'
+    description: 'Filter query sequence with SEG (Format: ''yes'', ''window locut hicut'', or'
   - names:
       - -soft_masking
     argument: <Boolean>
-    description: Apply filtering locations as soft masks (Default = `false')
+    description: Apply filtering locations as soft masks
   - names:
       - -lcase_masking
     argument: ""
@@ -197,32 +183,24 @@ options:
     argument: <String>
     description: Restrict search with the given Entrez query
   - names:
-      - -db_soft_mask
-    argument: <String>
-    description: Filtering algorithm ID to apply to the BLAST database as soft masking
-  - names:
-      - -db_hard_mask
-    argument: <String>
-    description: Filtering algorithm ID to apply to the BLAST database as hard masking
-  - names:
       - -qcov_hsp_perc
     argument: <Real, 0..100>
     description: Percent query coverage per hsp
   - names:
       - -max_hsps
-    argument: '"<Integer, >=1>"'
+    argument: <Integer, >=1>
     description: Set maximum number of HSPs per subject sequence to save for each query
   - names:
       - -culling_limit
-    argument: '"<Integer, >=0>"'
+    argument: <Integer, >=0>
     description: If the query range of a hit is enveloped by that of at least this many
   - names:
       - -best_hit_overhang
-    argument: '"<Real, (>0 and <0.5)>"'
+    argument: <Real, (>0 and <0.5)>
     description: 'Best Hit algorithm overhang value (recommended value: 0.1)'
   - names:
       - -best_hit_score_edge
-    argument: '"<Real, (>0 and <0.5)>"'
+    argument: <Real, (>0 and <0.5)>
     description: 'Best Hit algorithm score edge value (recommended value: 0.1)'
   - names:
       - -subject_besthit
@@ -230,15 +208,15 @@ options:
     description: Turn on best hit per subject sequence
   - names:
       - -max_target_seqs
-    argument: '"<Integer, >=1>"'
-    description: Maximum number of aligned sequences to keep (value of 5 or more is recommended) (Default = `500')
+    argument: <Integer, >=1>
+    description: Maximum number of aligned sequences to keep
   - names:
       - -dbsize
     argument: <Int8>
     description: Effective length of the database
   - names:
       - -searchsp
-    argument: '"<Int8, >=0>"'
+    argument: <Int8, >=0>
     description: Effective length of the search space
   - names:
       - -sum_stats
@@ -266,20 +244,20 @@ options:
     description: X-dropoff value (in bits) for final gapped alignment
   - names:
       - -window_size
-    argument: '"<Integer, >=0>"'
+    argument: <Integer, >=0>
     description: Multiple hits window size, use 0 to specify 1-hit algorithm
   - names:
-      - -ungapped
-    argument: ""
-    description: Perform ungapped alignment only?
+      - -gap_trigger
+    argument: <Real>
+    description: Number of bits to trigger gapping
   - names:
       - -parse_deflines
     argument: ""
     description: Should the query and subject defline(s) be parsed?
   - names:
       - -num_threads
-    argument: '"<Integer, >=1>"'
-    description: Number of threads (CPUs) to use in the BLAST search (Default = `1')
+    argument: <Integer, >=1>
+    description: Number of threads (CPUs) to use in the BLAST search
   - names:
       - -remote
     argument: ""
@@ -288,4 +266,52 @@ options:
       - -use_sw_tback
     argument: ""
     description: Compute locally optimal Smith-Waterman alignments?
-version: 'blastx: 2.13.0+'
+  - names:
+      - -num_iterations
+    argument: <Integer, >=0>
+    description: Number of iterations to perform (0 means run until convergence)
+  - names:
+      - -out_pssm
+    argument: <File_Out>
+    description: File name to store checkpoint file
+  - names:
+      - -out_ascii_pssm
+    argument: <File_Out>
+    description: File name to store ASCII version of PSSM
+  - names:
+      - -save_pssm_after_last_round
+    argument: ""
+    description: Save PSSM after the last database search
+  - names:
+      - -save_each_pssm
+    argument: ""
+    description: Save PSSM after each iteration (file name is given in -save_pssm or -save_ascii_pssm options)
+  - names:
+      - -in_msa
+    argument: <File_In>
+    description: File name of multiple sequence alignment to restart PSI-BLAST
+  - names:
+      - -msa_master_idx
+    argument: <Integer, >=1>
+    description: Ordinal number (1-based index) of the sequence to use as a master in the
+  - names:
+      - -ignore_msa_master
+    argument: ""
+    description: Ignore the master sequence when creating PSSM
+  - names:
+      - -in_pssm
+    argument: <File_In>
+    description: PSI-BLAST checkpoint file
+  - names:
+      - -pseudocount
+    argument: <Integer>
+    description: Pseudo-count value used when constructing PSSM
+  - names:
+      - -inclusion_ethresh
+    argument: <Real>
+    description: E-value inclusion threshold for pairwise alignments
+  - names:
+      - -phi_pattern
+    argument: <File_In>
+    description: File name containing pattern to search
+version: 'psiblast: 2.13.0+'

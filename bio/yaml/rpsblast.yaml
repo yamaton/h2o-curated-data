@@ -1,33 +1,27 @@
-name: tblastx
-description: tblastx
+name: rpsblast
+description: rpsblast
 usage: |-
-  tblastx [-h] [-help] [-import_search_strategy filename]
+  rpsblast [-h] [-help] [-import_search_strategy filename]
     [-export_search_strategy filename] [-db database_name]
-    [-dbsize num_letters] [-gilist filename] [-seqidlist filename]
-    [-negative_gilist filename] [-negative_seqidlist filename]
-    [-taxids taxids] [-negative_taxids taxids] [-taxidlist filename]
-    [-negative_taxidlist filename] [-entrez_query entrez_query]
-    [-db_soft_mask filtering_algorithm] [-db_hard_mask filtering_algorithm]
-    [-subject subject_input_file] [-subject_loc range] [-query input_file]
-    [-out output_file] [-evalue evalue] [-word_size int_value]
-    [-qcov_hsp_perc float_value] [-max_hsps int_value]
-    [-xdrop_ungap float_value] [-searchsp int_value] [-sum_stats bool_value]
-    [-max_intron_length length] [-seg SEG_options]
-    [-soft_masking soft_masking] [-matrix matrix_name]
-    [-threshold float_value] [-culling_limit int_value]
-    [-best_hit_overhang float_value] [-best_hit_score_edge float_value]
-    [-subject_besthit] [-window_size int_value] [-lcase_masking]
-    [-query_loc range] [-strand strand] [-parse_deflines]
-    [-query_gencode int_value] [-db_gencode int_value] [-outfmt format]
-    [-show_gis] [-num_descriptions int_value] [-num_alignments int_value]
+    [-dbsize num_letters] [-entrez_query entrez_query] [-query input_file]
+    [-out output_file] [-evalue evalue] [-qcov_hsp_perc float_value]
+    [-max_hsps int_value] [-xdrop_ungap float_value] [-xdrop_gap float_value]
+    [-xdrop_gap_final float_value] [-searchsp int_value]
+    [-sum_stats bool_value] [-seg SEG_options] [-soft_masking soft_masking]
+    [-culling_limit int_value] [-best_hit_overhang float_value]
+    [-best_hit_score_edge float_value] [-subject_besthit]
+    [-window_size int_value] [-lcase_masking] [-query_loc range]
+    [-parse_deflines] [-outfmt format] [-show_gis]
+    [-num_descriptions int_value] [-num_alignments int_value]
     [-line_length line_length] [-html] [-sorthits sort_hits]
     [-sorthsps sort_hsps] [-max_target_seqs num_sequences]
-    [-num_threads int_value] [-remote] [-version]
+    [-num_threads int_value] [-mt_mode int_value] [-remote]
+    [-comp_based_stats compo] [-use_sw_tback] [-version]
 options:
   - names:
       - -h
     argument: ""
-    description: Print USAGE and DESCRIPTION;  ignore all other parameters
+    description: Print USAGE and DESCRIPTION; ignore all other parameters
   - names:
       - -help
     argument: ""
@@ -35,7 +29,7 @@ options:
   - names:
       - -version
     argument: ""
-    description: Print version number;  ignore other arguments
+    description: Print version number; ignore other arguments
   - names:
       - -query
     argument: <File_In>
@@ -45,49 +39,25 @@ options:
     argument: <String>
     description: 'Location on the query sequence in 1-based offsets (Format: start-stop)'
   - names:
-      - -strand
-    argument: <String, `both', `minus', `plus'>
-    description: Query strand(s) to search against database/subject
-  - names:
       - -db
     argument: <String>
     description: BLAST database name
   - names:
       - -out
-    argument: <File_Out>
+    argument: <File_Out, file name length < 256>
     description: Output file name
   - names:
       - -evalue
     argument: <Real>
     description: Expectation value (E) threshold for saving hits
   - names:
-      - -word_size
-    argument: <Integer, >=2>
-    description: Word size for wordfinder algorithm
-  - names:
-      - -max_intron_length
-    argument: <Integer, >=0>
-    description: Length of the largest intron allowed in a translated nucleotide sequence
-  - names:
-      - -matrix
+      - -comp_based_stats
     argument: <String>
-    description: Scoring matrix name (normally BLOSUM62)
-  - names:
-      - -threshold
-    argument: <Real, >=0>
-    description: Minimum word score such that the word is added to the BLAST lookup table
-  - names:
-      - -subject
-    argument: <File_In>
-    description: Subject sequence(s) to search
-  - names:
-      - -subject_loc
-    argument: <String>
-    description: 'Location on the subject sequence in 1-based offsets (Format: start-stop)'
+    description: 'Use composition-based statistics:'
   - names:
       - -outfmt
     argument: <String>
-    description: 'alignment view options:'
+    description: alignment view options.
   - names:
       - -show_gis
     argument: ""
@@ -109,6 +79,14 @@ options:
     argument: ""
     description: Produce HTML output?
   - names:
+      - -sorthits
+    argument: <Integer, (>=0 and =<4)>
+    description: 'Sorting option for hits:'
+  - names:
+      - -sorthsps
+    argument: <Integer, (>=0 and =<4)>
+    description: 'Sorting option for hps:'
+  - names:
       - -seg
     argument: <String>
     description: 'Filter query sequence with SEG (Format: ''yes'', ''window locut hicut'', or'
@@ -121,29 +99,9 @@ options:
     argument: ""
     description: Use lower case filtering in query and subject sequence(s)?
   - names:
-      - -gilist
-    argument: <String>
-    description: Restrict search of database to list of GI's
-  - names:
-      - -seqidlist
-    argument: <String>
-    description: Restrict search of database to list of SeqId's
-  - names:
-      - -negative_gilist
-    argument: <String>
-    description: Restrict search of database to everything except the listed GIs
-  - names:
       - -entrez_query
     argument: <String>
     description: Restrict search with the given Entrez query
-  - names:
-      - -db_soft_mask
-    argument: <String>
-    description: Filtering algorithm ID to apply to the BLAST database as soft masking
-  - names:
-      - -db_hard_mask
-    argument: <String>
-    description: Filtering algorithm ID to apply to the BLAST database as hard masking
   - names:
       - -qcov_hsp_perc
     argument: <Real, 0..100>
@@ -164,6 +122,10 @@ options:
       - -best_hit_score_edge
     argument: <Real, (>0 and <0.5)>
     description: 'Best Hit algorithm score edge value (recommended value: 0.1)'
+  - names:
+      - -subject_besthit
+    argument: ""
+    description: Turn on best hit per subject sequence
   - names:
       - -max_target_seqs
     argument: <Integer, >=1>
@@ -193,6 +155,14 @@ options:
     argument: <Real>
     description: X-dropoff value (in bits) for ungapped extensions
   - names:
+      - -xdrop_gap
+    argument: <Real>
+    description: X-dropoff value (in bits) for preliminary gapped extensions
+  - names:
+      - -xdrop_gap_final
+    argument: <Real>
+    description: X-dropoff value (in bits) for final gapped alignment
+  - names:
       - -window_size
     argument: <Integer, >=0>
     description: Multiple hits window size, use 0 to specify 1-hit algorithm
@@ -202,10 +172,18 @@ options:
     description: Should the query and subject defline(s) be parsed?
   - names:
       - -num_threads
-    argument: <Integer, >=1>
-    description: Number of threads (CPUs) to use in the BLAST search
+    argument: <Integer, >=0>
+    description: 'Number of threads to use in RPS BLAST search:'
+  - names:
+      - -mt_mode
+    argument: <Integer, (>=0 and =<1)>
+    description: 'Multi-thread mode to use in RPS BLAST search: {0 (auto) split by database vols, 1 split by queries}'
   - names:
       - -remote
     argument: ""
     description: Execute search remotely?
-version: 'tblastx: 2.13.0+'
+  - names:
+      - -use_sw_tback
+    argument: ""
+    description: Compute locally optimal Smith-Waterman alignments?
+version: 'rpsblast: 2.13.0+'

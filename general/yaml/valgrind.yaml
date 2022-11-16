@@ -1,5 +1,6 @@
 name: valgrind
 description: valgrind
+usage: valgrind [options] prog-and-args
 options:
   - names:
       - --tool
@@ -14,6 +15,10 @@ options:
       - --help-debug
     argument: ""
     description: show this message, plus debugging options
+  - names:
+      - --help-dyn-options
+    argument: ""
+    description: show the dynamically changeable options
   - names:
       - --version
     argument: ""
@@ -39,7 +44,7 @@ options:
   - names:
       - --trace-children-skip-by-arg
     argument: patt1,patt2,...
-    description: same as --trace-children-skip but check the argv[] entries for children, rather than the exe name, to make a follow/no-follow decision
+    description: same as --trace-children-skip= but check the argv[] entries for children, rather than the exe name, to make a follow/no-follow decision
   - names:
       - --child-silent-after-fork
     argument: no|yes
@@ -55,11 +60,11 @@ options:
   - names:
       - --vgdb-stop-at
     argument: event1,event2,...
-    description: invoke gdbserver for given events [none]
+    description: 'invoke gdbserver for given events [none] where event is one of: startup exit abexit valgrindabexit all none'
   - names:
       - --track-fds
-    argument: no|yes
-    description: track open file descriptors? [no]
+    argument: no|yes|all
+    description: track open file descriptors? [no] all includes reporting stdin, stdout and stderr
   - names:
       - --time-stamp
     argument: no|yes
@@ -76,6 +81,10 @@ options:
       - --log-socket
     argument: ipaddr:port
     description: log messages to socket ipaddr:port
+  - names:
+      - --enable-debuginfod
+    argument: no|yes query
+    description: debuginfod servers for missing debuginfo [yes]
   - names:
       - --xml
     argument: "yes"
@@ -182,8 +191,12 @@ options:
     description: xtree memory report file [xtmemory.kcg.%p]
   - names:
       - --fullpath-after
+    argument: ""
+    description: (with nothing after the '=') show full source paths in call stacks
+  - names:
+      - --fullpath-after
     argument: string
-    description: if the argument is empty, (with nothing after the '=') show full source paths in call stacks. like --fullpath-after=, but only show the part of the path after 'string'. Allows removal of path prefixes. Use this flag multiple times to specify a set of prefixes to remove.
+    description: like --fullpath-after=, but only show the part of the path after 'string'. Allows removal of path prefixes. Use this flag multiple times to specify a set of prefixes to remove.
   - names:
       - --extra-debuginfo-path
     argument: path
@@ -259,7 +272,7 @@ options:
   - names:
       - --valgrind-stacksize
     argument: <number>
-    description: size of valgrind (host) thread's stack
+    description: size of valgrind (host) thread's stack (in bytes) [1048576]
   - names:
       - --show-emwarns
     argument: no|yes
@@ -279,15 +292,15 @@ options:
   - names:
       - --unw-stack-scan-thresh
     argument: <number>
-    description: Enable stack-scan unwind if fewer than <number> good frames found [0, meaning "disabled"]
+    description: 'Enable stack-scan unwind if fewer than <number> good frames found [0, meaning "disabled"] NOTE: stack scanning is only available on arm-linux.'
   - names:
       - --unw-stack-scan-frames
     argument: <number>
     description: Max number of frames that can be recovered by stack scanning [5]
   - names:
       - --resync-filter
-    argument: no|yes|verbose [yes on MacOS, no on other OSes]
-    description: attempt to avoid expensive address-space-resync operations
+    argument: no|yes|verbose
+    description: attempt to avoid expensive address-space-resync operations [yes on MacOS, no on other OSes]
   - names:
       - --max-threads
     argument: <number>
@@ -313,13 +326,19 @@ options:
     argument: heur1,heur2,...
     description: 'which heuristics to use for improving leak search false positive [all] where heur is one of: stdstring length64 newarray multipleinheritance all none'
   - names:
-      - --show-possibly-lost
-    argument: yes|no
-    description: Alternative way to specify the leak kinds to show.
+      - --show-reachable
+    argument: "yes"
+    description: same as --show-leak-kinds=all
   - names:
       - --show-reachable
-    argument: yes|no
-    description: Alternative way to specify the leak kinds to show.
+      - --show-possibly-lost
+    argument: "no"
+    description: same as --show-leak-kinds=definite,possible
+  - names:
+      - --show-reachable
+      - --show-possibly-lost
+    argument: "no"
+    description: same as --show-leak-kinds=definite
   - names:
       - --xtree-leak
     argument: no|yes
@@ -380,7 +399,7 @@ options:
       - --show-mismatched-frees
     argument: no|yes
     description: show frees that don't match the allocator? [yes]
-version: valgrind-3.15.0
+version: valgrind-3.20.0
 tldr: |
   > Wrapper for a set of expert tools for profiling, optimizing and debugging programs.
   > Commonly used tools include `memcheck`, `cachegrind`, `callgrind`, `massif`, `helgrind`, and `drd`.

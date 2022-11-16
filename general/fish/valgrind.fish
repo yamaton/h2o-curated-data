@@ -3,21 +3,23 @@
 complete -c valgrind -l "tool" -d "use the Valgrind tool named <name> [memcheck]" -x
 complete -c valgrind -s "h" -l "help" -d "show this message"
 complete -c valgrind -l "help-debug" -d "show this message, plus debugging options"
+complete -c valgrind -l "help-dyn-options" -d "show the dynamically changeable options"
 complete -c valgrind -l "version" -d "show version"
 complete -c valgrind -s "q" -l "quiet" -d "run silently; only print error msgs"
 complete -c valgrind -s "v" -l "verbose" -d "be more verbose -- show misc extra info"
 complete -c valgrind -l "trace-children" -d "Valgrind-ise child processes (follow execve)? [no]" -x
 complete -c valgrind -l "trace-children-skip" -d "specifies a list of executables that --trace-children=yes should not trace into" -x
-complete -c valgrind -l "trace-children-skip-by-arg" -d "same as --trace-children-skip but check the argv[] entries for children, rather than the exe name, to make a follow/no-follow decision" -x
+complete -c valgrind -l "trace-children-skip-by-arg" -d "same as --trace-children-skip= but check the argv[] entries for children, rather than the exe name, to make a follow/no-follow decision" -x
 complete -c valgrind -l "child-silent-after-fork" -d "omit child output between fork & exec? [no]" -x
 complete -c valgrind -l "vgdb" -d "activate gdbserver? [yes]   full is slower but provides precise watchpoint/step" -x
 complete -c valgrind -l "vgdb-error" -d "invoke gdbserver after <number> errors [999999999] to get started quickly, use --vgdb-error=0 and follow the on-screen directions" -r
-complete -c valgrind -l "vgdb-stop-at" -d "invoke gdbserver for given events [none]" -x
-complete -c valgrind -l "track-fds" -d "track open file descriptors? [no]" -r
+complete -c valgrind -l "vgdb-stop-at" -d "invoke gdbserver for given events [none] where event is one of: startup exit abexit valgrindabexit all none" -x
+complete -c valgrind -l "track-fds" -d "track open file descriptors? [no] all includes reporting stdin, stdout and stderr" -r
 complete -c valgrind -l "time-stamp" -d "add timestamps to log messages? [no]" -x
 complete -c valgrind -l "log-fd" -d "log messages to file descriptor [2=stderr]" -r
 complete -c valgrind -l "log-file" -d "log messages to <file>" -r
 complete -c valgrind -l "log-socket" -d "log messages to socket ipaddr:port" -x
+complete -c valgrind -l "enable-debuginfod" -d "debuginfod servers for missing debuginfo [yes]" -x
 complete -c valgrind -l "xml" -d "emit error output in XML (some tools only)" -x
 complete -c valgrind -l "xml-fd" -d "XML output to file descriptor" -r
 complete -c valgrind -l "xml-file" -d "XML output to <file>" -r
@@ -44,7 +46,8 @@ complete -c valgrind -l "alignment" -d "set minimum alignment of heap allocation
 complete -c valgrind -l "redzone-size" -d "set minimum size of redzones added before/after heap blocks (in bytes)." -x
 complete -c valgrind -l "xtree-memory" -d "profile heap memory in an xtree [none] and produces a report at the end of the execution none: no profiling, allocs: current allocated size/blocks, full: profile current and cumulative allocated size/blocks and freed size/blocks." -r
 complete -c valgrind -l "xtree-memory-file" -d "xtree memory report file [xtmemory.kcg.%p]" -r
-complete -c valgrind -l "fullpath-after" -d "if the argument is empty, (with nothing after the '=') show full source paths in call stacks." -r
+complete -c valgrind -l "fullpath-after" -d "(with nothing after the '=') show full source paths in call stacks"
+complete -c valgrind -l "fullpath-after" -d "like --fullpath-after=, but only show the part of the path after 'string'." -r
 complete -c valgrind -l "extra-debuginfo-path" -d "absolute path to search for additional debug symbols, in addition to existing default well known search paths." -r
 complete -c valgrind -l "debuginfo-server" -d "also query this server (valgrind-di-server) for debug symbols" -x
 complete -c valgrind -l "allow-mismatched-debuginfo" -d "for the above two flags only, accept debuginfo objects that don't \"match\" the main object [no]" -x
@@ -63,22 +66,23 @@ complete -c valgrind -l "merge-recursive-frames" -d "merge frames between identi
 complete -c valgrind -l "num-transtab-sectors" -d "size of translated code cache [32] more sectors may increase performance, but use more memory." -x
 complete -c valgrind -l "avg-transtab-entry-size" -d "avg size in bytes of a translated basic block [0, meaning use tool provided default]" -x
 complete -c valgrind -l "aspace-minaddr" -d "avoid mapping memory below 0xPP [guessed]" -x
-complete -c valgrind -l "valgrind-stacksize" -d "size of valgrind (host) thread's stack" -x
+complete -c valgrind -l "valgrind-stacksize" -d "size of valgrind (host) thread's stack (in bytes) [1048576]" -x
 complete -c valgrind -l "show-emwarns" -d "show warnings about emulation limits? [no]" -x
 complete -c valgrind -l "require-text-symbol" -d "abort run if the stated shared object doesn't have the stated text symbol." -x
 complete -c valgrind -l "soname-synonyms" -d "synonym soname specify patterns for function wrapping or replacement." -x
 complete -c valgrind -l "sigill-diagnostics" -d "warn about illegal instructions? [yes]" -x
-complete -c valgrind -l "unw-stack-scan-thresh" -d "Enable stack-scan unwind if fewer than <number> good frames found [0, meaning \"disabled\"]" -x
+complete -c valgrind -l "unw-stack-scan-thresh" -d "Enable stack-scan unwind if fewer than <number> good frames found [0, meaning \"disabled\"] NOTE: stack scanning is only available on arm-linux." -x
 complete -c valgrind -l "unw-stack-scan-frames" -d "Max number of frames that can be recovered by stack scanning [5]" -x
-complete -c valgrind -l "resync-filter" -d "attempt to avoid expensive address-space-resync operations" -x
+complete -c valgrind -l "resync-filter" -d "attempt to avoid expensive address-space-resync operations [yes on MacOS, no on other OSes]" -x
 complete -c valgrind -l "max-threads" -d "maximum number of threads that valgrind can handle [500]" -x
 complete -c valgrind -l "leak-check" -d "search for memory leaks at exit? [summary]" -x
 complete -c valgrind -l "leak-resolution" -d "differentiation of leak stack traces [high]" -x
 complete -c valgrind -l "show-leak-kinds" -d "which leak kinds to show? [definite,possible]" -x
 complete -c valgrind -l "errors-for-leak-kinds" -d "which leak kinds are errors? [definite,possible] where kind is one of: definite indirect possible reachable all none" -r
 complete -c valgrind -l "leak-check-heuristics" -d "which heuristics to use for improving leak search false positive [all] where heur is one of: stdstring length64 newarray multipleinheritance all none" -x
-complete -c valgrind -l "show-possibly-lost" -d "Alternative way to specify the leak kinds to show." -x
-complete -c valgrind -l "show-reachable" -d "Alternative way to specify the leak kinds to show." -x
+complete -c valgrind -l "show-reachable" -d "same as --show-leak-kinds=all" -x
+complete -c valgrind -l "show-reachable" -l "show-possibly-lost" -d "same as --show-leak-kinds=definite,possible" -x
+complete -c valgrind -l "show-reachable" -l "show-possibly-lost" -d "same as --show-leak-kinds=definite" -x
 complete -c valgrind -l "xtree-leak" -d "output leak result in xtree format? [no]" -x
 complete -c valgrind -l "xtree-leak-file" -d "xtree leak report file [xtleak.kcg.%p]" -r
 complete -c valgrind -l "undef-value-errors" -d "check for undefined value errors [yes]" -x

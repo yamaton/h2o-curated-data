@@ -18,21 +18,23 @@ function _valgrind {
         '--tool[use the Valgrind tool named <name> \[memcheck\]]' \
         {-h,--help}'[show this message]' \
         '--help-debug[show this message, plus debugging options]' \
+        '--help-dyn-options[show the dynamically changeable options]' \
         '--version[show version]' \
         {-q,--quiet}'[run silently; only print error msgs]' \
         {-v,--verbose}'[be more verbose -- show misc extra info]' \
         '--trace-children[Valgrind-ise child processes (follow execve)? \[no\]]' \
         '--trace-children-skip[specifies a list of executables that --trace-children=yes should not trace into]' \
-        '--trace-children-skip-by-arg[same as --trace-children-skip but check the argv\[\] entries for children, rather than the exe name, to make a follow/no-follow decision]' \
+        '--trace-children-skip-by-arg[same as --trace-children-skip= but check the argv\[\] entries for children, rather than the exe name, to make a follow/no-follow decision]' \
         '--child-silent-after-fork[omit child output between fork & exec? \[no\]]' \
         '--vgdb[activate gdbserver? \[yes\]   full is slower but provides precise watchpoint/step]' \
         '--vgdb-error[invoke gdbserver after <number> errors \[999999999\] to get started quickly, use --vgdb-error=0 and follow the on-screen directions]' \
-        '--vgdb-stop-at[invoke gdbserver for given events \[none\]]' \
-        '--track-fds[track open file descriptors? \[no\]]' \
+        '--vgdb-stop-at[invoke gdbserver for given events \[none\] where event is one of: startup exit abexit valgrindabexit all none]' \
+        '--track-fds[track open file descriptors? \[no\] all includes reporting stdin, stdout and stderr]' \
         '--time-stamp[add timestamps to log messages? \[no\]]' \
         '--log-fd[log messages to file descriptor \[2=stderr\]]' \
         '--log-file[log messages to <file>]':file:_files \
         '--log-socket[log messages to socket ipaddr:port]' \
+        '--enable-debuginfod[debuginfod servers for missing debuginfo \[yes\]]' \
         '--xml[emit error output in XML (some tools only)]' \
         '--xml-fd[XML output to file descriptor]' \
         '--xml-file[XML output to <file>]':file:_files \
@@ -59,7 +61,8 @@ function _valgrind {
         '--redzone-size[set minimum size of redzones added before/after heap blocks (in bytes). \[16\]]' \
         '--xtree-memory[profile heap memory in an xtree \[none\] and produces a report at the end of the execution none: no profiling, allocs: current allocated size/blocks, full: profile current and cumulative allocated size/blocks and freed size/blocks.]' \
         '--xtree-memory-file[xtree memory report file \[xtmemory.kcg.%p\]]':file:_files \
-        '--fullpath-after[if the argument is empty, (with nothing after the '\''='\'') show full source paths in call stacks. like --fullpath-after=, but only show the part of the path after '\''string'\''. Allows removal of path prefixes. Use this flag multiple times to specify a set of prefixes to remove.]' \
+        '--fullpath-after[(with nothing after the '\''='\'') show full source paths in call stacks]' \
+        '--fullpath-after[like --fullpath-after=, but only show the part of the path after '\''string'\''. Allows removal of path prefixes. Use this flag multiple times to specify a set of prefixes to remove.]' \
         '--extra-debuginfo-path[absolute path to search for additional debug symbols, in addition to existing default well known search paths.]':file:_files \
         '--debuginfo-server[also query this server (valgrind-di-server) for debug symbols]' \
         '--allow-mismatched-debuginfo[for the above two flags only, accept debuginfo objects that don'\''t "match" the main object \[no\]]' \
@@ -78,22 +81,23 @@ function _valgrind {
         '--num-transtab-sectors[size of translated code cache \[32\] more sectors may increase performance, but use more memory.]' \
         '--avg-transtab-entry-size[avg size in bytes of a translated basic block \[0, meaning use tool provided default\]]' \
         '--aspace-minaddr[avoid mapping memory below 0xPP \[guessed\]]' \
-        '--valgrind-stacksize[size of valgrind (host) thread'\''s stack]' \
+        '--valgrind-stacksize[size of valgrind (host) thread'\''s stack (in bytes) \[1048576\]]' \
         '--show-emwarns[show warnings about emulation limits? \[no\]]' \
         '--require-text-symbol[abort run if the stated shared object doesn'\''t have the stated text symbol. Patterns can contain ? and *.]' \
         '--soname-synonyms[synonym soname specify patterns for function wrapping or replacement.]' \
         '--sigill-diagnostics[warn about illegal instructions? \[yes\]]' \
-        '--unw-stack-scan-thresh[Enable stack-scan unwind if fewer than <number> good frames found \[0, meaning "disabled"\]]' \
+        '--unw-stack-scan-thresh[Enable stack-scan unwind if fewer than <number> good frames found \[0, meaning "disabled"\] NOTE: stack scanning is only available on arm-linux.]' \
         '--unw-stack-scan-frames[Max number of frames that can be recovered by stack scanning \[5\]]' \
-        '--resync-filter[attempt to avoid expensive address-space-resync operations]' \
+        '--resync-filter[attempt to avoid expensive address-space-resync operations \[yes on MacOS, no on other OSes\]]' \
         '--max-threads[maximum number of threads that valgrind can handle \[500\]]' \
         '--leak-check[search for memory leaks at exit? \[summary\]]' \
         '--leak-resolution[differentiation of leak stack traces \[high\]]' \
         '--show-leak-kinds[which leak kinds to show? \[definite,possible\]]' \
         '--errors-for-leak-kinds[which leak kinds are errors? \[definite,possible\] where kind is one of: definite indirect possible reachable all none]' \
         '--leak-check-heuristics[which heuristics to use for improving leak search false positive \[all\] where heur is one of: stdstring length64 newarray multipleinheritance all none]' \
-        '--show-possibly-lost[Alternative way to specify the leak kinds to show.]' \
-        '--show-reachable[Alternative way to specify the leak kinds to show.]' \
+        '--show-reachable[same as --show-leak-kinds=all]' \
+        {--show-reachable,--show-possibly-lost}'[same as --show-leak-kinds=definite,possible]' \
+        {--show-reachable,--show-possibly-lost}'[same as --show-leak-kinds=definite]' \
         '--xtree-leak[output leak result in xtree format? \[no\]]' \
         '--xtree-leak-file[xtree leak report file \[xtleak.kcg.%p\]]':file:_files \
         '--undef-value-errors[check for undefined value errors \[yes\]]' \

@@ -4,6 +4,7 @@ complete -c sudo -s "A" -l "askpass" -d "use a helper program for password promp
 complete -c sudo -s "b" -l "background" -d "run command in the background"
 complete -c sudo -s "B" -l "bell" -d "ring bell when prompting"
 complete -c sudo -s "C" -l "close-from" -d "close all file descriptors >= num" -r
+complete -c sudo -s "D" -l "chdir" -d "change the working directory before running command" -r
 complete -c sudo -s "E" -l "preserve-env" -d "preserve user environment when running command"
 complete -c sudo -l "preserve-env" -d "preserve specific environment variables" -x
 complete -c sudo -s "e" -l "edit" -d "edit files instead of running a command"
@@ -18,6 +19,7 @@ complete -c sudo -s "l" -l "list" -d "list user's privileges or check a specific
 complete -c sudo -s "n" -l "non-interactive" -d "non-interactive mode, no prompts are used"
 complete -c sudo -s "P" -l "preserve-groups" -d "preserve group vector instead of setting to target's"
 complete -c sudo -s "p" -l "prompt" -d "use the specified password prompt" -x
+complete -c sudo -s "R" -l "chroot" -d "change the root directory before running command" -r
 complete -c sudo -s "r" -l "role" -d "create SELinux security context with specified role" -x
 complete -c sudo -s "S" -l "stdin" -d "read password from standard input"
 complete -c sudo -s "s" -l "shell" -d "run shell as the target user; a command may also be specified"

@@ -46,7 +46,7 @@ complete -c diff -l "LTYPE-line-format" -d "format LTYPE input lines with LFMT" 
 complete -c diff -s "d" -l "minimal" -d "try hard to find a smaller set of changes"
 complete -c diff -l "horizon-lines" -d "keep NUM lines of the common prefix and suffix" -x
 complete -c diff -l "speed-large-files" -d "assume large files and many scattered small changes"
-complete -c diff -l "color" -d "colorize the output; WHEN can be 'never', 'always', or 'auto' (the default)" -x
+complete -c diff -l "color" -d "color output; WHEN is 'never', 'always', or 'auto'; plain --color means --color='auto'" -x
 complete -c diff -l "palette" -d "the colors to use when --color is active; PALETTE is a colon-separated list of terminfo capabilities" -x
 complete -c diff -l "help" -d "display this help and exit"
 complete -c diff -s "v" -l "version" -d "output version information and exit"

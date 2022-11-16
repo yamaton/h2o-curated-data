@@ -1,22 +1,35 @@
 name: virtualenv
 description: virtualenv
+usage: |-
+  virtualenv [--version] [--with-traceback] [-v | -q] [--read-only-app-data] [--app-data APP_DATA] [--reset-app-data] [--upgrade-embed-wheels] [--discovery {builtin}] [-p py] [--try-first-with py_exe]
+             [--creator {builtin,cpython3-posix,venv}] [--seeder {app-data,pip}] [--no-seed] [--activators comma_sep_list] [--clear] [--no-vcs-ignore] [--system-site-packages] [--symlinks | --copies] [--no-download | --download]
+             [--extra-search-dir d [d ...]] [--pip version] [--setuptools version] [--wheel version] [--no-pip] [--no-setuptools] [--no-wheel] [--no-periodic-update] [--symlink-app-data] [--prompt prompt] [-h]
+             dest
 options:
   - names:
       - --version
     argument: ""
-    description: display the version of the virtualenv package and it's location, then exit
+    description: display the version of the virtualenv package and its location, then exit
   - names:
       - --with-traceback
     argument: ""
     description: 'on failure also display the stacktrace internals of virtualenv (default: False)'
   - names:
+      - --read-only-app-data
+    argument: ""
+    description: 'use app data folder in read-only mode (write operations will fail with error) (default: False)'
+  - names:
       - --app-data
     argument: APP_DATA
-    description: 'a data folder used as cache by the virtualenv (default: <temp folder>)'
+    description: 'a data folder used as cache by the virtualenv (default: ~/.local/share/virtualenv)'
   - names:
-      - --clear-app-data
+      - --reset-app-data
     argument: ""
     description: 'start with empty app data folder (default: False)'
+  - names:
+      - --upgrade-embed-wheels
+    argument: ""
+    description: 'trigger a manual update of the embedded wheels (default: False)'
   - names:
       - -h
       - --help
@@ -40,7 +53,11 @@ options:
       - -p
       - --python
     argument: py
-    description: 'target interpreter for which to create a virtual (either absolute path or identifier string) (default: /usr/bin/python3)'
+    description: 'interpreter based on what to create environment (path/identifier) - by default use the interpreter where the tool is installed - first found wins (default: [])'
+  - names:
+      - --try-first-with
+    argument: py_exe
+    description: 'try first these interpreters before starting the discovery (default: [])'
   - names:
       - --creator
     argument: '{builtin,cpython3-posix,venv}'
@@ -49,6 +66,10 @@ options:
       - --clear
     argument: ""
     description: 'remove the destination directory if exist before starting (will overwrite files otherwise) (default: False)'
+  - names:
+      - --no-vcs-ignore
+    argument: ""
+    description: 'don''t create VCS ignore directive in the destination directory (default: False)'
   - names:
       - --system-site-packages
     argument: ""
@@ -72,30 +93,30 @@ options:
     argument: ""
     description: 'do not install seed packages (default: False)'
   - names:
-      - --download
-    argument: ""
-    description: 'pass to enable download of the latest pip, setuptools, and wheel from PyPI (default: False)'
-  - names:
       - --no-download
       - --never-download
     argument: ""
-    description: 'pass to disable download of the latest pip, setuptools, and wheel from PyPI (default: True)'
+    description: 'pass to disable download of the latest pip/setuptools/wheel from PyPI (default: True)'
+  - names:
+      - --download
+    argument: ""
+    description: 'pass to enable download of the latest pip/setuptools/wheel from PyPI (default: False)'
   - names:
       - --extra-search-dir
     argument: d [d ...]
-    description: 'a path containing wheels the seeder may also use beside bundled (can be set 1+ times) (default: [])'
+    description: 'a path containing wheels to extend the internal wheel list (can be set 1+ times) (default: [])'
   - names:
       - --pip
     argument: version
-    description: 'pip version to install, bundle for bundled (default: latest)'
+    description: 'version of pip to install as seed: embed, bundle or exact version (default: bundle)'
   - names:
       - --setuptools
     argument: version
-    description: 'setuptools version to install, bundle for bundled (default: latest)'
+    description: 'version of setuptools to install as seed: embed, bundle or exact version (default: bundle)'
   - names:
       - --wheel
     argument: version
-    description: 'wheel version to install, bundle for bundled (default: latest)'
+    description: 'version of wheel to install as seed: embed, bundle or exact version (default: bundle)'
   - names:
       - --no-pip
     argument: ""
@@ -109,18 +130,22 @@ options:
     argument: ""
     description: 'do not install wheel (default: False)'
   - names:
+      - --no-periodic-update
+    argument: ""
+    description: 'disable the periodic (once every 14 days) update of the embedded wheels (default: False)'
+  - names:
       - --symlink-app-data
     argument: ""
     description: 'symlink the python packages from the app-data folder (requires seed pip>=19.3) (default: False)'
   - names:
       - --activators
     argument: comma_sep_list
-    description: 'activators to generate - default is all supported (default: bash,cshell,fish,powershell,python,xonsh)'
+    description: 'activators to generate - default is all supported (default: bash,cshell,fish,nushell,powershell,python)'
   - names:
       - --prompt
     argument: prompt
-    description: 'provides an alternative prompt prefix for this environment (default: None)'
-version: virtualenv 20.0.17 from /usr/lib/python3/dist-packages/virtualenv/__init__.py
+    description: 'provides an alternative prompt prefix for this environment (value of . means name of the current working directory) (default: None)'
+version: virtualenv 20.16.7
 tldr: |
   > Create virtual isolated Python environments.
   > More information: <https://virtualenv.pypa.io/>.

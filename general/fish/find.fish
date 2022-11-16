@@ -19,28 +19,28 @@ complete -c find -o "noignore_readdir_race" -d "Turns off the effect of -ignore_
 complete -c find -o "noleaf" -d "Do not optimize by assuming that directories contain 2 fewer subdirectories than their hard link count."
 complete -c find -o "version" -l "version" -d "Print the find version number and exit."
 complete -c find -o "xdev" -d "Don't descend directories on other filesystems."
-complete -c find -o "amin" -d "File was last accessed n minutes ago." -r
+complete -c find -o "amin" -d "File was last accessed less than, more than or exactly n minutes ago." -r
 complete -c find -o "anewer" -d "Time of the last access of the current file is more recent than that of the last data modification of the reference file." -r
-complete -c find -o "atime" -d "File was last accessed n*24 hours ago." -r
-complete -c find -o "cmin" -d "File's status was last changed n minutes ago." -r
+complete -c find -o "atime" -d "File was last accessed less than, more than or exactly n*24 hours ago." -r
+complete -c find -o "cmin" -d "File's status was last changed less than, more than or exactly n minutes ago." -r
 complete -c find -o "cnewer" -d "Time of the last status change of the current file is more recent than that of the last data modification of the reference file." -r
-complete -c find -o "ctime" -d "File's status was last changed n*24 hours ago." -r
+complete -c find -o "ctime" -d "File's status was last changed less than, more than or exactly n*24 hours ago." -r
 complete -c find -o "empty" -d "File is empty and is either a regular file or a directory."
 complete -c find -o "executable" -d "Matches files which are executable and directories which are searchable (in a file name resolution sense) by the current user."
 complete -c find -o "false" -d "Always false."
 complete -c find -o "fstype" -d "File is on a filesystem of type type." -r
-complete -c find -o "gid" -d "File's numeric group ID is n." -r
+complete -c find -o "gid" -d "File's numeric group ID is less than, more than or exactly n." -r
 complete -c find -o "group" -d "File belongs to group gname (numeric group ID allowed)." -r
 complete -c find -o "ilname" -d "Like -lname, but the match is case insensitive." -x
 complete -c find -o "iname" -d "Like -name, but the match is case insensitive." -r
-complete -c find -o "inum" -d "File has inode number n." -r
+complete -c find -o "inum" -d "File has inode number smaller than, greater than or exactly n." -r
 complete -c find -o "ipath" -d "Like -path." -r
 complete -c find -o "iregex" -d "Like -regex, but the match is case insensitive." -x
 complete -c find -o "iwholename" -d "See -ipath." -r
-complete -c find -o "links" -d "File has n hard links." -r
+complete -c find -o "links" -d "File has less than, more than or exactly n hard links." -r
 complete -c find -o "lname" -d "File is a symbolic link whose contents match shell pattern pattern." -r
-complete -c find -o "mmin" -d "File's data was last modified n minutes ago." -r
-complete -c find -o "mtime" -d "File's data was last modified n*24 hours ago." -r
+complete -c find -o "mmin" -d "File's data was last modified less than, more than or exactly n minutes ago." -r
+complete -c find -o "mtime" -d "File's data was last modified less than, more than or exactly n*24 hours ago." -r
 complete -c find -o "name" -d "Base of file name (the path with the leading directories removed) matches shell pattern pattern." -r
 complete -c find -o "newer" -d "Time of the last data modification of the current file is more recent than that of the last data modification of the reference file." -r
 complete -c find -o "newerXY" -d "Succeeds if timestamp X of the file being considered is newer than timestamp Y of the file reference." -r
@@ -54,11 +54,11 @@ complete -c find -o "perm" -d "This is no longer supported (and has been depreca
 complete -c find -o "readable" -d "Matches files which are readable by the current user."
 complete -c find -o "regex" -d "File name matches regular expression pattern." -r
 complete -c find -o "samefile" -d "File refers to the same inode as name." -r
-complete -c find -o "size" -d "File uses n units of space, rounding up." -r
+complete -c find -o "size" -d "File uses less than, more than or exactly n units of space, rounding up." -r
 complete -c find -o "true" -d "Always true."
 complete -c find -o "type" -d "File is of type c:" -r
-complete -c find -o "uid" -d "File's numeric user ID is n." -r
-complete -c find -o "used" -d "File was last accessed n days after its status was last changed." -r
+complete -c find -o "uid" -d "File's numeric user ID is less than, more than or exactly n." -r
+complete -c find -o "used" -d "File was last accessed less than, more than or exactly n days after its status was last changed." -r
 complete -c find -o "user" -d "File is owned by user uname (numeric user ID allowed)." -r
 complete -c find -o "wholename" -d "See -path." -r
 complete -c find -o "writable" -d "Matches files which are writable by the current user."
@@ -79,15 +79,5 @@ complete -c find -o "print" -d "True; print the full file name on the standard o
 complete -c find -o "print0" -d "True; print the full file name on the standard output, followed by a null character (instead of the newline character that -print uses)."
 complete -c find -o "printf" -d "True; print format on the standard output, interpreting `\\' escapes and `%' directives." -r
 complete -c find -o "prune" -d "True; if the file is a directory, do not descend into it."
-complete -c find -o "quit" -d "Exit immediately."
-complete -c find -o "print0" -o "fprint0" -d "Always print the exact filename, unchanged, even if the output is going to a terminal."
-complete -c find -o "ls" -o "fls" -d "Unusual characters are always escaped."
-complete -c find -o "printf" -o "fprintf" -d "If the output is not going to a terminal, it is printed as-is."
-complete -c find -o "print" -o "fprint" -d "Quoting is handled in the same way as for -printf and -fprintf."
-complete -c find -s "H" -d "This option is supported."
-complete -c find -s "L" -d "This option is supported."
-complete -c find -o "name" -d "This option is supported, but POSIX conformance depends on the POSIX conformance of the system's fnmatch(3) library function."
-complete -c find -o "type" -d "Supported."
-complete -c find -o "ok" -d "Supported."
-complete -c find -o "newer" -d "Supported."
-complete -c find -o "perm" -d "Supported."
+complete -c find -o "quit" -d "Exit immediately (with return value zero if no errors have occurred)."
+complete -c find -o "not" -d "Same as ! expr, but not POSIX compliant." -x

@@ -1,7 +1,7 @@
 # Auto-generated with h2o
 
 complete -c ssh-keygen -s "A" -d "For each of the key types (rsa, dsa, ecdsa and ed25519) for which host keys do not exist, generate the host keys with the default key file path, an empty passphrase, default bits for the key type, and default comment."
-complete -c ssh-keygen -s "a" -d "When saving a private key, this option specifies the number of KDF (key derivation function) rounds used." -x
+complete -c ssh-keygen -s "a" -d "When saving a private key, this option specifies the number of KDF (key derivation function, currently bcrypt_pbkdf(3)) rounds used." -x
 complete -c ssh-keygen -s "B" -d "Show the bubblebabble digest of specified private or public key file."
 complete -c ssh-keygen -s "b" -d "Specifies the number of bits in the key to create." -x
 complete -c ssh-keygen -s "C" -d "Provides a new comment." -x
@@ -39,8 +39,10 @@ complete -c ssh-keygen -s "V" -d "Specify a validity interval when signing a cer
 complete -c ssh-keygen -s "v" -d "Verbose mode."
 complete -c ssh-keygen -s "w" -d "Specifies a path to a library that will be used when creating FIDO authenticator-hosted keys, overriding the default of using the internal USB HID support." -r
 complete -c ssh-keygen -s "Y" -d "Find the principal(s) associated with the public key of a signature, provided using the -s flag in an authorized signers file provided using the -f flag." -r
+complete -c ssh-keygen -s "Y" -d "Find principal matching the principal name provided using the -I flag in the authorized signers file specified using the -f flag." -r
 complete -c ssh-keygen -s "Y" -d "Checks that a signature generated using ssh-keygen -Y sign has a valid structure." -r
 complete -c ssh-keygen -s "Y" -d "Cryptographically sign a file or some data using a SSH key." -r
 complete -c ssh-keygen -s "Y" -d "Request to verify a signature generated using ssh-keygen -Y sign as described above." -r
 complete -c ssh-keygen -s "y" -d "This option will read a private OpenSSH format file and print an OpenSSH public key to stdout."
+complete -c ssh-keygen -s "Z" -d "Specifies the cipher to use for encryption when writing an OpenSSH-format private key file." -r
 complete -c ssh-keygen -s "z" -d "Specifies a serial number to be embedded in the certificate to distinguish this certificate from others from the same CA." -x

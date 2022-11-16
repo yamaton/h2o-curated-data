@@ -1,5 +1,32 @@
 name: ssh-keygen
 description: ssh-keygen
+usage: |-
+  ssh-keygen [-q] [-a rounds] [-b bits] [-C comment] [-f output_keyfile] [-m format] [-N new_passphrase] [-O option] [-t dsa | ecdsa | ecdsa-sk | ed25519 | ed25519-sk | rsa] [-w provider] [-Z cipher]
+  ssh-keygen -p [-a rounds] [-f keyfile] [-m format] [-N new_passphrase] [-P old_passphrase] [-Z cipher]
+  ssh-keygen -i [-f input_keyfile] [-m key_format]
+  ssh-keygen -e [-f input_keyfile] [-m key_format]
+  ssh-keygen -y [-f input_keyfile]
+  ssh-keygen -c [-a rounds] [-C comment] [-f keyfile] [-P passphrase]
+  ssh-keygen -l [-v] [-E fingerprint_hash] [-f input_keyfile]
+  ssh-keygen -B [-f input_keyfile]
+  ssh-keygen -D pkcs11
+  ssh-keygen -F hostname [-lv] [-f known_hosts_file]
+  ssh-keygen -H [-f known_hosts_file]
+  ssh-keygen -K [-a rounds] [-w provider]
+  ssh-keygen -R hostname [-f known_hosts_file]
+  ssh-keygen -r hostname [-g] [-f input_keyfile]
+  ssh-keygen -M generate [-O option] output_file
+  ssh-keygen -M screen [-f input_file] [-O option] output_file
+  ssh-keygen -I certificate_identity -s ca_key [-hU] [-D pkcs11_provider] [-n principals] [-O option] [-V validity_interval] [-z serial_number] file ...
+  ssh-keygen -L [-f input_keyfile]
+  ssh-keygen -A [-a rounds] [-f prefix_path]
+  ssh-keygen -k -f krl_file [-u] [-s ca_public] [-z version_number] file ...
+  ssh-keygen -Q [-l] -f krl_file file ...
+  ssh-keygen -Y find-principals [-O option] -s signature_file -f allowed_signers_file
+  ssh-keygen -Y match-principals -I signer_identity -f allowed_signers_file
+  ssh-keygen -Y check-novalidate [-O option] -n namespace -s signature_file
+  ssh-keygen -Y sign [-O option] -f key_file -n namespace file ...
+  ssh-keygen -Y verify [-O option] -f allowed_signers_file -I signer_identity -n namespace -s signature_file [-r revocation_file]
 options:
   - names:
       - -A
@@ -8,7 +35,7 @@ options:
   - names:
       - -a
     argument: rounds
-    description: When saving a private key, this option specifies the number of KDF (key derivation function) rounds used. Higher numbers result in slower passphrase verification and increased resistance to brute-force password cracking (should the keys be stolen).
+    description: When saving a private key, this option specifies the number of KDF (key derivation function, currently bcrypt_pbkdf(3)) rounds used. Higher numbers result in slower passphrase verification and increased resistance to brute-force password cracking (should the keys be stolen). The default is 16 rounds.
   - names:
       - -B
     argument: ""
@@ -56,11 +83,11 @@ options:
   - names:
       - -h
     argument: ""
-    description: When signing a key, create a host certificate instead of a user certificate. Please see the CERTIFICATES section for details.
+    description: When signing a key, create a host certificate instead of a user certificate. See the CERTIFICATES section for details.
   - names:
       - -I
     argument: certificate_identity
-    description: Specify the key identity when signing a public key. Please see the CERTIFICATES section for details.
+    description: Specify the key identity when signing a public key. See the CERTIFICATES section for details.
   - names:
       - -i
     argument: ""
@@ -68,7 +95,7 @@ options:
   - names:
       - -K
     argument: ""
-    description: Download resident keys from a FIDO authenticator. Public and private key files will be written to the current directory for each downloaded key.
+    description: Download resident keys from a FIDO authenticator. Public and private key files will be written to the current directory for each downloaded key. If multiple FIDO authenticators are attached, keys will be downloaded from the first touched authenticator.
   - names:
       - -k
     argument: ""
@@ -100,7 +127,7 @@ options:
   - names:
       - -n
     argument: principals
-    description: Specify one or more principals (user or host names) to be included in a certificate when signing a key. Multiple principals may be specified, separated by commas. Please see the CERTIFICATES section for details.
+    description: Specify one or more principals (user or host names) to be included in a certificate when signing a key. Multiple principals may be specified, separated by commas. See the CERTIFICATES section for details.
   - names:
       - -O
     argument: option
@@ -116,7 +143,7 @@ options:
   - names:
       - -Q
     argument: ""
-    description: Test whether keys have been revoked in a KRL.
+    description: Test whether keys have been revoked in a KRL. If the -l option is also specified then the contents of the KRL will be printed.
   - names:
       - -q
     argument: ""
@@ -132,7 +159,7 @@ options:
   - names:
       - -s
     argument: ca_key
-    description: Certify (sign) a public key using the specified CA key. Please see the CERTIFICATES section for details.
+    description: Certify (sign) a public key using the specified CA key. See the CERTIFICATES section for details.
   - names:
       - -U
     argument: ""
@@ -159,6 +186,10 @@ options:
     description: Find the principal(s) associated with the public key of a signature, provided using the -s flag in an authorized signers file provided using the -f flag. The format of the allowed signers file is documented in the ALLOWED SIGNERS section below. If one or more matching principals are found, they are returned on standard output.
   - names:
       - -Y
+    argument: match-principals
+    description: Find principal matching the principal name provided using the -I flag in the authorized signers file specified using the -f flag. If one or more matching principals are found, they are returned on standard output.
+  - names:
+      - -Y
     argument: check-novalidate
     description: Checks that a signature generated using ssh-keygen -Y sign has a valid structure. This does not validate if a signature comes from an authorized signer. When testing a signature, ssh-keygen accepts a message on standard input and a signature namespace using -n. A file containing the corresponding signature must also be supplied using the -s flag. Successful testing of the signature is signalled by ssh-keygen returning a zero exit status.
   - names:
@@ -173,6 +204,10 @@ options:
       - -y
     argument: ""
     description: This option will read a private OpenSSH format file and print an OpenSSH public key to stdout.
+  - names:
+      - -Z
+    argument: cipher
+    description: Specifies the cipher to use for encryption when writing an OpenSSH-format private key file. The list of available ciphers may be obtained using "ssh -Q cipher". The default is “aes256-ctr”.
   - names:
       - -z
     argument: serial_number

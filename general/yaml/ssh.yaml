@@ -1,5 +1,6 @@
 name: ssh
 description: ssh
+usage: ssh [-46AaCfGgKkMNnqsTtVvXxYy] [-B bind_interface] [-b bind_address] [-c cipher_spec] [-D [bind_address:]port] [-E log_file] [-e escape_char] [-F configfile] [-I pkcs11] [-i identity_file] [-J destination] [-L address] [-l login_name] [-m mac_spec] [-O ctl_cmd] [-o option] [-p port] [-Q query_option] [-R address] [-S ctl_path] [-W host:port] [-w local_tun[:remote_tun]] destination [command [argument ...]]
 options:
   - names:
       - "-4"
@@ -48,7 +49,7 @@ options:
   - names:
       - -F
     argument: configfile
-    description: Specifies an alternative per-user configuration file. If a configuration file is given on the command line, the system-wide configuration file (/etc/ssh/ssh_config) will be ignored. The default for the per-user configuration file is ~/.ssh/config.
+    description: Specifies an alternative per-user configuration file. If a configuration file is given on the command line, the system-wide configuration file (/etc/ssh/ssh_config) will be ignored. The default for the per-user configuration file is ~/.ssh/config. If set to “none”, no configuration files will be read.
   - names:
       - -f
     argument: ""
@@ -68,7 +69,7 @@ options:
   - names:
       - -i
     argument: identity_file
-    description: Selects a file from which the identity (private key) for public key authentication is read. The default is ~/.ssh/id_dsa, ~/.ssh/id_ecdsa, ~/.ssh/id_ecdsa_sk, ~/.ssh/id_ed25519, ~/.ssh/id_ed25519_sk and ~/.ssh/id_rsa. Identity files may also be specified on a per-host basis in the configuration file. It is possible to have multiple -i options (and multiple identities specified in configuration files). If no certificates have been explicitly specified by the CertificateFile directive, ssh will also try to load certificate information from the filename obtained by appending -cert.pub to identity filenames.
+    description: Selects a file from which the identity (private key) for public key authentication is read. You can also specify a public key file to use the corresponding private key that is loaded in ssh-agent(1) when the private key file is not present locally. The default is ~/.ssh/id_rsa, ~/.ssh/id_ecdsa, ~/.ssh/id_ecdsa_sk, ~/.ssh/id_ed25519, ~/.ssh/id_ed25519_sk and ~/.ssh/id_dsa. Identity files may also be specified on a per-host basis in the configuration file. It is possible to have multiple -i options (and multiple identities specified in configuration files). If no certificates have been explicitly specified by the CertificateFile directive, ssh will also try to load certificate information from the filename obtained by appending -cert.pub to identity filenames.
   - names:
       - -J
     argument: destination
@@ -100,11 +101,11 @@ options:
   - names:
       - -N
     argument: ""
-    description: Do not execute a remote command. This is useful for just forwarding ports.
+    description: Do not execute a remote command. This is useful for just forwarding ports. Refer to the description of SessionType in ssh_config(5) for details.
   - names:
       - -n
     argument: ""
-    description: Redirects stdin from /dev/null (actually, prevents reading from stdin). This must be used when ssh is run in the background. A common trick is to use this to run X11 programs on a remote machine. For example, ssh -n shadows.cs.hut.fi emacs & will start an emacs on shadows.cs.hut.fi, and the X11 connection will be automatically forwarded over an encrypted channel. The ssh program will be put in the background. (This does not work if ssh needs to ask for a password or passphrase; see also the -f option.)
+    description: Redirects stdin from /dev/null (actually, prevents reading from stdin). This must be used when ssh is run in the background. A common trick is to use this to run X11 programs on a remote machine. For example, ssh -n shadows.cs.hut.fi emacs & will start an emacs on shadows.cs.hut.fi, and the X11 connection will be automatically forwarded over an encrypted channel. The ssh program will be put in the background. (This does not work if ssh needs to ask for a password or passphrase; see also the -f option.) Refer to the description of StdinNull in ssh_config(5) for details.
   - names:
       - -O
     argument: ctl_cmd
@@ -120,7 +121,7 @@ options:
   - names:
       - -Q
     argument: query_option
-    description: 'Queries ssh for the algorithms supported for the specified version 2. The available features are: cipher (supported symmetric ciphers), cipher-auth (supported symmetric ciphers that support authenticated encryption), help (supported query terms for use with the -Q flag), mac (supported message integrity codes), kex (key exchange algorithms), kex-gss (GSSAPI key exchange algorithms), key (key types), key-cert (certificate key types), key-plain (non-certificate key types), key-sig (all key types and signature algorithms), protocol-version (supported SSH protocol versions), and sig (supported signature algorithms). Alternatively, any keyword from ssh_config(5) or sshd_config(5) that takes an algorithm list may be used as an alias for the corresponding query_option.'
+    description: 'Queries for the algorithms supported by one of the following features: cipher (supported symmetric ciphers), cipher-auth (supported symmetric ciphers that support authenticated encryption), help (supported query terms for use with the -Q flag), mac (supported message integrity codes), kex (key exchange algorithms), kex-gss (GSSAPI key exchange algorithms), key (key types), key-cert (certificate key types), key-plain (non-certificate key types), key-sig (all key types and signature algorithms), protocol-version (supported SSH protocol versions), and sig (supported signature algorithms). Alternatively, any keyword from ssh_config(5) or sshd_config(5) that takes an algorithm list may be used as an alias for the corresponding query_option.'
   - names:
       - -q
     argument: ""
@@ -136,7 +137,7 @@ options:
   - names:
       - -s
     argument: ""
-    description: May be used to request invocation of a subsystem on the remote system. Subsystems facilitate the use of SSH as a secure transport for other applications (e.g. sftp(1)). The subsystem is specified as the remote command.
+    description: May be used to request invocation of a subsystem on the remote system. Subsystems facilitate the use of SSH as a secure transport for other applications (e.g. sftp(1)). The subsystem is specified as the remote command. Refer to the description of SessionType in ssh_config(5) for details.
   - names:
       - -T
     argument: ""
@@ -177,7 +178,7 @@ options:
       - -y
     argument: ""
     description: Send log information using the syslog(3) system module. By default this information is sent to stderr.
-version: OpenSSH_8.2p1 Ubuntu-4ubuntu0.5, OpenSSL 1.1.1f  31 Mar 2020
+version: OpenSSH_8.9p1 Ubuntu-3, OpenSSL 3.0.2 15 Mar 2022
 tldr: |
   > Secure Shell is a protocol used to securely log onto remote systems.
   > It can be used for logging or executing commands on a remote server.

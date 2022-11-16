@@ -5,6 +5,8 @@ complete -c ssh-add -s "D" -d "Deletes all identities from the agent."
 complete -c ssh-add -s "d" -d "Instead of adding identities, removes identities from the agent."
 complete -c ssh-add -s "E" -d "Specifies the hash algorithm used when displaying key fingerprints." -x
 complete -c ssh-add -s "e" -d "Remove keys provided by the PKCS#11 shared library pkcs11." -x
+complete -c ssh-add -s "H" -d "Specifies a known hosts file to look up hostkeys when using destination-constrained keys via the -h flag." -r
+complete -c ssh-add -s "h" -d "When adding keys, constrain them to be usable only through specific hosts or to specific destinations." -x
 complete -c ssh-add -s "K" -d "Load resident keys from a FIDO authenticator."
 complete -c ssh-add -s "k" -d "When loading keys into or deleting keys from the agent, process plain private keys only and skip certificates."
 complete -c ssh-add -s "L" -d "Lists public key parameters of all identities currently represented by the agent."

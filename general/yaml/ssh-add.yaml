@@ -1,5 +1,10 @@
 name: ssh-add
-description: adds private key identities to the OpenSSH authentication agent
+description: ssh-add
+usage: |-
+  ssh-add [-cDdKkLlqvXx] [-E fingerprint_hash] [-H hostkey_file] [-h destination_constraint] [-S provider] [-t life] [file ...]
+  ssh-add -s pkcs11
+  ssh-add -e pkcs11
+  ssh-add -T pubkey ...
 options:
   - names:
       - -c
@@ -12,7 +17,7 @@ options:
   - names:
       - -d
     argument: ""
-    description: Instead of adding identities, removes identities from the agent. If ssh-add has been run without arguments, the keys for the default identities and their corresponding certificates will be removed. Otherwise, the argument list will be interpreted as a list of paths to public key files to specify keys and certificates to be removed from the agent. If no public key is found at a given path, ssh-add will append .pub and retry.
+    description: Instead of adding identities, removes identities from the agent. If ssh-add has been run without arguments, the keys for the default identities and their corresponding certificates will be removed. Otherwise, the argument list will be interpreted as a list of paths to public key files to specify keys and certificates to be removed from the agent. If no public key is found at a given path, ssh-add will append .pub and retry. If the argument list consists of “-” then ssh-add will read public keys to be removed from standard input.
   - names:
       - -E
     argument: fingerprint_hash
@@ -21,6 +26,14 @@ options:
       - -e
     argument: pkcs11
     description: Remove keys provided by the PKCS#11 shared library pkcs11.
+  - names:
+      - -H
+    argument: hostkey_file
+    description: 'Specifies a known hosts file to look up hostkeys when using destination-constrained keys via the -h flag. This option may be specified multiple times to allow multiple files to be searched. If no files are specified, ssh-add will use the default ssh_config(5) known hosts files: ~/.ssh/known_hosts, ~/.ssh/known_hosts2, /etc/ssh/ssh_known_hosts, and /etc/ssh/ssh_known_hosts2.'
+  - names:
+      - -h
+    argument: destination_constraint
+    description: When adding keys, constrain them to be usable only through specific hosts or to specific destinations.
   - names:
       - -K
     argument: ""

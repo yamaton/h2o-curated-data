@@ -29,7 +29,7 @@ complete -c ssh -s "n" -d "Redirects stdin from /dev/null (actually, prevents re
 complete -c ssh -s "O" -d "Control an active connection multiplexing master process." -x
 complete -c ssh -s "o" -d "Can be used to give options in the format used in the configuration file." -r
 complete -c ssh -s "p" -d "Port to connect to on the remote host." -r
-complete -c ssh -s "Q" -d "Queries ssh for the algorithms supported for the specified version 2." -x
+complete -c ssh -s "Q" -d "Queries for the algorithms supported by one of the following features: cipher (supported symmetric ciphers), cipher-auth (supported symmetric ciphers that support authenticated encryption), help (supported query terms for use with the -Q flag), mac (supported message integrity codes), kex (key exchange algorithms), kex-gss (GSSAPI key exchange algorithms), key (key types), key-cert (certificate key types), key-plain (non-certificate key types), key-sig (all key types and signature algorithms), protocol-version (supported SSH protocol versions), and sig (supported signature algorithms)." -x
 complete -c ssh -s "q" -d "Quiet mode."
 complete -c ssh -s "R" -d "Specifies that connections to the given TCP port or Unix socket on the remote (server) host are to be forwarded to the local side." -x
 complete -c ssh -s "S" -d "Specifies the location of a control socket for connection sharing, or the string \8220none\8221 to disable connection sharing." -r

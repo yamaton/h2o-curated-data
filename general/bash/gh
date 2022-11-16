@@ -110,6 +110,10 @@ _gh()
             return
             ;;
 
+          exit-codes) _gh_exitcodes
+            return
+            ;;
+
           formatting) _gh_formatting
             return
             ;;
@@ -123,7 +127,7 @@ _gh()
             ;;
 
       *)
-          word_list=" auth browse codespace gist issue pr release repo run workflow alias api completion config extension gpg-key label search secret ssh-key status actions environment formatting mintty reference --help --version"
+          word_list=" auth browse codespace gist issue pr release repo run workflow alias api completion config extension gpg-key label search secret ssh-key status actions environment exit-codes formatting mintty reference --help --version"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac
@@ -170,12 +174,16 @@ _gh_auth ()
             return
             ;;
 
+          token) _gh_token
+            return
+            ;;
+
           *)  ;; 
         esac
         (( subcommand_index++ ))
     done
 
-    word_list=" login logout refresh setup-git status --help" 
+    word_list=" login logout refresh setup-git status token --help" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -216,6 +224,14 @@ _auth_status ()
 {
     local cur word_list
     word_list=" -h --hostname -t --show-token --help" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_auth_token ()
+{
+    local cur word_list
+    word_list=" -h --hostname --help" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -284,6 +300,10 @@ _gh_codespace ()
             return
             ;;
 
+          rebuild) _gh_rebuild
+            return
+            ;;
+
           ssh) _gh_ssh
             return
             ;;
@@ -297,7 +317,7 @@ _gh_codespace ()
         (( subcommand_index++ ))
     done
 
-    word_list=" code cp create delete edit jupyter list logs ports ssh stop --help" 
+    word_list=" code cp create delete edit jupyter list logs ports rebuild ssh stop --help" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -321,7 +341,7 @@ _codespace_cp ()
 _codespace_create ()
 {
     local cur word_list
-    word_list=" -b --branch --default-permissions --devcontainer-path --idle-timeout -l --location -m --machine -r --repo -s --status --help" 
+    word_list=" -b --branch --default-permissions --devcontainer-path --idle-timeout -l --location -m --machine -r --repo --retention-period -s --status --help" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -329,7 +349,7 @@ _codespace_create ()
 _codespace_delete ()
 {
     local cur word_list
-    word_list=" --all -c --codespace --days -f --force -r --repo --help" 
+    word_list=" --all -c --codespace --days -f --force -o --org -r --repo -u --user --help" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -353,7 +373,7 @@ _codespace_jupyter ()
 _codespace_list ()
 {
     local cur word_list
-    word_list=" -q --jq --json -L --limit -t --template --help" 
+    word_list=" -q --jq --json -L --limit -o --org -r --repo -t --template -u --user --help" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -420,6 +440,14 @@ _ports_visibility ()
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
 
+_codespace_rebuild ()
+{
+    local cur word_list
+    word_list=" -c --codespace --help" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
 _codespace_ssh ()
 {
     local cur word_list
@@ -431,7 +459,7 @@ _codespace_ssh ()
 _codespace_stop ()
 {
     local cur word_list
-    word_list=" -c --codespace --help" 
+    word_list=" -c --codespace -o --org -u --user --help" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -582,6 +610,10 @@ _gh_issue ()
             return
             ;;
 
+          pin) _gh_pin
+            return
+            ;;
+
           reopen) _gh_reopen
             return
             ;;
@@ -594,6 +626,10 @@ _gh_issue ()
             return
             ;;
 
+          unpin) _gh_unpin
+            return
+            ;;
+
           view) _gh_view
             return
             ;;
@@ -603,7 +639,7 @@ _gh_issue ()
         (( subcommand_index++ ))
     done
 
-    word_list=" close comment create delete edit list reopen status transfer view -R --repo --help" 
+    word_list=" close comment create delete edit list pin reopen status transfer unpin view -R --repo --help" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -611,7 +647,7 @@ _gh_issue ()
 _issue_close ()
 {
     local cur word_list
-    word_list=" -c --comment --help -R --repo" 
+    word_list=" -c --comment -r --reason --help -R --repo" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -619,7 +655,7 @@ _issue_close ()
 _issue_comment ()
 {
     local cur word_list
-    word_list=" -b --body -F --body-file -e --editor -w --web --help -R --repo" 
+    word_list=" -b --body -F --body-file --edit-last -e --editor -w --web --help -R --repo" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -656,6 +692,14 @@ _issue_list ()
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
 
+_issue_pin ()
+{
+    local cur word_list
+    word_list=" --help -R --repo" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
 _issue_reopen ()
 {
     local cur word_list
@@ -673,6 +717,14 @@ _issue_status ()
 }
 
 _issue_transfer ()
+{
+    local cur word_list
+    word_list=" --help -R --repo" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_issue_unpin ()
 {
     local cur word_list
     word_list=" --help -R --repo" 
@@ -785,7 +837,7 @@ _pr_checkout ()
 _pr_checks ()
 {
     local cur word_list
-    word_list=" -i --interval --watch --watch -w --web --help -R --repo" 
+    word_list=" -i --interval --watch --required --watch -w --web --help -R --repo" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -801,7 +853,7 @@ _pr_close ()
 _pr_comment ()
 {
     local cur word_list
-    word_list=" -b --body -F --body-file -e --editor -w --web --help -R --repo" 
+    word_list=" -b --body -F --body-file --edit-last -e --editor -w --web --help -R --repo" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -817,7 +869,7 @@ _pr_create ()
 _pr_diff ()
 {
     local cur word_list
-    word_list=" --color --patch --help -R --repo" 
+    word_list=" --color --name-only --patch -w --web --help -R --repo" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -841,7 +893,7 @@ _pr_list ()
 _pr_merge ()
 {
     local cur word_list
-    word_list=" --admin --auto -b --body -F --body-file -d --delete-branch --disable-auto -m --merge -r --rebase -s --squash -t --subject --help -R --repo" 
+    word_list=" --admin -A --author-email --auto -b --body -F --body-file -d --delete-branch --disable-auto --match-head-commit -m --merge -r --rebase -s --squash -t --subject --help -R --repo" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -849,7 +901,7 @@ _pr_merge ()
 _pr_ready ()
 {
     local cur word_list
-    word_list=" --help -R --repo" 
+    word_list=" --undo --help -R --repo" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -873,7 +925,7 @@ _pr_review ()
 _pr_status ()
 {
     local cur word_list
-    word_list=" -q --jq --json -t --template --help -R --repo" 
+    word_list=" -c --conflict-status -q --jq --json -t --template --help -R --repo" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -947,7 +999,7 @@ _gh_release ()
 _release_create ()
 {
     local cur word_list
-    word_list=" --discussion-category -d --draft --generate-notes -n --notes -F --notes-file -p --prerelease --target -t --title --help -R --repo" 
+    word_list=" --discussion-category -d --draft --generate-notes -n --notes -F --notes-file --notes-start-tag -p --prerelease --target -t --title --help -R --repo" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -955,7 +1007,7 @@ _release_create ()
 _release_delete ()
 {
     local cur word_list
-    word_list=" -y --yes --help -R --repo" 
+    word_list=" --cleanup-tag -y --yes --help -R --repo" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -963,7 +1015,7 @@ _release_delete ()
 _release_download ()
 {
     local cur word_list
-    word_list=" -A --archive -D --dir -p --pattern --help -R --repo" 
+    word_list=" -A --archive --clobber -D --dir -p --pattern --skip-existing --help -R --repo" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -1093,7 +1145,7 @@ _repo_clone ()
 _repo_create ()
 {
     local cur word_list
-    word_list=" -c --clone -d --description --disable-issues --disable-wiki -g --gitignore -h --homepage --include-all-branches --internal -l --license --private --public --push -r --remote -s --source -t --team -p --template --help" 
+    word_list=" --add-readme -c --clone -d --description --disable-issues --disable-wiki -g --gitignore -h --homepage --include-all-branches --internal -l --license --private --public --push -r --remote -s --source -t --team -p --template --help" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -1489,7 +1541,37 @@ _gh_api ()
 _gh_completion ()
 {
     local cur word_list
-    word_list=" -s --shell --help" 
+    local i=1 subcommand_index
+
+    # take the last word that's NOT starting with -
+    while [[ ( $i < $COMP_CWORD ) ]]; do
+        local s="${COMP_WORDS[i]}"
+        case "$s" in
+          completion)
+            subcommand_index=$i
+            break
+            ;;
+        esac
+        (( i++ ))
+    done
+
+    while [[ ( $subcommand_index < $COMP_CWORD ) ]]; do
+        local s="${COMP_WORDS[subcommand_index}"
+        case "$s" in
+          autoload) _gh_autoload
+            return
+            ;;
+
+          compinit) _gh_compinit
+            return
+            ;;
+
+          *)  ;; 
+        esac
+        (( subcommand_index++ ))
+    done
+
+    word_list=" autoload compinit -s --shell --help" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -1678,6 +1760,10 @@ _gh_gpgkey ()
             return
             ;;
 
+          delete) _gh_delete
+            return
+            ;;
+
           list) _gh_list
             return
             ;;
@@ -1687,7 +1773,7 @@ _gh_gpgkey ()
         (( subcommand_index++ ))
     done
 
-    word_list=" add list --help" 
+    word_list=" add delete list --help" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -1696,6 +1782,14 @@ _gpgkey_add ()
 {
     local cur word_list
     word_list=" --help" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_gpgkey_delete ()
+{
+    local cur word_list
+    word_list=" -y --confirm --help" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -1954,6 +2048,10 @@ _gh_sshkey ()
             return
             ;;
 
+          delete) _gh_delete
+            return
+            ;;
+
           list) _gh_list
             return
             ;;
@@ -1963,7 +2061,7 @@ _gh_sshkey ()
         (( subcommand_index++ ))
     done
 
-    word_list=" add list --help" 
+    word_list=" add delete list --help" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -1972,6 +2070,14 @@ _sshkey_add ()
 {
     local cur word_list
     word_list=" -t --title --help" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_sshkey_delete ()
+{
+    local cur word_list
+    word_list=" -y --confirm --help" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -1996,14 +2102,6 @@ _gh_actions ()
 {
     local cur word_list
     word_list=" --help" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
-}
-
-_gh_reference ()
-{
-    local cur word_list
-    word_list=" -s --shell --cache -F --field -H --header --hostname -i --include --input -q --jq -X --method --paginate -p --preview -f --raw-field --silent -t --template -p --git-protocol -h --hostname -s --scopes -w --web --with-token -h --hostname -h --hostname -s --scopes -h --hostname -h --hostname -t --show-token -b --branch -c --commit -n --no-browser -p --projects -s --settings -w --wiki -c --codespace --insiders -w --web -e --expand -p --profile -r --recursive -b --branch --default-permissions --devcontainer-path --idle-timeout -l --location -m --machine -r --repo -s --status --all --days -f --force -r --repo -d --display-name -m --machine -q --jq --json -L --limit -t --template -f --follow --config -d --debug --debug-file --profile --server-port -s --shell -h --host -h --host -h --host --precompiled --pin --all --dry-run --force -d --desc -f --filename -p --public -w --web -a --add -d --desc -f --filename -L --limit --public --secret -f --filename --files -r --raw -w --web -c --comment -b --body -F --body-file -e --editor -w --web -a --assignee -b --body -l --label -m --milestone -p --project --recover -t --title -w --web --add-assignee --add-label --add-project -b --body -m --milestone --remove-assignee --remove-label --remove-project -t --title --app -a --assignee -A --author -l --label -L --limit --mention -m --milestone -S --search -s --state -w --web -c --comment -c --comments -w --web -f --force -c --color -d --description -f --force --confirm -n --name -L --limit --order -S --search --sort -w --web -b --branch --detach -f --force --recurse-submodules -i --interval --watch --watch -w --web -d --delete-branch -B --base -b --body -d --draft -f --fill -H --head -m --milestone --no-maintainer-edit -p --project -r --reviewer -t --title -w --web --color --patch --add-project --add-reviewer -B --base -m --milestone --remove-project --remove-reviewer -B --base -d --draft -H --head -L --limit -S --search -s --state -w --web --admin --auto -b --body -d --delete-branch --disable-auto -m --merge -r --rebase -s --squash -t --subject -a --approve -b --body -c --comment -r --request-changes -c --comments -w --web --discussion-category -d --draft --generate-notes -n --notes -F --notes-file -p --prerelease --target -t --title -y --yes -A --archive -D --dir -p --pattern --discussion-category --draft --prerelease --tag --exclude-drafts --clobber -w --web -y --confirm -u --upstream-remote-name -c --clone -d --description --disable-issues --disable-wiki -g --gitignore -h --homepage --include-all-branches --internal -l --license --private --public --push -r --remote -s --source -t --team -p --template -w --allow-write -t --title --add-topic --allow-forking --default-branch --delete-branch-on-merge --enable-auto-merge --enable-issues --enable-merge-commit --enable-projects --enable-rebase-merge --enable-squash-merge --enable-wiki --remove-topic --template --visibility --clone --fork-name --org --remote --remote-name --archived --fork -l --language -L --limit --no-archived --source --topic --visibility -y --confirm -b --branch -s --source -b --branch -w --web -D --dir -n --name -p --pattern -b --branch -L --limit -u --user -w --workflow -d --debug --failed -j --job --exit-status -j --job --log --log-failed -v --verbose -w --web --exit-status -i --interval --archived --assignee --author --closed --commenter --comments --created --include-prs --interactions --involves --label --language -L --limit --locked --match --mentions --milestone --no-assignee --no-label --no-milestone --no-project --order --owner --project --reactions --repo --sort --state --team-mentions --updated --visibility -w --web -B --base --checks --draft -H --head --merged --merged-at --review --review-requested --reviewed-by --sort --archived --followers --forks --good-first-issues --help-wanted-issues --include-forks --license -L --limit --match --number-topics --order --owner --size --sort --stars --topic --visibility -a --app -e --env -o --org -u --user -a --app -e --env -o --org -u --user -a --app -b --body -e --env -f --env-file --no-store -o --org -r --repos -u --user -v --visibility -t --title -e --exclude -o --org -a --all -L --limit -F --field --json -r --ref -r --ref -w --web -y --yaml" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }

@@ -1,5 +1,6 @@
 name: terraform
 description: terraform
+usage: terraform [global options] <subcommand> [args]
 options:
   - names:
       - -chdir
@@ -16,31 +17,40 @@ options:
 subcommands:
   - name: init
     description: Prepare your working directory for other commands
+    usage: terraform [global options] init [options]
     options:
       - names:
           - -backend
-        argument: "true"
-        description: Configure the backend for this configuration.
+        argument: "false"
+        description: Disable backend or Terraform Cloud initialization for this configuration and use what was previously initialized instead.
       - names:
           - -backend-config
         argument: path
-        description: This can be either a path to an HCL file with key/value assignments (same format as terraform.tfvars) or a 'key=value' format. This is merged with what is in the configuration file. This can be specified multiple times. The backend type must be in the configuration itself.
+        description: Configuration to be merged with what is in the configuration file's 'backend' block. This can be either a path to an HCL file with key/value assignments (same format as terraform.tfvars) or a 'key=value' format, and can be specified multiple times. The backend type must be in the configuration itself.
       - names:
           - -force-copy
         argument: ""
-        description: Suppress prompts about copying state data. This is equivalent to providing a "yes" to all confirmation prompts.
+        description: Suppress prompts about copying state data when initializating a new state backend. This is equivalent to providing a "yes" to all confirmation prompts.
       - names:
           - -from-module
         argument: SOURCE
         description: Copy the contents of the given module into the target directory before initialization.
       - names:
           - -get
-        argument: "true"
-        description: Download any modules for this configuration.
+        argument: "false"
+        description: Disable downloading modules for this configuration.
       - names:
           - -input
-        argument: "true"
-        description: Ask for input if necessary. If false, will error if input was required.
+        argument: "false"
+        description: Disable interactive prompts. Note that some actions may require interactive prompts and will error if input is disabled.
+      - names:
+          - -lock
+        argument: "false"
+        description: Don't hold a state lock during backend migration. This is dangerous if others might concurrently run commands against the same workspace.
+      - names:
+          - -lock-timeout
+        argument: 0s
+        description: Duration to retry a state lock.
       - names:
           - -no-color
         argument: ""
@@ -52,25 +62,26 @@ subcommands:
       - names:
           - -reconfigure
         argument: ""
-        description: Reconfigure the backend, ignoring any saved configuration.
+        description: Reconfigure a backend, ignoring any saved configuration.
       - names:
           - -migrate-state
         argument: ""
-        description: Reconfigure the backend, and attempt to migrate any existing state.
+        description: Reconfigure a backend, and attempt to migrate any existing state.
       - names:
           - -upgrade
-        argument: "false"
-        description: If installing modules (-get) or plugins, ignore previously-downloaded objects and install the latest version allowed within configured constraints.
+        argument: ""
+        description: Install the latest module and provider versions allowed within configured constraints, overriding the default behavior of selecting exactly the version recorded in the dependency lockfile.
       - names:
           - -lockfile
         argument: MODE
-        description: Set a dependency lockfile mode. Currently only "readonly" is valid.
+        description: Set a dependency lockfile mode.   Currently only "readonly" is valid.
       - names:
           - -ignore-remote-version
         argument: ""
-        description: A rare option used for the remote backend only. See the remote backend documentation for more information.
+        description: A rare option used for Terraform Cloud and the remote backend only. Set this to ignore checking that the local and remote Terraform versions use compatible state representations, making an operation proceed even when there is a potential mismatch. See the documentation on configuring Terraform with Terraform Cloud for more information.
   - name: validate
     description: Check whether the configuration is valid
+    usage: terraform [global options] validate [options]
     options:
       - names:
           - -json
@@ -82,6 +93,7 @@ subcommands:
         description: If specified, output won't contain any color.
   - name: plan
     description: Show changes required by the current configuration
+    usage: terraform [global options] plan [options]
     options:
       - names:
           - -destroy
@@ -98,7 +110,7 @@ subcommands:
       - names:
           - -replace
         argument: resource
-        description: Force replacement of a particular resource instance using its resource address. If the plan would've normally produced an update or no-op action for this instance, Terraform will plan to replace it instead.
+        description: Force replacement of a particular resource instance using its resource address. If the plan would've normally produced an update or no-op action for this instance, Terraform will plan to replace it instead. You can use this option multiple times to replace more than one object.
       - names:
           - -target
         argument: resource
@@ -141,7 +153,7 @@ subcommands:
         description: Write a plan file to the given path. This can be used as input to the "apply" command.
       - names:
           - -parallelism
-        argument: n
+        argument: "n"
         description: Limit the number of concurrent operations. Defaults to 10.
       - names:
           - -state
@@ -149,6 +161,7 @@ subcommands:
         description: A legacy option used for the local backend only. See the local backend's documentation for more information.
   - name: apply
     description: Create or update infrastructure
+    usage: terraform [global options] apply [options] [PLAN]
     options:
       - names:
           - -auto-approve
@@ -162,6 +175,10 @@ subcommands:
           - -compact-warnings
         argument: ""
         description: If Terraform produces any warnings that are not accompanied by errors, show them in a more compact form that includes only the summary messages.
+      - names:
+          - -destroy
+        argument: ""
+        description: Destroy Terraform-managed infrastructure. The command "terraform destroy" is a convenience alias for this option.
       - names:
           - -lock
         argument: "false"
@@ -180,7 +197,7 @@ subcommands:
         description: If specified, output won't contain any color.
       - names:
           - -parallelism
-        argument: n
+        argument: "n"
         description: Limit the number of parallel resource operations. Defaults to 10.
       - names:
           - -state
@@ -192,9 +209,11 @@ subcommands:
         description: Path to write state to that is different than "-state". This can be used to preserve the old state.
   - name: destroy
     description: Destroy previously-created infrastructure
+    usage: terraform [global options] destroy [options]
     options: []
   - name: console
     description: Try Terraform expressions at an interactive command prompt
+    usage: terraform [global options] console [options]
     options:
       - names:
           - -state
@@ -210,6 +229,7 @@ subcommands:
         description: Set variables in the Terraform configuration from a file. If "terraform.tfvars" or any ".auto.tfvars" files are present, they will be automatically loaded.
   - name: fmt
     description: Reformat your configuration in the standard style
+    usage: terraform [global options] fmt [options] [target...]
     options:
       - names:
           - -list
@@ -237,6 +257,7 @@ subcommands:
         description: Also process files in subdirectories. By default, only the given directory (or current directory) is processed.
   - name: force-unlock
     description: Release a stuck lock on the current workspace
+    usage: terraform [global options] force-unlock LOCK_ID
     options:
       - names:
           - -force
@@ -244,6 +265,7 @@ subcommands:
         description: Don't ask for input for unlock confirmation.
   - name: get
     description: Install or upgrade remote Terraform modules
+    usage: terraform [global options] get [options] PATH
     options:
       - names:
           - -update
@@ -255,6 +277,7 @@ subcommands:
         description: Disable text coloring in the output.
   - name: graph
     description: Generate a Graphviz graph of the steps in an operation
+    usage: terraform [global options] graph [options]
     options:
       - names:
           - -plan
@@ -267,22 +290,19 @@ subcommands:
       - names:
           - -type
         argument: plan
-        description: 'Type of graph to output. Can be: plan, plan-destroy, apply, validate, input, refresh.'
+        description: 'Type of graph to output. Can be: plan, plan-refresh-only, plan-destroy, or apply. By default Terraform chooses'
       - names:
           - -module-depth
-        argument: n
+        argument: "n"
         description: (deprecated) In prior versions of Terraform, specified the
   - name: import
     description: Associate existing infrastructure with a Terraform resource
+    usage: terraform [global options] import [options] ADDR ID
     options:
       - names:
           - -config
         argument: path
         description: Path to a directory of Terraform configuration files to use to configure the provider. Defaults to pwd. If no config files are present, they must be provided via the input prompts or env vars.
-      - names:
-          - -allow-missing-config
-        argument: ""
-        description: Allow import when no resource configuration block exists.
       - names:
           - -input
         argument: "false"
@@ -313,17 +333,20 @@ subcommands:
         description: A rare option used for the remote backend only. See the remote backend documentation for more information.
   - name: login
     description: Obtain and save credentials for a remote host
+    usage: terraform [global options] login [hostname]
     options: []
   - name: logout
     description: Remove locally-stored credentials for a remote host
+    usage: terraform [global options] logout [hostname]
     options: []
   - name: output
     description: Show output values from your root module
+    usage: terraform [global options] output [options] [NAME]
     options:
       - names:
           - -state
         argument: path
-        description: Path to the state file to read. Defaults to "terraform.tfstate".
+        description: Path to the state file to read. Defaults to "terraform.tfstate". Ignored when remote state is used.
       - names:
           - -no-color
         argument: ""
@@ -338,9 +361,11 @@ subcommands:
         description: For value types that can be automatically converted to a string, will print the raw string directly, rather than a human-oriented representation of the value.
   - name: providers
     description: Show the providers required for this configuration
+    usage: terraform [global options] providers [DIR]
     options: []
   - name: refresh
     description: Update the state to match remote systems
+    usage: terraform [global options] refresh [options]
     options:
       - names:
           - -compact-warnings
@@ -363,6 +388,10 @@ subcommands:
         argument: ""
         description: If specified, output won't contain any color.
       - names:
+          - -parallelism
+        argument: "n"
+        description: Limit the number of concurrent operations. Defaults to 10.
+      - names:
           - -target
         argument: resource
         description: Resource to target. Operation will be limited to this resource and its dependencies. This flag can be used multiple times.
@@ -376,6 +405,7 @@ subcommands:
         description: Set variables in the Terraform configuration from a file. If "terraform.tfvars" or any ".auto.tfvars" files are present, they will be automatically loaded.
   - name: show
     description: Show the current state or a saved plan
+    usage: terraform [global options] show [options] [path]
     options:
       - names:
           - -no-color
@@ -387,9 +417,120 @@ subcommands:
         description: If specified, output the Terraform plan or state in a machine-readable form.
   - name: state
     description: Advanced state management
+    usage: terraform [global options] state <subcommand> [options] [args]
     options: []
+    subcommands:
+      - name: list
+        description: List resources in the state
+        usage: terraform [global options] state list [options] [address...]
+        options:
+          - names:
+              - -state
+            argument: statefile
+            description: Path to a Terraform state file to use to look up Terraform-managed resources. By default, Terraform will consult the state of the currently-selected workspace.
+          - names:
+              - -id
+            argument: ID
+            description: Filters the results to include only instances whose resource types have an attribute named "id" whose value equals the given id string.
+      - name: mv
+        description: Move an item in the state
+        usage: terraform [global options] state mv [options] SOURCE DESTINATION
+        options:
+          - names:
+              - -dry-run
+            argument: ""
+            description: If set, prints out what would've been moved but doesn't actually move anything.
+          - names:
+              - -lock
+            argument: "false"
+            description: Don't hold a state lock during the operation. This is dangerous if others might concurrently run commands against the same workspace.
+          - names:
+              - -lock-timeout
+            argument: 0s
+            description: Duration to retry a state lock.
+          - names:
+              - -ignore-remote-version
+            argument: ""
+            description: A rare option used for the remote backend only. See the remote backend documentation for more information.
+      - name: pull
+        description: Pull current state and output to stdout
+        usage: terraform [global options] state pull [options]
+        options: []
+      - name: push
+        description: Update remote state from a local state file
+        usage: terraform [global options] state push [options] PATH
+        options:
+          - names:
+              - -force
+            argument: ""
+            description: Write the state even if lineages don't match or the remote serial is higher.
+          - names:
+              - -lock
+            argument: "false"
+            description: Don't hold a state lock during the operation. This is dangerous if others might concurrently run commands against the same workspace.
+          - names:
+              - -lock-timeout
+            argument: 0s
+            description: Duration to retry a state lock.
+      - name: replace-provider
+        description: Replace provider in the state
+        usage: terraform [global options] state replace-provider [options] FROM_PROVIDER_FQN TO_PROVIDER_FQN
+        options:
+          - names:
+              - -auto-approve
+            argument: ""
+            description: Skip interactive approval.
+          - names:
+              - -lock
+            argument: "false"
+            description: Don't hold a state lock during the operation. This is dangerous if others might concurrently run commands against the same workspace.
+          - names:
+              - -lock-timeout
+            argument: 0s
+            description: Duration to retry a state lock.
+          - names:
+              - -ignore-remote-version
+            argument: ""
+            description: A rare option used for the remote backend only. See the remote backend documentation for more information.
+      - name: rm
+        description: Remove instances from the state
+        usage: terraform [global options] state rm [options] ADDRESS...
+        options:
+          - names:
+              - -dry-run
+            argument: ""
+            description: If set, prints out what would've been removed but doesn't actually remove anything.
+          - names:
+              - -backup
+            argument: PATH
+            description: Path where Terraform should write the backup state.
+          - names:
+              - -lock
+            argument: "false"
+            description: Don't hold a state lock during the operation. This is dangerous if others might concurrently run commands against the same workspace.
+          - names:
+              - -lock-timeout
+            argument: 0s
+            description: Duration to retry a state lock.
+          - names:
+              - -state
+            argument: PATH
+            description: Path to the state file to update. Defaults to the current workspace state.
+          - names:
+              - -ignore-remote-version
+            argument: ""
+            description: Continue even if remote and local Terraform versions are incompatible. This may result in an unusable workspace, and should be used with extreme caution.
+      - name: show
+        description: Show a resource in the state
+        usage: terraform [global options] state show [options] ADDRESS
+        options:
+          - names:
+              - -state
+            argument: statefile
+            description: Path to a Terraform state file to use to look up Terraform-managed resources. By default it will use the state "terraform.tfstate" if it exists.
   - name: taint
     description: Mark a resource instance as not fully functional
+    usage: terraform [global options] taint [options] <address>
     options:
       - names:
           - -allow-missing
@@ -409,6 +550,7 @@ subcommands:
         description: A rare option used for the remote backend only. See the remote backend documentation for more information.
   - name: test
     description: Experimental support for module integration testing
+    usage: terraform test [options]
     options:
       - names:
           - '-'
@@ -436,6 +578,7 @@ subcommands:
         description: Don't include virtual terminal formatting sequences in the output.
   - name: untaint
     description: Remove the 'tainted' state from a resource instance
+    usage: terraform [global options] untaint [options] name
     options:
       - names:
           - -allow-missing
@@ -455,6 +598,7 @@ subcommands:
         description: A rare option used for the remote backend only. See the remote backend documentation for more information.
   - name: version
     description: Show the current Terraform version
+    usage: terraform [global options] version [options]
     options:
       - names:
           - -json
@@ -462,7 +606,54 @@ subcommands:
         description: Output the version information as a JSON object.
   - name: workspace
     description: Workspace management
+    usage: terraform [global options] workspace
     options: []
+    subcommands:
+      - name: delete
+        description: Delete a workspace
+        usage: terraform [global options] workspace delete [OPTIONS] NAME
+        options:
+          - names:
+              - -force
+            argument: ""
+            description: Remove even a non-empty workspace.
+          - names:
+              - -lock
+            argument: "false"
+            description: Don't hold a state lock during the operation. This is dangerous if others might concurrently run commands against the same workspace.
+          - names:
+              - -lock-timeout
+            argument: 0s
+            description: Duration to retry a state lock.
+      - name: list
+        description: List Workspaces
+        usage: terraform [global options] workspace list
+        options: []
+      - name: new
+        description: Create a new workspace
+        usage: terraform [global options] workspace new [OPTIONS] NAME
+        options:
+          - names:
+              - -lock
+            argument: "false"
+            description: Don't hold a state lock during the operation. This is dangerous if others might concurrently run commands against the same workspace.
+          - names:
+              - -lock-timeout
+            argument: 0s
+            description: Duration to retry a state lock.
+          - names:
+              - -state
+            argument: path
+            description: Copy an existing state file into the new workspace.
+      - name: select
+        description: Select a workspace
+        usage: terraform [global options] workspace select NAME
+        options: []
+      - name: show
+        description: Show the name of the current workspace
+        usage: terraform [global options] workspace show
+        options: []
+version: Terraform v1.3.4
 tldr: |
   > Create and deploy infrastructure as code to cloud providers.
   > More information: <https://www.terraform.io/>.

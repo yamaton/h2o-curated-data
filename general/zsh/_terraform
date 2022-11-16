@@ -4,19 +4,21 @@
 
     function _terraform_init {
         _arguments \
-            '-backend[Configure the backend for this configuration.]' \
-            '-backend-config[This can be either a path to an HCL file with key/value assignments (same format as terraform.tfvars) or a '\''key=value'\'' format. This is merged with what is in the configuration file. This can be specified multiple times. The backend type must be in the configuration itself.]':file:_files \
-            '-force-copy[Suppress prompts about copying state data. This is equivalent to providing a "yes" to all confirmation prompts.]' \
+            '-backend[Disable backend or Terraform Cloud initialization for this configuration and use what was previously initialized instead.]' \
+            '-backend-config[Configuration to be merged with what is in the configuration file'\''s '\''backend'\'' block. This can be either a path to an HCL file with key/value assignments (same format as terraform.tfvars) or a '\''key=value'\'' format, and can be specified multiple times. The backend type must be in the configuration itself.]':file:_files \
+            '-force-copy[Suppress prompts about copying state data when initializating a new state backend. This is equivalent to providing a "yes" to all confirmation prompts.]' \
             '-from-module[Copy the contents of the given module into the target directory before initialization.]' \
-            '-get[Download any modules for this configuration.]' \
-            '-input[Ask for input if necessary. If false, will error if input was required.]' \
+            '-get[Disable downloading modules for this configuration.]' \
+            '-input[Disable interactive prompts. Note that some actions may require interactive prompts and will error if input is disabled.]' \
+            '-lock[Don'\''t hold a state lock during backend migration. This is dangerous if others might concurrently run commands against the same workspace.]' \
+            '-lock-timeout[Duration to retry a state lock.]' \
             '-no-color[If specified, output won'\''t contain any color.]' \
             '-plugin-dir[Directory containing plugin binaries. This overrides all default search paths for plugins, and prevents the automatic installation of plugins. This flag can be used multiple times.]' \
-            '-reconfigure[Reconfigure the backend, ignoring any saved configuration.]' \
-            '-migrate-state[Reconfigure the backend, and attempt to migrate any existing state.]' \
-            '-upgrade[If installing modules (-get) or plugins, ignore previously-downloaded objects and install the latest version allowed within configured constraints.]' \
-            '-lockfile[Set a dependency lockfile mode. Currently only "readonly" is valid.]' \
-            '-ignore-remote-version[A rare option used for the remote backend only. See the remote backend documentation for more information.]' \
+            '-reconfigure[Reconfigure a backend, ignoring any saved configuration.]' \
+            '-migrate-state[Reconfigure a backend, and attempt to migrate any existing state.]' \
+            '-upgrade[Install the latest module and provider versions allowed within configured constraints, overriding the default behavior of selecting exactly the version recorded in the dependency lockfile.]' \
+            '-lockfile[Set a dependency lockfile mode.   Currently only "readonly" is valid.]' \
+            '-ignore-remote-version[A rare option used for Terraform Cloud and the remote backend only. Set this to ignore checking that the local and remote Terraform versions use compatible state representations, making an operation proceed even when there is a potential mismatch. See the documentation on configuring Terraform with Terraform Cloud for more information.]' \
             "*: :_files"
 
     }
@@ -34,7 +36,7 @@
             '-destroy[Select the "destroy" planning mode, which creates a plan to destroy all objects currently managed by this Terraform configuration instead of the usual behavior.]' \
             '-refresh-only[Select the "refresh only" planning mode, which checks whether remote objects still match the outcome of the most recent Terraform apply but does not propose any actions to undo any changes made outside of Terraform.]' \
             '-refresh[Skip checking for external changes to remote objects while creating the plan. This can potentially make planning faster, but at the expense of possibly planning against a stale record of the remote system state.]' \
-            '-replace[Force replacement of a particular resource instance using its resource address. If the plan would'\''ve normally produced an update or no-op action for this instance, Terraform will plan to replace it instead.]' \
+            '-replace[Force replacement of a particular resource instance using its resource address. If the plan would'\''ve normally produced an update or no-op action for this instance, Terraform will plan to replace it instead. You can use this option multiple times to replace more than one object.]' \
             '-target[Limit the planning operation to only the given module, resource, or resource instance and all of its dependencies. You can use this option multiple times to include more than one object. This is for exceptional use only.]' \
             '-var[Set a value for one of the input variables in the root module of the configuration. Use this option more than once to set more than one variable.]' \
             '-var-file[Load variable values from the given file, in addition to the default files terraform.tfvars and *.auto.tfvars. Use this option more than once to include more than one variables file.]':file:_files \
@@ -56,6 +58,7 @@
             '-auto-approve[Skip interactive approval of plan before applying.]' \
             '-backup[Path to backup the existing state file before modifying. Defaults to the "-state-out" path with ".backup" extension. Set to "-" to disable backup.]':file:_files \
             '-compact-warnings[If Terraform produces any warnings that are not accompanied by errors, show them in a more compact form that includes only the summary messages.]' \
+            '-destroy[Destroy Terraform-managed infrastructure. The command "terraform destroy" is a convenience alias for this option.]' \
             '-lock[Don'\''t hold a state lock during the operation. This is dangerous if others might concurrently run commands against the same workspace.]' \
             '-lock-timeout[Duration to retry a state lock.]' \
             '-input[Ask for input for variables if not directly set.]' \
@@ -113,7 +116,7 @@
         _arguments \
             '-plan[Render graph using the specified plan file instead of the configuration in the current directory.]' \
             '-draw-cycles[Highlight any cycles in the graph with colored edges. This helps when diagnosing cycle errors.]' \
-            '-type[Type of graph to output. Can be: plan, plan-destroy, apply, validate, input, refresh.]' \
+            '-type[Type of graph to output. Can be: plan, plan-refresh-only, plan-destroy, or apply. By default Terraform chooses]' \
             '-module-depth[(deprecated) In prior versions of Terraform, specified the]' \
             "*: :_files"
 
@@ -122,7 +125,6 @@
     function _terraform_import {
         _arguments \
             '-config[Path to a directory of Terraform configuration files to use to configure the provider. Defaults to pwd. If no config files are present, they must be provided via the input prompts or env vars.]':file:_files \
-            '-allow-missing-config[Allow import when no resource configuration block exists.]' \
             '-input[Disable interactive input prompts.]' \
             '-lock[Don'\''t hold a state lock during the operation. This is dangerous if others might concurrently run commands against the same workspace.]' \
             '-lock-timeout[Duration to retry a state lock.]' \
@@ -148,7 +150,7 @@
 
     function _terraform_output {
         _arguments \
-            '-state[Path to the state file to read. Defaults to "terraform.tfstate".]':file:_files \
+            '-state[Path to the state file to read. Defaults to "terraform.tfstate". Ignored when remote state is used.]':file:_files \
             '-no-color[If specified, output won'\''t contain any color.]' \
             '-json[If specified, machine readable output will be printed in JSON format.]' \
             '-raw[For value types that can be automatically converted to a string, will print the raw string directly, rather than a human-oriented representation of the value.]' \
@@ -169,6 +171,7 @@
             '-lock[Don'\''t hold a state lock during the operation. This is dangerous if others might concurrently run commands against the same workspace.]' \
             '-lock-timeout[Duration to retry a state lock.]' \
             '-no-color[If specified, output won'\''t contain any color.]' \
+            '-parallelism[Limit the number of concurrent operations. Defaults to 10.]' \
             '-target[Resource to target. Operation will be limited to this resource and its dependencies. This flag can be used multiple times.]' \
             '-var[Set a variable in the Terraform configuration. This flag can be set multiple times.]' \
             '-var-file[Set variables in the Terraform configuration from a file. If "terraform.tfvars" or any ".auto.tfvars" files are present, they will be automatically loaded.]' \

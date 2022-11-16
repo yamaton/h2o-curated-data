@@ -121,7 +121,7 @@ _terraform()
 _terraform_init ()
 {
     local cur word_list
-    word_list=" -backend -backend-config -force-copy -from-module -get -input -no-color -plugin-dir -reconfigure -migrate-state -upgrade -lockfile -ignore-remote-version" 
+    word_list=" -backend -backend-config -force-copy -from-module -get -input -lock -lock-timeout -no-color -plugin-dir -reconfigure -migrate-state -upgrade -lockfile -ignore-remote-version" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -145,7 +145,7 @@ _terraform_plan ()
 _terraform_apply ()
 {
     local cur word_list
-    word_list=" -auto-approve -backup -compact-warnings -lock -lock-timeout -input -no-color -parallelism -state -state-out" 
+    word_list=" -auto-approve -backup -compact-warnings -destroy -lock -lock-timeout -input -no-color -parallelism -state -state-out" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -193,7 +193,7 @@ _terraform_graph ()
 _terraform_import ()
 {
     local cur word_list
-    word_list=" -config -allow-missing-config -input -lock -lock-timeout -no-color -var -var-file -ignore-remote-version" 
+    word_list=" -config -input -lock -lock-timeout -no-color -var -var-file -ignore-remote-version" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -209,7 +209,7 @@ _terraform_output ()
 _terraform_refresh ()
 {
     local cur word_list
-    word_list=" -compact-warnings -input -lock -lock-timeout -no-color -target -var -var-file" 
+    word_list=" -compact-warnings -input -lock -lock-timeout -no-color -parallelism -target -var -var-file" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -218,6 +218,112 @@ _terraform_show ()
 {
     local cur word_list
     word_list=" -no-color -json" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_terraform_state ()
+{
+    local cur word_list
+    local i=1 subcommand_index
+
+    # take the last word that's NOT starting with -
+    while [[ ( $i < $COMP_CWORD ) ]]; do
+        local s="${COMP_WORDS[i]}"
+        case "$s" in
+          state)
+            subcommand_index=$i
+            break
+            ;;
+        esac
+        (( i++ ))
+    done
+
+    while [[ ( $subcommand_index < $COMP_CWORD ) ]]; do
+        local s="${COMP_WORDS[subcommand_index}"
+        case "$s" in
+          list) _terraform_list
+            return
+            ;;
+
+          mv) _terraform_mv
+            return
+            ;;
+
+          pull) _terraform_pull
+            return
+            ;;
+
+          push) _terraform_push
+            return
+            ;;
+
+          replace-provider) _terraform_replaceprovider
+            return
+            ;;
+
+          rm) _terraform_rm
+            return
+            ;;
+
+          show) _terraform_show
+            return
+            ;;
+
+          *)  ;; 
+        esac
+        (( subcommand_index++ ))
+    done
+
+    word_list=" list mv pull push replace-provider rm show" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_state_list ()
+{
+    local cur word_list
+    word_list=" -state -id" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_state_mv ()
+{
+    local cur word_list
+    word_list=" -dry-run -lock -lock-timeout -ignore-remote-version" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_state_push ()
+{
+    local cur word_list
+    word_list=" -force -lock -lock-timeout" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_state_replaceprovider ()
+{
+    local cur word_list
+    word_list=" -auto-approve -lock -lock-timeout -ignore-remote-version" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_state_rm ()
+{
+    local cur word_list
+    word_list=" -dry-run -backup -lock -lock-timeout -state -ignore-remote-version" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_state_show ()
+{
+    local cur word_list
+    word_list=" -state" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -250,6 +356,72 @@ _terraform_version ()
 {
     local cur word_list
     word_list=" -json" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_terraform_workspace ()
+{
+    local cur word_list
+    local i=1 subcommand_index
+
+    # take the last word that's NOT starting with -
+    while [[ ( $i < $COMP_CWORD ) ]]; do
+        local s="${COMP_WORDS[i]}"
+        case "$s" in
+          workspace)
+            subcommand_index=$i
+            break
+            ;;
+        esac
+        (( i++ ))
+    done
+
+    while [[ ( $subcommand_index < $COMP_CWORD ) ]]; do
+        local s="${COMP_WORDS[subcommand_index}"
+        case "$s" in
+          delete) _terraform_delete
+            return
+            ;;
+
+          list) _terraform_list
+            return
+            ;;
+
+          new) _terraform_new
+            return
+            ;;
+
+          select) _terraform_select
+            return
+            ;;
+
+          show) _terraform_show
+            return
+            ;;
+
+          *)  ;; 
+        esac
+        (( subcommand_index++ ))
+    done
+
+    word_list=" delete list new select show" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_workspace_delete ()
+{
+    local cur word_list
+    word_list=" -force -lock -lock-timeout" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_workspace_new ()
+{
+    local cur word_list
+    word_list=" -lock -lock-timeout -state" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }

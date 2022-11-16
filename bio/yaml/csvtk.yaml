@@ -1,5 +1,6 @@
 name: csvtk
 description: csvtk
+usage: csvtk [command]
 options:
   - names:
       - -c
@@ -73,6 +74,7 @@ options:
 subcommands:
   - name: add-header
     description: add column names
+    usage: csvtk add-header [flags]
     options:
       - names:
           - -h
@@ -150,6 +152,7 @@ subcommands:
         description: specifies that the input CSV file is delimited with tabs. Overrides "-d"
   - name: cat
     description: stream file to stdout and report progress on stderr
+    usage: csvtk cat [flags]
     options:
       - names:
           - -b
@@ -242,6 +245,7 @@ subcommands:
         description: specifies that the input CSV file is delimited with tabs. Overrides "-d"
   - name: comb
     description: compute combinations of items at every row
+    usage: csvtk comb [flags]
     options:
       - names:
           - -h
@@ -331,6 +335,7 @@ subcommands:
         description: specifies that the input CSV file is delimited with tabs. Overrides "-d"
   - name: concat
     description: concatenate CSV/TSV files by rows
+    usage: csvtk concat [flags]
     options:
       - names:
           - -h
@@ -418,6 +423,7 @@ subcommands:
         description: specifies that the input CSV file is delimited with tabs. Overrides "-d"
   - name: corr
     description: calculate Pearson correlation between two columns
+    usage: csvtk corr [flags]
     options:
       - names:
           - -f
@@ -510,6 +516,7 @@ subcommands:
         description: specifies that the input CSV file is delimited with tabs. Overrides "-d"
   - name: csv2json
     description: convert CSV to JSON format
+    usage: csvtk csv2json [flags]
     options:
       - names:
           - -b
@@ -602,6 +609,7 @@ subcommands:
         description: specifies that the input CSV file is delimited with tabs. Overrides "-d"
   - name: csv2md
     description: convert CSV to markdown format
+    usage: csvtk csv2md [flags]
     options:
       - names:
           - -a
@@ -684,6 +692,7 @@ subcommands:
         description: specifies that the input CSV file is delimited with tabs. Overrides "-d"
   - name: csv2rst
     description: convert CSV to reStructuredText format
+    usage: csvtk csv2rst [flags]
     options:
       - names:
           - -k
@@ -781,6 +790,7 @@ subcommands:
         description: specifies that the input CSV file is delimited with tabs. Overrides "-d"
   - name: csv2tab
     description: convert CSV to tabular format
+    usage: csvtk csv2tab [flags]
     options:
       - names:
           - -h
@@ -853,6 +863,7 @@ subcommands:
         description: specifies that the input CSV file is delimited with tabs. Overrides "-d"
   - name: csv2xlsx
     description: convert CSV/TSV files to XLSX file
+    usage: csvtk csv2xlsx [flags]
     options:
       - names:
           - -h
@@ -925,7 +936,18 @@ subcommands:
         description: specifies that the input CSV file is delimited with tabs. Overrides "-d"
   - name: cut
     description: select and arrange fields
+    usage: csvtk cut [flags]
     options:
+      - names:
+          - -m
+          - --allow-missing-col
+        argument: ""
+        description: allow missing column
+      - names:
+          - -b
+          - --blank-missing-col
+        argument: ""
+        description: blank missing column
       - names:
           - -f
           - --fields
@@ -1017,6 +1039,7 @@ subcommands:
         description: specifies that the input CSV file is delimited with tabs. Overrides "-d"
   - name: del-header
     description: delete column names
+    usage: csvtk del-header [flags]
     options:
       - names:
           - -h
@@ -1089,6 +1112,7 @@ subcommands:
         description: specifies that the input CSV file is delimited with tabs. Overrides "-d"
   - name: dim
     description: dimensions of CSV file
+    usage: csvtk dim [flags]
     options:
       - names:
           - --cols
@@ -1178,6 +1202,7 @@ subcommands:
         description: specifies that the input CSV file is delimited with tabs. Overrides "-d"
   - name: filter
     description: filter rows by values of selected fields with arithmetic expression
+    usage: csvtk filter [flags]
     options:
       - names:
           - --any
@@ -1268,7 +1293,8 @@ subcommands:
         argument: ""
         description: specifies that the input CSV file is delimited with tabs. Overrides "-d"
   - name: filter2
-    description: filter rows by awk-like artithmetic/string expressions
+    description: filter rows by awk-like arithmetic/string expressions
+    usage: csvtk filter2 [flags]
     options:
       - names:
           - -f
@@ -1285,6 +1311,108 @@ subcommands:
           - --line-number
         argument: ""
         description: print line number as the first column ("n")
+      - names:
+          - -s
+          - --numeric-as-string
+        argument: ""
+        description: treat even numeric fields as strings to avoid converting big numbers into scientific notation
+      - names:
+          - -c
+          - --chunk-size
+        argument: int
+        description: chunk size of CSV reader (default 50)
+      - names:
+          - -C
+          - --comment-char
+        argument: string
+        description: lines starting with commment-character will be ignored. if your header row starts with '#', please assign "-C" another rare symbol, e.g. '$' (default "#")
+      - names:
+          - -d
+          - --delimiter
+        argument: string
+        description: delimiting character of the input CSV file (default ",")
+      - names:
+          - -E
+          - --ignore-empty-row
+        argument: ""
+        description: ignore empty rows
+      - names:
+          - -I
+          - --ignore-illegal-row
+        argument: ""
+        description: ignore illegal rows
+      - names:
+          - --infile-list
+        argument: string
+        description: file of input files list (one file per line), if given, they are appended to files from cli arguments
+      - names:
+          - -l
+          - --lazy-quotes
+        argument: ""
+        description: if given, a quote may appear in an unquoted field and a non-doubled quote may appear in a quoted field
+      - names:
+          - -H
+          - --no-header-row
+        argument: ""
+        description: specifies that the input CSV file does not have header row
+      - names:
+          - -j
+          - --num-cpus
+        argument: int
+        description: number of CPUs to use (default value depends on your computer) (default 12)
+      - names:
+          - -D
+          - --out-delimiter
+        argument: string
+        description: delimiting character of the output CSV file, e.g., -D $'\t' for tab (default ",")
+      - names:
+          - -o
+          - --out-file
+        argument: string
+        description: out file ("-" for stdout, suffix .gz for gzipped out) (default "-")
+      - names:
+          - -T
+          - --out-tabs
+        argument: ""
+        description: specifies that the output is delimited with tabs. Overrides "-D"
+      - names:
+          - -t
+          - --tabs
+        argument: ""
+        description: specifies that the input CSV file is delimited with tabs. Overrides "-d"
+  - name: fmtdate
+    description: format date of selected fields
+    usage: csvtk fmtdate [flags]
+    options:
+      - names:
+          - -f
+          - --fields
+        argument: string
+        description: select only these fields. e.g -f 1,2 or -f columnA,columnB (default "1")
+      - names:
+          - --format
+        argument: string
+        description: output date format in MS Excel (TM) syntax, type "csvtk fmtdate -h" for details (default "YYYY-MM-DD hh:mm:ss")
+      - names:
+          - -F
+          - --fuzzy-fields
+        argument: ""
+        description: using fuzzy fields, e.g., -F -f "*name" or -F -f "id123*"
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: help for fmtdate
+      - names:
+          - -k
+          - --keep-unparsed
+        argument: ""
+        description: keep the key as value when no value found for the key
+      - names:
+          - -z
+          - --time-zone
+        argument: string
+        description: timezone aka "Asia/Shanghai" or "America/Los_Angeles" formatted time-zone, type "csvtk fmtdate -h" for details
       - names:
           - -c
           - --chunk-size
@@ -1351,6 +1479,7 @@ subcommands:
         description: specifies that the input CSV file is delimited with tabs. Overrides "-d"
   - name: fold
     description: fold multiple values of a field into cells of groups
+    usage: csvtk fold [flags]
     options:
       - names:
           - -f
@@ -1448,6 +1577,7 @@ subcommands:
         description: specifies that the input CSV file is delimited with tabs. Overrides "-d"
   - name: freq
     description: frequencies of selected fields
+    usage: csvtk freq [flags]
     options:
       - names:
           - -f
@@ -1550,6 +1680,7 @@ subcommands:
         description: specifies that the input CSV file is delimited with tabs. Overrides "-d"
   - name: gather
     description: gather columns into key-value pairs
+    usage: csvtk gather [flags]
     options:
       - names:
           - -f
@@ -1640,8 +1771,90 @@ subcommands:
           - --tabs
         argument: ""
         description: specifies that the input CSV file is delimited with tabs. Overrides "-d"
+  - name: genautocomplete
+    description: generate shell autocompletion script (bash|zsh|fish|powershell)
+    usage: csvtk genautocomplete [flags]
+    options:
+      - names:
+          - --file
+        argument: string
+        description: autocompletion file (default "~/.bash_completion.d/csvtk.sh")
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: help for genautocomplete
+      - names:
+          - --shell
+        argument: string
+        description: autocompletion type (bash|zsh|fish|powershell) (default "bash")
+      - names:
+          - -c
+          - --chunk-size
+        argument: int
+        description: chunk size of CSV reader (default 50)
+      - names:
+          - -C
+          - --comment-char
+        argument: string
+        description: lines starting with commment-character will be ignored. if your header row starts with '#', please assign "-C" another rare symbol, e.g. '$' (default "#")
+      - names:
+          - -d
+          - --delimiter
+        argument: string
+        description: delimiting character of the input CSV file (default ",")
+      - names:
+          - -E
+          - --ignore-empty-row
+        argument: ""
+        description: ignore empty rows
+      - names:
+          - -I
+          - --ignore-illegal-row
+        argument: ""
+        description: ignore illegal rows
+      - names:
+          - --infile-list
+        argument: string
+        description: file of input files list (one file per line), if given, they are appended to files from cli arguments
+      - names:
+          - -l
+          - --lazy-quotes
+        argument: ""
+        description: if given, a quote may appear in an unquoted field and a non-doubled quote may appear in a quoted field
+      - names:
+          - -H
+          - --no-header-row
+        argument: ""
+        description: specifies that the input CSV file does not have header row
+      - names:
+          - -j
+          - --num-cpus
+        argument: int
+        description: number of CPUs to use (default value depends on your computer) (default 12)
+      - names:
+          - -D
+          - --out-delimiter
+        argument: string
+        description: delimiting character of the output CSV file, e.g., -D $'\t' for tab (default ",")
+      - names:
+          - -o
+          - --out-file
+        argument: string
+        description: out file ("-" for stdout, suffix .gz for gzipped out) (default "-")
+      - names:
+          - -T
+          - --out-tabs
+        argument: ""
+        description: specifies that the output is delimited with tabs. Overrides "-D"
+      - names:
+          - -t
+          - --tabs
+        argument: ""
+        description: specifies that the input CSV file is delimited with tabs. Overrides "-d"
   - name: grep
     description: grep data by selected fields with patterns/regular expressions
+    usage: csvtk grep [flags]
     options:
       - names:
           - --delete-matched
@@ -1771,6 +1984,7 @@ subcommands:
         description: specifies that the input CSV file is delimited with tabs. Overrides "-d"
   - name: head
     description: print first N records
+    usage: csvtk head [flags]
     options:
       - names:
           - -h
@@ -1848,6 +2062,7 @@ subcommands:
         description: specifies that the input CSV file is delimited with tabs. Overrides "-d"
   - name: headers
     description: print headers
+    usage: csvtk headers [flags]
     options:
       - names:
           - -h
@@ -1925,6 +2140,7 @@ subcommands:
         description: specifies that the input CSV file is delimited with tabs. Overrides "-d"
   - name: inter
     description: intersection of multiple files
+    usage: csvtk inter [flags]
     options:
       - names:
           - -f
@@ -2012,6 +2228,7 @@ subcommands:
         description: specifies that the input CSV file is delimited with tabs. Overrides "-d"
   - name: join
     description: join files by selected fields (inner, left and outer join)
+    usage: csvtk join [flags]
     options:
       - names:
           - -f
@@ -2033,6 +2250,11 @@ subcommands:
           - --ignore-case
         argument: ""
         description: ignore case
+      - names:
+          - -n
+          - --ignore-null
+        argument: ""
+        description: do not match NULL values
       - names:
           - -k
           - --keep-unmatched
@@ -2118,6 +2340,7 @@ subcommands:
         description: specifies that the input CSV file is delimited with tabs. Overrides "-d"
   - name: mutate
     description: create new column from selected fields by regular expression
+    usage: csvtk mutate [flags]
     options:
       - names:
           - -f
@@ -2218,18 +2441,19 @@ subcommands:
         argument: ""
         description: specifies that the input CSV file is delimited with tabs. Overrides "-d"
   - name: mutate2
-    description: create new column from selected fields by awk-like artithmetic/string expressions
+    description: create new column from selected fields by awk-like arithmetic/string expressions
+    usage: csvtk mutate2 [flags]
     options:
       - names:
-          - -L
-          - --digits
+          - -w
+          - --decimal-width
         argument: int
-        description: number of digits after the decimal dot (default 2)
+        description: limit floats to N decimal points (default 2)
       - names:
           - -e
           - --expression
         argument: string
-        description: 'artithmetic/string expressions. e.g. "''string''", ''"abc"'', '' $a + "-" + $b '', ''$1 + $2'', ''$a / $b'', '' $1 > 100 ? "big" : "small" '''
+        description: 'arithmetic/string expressions. e.g. "''string''", ''"abc"'', '' $a + "-" + $b '', ''$1 + $2'', ''$a / $b'', '' $1 > 100 ? "big" : "small" '''
       - names:
           - -h
           - --help
@@ -2311,6 +2535,7 @@ subcommands:
         description: specifies that the input CSV file is delimited with tabs. Overrides "-d"
   - name: ncol
     description: print number of columns
+    usage: csvtk ncol [flags]
     options:
       - names:
           - -n
@@ -2388,6 +2613,7 @@ subcommands:
         description: specifies that the input CSV file is delimited with tabs. Overrides "-d"
   - name: nrow
     description: print number of records
+    usage: csvtk nrow [flags]
     options:
       - names:
           - -n
@@ -2465,6 +2691,7 @@ subcommands:
         description: specifies that the input CSV file is delimited with tabs. Overrides "-d"
   - name: plot
     description: plot common figures
+    usage: csvtk plot [command]
     options:
       - names:
           - --axis-width
@@ -2497,6 +2724,14 @@ subcommands:
           - --label-size
         argument: int
         description: label font size (default 14)
+      - names:
+          - --na-values
+        argument: strings
+        description: NA values, case ignored (default [,NA,N/A])
+      - names:
+          - --skip-na
+        argument: ""
+        description: skip NA values in --na-values
       - names:
           - --tick-width
         argument: float
@@ -2601,8 +2836,505 @@ subcommands:
           - --tabs
         argument: ""
         description: specifies that the input CSV file is delimited with tabs. Overrides "-d"
+    subcommands:
+      - name: box
+        description: plot boxplot
+        usage: csvtk plot box [flags]
+        options:
+          - names:
+              - --box-width
+            argument: float
+            description: box width
+          - names:
+              - -h
+              - --help
+            argument: ""
+            description: help for box
+          - names:
+              - --horiz
+            argument: ""
+            description: horize box plot
+          - names:
+              - --axis-width
+            argument: float
+            description: axis width (default 1.5)
+          - names:
+              - -c
+              - --chunk-size
+            argument: int
+            description: chunk size of CSV reader (default 50)
+          - names:
+              - -C
+              - --comment-char
+            argument: string
+            description: lines starting with commment-character will be ignored. if your header row starts with '#', please assign "-C" another rare symbol, e.g. '$' (default "#")
+          - names:
+              - -f
+              - --data-field
+            argument: string
+            description: column index or column name of data (default "1")
+          - names:
+              - -d
+              - --delimiter
+            argument: string
+            description: delimiting character of the input CSV file (default ",")
+          - names:
+              - --format
+            argument: string
+            description: 'image format for stdout when flag -o/--out-file not given. available values: eps, jpg|jpeg, pdf, png, svg, and tif|tiff. (default "png")'
+          - names:
+              - -g
+              - --group-field
+            argument: string
+            description: column index or column name of group
+          - names:
+              - --height
+            argument: float
+            description: Figure height (default 4.5)
+          - names:
+              - -E
+              - --ignore-empty-row
+            argument: ""
+            description: ignore empty rows
+          - names:
+              - -I
+              - --ignore-illegal-row
+            argument: ""
+            description: ignore illegal rows
+          - names:
+              - --infile-list
+            argument: string
+            description: file of input files list (one file per line), if given, they are appended to files from cli arguments
+          - names:
+              - --label-size
+            argument: int
+            description: label font size (default 14)
+          - names:
+              - -l
+              - --lazy-quotes
+            argument: ""
+            description: if given, a quote may appear in an unquoted field and a non-doubled quote may appear in a quoted field
+          - names:
+              - --na-values
+            argument: strings
+            description: NA values, case ignored (default [,NA,N/A])
+          - names:
+              - -H
+              - --no-header-row
+            argument: ""
+            description: specifies that the input CSV file does not have header row
+          - names:
+              - -j
+              - --num-cpus
+            argument: int
+            description: number of CPUs to use (default value depends on your computer) (default 12)
+          - names:
+              - -D
+              - --out-delimiter
+            argument: string
+            description: delimiting character of the output CSV file, e.g., -D $'\t' for tab (default ",")
+          - names:
+              - -o
+              - --out-file
+            argument: string
+            description: out file ("-" for stdout, suffix .gz for gzipped out) (default "-")
+          - names:
+              - -T
+              - --out-tabs
+            argument: ""
+            description: specifies that the output is delimited with tabs. Overrides "-D"
+          - names:
+              - --skip-na
+            argument: ""
+            description: skip NA values in --na-values
+          - names:
+              - -t
+              - --tabs
+            argument: ""
+            description: specifies that the input CSV file is delimited with tabs. Overrides "-d"
+          - names:
+              - --tick-width
+            argument: float
+            description: axis tick width (default 1.5)
+          - names:
+              - --title
+            argument: string
+            description: Figure title
+          - names:
+              - --title-size
+            argument: int
+            description: title font size (default 16)
+          - names:
+              - --width
+            argument: float
+            description: Figure width (default 6)
+          - names:
+              - --x-max
+            argument: string
+            description: maximum value of X axis
+          - names:
+              - --x-min
+            argument: string
+            description: minimum value of X axis
+          - names:
+              - --xlab
+            argument: string
+            description: x label text
+          - names:
+              - --y-max
+            argument: string
+            description: maximum value of Y axis
+          - names:
+              - --y-min
+            argument: string
+            description: minimum value of Y axis
+          - names:
+              - --ylab
+            argument: string
+            description: y label text
+      - name: hist
+        description: plot histogram
+        usage: csvtk plot hist [flags]
+        options:
+          - names:
+              - --bins
+            argument: int
+            description: number of bins (default 50)
+          - names:
+              - --color-index
+            argument: int
+            description: color index, 1-7 (default 1)
+          - names:
+              - -h
+              - --help
+            argument: ""
+            description: help for hist
+          - names:
+              - --percentiles
+            argument: ""
+            description: calculate percentiles
+          - names:
+              - --axis-width
+            argument: float
+            description: axis width (default 1.5)
+          - names:
+              - -c
+              - --chunk-size
+            argument: int
+            description: chunk size of CSV reader (default 50)
+          - names:
+              - -C
+              - --comment-char
+            argument: string
+            description: lines starting with commment-character will be ignored. if your header row starts with '#', please assign "-C" another rare symbol, e.g. '$' (default "#")
+          - names:
+              - -f
+              - --data-field
+            argument: string
+            description: column index or column name of data (default "1")
+          - names:
+              - -d
+              - --delimiter
+            argument: string
+            description: delimiting character of the input CSV file (default ",")
+          - names:
+              - --format
+            argument: string
+            description: 'image format for stdout when flag -o/--out-file not given. available values: eps, jpg|jpeg, pdf, png, svg, and tif|tiff. (default "png")'
+          - names:
+              - -g
+              - --group-field
+            argument: string
+            description: column index or column name of group
+          - names:
+              - --height
+            argument: float
+            description: Figure height (default 4.5)
+          - names:
+              - -E
+              - --ignore-empty-row
+            argument: ""
+            description: ignore empty rows
+          - names:
+              - -I
+              - --ignore-illegal-row
+            argument: ""
+            description: ignore illegal rows
+          - names:
+              - --infile-list
+            argument: string
+            description: file of input files list (one file per line), if given, they are appended to files from cli arguments
+          - names:
+              - --label-size
+            argument: int
+            description: label font size (default 14)
+          - names:
+              - -l
+              - --lazy-quotes
+            argument: ""
+            description: if given, a quote may appear in an unquoted field and a non-doubled quote may appear in a quoted field
+          - names:
+              - --na-values
+            argument: strings
+            description: NA values, case ignored (default [,NA,N/A])
+          - names:
+              - -H
+              - --no-header-row
+            argument: ""
+            description: specifies that the input CSV file does not have header row
+          - names:
+              - -j
+              - --num-cpus
+            argument: int
+            description: number of CPUs to use (default value depends on your computer) (default 12)
+          - names:
+              - -D
+              - --out-delimiter
+            argument: string
+            description: delimiting character of the output CSV file, e.g., -D $'\t' for tab (default ",")
+          - names:
+              - -o
+              - --out-file
+            argument: string
+            description: out file ("-" for stdout, suffix .gz for gzipped out) (default "-")
+          - names:
+              - -T
+              - --out-tabs
+            argument: ""
+            description: specifies that the output is delimited with tabs. Overrides "-D"
+          - names:
+              - --skip-na
+            argument: ""
+            description: skip NA values in --na-values
+          - names:
+              - -t
+              - --tabs
+            argument: ""
+            description: specifies that the input CSV file is delimited with tabs. Overrides "-d"
+          - names:
+              - --tick-width
+            argument: float
+            description: axis tick width (default 1.5)
+          - names:
+              - --title
+            argument: string
+            description: Figure title
+          - names:
+              - --title-size
+            argument: int
+            description: title font size (default 16)
+          - names:
+              - --width
+            argument: float
+            description: Figure width (default 6)
+          - names:
+              - --x-max
+            argument: string
+            description: maximum value of X axis
+          - names:
+              - --x-min
+            argument: string
+            description: minimum value of X axis
+          - names:
+              - --xlab
+            argument: string
+            description: x label text
+          - names:
+              - --y-max
+            argument: string
+            description: maximum value of Y axis
+          - names:
+              - --y-min
+            argument: string
+            description: minimum value of Y axis
+          - names:
+              - --ylab
+            argument: string
+            description: y label text
+      - name: line
+        description: line plot and scatter plot
+        usage: csvtk plot line [flags]
+        options:
+          - names:
+              - --color-index
+            argument: int
+            description: color index, 1-7 (default 1)
+          - names:
+              - -x
+              - --data-field-x
+            argument: string
+            description: column index or column name of X for command line
+          - names:
+              - -y
+              - --data-field-y
+            argument: string
+            description: column index or column name of Y for command line
+          - names:
+              - -h
+              - --help
+            argument: ""
+            description: help for line
+          - names:
+              - --legend-left
+            argument: ""
+            description: locate legend along the left edge of the plot
+          - names:
+              - --legend-top
+            argument: ""
+            description: locate legend along the top edge of the plot
+          - names:
+              - --line-width
+            argument: float
+            description: line width (default 1.5)
+          - names:
+              - --point-size
+            argument: float
+            description: point size (default 3)
+          - names:
+              - --scatter
+            argument: ""
+            description: only plot points
+          - names:
+              - --axis-width
+            argument: float
+            description: axis width (default 1.5)
+          - names:
+              - -c
+              - --chunk-size
+            argument: int
+            description: chunk size of CSV reader (default 50)
+          - names:
+              - -C
+              - --comment-char
+            argument: string
+            description: lines starting with commment-character will be ignored. if your header row starts with '#', please assign "-C" another rare symbol, e.g. '$' (default "#")
+          - names:
+              - -f
+              - --data-field
+            argument: string
+            description: column index or column name of data (default "1")
+          - names:
+              - -d
+              - --delimiter
+            argument: string
+            description: delimiting character of the input CSV file (default ",")
+          - names:
+              - --format
+            argument: string
+            description: 'image format for stdout when flag -o/--out-file not given. available values: eps, jpg|jpeg, pdf, png, svg, and tif|tiff. (default "png")'
+          - names:
+              - -g
+              - --group-field
+            argument: string
+            description: column index or column name of group
+          - names:
+              - --height
+            argument: float
+            description: Figure height (default 4.5)
+          - names:
+              - -E
+              - --ignore-empty-row
+            argument: ""
+            description: ignore empty rows
+          - names:
+              - -I
+              - --ignore-illegal-row
+            argument: ""
+            description: ignore illegal rows
+          - names:
+              - --infile-list
+            argument: string
+            description: file of input files list (one file per line), if given, they are appended to files from cli arguments
+          - names:
+              - --label-size
+            argument: int
+            description: label font size (default 14)
+          - names:
+              - -l
+              - --lazy-quotes
+            argument: ""
+            description: if given, a quote may appear in an unquoted field and a non-doubled quote may appear in a quoted field
+          - names:
+              - --na-values
+            argument: strings
+            description: NA values, case ignored (default [,NA,N/A])
+          - names:
+              - -H
+              - --no-header-row
+            argument: ""
+            description: specifies that the input CSV file does not have header row
+          - names:
+              - -j
+              - --num-cpus
+            argument: int
+            description: number of CPUs to use (default value depends on your computer) (default 12)
+          - names:
+              - -D
+              - --out-delimiter
+            argument: string
+            description: delimiting character of the output CSV file, e.g., -D $'\t' for tab (default ",")
+          - names:
+              - -o
+              - --out-file
+            argument: string
+            description: out file ("-" for stdout, suffix .gz for gzipped out) (default "-")
+          - names:
+              - -T
+              - --out-tabs
+            argument: ""
+            description: specifies that the output is delimited with tabs. Overrides "-D"
+          - names:
+              - --skip-na
+            argument: ""
+            description: skip NA values in --na-values
+          - names:
+              - -t
+              - --tabs
+            argument: ""
+            description: specifies that the input CSV file is delimited with tabs. Overrides "-d"
+          - names:
+              - --tick-width
+            argument: float
+            description: axis tick width (default 1.5)
+          - names:
+              - --title
+            argument: string
+            description: Figure title
+          - names:
+              - --title-size
+            argument: int
+            description: title font size (default 16)
+          - names:
+              - --width
+            argument: float
+            description: Figure width (default 6)
+          - names:
+              - --x-max
+            argument: string
+            description: maximum value of X axis
+          - names:
+              - --x-min
+            argument: string
+            description: minimum value of X axis
+          - names:
+              - --xlab
+            argument: string
+            description: x label text
+          - names:
+              - --y-max
+            argument: string
+            description: maximum value of Y axis
+          - names:
+              - --y-min
+            argument: string
+            description: minimum value of Y axis
+          - names:
+              - --ylab
+            argument: string
+            description: y label text
   - name: pretty
     description: convert CSV to readable aligned table
+    usage: csvtk pretty [flags]
     options:
       - names:
           - -r
@@ -2695,6 +3427,7 @@ subcommands:
         description: specifies that the input CSV file is delimited with tabs. Overrides "-d"
   - name: rename
     description: rename column names with new names
+    usage: csvtk rename [flags]
     options:
       - names:
           - -f
@@ -2782,6 +3515,7 @@ subcommands:
         description: specifies that the input CSV file is delimited with tabs. Overrides "-d"
   - name: rename2
     description: rename column names by regular expression
+    usage: csvtk rename2 [flags]
     options:
       - names:
           - -f
@@ -2907,6 +3641,7 @@ subcommands:
         description: specifies that the input CSV file is delimited with tabs. Overrides "-d"
   - name: replace
     description: replace data of selected fields by regular expression
+    usage: csvtk replace [flags]
     options:
       - names:
           - -f
@@ -3031,6 +3766,7 @@ subcommands:
         description: specifies that the input CSV file is delimited with tabs. Overrides "-d"
   - name: round
     description: round float to n decimal places
+    usage: csvtk round [flags]
     options:
       - names:
           - -a
@@ -3123,6 +3859,7 @@ subcommands:
         description: specifies that the input CSV file is delimited with tabs. Overrides "-d"
   - name: sample
     description: sampling by proportion
+    usage: csvtk sample [flags]
     options:
       - names:
           - -h
@@ -3210,6 +3947,7 @@ subcommands:
         description: specifies that the input CSV file is delimited with tabs. Overrides "-d"
   - name: sep
     description: separate column into multiple columns
+    usage: csvtk sep [flags]
     options:
       - names:
           - --drop
@@ -3326,6 +4064,7 @@ subcommands:
         description: specifies that the input CSV file is delimited with tabs. Overrides "-d"
   - name: sort
     description: sort by selected fields
+    usage: csvtk sort [flags]
     options:
       - names:
           - -h
@@ -3410,6 +4149,7 @@ subcommands:
         description: specifies that the input CSV file is delimited with tabs. Overrides "-d"
   - name: space2tab
     description: convert space delimited format to CSV
+    usage: csvtk space2tab [flags]
     options:
       - names:
           - -h
@@ -3482,6 +4222,7 @@ subcommands:
         description: specifies that the input CSV file is delimited with tabs. Overrides "-d"
   - name: split
     description: split CSV/TSV into multiple files according to column values
+    usage: csvtk split [flags]
     options:
       - names:
           - -g
@@ -3584,6 +4325,7 @@ subcommands:
         description: specifies that the input CSV file is delimited with tabs. Overrides "-d"
   - name: splitxlsx
     description: split XLSX sheet into multiple sheets according to column values
+    usage: csvtk splitxlsx [flags]
     options:
       - names:
           - -f
@@ -3686,9 +4428,10 @@ subcommands:
         description: specifies that the input CSV file is delimited with tabs. Overrides "-d"
   - name: summary
     description: summary statistics of selected numeric or text fields (groupby group fields)
+    usage: csvtk summary [flags]
     options:
       - names:
-          - -n
+          - -w
           - --decimal-width
         argument: int
         description: limit floats to N decimal points (default 2)
@@ -3696,7 +4439,7 @@ subcommands:
           - -f
           - --fields
         argument: strings
-        description: 'operations on these fields. e.g -f 1:count,1:sum or -f colA:mean. available operations: collapse, count, countn, countunique, entropy, first, last, max, mean, median, min, prod, q1, q2, q3, rand, stdev, sum, uniq, variance'
+        description: 'operations on these fields. e.g -f 1:count,1:sum or -f colA:mean. available operations: argmax, argmin, collapse, count, countn, countuniq, countunique, entropy, first, last, max, mean, median, min, prod, q1, q2, q3, rand, stdev, sum, uniq, unique, variance'
       - names:
           - -g
           - --groups
@@ -3788,6 +4531,7 @@ subcommands:
         description: specifies that the input CSV file is delimited with tabs. Overrides "-d"
   - name: tab2csv
     description: convert tabular format to CSV
+    usage: csvtk tab2csv [flags]
     options:
       - names:
           - -h
@@ -3860,6 +4604,7 @@ subcommands:
         description: specifies that the input CSV file is delimited with tabs. Overrides "-d"
   - name: transpose
     description: transpose CSV data
+    usage: csvtk transpose [flags]
     options:
       - names:
           - -h
@@ -3932,6 +4677,7 @@ subcommands:
         description: specifies that the input CSV file is delimited with tabs. Overrides "-d"
   - name: unfold
     description: unfold multiple values in cells of a field
+    usage: csvtk unfold [flags]
     options:
       - names:
           - -f
@@ -4014,6 +4760,7 @@ subcommands:
         description: specifies that the input CSV file is delimited with tabs. Overrides "-d"
   - name: uniq
     description: unique data without sorting
+    usage: csvtk uniq [flags]
     options:
       - names:
           - -f
@@ -4106,6 +4853,7 @@ subcommands:
         description: specifies that the input CSV file is delimited with tabs. Overrides "-d"
   - name: version
     description: print version information and check for update
+    usage: csvtk version [flags]
     options:
       - names:
           - -u
@@ -4183,6 +4931,7 @@ subcommands:
         description: specifies that the input CSV file is delimited with tabs. Overrides "-d"
   - name: watch
     description: monitor the specified fields
+    usage: csvtk watch [flags]
     options:
       - names:
           - -B
@@ -4305,6 +5054,7 @@ subcommands:
         description: specifies that the input CSV file is delimited with tabs. Overrides "-d"
   - name: xlsx2csv
     description: convert XLSX to CSV format
+    usage: csvtk xlsx2csv [flags]
     options:
       - names:
           - -h
@@ -4390,7 +5140,7 @@ subcommands:
           - --tabs
         argument: ""
         description: specifies that the input CSV file is delimited with tabs. Overrides "-d"
-version: csvtk v0.23.0
+version: csvtk v0.25.0
 tldr: |
   > Manipulate CSV and TSV files
 

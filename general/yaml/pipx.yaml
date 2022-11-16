@@ -1,5 +1,6 @@
 name: pipx
 description: pipx
+usage: pipx [-h] [--version] {install,inject,upgrade,upgrade-all,uninstall,uninstall-all,reinstall,reinstall-all,list,run,runpip,ensurepath,environment,completions} ...
 options:
   - names:
       - -h
@@ -13,6 +14,7 @@ options:
 subcommands:
   - name: install
     description: Install a package
+    usage: pipx install [-h] [--include-deps] [--verbose] [--force] [--suffix SUFFIX] [--python PYTHON] [--system-site-packages] [--index-url INDEX_URL] [--editable] [--pip-args PIP_ARGS] package_spec
     options:
       - names:
           - -h
@@ -57,6 +59,7 @@ subcommands:
         description: Arbitrary pip arguments to pass directly to pip install/upgrade commands
   - name: inject
     description: Install packages into an existing Virtual Environment
+    usage: pipx inject [-h] [--include-apps] [--include-deps] [--system-site-packages] [--index-url INDEX_URL] [--editable] [--pip-args PIP_ARGS] [--force] [--verbose] package dependencies [dependencies ...]
     options:
       - names:
           - -h
@@ -96,6 +99,7 @@ subcommands:
         description: Modify existing virtual environment and files in PIPX_BIN_DIR
   - name: upgrade
     description: Upgrade a package
+    usage: pipx upgrade [-h] [--include-injected] [--force] [--system-site-packages] [--index-url INDEX_URL] [--editable] [--pip-args PIP_ARGS] [--verbose] package
     options:
       - names:
           - -h
@@ -131,6 +135,7 @@ subcommands:
         description: Arbitrary pip arguments to pass directly to pip install/upgrade commands
   - name: upgrade-all
     description: Upgrade all packages. Runs `pip install -U <pkgname>` for each package.
+    usage: pipx upgrade-all [-h] [--include-injected] [--skip SKIP [SKIP ...]] [--force] [--verbose]
     options:
       - names:
           - -h
@@ -152,6 +157,7 @@ subcommands:
         description: Modify existing virtual environment and files in PIPX_BIN_DIR
   - name: uninstall
     description: Uninstall a package
+    usage: pipx uninstall [-h] [--verbose] package
     options:
       - names:
           - -h
@@ -160,6 +166,7 @@ subcommands:
         description: show this help message and exit
   - name: uninstall-all
     description: Uninstall all packages
+    usage: pipx uninstall-all [-h] [--verbose]
     options:
       - names:
           - -h
@@ -168,6 +175,7 @@ subcommands:
         description: show this help message and exit
   - name: reinstall
     description: Reinstall a package
+    usage: pipx reinstall [-h] [--python PYTHON] [--verbose] package
     options:
       - names:
           - -h
@@ -180,6 +188,7 @@ subcommands:
         description: The Python executable used to recreate the Virtual Environment and run the associated app/apps. Must be v3.6+.
   - name: reinstall-all
     description: Reinstall all packages
+    usage: pipx reinstall-all [-h] [--python PYTHON] [--skip SKIP [SKIP ...]] [--verbose]
     options:
       - names:
           - -h
@@ -196,6 +205,7 @@ subcommands:
         description: skip these packages
   - name: list
     description: List installed packages
+    usage: pipx list [-h] [--include-injected] [--json | --short] [--verbose]
     options:
       - names:
           - -h
@@ -216,6 +226,7 @@ subcommands:
         description: List packages only.
   - name: run
     description: Download the latest version of a package to a temporary virtual environment, then run an app from it. Also compatible with local `__pypackages__` directory (experimental).
+    usage: pipx run [-h] [--no-cache] [--pypackages] [--spec SPEC] [--verbose] [--python PYTHON] [--system-site-packages] [--index-url INDEX_URL] [--editable] [--pip-args PIP_ARGS] app ...
     options:
       - names:
           - -h
@@ -259,6 +270,7 @@ subcommands:
         description: Arbitrary pip arguments to pass directly to pip install/upgrade commands
   - name: runpip
     description: Run pip in an existing pipx-managed Virtual Environment
+    usage: pipx runpip [-h] [--verbose] package ...
     options:
       - names:
           - -h
@@ -267,6 +279,7 @@ subcommands:
         description: show this help message and exit
   - name: ensurepath
     description: Ensure directories necessary for pipx operation are in your PATH environment variable.
+    usage: pipx ensurepath [-h] [--force]
     options:
       - names:
           - -h
@@ -280,6 +293,7 @@ subcommands:
         description: Add text to your shell's config file even if it looks like your PATH already contains paths to pipx and pipx-install apps.
   - name: environment
     description: Print a list of variables used in pipx.constants.
+    usage: pipx environment [-h] [--value VARIABLE]
     options:
       - names:
           - -h
@@ -293,6 +307,7 @@ subcommands:
         description: Print the value of the variable.
   - name: completions
     description: Print instructions on enabling shell completions for pipx
+    usage: pipx completions [-h]
     options:
       - names:
           - -h
@@ -302,7 +317,7 @@ subcommands:
 version: 1.1.0
 tldr: |
   > Install and run python applications in isolated environments.
-  > More information: <https://github.com/pipxproject/pipx>.
+  > More information: <https://github.com/pypa/pipx>.
 
   - Run an app in a temporary virtual environment:
 
@@ -319,3 +334,11 @@ tldr: |
   - Run an app in a temporary virtual environment with a package name different from the executable:
 
   `pipx run --spec {{httpx-cli}} {{httpx}} {{http://www.github.com}}`
+
+  - Inject dependencies into an existing virtual environment:
+
+  `pipx inject {{package}} {{dependency1 dependency2 ...}}`
+
+  - Install a package in a virtual environment with pip arguments:
+
+  `pipx install --pip-args='{{pip-args}}' {{package}}`

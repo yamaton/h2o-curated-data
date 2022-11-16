@@ -2,7 +2,7 @@
 
 complete -c yarn -n "not __fish_seen_subcommand_from access add audit autoclean bin cache check config create exec generate-lock-entry global help import info init install licenses link list login logout node outdated owner pack policies publish remove run tag team unlink unplug upgrade upgrade-interactive version versions why workspace workspaces" -l "cache-folder" -d "specify a custom folder that must be used to store the yarn cache" -r
 complete -c yarn -n "not __fish_seen_subcommand_from access add audit autoclean bin cache check config create exec generate-lock-entry global help import info init install licenses link list login logout node outdated owner pack policies publish remove run tag team unlink unplug upgrade upgrade-interactive version versions why workspace workspaces" -l "check-files" -d "install will verify file tree of packages for consistency"
-complete -c yarn -n "not __fish_seen_subcommand_from access add audit autoclean bin cache check config create exec generate-lock-entry global help import info init install licenses link list login logout node outdated owner pack policies publish remove run tag team unlink unplug upgrade upgrade-interactive version versions why workspace workspaces" -l "cwd" -d "working directory to use (default: ~/repos/h2o-curated-data)" -r
+complete -c yarn -n "not __fish_seen_subcommand_from access add audit autoclean bin cache check config create exec generate-lock-entry global help import info init install licenses link list login logout node outdated owner pack policies publish remove run tag team unlink unplug upgrade upgrade-interactive version versions why workspace workspaces" -l "cwd" -d "working directory to use" -r
 complete -c yarn -n "not __fish_seen_subcommand_from access add audit autoclean bin cache check config create exec generate-lock-entry global help import info init install licenses link list login logout node outdated owner pack policies publish remove run tag team unlink unplug upgrade upgrade-interactive version versions why workspace workspaces" -l "disable-pnp" -d "disable the Plug'n'Play installation"
 complete -c yarn -n "not __fish_seen_subcommand_from access add audit autoclean bin cache check config create exec generate-lock-entry global help import info init install licenses link list login logout node outdated owner pack policies publish remove run tag team unlink unplug upgrade upgrade-interactive version versions why workspace workspaces" -l "emoji" -d "enable emoji in output (default: false)" -x
 complete -c yarn -n "not __fish_seen_subcommand_from access add audit autoclean bin cache check config create exec generate-lock-entry global help import info init install licenses link list login logout node outdated owner pack policies publish remove run tag team unlink unplug upgrade upgrade-interactive version versions why workspace workspaces" -l "enable-pnp" -l "pnp" -d "enable the Plug'n'Play installation"
@@ -35,7 +35,7 @@ complete -c yarn -n "not __fish_seen_subcommand_from access add audit autoclean 
 complete -c yarn -n "not __fish_seen_subcommand_from access add audit autoclean bin cache check config create exec generate-lock-entry global help import info init install licenses link list login logout node outdated owner pack policies publish remove run tag team unlink unplug upgrade upgrade-interactive version versions why workspace workspaces" -l "prefer-offline" -d "use network only if dependencies are not available in local cache"
 complete -c yarn -n "not __fish_seen_subcommand_from access add audit autoclean bin cache check config create exec generate-lock-entry global help import info init install licenses link list login logout node outdated owner pack policies publish remove run tag team unlink unplug upgrade upgrade-interactive version versions why workspace workspaces" -l "preferred-cache-folder" -d "specify a custom folder to store the yarn cache if possible" -r
 complete -c yarn -n "not __fish_seen_subcommand_from access add audit autoclean bin cache check config create exec generate-lock-entry global help import info init install licenses link list login logout node outdated owner pack policies publish remove run tag team unlink unplug upgrade upgrade-interactive version versions why workspace workspaces" -l "prod" -l "production" -d "set production" -x
-complete -c yarn -n "not __fish_seen_subcommand_from access add audit autoclean bin cache check config create exec generate-lock-entry global help import info init install licenses link list login logout node outdated owner pack policies publish remove run tag team unlink unplug upgrade upgrade-interactive version versions why workspace workspaces" -l "proxy" -d "proxy" -x
+complete -c yarn -n "not __fish_seen_subcommand_from access add audit autoclean bin cache check config create exec generate-lock-entry global help import info init install licenses link list login logout node outdated owner pack policies publish remove run tag team unlink unplug upgrade upgrade-interactive version versions why workspace workspaces" -l "proxy" -d "set proxy" -x
 complete -c yarn -n "not __fish_seen_subcommand_from access add audit autoclean bin cache check config create exec generate-lock-entry global help import info init install licenses link list login logout node outdated owner pack policies publish remove run tag team unlink unplug upgrade upgrade-interactive version versions why workspace workspaces" -l "pure-lockfile" -d "don't generate a lockfile"
 complete -c yarn -n "not __fish_seen_subcommand_from access add audit autoclean bin cache check config create exec generate-lock-entry global help import info init install licenses link list login logout node outdated owner pack policies publish remove run tag team unlink unplug upgrade upgrade-interactive version versions why workspace workspaces" -l "registry" -d "override configuration registry" -x
 complete -c yarn -n "not __fish_seen_subcommand_from access add audit autoclean bin cache check config create exec generate-lock-entry global help import info init install licenses link list login logout node outdated owner pack policies publish remove run tag team unlink unplug upgrade upgrade-interactive version versions why workspace workspaces" -s "s" -l "silent" -d "skip Yarn console logs, other types of logs (script output) will be printed"
@@ -52,9 +52,9 @@ complete -c yarn -n "not __fish_seen_subcommand_from access add audit autoclean 
 
 complete -k -c yarn -n __fish_use_subcommand -x -a workspaces -d "workspaces"
 complete -k -c yarn -n __fish_use_subcommand -x -a workspace -d "workspace"
-complete -k -c yarn -n __fish_use_subcommand -x -a why -d "Identifies why a package has been installed, detailing which other packages depend on it."
-complete -k -c yarn -n __fish_use_subcommand -x -a versions -d "Displays version information of currently installed Yarn, Node.js, and its dependencies."
-complete -k -c yarn -n __fish_use_subcommand -x -a version -d "Update the version of your package via the command line."
+complete -k -c yarn -n __fish_use_subcommand -x -a why -d "why"
+complete -k -c yarn -n __fish_use_subcommand -x -a versions -d "versions"
+complete -k -c yarn -n __fish_use_subcommand -x -a version -d "version"
 complete -k -c yarn -n __fish_use_subcommand -x -a upgrade-interactive -d "Provides an easy way to update outdated packages."
 complete -k -c yarn -n __fish_use_subcommand -x -a upgrade -d "Upgrades packages to their latest version based on the specified range."
 complete -k -c yarn -n __fish_use_subcommand -x -a unplug -d "Temporarily copies a package (with an optional @range suffix) outside of the global cache for debugging purposes"
@@ -94,6 +94,54 @@ complete -k -c yarn -n __fish_use_subcommand -x -a access -d "Lists licenses for
 
 
 
+complete -c yarn -n "__fish_seen_subcommand_from access" -s "v" -l "version" -d "output the version number"
+complete -c yarn -n "__fish_seen_subcommand_from access" -l "no-default-rc" -d "prevent Yarn from automatically detecting yarnrc and npmrc files"
+complete -c yarn -n "__fish_seen_subcommand_from access" -l "use-yarnrc" -d "specifies a yarnrc file that Yarn should use (.yarnrc only, not .npmrc) (default: )" -r
+complete -c yarn -n "__fish_seen_subcommand_from access" -l "verbose" -d "output verbose messages on internal operations"
+complete -c yarn -n "__fish_seen_subcommand_from access" -l "offline" -d "trigger an error if any required dependencies are not available in local cache"
+complete -c yarn -n "__fish_seen_subcommand_from access" -l "prefer-offline" -d "use network only if dependencies are not available in local cache"
+complete -c yarn -n "__fish_seen_subcommand_from access" -l "enable-pnp" -l "pnp" -d "enable the Plug'n'Play installation"
+complete -c yarn -n "__fish_seen_subcommand_from access" -l "disable-pnp" -d "disable the Plug'n'Play installation"
+complete -c yarn -n "__fish_seen_subcommand_from access" -l "strict-semver" -d "strict-semver"
+complete -c yarn -n "__fish_seen_subcommand_from access" -l "json" -d "format Yarn log messages as lines of JSON (see jsonlines.org)"
+complete -c yarn -n "__fish_seen_subcommand_from access" -l "ignore-scripts" -d "don't run lifecycle scripts"
+complete -c yarn -n "__fish_seen_subcommand_from access" -l "har" -d "save HAR output of network traffic"
+complete -c yarn -n "__fish_seen_subcommand_from access" -l "ignore-platform" -d "ignore platform checks"
+complete -c yarn -n "__fish_seen_subcommand_from access" -l "ignore-engines" -d "ignore engines check"
+complete -c yarn -n "__fish_seen_subcommand_from access" -l "ignore-optional" -d "ignore optional dependencies"
+complete -c yarn -n "__fish_seen_subcommand_from access" -l "force" -d "install and build packages even if they were built before, overwrite lockfile"
+complete -c yarn -n "__fish_seen_subcommand_from access" -l "skip-integrity-check" -d "run install without checking if node_modules is installed"
+complete -c yarn -n "__fish_seen_subcommand_from access" -l "check-files" -d "install will verify file tree of packages for consistency"
+complete -c yarn -n "__fish_seen_subcommand_from access" -l "no-bin-links" -d "don't generate bin links when setting up packages"
+complete -c yarn -n "__fish_seen_subcommand_from access" -l "flat" -d "only allow one version of a package"
+complete -c yarn -n "__fish_seen_subcommand_from access" -l "prod" -l "production" -d "production" -x
+complete -c yarn -n "__fish_seen_subcommand_from access" -l "no-lockfile" -d "don't read or generate a lockfile"
+complete -c yarn -n "__fish_seen_subcommand_from access" -l "pure-lockfile" -d "don't generate a lockfile"
+complete -c yarn -n "__fish_seen_subcommand_from access" -l "frozen-lockfile" -d "don't generate a lockfile and fail if an update is needed"
+complete -c yarn -n "__fish_seen_subcommand_from access" -l "update-checksums" -d "update package checksums from current repository"
+complete -c yarn -n "__fish_seen_subcommand_from access" -l "link-duplicates" -d "create hardlinks to the repeated modules in node_modules"
+complete -c yarn -n "__fish_seen_subcommand_from access" -l "link-folder" -d "specify a custom folder to store global links" -r
+complete -c yarn -n "__fish_seen_subcommand_from access" -l "global-folder" -d "specify a custom folder to store global packages" -r
+complete -c yarn -n "__fish_seen_subcommand_from access" -l "modules-folder" -d "rather than installing modules into the node_modules folder relative to the cwd, output them here" -r
+complete -c yarn -n "__fish_seen_subcommand_from access" -l "preferred-cache-folder" -d "specify a custom folder to store the yarn cache if possible" -r
+complete -c yarn -n "__fish_seen_subcommand_from access" -l "cache-folder" -d "specify a custom folder that must be used to store the yarn cache" -r
+complete -c yarn -n "__fish_seen_subcommand_from access" -l "mutex" -d "use a mutex to ensure only one yarn instance is executing" -x
+complete -c yarn -n "__fish_seen_subcommand_from access" -l "emoji" -d "enable emoji in output (default: false)" -x
+complete -c yarn -n "__fish_seen_subcommand_from access" -s "s" -l "silent" -d "skip Yarn console logs, other types of logs (script output) will be printed"
+complete -c yarn -n "__fish_seen_subcommand_from access" -l "cwd" -d "working directory to use" -r
+complete -c yarn -n "__fish_seen_subcommand_from access" -l "proxy" -l "https-proxy" -d "proxy" -x
+complete -c yarn -n "__fish_seen_subcommand_from access" -l "no-progress" -d "disable progress bar"
+complete -c yarn -n "__fish_seen_subcommand_from access" -l "network-concurrency" -d "maximum number of concurrent network requests" -x
+complete -c yarn -n "__fish_seen_subcommand_from access" -l "network-timeout" -d "TCP timeout for network requests" -x
+complete -c yarn -n "__fish_seen_subcommand_from access" -l "non-interactive" -d "do not show interactive prompts"
+complete -c yarn -n "__fish_seen_subcommand_from access" -l "scripts-prepend-node-path" -d "prepend the node executable dir to the PATH in scripts" -r
+complete -c yarn -n "__fish_seen_subcommand_from access" -l "no-node-version-check" -d "do not warn when using a potentially unsupported Node version"
+complete -c yarn -n "__fish_seen_subcommand_from access" -l "focus" -d "Focus on a single workspace by installing remote copies of its sibling workspaces."
+complete -c yarn -n "__fish_seen_subcommand_from access" -l "otp" -d "one-time password for two factor authentication" -x
+complete -c yarn -n "__fish_seen_subcommand_from access" -s "h" -l "help" -d "output usage information"
+
+
+
 complete -c yarn -n "__fish_seen_subcommand_from add" -s "v" -l "version" -d "output the version number"
 complete -c yarn -n "__fish_seen_subcommand_from add" -l "no-default-rc" -d "prevent Yarn from automatically detecting yarnrc and npmrc files"
 complete -c yarn -n "__fish_seen_subcommand_from add" -l "use-yarnrc" -d "specifies a yarnrc file that Yarn should use (.yarnrc only, not .npmrc) (default: )" -r
@@ -102,8 +150,7 @@ complete -c yarn -n "__fish_seen_subcommand_from add" -l "offline" -d "trigger a
 complete -c yarn -n "__fish_seen_subcommand_from add" -l "prefer-offline" -d "use network only if dependencies are not available in local cache"
 complete -c yarn -n "__fish_seen_subcommand_from add" -l "enable-pnp" -l "pnp" -d "enable the Plug'n'Play installation"
 complete -c yarn -n "__fish_seen_subcommand_from add" -l "disable-pnp" -d "disable the Plug'n'Play installation"
-complete -c yarn -n "__fish_seen_subcommand_from add" -l "strict-semver" -d "strict-semver"
-complete -c yarn -n "__fish_seen_subcommand_from add" -l "json" -d "format Yarn log messages as lines of JSON (see jsonlines.org)"
+complete -c yarn -n "__fish_seen_subcommand_from add" -l "strict-semver" -l "json" -d "format Yarn log messages as lines of JSON (see jsonlines.org)"
 complete -c yarn -n "__fish_seen_subcommand_from add" -l "ignore-scripts" -d "don't run lifecycle scripts"
 complete -c yarn -n "__fish_seen_subcommand_from add" -l "har" -d "save HAR output of network traffic"
 complete -c yarn -n "__fish_seen_subcommand_from add" -l "ignore-platform" -d "ignore platform checks"
@@ -114,8 +161,7 @@ complete -c yarn -n "__fish_seen_subcommand_from add" -l "skip-integrity-check" 
 complete -c yarn -n "__fish_seen_subcommand_from add" -l "check-files" -d "install will verify file tree of packages for consistency"
 complete -c yarn -n "__fish_seen_subcommand_from add" -l "no-bin-links" -d "don't generate bin links when setting up packages"
 complete -c yarn -n "__fish_seen_subcommand_from add" -l "flat" -d "only allow one version of a package"
-complete -c yarn -n "__fish_seen_subcommand_from add" -l "prod" -l "production" -d "production" -x
-complete -c yarn -n "__fish_seen_subcommand_from add" -l "no-lockfile" -d "don't read or generate a lockfile"
+complete -c yarn -n "__fish_seen_subcommand_from add" -l "prod" -l "production" -l "no-lockfile" -d "don't read or generate a lockfile" -r
 complete -c yarn -n "__fish_seen_subcommand_from add" -l "pure-lockfile" -d "don't generate a lockfile"
 complete -c yarn -n "__fish_seen_subcommand_from add" -l "frozen-lockfile" -d "don't generate a lockfile and fail if an update is needed"
 complete -c yarn -n "__fish_seen_subcommand_from add" -l "update-checksums" -d "update package checksums from current repository"
@@ -184,7 +230,7 @@ complete -c yarn -n "__fish_seen_subcommand_from audit" -l "cache-folder" -d "sp
 complete -c yarn -n "__fish_seen_subcommand_from audit" -l "mutex" -d "use a mutex to ensure only one yarn instance is executing" -x
 complete -c yarn -n "__fish_seen_subcommand_from audit" -l "emoji" -d "enable emoji in output (default: false)" -x
 complete -c yarn -n "__fish_seen_subcommand_from audit" -s "s" -l "silent" -d "skip Yarn console logs, other types of logs (script output) will be printed"
-complete -c yarn -n "__fish_seen_subcommand_from audit" -l "cwd" -d "working directory to use (default: ~/repos/h2o-curated-data/general)" -r
+complete -c yarn -n "__fish_seen_subcommand_from audit" -l "cwd" -d "working directory to use" -r
 complete -c yarn -n "__fish_seen_subcommand_from audit" -l "proxy" -l "https-proxy" -d "proxy" -x
 complete -c yarn -n "__fish_seen_subcommand_from audit" -l "registry" -d "override configuration registry" -x
 complete -c yarn -n "__fish_seen_subcommand_from audit" -l "no-progress" -d "disable progress bar"
@@ -236,7 +282,7 @@ complete -c yarn -n "__fish_seen_subcommand_from autoclean" -l "cache-folder" -d
 complete -c yarn -n "__fish_seen_subcommand_from autoclean" -l "mutex" -d "use a mutex to ensure only one yarn instance is executing" -x
 complete -c yarn -n "__fish_seen_subcommand_from autoclean" -l "emoji" -d "enable emoji in output (default: false)" -x
 complete -c yarn -n "__fish_seen_subcommand_from autoclean" -s "s" -l "silent" -d "skip Yarn console logs, other types of logs (script output) will be printed"
-complete -c yarn -n "__fish_seen_subcommand_from autoclean" -l "cwd" -d "working directory to use (default: ~/repos/h2o-curated-data/general)" -r
+complete -c yarn -n "__fish_seen_subcommand_from autoclean" -l "cwd" -d "working directory to use" -r
 complete -c yarn -n "__fish_seen_subcommand_from autoclean" -l "proxy" -l "https-proxy" -d "proxy" -x
 complete -c yarn -n "__fish_seen_subcommand_from autoclean" -l "registry" -d "override configuration registry" -x
 complete -c yarn -n "__fish_seen_subcommand_from autoclean" -l "no-progress" -d "disable progress bar"
@@ -287,7 +333,7 @@ complete -c yarn -n "__fish_seen_subcommand_from bin" -l "cache-folder" -d "spec
 complete -c yarn -n "__fish_seen_subcommand_from bin" -l "mutex" -d "use a mutex to ensure only one yarn instance is executing" -x
 complete -c yarn -n "__fish_seen_subcommand_from bin" -l "emoji" -d "enable emoji in output (default: false)" -x
 complete -c yarn -n "__fish_seen_subcommand_from bin" -s "s" -l "silent" -d "skip Yarn console logs, other types of logs (script output) will be printed"
-complete -c yarn -n "__fish_seen_subcommand_from bin" -l "cwd" -d "working directory to use (default: ~/repos/h2o-curated-data/general)" -r
+complete -c yarn -n "__fish_seen_subcommand_from bin" -l "cwd" -d "working directory to use" -r
 complete -c yarn -n "__fish_seen_subcommand_from bin" -l "proxy" -l "https-proxy" -d "proxy" -x
 complete -c yarn -n "__fish_seen_subcommand_from bin" -l "registry" -d "override configuration registry" -x
 complete -c yarn -n "__fish_seen_subcommand_from bin" -l "no-progress" -d "disable progress bar"
@@ -336,7 +382,7 @@ complete -c yarn -n "__fish_seen_subcommand_from cache" -l "cache-folder" -d "sp
 complete -c yarn -n "__fish_seen_subcommand_from cache" -l "mutex" -d "use a mutex to ensure only one yarn instance is executing" -x
 complete -c yarn -n "__fish_seen_subcommand_from cache" -l "emoji" -d "enable emoji in output (default: false)" -x
 complete -c yarn -n "__fish_seen_subcommand_from cache" -s "s" -l "silent" -d "skip Yarn console logs, other types of logs (script output) will be printed"
-complete -c yarn -n "__fish_seen_subcommand_from cache" -l "cwd" -d "working directory to use (default: ~/repos/h2o-curated-data/general)" -r
+complete -c yarn -n "__fish_seen_subcommand_from cache" -l "cwd" -d "working directory to use" -r
 complete -c yarn -n "__fish_seen_subcommand_from cache" -l "proxy" -l "https-proxy" -d "proxy" -x
 complete -c yarn -n "__fish_seen_subcommand_from cache" -l "registry" -d "override configuration registry" -x
 complete -c yarn -n "__fish_seen_subcommand_from cache" -l "no-progress" -d "disable progress bar"
@@ -386,7 +432,7 @@ complete -c yarn -n "__fish_seen_subcommand_from check" -l "cache-folder" -d "sp
 complete -c yarn -n "__fish_seen_subcommand_from check" -l "mutex" -d "use a mutex to ensure only one yarn instance is executing" -x
 complete -c yarn -n "__fish_seen_subcommand_from check" -l "emoji" -d "enable emoji in output (default: false)" -x
 complete -c yarn -n "__fish_seen_subcommand_from check" -s "s" -l "silent" -d "skip Yarn console logs, other types of logs (script output) will be printed"
-complete -c yarn -n "__fish_seen_subcommand_from check" -l "cwd" -d "working directory to use (default: ~/repos/h2o-curated-data/general)" -r
+complete -c yarn -n "__fish_seen_subcommand_from check" -l "cwd" -d "working directory to use" -r
 complete -c yarn -n "__fish_seen_subcommand_from check" -l "proxy" -l "https-proxy" -d "proxy" -x
 complete -c yarn -n "__fish_seen_subcommand_from check" -l "registry" -d "override configuration registry" -x
 complete -c yarn -n "__fish_seen_subcommand_from check" -l "no-progress" -d "disable progress bar"
@@ -435,7 +481,7 @@ complete -c yarn -n "__fish_seen_subcommand_from config" -l "cache-folder" -d "s
 complete -c yarn -n "__fish_seen_subcommand_from config" -l "mutex" -d "use a mutex to ensure only one yarn instance is executing" -x
 complete -c yarn -n "__fish_seen_subcommand_from config" -l "emoji" -d "enable emoji in output (default: false)" -x
 complete -c yarn -n "__fish_seen_subcommand_from config" -s "s" -l "silent" -d "skip Yarn console logs, other types of logs (script output) will be printed"
-complete -c yarn -n "__fish_seen_subcommand_from config" -l "cwd" -d "working directory to use (default: ~/repos/h2o-curated-data/general)" -r
+complete -c yarn -n "__fish_seen_subcommand_from config" -l "cwd" -d "working directory to use" -r
 complete -c yarn -n "__fish_seen_subcommand_from config" -l "proxy" -l "https-proxy" -d "proxy" -x
 complete -c yarn -n "__fish_seen_subcommand_from config" -l "registry" -d "override configuration registry" -x
 complete -c yarn -n "__fish_seen_subcommand_from config" -l "no-progress" -d "disable progress bar"
@@ -484,7 +530,7 @@ complete -c yarn -n "__fish_seen_subcommand_from create" -l "cache-folder" -d "s
 complete -c yarn -n "__fish_seen_subcommand_from create" -l "mutex" -d "use a mutex to ensure only one yarn instance is executing" -x
 complete -c yarn -n "__fish_seen_subcommand_from create" -l "emoji" -d "enable emoji in output (default: false)" -x
 complete -c yarn -n "__fish_seen_subcommand_from create" -s "s" -l "silent" -d "skip Yarn console logs, other types of logs (script output) will be printed"
-complete -c yarn -n "__fish_seen_subcommand_from create" -l "cwd" -d "working directory to use (default: ~/repos/h2o-curated-data/general)" -r
+complete -c yarn -n "__fish_seen_subcommand_from create" -l "cwd" -d "working directory to use" -r
 complete -c yarn -n "__fish_seen_subcommand_from create" -l "proxy" -l "https-proxy" -d "proxy" -x
 complete -c yarn -n "__fish_seen_subcommand_from create" -l "registry" -d "override configuration registry" -x
 complete -c yarn -n "__fish_seen_subcommand_from create" -l "no-progress" -d "disable progress bar"
@@ -533,7 +579,7 @@ complete -c yarn -n "__fish_seen_subcommand_from exec" -l "cache-folder" -d "spe
 complete -c yarn -n "__fish_seen_subcommand_from exec" -l "mutex" -d "use a mutex to ensure only one yarn instance is executing" -x
 complete -c yarn -n "__fish_seen_subcommand_from exec" -l "emoji" -d "enable emoji in output (default: false)" -x
 complete -c yarn -n "__fish_seen_subcommand_from exec" -s "s" -l "silent" -d "skip Yarn console logs, other types of logs (script output) will be printed"
-complete -c yarn -n "__fish_seen_subcommand_from exec" -l "cwd" -d "working directory to use (default: ~/repos/h2o-curated-data/general)" -r
+complete -c yarn -n "__fish_seen_subcommand_from exec" -l "cwd" -d "working directory to use" -r
 complete -c yarn -n "__fish_seen_subcommand_from exec" -l "proxy" -l "https-proxy" -d "proxy" -x
 complete -c yarn -n "__fish_seen_subcommand_from exec" -l "registry" -d "override configuration registry" -x
 complete -c yarn -n "__fish_seen_subcommand_from exec" -l "no-progress" -d "disable progress bar"
@@ -582,7 +628,7 @@ complete -c yarn -n "__fish_seen_subcommand_from generate-lock-entry" -l "cache-
 complete -c yarn -n "__fish_seen_subcommand_from generate-lock-entry" -l "mutex" -d "use a mutex to ensure only one yarn instance is executing" -x
 complete -c yarn -n "__fish_seen_subcommand_from generate-lock-entry" -l "emoji" -d "enable emoji in output (default: false)" -x
 complete -c yarn -n "__fish_seen_subcommand_from generate-lock-entry" -s "s" -l "silent" -d "skip Yarn console logs, other types of logs (script output) will be printed"
-complete -c yarn -n "__fish_seen_subcommand_from generate-lock-entry" -l "cwd" -d "working directory to use (default: ~/repos/h2o-curated-data/general)" -r
+complete -c yarn -n "__fish_seen_subcommand_from generate-lock-entry" -l "cwd" -d "working directory to use" -r
 complete -c yarn -n "__fish_seen_subcommand_from generate-lock-entry" -l "proxy" -l "https-proxy" -d "proxy" -x
 complete -c yarn -n "__fish_seen_subcommand_from generate-lock-entry" -l "registry" -d "override configuration registry" -x
 complete -c yarn -n "__fish_seen_subcommand_from generate-lock-entry" -l "no-progress" -d "disable progress bar"
@@ -685,7 +731,7 @@ complete -c yarn -n "__fish_seen_subcommand_from help" -l "cache-folder" -d "spe
 complete -c yarn -n "__fish_seen_subcommand_from help" -l "mutex" -d "use a mutex to ensure only one yarn instance is executing" -x
 complete -c yarn -n "__fish_seen_subcommand_from help" -l "emoji" -d "enable emoji in output (default: false)" -x
 complete -c yarn -n "__fish_seen_subcommand_from help" -s "s" -l "silent" -d "skip Yarn console logs, other types of logs (script output) will be printed"
-complete -c yarn -n "__fish_seen_subcommand_from help" -l "cwd" -d "working directory to use (default: ~/repos/h2o-curated-data/general)" -r
+complete -c yarn -n "__fish_seen_subcommand_from help" -l "cwd" -d "working directory to use" -r
 complete -c yarn -n "__fish_seen_subcommand_from help" -l "proxy" -l "https-proxy" -d "proxy" -x
 complete -c yarn -n "__fish_seen_subcommand_from help" -l "registry" -d "override configuration registry" -x
 complete -c yarn -n "__fish_seen_subcommand_from help" -l "no-progress" -d "disable progress bar"
@@ -832,7 +878,7 @@ complete -c yarn -n "__fish_seen_subcommand_from init" -l "cache-folder" -d "spe
 complete -c yarn -n "__fish_seen_subcommand_from init" -l "mutex" -d "use a mutex to ensure only one yarn instance is executing" -x
 complete -c yarn -n "__fish_seen_subcommand_from init" -l "emoji" -d "enable emoji in output (default: false)" -x
 complete -c yarn -n "__fish_seen_subcommand_from init" -s "s" -l "silent" -d "skip Yarn console logs, other types of logs (script output) will be printed"
-complete -c yarn -n "__fish_seen_subcommand_from init" -l "cwd" -d "working directory to use (default: ~/repos/h2o-curated-data/general)" -r
+complete -c yarn -n "__fish_seen_subcommand_from init" -l "cwd" -d "working directory to use" -r
 complete -c yarn -n "__fish_seen_subcommand_from init" -l "proxy" -l "https-proxy" -d "proxy" -x
 complete -c yarn -n "__fish_seen_subcommand_from init" -l "registry" -d "override configuration registry" -x
 complete -c yarn -n "__fish_seen_subcommand_from init" -l "no-progress" -d "disable progress bar"
@@ -885,7 +931,7 @@ complete -c yarn -n "__fish_seen_subcommand_from install" -l "cache-folder" -d "
 complete -c yarn -n "__fish_seen_subcommand_from install" -l "mutex" -d "use a mutex to ensure only one yarn instance is executing" -x
 complete -c yarn -n "__fish_seen_subcommand_from install" -l "emoji" -d "enable emoji in output (default: false)" -x
 complete -c yarn -n "__fish_seen_subcommand_from install" -s "s" -l "silent" -d "skip Yarn console logs, other types of logs (script output) will be printed"
-complete -c yarn -n "__fish_seen_subcommand_from install" -l "cwd" -d "working directory to use (default: ~/repos/h2o-curated-data/general)" -r
+complete -c yarn -n "__fish_seen_subcommand_from install" -l "cwd" -d "working directory to use" -r
 complete -c yarn -n "__fish_seen_subcommand_from install" -l "proxy" -l "https-proxy" -d "proxy" -x
 complete -c yarn -n "__fish_seen_subcommand_from install" -l "registry" -d "override configuration registry" -x
 complete -c yarn -n "__fish_seen_subcommand_from install" -l "no-progress" -d "disable progress bar"
@@ -942,7 +988,7 @@ complete -c yarn -n "__fish_seen_subcommand_from licenses" -l "cache-folder" -d 
 complete -c yarn -n "__fish_seen_subcommand_from licenses" -l "mutex" -d "use a mutex to ensure only one yarn instance is executing" -x
 complete -c yarn -n "__fish_seen_subcommand_from licenses" -l "emoji" -d "enable emoji in output (default: false)" -x
 complete -c yarn -n "__fish_seen_subcommand_from licenses" -s "s" -l "silent" -d "skip Yarn console logs, other types of logs (script output) will be printed"
-complete -c yarn -n "__fish_seen_subcommand_from licenses" -l "cwd" -d "working directory to use (default: ~/repos/h2o-curated-data/general)" -r
+complete -c yarn -n "__fish_seen_subcommand_from licenses" -l "cwd" -d "working directory to use" -r
 complete -c yarn -n "__fish_seen_subcommand_from licenses" -l "proxy" -l "https-proxy" -d "proxy" -x
 complete -c yarn -n "__fish_seen_subcommand_from licenses" -l "registry" -d "override configuration registry" -x
 complete -c yarn -n "__fish_seen_subcommand_from licenses" -l "no-progress" -d "disable progress bar"
@@ -991,7 +1037,7 @@ complete -c yarn -n "__fish_seen_subcommand_from link" -l "cache-folder" -d "spe
 complete -c yarn -n "__fish_seen_subcommand_from link" -l "mutex" -d "use a mutex to ensure only one yarn instance is executing" -x
 complete -c yarn -n "__fish_seen_subcommand_from link" -l "emoji" -d "enable emoji in output (default: false)" -x
 complete -c yarn -n "__fish_seen_subcommand_from link" -s "s" -l "silent" -d "skip Yarn console logs, other types of logs (script output) will be printed"
-complete -c yarn -n "__fish_seen_subcommand_from link" -l "cwd" -d "working directory to use (default: ~/repos/h2o-curated-data/general)" -r
+complete -c yarn -n "__fish_seen_subcommand_from link" -l "cwd" -d "working directory to use" -r
 complete -c yarn -n "__fish_seen_subcommand_from link" -l "proxy" -l "https-proxy" -d "proxy" -x
 complete -c yarn -n "__fish_seen_subcommand_from link" -l "registry" -d "override configuration registry" -x
 complete -c yarn -n "__fish_seen_subcommand_from link" -l "no-progress" -d "disable progress bar"
@@ -1040,7 +1086,7 @@ complete -c yarn -n "__fish_seen_subcommand_from list" -l "cache-folder" -d "spe
 complete -c yarn -n "__fish_seen_subcommand_from list" -l "mutex" -d "use a mutex to ensure only one yarn instance is executing" -x
 complete -c yarn -n "__fish_seen_subcommand_from list" -l "emoji" -d "enable emoji in output (default: false)" -x
 complete -c yarn -n "__fish_seen_subcommand_from list" -s "s" -l "silent" -d "skip Yarn console logs, other types of logs (script output) will be printed"
-complete -c yarn -n "__fish_seen_subcommand_from list" -l "cwd" -d "working directory to use (default: ~/repos/h2o-curated-data/general)" -r
+complete -c yarn -n "__fish_seen_subcommand_from list" -l "cwd" -d "working directory to use" -r
 complete -c yarn -n "__fish_seen_subcommand_from list" -l "proxy" -l "https-proxy" -d "proxy" -x
 complete -c yarn -n "__fish_seen_subcommand_from list" -l "registry" -d "override configuration registry" -x
 complete -c yarn -n "__fish_seen_subcommand_from list" -l "no-progress" -d "disable progress bar"
@@ -1140,7 +1186,7 @@ complete -c yarn -n "__fish_seen_subcommand_from logout" -l "cache-folder" -d "s
 complete -c yarn -n "__fish_seen_subcommand_from logout" -l "mutex" -d "use a mutex to ensure only one yarn instance is executing" -x
 complete -c yarn -n "__fish_seen_subcommand_from logout" -l "emoji" -d "enable emoji in output (default: false)" -x
 complete -c yarn -n "__fish_seen_subcommand_from logout" -s "s" -l "silent" -d "skip Yarn console logs, other types of logs (script output) will be printed"
-complete -c yarn -n "__fish_seen_subcommand_from logout" -l "cwd" -d "working directory to use (default: ~/repos/h2o-curated-data/general)" -r
+complete -c yarn -n "__fish_seen_subcommand_from logout" -l "cwd" -d "working directory to use" -r
 complete -c yarn -n "__fish_seen_subcommand_from logout" -l "proxy" -l "https-proxy" -d "proxy" -x
 complete -c yarn -n "__fish_seen_subcommand_from logout" -l "registry" -d "override configuration registry" -x
 complete -c yarn -n "__fish_seen_subcommand_from logout" -l "no-progress" -d "disable progress bar"
@@ -1239,7 +1285,7 @@ complete -c yarn -n "__fish_seen_subcommand_from outdated" -l "cache-folder" -d 
 complete -c yarn -n "__fish_seen_subcommand_from outdated" -l "mutex" -d "use a mutex to ensure only one yarn instance is executing" -x
 complete -c yarn -n "__fish_seen_subcommand_from outdated" -l "emoji" -d "enable emoji in output (default: false)" -x
 complete -c yarn -n "__fish_seen_subcommand_from outdated" -s "s" -l "silent" -d "skip Yarn console logs, other types of logs (script output) will be printed"
-complete -c yarn -n "__fish_seen_subcommand_from outdated" -l "cwd" -d "working directory to use (default: ~/repos/h2o-curated-data/general)" -r
+complete -c yarn -n "__fish_seen_subcommand_from outdated" -l "cwd" -d "working directory to use" -r
 complete -c yarn -n "__fish_seen_subcommand_from outdated" -l "proxy" -l "https-proxy" -d "proxy" -x
 complete -c yarn -n "__fish_seen_subcommand_from outdated" -l "registry" -d "override configuration registry" -x
 complete -c yarn -n "__fish_seen_subcommand_from outdated" -l "no-progress" -d "disable progress bar"
@@ -1288,7 +1334,7 @@ complete -c yarn -n "__fish_seen_subcommand_from owner" -l "cache-folder" -d "sp
 complete -c yarn -n "__fish_seen_subcommand_from owner" -l "mutex" -d "use a mutex to ensure only one yarn instance is executing" -x
 complete -c yarn -n "__fish_seen_subcommand_from owner" -l "emoji" -d "enable emoji in output (default: false)" -x
 complete -c yarn -n "__fish_seen_subcommand_from owner" -s "s" -l "silent" -d "skip Yarn console logs, other types of logs (script output) will be printed"
-complete -c yarn -n "__fish_seen_subcommand_from owner" -l "cwd" -d "working directory to use (default: ~/repos/h2o-curated-data/general)" -r
+complete -c yarn -n "__fish_seen_subcommand_from owner" -l "cwd" -d "working directory to use" -r
 complete -c yarn -n "__fish_seen_subcommand_from owner" -l "proxy" -l "https-proxy" -d "proxy" -x
 complete -c yarn -n "__fish_seen_subcommand_from owner" -l "registry" -d "override configuration registry" -x
 complete -c yarn -n "__fish_seen_subcommand_from owner" -l "no-progress" -d "disable progress bar"
@@ -1337,7 +1383,7 @@ complete -c yarn -n "__fish_seen_subcommand_from pack" -l "cache-folder" -d "spe
 complete -c yarn -n "__fish_seen_subcommand_from pack" -l "mutex" -d "use a mutex to ensure only one yarn instance is executing" -x
 complete -c yarn -n "__fish_seen_subcommand_from pack" -l "emoji" -d "enable emoji in output (default: false)" -x
 complete -c yarn -n "__fish_seen_subcommand_from pack" -s "s" -l "silent" -d "skip Yarn console logs, other types of logs (script output) will be printed"
-complete -c yarn -n "__fish_seen_subcommand_from pack" -l "cwd" -d "working directory to use (default: ~/repos/h2o-curated-data/general)" -r
+complete -c yarn -n "__fish_seen_subcommand_from pack" -l "cwd" -d "working directory to use" -r
 complete -c yarn -n "__fish_seen_subcommand_from pack" -l "proxy" -l "https-proxy" -d "proxy" -x
 complete -c yarn -n "__fish_seen_subcommand_from pack" -l "registry" -d "override configuration registry" -x
 complete -c yarn -n "__fish_seen_subcommand_from pack" -l "no-progress" -d "disable progress bar"
@@ -1436,7 +1482,7 @@ complete -c yarn -n "__fish_seen_subcommand_from publish" -l "cache-folder" -d "
 complete -c yarn -n "__fish_seen_subcommand_from publish" -l "mutex" -d "use a mutex to ensure only one yarn instance is executing" -x
 complete -c yarn -n "__fish_seen_subcommand_from publish" -l "emoji" -d "enable emoji in output (default: false)" -x
 complete -c yarn -n "__fish_seen_subcommand_from publish" -s "s" -l "silent" -d "skip Yarn console logs, other types of logs (script output) will be printed"
-complete -c yarn -n "__fish_seen_subcommand_from publish" -l "cwd" -d "working directory to use (default: ~/repos/h2o-curated-data/general)" -r
+complete -c yarn -n "__fish_seen_subcommand_from publish" -l "cwd" -d "working directory to use" -r
 complete -c yarn -n "__fish_seen_subcommand_from publish" -l "proxy" -l "https-proxy" -d "proxy" -x
 complete -c yarn -n "__fish_seen_subcommand_from publish" -l "registry" -d "override configuration registry" -x
 complete -c yarn -n "__fish_seen_subcommand_from publish" -l "no-progress" -d "disable progress bar"
@@ -1499,7 +1545,7 @@ complete -c yarn -n "__fish_seen_subcommand_from remove" -l "cache-folder" -d "s
 complete -c yarn -n "__fish_seen_subcommand_from remove" -l "mutex" -d "use a mutex to ensure only one yarn instance is executing" -x
 complete -c yarn -n "__fish_seen_subcommand_from remove" -l "emoji" -d "enable emoji in output (default: false)" -x
 complete -c yarn -n "__fish_seen_subcommand_from remove" -s "s" -l "silent" -d "skip Yarn console logs, other types of logs (script output) will be printed"
-complete -c yarn -n "__fish_seen_subcommand_from remove" -l "cwd" -d "working directory to use (default: ~/repos/h2o-curated-data/general)" -r
+complete -c yarn -n "__fish_seen_subcommand_from remove" -l "cwd" -d "working directory to use" -r
 complete -c yarn -n "__fish_seen_subcommand_from remove" -l "proxy" -l "https-proxy" -d "proxy" -x
 complete -c yarn -n "__fish_seen_subcommand_from remove" -l "registry" -d "override configuration registry" -x
 complete -c yarn -n "__fish_seen_subcommand_from remove" -l "no-progress" -d "disable progress bar"
@@ -1549,7 +1595,7 @@ complete -c yarn -n "__fish_seen_subcommand_from run" -l "cache-folder" -d "spec
 complete -c yarn -n "__fish_seen_subcommand_from run" -l "mutex" -d "use a mutex to ensure only one yarn instance is executing" -x
 complete -c yarn -n "__fish_seen_subcommand_from run" -l "emoji" -d "enable emoji in output (default: false)" -x
 complete -c yarn -n "__fish_seen_subcommand_from run" -s "s" -l "silent" -d "skip Yarn console logs, other types of logs (script output) will be printed"
-complete -c yarn -n "__fish_seen_subcommand_from run" -l "cwd" -d "working directory to use (default: ~/repos/h2o-curated-data/general)" -r
+complete -c yarn -n "__fish_seen_subcommand_from run" -l "cwd" -d "working directory to use" -r
 complete -c yarn -n "__fish_seen_subcommand_from run" -l "proxy" -l "https-proxy" -d "proxy" -x
 complete -c yarn -n "__fish_seen_subcommand_from run" -l "registry" -d "override configuration registry" -x
 complete -c yarn -n "__fish_seen_subcommand_from run" -l "no-progress" -d "disable progress bar"
@@ -1598,7 +1644,7 @@ complete -c yarn -n "__fish_seen_subcommand_from tag" -l "cache-folder" -d "spec
 complete -c yarn -n "__fish_seen_subcommand_from tag" -l "mutex" -d "use a mutex to ensure only one yarn instance is executing" -x
 complete -c yarn -n "__fish_seen_subcommand_from tag" -l "emoji" -d "enable emoji in output (default: false)" -x
 complete -c yarn -n "__fish_seen_subcommand_from tag" -s "s" -l "silent" -d "skip Yarn console logs, other types of logs (script output) will be printed"
-complete -c yarn -n "__fish_seen_subcommand_from tag" -l "cwd" -d "working directory to use (default: ~/repos/h2o-curated-data/general)" -r
+complete -c yarn -n "__fish_seen_subcommand_from tag" -l "cwd" -d "working directory to use" -r
 complete -c yarn -n "__fish_seen_subcommand_from tag" -l "proxy" -l "https-proxy" -d "proxy" -x
 complete -c yarn -n "__fish_seen_subcommand_from tag" -l "registry" -d "override configuration registry" -x
 complete -c yarn -n "__fish_seen_subcommand_from tag" -l "no-progress" -d "disable progress bar"
@@ -1647,7 +1693,7 @@ complete -c yarn -n "__fish_seen_subcommand_from team" -l "cache-folder" -d "spe
 complete -c yarn -n "__fish_seen_subcommand_from team" -l "mutex" -d "use a mutex to ensure only one yarn instance is executing" -x
 complete -c yarn -n "__fish_seen_subcommand_from team" -l "emoji" -d "enable emoji in output (default: false)" -x
 complete -c yarn -n "__fish_seen_subcommand_from team" -s "s" -l "silent" -d "skip Yarn console logs, other types of logs (script output) will be printed"
-complete -c yarn -n "__fish_seen_subcommand_from team" -l "cwd" -d "working directory to use (default: ~/repos/h2o-curated-data/general)" -r
+complete -c yarn -n "__fish_seen_subcommand_from team" -l "cwd" -d "working directory to use" -r
 complete -c yarn -n "__fish_seen_subcommand_from team" -l "proxy" -l "https-proxy" -d "proxy" -x
 complete -c yarn -n "__fish_seen_subcommand_from team" -l "registry" -d "override configuration registry" -x
 complete -c yarn -n "__fish_seen_subcommand_from team" -l "no-progress" -d "disable progress bar"
@@ -1696,7 +1742,7 @@ complete -c yarn -n "__fish_seen_subcommand_from unlink" -l "cache-folder" -d "s
 complete -c yarn -n "__fish_seen_subcommand_from unlink" -l "mutex" -d "use a mutex to ensure only one yarn instance is executing" -x
 complete -c yarn -n "__fish_seen_subcommand_from unlink" -l "emoji" -d "enable emoji in output (default: false)" -x
 complete -c yarn -n "__fish_seen_subcommand_from unlink" -s "s" -l "silent" -d "skip Yarn console logs, other types of logs (script output) will be printed"
-complete -c yarn -n "__fish_seen_subcommand_from unlink" -l "cwd" -d "working directory to use (default: ~/repos/h2o-curated-data/general)" -r
+complete -c yarn -n "__fish_seen_subcommand_from unlink" -l "cwd" -d "working directory to use" -r
 complete -c yarn -n "__fish_seen_subcommand_from unlink" -l "proxy" -l "https-proxy" -d "proxy" -x
 complete -c yarn -n "__fish_seen_subcommand_from unlink" -l "registry" -d "override configuration registry" -x
 complete -c yarn -n "__fish_seen_subcommand_from unlink" -l "no-progress" -d "disable progress bar"
@@ -1745,7 +1791,7 @@ complete -c yarn -n "__fish_seen_subcommand_from unplug" -l "cache-folder" -d "s
 complete -c yarn -n "__fish_seen_subcommand_from unplug" -l "mutex" -d "use a mutex to ensure only one yarn instance is executing" -x
 complete -c yarn -n "__fish_seen_subcommand_from unplug" -l "emoji" -d "enable emoji in output (default: false)" -x
 complete -c yarn -n "__fish_seen_subcommand_from unplug" -s "s" -l "silent" -d "skip Yarn console logs, other types of logs (script output) will be printed"
-complete -c yarn -n "__fish_seen_subcommand_from unplug" -l "cwd" -d "working directory to use (default: ~/repos/h2o-curated-data/general)" -r
+complete -c yarn -n "__fish_seen_subcommand_from unplug" -l "cwd" -d "working directory to use" -r
 complete -c yarn -n "__fish_seen_subcommand_from unplug" -l "proxy" -l "https-proxy" -d "proxy" -x
 complete -c yarn -n "__fish_seen_subcommand_from unplug" -l "registry" -d "override configuration registry" -x
 complete -c yarn -n "__fish_seen_subcommand_from unplug" -l "no-progress" -d "disable progress bar"
@@ -1796,7 +1842,7 @@ complete -c yarn -n "__fish_seen_subcommand_from upgrade" -l "cache-folder" -d "
 complete -c yarn -n "__fish_seen_subcommand_from upgrade" -l "mutex" -d "use a mutex to ensure only one yarn instance is executing" -x
 complete -c yarn -n "__fish_seen_subcommand_from upgrade" -l "emoji" -d "enable emoji in output (default: false)" -x
 complete -c yarn -n "__fish_seen_subcommand_from upgrade" -s "s" -l "silent" -d "skip Yarn console logs, other types of logs (script output) will be printed"
-complete -c yarn -n "__fish_seen_subcommand_from upgrade" -l "cwd" -d "working directory to use (default: ~/repos/h2o-curated-data/general)" -r
+complete -c yarn -n "__fish_seen_subcommand_from upgrade" -l "cwd" -d "working directory to use" -r
 complete -c yarn -n "__fish_seen_subcommand_from upgrade" -l "proxy" -l "https-proxy" -d "proxy" -x
 complete -c yarn -n "__fish_seen_subcommand_from upgrade" -l "registry" -d "override configuration registry" -x
 complete -c yarn -n "__fish_seen_subcommand_from upgrade" -l "no-progress" -d "disable progress bar"
@@ -1852,7 +1898,7 @@ complete -c yarn -n "__fish_seen_subcommand_from upgrade-interactive" -l "cache-
 complete -c yarn -n "__fish_seen_subcommand_from upgrade-interactive" -l "mutex" -d "use a mutex to ensure only one yarn instance is executing" -x
 complete -c yarn -n "__fish_seen_subcommand_from upgrade-interactive" -l "emoji" -d "enable emoji in output (default: false)" -x
 complete -c yarn -n "__fish_seen_subcommand_from upgrade-interactive" -s "s" -l "silent" -d "skip Yarn console logs, other types of logs (script output) will be printed"
-complete -c yarn -n "__fish_seen_subcommand_from upgrade-interactive" -l "cwd" -d "working directory to use (default: ~/repos/h2o-curated-data/general)" -r
+complete -c yarn -n "__fish_seen_subcommand_from upgrade-interactive" -l "cwd" -d "working directory to use" -r
 complete -c yarn -n "__fish_seen_subcommand_from upgrade-interactive" -l "proxy" -l "https-proxy" -d "proxy" -x
 complete -c yarn -n "__fish_seen_subcommand_from upgrade-interactive" -l "registry" -d "override configuration registry" -x
 complete -c yarn -n "__fish_seen_subcommand_from upgrade-interactive" -l "no-progress" -d "disable progress bar"
@@ -1869,260 +1915,3 @@ complete -c yarn -n "__fish_seen_subcommand_from upgrade-interactive" -s "E" -l 
 complete -c yarn -n "__fish_seen_subcommand_from upgrade-interactive" -s "T" -l "tilde" -d "install most recent release with the same minor version."
 complete -c yarn -n "__fish_seen_subcommand_from upgrade-interactive" -s "C" -l "caret" -d "install most recent release with the same major version."
 complete -c yarn -n "__fish_seen_subcommand_from upgrade-interactive" -s "h" -l "help" -d "output usage information"
-
-
-
-complete -c yarn -n "__fish_seen_subcommand_from version" -s "v" -l "version" -d "output the version number"
-complete -c yarn -n "__fish_seen_subcommand_from version" -l "no-default-rc" -d "prevent Yarn from automatically detecting yarnrc and npmrc files"
-complete -c yarn -n "__fish_seen_subcommand_from version" -l "use-yarnrc" -d "specifies a yarnrc file that Yarn should use (.yarnrc only, not .npmrc) (default: )" -r
-complete -c yarn -n "__fish_seen_subcommand_from version" -l "verbose" -d "output verbose messages on internal operations"
-complete -c yarn -n "__fish_seen_subcommand_from version" -l "offline" -d "trigger an error if any required dependencies are not available in local cache"
-complete -c yarn -n "__fish_seen_subcommand_from version" -l "prefer-offline" -d "use network only if dependencies are not available in local cache"
-complete -c yarn -n "__fish_seen_subcommand_from version" -l "enable-pnp" -l "pnp" -d "enable the Plug'n'Play installation"
-complete -c yarn -n "__fish_seen_subcommand_from version" -l "disable-pnp" -d "disable the Plug'n'Play installation"
-complete -c yarn -n "__fish_seen_subcommand_from version" -l "strict-semver" -d "strict-semver"
-complete -c yarn -n "__fish_seen_subcommand_from version" -l "json" -d "format Yarn log messages as lines of JSON (see jsonlines.org)"
-complete -c yarn -n "__fish_seen_subcommand_from version" -l "ignore-scripts" -d "don't run lifecycle scripts"
-complete -c yarn -n "__fish_seen_subcommand_from version" -l "har" -d "save HAR output of network traffic"
-complete -c yarn -n "__fish_seen_subcommand_from version" -l "ignore-platform" -d "ignore platform checks"
-complete -c yarn -n "__fish_seen_subcommand_from version" -l "ignore-engines" -d "ignore engines check"
-complete -c yarn -n "__fish_seen_subcommand_from version" -l "ignore-optional" -d "ignore optional dependencies"
-complete -c yarn -n "__fish_seen_subcommand_from version" -l "force" -d "install and build packages even if they were built before, overwrite lockfile"
-complete -c yarn -n "__fish_seen_subcommand_from version" -l "skip-integrity-check" -d "run install without checking if node_modules is installed"
-complete -c yarn -n "__fish_seen_subcommand_from version" -l "check-files" -d "install will verify file tree of packages for consistency"
-complete -c yarn -n "__fish_seen_subcommand_from version" -l "no-bin-links" -d "don't generate bin links when setting up packages"
-complete -c yarn -n "__fish_seen_subcommand_from version" -l "flat" -d "only allow one version of a package"
-complete -c yarn -n "__fish_seen_subcommand_from version" -l "prod" -l "production" -d "production" -x
-complete -c yarn -n "__fish_seen_subcommand_from version" -l "no-lockfile" -d "don't read or generate a lockfile"
-complete -c yarn -n "__fish_seen_subcommand_from version" -l "pure-lockfile" -d "don't generate a lockfile"
-complete -c yarn -n "__fish_seen_subcommand_from version" -l "frozen-lockfile" -d "don't generate a lockfile and fail if an update is needed"
-complete -c yarn -n "__fish_seen_subcommand_from version" -l "update-checksums" -d "update package checksums from current repository"
-complete -c yarn -n "__fish_seen_subcommand_from version" -l "link-duplicates" -d "create hardlinks to the repeated modules in node_modules"
-complete -c yarn -n "__fish_seen_subcommand_from version" -l "link-folder" -d "specify a custom folder to store global links" -r
-complete -c yarn -n "__fish_seen_subcommand_from version" -l "global-folder" -d "specify a custom folder to store global packages" -r
-complete -c yarn -n "__fish_seen_subcommand_from version" -l "modules-folder" -d "rather than installing modules into the node_modules folder relative to the cwd, output them here" -r
-complete -c yarn -n "__fish_seen_subcommand_from version" -l "preferred-cache-folder" -d "specify a custom folder to store the yarn cache if possible" -r
-complete -c yarn -n "__fish_seen_subcommand_from version" -l "cache-folder" -d "specify a custom folder that must be used to store the yarn cache" -r
-complete -c yarn -n "__fish_seen_subcommand_from version" -l "mutex" -d "use a mutex to ensure only one yarn instance is executing" -x
-complete -c yarn -n "__fish_seen_subcommand_from version" -l "emoji" -d "enable emoji in output (default: false)" -x
-complete -c yarn -n "__fish_seen_subcommand_from version" -s "s" -l "silent" -d "skip Yarn console logs, other types of logs (script output) will be printed"
-complete -c yarn -n "__fish_seen_subcommand_from version" -l "cwd" -d "working directory to use (default: ~/repos/h2o-curated-data/general)" -r
-complete -c yarn -n "__fish_seen_subcommand_from version" -l "proxy" -l "https-proxy" -d "proxy" -x
-complete -c yarn -n "__fish_seen_subcommand_from version" -l "registry" -d "override configuration registry" -x
-complete -c yarn -n "__fish_seen_subcommand_from version" -l "no-progress" -d "disable progress bar"
-complete -c yarn -n "__fish_seen_subcommand_from version" -l "network-concurrency" -d "maximum number of concurrent network requests" -x
-complete -c yarn -n "__fish_seen_subcommand_from version" -l "network-timeout" -d "TCP timeout for network requests" -x
-complete -c yarn -n "__fish_seen_subcommand_from version" -l "non-interactive" -d "do not show interactive prompts"
-complete -c yarn -n "__fish_seen_subcommand_from version" -l "scripts-prepend-node-path" -d "prepend the node executable dir to the PATH in scripts" -r
-complete -c yarn -n "__fish_seen_subcommand_from version" -l "no-node-version-check" -d "do not warn when using a potentially unsupported Node version"
-complete -c yarn -n "__fish_seen_subcommand_from version" -l "focus" -d "Focus on a single workspace by installing remote copies of its sibling workspaces."
-complete -c yarn -n "__fish_seen_subcommand_from version" -l "otp" -d "one-time password for two factor authentication" -x
-complete -c yarn -n "__fish_seen_subcommand_from version" -l "new-version" -d "new version" -x
-complete -c yarn -n "__fish_seen_subcommand_from version" -l "major" -d "auto-increment major version number"
-complete -c yarn -n "__fish_seen_subcommand_from version" -l "minor" -d "auto-increment minor version number"
-complete -c yarn -n "__fish_seen_subcommand_from version" -l "patch" -d "auto-increment patch version number"
-complete -c yarn -n "__fish_seen_subcommand_from version" -l "premajor" -d "auto-increment premajor version number"
-complete -c yarn -n "__fish_seen_subcommand_from version" -l "preminor" -d "auto-increment preminor version number"
-complete -c yarn -n "__fish_seen_subcommand_from version" -l "prepatch" -d "auto-increment prepatch version number"
-complete -c yarn -n "__fish_seen_subcommand_from version" -l "prerelease" -d "auto-increment prerelease version number"
-complete -c yarn -n "__fish_seen_subcommand_from version" -l "preid" -d "add a custom identifier to the prerelease" -x
-complete -c yarn -n "__fish_seen_subcommand_from version" -l "message" -d "message" -x
-complete -c yarn -n "__fish_seen_subcommand_from version" -l "no-git-tag-version" -d "no git tag version"
-complete -c yarn -n "__fish_seen_subcommand_from version" -l "no-commit-hooks" -d "bypass git hooks when committing new version"
-complete -c yarn -n "__fish_seen_subcommand_from version" -s "h" -l "help" -d "output usage information"
-
-
-
-complete -c yarn -n "__fish_seen_subcommand_from versions" -s "v" -l "version" -d "output the version number"
-complete -c yarn -n "__fish_seen_subcommand_from versions" -l "no-default-rc" -d "prevent Yarn from automatically detecting yarnrc and npmrc files"
-complete -c yarn -n "__fish_seen_subcommand_from versions" -l "use-yarnrc" -d "specifies a yarnrc file that Yarn should use (.yarnrc only, not .npmrc) (default: )" -r
-complete -c yarn -n "__fish_seen_subcommand_from versions" -l "verbose" -d "output verbose messages on internal operations"
-complete -c yarn -n "__fish_seen_subcommand_from versions" -l "offline" -d "trigger an error if any required dependencies are not available in local cache"
-complete -c yarn -n "__fish_seen_subcommand_from versions" -l "prefer-offline" -d "use network only if dependencies are not available in local cache"
-complete -c yarn -n "__fish_seen_subcommand_from versions" -l "enable-pnp" -l "pnp" -d "enable the Plug'n'Play installation"
-complete -c yarn -n "__fish_seen_subcommand_from versions" -l "disable-pnp" -d "disable the Plug'n'Play installation"
-complete -c yarn -n "__fish_seen_subcommand_from versions" -l "strict-semver" -d "strict-semver"
-complete -c yarn -n "__fish_seen_subcommand_from versions" -l "json" -d "format Yarn log messages as lines of JSON (see jsonlines.org)"
-complete -c yarn -n "__fish_seen_subcommand_from versions" -l "ignore-scripts" -d "don't run lifecycle scripts"
-complete -c yarn -n "__fish_seen_subcommand_from versions" -l "har" -d "save HAR output of network traffic"
-complete -c yarn -n "__fish_seen_subcommand_from versions" -l "ignore-platform" -d "ignore platform checks"
-complete -c yarn -n "__fish_seen_subcommand_from versions" -l "ignore-engines" -d "ignore engines check"
-complete -c yarn -n "__fish_seen_subcommand_from versions" -l "ignore-optional" -d "ignore optional dependencies"
-complete -c yarn -n "__fish_seen_subcommand_from versions" -l "force" -d "install and build packages even if they were built before, overwrite lockfile"
-complete -c yarn -n "__fish_seen_subcommand_from versions" -l "skip-integrity-check" -d "run install without checking if node_modules is installed"
-complete -c yarn -n "__fish_seen_subcommand_from versions" -l "check-files" -d "install will verify file tree of packages for consistency"
-complete -c yarn -n "__fish_seen_subcommand_from versions" -l "no-bin-links" -d "don't generate bin links when setting up packages"
-complete -c yarn -n "__fish_seen_subcommand_from versions" -l "flat" -d "only allow one version of a package"
-complete -c yarn -n "__fish_seen_subcommand_from versions" -l "prod" -l "production" -d "production" -x
-complete -c yarn -n "__fish_seen_subcommand_from versions" -l "no-lockfile" -d "don't read or generate a lockfile"
-complete -c yarn -n "__fish_seen_subcommand_from versions" -l "pure-lockfile" -d "don't generate a lockfile"
-complete -c yarn -n "__fish_seen_subcommand_from versions" -l "frozen-lockfile" -d "don't generate a lockfile and fail if an update is needed"
-complete -c yarn -n "__fish_seen_subcommand_from versions" -l "update-checksums" -d "update package checksums from current repository"
-complete -c yarn -n "__fish_seen_subcommand_from versions" -l "link-duplicates" -d "create hardlinks to the repeated modules in node_modules"
-complete -c yarn -n "__fish_seen_subcommand_from versions" -l "link-folder" -d "specify a custom folder to store global links" -r
-complete -c yarn -n "__fish_seen_subcommand_from versions" -l "global-folder" -d "specify a custom folder to store global packages" -r
-complete -c yarn -n "__fish_seen_subcommand_from versions" -l "modules-folder" -d "rather than installing modules into the node_modules folder relative to the cwd, output them here" -r
-complete -c yarn -n "__fish_seen_subcommand_from versions" -l "preferred-cache-folder" -d "specify a custom folder to store the yarn cache if possible" -r
-complete -c yarn -n "__fish_seen_subcommand_from versions" -l "cache-folder" -d "specify a custom folder that must be used to store the yarn cache" -r
-complete -c yarn -n "__fish_seen_subcommand_from versions" -l "mutex" -d "use a mutex to ensure only one yarn instance is executing" -x
-complete -c yarn -n "__fish_seen_subcommand_from versions" -l "emoji" -d "enable emoji in output (default: false)" -x
-complete -c yarn -n "__fish_seen_subcommand_from versions" -s "s" -l "silent" -d "skip Yarn console logs, other types of logs (script output) will be printed"
-complete -c yarn -n "__fish_seen_subcommand_from versions" -l "cwd" -d "working directory to use (default: ~/repos/h2o-curated-data/general)" -r
-complete -c yarn -n "__fish_seen_subcommand_from versions" -l "proxy" -l "https-proxy" -d "proxy" -x
-complete -c yarn -n "__fish_seen_subcommand_from versions" -l "registry" -d "override configuration registry" -x
-complete -c yarn -n "__fish_seen_subcommand_from versions" -l "no-progress" -d "disable progress bar"
-complete -c yarn -n "__fish_seen_subcommand_from versions" -l "network-concurrency" -d "maximum number of concurrent network requests" -x
-complete -c yarn -n "__fish_seen_subcommand_from versions" -l "network-timeout" -d "TCP timeout for network requests" -x
-complete -c yarn -n "__fish_seen_subcommand_from versions" -l "non-interactive" -d "do not show interactive prompts"
-complete -c yarn -n "__fish_seen_subcommand_from versions" -l "scripts-prepend-node-path" -d "prepend the node executable dir to the PATH in scripts" -r
-complete -c yarn -n "__fish_seen_subcommand_from versions" -l "no-node-version-check" -d "do not warn when using a potentially unsupported Node version"
-complete -c yarn -n "__fish_seen_subcommand_from versions" -l "focus" -d "Focus on a single workspace by installing remote copies of its sibling workspaces."
-complete -c yarn -n "__fish_seen_subcommand_from versions" -l "otp" -d "one-time password for two factor authentication" -x
-complete -c yarn -n "__fish_seen_subcommand_from versions" -s "h" -l "help" -d "output usage information"
-
-
-
-complete -c yarn -n "__fish_seen_subcommand_from why" -s "v" -l "version" -d "output the version number"
-complete -c yarn -n "__fish_seen_subcommand_from why" -l "no-default-rc" -d "prevent Yarn from automatically detecting yarnrc and npmrc files"
-complete -c yarn -n "__fish_seen_subcommand_from why" -l "use-yarnrc" -d "specifies a yarnrc file that Yarn should use (.yarnrc only, not .npmrc) (default: )" -r
-complete -c yarn -n "__fish_seen_subcommand_from why" -l "verbose" -d "output verbose messages on internal operations"
-complete -c yarn -n "__fish_seen_subcommand_from why" -l "offline" -d "trigger an error if any required dependencies are not available in local cache"
-complete -c yarn -n "__fish_seen_subcommand_from why" -l "prefer-offline" -d "use network only if dependencies are not available in local cache"
-complete -c yarn -n "__fish_seen_subcommand_from why" -l "enable-pnp" -l "pnp" -d "enable the Plug'n'Play installation"
-complete -c yarn -n "__fish_seen_subcommand_from why" -l "disable-pnp" -d "disable the Plug'n'Play installation"
-complete -c yarn -n "__fish_seen_subcommand_from why" -l "strict-semver" -d "strict-semver"
-complete -c yarn -n "__fish_seen_subcommand_from why" -l "json" -d "format Yarn log messages as lines of JSON (see jsonlines.org)"
-complete -c yarn -n "__fish_seen_subcommand_from why" -l "ignore-scripts" -d "don't run lifecycle scripts"
-complete -c yarn -n "__fish_seen_subcommand_from why" -l "har" -d "save HAR output of network traffic"
-complete -c yarn -n "__fish_seen_subcommand_from why" -l "ignore-platform" -d "ignore platform checks"
-complete -c yarn -n "__fish_seen_subcommand_from why" -l "ignore-engines" -d "ignore engines check"
-complete -c yarn -n "__fish_seen_subcommand_from why" -l "ignore-optional" -d "ignore optional dependencies"
-complete -c yarn -n "__fish_seen_subcommand_from why" -l "force" -d "install and build packages even if they were built before, overwrite lockfile"
-complete -c yarn -n "__fish_seen_subcommand_from why" -l "skip-integrity-check" -d "run install without checking if node_modules is installed"
-complete -c yarn -n "__fish_seen_subcommand_from why" -l "check-files" -d "install will verify file tree of packages for consistency"
-complete -c yarn -n "__fish_seen_subcommand_from why" -l "no-bin-links" -d "don't generate bin links when setting up packages"
-complete -c yarn -n "__fish_seen_subcommand_from why" -l "flat" -d "only allow one version of a package"
-complete -c yarn -n "__fish_seen_subcommand_from why" -l "prod" -l "production" -d "production" -x
-complete -c yarn -n "__fish_seen_subcommand_from why" -l "no-lockfile" -d "don't read or generate a lockfile"
-complete -c yarn -n "__fish_seen_subcommand_from why" -l "pure-lockfile" -d "don't generate a lockfile"
-complete -c yarn -n "__fish_seen_subcommand_from why" -l "frozen-lockfile" -d "don't generate a lockfile and fail if an update is needed"
-complete -c yarn -n "__fish_seen_subcommand_from why" -l "update-checksums" -d "update package checksums from current repository"
-complete -c yarn -n "__fish_seen_subcommand_from why" -l "link-duplicates" -d "create hardlinks to the repeated modules in node_modules"
-complete -c yarn -n "__fish_seen_subcommand_from why" -l "link-folder" -d "specify a custom folder to store global links" -r
-complete -c yarn -n "__fish_seen_subcommand_from why" -l "global-folder" -d "specify a custom folder to store global packages" -r
-complete -c yarn -n "__fish_seen_subcommand_from why" -l "modules-folder" -d "rather than installing modules into the node_modules folder relative to the cwd, output them here" -r
-complete -c yarn -n "__fish_seen_subcommand_from why" -l "preferred-cache-folder" -d "specify a custom folder to store the yarn cache if possible" -r
-complete -c yarn -n "__fish_seen_subcommand_from why" -l "cache-folder" -d "specify a custom folder that must be used to store the yarn cache" -r
-complete -c yarn -n "__fish_seen_subcommand_from why" -l "mutex" -d "use a mutex to ensure only one yarn instance is executing" -x
-complete -c yarn -n "__fish_seen_subcommand_from why" -l "emoji" -d "enable emoji in output (default: false)" -x
-complete -c yarn -n "__fish_seen_subcommand_from why" -s "s" -l "silent" -d "skip Yarn console logs, other types of logs (script output) will be printed"
-complete -c yarn -n "__fish_seen_subcommand_from why" -l "cwd" -d "working directory to use (default: ~/repos/h2o-curated-data/general)" -r
-complete -c yarn -n "__fish_seen_subcommand_from why" -l "proxy" -l "https-proxy" -d "proxy" -x
-complete -c yarn -n "__fish_seen_subcommand_from why" -l "registry" -d "override configuration registry" -x
-complete -c yarn -n "__fish_seen_subcommand_from why" -l "no-progress" -d "disable progress bar"
-complete -c yarn -n "__fish_seen_subcommand_from why" -l "network-concurrency" -d "maximum number of concurrent network requests" -x
-complete -c yarn -n "__fish_seen_subcommand_from why" -l "network-timeout" -d "TCP timeout for network requests" -x
-complete -c yarn -n "__fish_seen_subcommand_from why" -l "non-interactive" -d "do not show interactive prompts"
-complete -c yarn -n "__fish_seen_subcommand_from why" -l "scripts-prepend-node-path" -d "prepend the node executable dir to the PATH in scripts" -r
-complete -c yarn -n "__fish_seen_subcommand_from why" -l "no-node-version-check" -d "do not warn when using a potentially unsupported Node version"
-complete -c yarn -n "__fish_seen_subcommand_from why" -l "focus" -d "Focus on a single workspace by installing remote copies of its sibling workspaces."
-complete -c yarn -n "__fish_seen_subcommand_from why" -l "otp" -d "one-time password for two factor authentication" -x
-complete -c yarn -n "__fish_seen_subcommand_from why" -s "h" -l "help" -d "output usage information"
-
-
-
-complete -c yarn -n "__fish_seen_subcommand_from workspace" -s "v" -l "version" -d "output the version number"
-complete -c yarn -n "__fish_seen_subcommand_from workspace" -l "no-default-rc" -d "prevent Yarn from automatically detecting yarnrc and npmrc files"
-complete -c yarn -n "__fish_seen_subcommand_from workspace" -l "use-yarnrc" -d "specifies a yarnrc file that Yarn should use (.yarnrc only, not .npmrc) (default: )" -r
-complete -c yarn -n "__fish_seen_subcommand_from workspace" -l "verbose" -d "output verbose messages on internal operations"
-complete -c yarn -n "__fish_seen_subcommand_from workspace" -l "offline" -d "trigger an error if any required dependencies are not available in local cache"
-complete -c yarn -n "__fish_seen_subcommand_from workspace" -l "prefer-offline" -d "use network only if dependencies are not available in local cache"
-complete -c yarn -n "__fish_seen_subcommand_from workspace" -l "enable-pnp" -l "pnp" -d "enable the Plug'n'Play installation"
-complete -c yarn -n "__fish_seen_subcommand_from workspace" -l "disable-pnp" -d "disable the Plug'n'Play installation"
-complete -c yarn -n "__fish_seen_subcommand_from workspace" -l "strict-semver" -d "strict-semver"
-complete -c yarn -n "__fish_seen_subcommand_from workspace" -l "json" -d "format Yarn log messages as lines of JSON (see jsonlines.org)"
-complete -c yarn -n "__fish_seen_subcommand_from workspace" -l "ignore-scripts" -d "don't run lifecycle scripts"
-complete -c yarn -n "__fish_seen_subcommand_from workspace" -l "har" -d "save HAR output of network traffic"
-complete -c yarn -n "__fish_seen_subcommand_from workspace" -l "ignore-platform" -d "ignore platform checks"
-complete -c yarn -n "__fish_seen_subcommand_from workspace" -l "ignore-engines" -d "ignore engines check"
-complete -c yarn -n "__fish_seen_subcommand_from workspace" -l "ignore-optional" -d "ignore optional dependencies"
-complete -c yarn -n "__fish_seen_subcommand_from workspace" -l "force" -d "install and build packages even if they were built before, overwrite lockfile"
-complete -c yarn -n "__fish_seen_subcommand_from workspace" -l "skip-integrity-check" -d "run install without checking if node_modules is installed"
-complete -c yarn -n "__fish_seen_subcommand_from workspace" -l "check-files" -d "install will verify file tree of packages for consistency"
-complete -c yarn -n "__fish_seen_subcommand_from workspace" -l "no-bin-links" -d "don't generate bin links when setting up packages"
-complete -c yarn -n "__fish_seen_subcommand_from workspace" -l "flat" -d "only allow one version of a package"
-complete -c yarn -n "__fish_seen_subcommand_from workspace" -l "prod" -l "production" -d "production" -x
-complete -c yarn -n "__fish_seen_subcommand_from workspace" -l "no-lockfile" -d "don't read or generate a lockfile"
-complete -c yarn -n "__fish_seen_subcommand_from workspace" -l "pure-lockfile" -d "don't generate a lockfile"
-complete -c yarn -n "__fish_seen_subcommand_from workspace" -l "frozen-lockfile" -d "don't generate a lockfile and fail if an update is needed"
-complete -c yarn -n "__fish_seen_subcommand_from workspace" -l "update-checksums" -d "update package checksums from current repository"
-complete -c yarn -n "__fish_seen_subcommand_from workspace" -l "link-duplicates" -d "create hardlinks to the repeated modules in node_modules"
-complete -c yarn -n "__fish_seen_subcommand_from workspace" -l "link-folder" -d "specify a custom folder to store global links" -r
-complete -c yarn -n "__fish_seen_subcommand_from workspace" -l "global-folder" -d "specify a custom folder to store global packages" -r
-complete -c yarn -n "__fish_seen_subcommand_from workspace" -l "modules-folder" -d "rather than installing modules into the node_modules folder relative to the cwd, output them here" -r
-complete -c yarn -n "__fish_seen_subcommand_from workspace" -l "preferred-cache-folder" -d "specify a custom folder to store the yarn cache if possible" -r
-complete -c yarn -n "__fish_seen_subcommand_from workspace" -l "cache-folder" -d "specify a custom folder that must be used to store the yarn cache" -r
-complete -c yarn -n "__fish_seen_subcommand_from workspace" -l "mutex" -d "use a mutex to ensure only one yarn instance is executing" -x
-complete -c yarn -n "__fish_seen_subcommand_from workspace" -l "emoji" -d "enable emoji in output (default: false)" -x
-complete -c yarn -n "__fish_seen_subcommand_from workspace" -s "s" -l "silent" -d "skip Yarn console logs, other types of logs (script output) will be printed"
-complete -c yarn -n "__fish_seen_subcommand_from workspace" -l "cwd" -d "working directory to use (default: ~/repos/h2o-curated-data/general)" -r
-complete -c yarn -n "__fish_seen_subcommand_from workspace" -l "proxy" -l "https-proxy" -d "proxy" -x
-complete -c yarn -n "__fish_seen_subcommand_from workspace" -l "registry" -d "override configuration registry" -x
-complete -c yarn -n "__fish_seen_subcommand_from workspace" -l "no-progress" -d "disable progress bar"
-complete -c yarn -n "__fish_seen_subcommand_from workspace" -l "network-concurrency" -d "maximum number of concurrent network requests" -x
-complete -c yarn -n "__fish_seen_subcommand_from workspace" -l "network-timeout" -d "TCP timeout for network requests" -x
-complete -c yarn -n "__fish_seen_subcommand_from workspace" -l "non-interactive" -d "do not show interactive prompts"
-complete -c yarn -n "__fish_seen_subcommand_from workspace" -l "scripts-prepend-node-path" -d "prepend the node executable dir to the PATH in scripts" -r
-complete -c yarn -n "__fish_seen_subcommand_from workspace" -l "no-node-version-check" -d "do not warn when using a potentially unsupported Node version"
-complete -c yarn -n "__fish_seen_subcommand_from workspace" -l "focus" -d "Focus on a single workspace by installing remote copies of its sibling workspaces."
-complete -c yarn -n "__fish_seen_subcommand_from workspace" -l "otp" -d "one-time password for two factor authentication" -x
-complete -c yarn -n "__fish_seen_subcommand_from workspace" -s "h" -l "help" -d "output usage information"
-
-
-
-complete -c yarn -n "__fish_seen_subcommand_from workspaces" -s "v" -l "version" -d "output the version number"
-complete -c yarn -n "__fish_seen_subcommand_from workspaces" -l "no-default-rc" -d "prevent Yarn from automatically detecting yarnrc and npmrc files"
-complete -c yarn -n "__fish_seen_subcommand_from workspaces" -l "use-yarnrc" -d "specifies a yarnrc file that Yarn should use (.yarnrc only, not .npmrc) (default: )" -r
-complete -c yarn -n "__fish_seen_subcommand_from workspaces" -l "verbose" -d "output verbose messages on internal operations"
-complete -c yarn -n "__fish_seen_subcommand_from workspaces" -l "offline" -d "trigger an error if any required dependencies are not available in local cache"
-complete -c yarn -n "__fish_seen_subcommand_from workspaces" -l "prefer-offline" -d "use network only if dependencies are not available in local cache"
-complete -c yarn -n "__fish_seen_subcommand_from workspaces" -l "enable-pnp" -l "pnp" -d "enable the Plug'n'Play installation"
-complete -c yarn -n "__fish_seen_subcommand_from workspaces" -l "disable-pnp" -d "disable the Plug'n'Play installation"
-complete -c yarn -n "__fish_seen_subcommand_from workspaces" -l "strict-semver" -d "strict-semver"
-complete -c yarn -n "__fish_seen_subcommand_from workspaces" -l "json" -d "format Yarn log messages as lines of JSON (see jsonlines.org)"
-complete -c yarn -n "__fish_seen_subcommand_from workspaces" -l "ignore-scripts" -d "don't run lifecycle scripts"
-complete -c yarn -n "__fish_seen_subcommand_from workspaces" -l "har" -d "save HAR output of network traffic"
-complete -c yarn -n "__fish_seen_subcommand_from workspaces" -l "ignore-platform" -d "ignore platform checks"
-complete -c yarn -n "__fish_seen_subcommand_from workspaces" -l "ignore-engines" -d "ignore engines check"
-complete -c yarn -n "__fish_seen_subcommand_from workspaces" -l "ignore-optional" -d "ignore optional dependencies"
-complete -c yarn -n "__fish_seen_subcommand_from workspaces" -l "force" -d "install and build packages even if they were built before, overwrite lockfile"
-complete -c yarn -n "__fish_seen_subcommand_from workspaces" -l "skip-integrity-check" -d "run install without checking if node_modules is installed"
-complete -c yarn -n "__fish_seen_subcommand_from workspaces" -l "check-files" -d "install will verify file tree of packages for consistency"
-complete -c yarn -n "__fish_seen_subcommand_from workspaces" -l "no-bin-links" -d "don't generate bin links when setting up packages"
-complete -c yarn -n "__fish_seen_subcommand_from workspaces" -l "flat" -d "only allow one version of a package"
-complete -c yarn -n "__fish_seen_subcommand_from workspaces" -l "prod" -l "production" -d "production" -x
-complete -c yarn -n "__fish_seen_subcommand_from workspaces" -l "no-lockfile" -d "don't read or generate a lockfile"
-complete -c yarn -n "__fish_seen_subcommand_from workspaces" -l "pure-lockfile" -d "don't generate a lockfile"
-complete -c yarn -n "__fish_seen_subcommand_from workspaces" -l "frozen-lockfile" -d "don't generate a lockfile and fail if an update is needed"
-complete -c yarn -n "__fish_seen_subcommand_from workspaces" -l "update-checksums" -d "update package checksums from current repository"
-complete -c yarn -n "__fish_seen_subcommand_from workspaces" -l "link-duplicates" -d "create hardlinks to the repeated modules in node_modules"
-complete -c yarn -n "__fish_seen_subcommand_from workspaces" -l "link-folder" -d "specify a custom folder to store global links" -r
-complete -c yarn -n "__fish_seen_subcommand_from workspaces" -l "global-folder" -d "specify a custom folder to store global packages" -r
-complete -c yarn -n "__fish_seen_subcommand_from workspaces" -l "modules-folder" -d "rather than installing modules into the node_modules folder relative to the cwd, output them here" -r
-complete -c yarn -n "__fish_seen_subcommand_from workspaces" -l "preferred-cache-folder" -d "specify a custom folder to store the yarn cache if possible" -r
-complete -c yarn -n "__fish_seen_subcommand_from workspaces" -l "cache-folder" -d "specify a custom folder that must be used to store the yarn cache" -r
-complete -c yarn -n "__fish_seen_subcommand_from workspaces" -l "mutex" -d "use a mutex to ensure only one yarn instance is executing" -x
-complete -c yarn -n "__fish_seen_subcommand_from workspaces" -l "emoji" -d "enable emoji in output (default: false)" -x
-complete -c yarn -n "__fish_seen_subcommand_from workspaces" -s "s" -l "silent" -d "skip Yarn console logs, other types of logs (script output) will be printed"
-complete -c yarn -n "__fish_seen_subcommand_from workspaces" -l "cwd" -d "working directory to use (default: ~/repos/h2o-curated-data/general)" -r
-complete -c yarn -n "__fish_seen_subcommand_from workspaces" -l "proxy" -l "https-proxy" -d "proxy" -x
-complete -c yarn -n "__fish_seen_subcommand_from workspaces" -l "registry" -d "override configuration registry" -x
-complete -c yarn -n "__fish_seen_subcommand_from workspaces" -l "no-progress" -d "disable progress bar"
-complete -c yarn -n "__fish_seen_subcommand_from workspaces" -l "network-concurrency" -d "maximum number of concurrent network requests" -x
-complete -c yarn -n "__fish_seen_subcommand_from workspaces" -l "network-timeout" -d "TCP timeout for network requests" -x
-complete -c yarn -n "__fish_seen_subcommand_from workspaces" -l "non-interactive" -d "do not show interactive prompts"
-complete -c yarn -n "__fish_seen_subcommand_from workspaces" -l "scripts-prepend-node-path" -d "prepend the node executable dir to the PATH in scripts" -r
-complete -c yarn -n "__fish_seen_subcommand_from workspaces" -l "no-node-version-check" -d "do not warn when using a potentially unsupported Node version"
-complete -c yarn -n "__fish_seen_subcommand_from workspaces" -l "focus" -d "Focus on a single workspace by installing remote copies of its sibling workspaces."
-complete -c yarn -n "__fish_seen_subcommand_from workspaces" -l "otp" -d "one-time password for two factor authentication" -x
-complete -c yarn -n "__fish_seen_subcommand_from workspaces" -s "h" -l "help" -d "output usage information"

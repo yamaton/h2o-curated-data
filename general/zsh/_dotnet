@@ -4,231 +4,310 @@
 
     function _dotnet_add {
         _arguments \
-            {-h,--help}'[Show command line help.]' \
+            {-?,-h,--help}'[Show command line help.]' \
             "*: :_files"
 
     }
 
     function _dotnet_build {
         _arguments \
-            {-h,--help}'[Show command line help.]' \
-            {-o,--output}'[The output directory to place built artifacts in.]':file:_files \
+            '--use-current-runtime[Use current runtime as the target runtime.]' \
             {-f,--framework}'[The target framework to build for. The target framework must also be specified in the project file.]' \
             {-c,--configuration}'[The configuration to use for building the project. The default for most projects is '\''Debug'\''.]' \
             {-r,--runtime}'[The target runtime to build for.]' \
             '--version-suffix[Set the value of the $(VersionSuffix) property to use when building the project.]' \
-            '--no-incremental[Do not use incremental building.]' \
-            '--no-dependencies[Do not build project-to-project references and only build the specified project.]' \
-            '--nologo[Do not display the startup banner or the copyright message.]' \
             '--no-restore[Do not restore the project before building.]' \
             '--interactive[Allows the command to stop and wait for user input or action (for example to complete authentication).]' \
             {-v,--verbosity}'[Set the MSBuild verbosity level. Allowed values are q\[uiet\], m\[inimal\], n\[ormal\], d\[etailed\], and diag\[nostic\].]' \
-            '--force[Force all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting project.assets.json.]' \
+            {--debug,-o,--output}'[The output directory to place built artifacts in.]':file:_files \
+            '--no-incremental[Do not use incremental building.]' \
+            '--no-dependencies[Do not build project-to-project references and only build the specified project.]' \
+            '--nologo[Do not display the startup banner or the copyright message.]' \
+            {--sc,--self-contained}'[Publish the .NET runtime with your application so the runtime doesn'\''t need to be installed on the target machine. The default is '\''true'\'' if a runtime identifier is specified.]' \
+            '--no-self-contained[Publish your application as a framework dependent application. A compatible .NET runtime must be installed on the target machine to run your application.]' \
+            {-a,--arch}'[The target architecture.]' \
+            '--os[The target operating system.]' \
+            {-?,-h,--help}'[Show command line help.]' \
             "*: :_files"
 
     }
 
     function _dotnet_build-server {
         _arguments \
-            {-h,--help}'[Show command line help.]' \
+            {-?,-h,--help}'[Show command line help.]' \
             "*: :_files"
 
     }
 
     function _dotnet_clean {
         _arguments \
-            {-h,--help}'[Show command line help.]' \
-            {-o,--output}'[The directory containing the build artifacts to clean.]':file:_files \
-            '--nologo[Do not display the startup banner or the copyright message.]' \
             {-f,--framework}'[The target framework to clean for. The target framework must also be specified in the project file.]' \
             {-r,--runtime}'[The target runtime to clean for.]' \
             {-c,--configuration}'[The configuration to clean for. The default for most projects is '\''Debug'\''.]' \
             '--interactive[Allows the command to stop and wait for user input or action (for example to complete authentication).]' \
             {-v,--verbosity}'[Set the MSBuild verbosity level. Allowed values are q\[uiet\], m\[inimal\], n\[ormal\], d\[etailed\], and diag\[nostic\].]' \
+            {-o,--output}'[The directory containing the build artifacts to clean.]':file:_files \
+            '--nologo[Do not display the startup banner or the copyright message.]' \
+            {-?,-h,--help}'[Show command line help.]' \
+            "*: :_files"
+
+    }
+
+    function _dotnet_format {
+        _arguments \
+            '--diagnostics[A space separated list of diagnostic ids to use as a filter when fixing code style or 3rd party issues. \[default: \]]' \
+            '--severity[The severity of diagnostics to fix. Allowed values are info, warn, and error.]' \
+            '--no-restore[Doesn'\''t execute an implicit restore before formatting.]' \
+            '--verify-no-changes[Verify no formatting changes would be performed. Terminates with a non-zero exit code if any files would have been formatted.]' \
+            '--include[A list of relative file or folder paths to include in formatting. All files are formatted if empty. \[default: \]]' \
+            '--exclude[A list of relative file or folder paths to exclude from formatting. \[default: \]]' \
+            '--include-generated[Format files generated by the SDK.]' \
+            {-v,--verbosity}'[Set the verbosity level. Allowed values are q\[uiet\], m\[inimal\], n\[ormal\], d\[etailed\], and diag\[nostic\]]' \
+            '--binarylog[Log all project or solution load information to a binary log file.]':file:_files \
+            '--report[Accepts a file path which if provided will produce a json report in the given directory.]':file:_files \
+            '--version[Show version information]' \
+            {-?,-h,--help}'[Show help and usage information]' \
             "*: :_files"
 
     }
 
     function _dotnet_help {
         _arguments \
-            {-h,--help}'[Show command line help.]' \
+            {-?,-h,--help}'[Show command line help.]' \
             "*: :_files"
 
     }
 
     function _dotnet_list {
         _arguments \
-            {-h,--help}'[Show command line help.]' \
+            {-?,-h,--help}'[Show command line help.]' \
             "*: :_files"
 
     }
 
     function _dotnet_msbuild {
         _arguments \
+            '-maxCpuCount[Specifies the maximum number of concurrent processes to build with. If the switch is not used, the default value used is 1. If the switch is used without a value MSBuild will use up to the number of processors on the computer. (Short form: -m\[:n\])]' \
+            '-noConsoleLogger[Disable the default console logger and do not log events to the console. (Short form: -noConLog)]' \
+            '-fileLogger[Logs the build output to a file. By default the file is in the current directory and named "msbuild\[n\].log". Events from all nodes are combined into a single log. The location of the file and other parameters for the fileLogger can be specified through the addition of the "-fileLoggerParameters\[n\]" switch. "n" if present can be a digit from 1-9, allowing up to 10 file loggers to be attached. (Short form: -fl\[n\])]' \
+            '-fileLoggerParameters[Provides any extra parameters for file loggers. The presence of this switch implies the corresponding -fileLogger\[n\] switch. "n" if present can be a digit from 1-9. -fileLoggerParameters is also used by any distributed file logger, see description of -distributedFileLogger. (Short form: -flp\[n\]) The same parameters listed for the console logger are available. Some additional available parameters are:]' \
+            '-distributedFileLogger[Logs the build output to multiple log files, one log file per MSBuild node. The initial location for these files is the current directory. By default the files are called "MSBuild<nodeid>.log". The location of the files and other parameters for the fileLogger can be specified with the addition of the "-fileLoggerParameters" switch.]' \
+            '-binaryLogger[Serializes all build events to a compressed binary file. By default the file is in the current directory and named "msbuild.binlog". The binary log is a detailed description of the build process that can later be used to reconstruct text logs and used by other analysis tools. A binary log is usually 10-20x smaller than the most detailed text diagnostic-level log, but it contains more information. (Short form: -bl)]':file:_files \
+            '-warnAsError[List of warning codes to treats as errors. Use a semicolon or a comma to separate multiple warning codes. To treat all warnings as errors use the switch with no values. (Short form: -err\[:c;\[c2\]\])]' \
+            '-warnAsMessage[List of warning codes to treats as low importance messages. Use a semicolon or a comma to separate multiple warning codes. (Short form: -noWarn\[:c;\[c2\]\])]' \
+            '-preprocess[Creates a single, aggregated project file by inlining all the files that would be imported during a build, with their boundaries marked. This can be useful for figuring out what files are being imported and from where, and what they will contribute to the build. By default the output is written to the console window. If the path to an output file is provided that will be used instead. (Short form: -pp) Example:]':file:_files \
+            '-targets[Prints a list of available targets without executing the actual build process. By default the output is written to the console window. If the path to an output file is provided that will be used instead. (Short form: -ts) Example:]':file:_files \
+            '-detailedSummary[Shows detailed information at the end of the build about the configurations built and how they were scheduled to nodes. (Short form: -ds)]' \
+            '-restore[Runs a target named Restore prior to building other targets and ensures the build for these targets uses the latest restored build logic. This is useful when your project tree requires packages to be restored before it can be built. Specifying -restore is the same as specifying -restore:True. Use the parameter to override a value that comes from a response file. (Short form: -r)]' \
+            '-interactive[Indicates that actions in the build are allowed to interact with the user. Do not use this argument in an automated scenario where interactivity is not expected. Specifying -interactive is the same as specifying -interactive:true. Use the parameter to override a value that comes from a response file.]' \
+            '-isolateProjects[Causes MSBuild to build each project in isolation.]' \
+            '-graphBuild[Causes MSBuild to construct and build a project graph.]' \
+            '-lowPriority[Causes MSBuild to run at low process priority.]' \
+            '-noAutoResponse[Do not auto-include any MSBuild.rsp files. (Short form: -noAutoRsp)]' \
+            '-noLogo[Do not display the startup banner and copyright message.]' \
+            '-version[Display version information only. (Short form: -ver)]' \
+            '-help[Display this usage message. (Short form: -? or -h)]' \
             "*: :_files"
 
     }
 
     function _dotnet_new {
         _arguments \
+            {-h,--help}'[Displays help for this command.]' \
+            {-l,--list}'[Lists templates containing the specified template name. If no name is specified, lists all templates.]' \
+            {-n,--name}'[The name for the output being created. If no name is specified, the name of the output directory is used.]' \
+            {-o,--output}'[Location to place the generated output.]' \
+            {-i,--install}'[Installs a source or a template package.]' \
+            {-u,--uninstall}'[Uninstalls a source or a template package.]' \
+            '--interactive[Allows the internal dotnet restore command to stop and wait for user input or action (for example to complete authentication).]' \
+            {--add-source,--nuget-source}'[Specifies a NuGet source to use during install.]' \
+            '--type[Filters templates based on available types. Predefined values are "project" and "item".]' \
+            '--dry-run[Displays a summary of what would happen if the given command line were run if it would result in a template creation.]' \
+            '--force[Forces content to be generated even if it would change existing files.]' \
+            {-lang,--language}'[Filters templates based on language and specifies the language of the template to create.]' \
+            '--update-check[Check the currently installed template packages for updates.]' \
+            '--update-apply[Check the currently installed template packages for update, and install the updates.]' \
+            '--search[Searches for the templates on NuGet.org.]' \
+            '--author[Filters the templates based on the template author. Applicable only with --search or --list | -l option.]' \
+            '--package[Filters the templates based on NuGet package ID. Applies to --search.]' \
+            '--columns[Comma separated list of columns to display in --list and --search output. The supported columns are: language, tags, author, type.]' \
+            '--columns-all[Display all columns in --list and --search output.]' \
+            '--tag[Filters the templates based on the tag. Applies to --search and --list.]' \
+            '--no-update-check[Disables checking for the template package updates when instantiating a template.]' \
             "*: :_files"
 
     }
 
     function _dotnet_nuget {
         _arguments \
+            {-h,--help}'[Show help information]' \
+            '--version[Show version information]' \
             "*: :_files"
 
     }
 
     function _dotnet_pack {
         _arguments \
-            {-h,--help}'[Show command line help.]' \
             {-o,--output}'[The output directory to place built packages in.]':file:_files \
             '--no-build[Do not build the project before packing. Implies --no-restore.]' \
             '--include-symbols[Include packages with symbols in addition to regular packages in output directory.]' \
             '--include-source[Include PDBs and source files. Source files go into the '\''src'\'' folder in the resulting nuget package.]' \
-            {-c,--configuration}'[The configuration to use for building the package. The default for most projects is '\''Debug'\''.]' \
-            '--version-suffix[Set the value of the $(VersionSuffix) property to use when building the project.]' \
             {-s,--serviceable}'[Set the serviceable flag in the package. See https://aka.ms/nupkgservicing for more information.]' \
             '--nologo[Do not display the startup banner or the copyright message.]' \
             '--interactive[Allows the command to stop and wait for user input or action (for example to complete authentication).]' \
             '--no-restore[Do not restore the project before building.]' \
             {-v,--verbosity}'[Set the MSBuild verbosity level. Allowed values are q\[uiet\], m\[inimal\], n\[ormal\], d\[etailed\], and diag\[nostic\].]' \
-            '--runtime[The target runtime to restore packages for.]' \
-            '--no-dependencies[Do not restore project-to-project references and only restore the specified project.]' \
-            '--force[Force all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting project.assets.json.]' \
+            '--version-suffix[Set the value of the $(VersionSuffix) property to use when building the project.]' \
+            {-c,--configuration}'[The configuration to use for building the package. The default for most projects is '\''Debug'\''.]' \
+            '--use-current-runtime[Use current runtime as the target runtime.]' \
+            {-?,-h,--help}'[Show command line help.]' \
             "*: :_files"
 
     }
 
     function _dotnet_publish {
         _arguments \
-            {-h,--help}'[Show command line help.]' \
+            '--use-current-runtime[Use current runtime as the target runtime.]' \
             {-o,--output}'[The output directory to place the published artifacts in.]':file:_files \
+            '--manifest[The path to a target manifest file that contains the list of packages to be excluded from the publish step.]' \
+            '--no-build[Do not build the project before publishing. Implies --no-restore.]' \
+            {--sc,--self-contained}'[Publish the .NET runtime with your application so the runtime doesn'\''t need to be installed on the target machine. The default is '\''true'\'' if a runtime identifier is specified.]' \
+            '--no-self-contained[Publish your application as a framework dependent application. A compatible .NET runtime must be installed on the target machine to run your application.]' \
+            '--nologo[Do not display the startup banner or the copyright message.]' \
             {-f,--framework}'[The target framework to publish for. The target framework has to be specified in the project file.]' \
             {-r,--runtime}'[The target runtime to publish for. This is used when creating a self-contained deployment. The default is to publish a framework-dependent application.]' \
             {-c,--configuration}'[The configuration to publish for. The default for most projects is '\''Debug'\''.]' \
             '--version-suffix[Set the value of the $(VersionSuffix) property to use when building the project.]' \
-            '--manifest[The path to a target manifest file that contains the list of packages to be excluded from the publish step.]' \
-            '--no-build[Do not build the project before publishing. Implies --no-restore.]' \
-            '--self-contained[Publish the .NET runtime with your application so the runtime doesn'\''t need to be installed on the target machine. The default is '\''true'\'' if a runtime identifier is specified.]' \
-            '--no-self-contained[Publish your application as a framework dependent application without the .NET runtime. A supported .NET runtime must be installed to run your application.]' \
-            '--nologo[Do not display the startup banner or the copyright message.]' \
             '--interactive[Allows the command to stop and wait for user input or action (for example to complete authentication).]' \
             '--no-restore[Do not restore the project before building.]' \
             {-v,--verbosity}'[Set the MSBuild verbosity level. Allowed values are q\[uiet\], m\[inimal\], n\[ormal\], d\[etailed\], and diag\[nostic\].]' \
-            '--no-dependencies[Do not restore project-to-project references and only restore the specified project.]' \
-            '--force[Force all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting project.assets.json.]' \
+            {-a,--arch}'[The target architecture.]' \
+            '--os[The target operating system.]' \
+            {-?,-h,--help}'[Show command line help.]' \
             "*: :_files"
 
     }
 
     function _dotnet_remove {
         _arguments \
-            {-h,--help}'[Show command line help.]' \
+            {-?,-h,--help}'[Show command line help.]' \
             "*: :_files"
 
     }
 
     function _dotnet_restore {
         _arguments \
-            {-h,--help}'[Show command line help.]' \
             {-s,--source}'[The NuGet package source to use for the restore.]' \
-            {-r,--runtime}'[The target runtime to restore packages for.]' \
             '--packages[The directory to restore packages to.]':file:_files \
+            '--use-current-runtime[Use current runtime as the target runtime.]' \
             '--disable-parallel[Prevent restoring multiple projects in parallel.]' \
             '--configfile[The NuGet configuration file to use.]':file:_files \
             '--no-cache[Do not cache packages and http requests.]' \
             '--ignore-failed-sources[Treat package source failures as warnings.]' \
-            '--no-dependencies[Do not restore project-to-project references and only restore the specified project.]' \
             {-f,--force}'[Force all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting project.assets.json.]' \
+            {-r,--runtime}'[The target runtime to restore packages for.]' \
+            '--no-dependencies[Do not restore project-to-project references and only restore the specified project.]' \
             {-v,--verbosity}'[Set the MSBuild verbosity level. Allowed values are q\[uiet\], m\[inimal\], n\[ormal\], d\[etailed\], and diag\[nostic\].]' \
             '--interactive[Allows the command to stop and wait for user input or action (for example to complete authentication).]' \
             '--use-lock-file[Enables project lock file to be generated and used with restore.]' \
             '--locked-mode[Don'\''t allow updating project lock file.]' \
             '--lock-file-path[Output location where project lock file is written. By default, this is '\''PROJECT_ROOT\packages.lock.json'\''.]':file:_files \
             '--force-evaluate[Forces restore to reevaluate all dependencies even if a lock file already exists.]' \
+            {-?,-h,--help}'[Show command line help.]' \
             "*: :_files"
 
     }
 
     function _dotnet_run {
         _arguments \
-            {-h,--help}'[Show command line help.]' \
             {-c,--configuration}'[The configuration to run for. The default for most projects is '\''Debug'\''.]' \
             {-f,--framework}'[The target framework to run for. The target framework must also be specified in the project file.]' \
             {-r,--runtime}'[The target runtime to run for.]' \
-            {-p,--project}'[The path to the project file to run (defaults to the current directory if there is only one project).]' \
-            '--launch-profile[The name of the launch profile (if any) to use when launching the application.]' \
+            '--project[The path to the project file to run (defaults to the current directory if there is only one project).]' \
+            {-p,--property}'[Properties to be passed to MSBuild.]' \
+            '--launch-profile[The name of the launch profile (if any) to use when launching the application.]':file:_files \
             '--no-launch-profile[Do not attempt to use launchSettings.json to configure the application.]' \
             '--no-build[Do not build the project before running. Implies --no-restore.]' \
             '--interactive[Allows the command to stop and wait for user input or action (for example to complete authentication).]' \
             '--no-restore[Do not restore the project before building.]' \
+            {--sc,--self-contained}'[Publish the .NET runtime with your application so the runtime doesn'\''t need to be installed on the target machine. The default is '\''true'\'' if a runtime identifier is specified.]' \
+            '--no-self-contained[Publish your application as a framework dependent application. A compatible .NET runtime must be installed on the target machine to run your application.]' \
             {-v,--verbosity}'[Set the MSBuild verbosity level. Allowed values are q\[uiet\], m\[inimal\], n\[ormal\], d\[etailed\], and diag\[nostic\].]' \
-            '--no-dependencies[Do not restore project-to-project references and only restore the specified project.]' \
-            '--force[Force all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting project.assets.json.]' \
+            {-a,--arch}'[The target architecture.]' \
+            '--os[The target operating system.]' \
+            {-?,-h,--help}'[Show command line help.]' \
+            "*: :_files"
+
+    }
+
+    function _dotnet_sdk {
+        _arguments \
+            {-?,-h,--help}'[Show command line help.]' \
             "*: :_files"
 
     }
 
     function _dotnet_sln {
         _arguments \
-            {-h,--help}'[Show command line help.]' \
+            {-?,-h,--help}'[Show command line help.]' \
             "*: :_files"
 
     }
 
     function _dotnet_store {
         _arguments \
-            {-h,--help}'[Show command line help.]' \
             {-m,--manifest}'[The XML file that contains the list of packages to be stored.]' \
-            {-f,--framework}'[The target framework to store packages for. The target framework has to be specified in the project file.]' \
-            '--framework-version[The Microsoft.NETCore.App package version that will be used to run the assemblies.]' \
-            {-r,--runtime}'[The target runtime to store packages for.]' \
+            '--framework-version[The Microsoft.NETCore.App package version]' \
             {-o,--output}'[The output directory to store the given assemblies in.]':file:_files \
             {-w,--working-dir}'[The working directory used by the command to execute.]':file:_files \
             '--skip-optimization[Skip the optimization phase.]' \
             '--skip-symbols[Skip creating symbol files which can be used for profiling the optimized assemblies.]' \
+            {-f,--framework}'[The target framework to store packages for. The target framework has to be specified in the project file.]' \
+            {-r,--runtime}'[The target runtime to store packages for.]' \
             {-v,--verbosity}'[Set the MSBuild verbosity level. Allowed values are q\[uiet\], m\[inimal\], n\[ormal\], d\[etailed\], and diag\[nostic\].]' \
+            '--use-current-runtime[Use current runtime as the target runtime.]' \
+            {-?,-h,--help}'[Show command line help.]' \
             "*: :_files"
 
     }
 
     function _dotnet_test {
         _arguments \
-            {-h,--help}'[Show command line help.]' \
             {-s,--settings}'[The settings file to use when running tests.]':file:_files \
             {-t,--list-tests}'[List the discovered tests instead of running the tests.]' \
-            '--filter[Run tests that match the given expression. Examples: Run tests with priority set to 1: --filter "Priority = 1" Run a test with the specified full name: --filter "FullyQualifiedName=Namespace.ClassName.MethodName" Run tests that contain the specified name: --filter "FullyQualifiedName~Namespace.Class" See https://aka.ms/vstest-filtering for more information on filtering support.]' \
+            {-e,--environment}'[Sets the value of an environment variable. Creates the variable if it does not exist, overrides if it does. This will force the tests to be run in an isolated process. This argument can be specified multiple times to provide multiple variables.]' \
+            '--filter[Run tests that match the given expression.]' \
             {-a,--test-adapter-path}'[The path to the custom adapters to use for the test run.]':file:_files \
-            {-l,--logger}'[The logger to use for test results. Examples: Log in trx format using a unique file name: --logger trx Log in trx format using the specified file name: --logger "trx;LogFileName=<TestResults.trx>" See https://aka.ms/vstest-report for more information on logger arguments.]' \
-            {-c,--configuration}'[The configuration to use for running tests. The default for most projects is '\''Debug'\''.]' \
-            {-f,--framework}'[The target framework to run tests for. The target framework must also be specified in the project file.]' \
-            '--runtime[The target runtime to test for.]' \
+            {-l,--logger}'[The logger to use for test results.]' \
             {-o,--output}'[The output directory to place built artifacts in.]':file:_files \
             {-d,--diag}'[Enable verbose logging to the specified file.]':file:_files \
             '--no-build[Do not build the project before testing. Implies --no-restore.]' \
             {-r,--results-directory}'[The directory where the test results will be placed. The specified directory will be created if it does not exist.]':file:_files \
-            '--collect[The friendly name of the data collector to use for the test run. More info here: https://aka.ms/vstest-collect]' \
-            '--blame[Runs the tests in blame mode. This option is helpful in isolating problematic tests that cause the test host to crash or hang. When a crash is detected, it creates an sequence file in TestResults/guid/guid_Sequence.xml that captures the order of tests that were run before the crash. Based on the additional settings, hang dump or crash dump can also be collected. Example: Timeout the test run when test takes more than the default timeout of 1 hour, and collect crash dump when the test host exits unexpectedly. (Crash dumps require additional setup, see below.) dotnet test --blame-hang --blame-crash Example: Timeout the test run when a test takes more than 20 minutes and collect hang dump. dotnet test --blame-hang-timeout 20min]' \
-            '--blame-crash[Runs the tests in blame mode and enables collecting crash dump when testhost exits unexpectedly. This option is currently only supported on Windows, and requires procdump.exe and procdump64.exe to be available in PATH. Or PROCDUMP_PATH environment variable to be set, and point to a directory that contains procdump.exe and procdump64.exe. The tools can be downloaded here: https://docs.microsoft.com/sysinternals/downloads/procdump Implies --blame.]' \
-            '--blame-crash-dump-type[The type of crash dump to be collected. Implies --blame-crash.]' \
-            '--blame-crash-collect-always[Enables collecting crash dump on expected as well as unexpected testhost exit.]' \
+            '--collect[The friendly name of the data collector to use for the test run.]' \
+            '--blame[Runs the tests in blame mode. This option is helpful in isolating problematic tests that cause the test host to crash or hang. When a crash is detected, it creates an sequence file in TestResults/guid/guid_Sequence.xml that captures the order of tests that were run before the crash. Based on the additional settings, hang dump or crash dump can also be collected. Example:]' \
+            '--blame-crash[Runs the tests in blame mode and enables collecting crash dump when testhost exits unexpectedly. This option is currently only supported on Windows, and requires procdump.exe and procdump64.exe to be available in PATH. Or PROCDUMP_PATH environment variable to be set, and point to a directory that contains procdump.exe and procdump64.exe. The tools can be downloaded here: https://docs.microsoft.com/sysinternal s/downloads/procdump Implies --blame.]' \
+            '--blame-crash-dump-type[The type of crash dump to be]' \
+            '--blame-crash-collect-always[Enables collecting crash dump on]' \
             '--blame-hang[Run the tests in blame mode and enables collecting hang dump when test exceeds the given timeout. Implies --blame-hang.]' \
-            '--blame-hang-dump-type[The type of crash dump to be collected. When None, is used then test host is terminated on timeout, but no dump is collected. Implies --blame-hang.]' \
+            '--blame-hang-dump-type[The type of crash dump to be]' \
             '--blame-hang-timeout[Per-test timeout, after which hang dump is triggered and the testhost process is terminated. The timeout value is specified in the following format: 1.5h / 90m / 5400s / 5400000ms. When no unit is used (e.g. 5400000), the value is assumed to be in milliseconds. When used together with data driven tests, the timeout behavior depends on the test adapter used. For xUnit and NUnit the timeout is renewed after every test case, For MSTest, the timeout is used for all testcases. This option is currently supported only on Windows together with netcoreapp2.1 and newer. And on Linux with netcoreapp3.1 and newer. OSX and UWP are not supported.]' \
             '--nologo[Run test(s), without displaying Microsoft Testplatform banner]' \
+            {-c,--configuration}'[The configuration to use for running tests. The default for most projects is '\''Debug'\''.]' \
+            {-f,--framework}'[The target framework to run tests for. The target framework must also be specified in the project file.]' \
+            '--runtime[The target runtime to test for.]' \
             '--no-restore[Do not restore the project before building.]' \
             '--interactive[Allows the command to stop and wait for user input or action (for example to complete authentication).]' \
             {-v,--verbosity}'[Set the MSBuild verbosity level. Allowed values are q\[uiet\], m\[inimal\], n\[ormal\], d\[etailed\], and diag\[nostic\].]' \
+            '--arch[The target architecture.]' \
+            '--os[The target operating system.]' \
+            {-?,-h,--help}'[Show command line help.]' \
             "*: :_files"
 
     }
 
     function _dotnet_tool {
         _arguments \
-            {-h,--help}'[Show command line help.]' \
+            {-?,-h,--help}'[Show command line help.]' \
             "*: :_files"
 
     }
@@ -239,14 +318,44 @@
 
     }
 
+    function _dotnet_workload {
+        _arguments \
+            {-?,-h,--help}'[Show command line help.]' \
+            "*: :_files"
+
+    }
+
     function _dotnet_dev-certs {
         _arguments \
+            {-h,--help}'[Show help information]' \
             "*: :_files"
 
     }
 
     function _dotnet_fsi {
         _arguments \
+            '--usesdkrefs[Use reference assemblies for .NET framework references when available (Enabled by default).]' \
+            '--[Treat remaining arguments as command line arguments, accessed using fsi.CommandLineArgs]' \
+            '--optimize[Enable optimizations (Short form: -O)]' \
+            '--tailcalls[Enable or disable tailcalls]' \
+            '--deterministic[Produce a deterministic assembly (including module version GUID and timestamp)]' \
+            '--crossoptimize[Enable or disable cross-module optimizations]' \
+            '--warnaserror[Report specific warnings as errors]' \
+            '--consolecolors[Output warning and error messages in color]' \
+            '--checked[Generate overflow checks]' \
+            '--mlcompatibility[Ignore ML compatibility warnings]' \
+            '--version[Display compiler version banner and exit]' \
+            '--help[Display this usage message (Short form: -?)]' \
+            '--utf8output[Output messages in UTF-8 encoding]' \
+            '--fullpaths[Output messages with fully qualified paths]' \
+            '--simpleresolution[Resolve assembly references using directory-based rules rather than MSBuild resolution]' \
+            '--noframework[Do not reference the default CLI assemblies by default]' \
+            '--exec[Exit fsi after loading the files or running the .fsx script given on the command line]' \
+            '--gui[Execute interactions on a Windows Forms event loop (on by default)]' \
+            '--quiet[Suppress fsi writing to stdout]' \
+            '--readline[Support TAB completion in console (on by default)]' \
+            '--quotations-debug[Emit debug information in quotations]' \
+            '--shadowcopyreferences[Prevents references from being locked by the F# Interactive process]' \
             "*: :_files"
 
     }
@@ -259,12 +368,25 @@
 
     function _dotnet_user-secrets {
         _arguments \
+            {-?,-h,--help}'[Show help information]' \
+            '--version[Show version information]' \
+            {-v,--verbose}'[Show verbose output]' \
+            {-p,--project}'[Path to project. Defaults to searching the current directory.]' \
+            {-c,--configuration}'[The project configuration to use. Defaults to '\''Debug'\''.]' \
+            '--id[The user secret ID to use.]' \
             "*: :_files"
 
     }
 
     function _dotnet_watch {
         _arguments \
+            {-q,--quiet}'[Suppresses all output except warnings and errors]' \
+            {-v,--verbose}'[Show verbose output]' \
+            '--no-hot-reload[Suppress hot reload for supported apps.]' \
+            '--project[The project to watch]' \
+            '--list[Lists all discovered files without starting the watcher]' \
+            '--version[Show version information]' \
+            {-?,-h,--help}'[Show help and usage information]' \
             "*: :_files"
 
     }
@@ -280,6 +402,7 @@ function _dotnet {
             'build:Build a .NET project.'
             'build-server:Interact with servers started by a build.'
             'clean:Clean build outputs of a .NET project.'
+            'format:Apply style preferences to a project or solution.'
             'help:Show command line help.'
             'list:List project references of a .NET project.'
             'msbuild:Run Microsoft Build Engine (MSBuild) commands.'
@@ -290,11 +413,13 @@ function _dotnet {
             'remove:Remove a package or reference from a .NET project.'
             'restore:Restore dependencies specified in a .NET project.'
             'run:Build and run a .NET project output.'
+            'sdk:Manage .NET SDK installation.'
             'sln:Modify Visual Studio solution files.'
             'store:Store the specified assemblies in the runtime package store.'
             'test:Run unit tests using the test runner specified in a .NET project.'
             'tool:Install or manage tools that extend the .NET experience.'
             'vstest:Run Microsoft Test Engine (VSTest) commands.'
+            'workload:Manage optional workloads.'
             'dev-certs:Create and manage development certificates.'
             'fsi:Start F# Interactive / execute F# scripts.'
             'sql-cache:SQL Server cache command-line tools.'
@@ -310,11 +435,14 @@ function _dotnet {
         '--additional-deps[Path to additional deps.json file.]':file:_files \
         '--depsfile[Path to <application>.deps.json file.]' \
         '--fx-version[Version of the installed Shared Framework to use to run the application.]' \
-        '--roll-forward[Roll forward to framework version  (LatestPatch, Minor, LatestMinor, Major, LatestMajor, Disable).]' \
+        '--roll-forward[Roll forward to framework version (LatestPatch, Minor, LatestMinor, Major, LatestMajor, Disable).]' \
         '--runtimeconfig[Path to <application>.runtimeconfig.json file.]' \
-        {-d,--diagnostics,-h,--help}'[ne help.]' \
-        '--info[formation.]' \
-        {--list-runtimes,--list-sdks,--version}'[K version in use.]' \
+        {-d,--diagnostics}'[Enable diagnostic output.]' \
+        {-h,--help}'[Show command line help.]' \
+        '--info[Display .NET information.]' \
+        '--list-runtimes[Display the installed runtimes.]' \
+        '--list-sdks[Display the installed SDKs.]' \
+        '--version[Display .NET SDK version in use.]' \
         ': :->cmd' \
         '*:: :->subcmd'
 
@@ -338,6 +466,10 @@ function _dotnet {
 
         (clean)
             _dotnet_clean
+            ;;
+
+        (format)
+            _dotnet_format
             ;;
 
         (help)
@@ -380,6 +512,10 @@ function _dotnet {
             _dotnet_run
             ;;
 
+        (sdk)
+            _dotnet_sdk
+            ;;
+
         (sln)
             _dotnet_sln
             ;;
@@ -398,6 +534,10 @@ function _dotnet {
 
         (vstest)
             _dotnet_vstest
+            ;;
+
+        (workload)
+            _dotnet_workload
             ;;
 
         (dev-certs)

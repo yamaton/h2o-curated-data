@@ -34,6 +34,10 @@ _dotnet()
             return
             ;;
 
+          format) _dotnet_format
+            return
+            ;;
+
           help) _dotnet_help
             return
             ;;
@@ -74,6 +78,10 @@ _dotnet()
             return
             ;;
 
+          sdk) _dotnet_sdk
+            return
+            ;;
+
           sln) _dotnet_sln
             return
             ;;
@@ -91,6 +99,10 @@ _dotnet()
             ;;
 
           vstest) _dotnet_vstest
+            return
+            ;;
+
+          workload) _dotnet_workload
             return
             ;;
 
@@ -115,7 +127,7 @@ _dotnet()
             ;;
 
       *)
-          word_list=" add build build-server clean help list msbuild new nuget pack publish remove restore run sln store test tool vstest dev-certs fsi sql-cache user-secrets watch --additionalprobingpath --additional-deps --depsfile --fx-version --roll-forward --runtimeconfig -d --diagnostics -h --help --info --list-runtimes --list-sdks --version"
+          word_list=" add build build-server clean format help list msbuild new nuget pack publish remove restore run sdk sln store test tool vstest workload dev-certs fsi sql-cache user-secrets watch --additionalprobingpath --additional-deps --depsfile --fx-version --roll-forward --runtimeconfig -d --diagnostics -h --help --info --list-runtimes --list-sdks --version"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac
@@ -125,7 +137,53 @@ _dotnet()
 _dotnet_add ()
 {
     local cur word_list
-    word_list=" -h --help" 
+    local i=1 subcommand_index
+
+    # take the last word that's NOT starting with -
+    while [[ ( $i < $COMP_CWORD ) ]]; do
+        local s="${COMP_WORDS[i]}"
+        case "$s" in
+          add)
+            subcommand_index=$i
+            break
+            ;;
+        esac
+        (( i++ ))
+    done
+
+    while [[ ( $subcommand_index < $COMP_CWORD ) ]]; do
+        local s="${COMP_WORDS[subcommand_index}"
+        case "$s" in
+          package) _dotnet_package
+            return
+            ;;
+
+          reference) _dotnet_reference
+            return
+            ;;
+
+          *)  ;; 
+        esac
+        (( subcommand_index++ ))
+    done
+
+    word_list=" package reference -? -h --help" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_add_package ()
+{
+    local cur word_list
+    word_list=" -v --version -f --framework -n --no-restore -s --source --package-directory --interactive --prerelease -? -h --help" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_add_reference ()
+{
+    local cur word_list
+    word_list=" -f --framework --interactive -? -h --help" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -133,7 +191,7 @@ _dotnet_add ()
 _dotnet_build ()
 {
     local cur word_list
-    word_list=" -h --help -o --output -f --framework -c --configuration -r --runtime --version-suffix --no-incremental --no-dependencies --nologo --no-restore --interactive -v --verbosity --force" 
+    word_list=" --use-current-runtime -f --framework -c --configuration -r --runtime --version-suffix --no-restore --interactive -v --verbosity --debug -o --output --no-incremental --no-dependencies --nologo --sc --self-contained --no-self-contained -a --arch --os -? -h --help" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -141,7 +199,41 @@ _dotnet_build ()
 _dotnet_buildserver ()
 {
     local cur word_list
-    word_list=" -h --help" 
+    local i=1 subcommand_index
+
+    # take the last word that's NOT starting with -
+    while [[ ( $i < $COMP_CWORD ) ]]; do
+        local s="${COMP_WORDS[i]}"
+        case "$s" in
+          build-server)
+            subcommand_index=$i
+            break
+            ;;
+        esac
+        (( i++ ))
+    done
+
+    while [[ ( $subcommand_index < $COMP_CWORD ) ]]; do
+        local s="${COMP_WORDS[subcommand_index}"
+        case "$s" in
+          shutdown) _dotnet_shutdown
+            return
+            ;;
+
+          *)  ;; 
+        esac
+        (( subcommand_index++ ))
+    done
+
+    word_list=" shutdown -? -h --help" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_buildserver_shutdown ()
+{
+    local cur word_list
+    word_list=" --msbuild --vbcscompiler --razor -? -h --help" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -149,7 +241,73 @@ _dotnet_buildserver ()
 _dotnet_clean ()
 {
     local cur word_list
-    word_list=" -h --help -o --output --nologo -f --framework -r --runtime -c --configuration --interactive -v --verbosity" 
+    word_list=" -f --framework -r --runtime -c --configuration --interactive -v --verbosity -o --output --nologo -? -h --help" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_dotnet_format ()
+{
+    local cur word_list
+    local i=1 subcommand_index
+
+    # take the last word that's NOT starting with -
+    while [[ ( $i < $COMP_CWORD ) ]]; do
+        local s="${COMP_WORDS[i]}"
+        case "$s" in
+          format)
+            subcommand_index=$i
+            break
+            ;;
+        esac
+        (( i++ ))
+    done
+
+    while [[ ( $subcommand_index < $COMP_CWORD ) ]]; do
+        local s="${COMP_WORDS[subcommand_index}"
+        case "$s" in
+          whitespace) _dotnet_whitespace
+            return
+            ;;
+
+          style) _dotnet_style
+            return
+            ;;
+
+          analyzers) _dotnet_analyzers
+            return
+            ;;
+
+          *)  ;; 
+        esac
+        (( subcommand_index++ ))
+    done
+
+    word_list=" whitespace style analyzers --diagnostics --severity --no-restore --verify-no-changes --include --exclude --include-generated -v --verbosity --binarylog --report --version -? -h --help" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_format_whitespace ()
+{
+    local cur word_list
+    word_list=" --folder --no-restore --verify-no-changes --include --exclude --include-generated -v --verbosity --binarylog --report -? -h --help" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_format_style ()
+{
+    local cur word_list
+    word_list=" --diagnostics --severity --no-restore --verify-no-changes --include --exclude --include-generated -v --verbosity --binarylog --report -? -h --help" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_format_analyzers ()
+{
+    local cur word_list
+    word_list=" --diagnostics --severity --no-restore --verify-no-changes --include --exclude --include-generated -v --verbosity --binarylog --report -? -h --help" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -157,7 +315,7 @@ _dotnet_clean ()
 _dotnet_help ()
 {
     local cur word_list
-    word_list=" -h --help" 
+    word_list=" -? -h --help" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -165,7 +323,483 @@ _dotnet_help ()
 _dotnet_list ()
 {
     local cur word_list
-    word_list=" -h --help" 
+    local i=1 subcommand_index
+
+    # take the last word that's NOT starting with -
+    while [[ ( $i < $COMP_CWORD ) ]]; do
+        local s="${COMP_WORDS[i]}"
+        case "$s" in
+          list)
+            subcommand_index=$i
+            break
+            ;;
+        esac
+        (( i++ ))
+    done
+
+    while [[ ( $subcommand_index < $COMP_CWORD ) ]]; do
+        local s="${COMP_WORDS[subcommand_index}"
+        case "$s" in
+          package) _dotnet_package
+            return
+            ;;
+
+          reference) _dotnet_reference
+            return
+            ;;
+
+          *)  ;; 
+        esac
+        (( subcommand_index++ ))
+    done
+
+    word_list=" package reference -? -h --help" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_list_package ()
+{
+    local cur word_list
+    word_list=" -v --verbosity --outdated --deprecated --vulnerable --include-transitive --include-prerelease --highest-patch --highest-minor --config --source --interactive -? -h --help" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_list_reference ()
+{
+    local cur word_list
+    word_list=" -? -h --help" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_dotnet_msbuild ()
+{
+    local cur word_list
+    word_list=" -maxCpuCount -noConsoleLogger -fileLogger -fileLoggerParameters -distributedFileLogger -binaryLogger -warnAsError -warnAsMessage -preprocess -targets -detailedSummary -restore -interactive -isolateProjects -graphBuild -lowPriority -noAutoResponse -noLogo -version -help" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_dotnet_new ()
+{
+    local cur word_list
+    word_list=" -h --help -l --list -n --name -o --output -i --install -u --uninstall --interactive --add-source --nuget-source --type --dry-run --force -lang --language --update-check --update-apply --search --author --package --columns --columns-all --tag --no-update-check" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_dotnet_nuget ()
+{
+    local cur word_list
+    local i=1 subcommand_index
+
+    # take the last word that's NOT starting with -
+    while [[ ( $i < $COMP_CWORD ) ]]; do
+        local s="${COMP_WORDS[i]}"
+        case "$s" in
+          nuget)
+            subcommand_index=$i
+            break
+            ;;
+        esac
+        (( i++ ))
+    done
+
+    while [[ ( $subcommand_index < $COMP_CWORD ) ]]; do
+        local s="${COMP_WORDS[subcommand_index}"
+        case "$s" in
+          add) _dotnet_add
+            return
+            ;;
+
+          delete) _dotnet_delete
+            return
+            ;;
+
+          disable) _dotnet_disable
+            return
+            ;;
+
+          enable) _dotnet_enable
+            return
+            ;;
+
+          list) _dotnet_list
+            return
+            ;;
+
+          push) _dotnet_push
+            return
+            ;;
+
+          remove) _dotnet_remove
+            return
+            ;;
+
+          sign) _dotnet_sign
+            return
+            ;;
+
+          trust) _dotnet_trust
+            return
+            ;;
+
+          update) _dotnet_update
+            return
+            ;;
+
+          verify) _dotnet_verify
+            return
+            ;;
+
+          *)  ;; 
+        esac
+        (( subcommand_index++ ))
+    done
+
+    word_list=" add delete disable enable list push remove sign trust update verify -h --help --version" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_nuget_add ()
+{
+    local cur word_list
+    local i=1 subcommand_index
+
+    # take the last word that's NOT starting with -
+    while [[ ( $i < $COMP_CWORD ) ]]; do
+        local s="${COMP_WORDS[i]}"
+        case "$s" in
+          add)
+            subcommand_index=$i
+            break
+            ;;
+        esac
+        (( i++ ))
+    done
+
+    while [[ ( $subcommand_index < $COMP_CWORD ) ]]; do
+        local s="${COMP_WORDS[subcommand_index}"
+        case "$s" in
+          client-cert) _nuget_clientcert
+            return
+            ;;
+
+          source) _nuget_source
+            return
+            ;;
+
+          *)  ;; 
+        esac
+        (( subcommand_index++ ))
+    done
+
+    word_list=" client-cert source -h --help" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_add_clientcert ()
+{
+    local cur word_list
+    word_list=" -s --package-source --path --password --store-password-in-clear-text --store-location --store-name --find-by --find-value -f --force --configfile -h --help" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_add_source ()
+{
+    local cur word_list
+    word_list=" -n --name -u --username -p --password --store-password-in-clear-text --valid-authentication-types --configfile -h --help" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_nuget_delete ()
+{
+    local cur word_list
+    word_list=" -h --help --force-english-output -s --source --non-interactive -k --api-key --no-service-endpoint --interactive" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_nuget_disable ()
+{
+    local cur word_list
+    local i=1 subcommand_index
+
+    # take the last word that's NOT starting with -
+    while [[ ( $i < $COMP_CWORD ) ]]; do
+        local s="${COMP_WORDS[i]}"
+        case "$s" in
+          disable)
+            subcommand_index=$i
+            break
+            ;;
+        esac
+        (( i++ ))
+    done
+
+    while [[ ( $subcommand_index < $COMP_CWORD ) ]]; do
+        local s="${COMP_WORDS[subcommand_index}"
+        case "$s" in
+          source) _nuget_source
+            return
+            ;;
+
+          *)  ;; 
+        esac
+        (( subcommand_index++ ))
+    done
+
+    word_list=" source -h --help" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_disable_source ()
+{
+    local cur word_list
+    word_list=" --configfile -h --help" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_nuget_enable ()
+{
+    local cur word_list
+    local i=1 subcommand_index
+
+    # take the last word that's NOT starting with -
+    while [[ ( $i < $COMP_CWORD ) ]]; do
+        local s="${COMP_WORDS[i]}"
+        case "$s" in
+          enable)
+            subcommand_index=$i
+            break
+            ;;
+        esac
+        (( i++ ))
+    done
+
+    while [[ ( $subcommand_index < $COMP_CWORD ) ]]; do
+        local s="${COMP_WORDS[subcommand_index}"
+        case "$s" in
+          source) _nuget_source
+            return
+            ;;
+
+          *)  ;; 
+        esac
+        (( subcommand_index++ ))
+    done
+
+    word_list=" source -h --help" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_enable_source ()
+{
+    local cur word_list
+    word_list=" --configfile -h --help" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_nuget_list ()
+{
+    local cur word_list
+    local i=1 subcommand_index
+
+    # take the last word that's NOT starting with -
+    while [[ ( $i < $COMP_CWORD ) ]]; do
+        local s="${COMP_WORDS[i]}"
+        case "$s" in
+          list)
+            subcommand_index=$i
+            break
+            ;;
+        esac
+        (( i++ ))
+    done
+
+    while [[ ( $subcommand_index < $COMP_CWORD ) ]]; do
+        local s="${COMP_WORDS[subcommand_index}"
+        case "$s" in
+          client-cert) _nuget_clientcert
+            return
+            ;;
+
+          source) _nuget_source
+            return
+            ;;
+
+          *)  ;; 
+        esac
+        (( subcommand_index++ ))
+    done
+
+    word_list=" client-cert source -h --help" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_list_clientcert ()
+{
+    local cur word_list
+    word_list=" --configfile -h --help" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_list_source ()
+{
+    local cur word_list
+    word_list=" --format --configfile -h --help" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_nuget_push ()
+{
+    local cur word_list
+    word_list=" -h --help --force-english-output -s --source -ss --symbol-source -t --timeout -k --api-key -sk --symbol-api-key -d --disable-buffering -n --no-symbols --no-service-endpoint --interactive --skip-duplicate" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_nuget_remove ()
+{
+    local cur word_list
+    local i=1 subcommand_index
+
+    # take the last word that's NOT starting with -
+    while [[ ( $i < $COMP_CWORD ) ]]; do
+        local s="${COMP_WORDS[i]}"
+        case "$s" in
+          remove)
+            subcommand_index=$i
+            break
+            ;;
+        esac
+        (( i++ ))
+    done
+
+    while [[ ( $subcommand_index < $COMP_CWORD ) ]]; do
+        local s="${COMP_WORDS[subcommand_index}"
+        case "$s" in
+          client-cert) _nuget_clientcert
+            return
+            ;;
+
+          source) _nuget_source
+            return
+            ;;
+
+          *)  ;; 
+        esac
+        (( subcommand_index++ ))
+    done
+
+    word_list=" client-cert source -h --help" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_remove_clientcert ()
+{
+    local cur word_list
+    word_list=" -s --package-source --configfile -h --help" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_remove_source ()
+{
+    local cur word_list
+    word_list=" --configfile -h --help" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_nuget_sign ()
+{
+    local cur word_list
+    word_list=" -o --output --certificate-path --certificate-store-name --certificate-store-location --certificate-subject-name --certificate-fingerprint --certificate-password --hash-algorithm --timestamper --timestamp-hash-algorithm --overwrite -v --verbosity -h --help" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_nuget_trust ()
+{
+    local cur word_list
+    word_list=" --algorithm --allow-untrusted-root --owners -v --verbosity --configfile -h --help" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_nuget_update ()
+{
+    local cur word_list
+    local i=1 subcommand_index
+
+    # take the last word that's NOT starting with -
+    while [[ ( $i < $COMP_CWORD ) ]]; do
+        local s="${COMP_WORDS[i]}"
+        case "$s" in
+          update)
+            subcommand_index=$i
+            break
+            ;;
+        esac
+        (( i++ ))
+    done
+
+    while [[ ( $subcommand_index < $COMP_CWORD ) ]]; do
+        local s="${COMP_WORDS[subcommand_index}"
+        case "$s" in
+          client-cert) _nuget_clientcert
+            return
+            ;;
+
+          source) _nuget_source
+            return
+            ;;
+
+          *)  ;; 
+        esac
+        (( subcommand_index++ ))
+    done
+
+    word_list=" client-cert source -h --help" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_update_clientcert ()
+{
+    local cur word_list
+    word_list=" -s --package-source --path --password --store-password-in-clear-text --store-location --store-name --find-by --find-value -f --force --configfile -h --help" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_update_source ()
+{
+    local cur word_list
+    word_list=" -s --source -u --username -p --password --store-password-in-clear-text --valid-authentication-types --configfile -h --help" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_nuget_verify ()
+{
+    local cur word_list
+    word_list=" --all --certificate-fingerprint -v --verbosity -h --help" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -173,7 +807,7 @@ _dotnet_list ()
 _dotnet_pack ()
 {
     local cur word_list
-    word_list=" -h --help -o --output --no-build --include-symbols --include-source -c --configuration --version-suffix -s --serviceable --nologo --interactive --no-restore -v --verbosity --runtime --no-dependencies --force" 
+    word_list=" -o --output --no-build --include-symbols --include-source -s --serviceable --nologo --interactive --no-restore -v --verbosity --version-suffix -c --configuration --use-current-runtime -? -h --help" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -181,7 +815,7 @@ _dotnet_pack ()
 _dotnet_publish ()
 {
     local cur word_list
-    word_list=" -h --help -o --output -f --framework -r --runtime -c --configuration --version-suffix --manifest --no-build --self-contained --no-self-contained --nologo --interactive --no-restore -v --verbosity --no-dependencies --force" 
+    word_list=" --use-current-runtime -o --output --manifest --no-build --sc --self-contained --no-self-contained --nologo -f --framework -r --runtime -c --configuration --version-suffix --interactive --no-restore -v --verbosity -a --arch --os -? -h --help" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -189,7 +823,53 @@ _dotnet_publish ()
 _dotnet_remove ()
 {
     local cur word_list
-    word_list=" -h --help" 
+    local i=1 subcommand_index
+
+    # take the last word that's NOT starting with -
+    while [[ ( $i < $COMP_CWORD ) ]]; do
+        local s="${COMP_WORDS[i]}"
+        case "$s" in
+          remove)
+            subcommand_index=$i
+            break
+            ;;
+        esac
+        (( i++ ))
+    done
+
+    while [[ ( $subcommand_index < $COMP_CWORD ) ]]; do
+        local s="${COMP_WORDS[subcommand_index}"
+        case "$s" in
+          package) _dotnet_package
+            return
+            ;;
+
+          reference) _dotnet_reference
+            return
+            ;;
+
+          *)  ;; 
+        esac
+        (( subcommand_index++ ))
+    done
+
+    word_list=" package reference -? -h --help" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_remove_package ()
+{
+    local cur word_list
+    word_list=" --interactive -? -h --help" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_remove_reference ()
+{
+    local cur word_list
+    word_list=" -f --framework -? -h --help" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -197,7 +877,7 @@ _dotnet_remove ()
 _dotnet_restore ()
 {
     local cur word_list
-    word_list=" -h --help -s --source -r --runtime --packages --disable-parallel --configfile --no-cache --ignore-failed-sources --no-dependencies -f --force -v --verbosity --interactive --use-lock-file --locked-mode --lock-file-path --force-evaluate" 
+    word_list=" -s --source --packages --use-current-runtime --disable-parallel --configfile --no-cache --ignore-failed-sources -f --force -r --runtime --no-dependencies -v --verbosity --interactive --use-lock-file --locked-mode --lock-file-path --force-evaluate -? -h --help" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -205,7 +885,49 @@ _dotnet_restore ()
 _dotnet_run ()
 {
     local cur word_list
-    word_list=" -h --help -c --configuration -f --framework -r --runtime -p --project --launch-profile --no-launch-profile --no-build --interactive --no-restore -v --verbosity --no-dependencies --force" 
+    word_list=" -c --configuration -f --framework -r --runtime --project -p --property --launch-profile --no-launch-profile --no-build --interactive --no-restore --sc --self-contained --no-self-contained -v --verbosity -a --arch --os -? -h --help" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_dotnet_sdk ()
+{
+    local cur word_list
+    local i=1 subcommand_index
+
+    # take the last word that's NOT starting with -
+    while [[ ( $i < $COMP_CWORD ) ]]; do
+        local s="${COMP_WORDS[i]}"
+        case "$s" in
+          sdk)
+            subcommand_index=$i
+            break
+            ;;
+        esac
+        (( i++ ))
+    done
+
+    while [[ ( $subcommand_index < $COMP_CWORD ) ]]; do
+        local s="${COMP_WORDS[subcommand_index}"
+        case "$s" in
+          check) _dotnet_check
+            return
+            ;;
+
+          *)  ;; 
+        esac
+        (( subcommand_index++ ))
+    done
+
+    word_list=" check -? -h --help" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_sdk_check ()
+{
+    local cur word_list
+    word_list=" -? -h --help" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -213,7 +935,65 @@ _dotnet_run ()
 _dotnet_sln ()
 {
     local cur word_list
-    word_list=" -h --help" 
+    local i=1 subcommand_index
+
+    # take the last word that's NOT starting with -
+    while [[ ( $i < $COMP_CWORD ) ]]; do
+        local s="${COMP_WORDS[i]}"
+        case "$s" in
+          sln)
+            subcommand_index=$i
+            break
+            ;;
+        esac
+        (( i++ ))
+    done
+
+    while [[ ( $subcommand_index < $COMP_CWORD ) ]]; do
+        local s="${COMP_WORDS[subcommand_index}"
+        case "$s" in
+          add) _dotnet_add
+            return
+            ;;
+
+          list) _dotnet_list
+            return
+            ;;
+
+          remove) _dotnet_remove
+            return
+            ;;
+
+          *)  ;; 
+        esac
+        (( subcommand_index++ ))
+    done
+
+    word_list=" add list remove -? -h --help" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_sln_add ()
+{
+    local cur word_list
+    word_list=" --in-root -s --solution-folder -? -h --help" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_sln_list ()
+{
+    local cur word_list
+    word_list=" -? -h --help" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_sln_remove ()
+{
+    local cur word_list
+    word_list=" -? -h --help" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -221,7 +1001,7 @@ _dotnet_sln ()
 _dotnet_store ()
 {
     local cur word_list
-    word_list=" -h --help -m --manifest -f --framework --framework-version -r --runtime -o --output -w --working-dir --skip-optimization --skip-symbols -v --verbosity" 
+    word_list=" -m --manifest --framework-version -o --output -w --working-dir --skip-optimization --skip-symbols -f --framework -r --runtime -v --verbosity --use-current-runtime -? -h --help" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -229,7 +1009,7 @@ _dotnet_store ()
 _dotnet_test ()
 {
     local cur word_list
-    word_list=" -h --help -s --settings -t --list-tests --filter -a --test-adapter-path -l --logger -c --configuration -f --framework --runtime -o --output -d --diag --no-build -r --results-directory --collect --blame --blame-crash --blame-crash-dump-type --blame-crash-collect-always --blame-hang --blame-hang-dump-type --blame-hang-timeout --nologo --no-restore --interactive -v --verbosity" 
+    word_list=" -s --settings -t --list-tests -e --environment --filter -a --test-adapter-path -l --logger -o --output -d --diag --no-build -r --results-directory --collect --blame --blame-crash --blame-crash-dump-type --blame-crash-collect-always --blame-hang --blame-hang-dump-type --blame-hang-timeout --nologo -c --configuration -f --framework --runtime --no-restore --interactive -v --verbosity --arch --os -? -h --help" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -237,7 +1017,341 @@ _dotnet_test ()
 _dotnet_tool ()
 {
     local cur word_list
+    local i=1 subcommand_index
+
+    # take the last word that's NOT starting with -
+    while [[ ( $i < $COMP_CWORD ) ]]; do
+        local s="${COMP_WORDS[i]}"
+        case "$s" in
+          tool)
+            subcommand_index=$i
+            break
+            ;;
+        esac
+        (( i++ ))
+    done
+
+    while [[ ( $subcommand_index < $COMP_CWORD ) ]]; do
+        local s="${COMP_WORDS[subcommand_index}"
+        case "$s" in
+          install) _dotnet_install
+            return
+            ;;
+
+          uninstall) _dotnet_uninstall
+            return
+            ;;
+
+          update) _dotnet_update
+            return
+            ;;
+
+          list) _dotnet_list
+            return
+            ;;
+
+          run) _dotnet_run
+            return
+            ;;
+
+          search) _dotnet_search
+            return
+            ;;
+
+          restore) _dotnet_restore
+            return
+            ;;
+
+          *)  ;; 
+        esac
+        (( subcommand_index++ ))
+    done
+
+    word_list=" install uninstall update list run search restore -? -h --help" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_tool_install ()
+{
+    local cur word_list
+    word_list=" -g --global --local --tool-path --version --configfile --tool-manifest --add-source --framework --prerelease --disable-parallel --ignore-failed-sources --no-cache --interactive -v --verbosity -a --arch -? -h --help" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_tool_uninstall ()
+{
+    local cur word_list
+    word_list=" -g --global --local --tool-path --tool-manifest -? -h --help" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_tool_update ()
+{
+    local cur word_list
+    word_list=" -g --global --tool-path --local --configfile --add-source --framework --version --tool-manifest --prerelease --disable-parallel --ignore-failed-sources --no-cache --interactive -v --verbosity -? -h --help" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_tool_list ()
+{
+    local cur word_list
+    word_list=" -g --global --local --tool-path -? -h --help" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_tool_run ()
+{
+    local cur word_list
+    word_list=" -? -h --help" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_tool_search ()
+{
+    local cur word_list
+    word_list=" --detail --skip --take --prerelease -? -h --help" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_tool_restore ()
+{
+    local cur word_list
+    word_list=" --configfile --add-source --tool-manifest --disable-parallel --ignore-failed-sources --no-cache --interactive -v --verbosity -? -h --help" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_dotnet_workload ()
+{
+    local cur word_list
+    local i=1 subcommand_index
+
+    # take the last word that's NOT starting with -
+    while [[ ( $i < $COMP_CWORD ) ]]; do
+        local s="${COMP_WORDS[i]}"
+        case "$s" in
+          workload)
+            subcommand_index=$i
+            break
+            ;;
+        esac
+        (( i++ ))
+    done
+
+    while [[ ( $subcommand_index < $COMP_CWORD ) ]]; do
+        local s="${COMP_WORDS[subcommand_index}"
+        case "$s" in
+          install) _dotnet_install
+            return
+            ;;
+
+          update) _dotnet_update
+            return
+            ;;
+
+          list) _dotnet_list
+            return
+            ;;
+
+          search) _dotnet_search
+            return
+            ;;
+
+          uninstall) _dotnet_uninstall
+            return
+            ;;
+
+          repair) _dotnet_repair
+            return
+            ;;
+
+          restore) _dotnet_restore
+            return
+            ;;
+
+          *)  ;; 
+        esac
+        (( subcommand_index++ ))
+    done
+
+    word_list=" install update list search uninstall repair restore -? -h --help" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_workload_install ()
+{
+    local cur word_list
+    word_list=" --configfile -s --source --skip-manifest-update --include-previews --temp-dir --disable-parallel --ignore-failed-sources --no-cache --interactive -v --verbosity -? -h --help" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_workload_update ()
+{
+    local cur word_list
+    word_list=" --configfile -s --source --include-previews --temp-dir --from-previous-sdk --advertising-manifests-only --disable-parallel --ignore-failed-sources --no-cache --interactive -v --verbosity -? -h --help" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_workload_list ()
+{
+    local cur word_list
+    word_list=" -? -h --help" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_workload_search ()
+{
+    local cur word_list
+    word_list=" -? -h --help" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_workload_uninstall ()
+{
+    local cur word_list
+    word_list=" -? -h --help" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_workload_repair ()
+{
+    local cur word_list
+    word_list=" --configfile -s --source -v --verbosity --disable-parallel --ignore-failed-sources --no-cache --interactive -? -h --help" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_workload_restore ()
+{
+    local cur word_list
+    word_list=" --configfile -s --source --skip-manifest-update --include-previews --temp-dir --disable-parallel --ignore-failed-sources --no-cache --interactive -v --verbosity -? -h --help" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_dotnet_devcerts ()
+{
+    local cur word_list
     word_list=" -h --help" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_dotnet_fsi ()
+{
+    local cur word_list
+    word_list=" --usesdkrefs -- --optimize --tailcalls --deterministic --crossoptimize --warnaserror --consolecolors --checked --mlcompatibility --version --help --utf8output --fullpaths --simpleresolution --noframework --exec --gui --quiet --readline --quotations-debug --shadowcopyreferences" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_dotnet_usersecrets ()
+{
+    local cur word_list
+    local i=1 subcommand_index
+
+    # take the last word that's NOT starting with -
+    while [[ ( $i < $COMP_CWORD ) ]]; do
+        local s="${COMP_WORDS[i]}"
+        case "$s" in
+          user-secrets)
+            subcommand_index=$i
+            break
+            ;;
+        esac
+        (( i++ ))
+    done
+
+    while [[ ( $subcommand_index < $COMP_CWORD ) ]]; do
+        local s="${COMP_WORDS[subcommand_index}"
+        case "$s" in
+          clear) _dotnet_clear
+            return
+            ;;
+
+          init) _dotnet_init
+            return
+            ;;
+
+          list) _dotnet_list
+            return
+            ;;
+
+          remove) _dotnet_remove
+            return
+            ;;
+
+          set) _dotnet_set
+            return
+            ;;
+
+          *)  ;; 
+        esac
+        (( subcommand_index++ ))
+    done
+
+    word_list=" clear init list remove set -? -h --help --version -v --verbose -p --project -c --configuration --id" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_usersecrets_clear ()
+{
+    local cur word_list
+    word_list=" -? -h --help -v --verbose -p --project -c --configuration --id" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_usersecrets_init ()
+{
+    local cur word_list
+    word_list=" -? -h --help -v --verbose -p --project -c --configuration --id" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_usersecrets_list ()
+{
+    local cur word_list
+    word_list=" -? -h --help --json -v --verbose -p --project -c --configuration --id" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_usersecrets_remove ()
+{
+    local cur word_list
+    word_list=" -? -h --help -v --verbose -p --project -c --configuration --id" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_usersecrets_set ()
+{
+    local cur word_list
+    word_list=" -? -h --help -v --verbose -p --project -c --configuration --id" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_dotnet_watch ()
+{
+    local cur word_list
+    word_list=" -q --quiet -v --verbose --no-hot-reload --project --list --version -? -h --help" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }

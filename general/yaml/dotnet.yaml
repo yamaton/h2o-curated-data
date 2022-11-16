@@ -1,5 +1,6 @@
 name: dotnet
 description: dotnet
+usage: dotnet [runtime-options] [path-to-application] [arguments]
 options:
   - names:
       - --additionalprobingpath
@@ -20,7 +21,7 @@ options:
   - names:
       - --roll-forward
     argument: <setting>
-    description: Roll forward to framework version  (LatestPatch, Minor, LatestMinor, Major, LatestMajor, Disable).
+    description: Roll forward to framework version (LatestPatch, Minor, LatestMinor, Major, LatestMajor, Disable).
   - names:
       - --runtimeconfig
     argument: ""
@@ -28,42 +29,110 @@ options:
   - names:
       - -d
       - --diagnostics
+    argument: ""
+    description: Enable diagnostic output.
+  - names:
       - -h
       - --help
-    argument: Enable diagnostic output.
-    description: ne help.
+    argument: ""
+    description: Show command line help.
   - names:
       - --info
-    argument: Display .NET in
-    description: formation.
+    argument: ""
+    description: Display .NET information.
   - names:
       - --list-runtimes
+    argument: ""
+    description: Display the installed runtimes.
+  - names:
       - --list-sdks
+    argument: ""
+    description: Display the installed SDKs.
+  - names:
       - --version
-    argument: Display the installed runtimes.
-    description: K version in use.
+    argument: ""
+    description: Display .NET SDK version in use.
 subcommands:
   - name: add
     description: Add a package or reference to a .NET project.
+    usage: dotnet [options] add [<PROJECT>] [command]
     options:
       - names:
+          - -?
           - -h
           - --help
         argument: ""
         description: Show command line help.
+    subcommands:
+      - name: package
+        description: Add a NuGet package reference to the project.
+        usage: dotnet [options] add [<PROJECT>] package [<PACKAGE_NAME>]
+        options:
+          - names:
+              - -v
+              - --version
+            argument: <VERSION>
+            description: The version of the package to add.
+          - names:
+              - -f
+              - --framework
+            argument: <FRAMEWORK>
+            description: Add the reference only when targeting a specific framework.
+          - names:
+              - -n
+              - --no-restore
+            argument: ""
+            description: Add the reference without performing restore preview and compatibility check.
+          - names:
+              - -s
+              - --source
+            argument: <SOURCE>
+            description: The NuGet package source to use during the restore.
+          - names:
+              - --package-directory
+            argument: <PACKAGE_DIR>
+            description: The directory to restore packages to.
+          - names:
+              - --interactive
+            argument: ""
+            description: Allows the command to stop and wait for user input or action (for example to complete authentication).
+          - names:
+              - --prerelease
+            argument: ""
+            description: Allows prerelease packages to be installed.
+          - names:
+              - -?
+              - -h
+              - --help
+            argument: ""
+            description: Show command line help.
+      - name: reference
+        description: Add a project-to-project reference to the project.
+        usage: dotnet [options] add [<PROJECT>] reference <PROJECT_PATH>...
+        options:
+          - names:
+              - -f
+              - --framework
+            argument: <FRAMEWORK>
+            description: Add the reference only when targeting a specific framework.
+          - names:
+              - --interactive
+            argument: ""
+            description: Allows the command to stop and wait for user input or action (for example to complete authentication).
+          - names:
+              - -?
+              - -h
+              - --help
+            argument: ""
+            description: Show command line help.
   - name: build
     description: Build a .NET project.
+    usage: dotnet [options] build [<PROJECT | SOLUTION>...]
     options:
       - names:
-          - -h
-          - --help
+          - --use-current-runtime
         argument: ""
-        description: Show command line help.
-      - names:
-          - -o
-          - --output
-        argument: <OUTPUT_DIR>
-        description: The output directory to place built artifacts in.
+        description: Use current runtime as the target runtime.
       - names:
           - -f
           - --framework
@@ -84,18 +153,6 @@ subcommands:
         argument: <VERSION_SUFFIX>
         description: Set the value of the $(VersionSuffix) property to use when building the project.
       - names:
-          - --no-incremental
-        argument: ""
-        description: Do not use incremental building.
-      - names:
-          - --no-dependencies
-        argument: ""
-        description: Do not build project-to-project references and only build the specified project.
-      - names:
-          - --nologo
-        argument: ""
-        description: Do not display the startup banner or the copyright message.
-      - names:
           - --no-restore
         argument: ""
         description: Do not restore the project before building.
@@ -109,34 +166,84 @@ subcommands:
         argument: <LEVEL>
         description: Set the MSBuild verbosity level. Allowed values are q[uiet], m[inimal], n[ormal], d[etailed], and diag[nostic].
       - names:
-          - --force
-        argument: ""
-        description: Force all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting project.assets.json.
-  - name: build-server
-    description: Interact with servers started by a build.
-    options:
-      - names:
-          - -h
-          - --help
-        argument: ""
-        description: Show command line help.
-  - name: clean
-    description: Clean build outputs of a .NET project.
-    options:
-      - names:
-          - -h
-          - --help
-        argument: ""
-        description: Show command line help.
-      - names:
+          - --debug
           - -o
           - --output
         argument: <OUTPUT_DIR>
-        description: The directory containing the build artifacts to clean.
+        description: The output directory to place built artifacts in.
+      - names:
+          - --no-incremental
+        argument: ""
+        description: Do not use incremental building.
+      - names:
+          - --no-dependencies
+        argument: ""
+        description: Do not build project-to-project references and only build the specified project.
       - names:
           - --nologo
         argument: ""
         description: Do not display the startup banner or the copyright message.
+      - names:
+          - --sc
+          - --self-contained
+        argument: ""
+        description: Publish the .NET runtime with your application so the runtime doesn't need to be installed on the target machine. The default is 'true' if a runtime identifier is specified.
+      - names:
+          - --no-self-contained
+        argument: ""
+        description: Publish your application as a framework dependent application. A compatible .NET runtime must be installed on the target machine to run your application.
+      - names:
+          - -a
+          - --arch
+        argument: <arch>
+        description: The target architecture.
+      - names:
+          - --os
+        argument: <os>
+        description: The target operating system.
+      - names:
+          - -?
+          - -h
+          - --help
+        argument: ""
+        description: Show command line help.
+  - name: build-server
+    description: Interact with servers started by a build.
+    usage: dotnet [options] build-server [command]
+    options:
+      - names:
+          - -?
+          - -h
+          - --help
+        argument: ""
+        description: Show command line help.
+    subcommands:
+      - name: shutdown
+        description: Shuts down build servers that are started from dotnet. By default,
+        usage: dotnet [options] build-server shutdown
+        options:
+          - names:
+              - --msbuild
+            argument: ""
+            description: Shut down the MSBuild build server.
+          - names:
+              - --vbcscompiler
+            argument: ""
+            description: Shut down the VB/C# compiler build server.
+          - names:
+              - --razor
+            argument: ""
+            description: Shut down the Razor build server.
+          - names:
+              - -?
+              - -h
+              - --help
+            argument: ""
+            description: Show command line help.
+  - name: clean
+    description: Clean build outputs of a .NET project.
+    usage: dotnet [options] clean [<PROJECT | SOLUTION>...]
+    options:
       - names:
           - -f
           - --framework
@@ -161,39 +268,1037 @@ subcommands:
           - --verbosity
         argument: <LEVEL>
         description: Set the MSBuild verbosity level. Allowed values are q[uiet], m[inimal], n[ormal], d[etailed], and diag[nostic].
-  - name: help
-    description: Show command line help.
+      - names:
+          - -o
+          - --output
+        argument: <OUTPUT_DIR>
+        description: The directory containing the build artifacts to clean.
+      - names:
+          - --nologo
+        argument: ""
+        description: Do not display the startup banner or the copyright message.
+      - names:
+          - -?
+          - -h
+          - --help
+        argument: ""
+        description: Show command line help.
+  - name: format
+    description: Apply style preferences to a project or solution.
+    usage: dotnet-format [options] [<The project or solution file to operate on. If a file is not specified, the command will search the current directory for one.>] [command]
     options:
       - names:
+          - --diagnostics
+        argument: <diagnostics>
+        description: 'A space separated list of diagnostic ids to use as a filter when fixing code style or 3rd party issues. [default: ]'
+      - names:
+          - --severity
+        argument: <error|info|warn>
+        description: The severity of diagnostics to fix. Allowed values are info, warn, and error.
+      - names:
+          - --no-restore
+        argument: ""
+        description: Doesn't execute an implicit restore before formatting.
+      - names:
+          - --verify-no-changes
+        argument: ""
+        description: Verify no formatting changes would be performed. Terminates with a non-zero exit code if any files would have been formatted.
+      - names:
+          - --include
+        argument: <include>
+        description: 'A list of relative file or folder paths to include in formatting. All files are formatted if empty. [default: ]'
+      - names:
+          - --exclude
+        argument: <exclude>
+        description: 'A list of relative file or folder paths to exclude from formatting. [default: ]'
+      - names:
+          - --include-generated
+        argument: ""
+        description: Format files generated by the SDK.
+      - names:
+          - -v
+          - --verbosity
+        argument: <d|detailed|diag|diagnostic|m|minimal|n|normal|q|quiet>
+        description: Set the verbosity level. Allowed values are q[uiet], m[inimal], n[ormal], d[etailed], and diag[nostic]
+      - names:
+          - --binarylog
+        argument: <binary-log-path>
+        description: Log all project or solution load information to a binary log file.
+      - names:
+          - --report
+        argument: <report-path>
+        description: Accepts a file path which if provided will produce a json report in the given directory.
+      - names:
+          - --version
+        argument: ""
+        description: Show version information
+      - names:
+          - -?
+          - -h
+          - --help
+        argument: ""
+        description: Show help and usage information
+    subcommands:
+      - name: whitespace
+        description: 'Run whitespace formatting. [default: ~/repos/h2o-curated-data/general/yaml/]'
+        usage: dotnet-format [options] [<The project or solution file to operate on. If a file is not specified, the command will search the current directory for one.>] whitespace [<The project or solution file to operate on. If a file is not specified, the command will search the current directory for one.>]
+        options:
+          - names:
+              - --folder
+            argument: ""
+            description: Whether to treat the `<workspace>` argument as a simple folder of files.
+          - names:
+              - --no-restore
+            argument: ""
+            description: Doesn't execute an implicit restore before formatting.
+          - names:
+              - --verify-no-changes
+            argument: ""
+            description: Verify no formatting changes would be performed. Terminates with a non-zero exit code if any files would have been formatted.
+          - names:
+              - --include
+            argument: <include>
+            description: 'A list of relative file or folder paths to include in formatting. All files are formatted if empty. [default: ]'
+          - names:
+              - --exclude
+            argument: <exclude>
+            description: 'A list of relative file or folder paths to exclude from formatting. [default: ]'
+          - names:
+              - --include-generated
+            argument: ""
+            description: Format files generated by the SDK.
+          - names:
+              - -v
+              - --verbosity
+            argument: <d|detailed|diag|diagnostic|m|minimal|n|normal|q|quiet>
+            description: Set the verbosity level. Allowed values are q[uiet], m[inimal], n[ormal], d[etailed], and diag[nostic]
+          - names:
+              - --binarylog
+            argument: <binary-log-path>
+            description: Log all project or solution load information to a binary log file.
+          - names:
+              - --report
+            argument: <report-path>
+            description: Accepts a file path which if provided will produce a json report in the given directory.
+          - names:
+              - -?
+              - -h
+              - --help
+            argument: ""
+            description: Show help and usage information
+      - name: style
+        description: 'Run code style analyzers and apply fixes. [default: ~/repos/h2o-curated-data/general/yaml/]'
+        usage: dotnet-format [options] [<The project or solution file to operate on. If a file is not specified, the command will search the current directory for one.>] style [<The project or solution file to operate on. If a file is not specified, the command will search the current directory for one.>]
+        options:
+          - names:
+              - --diagnostics
+            argument: <diagnostics>
+            description: 'A space separated list of diagnostic ids to use as a filter when fixing code style or 3rd party issues. [default: ]'
+          - names:
+              - --severity
+            argument: <error|info|warn>
+            description: The severity of diagnostics to fix. Allowed values are info, warn, and error.
+          - names:
+              - --no-restore
+            argument: ""
+            description: Doesn't execute an implicit restore before formatting.
+          - names:
+              - --verify-no-changes
+            argument: ""
+            description: Verify no formatting changes would be performed. Terminates with a non-zero exit code if any files would have been formatted.
+          - names:
+              - --include
+            argument: <include>
+            description: 'A list of relative file or folder paths to include in formatting. All files are formatted if empty. [default: ]'
+          - names:
+              - --exclude
+            argument: <exclude>
+            description: 'A list of relative file or folder paths to exclude from formatting. [default: ]'
+          - names:
+              - --include-generated
+            argument: ""
+            description: Format files generated by the SDK.
+          - names:
+              - -v
+              - --verbosity
+            argument: <d|detailed|diag|diagnostic|m|minimal|n|normal|q|quiet>
+            description: Set the verbosity level. Allowed values are q[uiet], m[inimal], n[ormal], d[etailed], and diag[nostic]
+          - names:
+              - --binarylog
+            argument: <binary-log-path>
+            description: Log all project or solution load information to a binary log file.
+          - names:
+              - --report
+            argument: <report-path>
+            description: Accepts a file path which if provided will produce a json report in the given directory.
+          - names:
+              - -?
+              - -h
+              - --help
+            argument: ""
+            description: Show help and usage information
+      - name: analyzers
+        description: 'Run 3rd party analyzers and apply fixes. [default: ~/repos/h2o-curated-data/general/yaml/]'
+        usage: dotnet-format [options] [<The project or solution file to operate on. If a file is not specified, the command will search the current directory for one.>] analyzers [<The project or solution file to operate on. If a file is not specified, the command will search the current directory for one.>]
+        options:
+          - names:
+              - --diagnostics
+            argument: <diagnostics>
+            description: 'A space separated list of diagnostic ids to use as a filter when fixing code style or 3rd party issues. [default: ]'
+          - names:
+              - --severity
+            argument: <error|info|warn>
+            description: The severity of diagnostics to fix. Allowed values are info, warn, and error.
+          - names:
+              - --no-restore
+            argument: ""
+            description: Doesn't execute an implicit restore before formatting.
+          - names:
+              - --verify-no-changes
+            argument: ""
+            description: Verify no formatting changes would be performed. Terminates with a non-zero exit code if any files would have been formatted.
+          - names:
+              - --include
+            argument: <include>
+            description: 'A list of relative file or folder paths to include in formatting. All files are formatted if empty. [default: ]'
+          - names:
+              - --exclude
+            argument: <exclude>
+            description: 'A list of relative file or folder paths to exclude from formatting. [default: ]'
+          - names:
+              - --include-generated
+            argument: ""
+            description: Format files generated by the SDK.
+          - names:
+              - -v
+              - --verbosity
+            argument: <d|detailed|diag|diagnostic|m|minimal|n|normal|q|quiet>
+            description: Set the verbosity level. Allowed values are q[uiet], m[inimal], n[ormal], d[etailed], and diag[nostic]
+          - names:
+              - --binarylog
+            argument: <binary-log-path>
+            description: Log all project or solution load information to a binary log file.
+          - names:
+              - --report
+            argument: <report-path>
+            description: Accepts a file path which if provided will produce a json report in the given directory.
+          - names:
+              - -?
+              - -h
+              - --help
+            argument: ""
+            description: Show help and usage information
+  - name: help
+    description: Show command line help.
+    usage: dotnet [options] help [<COMMAND_NAME>]
+    options:
+      - names:
+          - -?
           - -h
           - --help
         argument: ""
         description: Show command line help.
   - name: list
     description: List project references of a .NET project.
+    usage: dotnet [options] list [<PROJECT | SOLUTION>] [command]
     options:
       - names:
+          - -?
           - -h
           - --help
         argument: ""
         description: Show command line help.
+    subcommands:
+      - name: package
+        description: List all package references of the project or solution.
+        usage: dotnet [options] list [<PROJECT | SOLUTION>] package
+        options:
+          - names:
+              - -v
+              - --verbosity
+            argument: <LEVEL>
+            description: Set the MSBuild verbosity level. Allowed values are q[uiet], m[inimal], n[ormal], d[etailed], and diag[nostic].
+          - names:
+              - --outdated
+            argument: ""
+            description: Lists packages that have newer versions. Cannot be combined with '--deprecated' or '--vulnerable' options.
+          - names:
+              - --deprecated
+            argument: ""
+            description: Lists packages that have been deprecated. Cannot be combined with '--vulnerable' or '--outdated' options.
+          - names:
+              - --vulnerable
+            argument: ""
+            description: Lists packages that have known vulnerabilities. Cannot be combined with '--deprecated' or '--outdated' options.
+          - names:
+              - --include-transitive
+            argument: ""
+            description: Lists transitive and top-level packages.
+          - names:
+              - --include-prerelease
+            argument: ""
+            description: Consider packages with prerelease versions when searching for newer packages. Requires the '--outdated' option.
+          - names:
+              - --highest-patch
+            argument: ""
+            description: Consider only the packages with a matching major and minor version numbers when searching for newer packages. Requires the '--outdated' option.
+          - names:
+              - --highest-minor
+            argument: ""
+            description: Consider only the packages with a matching major version number when searching for newer packages. Requires the '--outdated' option.
+          - names:
+              - --config
+            argument: <CONFIG_FILE>
+            description: The path to the NuGet config file to use. Requires the '--outdated', '--deprecated' or '--vulnerable' option.
+          - names:
+              - --source
+            argument: <SOURCE>
+            description: The NuGet sources to use when searching for newer packages. Requires the '--outdated', '--deprecated' or '--vulnerable' option.
+          - names:
+              - --interactive
+            argument: ""
+            description: Allows the command to stop and wait for user input or action (for example to complete authentication).
+          - names:
+              - -?
+              - -h
+              - --help
+            argument: ""
+            description: Show command line help.
+      - name: reference
+        description: List all project-to-project references of the project.
+        usage: dotnet [options] list [<PROJECT>] reference
+        options:
+          - names:
+              - -?
+              - -h
+              - --help
+            argument: ""
+            description: Show command line help.
   - name: msbuild
     description: Run Microsoft Build Engine (MSBuild) commands.
-    options: []
+    usage: dotnet msbuild [options] [project file | directory]
+    options:
+      - names:
+          - -maxCpuCount
+        argument: '[:n]'
+        description: 'Specifies the maximum number of concurrent processes to build with. If the switch is not used, the default value used is 1. If the switch is used without a value MSBuild will use up to the number of processors on the computer. (Short form: -m[:n])'
+      - names:
+          - -noConsoleLogger
+        argument: ""
+        description: 'Disable the default console logger and do not log events to the console. (Short form: -noConLog)'
+      - names:
+          - -fileLogger
+        argument: '[n]'
+        description: 'Logs the build output to a file. By default the file is in the current directory and named "msbuild[n].log". Events from all nodes are combined into a single log. The location of the file and other parameters for the fileLogger can be specified through the addition of the "-fileLoggerParameters[n]" switch. "n" if present can be a digit from 1-9, allowing up to 10 file loggers to be attached. (Short form: -fl[n])'
+      - names:
+          - -fileLoggerParameters
+        argument: '[n]:<parameters>'
+        description: 'Provides any extra parameters for file loggers. The presence of this switch implies the corresponding -fileLogger[n] switch. "n" if present can be a digit from 1-9. -fileLoggerParameters is also used by any distributed file logger, see description of -distributedFileLogger. (Short form: -flp[n]) The same parameters listed for the console logger are available. Some additional available parameters are:'
+      - names:
+          - -distributedFileLogger
+        argument: ""
+        description: Logs the build output to multiple log files, one log file per MSBuild node. The initial location for these files is the current directory. By default the files are called "MSBuild<nodeid>.log". The location of the files and other parameters for the fileLogger can be specified with the addition of the "-fileLoggerParameters" switch.
+      - names:
+          - -binaryLogger
+        argument: '[:[LogFile=]output.binlog[;ProjectImports={None,Embed,ZipFile}]]'
+        description: 'Serializes all build events to a compressed binary file. By default the file is in the current directory and named "msbuild.binlog". The binary log is a detailed description of the build process that can later be used to reconstruct text logs and used by other analysis tools. A binary log is usually 10-20x smaller than the most detailed text diagnostic-level log, but it contains more information. (Short form: -bl)'
+      - names:
+          - -warnAsError
+        argument: '[:code[;code2]]'
+        description: 'List of warning codes to treats as errors. Use a semicolon or a comma to separate multiple warning codes. To treat all warnings as errors use the switch with no values. (Short form: -err[:c;[c2]])'
+      - names:
+          - -warnAsMessage
+        argument: '[:code[;code2]]'
+        description: 'List of warning codes to treats as low importance messages. Use a semicolon or a comma to separate multiple warning codes. (Short form: -noWarn[:c;[c2]])'
+      - names:
+          - -preprocess
+        argument: '[:file]'
+        description: 'Creates a single, aggregated project file by inlining all the files that would be imported during a build, with their boundaries marked. This can be useful for figuring out what files are being imported and from where, and what they will contribute to the build. By default the output is written to the console window. If the path to an output file is provided that will be used instead. (Short form: -pp) Example:'
+      - names:
+          - -targets
+        argument: '[:file]'
+        description: 'Prints a list of available targets without executing the actual build process. By default the output is written to the console window. If the path to an output file is provided that will be used instead. (Short form: -ts) Example:'
+      - names:
+          - -detailedSummary
+        argument: '[:True|False]'
+        description: 'Shows detailed information at the end of the build about the configurations built and how they were scheduled to nodes. (Short form: -ds)'
+      - names:
+          - -restore
+        argument: '[:True|False]'
+        description: 'Runs a target named Restore prior to building other targets and ensures the build for these targets uses the latest restored build logic. This is useful when your project tree requires packages to be restored before it can be built. Specifying -restore is the same as specifying -restore:True. Use the parameter to override a value that comes from a response file. (Short form: -r)'
+      - names:
+          - -interactive
+        argument: '[:True|False]'
+        description: Indicates that actions in the build are allowed to interact with the user. Do not use this argument in an automated scenario where interactivity is not expected. Specifying -interactive is the same as specifying -interactive:true. Use the parameter to override a value that comes from a response file.
+      - names:
+          - -isolateProjects
+        argument: '[:True|False]'
+        description: Causes MSBuild to build each project in isolation.
+      - names:
+          - -graphBuild
+        argument: '[:True|False]'
+        description: Causes MSBuild to construct and build a project graph.
+      - names:
+          - -lowPriority
+        argument: '[:True|False]'
+        description: Causes MSBuild to run at low process priority.
+      - names:
+          - -noAutoResponse
+        argument: ""
+        description: 'Do not auto-include any MSBuild.rsp files. (Short form: -noAutoRsp)'
+      - names:
+          - -noLogo
+        argument: ""
+        description: Do not display the startup banner and copyright message.
+      - names:
+          - -version
+        argument: ""
+        description: 'Display version information only. (Short form: -ver)'
+      - names:
+          - -help
+        argument: ""
+        description: 'Display this usage message. (Short form: -? or -h)'
   - name: new
     description: Create a new .NET project or file.
-    options: []
-  - name: nuget
-    description: Provides additional NuGet commands.
-    options: []
-  - name: pack
-    description: Create a NuGet package.
+    usage: new [options]
     options:
       - names:
           - -h
           - --help
         argument: ""
-        description: Show command line help.
+        description: Displays help for this command.
+      - names:
+          - -l
+          - --list
+        argument: <PARTIAL_NAME>
+        description: Lists templates containing the specified template name. If no name is specified, lists all templates.
+      - names:
+          - -n
+          - --name
+        argument: ""
+        description: The name for the output being created. If no name is specified, the name of the output directory is used.
+      - names:
+          - -o
+          - --output
+        argument: ""
+        description: Location to place the generated output.
+      - names:
+          - -i
+          - --install
+        argument: ""
+        description: Installs a source or a template package.
+      - names:
+          - -u
+          - --uninstall
+        argument: ""
+        description: Uninstalls a source or a template package.
+      - names:
+          - --interactive
+        argument: ""
+        description: Allows the internal dotnet restore command to stop and wait for user input or action (for example to complete authentication).
+      - names:
+          - --add-source
+          - --nuget-source
+        argument: ""
+        description: Specifies a NuGet source to use during install.
+      - names:
+          - --type
+        argument: ""
+        description: Filters templates based on available types. Predefined values are "project" and "item".
+      - names:
+          - --dry-run
+        argument: ""
+        description: Displays a summary of what would happen if the given command line were run if it would result in a template creation.
+      - names:
+          - --force
+        argument: ""
+        description: Forces content to be generated even if it would change existing files.
+      - names:
+          - -lang
+          - --language
+        argument: ""
+        description: Filters templates based on language and specifies the language of the template to create.
+      - names:
+          - --update-check
+        argument: ""
+        description: Check the currently installed template packages for updates.
+      - names:
+          - --update-apply
+        argument: ""
+        description: Check the currently installed template packages for update, and install the updates.
+      - names:
+          - --search
+        argument: <PARTIAL_NAME>
+        description: Searches for the templates on NuGet.org.
+      - names:
+          - --author
+        argument: <AUTHOR>
+        description: Filters the templates based on the template author. Applicable only with --search or --list | -l option.
+      - names:
+          - --package
+        argument: <PACKAGE>
+        description: Filters the templates based on NuGet package ID. Applies to --search.
+      - names:
+          - --columns
+        argument: <COLUMNS_LIST>
+        description: 'Comma separated list of columns to display in --list and --search output. The supported columns are: language, tags, author, type.'
+      - names:
+          - --columns-all
+        argument: ""
+        description: Display all columns in --list and --search output.
+      - names:
+          - --tag
+        argument: <TAG>
+        description: Filters the templates based on the tag. Applies to --search and --list.
+      - names:
+          - --no-update-check
+        argument: ""
+        description: Disables checking for the template package updates when instantiating a template.
+  - name: nuget
+    description: Provides additional NuGet commands.
+    usage: dotnet nuget [options] [command]
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: Show help information
+      - names:
+          - --version
+        argument: ""
+        description: Show version information
+    subcommands:
+      - name: add
+        description: Add a NuGet source.
+        usage: dotnet nuget add [options] [command]
+        options:
+          - names:
+              - -h
+              - --help
+            argument: ""
+            description: Show help information
+        subcommands:
+          - name: client-cert
+            description: Adds a client certificate configuration that matches the given package source name.
+            usage: dotnet nuget add client-cert [options]
+            options:
+              - names:
+                  - -s
+                  - --package-source
+                argument: ""
+                description: Package source name.
+              - names:
+                  - --path
+                argument: ""
+                description: Path to certificate file.
+              - names:
+                  - --password
+                argument: ""
+                description: Password for the certificate, if needed.
+              - names:
+                  - --store-password-in-clear-text
+                argument: ""
+                description: Enables storing password for the certificate by disabling password encryption.
+              - names:
+                  - --store-location
+                argument: ""
+                description: Certificate store location (see docs).
+              - names:
+                  - --store-name
+                argument: ""
+                description: Certificate store name (see docs).
+              - names:
+                  - --find-by
+                argument: ""
+                description: Search method to find certificate in certificate store (see docs).
+              - names:
+                  - --find-value
+                argument: ""
+                description: Search the certificate store for the supplied value. Used with FindValue (see docs).
+              - names:
+                  - -f
+                  - --force
+                argument: ""
+                description: Skip certificate validation.
+              - names:
+                  - --configfile
+                argument: ""
+                description: The NuGet configuration file. If specified, only the settings from this file will be used. If not specified, the hierarchy of configuration files from the current directory will be used. For more information, see https://docs.microsoft.com/nuget/consume-packages/configuring-nuget-behavior.
+              - names:
+                  - -h
+                  - --help
+                argument: ""
+                description: Show help information
+          - name: source
+            description: Add a NuGet source.
+            usage: dotnet nuget add source [arguments] [options]
+            options:
+              - names:
+                  - -n
+                  - --name
+                argument: ""
+                description: Name of the source.
+              - names:
+                  - -u
+                  - --username
+                argument: ""
+                description: Username to be used when connecting to an authenticated source.
+              - names:
+                  - -p
+                  - --password
+                argument: ""
+                description: Password to be used when connecting to an authenticated source.
+              - names:
+                  - --store-password-in-clear-text
+                argument: ""
+                description: Enables storing portable package source credentials by disabling password encryption.
+              - names:
+                  - --valid-authentication-types
+                argument: ""
+                description: Comma-separated list of valid authentication types for this source. Set this to basic if the server advertises NTLM or Negotiate and your credentials must be sent using the Basic mechanism, for instance when using a PAT with on-premises Azure DevOps Server. Other valid values include negotiate, kerberos, ntlm, and digest, but these values are unlikely to be useful.
+              - names:
+                  - --configfile
+                argument: ""
+                description: The NuGet configuration file. If specified, only the settings from this file will be used. If not specified, the hierarchy of configuration files from the current directory will be used. For more information, see https://docs.microsoft.com/nuget/consume-packages/configuring-nuget-behavior.
+              - names:
+                  - -h
+                  - --help
+                argument: ""
+                description: Show help information
+      - name: delete
+        description: Deletes a package from the server.
+        usage: dotnet nuget delete [arguments] [options]
+        options:
+          - names:
+              - -h
+              - --help
+            argument: ""
+            description: Show help information
+          - names:
+              - --force-english-output
+            argument: ""
+            description: Forces the application to run using an invariant, English-based culture.
+          - names:
+              - -s
+              - --source
+            argument: <source>
+            description: Package source (URL, UNC/folder path or package source name) to use. Defaults to DefaultPushSource if specified in NuGet.Config.
+          - names:
+              - --non-interactive
+            argument: ""
+            description: Do not prompt for user input or confirmations.
+          - names:
+              - -k
+              - --api-key
+            argument: <apiKey>
+            description: The API key for the server.
+          - names:
+              - --no-service-endpoint
+            argument: ""
+            description: Does not append "api/v2/package" to the source URL.
+          - names:
+              - --interactive
+            argument: ""
+            description: Allow the command to block and require manual action for operations like authentication.
+      - name: disable
+        description: Disable a NuGet source.
+        usage: dotnet nuget disable [options] [command]
+        options:
+          - names:
+              - -h
+              - --help
+            argument: ""
+            description: Show help information
+        subcommands:
+          - name: source
+            description: Disable a NuGet source.
+            usage: dotnet nuget disable source [arguments] [options]
+            options:
+              - names:
+                  - --configfile
+                argument: ""
+                description: The NuGet configuration file. If specified, only the settings from this file will be used. If not specified, the hierarchy of configuration files from the current directory will be used. For more information, see https://docs.microsoft.com/nuget/consume-packages/configuring-nuget-behavior.
+              - names:
+                  - -h
+                  - --help
+                argument: ""
+                description: Show help information
+      - name: enable
+        description: Enable a NuGet source.
+        usage: dotnet nuget enable [options] [command]
+        options:
+          - names:
+              - -h
+              - --help
+            argument: ""
+            description: Show help information
+        subcommands:
+          - name: source
+            description: Enable a NuGet source.
+            usage: dotnet nuget enable source [arguments] [options]
+            options:
+              - names:
+                  - --configfile
+                argument: ""
+                description: The NuGet configuration file. If specified, only the settings from this file will be used. If not specified, the hierarchy of configuration files from the current directory will be used. For more information, see https://docs.microsoft.com/nuget/consume-packages/configuring-nuget-behavior.
+              - names:
+                  - -h
+                  - --help
+                argument: ""
+                description: Show help information
+      - name: list
+        description: List configured NuGet sources.
+        usage: dotnet nuget list [options] [command]
+        options:
+          - names:
+              - -h
+              - --help
+            argument: ""
+            description: Show help information
+        subcommands:
+          - name: client-cert
+            description: Lists all the client certificates in the configuration.
+            usage: dotnet nuget list client-cert [options]
+            options:
+              - names:
+                  - --configfile
+                argument: ""
+                description: The NuGet configuration file. If specified, only the settings from this file will be used. If not specified, the hierarchy of configuration files from the current directory will be used. For more information, see https://docs.microsoft.com/nuget/consume-packages/configuring-nuget-behavior.
+              - names:
+                  - -h
+                  - --help
+                argument: ""
+                description: Show help information
+          - name: source
+            description: Lists all configured NuGet sources.
+            usage: dotnet nuget list source [options]
+            options:
+              - names:
+                  - --format
+                argument: ""
+                description: 'The format of the list command output: `Detailed` (the default) and `Short`.'
+              - names:
+                  - --configfile
+                argument: ""
+                description: The NuGet configuration file. If specified, only the settings from this file will be used. If not specified, the hierarchy of configuration files from the current directory will be used. For more information, see https://docs.microsoft.com/nuget/consume-packages/configuring-nuget-behavior.
+              - names:
+                  - -h
+                  - --help
+                argument: ""
+                description: Show help information
+      - name: push
+        description: Pushes a package to the server and publishes it.
+        usage: dotnet nuget push [arguments] [options]
+        options:
+          - names:
+              - -h
+              - --help
+            argument: ""
+            description: Show help information
+          - names:
+              - --force-english-output
+            argument: ""
+            description: Forces the application to run using an invariant, English-based culture.
+          - names:
+              - -s
+              - --source
+            argument: <source>
+            description: Package source (URL, UNC/folder path or package source name) to use. Defaults to DefaultPushSource if specified in NuGet.Config.
+          - names:
+              - -ss
+              - --symbol-source
+            argument: <source>
+            description: Symbol server URL to use.
+          - names:
+              - -t
+              - --timeout
+            argument: <timeout>
+            description: Timeout for pushing to a server in seconds. Defaults to 300 seconds (5 minutes).
+          - names:
+              - -k
+              - --api-key
+            argument: <apiKey>
+            description: The API key for the server.
+          - names:
+              - -sk
+              - --symbol-api-key
+            argument: <apiKey>
+            description: The API key for the symbol server.
+          - names:
+              - -d
+              - --disable-buffering
+            argument: ""
+            description: Disable buffering when pushing to an HTTP(S) server to decrease memory usage.
+          - names:
+              - -n
+              - --no-symbols
+            argument: ""
+            description: If a symbols package exists, it will not be pushed to a symbols server.
+          - names:
+              - --no-service-endpoint
+            argument: ""
+            description: Does not append "api/v2/package" to the source URL.
+          - names:
+              - --interactive
+            argument: ""
+            description: Allow the command to block and require manual action for operations like authentication.
+          - names:
+              - --skip-duplicate
+            argument: ""
+            description: If a package and version already exists, skip it and continue with the next package in the push, if any.
+      - name: remove
+        description: Remove a NuGet source.
+        usage: dotnet nuget remove [options] [command]
+        options:
+          - names:
+              - -h
+              - --help
+            argument: ""
+            description: Show help information
+        subcommands:
+          - name: client-cert
+            description: Removes the client certificate configuration that matches the given package source name.
+            usage: dotnet nuget remove client-cert [options]
+            options:
+              - names:
+                  - -s
+                  - --package-source
+                argument: ""
+                description: Package source name.
+              - names:
+                  - --configfile
+                argument: ""
+                description: The NuGet configuration file. If specified, only the settings from this file will be used. If not specified, the hierarchy of configuration files from the current directory will be used. For more information, see https://docs.microsoft.com/nuget/consume-packages/configuring-nuget-behavior.
+              - names:
+                  - -h
+                  - --help
+                argument: ""
+                description: Show help information
+          - name: source
+            description: Remove a NuGet source.
+            usage: dotnet nuget remove source [arguments] [options]
+            options:
+              - names:
+                  - --configfile
+                argument: ""
+                description: The NuGet configuration file. If specified, only the settings from this file will be used. If not specified, the hierarchy of configuration files from the current directory will be used. For more information, see https://docs.microsoft.com/nuget/consume-packages/configuring-nuget-behavior.
+              - names:
+                  - -h
+                  - --help
+                argument: ""
+                description: Show help information
+      - name: sign
+        description: Signs NuGet package(s) at <package-paths> with the specified certificate.
+        usage: dotnet nuget sign [arguments] [options]
+        options:
+          - names:
+              - -o
+              - --output
+            argument: ""
+            description: Directory where the signed package(s) should be saved. By default the original package is overwritten by the signed package.
+          - names:
+              - --certificate-path
+            argument: ""
+            description: File path to the certificate to be used while signing the package.
+          - names:
+              - --certificate-store-name
+            argument: ""
+            description: Name of the X.509 certificate store to use to search for the certificate. Defaults to "My", the X.509 certificate store for personal certificates.
+          - names:
+              - --certificate-store-location
+            argument: ""
+            description: Name of the X.509 certificate store use to search for the certificate. Defaults to "CurrentUser", the X.509 certificate store used by the current user.
+          - names:
+              - --certificate-subject-name
+            argument: ""
+            description: Subject name of the certificate used to search a local certificate store for the certificate.
+          - names:
+              - --certificate-fingerprint
+            argument: ""
+            description: SHA-1 fingerprint of the certificate used to search a local certificate store for the certificate. The certificate store can be specified by --certificate-store-name and --certificate-store-location options.
+          - names:
+              - --certificate-password
+            argument: ""
+            description: Password for the certificate, if needed.
+          - names:
+              - --hash-algorithm
+            argument: ""
+            description: Hash algorithm to be used to sign the package. Defaults to SHA256.
+          - names:
+              - --timestamper
+            argument: ""
+            description: URL to an RFC 3161 timestamping server.
+          - names:
+              - --timestamp-hash-algorithm
+            argument: ""
+            description: Hash algorithm to be used by the RFC 3161 timestamp server. Defaults to SHA256.
+          - names:
+              - --overwrite
+            argument: ""
+            description: Switch to indicate if the current signature should be overwritten. By default the command will fail if the package already has a signature.
+          - names:
+              - -v
+              - --verbosity
+            argument: ""
+            description: Set the verbosity level of the command. Allowed values are q[uiet], m[inimal], n[ormal], d[etailed], and diag[nostic].
+          - names:
+              - -h
+              - --help
+            argument: ""
+            description: Show help information
+      - name: trust
+        description: Manage the trusted signers.
+        usage: dotnet nuget trust [arguments] [options]
+        options:
+          - names:
+              - --algorithm
+            argument: ""
+            description: Specifies the hash algorithm used to calculate the certificate fingerprint. Defaults to SHA256. Values supported are SHA256, SHA384 and SHA512.
+          - names:
+              - --allow-untrusted-root
+            argument: ""
+            description: Specifies if the certificate for the trusted signer should be allowed to chain to an untrusted root.
+          - names:
+              - --owners
+            argument: ""
+            description: Semi-colon separated list of trusted owners to further restrict the trust of a repository.
+          - names:
+              - -v
+              - --verbosity
+            argument: ""
+            description: Set the verbosity level of the command. Allowed values are q[uiet], m[inimal], n[ormal], d[etailed], and diag[nostic].
+          - names:
+              - --configfile
+            argument: ""
+            description: The NuGet configuration file. If specified, only the settings from this file will be used. If not specified, the hierarchy of configuration files from the current directory will be used. For more information, see https://docs.microsoft.com/nuget/consume-packages/configuring-nuget-behavior.
+          - names:
+              - -h
+              - --help
+            argument: ""
+            description: Show help information
+      - name: update
+        description: Update a NuGet source.
+        usage: dotnet nuget update [options] [command]
+        options:
+          - names:
+              - -h
+              - --help
+            argument: ""
+            description: Show help information
+        subcommands:
+          - name: client-cert
+            description: Updates the client certificate configuration that matches the given package source name.
+            usage: dotnet nuget update client-cert [options]
+            options:
+              - names:
+                  - -s
+                  - --package-source
+                argument: ""
+                description: Package source name.
+              - names:
+                  - --path
+                argument: ""
+                description: Path to certificate file.
+              - names:
+                  - --password
+                argument: ""
+                description: Password for the certificate, if needed.
+              - names:
+                  - --store-password-in-clear-text
+                argument: ""
+                description: Enables storing password for the certificate by disabling password encryption.
+              - names:
+                  - --store-location
+                argument: ""
+                description: Certificate store location (see docs).
+              - names:
+                  - --store-name
+                argument: ""
+                description: Certificate store name (see docs).
+              - names:
+                  - --find-by
+                argument: ""
+                description: Search method to find certificate in certificate store (see docs).
+              - names:
+                  - --find-value
+                argument: ""
+                description: Search the certificate store for the supplied value. Used with FindValue (see docs).
+              - names:
+                  - -f
+                  - --force
+                argument: ""
+                description: Skip certificate validation.
+              - names:
+                  - --configfile
+                argument: ""
+                description: The NuGet configuration file. If specified, only the settings from this file will be used. If not specified, the hierarchy of configuration files from the current directory will be used. For more information, see https://docs.microsoft.com/nuget/consume-packages/configuring-nuget-behavior.
+              - names:
+                  - -h
+                  - --help
+                argument: ""
+                description: Show help information
+          - name: source
+            description: Update a NuGet source.
+            usage: dotnet nuget update source [arguments] [options]
+            options:
+              - names:
+                  - -s
+                  - --source
+                argument: ""
+                description: Path to the package source.
+              - names:
+                  - -u
+                  - --username
+                argument: ""
+                description: Username to be used when connecting to an authenticated source.
+              - names:
+                  - -p
+                  - --password
+                argument: ""
+                description: Password to be used when connecting to an authenticated source.
+              - names:
+                  - --store-password-in-clear-text
+                argument: ""
+                description: Enables storing portable package source credentials by disabling password encryption.
+              - names:
+                  - --valid-authentication-types
+                argument: ""
+                description: Comma-separated list of valid authentication types for this source. Set this to basic if the server advertises NTLM or Negotiate and your credentials must be sent using the Basic mechanism, for instance when using a PAT with on-premises Azure DevOps Server. Other valid values include negotiate, kerberos, ntlm, and digest, but these values are unlikely to be useful.
+              - names:
+                  - --configfile
+                argument: ""
+                description: The NuGet configuration file. If specified, only the settings from this file will be used. If not specified, the hierarchy of configuration files from the current directory will be used. For more information, see https://docs.microsoft.com/nuget/consume-packages/configuring-nuget-behavior.
+              - names:
+                  - -h
+                  - --help
+                argument: ""
+                description: Show help information
+      - name: verify
+        description: Verifies a signed NuGet package.
+        usage: dotnet nuget verify [arguments] [options]
+        options:
+          - names:
+              - --all
+            argument: ""
+            description: Specifies that all verifications possible should be performed to the package(s).
+          - names:
+              - --certificate-fingerprint
+            argument: ""
+            description: Verify that the signer certificate matches with one of the specified SHA256 fingerprints. A certificate SHA256 fingerprint is a SHA256 hash of the certificate used to identify the certificate. Multiple inputs should be separated by space.
+          - names:
+              - -v
+              - --verbosity
+            argument: ""
+            description: Set the verbosity level of the command. Allowed values are q[uiet], m[inimal], n[ormal], d[etailed], and diag[nostic].
+          - names:
+              - -h
+              - --help
+            argument: ""
+            description: Show help information
+  - name: pack
+    description: Create a NuGet package.
+    usage: dotnet [options] pack [<PROJECT | SOLUTION>...]
+    options:
       - names:
           - -o
           - --output
@@ -211,15 +1316,6 @@ subcommands:
           - --include-source
         argument: ""
         description: Include PDBs and source files. Source files go into the 'src' folder in the resulting nuget package.
-      - names:
-          - -c
-          - --configuration
-        argument: <CONFIGURATION>
-        description: The configuration to use for building the package. The default for most projects is 'Debug'.
-      - names:
-          - --version-suffix
-        argument: <VERSION_SUFFIX>
-        description: Set the value of the $(VersionSuffix) property to use when building the project.
       - names:
           - -s
           - --serviceable
@@ -243,30 +1339,58 @@ subcommands:
         argument: <LEVEL>
         description: Set the MSBuild verbosity level. Allowed values are q[uiet], m[inimal], n[ormal], d[etailed], and diag[nostic].
       - names:
-          - --runtime
-        argument: <RUNTIME_IDENTIFIER>
-        description: The target runtime to restore packages for.
+          - --version-suffix
+        argument: <VERSION_SUFFIX>
+        description: Set the value of the $(VersionSuffix) property to use when building the project.
       - names:
-          - --no-dependencies
+          - -c
+          - --configuration
+        argument: <CONFIGURATION>
+        description: The configuration to use for building the package. The default for most projects is 'Debug'.
+      - names:
+          - --use-current-runtime
         argument: ""
-        description: Do not restore project-to-project references and only restore the specified project.
+        description: Use current runtime as the target runtime.
       - names:
-          - --force
-        argument: ""
-        description: Force all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting project.assets.json.
-  - name: publish
-    description: Publish a .NET project for deployment.
-    options:
-      - names:
+          - -?
           - -h
           - --help
         argument: ""
         description: Show command line help.
+  - name: publish
+    description: Publish a .NET project for deployment.
+    usage: dotnet [options] publish [<PROJECT | SOLUTION>...]
+    options:
+      - names:
+          - --use-current-runtime
+        argument: ""
+        description: Use current runtime as the target runtime.
       - names:
           - -o
           - --output
         argument: <OUTPUT_DIR>
         description: The output directory to place the published artifacts in.
+      - names:
+          - --manifest
+        argument: <MANIFEST>
+        description: The path to a target manifest file that contains the list of packages to be excluded from the publish step.
+      - names:
+          - --no-build
+        argument: ""
+        description: Do not build the project before publishing. Implies --no-restore.
+      - names:
+          - --sc
+          - --self-contained
+        argument: ""
+        description: Publish the .NET runtime with your application so the runtime doesn't need to be installed on the target machine. The default is 'true' if a runtime identifier is specified.
+      - names:
+          - --no-self-contained
+        argument: ""
+        description: Publish your application as a framework dependent application. A compatible .NET runtime must be installed on the target machine to run your application.
+      - names:
+          - --nologo
+        argument: ""
+        description: Do not display the startup banner or the copyright message.
       - names:
           - -f
           - --framework
@@ -287,26 +1411,6 @@ subcommands:
         argument: <VERSION_SUFFIX>
         description: Set the value of the $(VersionSuffix) property to use when building the project.
       - names:
-          - --manifest
-        argument: <MANIFEST>
-        description: The path to a target manifest file that contains the list of packages to be excluded from the publish step.
-      - names:
-          - --no-build
-        argument: ""
-        description: Do not build the project before publishing. Implies --no-restore.
-      - names:
-          - --self-contained
-        argument: ""
-        description: Publish the .NET runtime with your application so the runtime doesn't need to be installed on the target machine. The default is 'true' if a runtime identifier is specified.
-      - names:
-          - --no-self-contained
-        argument: ""
-        description: Publish your application as a framework dependent application without the .NET runtime. A supported .NET runtime must be installed to run your application.
-      - names:
-          - --nologo
-        argument: ""
-        description: Do not display the startup banner or the copyright message.
-      - names:
           - --interactive
         argument: ""
         description: Allows the command to stop and wait for user input or action (for example to complete authentication).
@@ -320,43 +1424,77 @@ subcommands:
         argument: <LEVEL>
         description: Set the MSBuild verbosity level. Allowed values are q[uiet], m[inimal], n[ormal], d[etailed], and diag[nostic].
       - names:
-          - --no-dependencies
-        argument: ""
-        description: Do not restore project-to-project references and only restore the specified project.
+          - -a
+          - --arch
+        argument: <arch>
+        description: The target architecture.
       - names:
-          - --force
+          - --os
+        argument: <os>
+        description: The target operating system.
+      - names:
+          - -?
+          - -h
+          - --help
         argument: ""
-        description: Force all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting project.assets.json.
+        description: Show command line help.
   - name: remove
     description: Remove a package or reference from a .NET project.
+    usage: dotnet [options] remove [<PROJECT>] [command]
     options:
       - names:
+          - -?
           - -h
           - --help
         argument: ""
         description: Show command line help.
+    subcommands:
+      - name: package
+        description: Remove a NuGet package reference from the project.
+        usage: dotnet [options] remove [<PROJECT>] package <PACKAGE_NAME>...
+        options:
+          - names:
+              - --interactive
+            argument: ""
+            description: Allows the command to stop and wait for user input or action (for example to complete authentication).
+          - names:
+              - -?
+              - -h
+              - --help
+            argument: ""
+            description: Show command line help.
+      - name: reference
+        description: Remove a project-to-project reference from the project.
+        usage: dotnet [options] remove [<PROJECT>] reference <PROJECT_PATH>...
+        options:
+          - names:
+              - -f
+              - --framework
+            argument: <FRAMEWORK>
+            description: Remove the reference only when targeting a specific framework.
+          - names:
+              - -?
+              - -h
+              - --help
+            argument: ""
+            description: Show command line help.
   - name: restore
     description: Restore dependencies specified in a .NET project.
+    usage: dotnet [options] restore [<PROJECT | SOLUTION>...]
     options:
-      - names:
-          - -h
-          - --help
-        argument: ""
-        description: Show command line help.
       - names:
           - -s
           - --source
         argument: <SOURCE>
         description: The NuGet package source to use for the restore.
       - names:
-          - -r
-          - --runtime
-        argument: <RUNTIME_IDENTIFIER>
-        description: The target runtime to restore packages for.
-      - names:
           - --packages
         argument: <PACKAGES_DIR>
         description: The directory to restore packages to.
+      - names:
+          - --use-current-runtime
+        argument: ""
+        description: Use current runtime as the target runtime.
       - names:
           - --disable-parallel
         argument: ""
@@ -374,14 +1512,19 @@ subcommands:
         argument: ""
         description: Treat package source failures as warnings.
       - names:
-          - --no-dependencies
-        argument: ""
-        description: Do not restore project-to-project references and only restore the specified project.
-      - names:
           - -f
           - --force
         argument: ""
         description: Force all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting project.assets.json.
+      - names:
+          - -r
+          - --runtime
+        argument: <RUNTIME_IDENTIFIER>
+        description: The target runtime to restore packages for.
+      - names:
+          - --no-dependencies
+        argument: ""
+        description: Do not restore project-to-project references and only restore the specified project.
       - names:
           - -v
           - --verbosity
@@ -407,14 +1550,16 @@ subcommands:
           - --force-evaluate
         argument: ""
         description: Forces restore to reevaluate all dependencies even if a lock file already exists.
-  - name: run
-    description: Build and run a .NET project output.
-    options:
       - names:
+          - -?
           - -h
           - --help
         argument: ""
         description: Show command line help.
+  - name: run
+    description: Build and run a .NET project output.
+    usage: dotnet [options] run [[--] <additional arguments>...]]
+    options:
       - names:
           - -c
           - --configuration
@@ -431,13 +1576,17 @@ subcommands:
         argument: <RUNTIME_IDENTIFIER>
         description: The target runtime to run for.
       - names:
-          - -p
           - --project
-        argument: ""
+        argument: <project>
         description: The path to the project file to run (defaults to the current directory if there is only one project).
       - names:
+          - -p
+          - --property
+        argument: <property>
+        description: Properties to be passed to MSBuild.
+      - names:
           - --launch-profile
-        argument: ""
+        argument: <launch-profile>
         description: The name of the launch profile (if any) to use when launching the application.
       - names:
           - --no-launch-profile
@@ -456,53 +1605,118 @@ subcommands:
         argument: ""
         description: Do not restore the project before building.
       - names:
+          - --sc
+          - --self-contained
+        argument: ""
+        description: Publish the .NET runtime with your application so the runtime doesn't need to be installed on the target machine. The default is 'true' if a runtime identifier is specified.
+      - names:
+          - --no-self-contained
+        argument: ""
+        description: Publish your application as a framework dependent application. A compatible .NET runtime must be installed on the target machine to run your application.
+      - names:
           - -v
           - --verbosity
         argument: <LEVEL>
         description: Set the MSBuild verbosity level. Allowed values are q[uiet], m[inimal], n[ormal], d[etailed], and diag[nostic].
       - names:
-          - --no-dependencies
-        argument: ""
-        description: Do not restore project-to-project references and only restore the specified project.
+          - -a
+          - --arch
+        argument: <arch>
+        description: The target architecture.
       - names:
-          - --force
+          - --os
+        argument: <os>
+        description: The target operating system.
+      - names:
+          - -?
+          - -h
+          - --help
         argument: ""
-        description: Force all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting project.assets.json.
+        description: Show command line help.
+  - name: sdk
+    description: Manage .NET SDK installation.
+    usage: dotnet [options] sdk [command]
+    options:
+      - names:
+          - -?
+          - -h
+          - --help
+        argument: ""
+        description: Show command line help.
+    subcommands:
+      - name: check
+        description: .NET SDK Check Command
+        usage: dotnet [options] sdk check
+        options:
+          - names:
+              - -?
+              - -h
+              - --help
+            argument: ""
+            description: Show command line help.
   - name: sln
     description: Modify Visual Studio solution files.
+    usage: dotnet [options] sln <SLN_FILE> [command]
     options:
       - names:
+          - -?
           - -h
           - --help
         argument: ""
         description: Show command line help.
+    subcommands:
+      - name: add
+        description: Add one or more projects to a solution file.
+        usage: dotnet [options] sln <SLN_FILE> add [<PROJECT_PATH>...]
+        options:
+          - names:
+              - --in-root
+            argument: ""
+            description: Place project in root of the solution, rather than creating a solution folder.
+          - names:
+              - -s
+              - --solution-folder
+            argument: ""
+            description: The destination solution folder path to add the
+          - names:
+              - -?
+              - -h
+              - --help
+            argument: ""
+            description: Show command line help.
+      - name: list
+        description: List all projects in a solution file.
+        usage: dotnet [options] sln <SLN_FILE> list
+        options:
+          - names:
+              - -?
+              - -h
+              - --help
+            argument: ""
+            description: Show command line help.
+      - name: remove
+        description: Remove one or more projects from a solution file.
+        usage: dotnet [options] sln <SLN_FILE> remove [<PROJECT_PATH>...]
+        options:
+          - names:
+              - -?
+              - -h
+              - --help
+            argument: ""
+            description: Show command line help.
   - name: store
     description: Store the specified assemblies in the runtime package store.
+    usage: dotnet [options] store [<ienumerable`1>...]
     options:
-      - names:
-          - -h
-          - --help
-        argument: ""
-        description: Show command line help.
       - names:
           - -m
           - --manifest
         argument: <PROJECT_MANIFEST>
         description: The XML file that contains the list of packages to be stored.
       - names:
-          - -f
-          - --framework
-        argument: <FRAMEWORK>
-        description: The target framework to store packages for. The target framework has to be specified in the project file.
-      - names:
           - --framework-version
-        argument: <FRAMEWORK_VERSION>
-        description: The Microsoft.NETCore.App package version that will be used to run the assemblies.
-      - names:
-          - -r
-          - --runtime
-        argument: <RUNTIME_IDENTIFIER>
-        description: The target runtime to store packages for.
+        argument: ""
+        description: The Microsoft.NETCore.App package version
       - names:
           - -o
           - --output
@@ -522,18 +1736,34 @@ subcommands:
         argument: ""
         description: Skip creating symbol files which can be used for profiling the optimized assemblies.
       - names:
+          - -f
+          - --framework
+        argument: <FRAMEWORK>
+        description: The target framework to store packages for. The target framework has to be specified in the project file.
+      - names:
+          - -r
+          - --runtime
+        argument: <RUNTIME_IDENTIFIER>
+        description: The target runtime to store packages for.
+      - names:
           - -v
           - --verbosity
         argument: <LEVEL>
         description: Set the MSBuild verbosity level. Allowed values are q[uiet], m[inimal], n[ormal], d[etailed], and diag[nostic].
-  - name: test
-    description: Run unit tests using the test runner specified in a .NET project.
-    options:
       - names:
+          - --use-current-runtime
+        argument: ""
+        description: Use current runtime as the target runtime.
+      - names:
+          - -?
           - -h
           - --help
         argument: ""
         description: Show command line help.
+  - name: test
+    description: Run unit tests using the test runner specified in a .NET project.
+    usage: dotnet [options] test [<PROJECT | SOLUTION>...]
+    options:
       - names:
           - -s
           - --settings
@@ -545,9 +1775,14 @@ subcommands:
         argument: ""
         description: List the discovered tests instead of running the tests.
       - names:
+          - -e
+          - --environment
+        argument: <NAME="VALUE">
+        description: Sets the value of an environment variable. Creates the variable if it does not exist, overrides if it does. This will force the tests to be run in an isolated process. This argument can be specified multiple times to provide multiple variables.
+      - names:
           - --filter
         argument: <EXPRESSION>
-        description: 'Run tests that match the given expression. Examples: Run tests with priority set to 1: --filter "Priority = 1" Run a test with the specified full name: --filter "FullyQualifiedName=Namespace.ClassName.MethodName" Run tests that contain the specified name: --filter "FullyQualifiedName~Namespace.Class" See https://aka.ms/vstest-filtering for more information on filtering support.'
+        description: Run tests that match the given expression.
       - names:
           - -a
           - --test-adapter-path
@@ -557,21 +1792,7 @@ subcommands:
           - -l
           - --logger
         argument: <LOGGER>
-        description: 'The logger to use for test results. Examples: Log in trx format using a unique file name: --logger trx Log in trx format using the specified file name: --logger "trx;LogFileName=<TestResults.trx>" See https://aka.ms/vstest-report for more information on logger arguments.'
-      - names:
-          - -c
-          - --configuration
-        argument: <CONFIGURATION>
-        description: The configuration to use for running tests. The default for most projects is 'Debug'.
-      - names:
-          - -f
-          - --framework
-        argument: <FRAMEWORK>
-        description: The target framework to run tests for. The target framework must also be specified in the project file.
-      - names:
-          - --runtime
-        argument: <RUNTIME_IDENTIFIER>
-        description: The target runtime to test for.
+        description: The logger to use for test results.
       - names:
           - -o
           - --output
@@ -594,31 +1815,31 @@ subcommands:
       - names:
           - --collect
         argument: <DATA_COLLECTOR_NAME>
-        description: 'The friendly name of the data collector to use for the test run. More info here: https://aka.ms/vstest-collect'
+        description: The friendly name of the data collector to use for the test run.
       - names:
           - --blame
         argument: ""
-        description: 'Runs the tests in blame mode. This option is helpful in isolating problematic tests that cause the test host to crash or hang. When a crash is detected, it creates an sequence file in TestResults/guid/guid_Sequence.xml that captures the order of tests that were run before the crash. Based on the additional settings, hang dump or crash dump can also be collected. Example: Timeout the test run when test takes more than the default timeout of 1 hour, and collect crash dump when the test host exits unexpectedly. (Crash dumps require additional setup, see below.) dotnet test --blame-hang --blame-crash Example: Timeout the test run when a test takes more than 20 minutes and collect hang dump. dotnet test --blame-hang-timeout 20min'
+        description: 'Runs the tests in blame mode. This option is helpful in isolating problematic tests that cause the test host to crash or hang. When a crash is detected, it creates an sequence file in TestResults/guid/guid_Sequence.xml that captures the order of tests that were run before the crash. Based on the additional settings, hang dump or crash dump can also be collected. Example:'
       - names:
           - --blame-crash
         argument: ""
-        description: 'Runs the tests in blame mode and enables collecting crash dump when testhost exits unexpectedly. This option is currently only supported on Windows, and requires procdump.exe and procdump64.exe to be available in PATH. Or PROCDUMP_PATH environment variable to be set, and point to a directory that contains procdump.exe and procdump64.exe. The tools can be downloaded here: https://docs.microsoft.com/sysinternals/downloads/procdump Implies --blame.'
+        description: 'Runs the tests in blame mode and enables collecting crash dump when testhost exits unexpectedly. This option is currently only supported on Windows, and requires procdump.exe and procdump64.exe to be available in PATH. Or PROCDUMP_PATH environment variable to be set, and point to a directory that contains procdump.exe and procdump64.exe. The tools can be downloaded here: https://docs.microsoft.com/sysinternal s/downloads/procdump Implies --blame.'
       - names:
           - --blame-crash-dump-type
-        argument: <DUMP_TYPE>
-        description: The type of crash dump to be collected. Implies --blame-crash.
+        argument: ""
+        description: The type of crash dump to be
       - names:
           - --blame-crash-collect-always
         argument: ""
-        description: Enables collecting crash dump on expected as well as unexpected testhost exit.
+        description: Enables collecting crash dump on
       - names:
           - --blame-hang
         argument: ""
         description: Run the tests in blame mode and enables collecting hang dump when test exceeds the given timeout. Implies --blame-hang.
       - names:
           - --blame-hang-dump-type
-        argument: <DUMP_TYPE>
-        description: The type of crash dump to be collected. When None, is used then test host is terminated on timeout, but no dump is collected. Implies --blame-hang.
+        argument: ""
+        description: The type of crash dump to be
       - names:
           - --blame-hang-timeout
         argument: <TIMESPAN>
@@ -627,6 +1848,20 @@ subcommands:
           - --nologo
         argument: ""
         description: Run test(s), without displaying Microsoft Testplatform banner
+      - names:
+          - -c
+          - --configuration
+        argument: <CONFIGURATION>
+        description: The configuration to use for running tests. The default for most projects is 'Debug'.
+      - names:
+          - -f
+          - --framework
+        argument: <FRAMEWORK>
+        description: The target framework to run tests for. The target framework must also be specified in the project file.
+      - names:
+          - --runtime
+        argument: <RUNTIME_IDENTIFIER>
+        description: The target runtime to test for.
       - names:
           - --no-restore
         argument: ""
@@ -640,36 +1875,876 @@ subcommands:
           - --verbosity
         argument: <LEVEL>
         description: Set the MSBuild verbosity level. Allowed values are q[uiet], m[inimal], n[ormal], d[etailed], and diag[nostic].
+      - names:
+          - --arch
+        argument: <arch>
+        description: The target architecture.
+      - names:
+          - --os
+        argument: <os>
+        description: The target operating system.
+      - names:
+          - -?
+          - -h
+          - --help
+        argument: ""
+        description: Show command line help.
   - name: tool
     description: Install or manage tools that extend the .NET experience.
+    usage: dotnet [options] tool [command]
+    options:
+      - names:
+          - -?
+          - -h
+          - --help
+        argument: ""
+        description: Show command line help.
+    subcommands:
+      - name: install
+        description: Install global or local tool. Local tools are added to manifest and restored.
+        usage: dotnet [options] tool install [<PACKAGE_ID>]
+        options:
+          - names:
+              - -g
+              - --global
+            argument: ""
+            description: Install the tool for the current user.
+          - names:
+              - --local
+            argument: ""
+            description: Install the tool and add to the local tool manifest (default).
+          - names:
+              - --tool-path
+            argument: <PATH>
+            description: The directory where the tool will be installed. The directory will be created if it does not exist.
+          - names:
+              - --version
+            argument: <VERSION>
+            description: The version of the tool package to install.
+          - names:
+              - --configfile
+            argument: <FILE>
+            description: The NuGet configuration file to use.
+          - names:
+              - --tool-manifest
+            argument: <PATH>
+            description: Path to the manifest file.
+          - names:
+              - --add-source
+            argument: <SOURCE>
+            description: Add an additional NuGet package source to use during installation.
+          - names:
+              - --framework
+            argument: <FRAMEWORK>
+            description: The target framework to install the tool for.
+          - names:
+              - --prerelease
+            argument: ""
+            description: determining whether to include pre-release packages.
+          - names:
+              - --disable-parallel
+            argument: ""
+            description: Prevent restoring multiple projects in parallel.
+          - names:
+              - --ignore-failed-sources
+            argument: ""
+            description: Treat package source failures as warnings.
+          - names:
+              - --no-cache
+            argument: ""
+            description: Do not cache packages and http requests.
+          - names:
+              - --interactive
+            argument: ""
+            description: Allows the command to stop and wait for user input or action (for example to complete authentication).
+          - names:
+              - -v
+              - --verbosity
+            argument: <LEVEL>
+            description: Set the MSBuild verbosity level. Allowed values are q[uiet], m[inimal], n[ormal], d[etailed], and diag[nostic].
+          - names:
+              - -a
+              - --arch
+            argument: <arch>
+            description: The target architecture.
+          - names:
+              - -?
+              - -h
+              - --help
+            argument: ""
+            description: Show command line help.
+      - name: uninstall
+        description: Uninstall a global tool or local tool.
+        usage: dotnet [options] tool uninstall [<PACKAGE_ID>]
+        options:
+          - names:
+              - -g
+              - --global
+            argument: ""
+            description: Uninstall the tool from the current user's tools directory.
+          - names:
+              - --local
+            argument: ""
+            description: Uninstall the tool and remove it from the local tool manifest.
+          - names:
+              - --tool-path
+            argument: <PATH>
+            description: The directory containing the tool to uninstall.
+          - names:
+              - --tool-manifest
+            argument: <PATH>
+            description: Path to the manifest file.
+          - names:
+              - -?
+              - -h
+              - --help
+            argument: ""
+            description: Show command line help.
+      - name: update
+        description: Update a global tool.
+        usage: dotnet [options] tool update [<PACKAGE_ID>]
+        options:
+          - names:
+              - -g
+              - --global
+            argument: ""
+            description: Update the tool in the current user's tools directory.
+          - names:
+              - --tool-path
+            argument: <PATH>
+            description: The directory containing the tool to update.
+          - names:
+              - --local
+            argument: ""
+            description: Update the tool and the local tool manifest.
+          - names:
+              - --configfile
+            argument: <FILE>
+            description: The NuGet configuration file to use.
+          - names:
+              - --add-source
+            argument: <SOURCE>
+            description: Add an additional NuGet package source to use during installation.
+          - names:
+              - --framework
+            argument: <FRAMEWORK>
+            description: The target framework to install the tool for.
+          - names:
+              - --version
+            argument: <VERSION>
+            description: The version of the tool package to install.
+          - names:
+              - --tool-manifest
+            argument: <PATH>
+            description: Path to the manifest file.
+          - names:
+              - --prerelease
+            argument: ""
+            description: determining whether to include pre-release packages.
+          - names:
+              - --disable-parallel
+            argument: ""
+            description: Prevent restoring multiple projects in parallel.
+          - names:
+              - --ignore-failed-sources
+            argument: ""
+            description: Treat package source failures as warnings.
+          - names:
+              - --no-cache
+            argument: ""
+            description: Do not cache packages and http requests.
+          - names:
+              - --interactive
+            argument: ""
+            description: Allows the command to stop and wait for user input or action (for example to complete authentication).
+          - names:
+              - -v
+              - --verbosity
+            argument: <LEVEL>
+            description: Set the MSBuild verbosity level. Allowed values are q[uiet], m[inimal], n[ormal], d[etailed], and diag[nostic].
+          - names:
+              - -?
+              - -h
+              - --help
+            argument: ""
+            description: Show command line help.
+      - name: list
+        description: List tools installed globally or locally.
+        usage: dotnet [options] tool list
+        options:
+          - names:
+              - -g
+              - --global
+            argument: ""
+            description: List tools installed for the current user.
+          - names:
+              - --local
+            argument: ""
+            description: List the tools installed in the local tool manifest.
+          - names:
+              - --tool-path
+            argument: <PATH>
+            description: The directory containing the tools to list.
+          - names:
+              - -?
+              - -h
+              - --help
+            argument: ""
+            description: Show command line help.
+      - name: run
+        description: Run local tool.
+        usage: dotnet [options] tool run <COMMAND_NAME> [[--] <additional arguments>...]]
+        options:
+          - names:
+              - -?
+              - -h
+              - --help
+            argument: ""
+            description: Show command line help.
+      - name: search
+        description: Search dotnet tools in nuget.org
+        usage: dotnet [options] tool search <Search Term>
+        options:
+          - names:
+              - --detail
+            argument: ""
+            description: Show detail result of the query.
+          - names:
+              - --skip
+            argument: <Skip>
+            description: The number of results to skip, for pagination.
+          - names:
+              - --take
+            argument: <Take>
+            description: The number of results to return, for pagination.
+          - names:
+              - --prerelease
+            argument: ""
+            description: determining whether to include pre-release packages.
+          - names:
+              - -?
+              - -h
+              - --help
+            argument: ""
+            description: Show command line help.
+      - name: restore
+        description: Restore tools defined in the local tool manifest.
+        usage: dotnet [options] tool restore
+        options:
+          - names:
+              - --configfile
+            argument: <FILE>
+            description: The NuGet configuration file to use.
+          - names:
+              - --add-source
+            argument: <SOURCE>
+            description: Add an additional NuGet package source to use during installation.
+          - names:
+              - --tool-manifest
+            argument: <PATH>
+            description: Path to the manifest file.
+          - names:
+              - --disable-parallel
+            argument: ""
+            description: Prevent restoring multiple projects in parallel.
+          - names:
+              - --ignore-failed-sources
+            argument: ""
+            description: Treat package source failures as warnings.
+          - names:
+              - --no-cache
+            argument: ""
+            description: Do not cache packages and http requests.
+          - names:
+              - --interactive
+            argument: ""
+            description: Allows the command to stop and wait for user input or action (for example to complete authentication).
+          - names:
+              - -v
+              - --verbosity
+            argument: <LEVEL>
+            description: Set the MSBuild verbosity level. Allowed values are q[uiet], m[inimal], n[ormal], d[etailed], and diag[nostic].
+          - names:
+              - -?
+              - -h
+              - --help
+            argument: ""
+            description: Show command line help.
+  - name: vstest
+    description: Run Microsoft Test Engine (VSTest) commands.
+    usage: vstest.console.exe [Arguments] [Options] [[--] <RunSettings arguments>...]]
+    options: []
+  - name: workload
+    description: Manage optional workloads.
+    usage: dotnet [options] workload [command]
+    options:
+      - names:
+          - -?
+          - -h
+          - --help
+        argument: ""
+        description: Show command line help.
+    subcommands:
+      - name: install
+        description: Install one or more workloads.
+        usage: dotnet [options] workload install [<WORKLOAD_ID>...]
+        options:
+          - names:
+              - --configfile
+            argument: <FILE>
+            description: The NuGet configuration file to use.
+          - names:
+              - -s
+              - --source
+            argument: <SOURCE>
+            description: The NuGet package source to use during the restore. To specify multiple sources, repeat the option.
+          - names:
+              - --skip-manifest-update
+            argument: ""
+            description: Skip updating the workload manifests.
+          - names:
+              - --include-previews
+            argument: ""
+            description: Allow prerelease workload manifests.
+          - names:
+              - --temp-dir
+            argument: <temp-dir>
+            description: Specify a temporary directory for this command to download and extract NuGet packages (must be secure).
+          - names:
+              - --disable-parallel
+            argument: ""
+            description: Prevent restoring multiple projects in parallel.
+          - names:
+              - --ignore-failed-sources
+            argument: ""
+            description: Treat package source failures as warnings.
+          - names:
+              - --no-cache
+            argument: ""
+            description: Do not cache packages and http requests.
+          - names:
+              - --interactive
+            argument: ""
+            description: Allows the command to stop and wait for user input or action (for example to complete authentication).
+          - names:
+              - -v
+              - --verbosity
+            argument: <LEVEL>
+            description: Set the MSBuild verbosity level. Allowed values are q[uiet], m[inimal], n[ormal], d[etailed], and diag[nostic].
+          - names:
+              - -?
+              - -h
+              - --help
+            argument: ""
+            description: Show command line help.
+      - name: update
+        description: Update all installed workloads.
+        usage: dotnet [options] workload update
+        options:
+          - names:
+              - --configfile
+            argument: <FILE>
+            description: The NuGet configuration file to use.
+          - names:
+              - -s
+              - --source
+            argument: <SOURCE>
+            description: The NuGet package source to use during the restore. To specify multiple sources, repeat the option.
+          - names:
+              - --include-previews
+            argument: ""
+            description: Allow prerelease workload manifests.
+          - names:
+              - --temp-dir
+            argument: <temp-dir>
+            description: Specify a temporary directory for this command to download and extract NuGet packages (must be secure).
+          - names:
+              - --from-previous-sdk
+            argument: ""
+            description: Include workloads installed with earlier SDK versions in update.
+          - names:
+              - --advertising-manifests-only
+            argument: ""
+            description: Only update advertising manifests.
+          - names:
+              - --disable-parallel
+            argument: ""
+            description: Prevent restoring multiple projects in parallel.
+          - names:
+              - --ignore-failed-sources
+            argument: ""
+            description: Treat package source failures as warnings.
+          - names:
+              - --no-cache
+            argument: ""
+            description: Do not cache packages and http requests.
+          - names:
+              - --interactive
+            argument: ""
+            description: Allows the command to stop and wait for user input or action (for example to complete authentication).
+          - names:
+              - -v
+              - --verbosity
+            argument: <LEVEL>
+            description: Set the MSBuild verbosity level. Allowed values are q[uiet], m[inimal], n[ormal], d[etailed], and diag[nostic].
+          - names:
+              - -?
+              - -h
+              - --help
+            argument: ""
+            description: Show command line help.
+      - name: list
+        description: List workloads available.
+        usage: dotnet [options] workload list
+        options:
+          - names:
+              - -?
+              - -h
+              - --help
+            argument: ""
+            description: Show command line help.
+      - name: search
+        description: Search for available workloads.
+        usage: dotnet [options] workload search [<SEARCH_STRING>]
+        options:
+          - names:
+              - -?
+              - -h
+              - --help
+            argument: ""
+            description: Show command line help.
+      - name: uninstall
+        description: Uninstall one or more workloads.
+        usage: dotnet [options] workload uninstall [<WORKLOAD_ID>...]
+        options:
+          - names:
+              - -?
+              - -h
+              - --help
+            argument: ""
+            description: Show command line help.
+      - name: repair
+        description: Repair workload installations.
+        usage: dotnet [options] workload repair
+        options:
+          - names:
+              - --configfile
+            argument: <FILE>
+            description: The NuGet configuration file to use.
+          - names:
+              - -s
+              - --source
+            argument: <SOURCE>
+            description: The NuGet package source to use during the restore. To specify multiple sources, repeat the option.
+          - names:
+              - -v
+              - --verbosity
+            argument: <LEVEL>
+            description: Set the MSBuild verbosity level. Allowed values are q[uiet], m[inimal], n[ormal], d[etailed], and diag[nostic].
+          - names:
+              - --disable-parallel
+            argument: ""
+            description: Prevent restoring multiple projects in parallel.
+          - names:
+              - --ignore-failed-sources
+            argument: ""
+            description: Treat package source failures as warnings.
+          - names:
+              - --no-cache
+            argument: ""
+            description: Do not cache packages and http requests.
+          - names:
+              - --interactive
+            argument: ""
+            description: Allows the command to stop and wait for user input or action (for example to complete authentication).
+          - names:
+              - -?
+              - -h
+              - --help
+            argument: ""
+            description: Show command line help.
+      - name: restore
+        description: Restore workloads required for a project.
+        usage: dotnet [options] workload restore [<PROJECT | SOLUTION>...]
+        options:
+          - names:
+              - --configfile
+            argument: <FILE>
+            description: The NuGet configuration file to use.
+          - names:
+              - -s
+              - --source
+            argument: <SOURCE>
+            description: The NuGet package source to use during the restore. To specify multiple sources, repeat the option.
+          - names:
+              - --skip-manifest-update
+            argument: ""
+            description: Skip updating the workload manifests.
+          - names:
+              - --include-previews
+            argument: ""
+            description: Allow prerelease workload manifests.
+          - names:
+              - --temp-dir
+            argument: <temp-dir>
+            description: Specify a temporary directory for this command to download and extract NuGet packages (must be secure).
+          - names:
+              - --disable-parallel
+            argument: ""
+            description: Prevent restoring multiple projects in parallel.
+          - names:
+              - --ignore-failed-sources
+            argument: ""
+            description: Treat package source failures as warnings.
+          - names:
+              - --no-cache
+            argument: ""
+            description: Do not cache packages and http requests.
+          - names:
+              - --interactive
+            argument: ""
+            description: Allows the command to stop and wait for user input or action (for example to complete authentication).
+          - names:
+              - -v
+              - --verbosity
+            argument: <LEVEL>
+            description: Set the MSBuild verbosity level. Allowed values are q[uiet], m[inimal], n[ormal], d[etailed], and diag[nostic].
+          - names:
+              - -?
+              - -h
+              - --help
+            argument: ""
+            description: Show command line help.
+  - name: dev-certs
+    description: Create and manage development certificates.
+    usage: dotnet dev-certs [options] [command]
     options:
       - names:
           - -h
           - --help
         argument: ""
-        description: Show command line help.
-  - name: vstest
-    description: Run Microsoft Test Engine (VSTest) commands.
-    options: []
-  - name: dev-certs
-    description: Create and manage development certificates.
-    options: []
+        description: Show help information
   - name: fsi
     description: Start F# Interactive / execute F# scripts.
-    options: []
+    usage: |-
+      dotnet fsi <options> [script.fsx [<arguments>]]
+    options:
+      - names:
+          - --usesdkrefs
+        argument: '[+|-]'
+        description: Use reference assemblies for .NET framework references when available (Enabled by default).
+      - names:
+          - --
+        argument: '...'
+        description: Treat remaining arguments as command line arguments, accessed using fsi.CommandLineArgs
+      - names:
+          - --optimize
+        argument: '[+|-]'
+        description: 'Enable optimizations (Short form: -O)'
+      - names:
+          - --tailcalls
+        argument: '[+|-]'
+        description: Enable or disable tailcalls
+      - names:
+          - --deterministic
+        argument: '[+|-]'
+        description: Produce a deterministic assembly (including module version GUID and timestamp)
+      - names:
+          - --crossoptimize
+        argument: '[+|-]'
+        description: Enable or disable cross-module optimizations
+      - names:
+          - --warnaserror
+        argument: '[+|-]:<warn;...>'
+        description: Report specific warnings as errors
+      - names:
+          - --consolecolors
+        argument: '[+|-]'
+        description: Output warning and error messages in color
+      - names:
+          - --checked
+        argument: '[+|-]'
+        description: Generate overflow checks
+      - names:
+          - --mlcompatibility
+        argument: ""
+        description: Ignore ML compatibility warnings
+      - names:
+          - --version
+        argument: ""
+        description: Display compiler version banner and exit
+      - names:
+          - --help
+        argument: ""
+        description: 'Display this usage message (Short form: -?)'
+      - names:
+          - --utf8output
+        argument: ""
+        description: Output messages in UTF-8 encoding
+      - names:
+          - --fullpaths
+        argument: ""
+        description: Output messages with fully qualified paths
+      - names:
+          - --simpleresolution
+        argument: ""
+        description: Resolve assembly references using directory-based rules rather than MSBuild resolution
+      - names:
+          - --noframework
+        argument: ""
+        description: Do not reference the default CLI assemblies by default
+      - names:
+          - --exec
+        argument: ""
+        description: Exit fsi after loading the files or running the .fsx script given on the command line
+      - names:
+          - --gui
+        argument: '[+|-]'
+        description: Execute interactions on a Windows Forms event loop (on by default)
+      - names:
+          - --quiet
+        argument: ""
+        description: Suppress fsi writing to stdout
+      - names:
+          - --readline
+        argument: '[+|-]'
+        description: Support TAB completion in console (on by default)
+      - names:
+          - --quotations-debug
+        argument: '[+|-]'
+        description: Emit debug information in quotations
+      - names:
+          - --shadowcopyreferences
+        argument: '[+|-]'
+        description: Prevents references from being locked by the F# Interactive process
   - name: sql-cache
     description: SQL Server cache command-line tools.
+    usage: ""
     options: []
   - name: user-secrets
     description: Manage development user secrets.
-    options: []
+    usage: dotnet user-secrets [options] [command]
+    options:
+      - names:
+          - -?
+          - -h
+          - --help
+        argument: ""
+        description: Show help information
+      - names:
+          - --version
+        argument: ""
+        description: Show version information
+      - names:
+          - -v
+          - --verbose
+        argument: ""
+        description: Show verbose output
+      - names:
+          - -p
+          - --project
+        argument: <PROJECT>
+        description: Path to project. Defaults to searching the current directory.
+      - names:
+          - -c
+          - --configuration
+        argument: <CONFIGURATION>
+        description: The project configuration to use. Defaults to 'Debug'.
+      - names:
+          - --id
+        argument: ""
+        description: The user secret ID to use.
+    subcommands:
+      - name: clear
+        description: Deletes all the application secrets
+        usage: dotnet user-secrets clear [options]
+        options:
+          - names:
+              - -?
+              - -h
+              - --help
+            argument: ""
+            description: Show help information
+          - names:
+              - -v
+              - --verbose
+            argument: ""
+            description: Show verbose output
+          - names:
+              - -p
+              - --project
+            argument: <PROJECT>
+            description: Path to project. Defaults to searching the current directory.
+          - names:
+              - -c
+              - --configuration
+            argument: <CONFIGURATION>
+            description: The project configuration to use. Defaults to 'Debug'.
+          - names:
+              - --id
+            argument: ""
+            description: The user secret ID to use.
+      - name: init
+        description: Set a user secrets ID to enable secret storage
+        usage: dotnet user-secrets init [options]
+        options:
+          - names:
+              - -?
+              - -h
+              - --help
+            argument: ""
+            description: Show help information
+          - names:
+              - -v
+              - --verbose
+            argument: ""
+            description: Show verbose output
+          - names:
+              - -p
+              - --project
+            argument: <PROJECT>
+            description: Path to project. Defaults to searching the current directory.
+          - names:
+              - -c
+              - --configuration
+            argument: <CONFIGURATION>
+            description: The project configuration to use. Defaults to 'Debug'.
+          - names:
+              - --id
+            argument: ""
+            description: The user secret ID to use.
+      - name: list
+        description: Lists all the application secrets
+        usage: dotnet user-secrets list [options]
+        options:
+          - names:
+              - -?
+              - -h
+              - --help
+            argument: ""
+            description: Show help information
+          - names:
+              - --json
+            argument: ""
+            description: Use json output. JSON is wrapped by '//BEGIN' and '//END'
+          - names:
+              - -v
+              - --verbose
+            argument: ""
+            description: Show verbose output
+          - names:
+              - -p
+              - --project
+            argument: <PROJECT>
+            description: Path to project. Defaults to searching the current directory.
+          - names:
+              - -c
+              - --configuration
+            argument: <CONFIGURATION>
+            description: The project configuration to use. Defaults to 'Debug'.
+          - names:
+              - --id
+            argument: ""
+            description: The user secret ID to use.
+      - name: remove
+        description: Removes the specified user secret
+        usage: dotnet user-secrets remove [arguments] [options]
+        options:
+          - names:
+              - -?
+              - -h
+              - --help
+            argument: ""
+            description: Show help information
+          - names:
+              - -v
+              - --verbose
+            argument: ""
+            description: Show verbose output
+          - names:
+              - -p
+              - --project
+            argument: <PROJECT>
+            description: Path to project. Defaults to searching the current directory.
+          - names:
+              - -c
+              - --configuration
+            argument: <CONFIGURATION>
+            description: The project configuration to use. Defaults to 'Debug'.
+          - names:
+              - --id
+            argument: ""
+            description: The user secret ID to use.
+      - name: set
+        description: Sets the user secret to the specified value
+        usage: dotnet user-secrets set [arguments] [options]
+        options:
+          - names:
+              - -?
+              - -h
+              - --help
+            argument: ""
+            description: Show help information
+          - names:
+              - -v
+              - --verbose
+            argument: ""
+            description: Show verbose output
+          - names:
+              - -p
+              - --project
+            argument: <PROJECT>
+            description: Path to project. Defaults to searching the current directory.
+          - names:
+              - -c
+              - --configuration
+            argument: <CONFIGURATION>
+            description: The project configuration to use. Defaults to 'Debug'.
+          - names:
+              - --id
+            argument: ""
+            description: The user secret ID to use.
   - name: watch
     description: Start a file watcher that runs a command when files change.
-    options: []
+    usage: dotnet-watch [options] [[--] <additional arguments>...]]
+    options:
+      - names:
+          - -q
+          - --quiet
+        argument: ""
+        description: Suppresses all output except warnings and errors
+      - names:
+          - -v
+          - --verbose
+        argument: ""
+        description: Show verbose output
+      - names:
+          - --no-hot-reload
+        argument: ""
+        description: Suppress hot reload for supported apps.
+      - names:
+          - --project
+        argument: <project>
+        description: The project to watch
+      - names:
+          - --list
+        argument: ""
+        description: Lists all discovered files without starting the watcher
+      - names:
+          - --version
+        argument: ""
+        description: Show version information
+      - names:
+          - -?
+          - -h
+          - --help
+        argument: ""
+        description: Show help and usage information
+version: 6.0.110
 tldr: |
   > Cross platform .NET command-line tools for .NET Core.
   > Some subcommands such as `dotnet build` have their own usage documentation.
-  > More information: <https://docs.microsoft.com/dotnet/core/tools>.
+  > More information: <https://learn.microsoft.com/dotnet/core/tools>.
 
   - Initialize a new .NET project:
 

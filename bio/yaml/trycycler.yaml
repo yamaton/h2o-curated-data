@@ -1,5 +1,9 @@
 name: trycycler
 description: trycycler
+usage: |-
+  trycycler [-h] [--version]
+            {subsample,cluster,dotplot,reconcile,msa,partition,consensus}
+            ...
 options:
   - names:
       - -h
@@ -13,261 +17,294 @@ options:
 subcommands:
   - name: subsample
     description: subsample a long-read set
+    usage: trycycler subsample -r READS -o OUT_DIR [--count COUNT] [--genome_size GENOME_SIZE] [--min_read_depth MIN_READ_DEPTH] [-t THREADS] [-h] [--version]
     options:
       - names:
           - -r
           - --reads
         argument: READS
-        description: "Input long reads (FASTQ format)"
+        description: Input long reads (FASTQ format)
       - names:
           - -o
           - --out_dir
         argument: OUT_DIR
-        description: "Output directory"
+        description: Output directory
       - names:
           - --count
         argument: COUNT
-        description: "Number of subsampled read sets to output (default: 12)"
+        description: 'Number of subsampled read sets to output (default: 12)'
       - names:
           - --genome_size
         argument: GENOME_SIZE
-        description: "Approximate genome size (default: auto)"
+        description: 'Approximate genome size (default: auto)'
       - names:
           - --min_read_depth
         argument: MIN_READ_DEPTH
-        description: "Minimum allowed read depth (default: 25.0)"
+        description: 'Minimum allowed read depth (default: 25.0)'
       - names:
           - -t
           - --threads
         argument: THREADS
-        description: "Number of threads to use for alignment (default: 4)"
+        description: 'Number of threads to use for alignment (default: 12)'
       - names:
           - -h
           - --help
         argument: ""
-        description: "Show this help message and exit"
+        description: Show this help message and exit
       - names:
           - --version
         argument: ""
-        description: "Show program's version number and exit"
+        description: Show program's version number and exit
   - name: cluster
     description: cluster contigs by similarity
+    usage: trycycler cluster -a ASSEMBLIES [ASSEMBLIES ...] -r READS -o OUT_DIR [--min_contig_len MIN_CONTIG_LEN] [--min_contig_depth MIN_CONTIG_DEPTH] [--distance DISTANCE] [-t THREADS] [-h] [--version]
     options:
       - names:
           - -a
           - --assemblies
         argument: ASSEMBLIES [ASSEMBLIES ...]
-        description: "Input assemblies whose contigs will be clustered (multiple FASTA files)"
+        description: Input assemblies whose contigs will be clustered (multiple FASTA files)
       - names:
           - -r
           - --reads
         argument: READS
-        description: "Long reads (FASTQ format) used to generate the assemblies"
+        description: Long reads (FASTQ format) used to generate the assemblies
       - names:
           - -o
           - --out_dir
         argument: OUT_DIR
-        description: "Output directory"
+        description: Output directory
       - names:
           - --min_contig_len
         argument: MIN_CONTIG_LEN
-        description: "Exclude contigs shorter than this many base pairs in length (default: 1000)"
+        description: 'Exclude contigs shorter than this many base pairs in length (default: 1000)'
       - names:
           - --min_contig_depth
         argument: MIN_CONTIG_DEPTH
-        description: "Exclude contigs with less than this much read depth relative to the mean read depth (default: 0.1)"
+        description: 'Exclude contigs with less than this much read depth relative to the mean read depth (default: 0.1)'
       - names:
           - --distance
         argument: DISTANCE
-        description: "Mash distance complete-linkage clustering threshold (default: 0.01)"
+        description: 'Mash distance complete-linkage clustering threshold (default: 0.01)'
       - names:
           - -t
           - --threads
         argument: THREADS
-        description: "Number of threads to use for alignment (default: 4)"
+        description: 'Number of threads to use for alignment (default: 12)'
       - names:
           - -h
           - --help
         argument: ""
-        description: "Show this help message and exit"
+        description: Show this help message and exit
       - names:
           - --version
         argument: ""
-        description: "Show program's version number and exit"
-  - name: reconcile
-    description: reconcile contig sequences
+        description: Show program's version number and exit
+  - name: dotplot
+    description: draw pairwise dotplots for a cluster
+    usage: trycycler dotplot -c CLUSTER_DIR [--kmer KMER] [--res RES] [-h] [--version]
     options:
       - names:
           - -c
           - --cluster_dir
         argument: CLUSTER_DIR
-        description: "Cluster directory (should contain a 1_contigs subdirectory)"
+        description: Cluster directory (should contain a 1_contigs subdirectory)
+      - names:
+          - --kmer
+        argument: KMER
+        description: 'K-mer size to use in dot plots (default: 32)'
+      - names:
+          - --res
+        argument: RES
+        description: 'Size (in pixels) of each dot plot image (default: 2000)'
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: Show this help message and exit
+      - names:
+          - --version
+        argument: ""
+        description: Show program's version number and exit
+  - name: reconcile
+    description: reconcile contig sequences
+    usage: trycycler reconcile -c CLUSTER_DIR -r READS [--linear] [-t THREADS] [--verbose] [--max_mash_dist MAX_MASH_DIST] [--max_length_diff MAX_LENGTH_DIFF] [--max_add_seq MAX_ADD_SEQ] [--max_add_seq_percent MAX_ADD_SEQ_PERCENT] [--max_trim_seq MAX_TRIM_SEQ] [--max_trim_seq_percent MAX_TRIM_SEQ_PERCENT] [--min_identity MIN_IDENTITY] [--max_indel_size MAX_INDEL_SIZE] [-h] [--version]
+    options:
+      - names:
+          - -c
+          - --cluster_dir
+        argument: CLUSTER_DIR
+        description: Cluster directory (should contain a 1_contigs subdirectory)
       - names:
           - -r
           - --reads
         argument: READS
-        description: "Long reads (FASTQ format) used to generate the assemblies"
+        description: Long reads (FASTQ format) used to generate the assemblies
       - names:
           - --linear
         argument: ""
-        description: "The input contigs are not circular (default: assume the input contigs are circular)"
+        description: 'The input contigs are not circular (default: assume the input contigs are circular)'
       - names:
           - -t
           - --threads
         argument: THREADS
-        description: "Number of threads to use for alignment (default: 4)"
+        description: 'Number of threads to use for alignment (default: 12)'
       - names:
           - --verbose
         argument: ""
-        description: "Display extra output (for debugging) (default: False)"
+        description: 'Display extra output (for debugging) (default: False)'
       - names:
           - --max_mash_dist
         argument: MAX_MASH_DIST
-        description: "Maximum allowed pairwise Mash distance (default: 0.02)"
+        description: 'Maximum allowed pairwise Mash distance (default: 0.02)'
       - names:
           - --max_length_diff
         argument: MAX_LENGTH_DIFF
-        description: "Maximum allowed pairwise relative length difference (default: 1.1)"
+        description: 'Maximum allowed pairwise relative length difference (default: 1.1)'
       - names:
           - --max_add_seq
         argument: MAX_ADD_SEQ
-        description: "Maximum allowed sequence length to be added in order to fix circularisation (default: 1000)"
+        description: 'Maximum allowed sequence length to be added in order to fix circularisation (default: 1000)'
       - names:
           - --max_add_seq_percent
         argument: MAX_ADD_SEQ_PERCENT
-        description: "Maximum allowed percent relative sequence length to be added in order to fix circularisation (default: 5.0)"
+        description: 'Maximum allowed percent relative sequence length to be added in order to fix circularisation (default: 5.0)'
       - names:
           - --max_trim_seq
         argument: MAX_TRIM_SEQ
-        description: "Maximum allowed sequence length to be trimmed in order to fix circularisation (default: 50000)"
+        description: 'Maximum allowed sequence length to be trimmed in order to fix circularisation (default: 50000)'
       - names:
           - --max_trim_seq_percent
         argument: MAX_TRIM_SEQ_PERCENT
-        description: "Maximum allowed percent relative sequence length to be trimmed in order to fix circularisation (default: 10.0)"
+        description: 'Maximum allowed percent relative sequence length to be trimmed in order to fix circularisation (default: 10.0)'
       - names:
           - --min_identity
         argument: MIN_IDENTITY
-        description: "Minimum allowed pairwise percent identity (default: 98.0)"
+        description: 'Minimum allowed pairwise percent identity (default: 98.0)'
       - names:
           - --max_indel_size
         argument: MAX_INDEL_SIZE
-        description: "Maximum allowed pairwise indel size (default: 250)"
+        description: 'Maximum allowed pairwise indel size (default: 1000)'
       - names:
           - -h
           - --help
         argument: ""
-        description: "Show this help message and exit"
+        description: Show this help message and exit
       - names:
           - --version
         argument: ""
-        description: "Show program's version number and exit"
+        description: Show program's version number and exit
   - name: msa
     description: multiple sequence alignment
+    usage: trycycler msa -c CLUSTER_DIR [-k KMER] [-s STEP] [-l LOOKAHEAD] [-t THREADS] [-h] [--version]
     options:
       - names:
           - -c
           - --cluster_dir
         argument: CLUSTER_DIR
-        description: "Cluster directory (should contain a 1_contigs subdirectory)"
+        description: Cluster directory (should contain a 1_contigs subdirectory)
       - names:
           - -k
           - --kmer
         argument: KMER
-        description: "K-mer size used for sequence partitioning (default: 32)"
+        description: 'K-mer size used for sequence partitioning (default: 32)'
       - names:
           - -s
           - --step
         argument: STEP
-        description: "Step size used for sequence partitioning (default: 1000)"
+        description: 'Step size used for sequence partitioning (default: 1000)'
       - names:
           - -l
           - --lookahead
         argument: LOOKAHEAD
-        description: "Look-ahead margin used for sequence partitioning (default: 10000)"
+        description: 'Look-ahead margin used for sequence partitioning (default: 10000)'
       - names:
           - -t
           - --threads
         argument: THREADS
-        description: "Number of threads to use for multiple sequence alignment (default: 4)"
+        description: 'Number of threads to use for multiple sequence alignment (default: 12)'
       - names:
           - -h
           - --help
         argument: ""
-        description: "Show this help message and exit"
+        description: Show this help message and exit
       - names:
           - --version
         argument: ""
-        description: "Show program's version number and exit"
+        description: Show program's version number and exit
   - name: partition
     description: partition reads by cluster
+    usage: trycycler partition -c CLUSTER_DIRS [CLUSTER_DIRS ...] -r READS [--min_aligned_len MIN_ALIGNED_LEN] [--min_read_cov MIN_READ_COV] [-t THREADS] [-h] [--version]
     options:
       - names:
           - -c
           - --cluster_dirs
         argument: CLUSTER_DIRS [CLUSTER_DIRS ...]
-        description: "Cluster directories (each should contain 2_all_seqs.fasta and 3_pairwise_alignments files)"
+        description: Cluster directories (each should contain 2_all_seqs.fasta and 3_pairwise_alignments files)
       - names:
           - -r
           - --reads
         argument: READS
-        description: "Long reads (FASTQ format) used to generate the assemblies"
+        description: Long reads (FASTQ format) used to generate the assemblies
       - names:
           - --min_aligned_len
         argument: MIN_ALIGNED_LEN
-        description: "Do not consider reads with less than this many bases aligned (default: 1000)"
+        description: 'Do not consider reads with less than this many bases aligned (default: 1000)'
       - names:
           - --min_read_cov
         argument: MIN_READ_COV
-        description: "Do not consider reads with less than this percentages of their length covered by alignments (default: 90.0)"
+        description: 'Do not consider reads with less than this percentages of their length covered by alignments (default: 90.0)'
       - names:
           - -t
           - --threads
         argument: THREADS
-        description: "Number of threads to use for alignment (default: 4)"
+        description: 'Number of threads to use for alignment (default: 12)'
       - names:
           - -h
           - --help
         argument: ""
-        description: "Show this help message and exit"
+        description: Show this help message and exit
       - names:
           - --version
         argument: ""
-        description: "Show program's version number and exit"
+        description: Show program's version number and exit
   - name: consensus
     description: derive a consensus sequence
+    usage: trycycler consensus -c CLUSTER_DIR [--linear] [--min_aligned_len MIN_ALIGNED_LEN] [--min_read_cov MIN_READ_COV] [-t THREADS] [--verbose] [-h] [--version]
     options:
       - names:
           - -c
           - --cluster_dir
         argument: CLUSTER_DIR
-        description: "Cluster directory (should contain 2_all_seqs.fasta, 3_pairwise_alignments and 4_reads.fastq files)"
+        description: Cluster directory (should contain 2_all_seqs.fasta, 3_pairwise_alignments and 4_reads.fastq files)
       - names:
           - --linear
         argument: ""
-        description: "The input contigs are not circular (default: assume the input contigs are circular)"
+        description: 'The input contigs are not circular (default: assume the input contigs are circular)'
       - names:
           - --min_aligned_len
         argument: MIN_ALIGNED_LEN
-        description: "Do not consider reads with less than this many bases aligned (default: 1000)"
+        description: 'Do not consider reads with less than this many bases aligned (default: 1000)'
       - names:
           - --min_read_cov
         argument: MIN_READ_COV
-        description: "Do not consider reads with less than this percentages of their length covered by alignments (default: 90.0)"
+        description: 'Do not consider reads with less than this percentages of their length covered by alignments (default: 90.0)'
       - names:
           - -t
           - --threads
         argument: THREADS
-        description: "Number of threads to use for alignment (default: 4)"
+        description: 'Number of threads to use for alignment (default: 12)'
       - names:
           - --verbose
         argument: ""
-        description: "Display extra output (for debugging) (default: False)"
+        description: 'Display extra output (for debugging) (default: False)'
       - names:
           - -h
           - --help
         argument: ""
-        description: "Show this help message and exit"
+        description: Show this help message and exit
       - names:
           - --version
         argument: ""
-        description: "Show program's version number and exit"
+        description: Show program's version number and exit
+version: Trycycler v0.5.3

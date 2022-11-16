@@ -1,70 +1,190 @@
 name: unicycler
 description: unicycler
+usage: |-
+  unicycler [-h] [--help_all] [--version] [-1 SHORT1] [-2 SHORT2]
+            [-s UNPAIRED] [-l LONG] -o OUT [--verbosity VERBOSITY]
+            [--min_fasta_length MIN_FASTA_LENGTH] [--keep KEEP]
+            [-t THREADS] [--mode {conservative,normal,bold}]
+            [--min_bridge_qual MIN_BRIDGE_QUAL]
+            [--linear_seqs LINEAR_SEQS]
+            [--min_anchor_seg_len MIN_ANCHOR_SEG_LEN]
+            [--spades_path SPADES_PATH] [--min_kmer_frac MIN_KMER_FRAC]
+            [--max_kmer_frac MAX_KMER_FRAC] [--kmers KMERS]
+            [--kmer_count KMER_COUNT] [--depth_filter DEPTH_FILTER]
+            [--largest_component] [--spades_options SPADES_OPTIONS]
+            [--no_miniasm] [--racon_path RACON_PATH]
+            [--existing_long_read_assembly EXISTING_LONG_READ_ASSEMBLY]
+            [--no_simple_bridges] [--no_long_read_alignment]
+            [--contamination CONTAMINATION] [--scores SCORES]
+            [--low_score LOW_SCORE]
+            [--min_component_size MIN_COMPONENT_SIZE]
+            [--min_dead_end_size MIN_DEAD_END_SIZE] [--no_rotate]
+            [--start_genes START_GENES] [--start_gene_id START_GENE_ID]
+            [--start_gene_cov START_GENE_COV]
+            [--makeblastdb_path MAKEBLASTDB_PATH]
+            [--tblastn_path TBLASTN_PATH]
 options:
   - names:
       - -h
       - --help
     argument: ""
-    description: "Show this help message and exit"
+    description: Show this help message and exit
   - names:
       - --help_all
     argument: ""
-    description: "Show a help message with all program options"
+    description: Show a help message with all program options
   - names:
       - --version
     argument: ""
-    description: "Show Unicycler's version number"
+    description: Show Unicycler's version number
   - names:
       - "-1"
       - --short1
     argument: SHORT1
-    description: "FASTQ file of first short reads in each pair (required)"
+    description: FASTQ file of first short reads in each pair
   - names:
       - "-2"
       - --short2
     argument: SHORT2
-    description: "FASTQ file of second short reads in each pair (required)"
+    description: FASTQ file of second short reads in each pair
   - names:
       - -s
       - --unpaired
     argument: UNPAIRED
-    description: "FASTQ file of unpaired short reads (optional)"
+    description: FASTQ file of unpaired short reads
   - names:
       - -l
       - --long
     argument: LONG
-    description: "FASTQ or FASTA file of long reads (optional)"
+    description: FASTQ or FASTA file of long reads
   - names:
       - -o
       - --out
     argument: OUT
-    description: "Output directory (required)"
-  - names:
-      - --verbosity
-    argument: VERBOSITY
-    description: "Level of stdout and log file information (default: 1)   0 = no stdout, 1 = basic progress indicators,   2 = extra info, 3 = debugging info"
-  - names:
-      - --min_fasta_length
-    argument: MIN_FASTA_LENGTH
-    description: "Exclude contigs from the FASTA file which are shorter than this length (default: 100)"
+    description: 'Output directory (required),--verbosity VERBOSITY   Level of stdout and log file information (default: 1)   0 = no stdout, 1 = basic progress indicators, 2 = extra info, 3 = debugging info'
   - names:
       - --keep
     argument: KEEP
-    description: "Level of file retention (default: 1)   0 = only keep final files: assembly (FASTA,   GFA and log),   1 = also save graphs at main checkpoints,   2 = also keep SAM (enables fast rerun in different mode),   3 = keep all temp files and save all graphs (for debugging)"
+    description: 'Level of file retention (default: 1)   0 = only keep final files: assembly (FASTA, GFA and log), 1 = also save graphs at main checkpoints, 2 = also keep SAM (enables fast rerun in different mode), 3 = keep all temp files and save all graphs (for debugging)'
   - names:
-      - --vcf
-    argument: ""
-    description: "Produce a VCF by mapping the short reads to the final assembly (experimental, default: do not produce a vcf file)"
+      - --min_fasta_length
+    argument: MIN_FASTA_LENGTH
+    description: 'Exclude contigs from the FASTA file which are shorter than this length (default: 100)'
   - names:
       - -t
       - --threads
     argument: THREADS
-    description: "Number of threads used (default: 4)"
+    description: 'Number of threads used (default: 8)'
   - names:
       - --mode
     argument: '{conservative,normal,bold}'
-    description: "Bridging mode (default: normal)   conservative = smaller contigs, lowest misassembly                  rate   normal = moderate contig size and misassembly rate   bold = longest contigs, higher misassembly rate"
+    description: 'Bridging mode (default: normal)'
+  - names:
+      - --min_bridge_qual
+    argument: MIN_BRIDGE_QUAL
+    description: Do not apply bridges with a quality below this value
   - names:
       - --linear_seqs
     argument: LINEAR_SEQS
-    description: "The expected number of linear (i.e. non-circular) sequences in the underlying sequence (default: 0)"
+    description: 'The expected number of linear (i.e. non-circular) sequences in the underlying sequence (default: 0)'
+  - names:
+      - --min_anchor_seg_len
+    argument: MIN_ANCHOR_SEG_LEN
+    description: 'If set, Unicycler will not use segments shorter than this as scaffolding anchors (default: automatic threshold)'
+  - names:
+      - --spades_path
+    argument: SPADES_PATH
+    description: 'Path to the SPAdes executable (default: spades.py)'
+  - names:
+      - --min_kmer_frac
+    argument: MIN_KMER_FRAC
+    description: 'Lowest k-mer size for SPAdes assembly, expressed as a fraction of the read length (default: 0.2)'
+  - names:
+      - --max_kmer_frac
+    argument: MAX_KMER_FRAC
+    description: 'Highest k-mer size for SPAdes assembly, expressed as a fraction of the read length (default: 0.95)'
+  - names:
+      - --kmers
+    argument: KMERS
+    description: 'Exact k-mers to use for SPAdes assembly, commaseparated (example: 21,51,71, default: automatic)'
+  - names:
+      - --kmer_count
+    argument: KMER_COUNT
+    description: 'Number of k-mer steps to use in SPAdes assembly (default: 8)'
+  - names:
+      - --depth_filter
+    argument: DEPTH_FILTER
+    description: 'Filter out contigs lower than this fraction of the chromosomal depth, if doing so does not result in graph dead ends (default: 0.25)'
+  - names:
+      - --largest_component
+    argument: ""
+    description: 'Only keep the largest connected component of the assembly graph (default: keep all connected components)'
+  - names:
+      - --spades_options
+    argument: SPADES_OPTIONS
+    description: 'Additional options to be given to SPAdes (example: " --phred-offset 33", default: no additional options)'
+  - names:
+      - --no_miniasm
+    argument: ""
+    description: 'Skip miniasm+Racon bridging (default: use miniasm and Racon to produce long-read bridges)'
+  - names:
+      - --racon_path
+    argument: RACON_PATH
+    description: 'Path to the Racon executable (default: racon)'
+  - names:
+      - --existing_long_read_assembly
+    argument: EXISTING_LONG_READ_ASSEMBLY
+    description: 'A pre-prepared long-read assembly for the sample in GFA or FASTA format. If this option is used, Unicycler will skip the miniasm/Racon steps and instead use the given assembly (default: perform long-read assembly using miniasm/Racon)'
+  - names:
+      - --no_simple_bridges
+    argument: ""
+    description: 'Skip simple long-read bridging (default: use simple long-read bridging)'
+  - names:
+      - --no_long_read_alignment
+    argument: ""
+    description: 'Skip long-read-alignment-based bridging (default: use long-read alignments to produce bridges)'
+  - names:
+      - --contamination
+    argument: CONTAMINATION
+    description: FASTA file of known contamination in long reads
+  - names:
+      - --scores
+    argument: SCORES
+    description: 'Comma-delimited string of alignment scores: match, mismatch, gap open, gap extend (default: 3,-6,-5,-2)'
+  - names:
+      - --low_score
+    argument: LOW_SCORE
+    description: 'Score threshold - alignments below this are considered poor (default: set threshold automatically)'
+  - names:
+      - --min_component_size
+    argument: MIN_COMPONENT_SIZE
+    description: 'Graph components smaller than this size (bp) will be removed from the final graph (default: 1000)'
+  - names:
+      - --min_dead_end_size
+    argument: MIN_DEAD_END_SIZE
+    description: 'Graph dead ends smaller than this size (bp) will be removed from the final graph (default: 1000)'
+  - names:
+      - --no_rotate
+    argument: ""
+    description: 'Do not rotate completed replicons to start at a standard gene (default: completed replicons are rotated)'
+  - names:
+      - --start_genes
+    argument: START_GENES
+    description: 'FASTA file of genes for start point of rotated replicons (default: start_genes.fasta)'
+  - names:
+      - --start_gene_id
+    argument: START_GENE_ID
+    description: 'The minimum required BLAST percent identity for a start gene search (default: 90.0)'
+  - names:
+      - --start_gene_cov
+    argument: START_GENE_COV
+    description: 'The minimum required BLAST percent coverage for a start gene search (default: 95.0)'
+  - names:
+      - --makeblastdb_path
+    argument: MAKEBLASTDB_PATH
+    description: 'Path to the makeblastdb executable (default: makeblastdb)'
+  - names:
+      - --tblastn_path
+    argument: TBLASTN_PATH
+    description: 'Path to the tblastn executable (default: tblastn)'
+version: Unicycler v0.5.0

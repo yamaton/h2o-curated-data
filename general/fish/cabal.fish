@@ -50,6 +50,7 @@ complete -k -c cabal -n __fish_use_subcommand -x -a user-config -d "Display and 
 complete -k -c cabal -n __fish_use_subcommand -x -a fetch -d "Downloads packages for later installation."
 complete -k -c cabal -n __fish_use_subcommand -x -a list -d "List packages matching a search string."
 complete -k -c cabal -n __fish_use_subcommand -x -a info -d "Display detailed information about a particular package."
+complete -k -c cabal -n __fish_use_subcommand -x -a help -d "Help about commands."
 complete -k -c cabal -n __fish_use_subcommand -x -a install -d "Install packages."
 complete -k -c cabal -n __fish_use_subcommand -x -a update -d "Updates list of known packages."
 
@@ -369,6 +370,10 @@ complete -c cabal -n "__fish_seen_subcommand_from install" -l "package-env" -d "
 complete -c cabal -n "__fish_seen_subcommand_from install" -l "overwrite-policy" -d "How to handle already existing symlinks." -x
 complete -c cabal -n "__fish_seen_subcommand_from install" -l "install-method" -d "How to install the executables." -x
 complete -c cabal -n "__fish_seen_subcommand_from install" -l "installdir" -d "Where to install (by symlinking or copying) the executables in." -r
+
+
+
+complete -c cabal -n "__fish_seen_subcommand_from help" -s "h" -l "help" -d "Show this help text"
 
 
 

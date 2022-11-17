@@ -26,6 +26,10 @@ _cabal()
             return
             ;;
 
+          help) _cabal_help
+            return
+            ;;
+
           info) _cabal_info
             return
             ;;
@@ -227,7 +231,7 @@ _cabal()
             ;;
 
       *)
-          word_list=" update install info list fetch user-config get init configure build clean run repl test bench check sdist upload report freeze gen-bounds outdated haddock hscolour exec list-bin v2-build v2-configure v2-repl v2-run v2-test v2-bench v2-freeze v2-haddock v2-exec v2-update v2-install v2-clean v2-sdist v1-build v1-configure v1-repl v1-run v1-test v1-bench v1-freeze v1-haddock v1-install v1-clean v1-copy v1-register v1-reconfigure "
+          word_list=" update install help info list fetch user-config get init configure build clean run repl test bench check sdist upload report freeze gen-bounds outdated haddock hscolour exec list-bin v2-build v2-configure v2-repl v2-run v2-test v2-bench v2-freeze v2-haddock v2-exec v2-update v2-install v2-clean v2-sdist v1-build v1-configure v1-repl v1-run v1-test v1-bench v1-freeze v1-haddock v1-install v1-clean v1-copy v1-register v1-reconfigure "
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac
@@ -246,6 +250,40 @@ _cabal_install ()
 {
     local cur word_list
     word_list=" -h --help -v --verbose --builddir -g --ghc --ghcjs --uhc --haskell-suite --cabal-file -w --with-compiler --with-hc-pkg --prefix --bindir --libdir --libsubdir --dynlibdir --libexecdir --libexecsubdir --datadir --datasubdir --docdir --htmldir --haddockdir --sysconfdir --program-prefix --program-suffix --enable-library-vanilla --disable-library-vanilla -p --enable-library-profiling --disable-library-profiling --enable-shared --disable-shared --enable-static --disable-static --enable-executable-dynamic --disable-executable-dynamic --enable-executable-static --disable-executable-static --enable-profiling --disable-profiling --enable-executable-profiling --disable-executable-profiling --profiling-detail --library-profiling-detail -O --enable-optimization --disable-optimization --enable-debug-info --disable-debug-info --enable-library-for-ghci --disable-library-for-ghci --enable-split-sections --disable-split-sections --enable-split-objs --disable-split-objs --enable-executable-stripping --disable-executable-stripping --enable-library-stripping --disable-library-stripping --configure-option --user --global --package-db -f --flags --extra-include-dirs --enable-deterministic --disable-deterministic --ipid --cid --extra-lib-dirs --extra-framework-dirs --extra-prog-path --instantiate-with --enable-tests --disable-tests --enable-coverage --disable-coverage --enable-library-coverage --disable-library-coverage --enable-benchmarks --disable-benchmarks --enable-relocatable --disable-relocatable --disable-response-files --allow-depending-on-private-libs --with-PROG --PROG-option --PROG-options --cabal-lib-version --constraint --preference --solver --allow-older --allow-newer --write-ghc-environment-files --enable-documentation --disable-documentation --doc-index-file --dry-run --only-download --max-backjumps --reorder-goals --count-conflicts --fine-grained-conflicts --minimize-conflict-set --independent-goals --shadow-installed-packages --strong-flags --allow-boot-library-installs --reject-unconstrained-dependencies --reinstall --avoid-reinstalls --force-reinstalls --upgrade-dependencies --only-dependencies --dependencies-only --index-state --root-cmd --build-summary --build-log --remote-build-reporting --report-planning-failure --enable-per-component --disable-per-component --one-shot --run-tests -j --jobs --keep-going --offline --haddock-hoogle --haddock-html --haddock-html-location --haddock-for-hackage --haddock-executables --haddock-tests --haddock-benchmarks --haddock-all --haddock-internal --haddock-css --haddock-hyperlink-source --haddock-quickjump --haddock-hscolour-css --haddock-contents-location --test-log --test-machine-log --test-show-details --test-keep-tix-files --test-wrapper --test-fail-when-no-test-suites --test-options --test-option --benchmark-options --benchmark-option --project-file -z --ignore-project --lib --package-env --overwrite-policy --install-method --installdir" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_cabal_help ()
+{
+    local cur word_list
+    local i=1 subcommand_index
+
+    # take the last word that's NOT starting with -
+    while [[ ( $i < $COMP_CWORD ) ]]; do
+        local s="${COMP_WORDS[i]}"
+        case "$s" in
+          help)
+            subcommand_index=$i
+            break
+            ;;
+        esac
+        (( i++ ))
+    done
+
+    while [[ ( $subcommand_index < $COMP_CWORD ) ]]; do
+        local s="${COMP_WORDS[subcommand_index}"
+        case "$s" in
+          cabal) _cabal_cabal
+            return
+            ;;
+
+          *)  ;; 
+        esac
+        (( subcommand_index++ ))
+    done
+
+    word_list=" cabal -h --help" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }

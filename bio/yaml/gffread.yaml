@@ -1,22 +1,42 @@
 name: gffread
 description: gffread
+usage: |-
+  gffread [-g <genomic_seqs_fasta> | <dir>] [-s <seq_info.fsize>]
+          [-o <outfile>] [-t <trackname>] [-r [<strand>]<chr>:<start>-<end> [-R]]
+          [--jmatch <chr>:<start>-<end>] [--no-pseudo]
+          [-CTVNJMKQAFPGUBHZWTOLE] [-w <exons.fa>] [-x <cds.fa>] [-y <tr_cds.fa>]
+          [-j ][--ids <IDs.lst> | --nids <IDs.lst>] [--attrs <attr-list>] [-i <maxintron>]
+          [--stream] [--bed | --gtf | --tlf] [--table <attrlist>] [--sort-by <ref.lst>]
+          [<input_gff>]
 options:
   - names:
+      - --ids
+    argument: <IDs.lst>
+    description: discard records/transcripts if their IDs are not listed in <IDs.lst>
+  - names:
+      - --nids
+    argument: <IDs.lst>
+    description: discard records/transcripts if their IDs are listed in <IDs.lst>
+  - names:
       - -i
-    argument: ""
+    argument: <maxintron>
     description: discard transcripts having an intron larger than <maxintron>
   - names:
       - -l
-    argument: ""
+    argument: <minlen>
     description: discard transcripts shorter than <minlen> bases
   - names:
       - -r
-    argument: ""
+    argument: '[<strand>]<chr>:<start>-<end>'
     description: only show transcripts overlapping coordinate range <start>..<end> (on chromosome/contig <chr>, strand <strand> if provided)
   - names:
       - -R
     argument: ""
     description: for -r option, discard all transcripts that are not fully contained within the given range
+  - names:
+      - --jmatch
+    argument: <chr>:<start>-<end>
+    description: only output transcripts matching the given junction
   - names:
       - -U
     argument: ""
@@ -39,20 +59,20 @@ options:
     description: use the description field from <seq_info.fsize> and add it as the value for a 'descr' attribute to the GFF record
   - names:
       - -s
-    argument: ""
-    description: '<seq_info.fsize> is a tab-delimited file providing this info for each of the mapped sequences: <seq-name> <seq-length> <seq-description> (useful for -A option with mRNA/EST/protein mappings)'
+    argument: <seq_info.fsize>
+    description: 'a tab-delimited file providing this info   for each of the mapped sequences: <seq-name> <seq-length> <seq-description> (useful for -A option with mRNA/EST/protein mappings)'
   - names:
       - --sort-alpha
     argument: ""
     description: chromosomes (reference sequences) are sorted alphabetically
   - names:
       - --sort-by
-    argument: ""
+    argument: <ref.lst>
     description: sort the reference sequences by the order in which their names are given in the <refseq.lst> file
   - names:
       - -F
     argument: ""
-    description: preserve all GFF attributes (for non-exon features)
+    description: keep all GFF attributes (for non-exon features)
   - names:
       - --keep-exon-attrs
     argument: ""
@@ -61,6 +81,10 @@ options:
       - -G
     argument: ""
     description: do not keep exon attributes, move them to the transcript feature (for GFF3 output)
+  - names:
+      - --attrs
+    argument: <attr-list>
+    description: only output the GTF/GFF attributes listed in <attr-list> which is a comma delimited list of attribute names to
   - names:
       - --keep-genes
     argument: ""
@@ -125,7 +149,7 @@ options:
       - -M
       - --merge
     argument: ""
-    description: cluster the input transcripts into loci, discarding "duplicated" transcripts (those with the same exact introns and fully contained or equal boundaries)
+    description: cluster the input transcripts into loci, discarding "redundant" transcripts (those with the same exact introns and fully contained or equal boundaries)
   - names:
       - -d
     argument: <dupinfo>
@@ -137,7 +161,7 @@ options:
   - names:
       - -K
     argument: ""
-    description: 'for -M option: also discard as redundant the shorter, fully contained transcripts (intron chains matching a part of the container)'
+    description: 'for -M option: also discard as redundant the shorter, fully contained'
   - names:
       - -Q
     argument: ""
@@ -168,28 +192,36 @@ options:
     description: merge very close exons into a single exon (when intron size<4)
   - names:
       - -g
-    argument: ""
+    argument: <genomic_seqs_fasta | dir>
     description: full path to a multi-fasta file with the genomic sequences for all input mappings, OR a directory with single-fasta files (one per genomic sequence, with file names matching sequence names)
   - names:
-      - -w
+      - -j
     argument: ""
+    description: output the junctions and the corresponding transcripts
+  - names:
+      - -w
+    argument: <exons.fa>
     description: write a fasta file with spliced exons for each transcript
   - names:
       - --w-add
     argument: <N>
     description: for the -w option, extract additional <N> bases both upstream and downstream of the transcript boundaries
   - names:
-      - -x
+      - --w-nocds
     argument: ""
+    description: for -w, disable the output of CDS info in the FASTA file
+  - names:
+      - -x
+    argument: <cds.fa>
     description: write a fasta file with spliced CDS for each GFF transcript
   - names:
       - -y
-    argument: ""
+    argument: <tr_cds.fa>
     description: write a protein fasta file with the translation of CDS for each record
   - names:
       - -W
     argument: ""
-    description: for -w and -x options, write in the FASTA defline all the exon coordinates projected onto the spliced sequence;
+    description: for -w, -x and -y options, write in the FASTA defline all the exon coordinates projected onto the spliced sequence;
   - names:
       - -S
     argument: ""
@@ -197,19 +229,19 @@ options:
   - names:
       - -L
     argument: ""
-    description: Ensembl GTF to GFF3 conversion (implies -F; should be used with -m)
+    description: Ensembl GTF to GFF3 conversion, adds version to IDs
   - names:
       - -m
-    argument: <chr_replace>
-    description: 'is a name mapping table for converting reference sequence names, having this 2-column format: <original_ref_ID> <new_ref_ID>'
+    argument: ""
+    description: '<chr_replace> is a name mapping table for converting reference sequence names, having this 2-column format: <original_ref_ID> <new_ref_ID>'
   - names:
       - -t
-    argument: ""
+    argument: <trackname>
     description: use <trackname> in the 2nd column of each GFF/GTF output line
   - names:
       - -o
-    argument: ""
-    description: write the records into <outfile> instead of stdout
+    argument: <outfile>
+    description: write the output records into <outfile> instead of stdout
   - names:
       - -T
     argument: ""
@@ -221,13 +253,14 @@ options:
   - names:
       - --tlf
     argument: ""
-    description: 'output "transcript line format" which is like GFF but exons, CDS features and related data are stored as GFF attributes in the transcript feature line, like this: exoncount=N;exons=<exons>;CDSphase=<N>;CDS=<CDScoords> <exons> is a comma-delimited list of exon_start-exon_end coordinates; <CDScoords> is CDS_start:CDS_end coordinates or a list like <exons>'
+    description: 'output "transcript line format" which is like GFF but with exons and CDS related features stored as GFF attributes in the transcript feature line, like this: exoncount=N;exons=<exons>;CDSphase=<N>;CDS=<CDScoords> <exons> is a comma-delimited list of exon_start-exon_end coordinates; <CDScoords> is CDS_start:CDS_end coordinates or a list like <exons>'
   - names:
       - --table
-    argument: ""
+    argument: <attrlist>
     description: 'output a simple tab delimited format instead of GFF, with columns having the values of GFF attributes given in <attrlist>; special pseudo-attributes (prefixed by @) are recognized: @id, @geneid, @chr, @start, @end, @strand, @numexons, @exons, @cds, @covlen, @cdslen If any of -w/-y/-x FASTA output files are enabled, the same fields (excluding @id) are appended to the definition line of corresponding FASTA records'
   - names:
       - -v
       - -E
     argument: ""
     description: expose (warn about) duplicate transcript IDs and other potential problems with the given GFF/GTF records
+version: 0.12.7

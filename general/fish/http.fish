@@ -12,6 +12,7 @@ complete -c http -l "unsorted" -d "Disables all sorting while formatting output.
 complete -c http -l "response-charset" -d "--response-charset=big5" -x
 complete -c http -l "response-mime" -d "Override the response mime type for coloring and formatting for the terminal, e.g.:" -x
 complete -c http -l "format-options" -d "Controls output formatting." -x
+complete -c http -l "format-options" -d "This is something you will typically put into your config file." -r
 complete -c http -l "print" -s "p" -d "String specifying what the output should contain:" -x
 complete -c http -l "headers" -s "h" -d "Print only the response headers."
 complete -c http -l "meta" -s "m" -d "Print only the response metadata."

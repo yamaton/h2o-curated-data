@@ -41,7 +41,7 @@ complete -c ghcup -n "__fish_seen_subcommand_from install" -s "p" -l "platform" 
 complete -c ghcup -n "__fish_seen_subcommand_from install" -s "u" -l "url" -d "Install the specified version from this bindist" -x
 complete -c ghcup -n "__fish_seen_subcommand_from install" -l "set" -d "Set as active version after install"
 complete -c ghcup -n "__fish_seen_subcommand_from install" -s "i" -l "isolate" -d "install in an isolated dir instead of the default one" -r
-complete -c ghcup -n "__fish_seen_subcommand_from install" -s "f" -l "force" -d "Force install"
+complete -c ghcup -n "__fish_seen_subcommand_from install" -s "f" -l "force" -d "Force install (THIS IS UNSAFE, only use it in Dockerfiles or CI)"
 complete -c ghcup -n "__fish_seen_subcommand_from install" -s "h" -l "help" -d "Show this help text"
 
 
@@ -98,6 +98,7 @@ complete -c ghcup -n "__fish_seen_subcommand_from gc" -s "h" -l "help" -d "Show 
 
 complete -c ghcup -n "__fish_seen_subcommand_from run" -s "a" -l "append" -d "Append bin/ dir to PATH instead of prepending (this means that e.g. a system installation may take precedence)"
 complete -c ghcup -n "__fish_seen_subcommand_from run" -s "i" -l "install" -d "Install the tool, if missing"
+complete -c ghcup -n "__fish_seen_subcommand_from run" -s "m" -l "mingw-path" -d "On windows, add mingw64 PATHs to environment (does nothing on unix)"
 complete -c ghcup -n "__fish_seen_subcommand_from run" -l "ghc" -d "The ghc version" -x
 complete -c ghcup -n "__fish_seen_subcommand_from run" -l "cabal" -d "The cabal version" -x
 complete -c ghcup -n "__fish_seen_subcommand_from run" -l "hls" -d "The HLS version" -x

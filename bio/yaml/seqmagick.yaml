@@ -1,5 +1,6 @@
 name: seqmagick
 description: seqmagick
+usage: seqmagick [-h] [-V] [-v] [-q] {help,convert,info,mogrify,primer-trim,quality-filter,extract-ids,backtrans-align} ...
 options:
   - names:
       - -h
@@ -22,8 +23,21 @@ options:
     argument: ""
     description: Suppress output
 subcommands:
+  - name: help
+    description: Detailed help for actions using help <action>
+    usage: seqmagick help [-h] action
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
   - name: convert
     description: Convert between sequence formats
+    usage: |-
+      seqmagick convert [-h] [--line-wrap N] [--sort {length-asc,length-desc,name-asc,name-desc}] [--apply-function /path/to/module.py:function_name[:parameter]] [--cut start:end[,start2:end2]] [--relative-to ID] [--drop start:end[,start2:end2]] [--dash-gap] [--lower] [--mask start1:end1[,start2:end2]] [--reverse] [--reverse-complement] [--squeeze] [--squeeze-threshold PROP] [--transcribe {dna2rna,rna2dna}] [--translate {dna2protein,rna2protein,dna2proteinstop,rna2proteinstop}] [--ungap] [--upper] [--deduplicate-sequences] [--deduplicated-sequences-file FILE] [--deduplicate-taxa] [--exclude-from-file FILE] [--include-from-file FILE] [--head N] [--max-length N] [--min-length N] [--min-ungapped-length N] [--pattern-include REGEX] [--pattern-exclude REGEX] [--prune-empty] [--sample N] [--sample-seed N] [--seq-pattern-include REGEX] [--seq-pattern-exclude REGEX] [--tail N] [--first-name] [--name-suffix SUFFIX] [--name-prefix PREFIX] [--pattern-replace search_pattern replace_pattern]
+                        [--strip-range] [--input-format FORMAT] [--output-format FORMAT] [--alphabet {dna,dna-ambiguous,rna,rna-ambiguous,protein}]
+                        source_file dest_file
     options:
       - names:
           - -h
@@ -65,7 +79,7 @@ subcommands:
       - names:
           - --mask
         argument: start1:end1[,start2:end2]
-        description: Replace residues in 1-indexed slice with gapcharacters. If --relative-to is also specified, coordinates are relative to the sequence ID provided.
+        description: Replace residues in 1-indexed slice with gap-characters. If --relative-to is also specified, coordinates are relative to the sequence ID provided.
       - names:
           - --reverse
         argument: ""
@@ -125,7 +139,7 @@ subcommands:
       - names:
           - --max-length
         argument: "N"
-        description: Discard any sequences beyond the specified maximum length. This operation occurs *before* all lengthchanging options such as cut and squeeze.
+        description: Discard any sequences beyond the specified maximum length. This operation occurs *before* all length-changing options such as cut and squeeze.
       - names:
           - --min-length
         argument: "N"
@@ -194,8 +208,18 @@ subcommands:
           - --output-format
         argument: FORMAT
         description: 'Output file format (default: determine from extension)'
+    subcommands:
+      - name: source_file
+        description: Input sequence file
+        usage: ""
+        options: []
+      - name: dest_file
+        description: Output file
+        usage: ""
+        options: []
   - name: info
     description: Info action
+    usage: seqmagick info [-h] [--input-format INPUT_FORMAT] [--out-file destination_file] [--format {tab,csv,align}] [--threads THREADS] sequence_files [sequence_files ...]
     options:
       - names:
           - -h
@@ -220,6 +244,10 @@ subcommands:
         description: Number of threads (CPUs). [1]
   - name: mogrify
     description: Modify sequence file(s) in place.
+    usage: |-
+      seqmagick mogrify [-h] [--line-wrap N] [--sort {length-asc,length-desc,name-asc,name-desc}] [--apply-function /path/to/module.py:function_name[:parameter]] [--cut start:end[,start2:end2]] [--relative-to ID] [--drop start:end[,start2:end2]] [--dash-gap] [--lower] [--mask start1:end1[,start2:end2]] [--reverse] [--reverse-complement] [--squeeze] [--squeeze-threshold PROP] [--transcribe {dna2rna,rna2dna}] [--translate {dna2protein,rna2protein,dna2proteinstop,rna2proteinstop}] [--ungap] [--upper] [--deduplicate-sequences] [--deduplicated-sequences-file FILE] [--deduplicate-taxa] [--exclude-from-file FILE] [--include-from-file FILE] [--head N] [--max-length N] [--min-length N] [--min-ungapped-length N] [--pattern-include REGEX] [--pattern-exclude REGEX] [--prune-empty] [--sample N] [--sample-seed N] [--seq-pattern-include REGEX] [--seq-pattern-exclude REGEX] [--tail N] [--first-name] [--name-suffix SUFFIX] [--name-prefix PREFIX] [--pattern-replace search_pattern replace_pattern]
+                        [--strip-range] [--input-format FORMAT] [--output-format FORMAT] [--alphabet {dna,dna-ambiguous,rna,rna-ambiguous,protein}]
+                        sequence_file [sequence_file ...]
     options:
       - names:
           - -h
@@ -261,7 +289,7 @@ subcommands:
       - names:
           - --mask
         argument: start1:end1[,start2:end2]
-        description: Replace residues in 1-indexed slice with gapcharacters. If --relative-to is also specified, coordinates are relative to the sequence ID provided.
+        description: Replace residues in 1-indexed slice with gap-characters. If --relative-to is also specified, coordinates are relative to the sequence ID provided.
       - names:
           - --reverse
         argument: ""
@@ -321,7 +349,7 @@ subcommands:
       - names:
           - --max-length
         argument: "N"
-        description: Discard any sequences beyond the specified maximum length. This operation occurs *before* all lengthchanging options such as cut and squeeze.
+        description: Discard any sequences beyond the specified maximum length. This operation occurs *before* all length-changing options such as cut and squeeze.
       - names:
           - --min-length
         argument: "N"
@@ -390,8 +418,14 @@ subcommands:
           - --output-format
         argument: FORMAT
         description: 'Output file format (default: determine from extension)'
+    subcommands:
+      - name: sequence_file
+        description: Sequence file(s) to mogrify
+        usage: ""
+        options: []
   - name: primer-trim
-    description: Find a primer sequence in a gapped alignment, trim to
+    description: Find a primer sequence in a gapped alignment, trim to amplicon
+    usage: seqmagick primer-trim [-h] [--reverse-is-revcomp] [--source-format SOURCE_FORMAT] [--output-format OUTPUT_FORMAT] [--include-primers] [--max-hamming-distance MAX_HAMMING_DISTANCE] [--prune-action {trim,isolate}] source_file output_file forward_primer reverse_primer
     options:
       - names:
           - -h
@@ -422,8 +456,18 @@ subcommands:
           - --prune-action
         argument: '{trim,isolate}'
         description: 'Action to take. Options are trim (trim to the region defined by the two primers, decreasing the width of the alignment), or isolate (convert all characters outside the primer-defined area to gaps). default: trim'
+    positionalArguments:
+      - name: source_file
+        description: Source alignment file
+      - name: output_file
+        description: Destination trimmed file
+      - name: forward_primer
+        description: The forward primer used
+      - name: reverse_primer
+        description: The reverse primer used. By default the reverse primer is assumed to be a subsequence of the top strand (that is, the reverse complement of an actual downstream PCR primer). Use --reverse-is-revcomp if this is not the case.
   - name: quality-filter
     description: Filter reads based on quality scores
+    usage: seqmagick quality-filter [-h] [--input-qual INPUT_QUAL] [--report-out REPORT_OUT] [--details-out DETAILS_OUT] [--no-details-comment] [--min-mean-quality QUALITY] [--min-length LENGTH] [--max-length LENGTH] [--quality-window-mean-qual QUALITY_WINDOW_MEAN_QUAL] [--quality-window-prop QUALITY_WINDOW_PROP] [--quality-window WINDOW_SIZE] [--ambiguous-action {truncate,drop}] [--max-ambiguous MAX_AMBIGUOUS] [--pct-ambiguous PCT_AMBIGUOUS] [--primer PRIMER | --no-primer] [--barcode-file BARCODE_FILE] [--barcode-header] [--map-out SAMPLE_MAP] [--quoting {QUOTE_ALL,QUOTE_MINIMAL,QUOTE_NONE,QUOTE_NONNUMERIC}] sequence_file output_file
     options:
       - names:
           - -h
@@ -473,7 +517,7 @@ subcommands:
       - names:
           - --quality-window-mean-qual
         argument: QUALITY_WINDOW_MEAN_QUAL
-        description: 'Minimum quality score within the window defined by --quality-window. [default: same as --min-meanquality]'
+        description: 'Minimum quality score within the window defined by --quality-window. [default: same as --min-mean-quality]'
       - names:
           - --quality-window-prop
         argument: QUALITY_WINDOW_PROP
@@ -481,7 +525,7 @@ subcommands:
       - names:
           - --quality-window
         argument: WINDOW_SIZE
-        description: 'Window size for truncating sequences. When set to a non-zero value, sequences are truncated where the mean mean quality within the window drops below --min-meanquality. [default: 0]'
+        description: 'Window size for truncating sequences. When set to a non-zero value, sequences are truncated where the mean mean quality within the window drops below --min-mean-quality. [default: 0]'
       - names:
           - --primer
         argument: PRIMER
@@ -506,8 +550,14 @@ subcommands:
           - --quoting
         argument: '{QUOTE_ALL,QUOTE_MINIMAL,QUOTE_NONE,QUOTE_NONNUMERIC}'
         description: 'A string naming an attribute of the csv module defining the quoting behavior for `SAMPLE_MAP`. [default: QUOTE_MINIMAL]'
+    positionalArguments:
+      - name: sequence_file
+        description: Input fastq file. A fasta-format file may also be provided if --input-qual is also specified.
+      - name: output_file
+        description: Output file. Format determined from extension.
   - name: extract-ids
     description: Extract the sequence IDs from a file
+    usage: seqmagick extract-ids [-h] [-o OUTPUT_FILE] [--input-format INPUT_FORMAT] [-d] sequence_file
     options:
       - names:
           - -h
@@ -528,8 +578,12 @@ subcommands:
           - --include-description
         argument: ""
         description: 'Include the sequence description in output [default: False]'
+    positionalArguments:
+      - name: sequence_file
+        description: Sequence file
   - name: backtrans-align
-    description: Given a protein alignment and unaligned nucleotides,
+    description: Given a protein alignment and unaligned nucleotides, align the nucleotides using the protein alignment. Protein and nucleotide sequence files must contain the same number of sequences, in the same order, with the same IDs.
+    usage: seqmagick backtrans-align [-h] [-o destination_file] [-t {standard,standard-ambiguous,vertebrate-mito}] [-a {fail,warn,none}] protein_align nucl_align
     options:
       - names:
           - -h
@@ -545,9 +599,15 @@ subcommands:
           - -t
           - --translation-table
         argument: '{standard,standard-ambiguous,vertebrate-mito}'
-        description: 'Translation table to use. [Default: standardambiguous]'
+        description: 'Translation table to use. [Default: standard-ambiguous]'
       - names:
           - -a
           - --fail-action
         argument: '{fail,warn,none}'
         description: 'Action to take on an ambiguous codon [default: fail]'
+    positionalArguments:
+      - name: protein_align
+        description: Protein Alignment
+      - name: nucl_align
+        description: FASTA Alignment
+version: seqmagick v0.8.4

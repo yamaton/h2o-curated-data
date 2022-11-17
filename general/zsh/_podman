@@ -12,6 +12,16 @@
 
     }
 
+    function _podman_auto-update {
+        _arguments \
+            '--authfile[Path to the authentication file. Use REGISTRY_AUTH_FILE environment variable to override]' \
+            '--dry-run[Check for pending updates]' \
+            '--format[Change the output format to JSON or a Go template]' \
+            '--rollback[Rollback to previous image if update fails (default true)]' \
+            "*: :_files"
+
+    }
+
     function _podman_build {
         _arguments \
             '--add-host[add a custom host-to-IP mapping (host:ip) (default \[\])]' \
@@ -76,7 +86,7 @@
             '--target[set the target build stage to build]' \
             '--timestamp[set created timestamp to the specified epoch seconds to allow for deterministic builds, defaults to current time]' \
             '--tls-verify[require HTTPS and verify certificates when accessing the registry (default true)]' \
-            '--ulimit[ulimit options]' \
+            '--ulimit[ulimit options (default \[nproc=32768:32768\])]' \
             '--userns['\''container'\'', path of user namespace to join, or '\''host'\'']':file:_files \
             '--userns-gid-map[containerGID:hostGID:length GID mapping to use in user namespace]' \
             '--userns-gid-map-group[name of entries from /etc/subgid to use to set user namespace GID mapping]' \
@@ -175,7 +185,7 @@
             '--kernel-memory[Kernel memory limit (format: <number>\[<unit>\], where unit = b (bytes), k (kilobytes), m (megabytes), or g (gigabytes))]' \
             {-l,--label}'[Set metadata on container]' \
             '--label-file[Read in a line delimited file of labels]' \
-            '--log-driver[Logging driver for the container (default "journald")]' \
+            '--log-driver[Logging driver for the container (default "k8s-file")]' \
             '--log-opt[Logging driver options]' \
             '--mac-address[Container MAC address (e.g. 92:d0:c6:0a:29:33)]' \
             {-m,--memory}'[Memory limit (format: <number>\[<unit>\], where unit = b (bytes), k (kilobytes), m (megabytes), or g (gigabytes))]' \
@@ -227,7 +237,7 @@
             {-t,--tty}'[Allocate a pseudo-TTY for container]' \
             '--tz[Set timezone in container]' \
             '--uidmap[UID map to use for the user namespace]' \
-            '--ulimit[Ulimit options]' \
+            '--ulimit[Ulimit options (default \[nproc=32768:32768\])]' \
             '--umask[Set umask in container (default "0022")]' \
             {-u,--user}'[Username or UID (format: <name|uid>\[:<group|gid>\])]' \
             '--userns[User namespace to use]' \
@@ -282,6 +292,24 @@
 
     }
 
+    function _podman_generate {
+        _arguments \
+            "*: :_files"
+
+    }
+
+    function _podman_healthcheck {
+        _arguments \
+            "*: :_files"
+
+    }
+
+    function _podman_help {
+        _arguments \
+            "*: :_files"
+
+    }
+
     function _podman_history {
         _arguments \
             '--format[Change the output to JSON or a Go template]' \
@@ -309,7 +337,7 @@
             '--no-trunc[Do not truncate output]' \
             {-n,--noheading}'[Do not print column headings]' \
             {-q,--quiet}'[Display only image IDs]' \
-            '--sort[Sort by size, tag, created, id, repository (default "created")]' \
+            '--sort[Sort by created, id, repository, size, tag (default "created")]' \
             "*: :_files"
 
     }
@@ -437,6 +465,12 @@
 
     }
 
+    function _podman_play {
+        _arguments \
+            "*: :_files"
+
+    }
+
     function _podman_pod {
         _arguments \
             "*: :_files"
@@ -502,6 +536,12 @@
             '--remove-signatures[Discard any pre-existing signatures in the image]' \
             '--sign-by[Add a signature at the destination using the specified key]' \
             '--tls-verify[Require HTTPS and verify certificates when contacting registries (default true)]' \
+            "*: :_files"
+
+    }
+
+    function _podman_rename {
+        _arguments \
             "*: :_files"
 
     }
@@ -596,7 +636,7 @@
             '--kernel-memory[Kernel memory limit (format: <number>\[<unit>\], where unit = b (bytes), k (kilobytes), m (megabytes), or g (gigabytes))]' \
             {-l,--label}'[Set metadata on container]' \
             '--label-file[Read in a line delimited file of labels]' \
-            '--log-driver[Logging driver for the container (default "journald")]' \
+            '--log-driver[Logging driver for the container (default "k8s-file")]' \
             '--log-opt[Logging driver options]' \
             '--mac-address[Container MAC address (e.g. 92:d0:c6:0a:29:33)]' \
             {-m,--memory}'[Memory limit (format: <number>\[<unit>\], where unit = b (bytes), k (kilobytes), m (megabytes), or g (gigabytes))]' \
@@ -651,7 +691,7 @@
             {-t,--tty}'[Allocate a pseudo-TTY for container]' \
             '--tz[Set timezone in container]' \
             '--uidmap[UID map to use for the user namespace]' \
-            '--ulimit[Ulimit options]' \
+            '--ulimit[Ulimit options (default \[nproc=32768:32768\])]' \
             '--umask[Set umask in container (default "0022")]' \
             {-u,--user}'[Username or UID (format: <name|uid>\[:<group|gid>\])]' \
             '--userns[User namespace to use]' \
@@ -778,6 +818,13 @@
 
     }
 
+    function _podman_version {
+        _arguments \
+            {-f,--format}'[Change the output format to JSON or a Go template]' \
+            "*: :_files"
+
+    }
+
     function _podman_volume {
         _arguments \
             "*: :_files"
@@ -801,6 +848,7 @@ function _podman {
         local -a commands
         commands=(
             'attach:Attach to a running container'
+            'auto-update:Auto update containers according to their auto-update policy'
             'build:Build an image using instructions from Containerfiles'
             'commit:Create new image based on the changed container'
             'container:Manage containers'
@@ -810,6 +858,9 @@ function _podman {
             'events:Show podman events'
             'exec:Run a process in a running container'
             'export:Export container'\''s filesystem contents as a tar archive'
+            'generate:Generate structured data based on containers, pods or volumes'
+            'healthcheck:Manage health checks on containers'
+            'help:Help about any command'
             'history:Show history of a specified image'
             'image:Manage images'
             'images:List images in local storage'
@@ -827,11 +878,13 @@ function _podman {
             'mount:Mount a working container'\''s root filesystem'
             'network:Manage networks'
             'pause:Pause all the processes in one or more containers'
+            'play:Play containers, pods or volumes from a structured file'
             'pod:Manage pods'
             'port:List port mappings or a specific mapping for the container'
             'ps:List containers'
             'pull:Pull an image from a registry'
             'push:Push an image to a specified destination'
+            'rename:Rename an existing container'
             'restart:Restart one or more containers'
             'rm:Remove one or more containers'
             'rmi:Removes one or more images from local storage'
@@ -849,6 +902,7 @@ function _podman {
             'unpause:Unpause the processes in one or more containers'
             'unshare:Run a command in a modified user namespace'
             'untag:Remove a name from a local image'
+            'version:Display the Podman version information'
             'volume:Manage volumes'
             'wait:Block on one or more containers'
         )
@@ -861,7 +915,7 @@ function _podman {
         '--cni-config-dir[Path of the configuration directory for CNI networks]' \
         '--conmon[Path of the conmon binary]' \
         {-c,--connection}'[Connection to use for remote Podman service]' \
-        '--events-backend[Events backend to use ("file"|"journald"|"none") (default "journald")]' \
+        '--events-backend[Events backend to use ("file"|"journald"|"none") (default "file")]' \
         '--help[Help for podman]' \
         '--hooks-dir[Set the OCI hooks directory path (may be set multiple times) (default \[/usr/share/containers/oci/hooks.d\])]' \
         '--identity[path to SSH identity file, (CONTAINER_SSHKEY)]' \
@@ -877,7 +931,7 @@ function _podman {
         '--storage-opt[Used to pass an option to the storage driver]' \
         '--syslog[Output logging information to syslog as well as the console (default false)]' \
         '--tmpdir[Path to the tmp directory for libpod state content.]' \
-        '--url[URL to access Podman service (CONTAINER_HOST) (default "unix:/run/user/1000/podman/podman.sock")]' \
+        '--url[URL to access Podman service (CONTAINER_HOST) (default "unix:/mnt/wslg/runtime-dir/podman/podman.sock")]' \
         {-v,--version}'[version for podman]' \
         ': :->cmd' \
         '*:: :->subcmd'
@@ -890,6 +944,10 @@ function _podman {
         case $line[1] in
         (attach)
             _podman_attach
+            ;;
+
+        (auto-update)
+            _podman_auto-update
             ;;
 
         (build)
@@ -926,6 +984,18 @@ function _podman {
 
         (export)
             _podman_export
+            ;;
+
+        (generate)
+            _podman_generate
+            ;;
+
+        (healthcheck)
+            _podman_healthcheck
+            ;;
+
+        (help)
+            _podman_help
             ;;
 
         (history)
@@ -996,6 +1066,10 @@ function _podman {
             _podman_pause
             ;;
 
+        (play)
+            _podman_play
+            ;;
+
         (pod)
             _podman_pod
             ;;
@@ -1014,6 +1088,10 @@ function _podman {
 
         (push)
             _podman_push
+            ;;
+
+        (rename)
+            _podman_rename
             ;;
 
         (restart)
@@ -1082,6 +1160,10 @@ function _podman {
 
         (untag)
             _podman_untag
+            ;;
+
+        (version)
+            _podman_version
             ;;
 
         (volume)

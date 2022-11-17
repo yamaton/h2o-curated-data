@@ -76,7 +76,7 @@ complete -c youtube-dl -l "no-mtime" -d "Do not use the Last-modified header to 
 complete -c youtube-dl -l "write-description" -d "Write video description to a .description file"
 complete -c youtube-dl -l "write-info-json" -d "Write video metadata to a .info.json file"
 complete -c youtube-dl -l "write-annotations" -d "Write video annotations to a .annotations.xml file"
-complete -c youtube-dl -l "load-info-json" -d "JSON file containing the video information (created with the \"--writeinfo-json\" option)" -r
+complete -c youtube-dl -l "load-info-json" -d "JSON file containing the video information (created with the \"--write-info-json\" option)" -r
 complete -c youtube-dl -l "cookies" -d "File to read cookies from and dump cookie jar in" -r
 complete -c youtube-dl -l "cache-dir" -d "Location in the filesystem where youtube-dl can store some downloaded information permanently." -r
 complete -c youtube-dl -l "no-cache-dir" -d "Disable filesystem caching"

@@ -26,8 +26,12 @@ _croc()
             return
             ;;
 
+          help) _croc_help
+            return
+            ;;
+
       *)
-          word_list=" send relay --internal-dns --remember --debug --yes --stdout --no-compress --ask --local --ignore-stdin --overwrite --curve --ip --relay --relay6 --out --pass --socks5 --throttleUpload --help -h --version -v"
+          word_list=" send relay help --internal-dns --remember --debug --yes --stdout --no-compress --ask --local --ignore-stdin --overwrite --curve --ip --relay --relay6 --out --pass --socks5 --throttleUpload --help -h --version -v"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac
@@ -46,6 +50,14 @@ _croc_relay ()
 {
     local cur word_list
     word_list=" --host --ports --help -h" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_croc_help ()
+{
+    local cur word_list
+    word_list=" --help -h" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }

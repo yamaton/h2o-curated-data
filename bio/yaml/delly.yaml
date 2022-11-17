@@ -1,9 +1,11 @@
 name: delly
 description: delly
+usage: delly <command> <arguments>
 options: []
 subcommands:
   - name: call
     description: discover and genotype structural variants
+    usage: delly call [OPTIONS] -g <ref.fa> <sample1.sort.bam> <sample2.sort.bam> ...
     options:
       - names:
           - -?
@@ -28,8 +30,8 @@ subcommands:
       - names:
           - -o
           - --outfile
-        argument: arg (="sv.bcf")
-        description: SV BCF output file
+        argument: arg
+        description: BCF output file
       - names:
           - -q
           - --map-qual
@@ -82,6 +84,7 @@ subcommands:
         description: gzipped output file for SV-reads (optional)
   - name: merge
     description: merge structural variants across VCF/BCF files and within a single VCF/BCF file
+    usage: delly merge [OPTIONS] [<sample1.bcf> <sample2.bcf> ... | <list_of_bcf_files.txt>]
     options:
       - names:
           - -?
@@ -91,7 +94,7 @@ subcommands:
       - names:
           - -o
           - --outfile
-        argument: arg (="sv.bcf")
+        argument: arg
         description: Merged SV BCF output file
       - names:
           - -u
@@ -145,6 +148,7 @@ subcommands:
         description: min. reciprocal overlap
   - name: filter
     description: filter somatic or germline structural variants
+    usage: delly filter [OPTIONS] <input.bcf>
     options:
       - names:
           - -?
@@ -159,12 +163,17 @@ subcommands:
       - names:
           - -o
           - --outfile
-        argument: arg (="sv.bcf")
+        argument: arg
         description: Filtered SV BCF output file
+      - names:
+          - -y
+          - --quality
+        argument: arg (=300)
+        description: min. SV site quality
       - names:
           - -a
           - --altaf
-        argument: arg (=0.200000003)
+        argument: arg (=0.0299999993)
         description: min. fractional ALT support
       - names:
           - -m
@@ -218,6 +227,7 @@ subcommands:
         description: min. read-depth ratio of carrier vs. non-carrier for a duplication
   - name: lr
     description: long-read SV discovery
+    usage: delly lr [OPTIONS] -g <ref.fa> <sample1.sort.bam> <sample2.sort.bam> ...
     options:
       - names:
           - -?
@@ -247,8 +257,8 @@ subcommands:
       - names:
           - -o
           - --outfile
-        argument: arg (="sv.bcf")
-        description: SV BCF output file
+        argument: arg
+        description: BCF output file
       - names:
           - -q
           - --mapqual
@@ -262,7 +272,7 @@ subcommands:
       - names:
           - -z
           - --min-clique-size
-        argument: arg (=2)
+        argument: arg (=3)
         description: min. clique size
       - names:
           - -m
@@ -272,23 +282,38 @@ subcommands:
       - names:
           - -n
           - --maxreadsep
-        argument: arg (=75)
+        argument: arg (=100)
         description: max. read separation
       - names:
           - -p
           - --max-reads
-        argument: arg (=5)
+        argument: arg (=15)
         description: max. reads for consensus computation
       - names:
           - -f
           - --flank-size
-        argument: arg (=400)
+        argument: arg (=100)
         description: min. flank size
       - names:
           - -a
           - --flank-quality
         argument: arg (=0.899999976)
         description: min. flank quality
+      - names:
+          - -i
+          - --indel-size
+        argument: arg (=10000)
+        description: use exact alleles for InDels <10kbp
+      - names:
+          - -r
+          - --max-isize
+        argument: arg (=10000)
+        description: max. insertion size
+      - names:
+          - -v
+          - --vcffile
+        argument: arg
+        description: input VCF/BCF file for genotyping
       - names:
           - -u
           - --geno-qual
@@ -301,6 +326,7 @@ subcommands:
         description: gzipped output file for SV-reads
   - name: cnv
     description: discover and genotype copy-number variants
+    usage: delly cnv [OPTIONS] -g <genome.fa> -m <genome.map> <aligned.bam>
     options:
       - names:
           - -?
@@ -330,13 +356,13 @@ subcommands:
       - names:
           - -o
           - --outfile
-        argument: arg (="cnv.bcf")
-        description: output CNV file
+        argument: arg
+        description: BCF output file
       - names:
           - -c
           - --covfile
-        argument: arg (="cov.gz")
-        description: output coverage file
+        argument: arg
+        description: gzipped coverage file
       - names:
           - -x
           - --sdrd
@@ -424,6 +450,7 @@ subcommands:
         description: no scan window selection
   - name: classify
     description: classify somatic or germline copy-number variants
+    usage: delly classify [OPTIONS] <input.bcf>
     options:
       - names:
           - -?
@@ -438,7 +465,7 @@ subcommands:
       - names:
           - -o
           - --outfile
-        argument: arg (="cnv.bcf")
+        argument: arg
         description: Filtered CNV BCF output file
       - names:
           - -m
@@ -485,3 +512,4 @@ subcommands:
           - --maxsd
         argument: arg (=0.150000006)
         description: max. population SD
+version: 'Delly (Version: 1.1.6)'

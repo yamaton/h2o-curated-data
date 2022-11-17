@@ -62,8 +62,12 @@ _vsce()
             return
             ;;
 
+          help) _vsce_help
+            return
+            ;;
+
       *)
-          word_list=" ls package publish unpublish ls-publishers delete-publisher login logout verify-pat show search -V --version -h --help"
+          word_list=" ls package publish unpublish ls-publishers delete-publisher login logout verify-pat show search help -V --version -h --help"
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac
@@ -73,7 +77,7 @@ _vsce()
 _vsce_ls ()
 {
     local cur word_list
-    word_list=" --yarn --no-yarn --packagedDependencies --ignoreFile --no-dependencies -h --help" 
+    word_list=" --yarn --no-yarn --packagedDependencies --ignoreFile --dependencies --no-dependencies -h --help" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -81,7 +85,7 @@ _vsce_ls ()
 _vsce_package ()
 {
     local cur word_list
-    word_list=" -o --out -t --target -m --message --no-git-tag-version --no-update-package-json --githubBranch --gitlabBranch --no-rewrite-relative-links --baseContentUrl --baseImagesUrl --yarn --no-yarn --ignoreFile --no-gitHubIssueLinking --no-gitLabIssueLinking --no-dependencies --pre-release -h --help" 
+    word_list=" -o --out -t --target -m --message --no-git-tag-version --no-update-package-json --githubBranch --gitlabBranch --no-rewrite-relative-links --baseContentUrl --baseImagesUrl --yarn --no-yarn --ignoreFile --no-gitHubIssueLinking --no-gitLabIssueLinking --dependencies --no-dependencies --pre-release --allow-star-activation --allow-missing-repository -h --help" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -89,7 +93,7 @@ _vsce_package ()
 _vsce_publish ()
 {
     local cur word_list
-    word_list=" -p --pat -t --target -m --message --no-git-tag-version --no-update-package-json -i --packagePath --githubBranch --gitlabBranch --baseContentUrl --baseImagesUrl --yarn --no-yarn --noVerify --ignoreFile --no-dependencies --pre-release -h --help" 
+    word_list=" -p --pat -t --target -m --message --no-git-tag-version --no-update-package-json -i --packagePath --githubBranch --gitlabBranch --baseContentUrl --baseImagesUrl --yarn --no-yarn --noVerify --ignoreFile --dependencies --no-dependencies --pre-release --allow-star-activation --allow-missing-repository --skip-duplicate -h --help" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -153,7 +157,15 @@ _vsce_show ()
 _vsce_search ()
 {
     local cur word_list
-    word_list=" --json -h --help" 
+    word_list=" --json --stats -p --pagesize -h --help" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_vsce_help ()
+{
+    local cur word_list
+    word_list=" -V --version -h --help" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }

@@ -1,9 +1,11 @@
 name: ivar
-description: functions for viral amplicon-based sequencing
+description: ivar
+usage: ivar [command <trim|variants|filtervariants|consensus|getmasked|removereads|version|help>]
 options: []
 subcommands:
   - name: trim
     description: Trim reads in aligned BAM file
+    usage: ivar trim -i <input.bam> -b <primers.bed> -p <prefix> [-m <min-length>] [-q <min-quality>] [-s <sliding-window-width>]
     options:
       - names:
           - -i
@@ -47,6 +49,7 @@ subcommands:
         description: (Required) Prefix for the output BAM file
   - name: variants
     description: Call variants from aligned BAM file
+    usage: samtools mpileup -aa -A -d 0 -B -Q 0 --reference [<reference-fasta] <input.bam> | ivar variants -p <prefix> [-q <min-quality>] [-t <min-frequency-threshold>] [-m <minimum depth>] [-r <reference-fasta>] [-g GFF file]
     options:
       - names:
           - -q
@@ -74,6 +77,7 @@ subcommands:
         description: (Required) Prefix for the output tsv variant file
   - name: filtervariants
     description: Filter variants across replicates or samples
+    usage: ivar filtervariants -p <prefix> replicate-one.tsv replicate-two.tsv ... OR ivar filtervariants -p <prefix> -f <text file with one variant file per line>
     options:
       - names:
           - -t
@@ -89,6 +93,7 @@ subcommands:
         description: (Required) Prefix for the output filtered tsv file
   - name: consensus
     description: Call consensus from aligned BAM file
+    usage: samtools mpileup -aa -A -d 0 -Q 0 <input.bam> | ivar consensus -p <prefix>
     options:
       - names:
           - -q
@@ -120,6 +125,7 @@ subcommands:
         description: (Optional) Name of fasta header. By default, the prefix is used to create the fasta header in the following format, Consensus_<prefix>_threshold_<frequency-threshold>_quality_<minimum-quality>
   - name: getmasked
     description: Detect primer mismatches and get primer indices for the amplicon to be masked
+    usage: ivar getmasked -i <input-filtered.tsv> -b <primers.bed> -f <primer_pairs.tsv> -p <prefix>
     options:
       - names:
           - -i
@@ -139,6 +145,7 @@ subcommands:
         description: (Required) Prefix for the output text file
   - name: removereads
     description: Remove reads from trimmed BAM file
+    usage: ivar removereads -i <input.trimmed.bam> -p <prefix> -t <text-file-with-primer-indices> -b <primers.bed>
     options:
       - names:
           - -i

@@ -25,6 +25,7 @@ complete -k -c rustup -n __fish_use_subcommand -x -a show -d "Show the active an
 
 
 
+complete -c rustup -n "__fish_seen_subcommand_from show" -s "v" -l "verbose" -d "Enable verbose output with rustc information for all installed toolchains"
 complete -c rustup -n "__fish_seen_subcommand_from show" -s "h" -l "help" -d "Prints help information"
 
 

@@ -1,5 +1,6 @@
 name: cargo
 description: cargo
+usage: cargo [+toolchain] [OPTIONS] [SUBCOMMAND]
 options:
   - names:
       - -V
@@ -23,7 +24,7 @@ options:
       - -q
       - --quiet
     argument: ""
-    description: No output printed to stdout
+    description: Do not print cargo log messages
   - names:
       - --color
     argument: <WHEN>
@@ -42,35 +43,34 @@ options:
     description: Run without accessing the network
   - names:
       - --config
-    argument: <KEY=VALUE ...>
-    description: Override a configuration value (unstable)
+    argument: <KEY=VALUE>
+    description: Override a configuration value
   - names:
       - -Z
-    argument: <FLAG ...>
+    argument: <FLAG>
     description: Unstable (nightly-only) flags to Cargo, see 'cargo -Z help' for details
   - names:
       - -h
       - --help
     argument: ""
-    description: Prints help information
+    description: Print help information
 subcommands:
   - name: build
+    aliases:
+      - b
     description: Compile the current package
+    usage: cargo build [OPTIONS]
     options:
       - names:
           - -q
           - --quiet
         argument: ""
-        description: No output printed to stdout
+        description: Do not print cargo log messages
       - names:
           - -p
           - --package
-        argument: <SPEC>
+        argument: '[<SPEC>]'
         description: Package to build (see `cargo help pkgid`)
-      - names:
-          - --all
-        argument: ""
-        description: Alias for --workspace (deprecated)
       - names:
           - --workspace
         argument: ""
@@ -80,33 +80,70 @@ subcommands:
         argument: <SPEC>
         description: Exclude packages from the build
       - names:
+          - -v
+          - --verbose
+        argument: ""
+        description: Use verbose output (-vv very verbose/build.rs output)
+      - names:
+          - --all
+        argument: ""
+        description: Alias for --workspace (deprecated)
+      - names:
+          - --color
+        argument: <WHEN>
+        description: 'Coloring: auto, always, never'
+      - names:
           - -j
           - --jobs
         argument: <N>
         description: 'Number of parallel jobs, defaults to # of CPUs'
       - names:
+          - --frozen
+        argument: ""
+        description: Require Cargo.lock and cache are up to date
+      - names:
+          - --keep-going
+        argument: ""
+        description: Do not abort the build as soon as there is an error (unstable)
+      - names:
           - --lib
         argument: ""
         description: Build only this package's library
       - names:
+          - --locked
+        argument: ""
+        description: Require Cargo.lock is up to date
+      - names:
           - --bin
-        argument: <NAME>
+        argument: '[<NAME>]'
         description: Build only the specified binary
+      - names:
+          - --offline
+        argument: ""
+        description: Run without accessing the network
       - names:
           - --bins
         argument: ""
         description: Build all binaries
       - names:
+          - --config
+        argument: <KEY=VALUE>
+        description: Override a configuration value
+      - names:
           - --example
-        argument: <NAME>
+        argument: '[<NAME>]'
         description: Build only the specified example
+      - names:
+          - -Z
+        argument: <FLAG>
+        description: Unstable (nightly-only) flags to Cargo, see 'cargo -Z help' for details
       - names:
           - --examples
         argument: ""
         description: Build all examples
       - names:
           - --test
-        argument: <NAME>
+        argument: '[<NAME>]'
         description: Build only the specified test target
       - names:
           - --tests
@@ -114,7 +151,7 @@ subcommands:
         description: Build all tests
       - names:
           - --bench
-        argument: <NAME>
+        argument: '[<NAME>]'
         description: Build only the specified bench target
       - names:
           - --benches
@@ -125,6 +162,7 @@ subcommands:
         argument: ""
         description: Build all targets
       - names:
+          - -r
           - --release
         argument: ""
         description: Build artifacts in release mode, with optimizations
@@ -133,6 +171,7 @@ subcommands:
         argument: <PROFILE-NAME>
         description: Build artifacts with the specified profile
       - names:
+          - -F
           - --features
         argument: <FEATURES>
         description: Space or comma separated list of features to activate
@@ -163,7 +202,7 @@ subcommands:
       - names:
           - --ignore-rust-version
         argument: ""
-        description: Ignore `rust-version` specification in packages (unstable)
+        description: Ignore `rust-version` specification in packages
       - names:
           - --message-format
         argument: <FMT>
@@ -179,58 +218,32 @@ subcommands:
       - names:
           - --future-incompat-report
         argument: ""
-        description: Ouputs a future incompatibility report at the end of the build (unstable)
+        description: Outputs a future incompatibility report at the end of the build
       - names:
-          - -v
-          - --verbose
-        argument: ""
-        description: Use verbose output (-vv very verbose/build.rs output)
-      - names:
-          - --color
-        argument: <WHEN>
-        description: 'Coloring: auto, always, never'
-      - names:
-          - --frozen
-        argument: ""
-        description: Require Cargo.lock and cache are up to date
-      - names:
-          - --locked
-        argument: ""
-        description: Require Cargo.lock is up to date
-      - names:
-          - --offline
-        argument: ""
-        description: Run without accessing the network
-      - names:
-          - --config
-        argument: <KEY=VALUE>
-        description: Override a configuration value (unstable)
-      - names:
-          - -Z
-        argument: <FLAG>
-        description: Unstable (nightly-only) flags to Cargo, see 'cargo -Z help' for details
+          - --timings
+        argument: '[=<FMTS>...]'
+        description: 'Timing output formats (unstable) (comma separated): html, json'
       - names:
           - -h
           - --help
         argument: ""
-        description: Prints help information
+        description: Print help information
   - name: check
     description: Analyze the current package and report errors, but don't build object files
+    usage: cargo check [OPTIONS]
+    aliases:
+      - c
     options:
       - names:
           - -q
           - --quiet
         argument: ""
-        description: No output printed to stdout
+        description: Do not print cargo log messages
       - names:
           - -p
           - --package
-        argument: <SPEC>
+        argument: '[<SPEC>]'
         description: Package(s) to check
-      - names:
-          - --all
-        argument: ""
-        description: Alias for --workspace (deprecated)
       - names:
           - --workspace
         argument: ""
@@ -240,33 +253,70 @@ subcommands:
         argument: <SPEC>
         description: Exclude packages from the check
       - names:
+          - -v
+          - --verbose
+        argument: ""
+        description: Use verbose output (-vv very verbose/build.rs output)
+      - names:
+          - --all
+        argument: ""
+        description: Alias for --workspace (deprecated)
+      - names:
+          - --color
+        argument: <WHEN>
+        description: 'Coloring: auto, always, never'
+      - names:
           - -j
           - --jobs
         argument: <N>
         description: 'Number of parallel jobs, defaults to # of CPUs'
       - names:
+          - --frozen
+        argument: ""
+        description: Require Cargo.lock and cache are up to date
+      - names:
+          - --keep-going
+        argument: ""
+        description: Do not abort the build as soon as there is an error (unstable)
+      - names:
           - --lib
         argument: ""
         description: Check only this package's library
       - names:
+          - --locked
+        argument: ""
+        description: Require Cargo.lock is up to date
+      - names:
           - --bin
-        argument: <NAME>
+        argument: '[<NAME>]'
         description: Check only the specified binary
+      - names:
+          - --offline
+        argument: ""
+        description: Run without accessing the network
       - names:
           - --bins
         argument: ""
         description: Check all binaries
       - names:
+          - --config
+        argument: <KEY=VALUE>
+        description: Override a configuration value
+      - names:
           - --example
-        argument: <NAME>
+        argument: '[<NAME>]'
         description: Check only the specified example
+      - names:
+          - -Z
+        argument: <FLAG>
+        description: Unstable (nightly-only) flags to Cargo, see 'cargo -Z help' for details
       - names:
           - --examples
         argument: ""
         description: Check all examples
       - names:
           - --test
-        argument: <NAME>
+        argument: '[<NAME>]'
         description: Check only the specified test target
       - names:
           - --tests
@@ -274,7 +324,7 @@ subcommands:
         description: Check all tests
       - names:
           - --bench
-        argument: <NAME>
+        argument: '[<NAME>]'
         description: Check only the specified bench target
       - names:
           - --benches
@@ -285,6 +335,7 @@ subcommands:
         argument: ""
         description: Check all targets
       - names:
+          - -r
           - --release
         argument: ""
         description: Check artifacts in release mode, with optimizations
@@ -293,6 +344,7 @@ subcommands:
         argument: <PROFILE-NAME>
         description: Check artifacts with the specified profile
       - names:
+          - -F
           - --features
         argument: <FEATURES>
         description: Space or comma separated list of features to activate
@@ -319,7 +371,7 @@ subcommands:
       - names:
           - --ignore-rust-version
         argument: ""
-        description: Ignore `rust-version` specification in packages (unstable)
+        description: Ignore `rust-version` specification in packages
       - names:
           - --message-format
         argument: <FMT>
@@ -331,53 +383,29 @@ subcommands:
       - names:
           - --future-incompat-report
         argument: ""
-        description: Ouputs a future incompatibility report at the end of the build (unstable)
+        description: Outputs a future incompatibility report at the end of the build
       - names:
-          - -v
-          - --verbose
-        argument: ""
-        description: Use verbose output (-vv very verbose/build.rs output)
-      - names:
-          - --color
-        argument: <WHEN>
-        description: 'Coloring: auto, always, never'
-      - names:
-          - --frozen
-        argument: ""
-        description: Require Cargo.lock and cache are up to date
-      - names:
-          - --locked
-        argument: ""
-        description: Require Cargo.lock is up to date
-      - names:
-          - --offline
-        argument: ""
-        description: Run without accessing the network
-      - names:
-          - --config
-        argument: <KEY=VALUE>
-        description: Override a configuration value (unstable)
-      - names:
-          - -Z
-        argument: <FLAG>
-        description: Unstable (nightly-only) flags to Cargo, see 'cargo -Z help' for details
+          - --timings
+        argument: '[=<FMTS>...]'
+        description: 'Timing output formats (unstable) (comma separated): html, json'
       - names:
           - -h
           - --help
         argument: ""
-        description: Prints help information
+        description: Print help information
   - name: clean
     description: Remove the target directory
+    usage: cargo clean [OPTIONS]
     options:
       - names:
           - -q
           - --quiet
         argument: ""
-        description: No output printed to stdout
+        description: Do not print cargo log messages
       - names:
           - -p
           - --package
-        argument: <SPEC>
+        argument: '[<SPEC>]'
         description: Package to clean artifacts for
       - names:
           - --manifest-path
@@ -388,13 +416,27 @@ subcommands:
         argument: <TRIPLE>
         description: Target triple to clean output for
       - names:
+          - -v
+          - --verbose
+        argument: ""
+        description: Use verbose output (-vv very verbose/build.rs output)
+      - names:
           - --target-dir
         argument: <DIRECTORY>
         description: Directory for all generated artifacts
       - names:
+          - --color
+        argument: <WHEN>
+        description: 'Coloring: auto, always, never'
+      - names:
+          - -r
           - --release
         argument: ""
         description: Whether or not to clean release artifacts
+      - names:
+          - --frozen
+        argument: ""
+        description: Require Cargo.lock and cache are up to date
       - names:
           - --profile
         argument: <PROFILE-NAME>
@@ -404,19 +446,6 @@ subcommands:
         argument: ""
         description: Whether or not to clean just the documentation directory
       - names:
-          - -v
-          - --verbose
-        argument: ""
-        description: Use verbose output (-vv very verbose/build.rs output)
-      - names:
-          - --color
-        argument: <WHEN>
-        description: 'Coloring: auto, always, never'
-      - names:
-          - --frozen
-        argument: ""
-        description: Require Cargo.lock and cache are up to date
-      - names:
           - --locked
         argument: ""
         description: Require Cargo.lock is up to date
@@ -427,7 +456,7 @@ subcommands:
       - names:
           - --config
         argument: <KEY=VALUE>
-        description: Override a configuration value (unstable)
+        description: Override a configuration value
       - names:
           - -Z
         argument: <FLAG>
@@ -436,15 +465,18 @@ subcommands:
           - -h
           - --help
         argument: ""
-        description: Prints help information
+        description: Print help information
   - name: doc
     description: Build this package's and its dependencies' documentation
+    usage: cargo doc [OPTIONS]
+    aliases:
+      - d
     options:
       - names:
           - -q
           - --quiet
         argument: ""
-        description: No output printed to stdout
+        description: Do not print cargo log messages
       - names:
           - --open
         argument: ""
@@ -452,12 +484,13 @@ subcommands:
       - names:
           - -p
           - --package
-        argument: <SPEC>
+        argument: '[<SPEC>]'
         description: Package to document
       - names:
-          - --all
+          - -v
+          - --verbose
         argument: ""
-        description: Alias for --workspace (deprecated)
+        description: Use verbose output (-vv very verbose/build.rs output)
       - names:
           - --workspace
         argument: ""
@@ -467,6 +500,18 @@ subcommands:
         argument: <SPEC>
         description: Exclude packages from the build
       - names:
+          - --all
+        argument: ""
+        description: Alias for --workspace (deprecated)
+      - names:
+          - --color
+        argument: <WHEN>
+        description: 'Coloring: auto, always, never'
+      - names:
+          - --frozen
+        argument: ""
+        description: Require Cargo.lock and cache are up to date
+      - names:
           - --no-deps
         argument: ""
         description: Don't build documentation for dependencies
@@ -475,23 +520,52 @@ subcommands:
         argument: ""
         description: Document private items
       - names:
+          - --locked
+        argument: ""
+        description: Require Cargo.lock is up to date
+      - names:
           - -j
           - --jobs
         argument: <N>
         description: 'Number of parallel jobs, defaults to # of CPUs'
       - names:
+          - --offline
+        argument: ""
+        description: Run without accessing the network
+      - names:
+          - --config
+        argument: <KEY=VALUE>
+        description: Override a configuration value
+      - names:
+          - --keep-going
+        argument: ""
+        description: Do not abort the build as soon as there is an error (unstable)
+      - names:
           - --lib
         argument: ""
         description: Document only this package's library
       - names:
+          - -Z
+        argument: <FLAG>
+        description: Unstable (nightly-only) flags to Cargo, see 'cargo -Z help' for details
+      - names:
           - --bin
-        argument: <NAME>
+        argument: '[<NAME>]'
         description: Document only the specified binary
       - names:
           - --bins
         argument: ""
         description: Document all binaries
       - names:
+          - --example
+        argument: '[<NAME>]'
+        description: Document only the specified example
+      - names:
+          - --examples
+        argument: ""
+        description: Document all examples
+      - names:
+          - -r
           - --release
         argument: ""
         description: Build artifacts in release mode, with optimizations
@@ -500,6 +574,7 @@ subcommands:
         argument: <PROFILE-NAME>
         description: Build artifacts with the specified profile
       - names:
+          - -F
           - --features
         argument: <FEATURES>
         description: Space or comma separated list of features to activate
@@ -530,53 +605,29 @@ subcommands:
       - names:
           - --ignore-rust-version
         argument: ""
-        description: Ignore `rust-version` specification in packages (unstable)
+        description: Ignore `rust-version` specification in packages
       - names:
           - --unit-graph
         argument: ""
         description: Output build graph in JSON (unstable)
       - names:
-          - -v
-          - --verbose
-        argument: ""
-        description: Use verbose output (-vv very verbose/build.rs output)
-      - names:
-          - --color
-        argument: <WHEN>
-        description: 'Coloring: auto, always, never'
-      - names:
-          - --frozen
-        argument: ""
-        description: Require Cargo.lock and cache are up to date
-      - names:
-          - --locked
-        argument: ""
-        description: Require Cargo.lock is up to date
-      - names:
-          - --offline
-        argument: ""
-        description: Run without accessing the network
-      - names:
-          - --config
-        argument: <KEY=VALUE>
-        description: Override a configuration value (unstable)
-      - names:
-          - -Z
-        argument: <FLAG>
-        description: Unstable (nightly-only) flags to Cargo, see 'cargo -Z help' for details
+          - --timings
+        argument: '[=<FMTS>...]'
+        description: 'Timing output formats (unstable) (comma separated): html, json'
       - names:
           - -h
           - --help
         argument: ""
-        description: Prints help information
+        description: Print help information
   - name: new
     description: Create a new cargo package
+    usage: cargo new [OPTIONS] <path>
     options:
       - names:
           - -q
           - --quiet
         argument: ""
-        description: No output printed to stdout
+        description: Do not print cargo log messages
       - names:
           - --registry
         argument: <REGISTRY>
@@ -590,30 +641,30 @@ subcommands:
         argument: ""
         description: Use a binary (application) template [default]
       - names:
-          - --lib
-        argument: ""
-        description: Use a library template
-      - names:
-          - --edition
-        argument: <YEAR>
-        description: 'Edition to set for the crate generated [possible values: 2015, 2018, 2021]'
-      - names:
-          - --name
-        argument: <NAME>
-        description: Set the resulting package name, defaults to the directory name
-      - names:
           - -v
           - --verbose
         argument: ""
         description: Use verbose output (-vv very verbose/build.rs output)
       - names:
+          - --lib
+        argument: ""
+        description: Use a library template
+      - names:
           - --color
         argument: <WHEN>
         description: 'Coloring: auto, always, never'
       - names:
+          - --edition
+        argument: <YEAR>
+        description: 'Edition to set for the crate generated [possible values: 2015, 2018, 2021]'
+      - names:
           - --frozen
         argument: ""
         description: Require Cargo.lock and cache are up to date
+      - names:
+          - --name
+        argument: <NAME>
+        description: Set the resulting package name, defaults to the directory name
       - names:
           - --locked
         argument: ""
@@ -625,7 +676,7 @@ subcommands:
       - names:
           - --config
         argument: <KEY=VALUE>
-        description: Override a configuration value (unstable)
+        description: Override a configuration value
       - names:
           - -Z
         argument: <FLAG>
@@ -634,15 +685,16 @@ subcommands:
           - -h
           - --help
         argument: ""
-        description: Prints help information
+        description: Print help information
   - name: init
     description: Create a new cargo package in an existing directory
+    usage: cargo init [OPTIONS] [path]
     options:
       - names:
           - -q
           - --quiet
         argument: ""
-        description: No output printed to stdout
+        description: Do not print cargo log messages
       - names:
           - --registry
         argument: <REGISTRY>
@@ -656,30 +708,30 @@ subcommands:
         argument: ""
         description: Use a binary (application) template [default]
       - names:
-          - --lib
-        argument: ""
-        description: Use a library template
-      - names:
-          - --edition
-        argument: <YEAR>
-        description: 'Edition to set for the crate generated [possible values: 2015, 2018, 2021]'
-      - names:
-          - --name
-        argument: <NAME>
-        description: Set the resulting package name, defaults to the directory name
-      - names:
           - -v
           - --verbose
         argument: ""
         description: Use verbose output (-vv very verbose/build.rs output)
       - names:
+          - --lib
+        argument: ""
+        description: Use a library template
+      - names:
           - --color
         argument: <WHEN>
         description: 'Coloring: auto, always, never'
       - names:
+          - --edition
+        argument: <YEAR>
+        description: 'Edition to set for the crate generated [possible values: 2015, 2018, 2021]'
+      - names:
           - --frozen
         argument: ""
         description: Require Cargo.lock and cache are up to date
+      - names:
+          - --name
+        argument: <NAME>
+        description: Set the resulting package name, defaults to the directory name
       - names:
           - --locked
         argument: ""
@@ -691,7 +743,7 @@ subcommands:
       - names:
           - --config
         argument: <KEY=VALUE>
-        description: Override a configuration value (unstable)
+        description: Override a configuration value
       - names:
           - -Z
         argument: <FLAG>
@@ -700,53 +752,211 @@ subcommands:
           - -h
           - --help
         argument: ""
-        description: Prints help information
-  - name: run
-    description: Run a binary or example of the local package
+        description: Print help information
+  - name: add
+    description: Add dependencies to a manifest file
+    usage: |-
+      cargo add [OPTIONS] <DEP>[@<VERSION>] ...
+      cargo add [OPTIONS] --path <PATH> ...
+      cargo add [OPTIONS] --git <URL> ...
     options:
       - names:
-          - -q
-          - --quiet
+          - --no-default-features
         argument: ""
-        description: No output printed to stdout
+        description: Disable the default features
       - names:
-          - --bin
-        argument: <NAME>
-        description: Name of the bin target to run
+          - --default-features
+        argument: ""
+        description: Re-enable the default features
       - names:
-          - --example
+          - -F
+          - --features
+        argument: <FEATURES>
+        description: Space or comma separated list of features to activate
+      - names:
+          - --optional
+        argument: ""
+        description: Mark the dependency as optional
+      - names:
+          - -v
+          - --verbose
+        argument: ""
+        description: Use verbose output (-vv very verbose/build.rs output)
+      - names:
+          - --no-optional
+        argument: ""
+        description: Mark the dependency as required
+      - names:
+          - --color
+        argument: <WHEN>
+        description: 'Coloring: auto, always, never'
+      - names:
+          - --rename
         argument: <NAME>
-        description: Name of the example target to run
+        description: Rename the dependency
+      - names:
+          - --frozen
+        argument: ""
+        description: Require Cargo.lock and cache are up to date
+      - names:
+          - --manifest-path
+        argument: <PATH>
+        description: Path to Cargo.toml
+      - names:
+          - --locked
+        argument: ""
+        description: Require Cargo.lock is up to date
       - names:
           - -p
           - --package
         argument: <SPEC>
+        description: Package to modify
+      - names:
+          - --offline
+        argument: ""
+        description: Run without accessing the network
+      - names:
+          - -q
+          - --quiet
+        argument: ""
+        description: Do not print cargo log messages
+      - names:
+          - --config
+        argument: <KEY=VALUE>
+        description: Override a configuration value
+      - names:
+          - --dry-run
+        argument: ""
+        description: Don't actually write the manifest
+      - names:
+          - -Z
+        argument: <FLAG>
+        description: Unstable (nightly-only) flags to Cargo, see 'cargo -Z help' for details
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: Print help information
+      - names:
+          - --path
+        argument: <PATH>
+        description: Filesystem path to local crate to add
+      - names:
+          - --git
+        argument: <URI>
+        description: Git repository location
+      - names:
+          - --branch
+        argument: <BRANCH>
+        description: Git branch to download the crate from
+      - names:
+          - --tag
+        argument: <TAG>
+        description: Git tag to download the crate from
+      - names:
+          - --rev
+        argument: <REV>
+        description: Git reference to download the crate from
+      - names:
+          - --registry
+        argument: <NAME>
+        description: Package registry for this dependency
+      - names:
+          - --dev
+        argument: ""
+        description: Add as development dependency
+      - names:
+          - --build
+        argument: ""
+        description: Add as build dependency
+      - names:
+          - --target
+        argument: <TARGET>
+        description: Add as dependency to the given target platform
+  - name: run
+    description: Run a binary or example of the local package
+    usage: cargo run [OPTIONS] [--] [args]...
+    aliases:
+      - r
+    options:
+      - names:
+          - -q
+          - --quiet
+        argument: ""
+        description: Do not print cargo log messages
+      - names:
+          - --bin
+        argument: '[<NAME>]'
+        description: Name of the bin target to run
+      - names:
+          - --example
+        argument: '[<NAME>]'
+        description: Name of the example target to run
+      - names:
+          - -p
+          - --package
+        argument: '[<SPEC>...]'
         description: Package with the target to run
+      - names:
+          - -v
+          - --verbose
+        argument: ""
+        description: Use verbose output (-vv very verbose/build.rs output)
       - names:
           - -j
           - --jobs
         argument: <N>
         description: 'Number of parallel jobs, defaults to # of CPUs'
       - names:
+          - --color
+        argument: <WHEN>
+        description: 'Coloring: auto, always, never'
+      - names:
+          - --keep-going
+        argument: ""
+        description: Do not abort the build as soon as there is an error (unstable)
+      - names:
+          - --frozen
+        argument: ""
+        description: Require Cargo.lock and cache are up to date
+      - names:
+          - -r
           - --release
         argument: ""
         description: Build artifacts in release mode, with optimizations
+      - names:
+          - --locked
+        argument: ""
+        description: Require Cargo.lock is up to date
       - names:
           - --profile
         argument: <PROFILE-NAME>
         description: Build artifacts with the specified profile
       - names:
+          - -F
           - --features
         argument: <FEATURES>
         description: Space or comma separated list of features to activate
+      - names:
+          - --offline
+        argument: ""
+        description: Run without accessing the network
       - names:
           - --all-features
         argument: ""
         description: Activate all available features
       - names:
+          - --config
+        argument: <KEY=VALUE>
+        description: Override a configuration value
+      - names:
           - --no-default-features
         argument: ""
         description: Do not activate the `default` feature
+      - names:
+          - -Z
+        argument: <FLAG>
+        description: Unstable (nightly-only) flags to Cargo, see 'cargo -Z help' for details
       - names:
           - --target
         argument: <TRIPLE>
@@ -770,43 +980,21 @@ subcommands:
       - names:
           - --ignore-rust-version
         argument: ""
-        description: Ignore `rust-version` specification in packages (unstable)
+        description: Ignore `rust-version` specification in packages
       - names:
-          - -v
-          - --verbose
-        argument: ""
-        description: Use verbose output (-vv very verbose/build.rs output)
-      - names:
-          - --color
-        argument: <WHEN>
-        description: 'Coloring: auto, always, never'
-      - names:
-          - --frozen
-        argument: ""
-        description: Require Cargo.lock and cache are up to date
-      - names:
-          - --locked
-        argument: ""
-        description: Require Cargo.lock is up to date
-      - names:
-          - --offline
-        argument: ""
-        description: Run without accessing the network
-      - names:
-          - --config
-        argument: <KEY=VALUE>
-        description: Override a configuration value (unstable)
-      - names:
-          - -Z
-        argument: <FLAG>
-        description: Unstable (nightly-only) flags to Cargo, see 'cargo -Z help' for details
+          - --timings
+        argument: '[=<FMTS>...]'
+        description: 'Timing output formats (unstable) (comma separated): html, json'
       - names:
           - -h
           - --help
         argument: ""
-        description: Prints help information
+        description: Print help information
   - name: test
     description: Run the tests
+    usage: cargo test [OPTIONS] [TESTNAME] [-- <args>...]
+    aliases:
+      - t
     options:
       - names:
           - -q
@@ -819,40 +1007,69 @@ subcommands:
         description: Test only this package's library unit tests
       - names:
           - --bin
-        argument: <NAME>
+        argument: '[<NAME>]'
         description: Test only the specified binary
       - names:
           - --bins
         argument: ""
         description: Test all binaries
       - names:
+          - -v
+          - --verbose
+        argument: ""
+        description: Use verbose output (-vv very verbose/build.rs output)
+      - names:
           - --example
-        argument: <NAME>
+        argument: '[<NAME>]'
         description: Test only the specified example
+      - names:
+          - --color
+        argument: <WHEN>
+        description: 'Coloring: auto, always, never'
       - names:
           - --examples
         argument: ""
         description: Test all examples
       - names:
+          - --frozen
+        argument: ""
+        description: Require Cargo.lock and cache are up to date
+      - names:
           - --test
-        argument: <NAME>
+        argument: '[<NAME>]'
         description: Test only the specified test target
+      - names:
+          - --locked
+        argument: ""
+        description: Require Cargo.lock is up to date
       - names:
           - --tests
         argument: ""
         description: Test all tests
       - names:
           - --bench
-        argument: <NAME>
+        argument: '[<NAME>]'
         description: Test only the specified bench target
+      - names:
+          - --offline
+        argument: ""
+        description: Run without accessing the network
       - names:
           - --benches
         argument: ""
         description: Test all benches
       - names:
+          - --config
+        argument: <KEY=VALUE>
+        description: Override a configuration value
+      - names:
           - --all-targets
         argument: ""
         description: Test all targets
+      - names:
+          - -Z
+        argument: <FLAG>
+        description: Unstable (nightly-only) flags to Cargo, see 'cargo -Z help' for details
       - names:
           - --doc
         argument: ""
@@ -868,12 +1085,8 @@ subcommands:
       - names:
           - -p
           - --package
-        argument: <SPEC>
+        argument: '[<SPEC>]'
         description: Package to run tests for
-      - names:
-          - --all
-        argument: ""
-        description: Alias for --workspace (deprecated)
       - names:
           - --workspace
         argument: ""
@@ -883,11 +1096,20 @@ subcommands:
         argument: <SPEC>
         description: Exclude packages from the test
       - names:
+          - --all
+        argument: ""
+        description: Alias for --workspace (deprecated)
+      - names:
           - -j
           - --jobs
         argument: <N>
         description: 'Number of parallel jobs, defaults to # of CPUs'
       - names:
+          - --keep-going
+        argument: ""
+        description: Do not abort the build as soon as there is an error (unstable)
+      - names:
+          - -r
           - --release
         argument: ""
         description: Build artifacts in release mode, with optimizations
@@ -896,6 +1118,7 @@ subcommands:
         argument: <PROFILE-NAME>
         description: Build artifacts with the specified profile
       - names:
+          - -F
           - --features
         argument: <FEATURES>
         description: Space or comma separated list of features to activate
@@ -922,7 +1145,7 @@ subcommands:
       - names:
           - --ignore-rust-version
         argument: ""
-        description: Ignore `rust-version` specification in packages (unstable)
+        description: Ignore `rust-version` specification in packages
       - names:
           - --message-format
         argument: <FMT>
@@ -934,89 +1157,94 @@ subcommands:
       - names:
           - --future-incompat-report
         argument: ""
-        description: Ouputs a future incompatibility report at the end of the build (unstable)
+        description: Outputs a future incompatibility report at the end of the build
       - names:
-          - -v
-          - --verbose
-        argument: ""
-        description: Use verbose output (-vv very verbose/build.rs output)
-      - names:
-          - --color
-        argument: <WHEN>
-        description: 'Coloring: auto, always, never'
-      - names:
-          - --frozen
-        argument: ""
-        description: Require Cargo.lock and cache are up to date
-      - names:
-          - --locked
-        argument: ""
-        description: Require Cargo.lock is up to date
-      - names:
-          - --offline
-        argument: ""
-        description: Run without accessing the network
-      - names:
-          - --config
-        argument: <KEY=VALUE>
-        description: Override a configuration value (unstable)
-      - names:
-          - -Z
-        argument: <FLAG>
-        description: Unstable (nightly-only) flags to Cargo, see 'cargo -Z help' for details
+          - --timings
+        argument: '[=<FMTS>...]'
+        description: 'Timing output formats (unstable) (comma separated): html, json'
       - names:
           - -h
           - --help
         argument: ""
-        description: Prints help information
+        description: Print help information
   - name: bench
     description: Run the benchmarks
+    usage: cargo bench [OPTIONS] [BENCHNAME] [-- <args>...]
     options:
       - names:
           - -q
           - --quiet
         argument: ""
-        description: No output printed to stdout
+        description: Do not print cargo log messages
       - names:
           - --lib
         argument: ""
         description: Benchmark only this package's library
       - names:
           - --bin
-        argument: <NAME>
+        argument: '[<NAME>]'
         description: Benchmark only the specified binary
       - names:
           - --bins
         argument: ""
         description: Benchmark all binaries
       - names:
+          - -v
+          - --verbose
+        argument: ""
+        description: Use verbose output (-vv very verbose/build.rs output)
+      - names:
           - --example
-        argument: <NAME>
+        argument: '[<NAME>]'
         description: Benchmark only the specified example
+      - names:
+          - --color
+        argument: <WHEN>
+        description: 'Coloring: auto, always, never'
       - names:
           - --examples
         argument: ""
         description: Benchmark all examples
       - names:
+          - --frozen
+        argument: ""
+        description: Require Cargo.lock and cache are up to date
+      - names:
           - --test
-        argument: <NAME>
+        argument: '[<NAME>]'
         description: Benchmark only the specified test target
+      - names:
+          - --locked
+        argument: ""
+        description: Require Cargo.lock is up to date
       - names:
           - --tests
         argument: ""
         description: Benchmark all tests
       - names:
           - --bench
-        argument: <NAME>
+        argument: '[<NAME>]'
         description: Benchmark only the specified bench target
+      - names:
+          - --offline
+        argument: ""
+        description: Run without accessing the network
       - names:
           - --benches
         argument: ""
         description: Benchmark all benches
       - names:
+          - --config
+        argument: <KEY=VALUE>
+        description: Override a configuration value
+      - names:
           - --all-targets
         argument: ""
         description: Benchmark all targets
+      - names:
+          - -Z
+        argument: <FLAG>
+        description: Unstable (nightly-only) flags to Cargo, see 'cargo -Z help' for details
       - names:
           - --no-run
         argument: ""
@@ -1024,12 +1252,8 @@ subcommands:
       - names:
           - -p
           - --package
-        argument: <SPEC>
+        argument: '[<SPEC>]'
         description: Package to run benchmarks for
-      - names:
-          - --all
-        argument: ""
-        description: Alias for --workspace (deprecated)
       - names:
           - --workspace
         argument: ""
@@ -1039,11 +1263,24 @@ subcommands:
         argument: <SPEC>
         description: Exclude packages from the benchmark
       - names:
+          - --all
+        argument: ""
+        description: Alias for --workspace (deprecated)
+      - names:
           - -j
           - --jobs
         argument: <N>
         description: 'Number of parallel jobs, defaults to # of CPUs'
       - names:
+          - --keep-going
+        argument: ""
+        description: Do not abort the build as soon as there is an error (unstable)
+      - names:
+          - --profile
+        argument: <PROFILE-NAME>
+        description: Build artifacts with the specified profile
+      - names:
+          - -F
           - --features
         argument: <FEATURES>
         description: Space or comma separated list of features to activate
@@ -1070,7 +1307,7 @@ subcommands:
       - names:
           - --ignore-rust-version
         argument: ""
-        description: Ignore `rust-version` specification in packages (unstable)
+        description: Ignore `rust-version` specification in packages
       - names:
           - --message-format
         argument: <FMT>
@@ -1084,47 +1321,23 @@ subcommands:
         argument: ""
         description: Output build graph in JSON (unstable)
       - names:
-          - -v
-          - --verbose
-        argument: ""
-        description: Use verbose output (-vv very verbose/build.rs output)
-      - names:
-          - --color
-        argument: <WHEN>
-        description: 'Coloring: auto, always, never'
-      - names:
-          - --frozen
-        argument: ""
-        description: Require Cargo.lock and cache are up to date
-      - names:
-          - --locked
-        argument: ""
-        description: Require Cargo.lock is up to date
-      - names:
-          - --offline
-        argument: ""
-        description: Run without accessing the network
-      - names:
-          - --config
-        argument: <KEY=VALUE>
-        description: Override a configuration value (unstable)
-      - names:
-          - -Z
-        argument: <FLAG>
-        description: Unstable (nightly-only) flags to Cargo, see 'cargo -Z help' for details
+          - --timings
+        argument: '[=<FMTS>...]'
+        description: 'Timing output formats (unstable) (comma separated): html, json'
       - names:
           - -h
           - --help
         argument: ""
-        description: Prints help information
+        description: Print help information
   - name: update
     description: Update dependencies listed in Cargo.lock
+    usage: cargo update [OPTIONS]
     options:
       - names:
           - -q
           - --quiet
         argument: ""
-        description: No output printed to stdout
+        description: Do not print cargo log messages
       - names:
           - -w
           - --workspace
@@ -1133,37 +1346,37 @@ subcommands:
       - names:
           - -p
           - --package
-        argument: <SPEC>
+        argument: '[<SPEC>]'
         description: Package to update
       - names:
           - --aggressive
         argument: ""
         description: Force updating all dependencies of SPEC as well when used with -p
       - names:
-          - --dry-run
-        argument: ""
-        description: Don't actually write the lockfile
-      - names:
-          - --precise
-        argument: <PRECISE>
-        description: Update a single dependency to exactly PRECISE when used with -p
-      - names:
-          - --manifest-path
-        argument: <PATH>
-        description: Path to Cargo.toml
-      - names:
           - -v
           - --verbose
         argument: ""
         description: Use verbose output (-vv very verbose/build.rs output)
       - names:
+          - --dry-run
+        argument: ""
+        description: Don't actually write the lockfile
+      - names:
           - --color
         argument: <WHEN>
         description: 'Coloring: auto, always, never'
       - names:
+          - --precise
+        argument: <PRECISE>
+        description: Update a single dependency to exactly PRECISE when used with -p
+      - names:
           - --frozen
         argument: ""
         description: Require Cargo.lock and cache are up to date
+      - names:
+          - --manifest-path
+        argument: <PATH>
+        description: Path to Cargo.toml
       - names:
           - --locked
         argument: ""
@@ -1175,7 +1388,7 @@ subcommands:
       - names:
           - --config
         argument: <KEY=VALUE>
-        description: Override a configuration value (unstable)
+        description: Override a configuration value
       - names:
           - -Z
         argument: <FLAG>
@@ -1184,15 +1397,16 @@ subcommands:
           - -h
           - --help
         argument: ""
-        description: Prints help information
+        description: Print help information
   - name: search
     description: Search registry for crates
+    usage: cargo search [OPTIONS] [query]...
     options:
       - names:
           - -q
           - --quiet
         argument: ""
-        description: No output printed to stdout
+        description: Do not print cargo log messages
       - names:
           - --index
         argument: <INDEX>
@@ -1229,7 +1443,7 @@ subcommands:
       - names:
           - --config
         argument: <KEY=VALUE>
-        description: Override a configuration value (unstable)
+        description: Override a configuration value
       - names:
           - -Z
         argument: <FLAG>
@@ -1238,15 +1452,16 @@ subcommands:
           - -h
           - --help
         argument: ""
-        description: Prints help information
+        description: Print help information
   - name: publish
     description: Package and upload this package to the registry
+    usage: cargo publish [OPTIONS]
     options:
       - names:
           - -q
           - --quiet
         argument: ""
-        description: No output printed to stdout
+        description: Do not print cargo log messages
       - names:
           - --index
         argument: <INDEX>
@@ -1260,22 +1475,53 @@ subcommands:
         argument: ""
         description: Don't verify the contents by building them
       - names:
+          - -v
+          - --verbose
+        argument: ""
+        description: Use verbose output (-vv very verbose/build.rs output)
+      - names:
           - --allow-dirty
         argument: ""
         description: Allow dirty working directories to be packaged
+      - names:
+          - --color
+        argument: <WHEN>
+        description: 'Coloring: auto, always, never'
       - names:
           - --target
         argument: <TRIPLE>
         description: Build for the target triple
       - names:
+          - --frozen
+        argument: ""
+        description: Require Cargo.lock and cache are up to date
+      - names:
           - --target-dir
         argument: <DIRECTORY>
         description: Directory for all generated artifacts
+      - names:
+          - --locked
+        argument: ""
+        description: Require Cargo.lock is up to date
+      - names:
+          - -p
+          - --package
+        argument: '[<SPEC>...]'
+        description: Package to publish
       - names:
           - --manifest-path
         argument: <PATH>
         description: Path to Cargo.toml
       - names:
+          - --offline
+        argument: ""
+        description: Run without accessing the network
+      - names:
+          - --config
+        argument: <KEY=VALUE>
+        description: Override a configuration value
+      - names:
+          - -F
           - --features
         argument: <FEATURES>
         description: Space or comma separated list of features to activate
@@ -1283,6 +1529,10 @@ subcommands:
           - --all-features
         argument: ""
         description: Activate all available features
+      - names:
+          - -Z
+        argument: <FLAG>
+        description: Unstable (nightly-only) flags to Cargo, see 'cargo -Z help' for details
       - names:
           - --no-default-features
         argument: ""
@@ -1293,6 +1543,10 @@ subcommands:
         argument: <N>
         description: 'Number of parallel jobs, defaults to # of CPUs'
       - names:
+          - --keep-going
+        argument: ""
+        description: Do not abort the build as soon as there is an error (unstable)
+      - names:
           - --dry-run
         argument: ""
         description: Perform all checks without uploading
@@ -1301,47 +1555,19 @@ subcommands:
         argument: <REGISTRY>
         description: Registry to publish to
       - names:
-          - -v
-          - --verbose
-        argument: ""
-        description: Use verbose output (-vv very verbose/build.rs output)
-      - names:
-          - --color
-        argument: <WHEN>
-        description: 'Coloring: auto, always, never'
-      - names:
-          - --frozen
-        argument: ""
-        description: Require Cargo.lock and cache are up to date
-      - names:
-          - --locked
-        argument: ""
-        description: Require Cargo.lock is up to date
-      - names:
-          - --offline
-        argument: ""
-        description: Run without accessing the network
-      - names:
-          - --config
-        argument: <KEY=VALUE>
-        description: Override a configuration value (unstable)
-      - names:
-          - -Z
-        argument: <FLAG>
-        description: Unstable (nightly-only) flags to Cargo, see 'cargo -Z help' for details
-      - names:
           - -h
           - --help
         argument: ""
-        description: Prints help information
+        description: Print help information
   - name: install
     description: Install a Rust binary. Default location is $HOME/.cargo/bin
+    usage: cargo install [OPTIONS] [--] [crate]...
     options:
       - names:
           - -q
           - --quiet
         argument: ""
-        description: No output printed to stdout
+        description: Do not print cargo log messages
       - names:
           - --version
         argument: <VERSION>
@@ -1355,13 +1581,26 @@ subcommands:
         argument: <BRANCH>
         description: Branch to use when installing from git
       - names:
+          - -v
+          - --verbose
+        argument: ""
+        description: Use verbose output (-vv very verbose/build.rs output)
+      - names:
           - --tag
         argument: <TAG>
         description: Tag to use when installing from git
       - names:
+          - --color
+        argument: <WHEN>
+        description: 'Coloring: auto, always, never'
+      - names:
           - --rev
         argument: <SHA>
         description: Specific commit to use when installing from git
+      - names:
+          - --frozen
+        argument: ""
+        description: Require Cargo.lock and cache are up to date
       - names:
           - --path
         argument: <PATH>
@@ -1371,20 +1610,41 @@ subcommands:
         argument: ""
         description: list all installed packages and their versions
       - names:
+          - --locked
+        argument: ""
+        description: Require Cargo.lock is up to date
+      - names:
           - -j
           - --jobs
         argument: <N>
         description: 'Number of parallel jobs, defaults to # of CPUs'
+      - names:
+          - --offline
+        argument: ""
+        description: Run without accessing the network
+      - names:
+          - --config
+        argument: <KEY=VALUE>
+        description: Override a configuration value
+      - names:
+          - --keep-going
+        argument: ""
+        description: Do not abort the build as soon as there is an error (unstable)
       - names:
           - -f
           - --force
         argument: ""
         description: Force overwriting existing crates or binaries
       - names:
+          - -Z
+        argument: <FLAG>
+        description: Unstable (nightly-only) flags to Cargo, see 'cargo -Z help' for details
+      - names:
           - --no-track
         argument: ""
         description: Do not save tracking information
       - names:
+          - -F
           - --features
         argument: <FEATURES>
         description: Space or comma separated list of features to activate
@@ -1403,10 +1663,10 @@ subcommands:
       - names:
           - --debug
         argument: ""
-        description: Build in debug mode instead of release mode
+        description: Build in debug mode (with the 'dev' profile) instead of release mode
       - names:
           - --bin
-        argument: <NAME>
+        argument: '[<NAME>]'
         description: Install only the specified binary
       - names:
           - --bins
@@ -1414,7 +1674,7 @@ subcommands:
         description: Install all binaries
       - names:
           - --example
-        argument: <NAME>
+        argument: '[<NAME>]'
         description: Install only the specified example
       - names:
           - --examples
@@ -1441,51 +1701,31 @@ subcommands:
         argument: <REGISTRY>
         description: Registry to use
       - names:
-          - -v
-          - --verbose
-        argument: ""
-        description: Use verbose output (-vv very verbose/build.rs output)
+          - --message-format
+        argument: <FMT>
+        description: Error format
       - names:
-          - --color
-        argument: <WHEN>
-        description: 'Coloring: auto, always, never'
-      - names:
-          - --frozen
-        argument: ""
-        description: Require Cargo.lock and cache are up to date
-      - names:
-          - --locked
-        argument: ""
-        description: Require Cargo.lock is up to date
-      - names:
-          - --offline
-        argument: ""
-        description: Run without accessing the network
-      - names:
-          - --config
-        argument: <KEY=VALUE>
-        description: Override a configuration value (unstable)
-      - names:
-          - -Z
-        argument: <FLAG>
-        description: Unstable (nightly-only) flags to Cargo, see 'cargo -Z help' for details
+          - --timings
+        argument: '[=<FMTS>...]'
+        description: 'Timing output formats (unstable) (comma separated): html, json'
       - names:
           - -h
           - --help
         argument: ""
-        description: Prints help information
+        description: Print help information
   - name: uninstall
     description: Uninstall a Rust binary
+    usage: cargo uninstall [OPTIONS] [--] [spec]...
     options:
       - names:
           - -q
           - --quiet
         argument: ""
-        description: No output printed to stdout
+        description: Do not print cargo log messages
       - names:
           - -p
           - --package
-        argument: <SPEC>
+        argument: '[<SPEC>]'
         description: Package to uninstall
       - names:
           - --bin
@@ -1519,7 +1759,7 @@ subcommands:
       - names:
           - --config
         argument: <KEY=VALUE>
-        description: Override a configuration value (unstable)
+        description: Override a configuration value
       - names:
           - -Z
         argument: <FLAG>
@@ -1528,11 +1768,12 @@ subcommands:
           - -h
           - --help
         argument: ""
-        description: Prints help information
+        description: Print help information
+version: cargo 1.65.0 (4bc8f24d3 2022-10-20)
 tldr: |
   > Manage Rust projects and their module dependencies (crates).
   > Some subcommands such as `cargo build` have their own usage documentation.
-  > More information: <https://crates.io/>.
+  > More information: <https://crates.io>.
 
   - Search for crates:
 
@@ -1557,6 +1798,10 @@ tldr: |
   - Build the Rust project in the current directory:
 
   `cargo build`
+
+  - Build the rust project in the current directory using the nightly compiler:
+
+  `cargo +nightly build`
 
   - Build using a specific number of threads (default is the number of CPU cores):
 

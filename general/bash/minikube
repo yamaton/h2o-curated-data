@@ -134,12 +134,16 @@ _minikube()
             return
             ;;
 
+          license) _minikube_license
+            return
+            ;;
+
           completion) _minikube_completion
             return
             ;;
 
       *)
-          word_list=" start status stop delete dashboard pause unpause docker-env podman-env cache image addons config profile update-context service tunnel mount ssh kubectl node cp ssh-key ssh-host ip logs update-check version options completion "
+          word_list=" start status stop delete dashboard pause unpause docker-env podman-env cache image addons config profile update-context service tunnel mount ssh kubectl node cp ssh-key ssh-host ip logs update-check version options license completion "
           COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
           ;;
     esac
@@ -149,7 +153,7 @@ _minikube()
 _minikube_start ()
 {
     local cur word_list
-    word_list=" --container-runtime --extra-disks --feature-gates --force --force-systemd --host-dns-resolver --host-only-cidr --host-only-nic-type --hyperkit-vpnkit-sock --hyperv-external-adapter --hyperv-use-external-switch --hyperv-virtual-switch --image-mirror-country --image-repository --install-addons --interactive --iso-url --iso-url --keep-context --kubernetes-version --kvm-gpu --kvm-hidden --kvm-network --kvm-numa-count --kvm-qemu-uri --listen-address --memory --mount --mount-9p-version --mount-gid --mount-ip --mount-msize --mount-port --mount-string --mount-type --mount-uid --namespace --nat-nic-type --native-ssh --network --network-plugin --nfs-shares-root --no-kubernetes --no-vtx-check -n --nodes -o --output --preload --service-cluster-ip-range --ssh-ip-address --ssh-key --ssh-port --ssh-user --trace --uuid --vm --vm-driver --wait --wait-timeout" 
+    word_list=" --apiserver-name --apiserver-port --auto-update-drivers --base-image --binary-mirror --cache-images --cert-expiration --cni --container-runtime --cpus --cri-socket --delete-on-failure --disable-driver-mounts --disable-metrics --disable-optimizations --disk-size --dns-domain --dns-proxy --download-only --driver --dry-run --embed-certs --enable-default-cni --extra-config --extra-disks --feature-gates --force --force-systemd --host-dns-resolver --host-only-cidr --host-only-nic-type --hyperkit-vpnkit-sock --hyperv-external-adapter --hyperv-use-external-switch --hyperv-virtual-switch --image-mirror-country --image-repository --install-addons --interactive --iso-url --keep-context --kubernetes-version --kvm-gpu --kvm-hidden --kvm-network --kvm-numa-count --kvm-qemu-uri --listen-address --memory --mount --mount-9p-version --mount-gid --mount-ip --mount-msize --mount-port --mount-string --mount-type --mount-uid --namespace --nat-nic-type --native-ssh --network --network-plugin --nfs-shares-root --no-kubernetes --no-vtx-check -n --nodes -o --output --preload --qemu-firmware-path --service-cluster-ip-range --socket-vmnet-client-path --socket-vmnet-path --ssh-ip-address --ssh-key --ssh-port --ssh-user --subnet --trace --uuid --vm --vm-driver --wait --wait-timeout" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -157,7 +161,7 @@ _minikube_start ()
 _minikube_status ()
 {
     local cur word_list
-    word_list=" -l --layout -n --node -o --output -w --watch" 
+    word_list=" -f --format -l --layout -n --node -o --output -w --watch" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -173,7 +177,7 @@ _minikube_stop ()
 _minikube_delete ()
 {
     local cur word_list
-    word_list=" --all --purge" 
+    word_list=" --all -o --output --purge" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -189,7 +193,7 @@ _minikube_dashboard ()
 _minikube_pause ()
 {
     local cur word_list
-    word_list=" -A --all-namespaces -n --namespaces -n --namespaces -o --output" 
+    word_list=" -o --output" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -197,7 +201,7 @@ _minikube_pause ()
 _minikube_unpause ()
 {
     local cur word_list
-    word_list=" -A --all-namespaces -n --namespaces -n --namespaces -o --output" 
+    word_list=" -A --all-namespaces -o --output" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -268,6 +272,14 @@ _cache_add ()
 {
     local cur word_list
     word_list=" --all" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_cache_list ()
+{
+    local cur word_list
+    word_list=" --format" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -431,7 +443,7 @@ _addons_enable ()
 _addons_list ()
 {
     local cur word_list
-    word_list=" -o --output" 
+    word_list=" -d --docs -o --output" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -497,7 +509,7 @@ _minikube_config ()
 _config_defaults ()
 {
     local cur word_list
-    word_list=" --output" 
+    word_list=" -o --output" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -506,48 +518,6 @@ _config_view ()
 {
     local cur word_list
     word_list=" --format" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
-}
-
-_minikube_profile ()
-{
-    local cur word_list
-    local i=1 subcommand_index
-
-    # take the last word that's NOT starting with -
-    while [[ ( $i < $COMP_CWORD ) ]]; do
-        local s="${COMP_WORDS[i]}"
-        case "$s" in
-          profile)
-            subcommand_index=$i
-            break
-            ;;
-        esac
-        (( i++ ))
-    done
-
-    while [[ ( $subcommand_index < $COMP_CWORD ) ]]; do
-        local s="${COMP_WORDS[subcommand_index}"
-        case "$s" in
-          list) _minikube_list
-            return
-            ;;
-
-          *)  ;; 
-        esac
-        (( subcommand_index++ ))
-    done
-
-    word_list=" list" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
-}
-
-_profile_list ()
-{
-    local cur word_list
-    word_list=" -l --light -o --output" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -597,7 +567,7 @@ _service_list ()
 _minikube_tunnel ()
 {
     local cur word_list
-    word_list=" -c --cleanup" 
+    word_list=" --bind-address -c --cleanup" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -719,7 +689,7 @@ _minikube_ip ()
 _minikube_logs ()
 {
     local cur word_list
-    word_list=" --file -f --follow -n --length --node --problems" 
+    word_list=" --audit --file -f --follow -n --length --node --problems" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -728,6 +698,14 @@ _minikube_version ()
 {
     local cur word_list
     word_list=" --components -o --output --short" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_minikube_license ()
+{
+    local cur word_list
+    word_list=" -d --dir" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }

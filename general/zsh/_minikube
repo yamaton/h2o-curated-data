@@ -4,7 +4,30 @@
 
     function _minikube_start {
         _arguments \
-            '--container-runtime[The container runtime to be used. Valid options: docker, cri-o, containerd (default: auto),--cpus='\''2'\'': Number of CPUs allocated to Kubernetes. Use "max" to use the maximum number of CPUs.,--cri-socket='\'''\'': The cri socket path to be used.,--delete-on-failure=false: If set, delete the current cluster if start fails and try again. Defaults to false.,--disable-driver-mounts=false: Disables the filesystem mounts provided by the hypervisors,--disable-optimizations=false: If set, disables optimizations that are set for local Kubernetes. Including decreasing CoreDNS replicas from 2 to 1 and increasing kubeadm housekeeping-interval from 10s to 5m. Defaults to false.,--disk-size='\''20000mb'\'': Disk size allocated to the minikube VM (format: <number>\[<unit>\], where unit = b, k, m or g).,--dns-domain='\''cluster.local'\'': The cluster dns domain name used in the Kubernetes cluster,--dns-proxy=false: Enable proxy for NAT DNS requests (virtualbox driver only),--docker-env=\[\]: Environment variables to pass to the Docker daemon. (format: key=value),--docker-opt=\[\]: Specify arbitrary flags to pass to the Docker daemon. (format: key=value),--download-only=false: If true, only download and cache files for later use - don'\''t install or start anything.,--driver='\'''\'': Driver is one of: virtualbox, vmwarefusion, kvm2, vmware, none, docker, podman, ssh (defaults to auto-detect),--dry-run=false: dry-run mode. Validates configuration, but does not mutate system state,--embed-certs=false: if true, will embed the certs in kubeconfig.,--enable-default-cni=false: DEPRECATED: Replaced by --cni=bridge,--extra-config=: A set of key=value pairs that describe configuration that may be passed to different components.   The key should be '\''.'\'' separated, and the first part before the dot is the component to apply the configuration to. Valid components are: kubelet, kubeadm, apiserver, controller-manager, etcd, proxy, scheduler Valid kubeadm parameters: ignore-preflight-errors, dry-run, kubeconfig, kubeconfig-dir, node-name, cri-socket, experimental-upload-certs, certificate-key, rootfs, skip-phases, pod-network-cidr]' \
+            '--apiserver-name[The authoritative apiserver hostname for apiserver certificates and connectivity. This can be used if you want to make the apiserver available from outside the machine]' \
+            '--apiserver-port[The apiserver listening port]' \
+            '--auto-update-drivers[If set, automatically updates drivers to the latest version. Defaults to true.]' \
+            '--base-image[The base image to use for docker/podman drivers. Intended for local development.]' \
+            '--binary-mirror[Location to fetch kubectl, kubelet, & kubeadm binaries from.]' \
+            '--cache-images[If true, cache docker images for the current bootstrapper and load them into the machine. Always false with --driver=none.]' \
+            '--cert-expiration[Duration until minikube certificate expiration, defaults to three years (26280h).]' \
+            '--cni[CNI plug-in to use. Valid options: auto, bridge, calico, cilium, flannel, kindnet, or path to a CNI manifest (default: auto)]' \
+            '--container-runtime[The container runtime to be used. Valid options: docker, cri-o, containerd (default: auto)]' \
+            '--cpus[Number of CPUs allocated to Kubernetes. Use "max" to use the maximum number of CPUs.]' \
+            '--cri-socket[The cri socket path to be used.]' \
+            '--delete-on-failure[If set, delete the current cluster if start fails and try again. Defaults to false.]' \
+            '--disable-driver-mounts[Disables the filesystem mounts provided by the hypervisors]' \
+            '--disable-metrics[If set, disables metrics reporting (CPU and memory usage), this can improve CPU usage. Defaults to false.]' \
+            '--disable-optimizations[If set, disables optimizations that are set for local Kubernetes. Including decreasing CoreDNS replicas from 2 to 1. Defaults to false.]' \
+            '--disk-size[Disk size allocated to the minikube VM (format: <number>\[<unit>\], where unit = b, k, m or g).]' \
+            '--dns-domain[The cluster dns domain name used in the Kubernetes cluster]' \
+            '--dns-proxy[Enable proxy for NAT DNS requests (virtualbox driver only)]' \
+            '--download-only[If true, only download and cache files for later use - don'\''t install or start anything.]' \
+            '--driver[Driver is one of: virtualbox, vmwarefusion, kvm2, qemu2 (experimental), qemu (experimental), vmware, none, docker, podman, ssh (defaults to auto-detect)]' \
+            '--dry-run[dry-run mode. Validates configuration, but does not mutate system state]' \
+            '--embed-certs[if true, will embed the certs in kubeconfig.]' \
+            '--enable-default-cni[DEPRECATED: Replaced by --cni=bridge]' \
+            '--extra-config[A set of key=value pairs that describe configuration that may be passed to different components. The key should be '\''.'\'' separated, and the first part before the dot is the component to apply the configuration to. Valid components are: kubelet, kubeadm, apiserver, controller-manager, etcd, proxy, scheduler Valid kubeadm parameters: ignore-preflight-errors, dry-run, kubeconfig, kubeconfig-dir, node-name, cri-socket, experimental-upload-certs, certificate-key, rootfs, skip-phases, pod-network-cidr]' \
             '--extra-disks[Number of extra disks created and attached to the minikube VM (currently only implemented for hyperkit and kvm2 drivers)]' \
             '--feature-gates[A set of key=value pairs that describe feature gates for alpha/experimental features.]' \
             '--force[Force minikube to perform possibly dangerous operations]' \
@@ -21,9 +44,8 @@
             '--install-addons[If set, install addons. Defaults to true.]' \
             '--interactive[Allow user prompts for more information]' \
             '--iso-url[Locations to fetch the minikube ISO from.]' \
-            '--iso-url[Locations to fetch the minikube ISO from.]' \
             '--keep-context[This will keep the existing kubectl context and will create a minikube context.]' \
-            '--kubernetes-version[The Kubernetes version that the minikube VM will use (ex: v1.2.3, '\''stable'\'' for v1.23.3, '\''latest'\'' for v1.23.4-rc.0). Defaults to '\''stable'\''.]' \
+            '--kubernetes-version[The Kubernetes version that the minikube VM will use (ex: v1.2.3, '\''stable'\'' for v1.25.3, '\''latest'\'' for v1.25.3). Defaults to '\''stable'\''.]' \
             '--kvm-gpu[Enable experimental NVIDIA GPU support in minikube]' \
             '--kvm-hidden[Hide the hypervisor signature from the guest in minikube (kvm2 driver only)]' \
             '--kvm-network[The KVM default network name. (kvm2 driver only)]' \
@@ -44,18 +66,22 @@
             '--nat-nic-type[NIC Type used for nat network. One of Am79C970A, Am79C973, 82540EM, 82543GC, 82545EM, or virtio (virtualbox driver only)]' \
             '--native-ssh[Use native Golang SSH client (default true). Set to '\''false'\'' to use the command line '\''ssh'\'' command when accessing the docker machine. Useful for the machine drivers when they will not start with '\''Waiting for SSH'\''.]' \
             '--network[network to run minikube with. Now it is used by docker/podman and KVM drivers. If left empty, minikube will create a new network.]' \
-            '--network-plugin[Kubelet network plug-in to use (default: auto)]' \
+            '--network-plugin[DEPRECATED: Replaced by --cni]' \
             '--nfs-shares-root[Where to root the NFS Shares, defaults to /nfsshares (hyperkit driver only)]' \
             '--no-kubernetes[If set, minikube VM/container will start without starting or configuring Kubernetes. (only works on new clusters)]' \
             '--no-vtx-check[Disable checking for the availability of hardware virtualization before the vm is started (virtualbox driver only)]' \
             {-n,--nodes}'[The number of nodes to spin up. Defaults to 1.]' \
             {-o,--output}'[Format to print stdout in. Options include: \[text,json\]]' \
             '--preload[If set, download tarball of preloaded images if available to improve start time. Defaults to true.]' \
+            '--qemu-firmware-path[Path to the qemu firmware file. Defaults: For Linux, the default firmware location. For macOS, the brew installation location. For Windows, C:\Program Files\qemu\share]' \
             '--service-cluster-ip-range[The CIDR to be used for service cluster IPs.]' \
+            '--socket-vmnet-client-path[Path to the socket vmnet client binary]' \
+            '--socket-vmnet-path[Path to socket vmnet binary]' \
             '--ssh-ip-address[IP address (ssh driver only)]' \
             '--ssh-key[SSH key (ssh driver only)]' \
             '--ssh-port[SSH port (ssh driver only)]' \
             '--ssh-user[SSH user (ssh driver only)]' \
+            '--subnet[Subnet to be used on kic cluster. If left empty, minikube will choose subnet address, beginning from 192.168.49.0. (docker and podman driver only)]' \
             '--trace[Send trace events. Options include: \[gcp\]]' \
             '--uuid[Provide VM UUID to restore MAC address (hyperkit driver only)]' \
             '--vm[Filter to use only VM Drivers]' \
@@ -68,6 +94,7 @@
 
     function _minikube_status {
         _arguments \
+            {-f,--format}'[type: Control Plane host: {{.Host}} kubelet: {{.Kubelet}} apiserver: {{.APIServer}} kubeconfig: {{.Kubeconfig}} {{- if .TimeToStop }} timeToStop: {{.TimeToStop}} {{- end }} {{- if .DockerEnv }} docker-env: {{.DockerEnv}} {{- end }} {{- if .PodManEnv }} podman-env: {{.PodManEnv}} {{- end }} '\'': Go template format string for the status output. The format for Go templates can be found here: https://golang.org/pkg/text/template/ For the list accessible variables for the template, see the struct values here: https://godoc.org/k8s.io/minikube/cmd/minikube/cmd#Status]' \
             {-l,--layout}'[output layout (EXPERIMENTAL, JSON only): '\''nodes'\'' or '\''cluster'\'']' \
             {-n,--node}'[The node to check status for. Defaults to control plane. Leave blank with default format for status on all nodes.]' \
             {-o,--output}'[minikube status --output OUTPUT. json, text]' \
@@ -90,6 +117,7 @@
     function _minikube_delete {
         _arguments \
             '--all[Set flag to delete all profiles]' \
+            {-o,--output}'[Format to print stdout in. Options include: \[text,json\]]' \
             '--purge[Set this flag to delete the '\''.minikube'\'' folder from your user directory.]' \
             "*: :_files"
 
@@ -105,9 +133,6 @@
 
     function _minikube_pause {
         _arguments \
-            {-A,--all-namespaces}'[If set, pause all namespaces]' \
-            {-n,--namespaces}'[namespaces to pause]' \
-            {-n,--namespaces}'[namespaces to pause]' \
             {-o,--output}'[Format to print stdout in. Options include: \[text,json\]]' \
             "*: :_files"
 
@@ -116,8 +141,6 @@
     function _minikube_unpause {
         _arguments \
             {-A,--all-namespaces}'[If set, unpause all namespaces]' \
-            {-n,--namespaces}'[namespaces to unpause]' \
-            {-n,--namespaces}'[namespaces to unpause]' \
             {-o,--output}'[Format to print stdout in. Options include: \[text,json\]]' \
             "*: :_files"
 
@@ -193,6 +216,7 @@
 
     function _minikube_tunnel {
         _arguments \
+            '--bind-address[set tunnel bind address, empty or '\''*'\'' indicates the tunnel should be available for all interfaces]' \
             {-c,--cleanup}'[call with cleanup=true to remove old tunnels]' \
             "*: :_files"
 
@@ -263,6 +287,7 @@
 
     function _minikube_logs {
         _arguments \
+            '--audit[Show only the audit logs]' \
             '--file[If present, writes to the provided file instead of stdout.]' \
             {-f,--follow}'[Show only the most recent journal entries, and continuously print new entries as they are appended to the journal.]' \
             {-n,--length}'[Number of lines back to go within the log]' \
@@ -293,6 +318,13 @@
 
     }
 
+    function _minikube_license {
+        _arguments \
+            {-d,--dir}'[Directory to output licenses to]' \
+            "*: :_files"
+
+    }
+
     function _minikube_completion {
         _arguments \
             "*: :_files"
@@ -313,9 +345,9 @@ function _minikube {
             'dashboard:Access the Kubernetes dashboard running within the minikube cluster'
             'pause:pause Kubernetes'
             'unpause:unpause Kubernetes'
-            'docker-env:Configure environment to use minikube'\''s Docker daemon'
+            'docker-env:Provides instructions to point your terminal'\''s docker-cli to the Docker Engine inside minikube. (Useful for building docker images directly inside minikube)'
             'podman-env:Configure environment to use minikube'\''s Podman service'
-            'cache:Add, delete, or push a local image into minikube'
+            'cache:Manage cache for images'
             'image:Manage images'
             'addons:Enable or disable a minikube addon'
             'config:Modify persistent configuration values'
@@ -335,6 +367,7 @@ function _minikube {
             'update-check:Print current and latest version number'
             'version:Print the version of minikube'
             'options:Show a list of global command-line options (applies to all commands).'
+            'license:Outputs the licenses of dependencies to a directory'
             'completion:Generate command completion for a shell'
         )
         _describe 'command' commands
@@ -465,6 +498,10 @@ function _minikube {
 
         (options)
             _minikube_options
+            ;;
+
+        (license)
+            _minikube_license
             ;;
 
         (completion)

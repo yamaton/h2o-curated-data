@@ -1,9 +1,20 @@
 name: nanopolish
 description: nanopolish
-options: []
+usage: |-
+  nanopolish [command] [options]
+options:
+  - names:
+      - --help
+    argument: ""
+    description: Show help
+  - names:
+      - --version
+    argument: ""
+    description: Show version
 subcommands:
   - name: call-methylation
     description: Classify nucleotides as methylated or not.
+    usage: nanopolish call-methylation [OPTIONS] --reads reads.fa --bam alignments.bam --genome genome.fa --methylation cpg
     options:
       - names:
           - -v
@@ -39,10 +50,24 @@ subcommands:
         argument: STRING
         description: the type of methylation (cpg,gpc,dam,dcm)
       - names:
+          - -o
+          - --modbam-output-name
+        argument: FILE
+        description: 'write the results as tags in FILE (default: tsv output)'
+      - names:
+          - -s
+          - --modbam-style
+        argument: STRING
+        description: 'modbam output style either ''reference'' or ''read'' (default: read) when this is set to reference the SEQ field in the output will be the reference sequence spanned by the read'
+      - names:
           - -t
           - --threads
         argument: NUM
         description: 'use NUM threads (default: 1)'
+      - names:
+          - --min-mapping-quality
+        argument: NUM
+        description: 'only use reads with mapQ >= NUM (default: 20)'
       - names:
           - --watch
         argument: DIR
@@ -70,8 +95,51 @@ subcommands:
           - --batchsize
         argument: NUM
         description: 'the batch size (default: 512)'
+  - name: detect-polyi
+    description: Detect presence of poly(I) tails and estimate length of tails in direct RNA reads
+    usage: nanopolish detect-polyi [OPTIONS] --reads reads.fa --bam alignments.bam --genome genome.fa
+    options:
+      - names:
+          - -v
+          - --verbose
+        argument: ""
+        description: display verbose output
+      - names:
+          - --version
+        argument: ""
+        description: display version
+      - names:
+          - --help
+        argument: ""
+        description: display this help and exit
+      - names:
+          - -w
+          - --window
+        argument: STR
+        description: 'only compute the poly-A lengths for reads in window STR (format: ctg:start_id-end_id)'
+      - names:
+          - -r
+          - --reads
+        argument: FILE
+        description: the 1D ONT direct RNA reads are in fasta FILE
+      - names:
+          - -b
+          - --bam
+        argument: FILE
+        description: the reads aligned to the genome assembly are in bam FILE
+      - names:
+          - -g
+          - --genome
+        argument: FILE
+        description: the reference genome assembly for the reads is in FILE
+      - names:
+          - -t
+          - --threads
+        argument: NUM
+        description: 'use NUM threads (default: 1)'
   - name: eventalign
     description: Align nanopore events to reference k-mers
+    usage: nanopolish eventalign [OPTIONS] --reads reads.fa --bam alignments.bam --genome genome.fa
     options:
       - names:
           - -v
@@ -99,7 +167,7 @@ subcommands:
           - -r
           - --reads
         argument: FILE
-        description: the 2D ONT reads are in fasta FILE
+        description: the ONT reads are in fasta FILE
       - names:
           - -b
           - --bam
@@ -149,8 +217,9 @@ subcommands:
           - --models-fofn
         argument: FILE
         description: read alternative k-mer models from FILE
-  - name: extract
-    description: Extract reads in fasta format
+  - name: fast5-check
+    description: Check whether the fast5 files are indexed correctly and readable by nanopolish
+    usage: nanopolish fast5-check [OPTIONS] -r reads.fastq
     options:
       - names:
           - --help
@@ -160,54 +229,17 @@ subcommands:
           - --version
         argument: ""
         description: display version
-      - names:
-          - -v
-          - --verbose
-        argument: ""
-        description: display verbose output
       - names:
           - -r
-          - --recurse
+          - --reads
         argument: ""
-        description: recurse into subdirectories
-      - names:
-          - -q
-          - --fastq
-        argument: ""
-        description: 'extract fastq (default: fasta)'
-      - names:
-          - -t
-          - --type
-        argument: TYPE
-        description: 'read type: template, complement, 2d, 2d-or-template, any'
-      - names:
-          - -b
-          - --basecaller
-        argument: NAME[:VERSION]
-        description: consider only data produced by basecaller NAME,
-      - names:
-          - -o
-          - --output
-        argument: FILE
-        description: write output to FILE
-  - name: getmodel
-    description: Write the pore models for the given read to stdout
-    options:
-      - names:
-          - -v
-          - --verbose
-        argument: ""
-        description: display verbose output
-      - names:
-          - --version
-        argument: ""
-        description: display version
-      - names:
-          - --help
-        argument: ""
-        description: display this help and exit
+        description: file containing the basecalled reads
+  - name: help
+    description: Show help
+    options: []
   - name: index
     description: Build an index mapping from basecalled reads to the signals measured by the sequencer
+    usage: nanopolish index [OPTIONS] -d nanopore_raw_file_directory reads.fastq
     options:
       - names:
           - --help
@@ -222,6 +254,10 @@ subcommands:
           - --verbose
         argument: ""
         description: display verbose output
+      - names:
+          - --slow5
+        argument: FILE
+        description: slow5 file
       - names:
           - -d
           - --directory
@@ -239,6 +275,7 @@ subcommands:
         description: file containing the paths to the sequencing summary files (one per line)
   - name: methyltrain
     description: Train a methylation model
+    usage: nanopolish methyltrain [OPTIONS] --reads reads.fa --bam alignments.bam --genome genome.fa
     options:
       - names:
           - -v
@@ -330,6 +367,7 @@ subcommands:
         description: 'use NUM events for training (default: 1000)'
   - name: phase-reads
     description: Output a BAM file where each record shows the combination of alleles from variants.vcf that each read supports.
+    usage: nanopolish phase-reads [OPTIONS] --reads reads.fa --bam alignments.bam --genome genome.fa variants.vcf
     options:
       - names:
           - -v
@@ -375,6 +413,7 @@ subcommands:
         description: print out a progress message
   - name: polya
     description: Estimate the length of the poly-A tail on direct RNA reads
+    usage: nanopolish polya [OPTIONS] --reads reads.fa --bam alignments.bam --genome genome.fa
     options:
       - names:
           - -v
@@ -416,6 +455,7 @@ subcommands:
         description: 'use NUM threads (default: 1)'
   - name: scorereads
     description: Score reads against an alignment, model
+    usage: nanopolish scorereads [OPTIONS] --reads reads.fa --bam alignments.bam --genome genome.fa
     options:
       - names:
           - -v
@@ -481,6 +521,7 @@ subcommands:
         description: train new transition parameters from the input reads
   - name: variants
     description: Find SNPs using a signal-level HMM
+    usage: nanopolish variants [OPTIONS] --reads reads.fa --bam alignments.bam --genome genome.fa
     options:
       - names:
           - -v
@@ -607,6 +648,7 @@ subcommands:
         description: read alternative k-mer models from FILE
   - name: vcf2fasta
     description: Write a new genome sequence by introducing variants from the input files
+    usage: nanopolish vcf2fasta -g draft.fa segment1.vcf segment2.vcf ...
     options:
       - names:
           - -v
@@ -635,3 +677,4 @@ subcommands:
           - --skip-checks
         argument: ""
         description: skip the sanity checks
+version: nanopolish version 0.14.0

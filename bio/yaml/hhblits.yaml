@@ -1,14 +1,15 @@
 name: hhblits
 description: hhblits
+usage: hhblits -i query [options]
 options:
   - names:
       - -i
     argument: <file>
-    description: 'input/query: single sequence or multiple sequence alignment (MSA) in a3m, a2m, or FASTA format, or HMM in hhm format <file> may be ''stdin'' or ''stdout'' throughout.'
+    description: 'input/query: single sequence or multiple sequence alignment (MSA) in a3m, a2m, or FASTA format, or HMM in hhm format'
   - names:
       - -d
-    argument: <name>                      database name (e.g. uniprot20_29Feb2012)
-    description: Multiple databases may be specified with '-d <db1> -d <db2> ...'
+    argument: <name>
+    description: database name (e.g. uniprot20_29Feb2012) Multiple databases may be specified with '-d <db1> -d <db2> ...'
   - names:
       - -n
     argument: '[1,8]'
@@ -96,7 +97,7 @@ options:
     description: minimum probability in summary and alignment list (default=20)
   - names:
       - -E
-    argument: '[0,inf['
+    argument: '[0,inf]'
     description: maximum E-value in summary and alignment list (default=1E+06)
   - names:
       - -Z
@@ -161,11 +162,15 @@ options:
   - names:
       - -interim_filter
     argument: NONE|FULL
-    description: 'filter sequences of query MSA during merging to avoid early stop (default: FULL) NONE: disables the intermediate filter FULL: if an early stop occurs compare filter seqs in an all vs. all comparison'
+    description: 'filter sequences of query MSA during merging to avoid early stop (default: FULL)'
   - names:
       - -id
     argument: '[0,100]'
     description: maximum pairwise sequence identity (def=90)
+  - names:
+      - -diff
+    argument: '[0,inf]'
+    description: filter MSAs by selecting most diverse set of sequences, keeping at least this many seqs in each MSA block of length 50 Zero and non-numerical values turn off the filtering. (def=1000)
   - names:
       - -cov
     argument: '[0,100]'
@@ -196,7 +201,7 @@ options:
     description: realign hits from previous iterations
   - names:
       - -mact
-    argument: '[0,1['
+    argument: '[0,1]'
     description: 'posterior prob threshold for MAC realignment controlling greediness at alignment ends: 0:global >0.1:local (default=0.35)'
   - names:
       - -glob
@@ -221,8 +226,8 @@ options:
     description: show up to this many alternative alignments with raw score > smin(def=4)
   - names:
       - -premerge
-    argument: <int> merge <int>
-    description: hits to query MSA before aligning remaining hits (def=3)
+    argument: <int>
+    description: merge <int> hits to query MSA before aligning remaining hits (def=3)
   - names:
       - -smin
     argument: <float>
@@ -242,7 +247,7 @@ options:
   - names:
       - -ssm
     argument: '{0,..,4}'
-    description: '0: no ss scoring. 1,2: ss scoring after or during alignment [default=2] 3,4: ss scoring after or during alignment, predicted vs. predicted'
+    description: '0: no ss scoring, 1,2: ss scoring after or during alignment 3,4: ss scoring after or during alignment, predicted vs. predicted [default=2]'
   - names:
       - -ssw
     argument: '[0,1]'
@@ -257,23 +262,39 @@ options:
     description: use global sequence weighting for realignment!
   - names:
       - -gapb
-    argument: '[0,inf['
+    argument: '[0,inf]'
     description: Transition pseudocount admixture (def=1.00)
   - names:
       - -gapd
-    argument: '[0,inf['
+    argument: '[0,inf]'
     description: Transition pseudocount admixture for open gap (default=0.15)
   - names:
       - -gape
     argument: '[0,1.5]'
     description: Transition pseudocount admixture for extend gap (def=1.00)
   - names:
+      - -gapf
+    argument: '[0,inf]'
+    description: factor to increase/reduce gap open penalty for deletes (def=0.60)
+  - names:
+      - -gapg
+    argument: '[0,inf]'
+    description: factor to increase/reduce gap open penalty for inserts (def=0.60)
+  - names:
+      - -gaph
+    argument: '[0,inf]'
+    description: factor to increase/reduce gap extend penalty for deletes(def=0.60)
+  - names:
+      - -gapi
+    argument: '[0,inf]'
+    description: factor to increase/reduce gap extend penalty for inserts(def=0.60)
+  - names:
       - -egq
-    argument: '[0,inf['
+    argument: '[0,inf]'
     description: penalty (bits) for end gaps aligned to query residues (def=0.00)
   - names:
       - -egt
-    argument: '[0,inf['
+    argument: '[0,inf]'
     description: penalty (bits) for end gaps aligned to template residues (def=0.00)
   - names:
       - -pc_hhm_contxt_mode
@@ -285,7 +306,7 @@ options:
     description: overall pseudocount admixture (def=0.9)
   - names:
       - -pc_hhm_contxt_b
-    argument: '[1,inf['
+    argument: '[1,inf]'
     description: Neff threshold value for mode 2 (def=4.0)
   - names:
       - -pc_hhm_contxt_c
@@ -301,7 +322,7 @@ options:
     description: overall pseudocount admixture (def=1.0)
   - names:
       - -pc_hhm_nocontxt_b
-    argument: '[1,inf['
+    argument: '[1,inf]'
     description: Neff threshold value for mode 2 (def=1.5)
   - names:
       - -pc_hhm_nocontxt_c
@@ -317,7 +338,7 @@ options:
     description: overall pseudocount admixture (def=0.8)
   - names:
       - -pc_prefilter_contxt_b
-    argument: '[1,inf['
+    argument: '[1,inf]'
     description: Neff threshold value for mode 2 (def=2.0)
   - names:
       - -pc_prefilter_contxt_c
@@ -333,7 +354,7 @@ options:
     description: overall pseudocount admixture (def=1.0)
   - names:
       - -pc_prefilter_nocontxt_b
-    argument: '[1,inf['
+    argument: '[1,inf]'
     description: Neff threshold value for mode 2 (def=1.5)
   - names:
       - -pc_prefilter_nocontxt_c
@@ -385,5 +406,6 @@ options:
     description: max number of HMM columns (def=20001)
   - names:
       - -maxmem
-    argument: '[1,inf['
+    argument: '[1,inf]'
     description: limit memory for realignment (in GB) (def=3.0)
+version: HHblits 3.3.0

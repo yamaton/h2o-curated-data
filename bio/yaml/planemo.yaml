@@ -1,5 +1,6 @@
 name: planemo
 description: planemo
+usage: planemo [OPTIONS] COMMAND [ARGS]...
 options:
   - names:
       - --version
@@ -25,6 +26,7 @@ options:
 subcommands:
   - name: autoupdate
     description: Auto-update tool requirements by checking...
+    usage: planemo autoupdate [OPTIONS] TOOL_PATH
     options:
       - names:
           - --dry-run
@@ -102,7 +104,7 @@ subcommands:
         description: Root of development galaxy directory to execute command with.
       - names:
           - --galaxy_python_version
-        argument: '[3|3.6|3.7|3.8|3.9]'
+        argument: '[3|3.7|3.8|3.9]'
         description: Python version to start Galaxy under
       - names:
           - --extra_tools
@@ -164,6 +166,10 @@ subcommands:
         argument: ""
         description: Test tools against mulled containers (forces --docker). Disables conda resolution unless any conda option has been set explicitly.
       - names:
+          - --galaxy_startup_timeout
+        argument: INTEGER RANGE
+        description: Wait for galaxy to start before assuming Galaxy did not start. [x>=1]
+      - names:
           - --job_config_file
         argument: FILE
         description: Job configuration file for Galaxy to target.
@@ -171,6 +177,10 @@ subcommands:
           - --tool_dependency_dir
         argument: DIRECTORY
         description: Tool dependency dir for Galaxy to target.
+      - names:
+          - --tool_data_path
+        argument: DIRECTORY
+        description: Directory where data used by tools is located. Required if tests are run in docker and should make use of external reference data.
       - names:
           - --test_data
         argument: DIRECTORY
@@ -305,6 +315,7 @@ subcommands:
         description: Show this message and exit.
   - name: ci_find_repos
     description: Find all shed repositories in one or more...
+    usage: planemo ci_find_repos [OPTIONS] PROJECT
     options:
       - names:
           - --exclude
@@ -336,6 +347,7 @@ subcommands:
         description: Show this message and exit.
   - name: ci_find_tools
     description: Find all tools in one or more directories.
+    usage: planemo ci_find_tools [OPTIONS] PROJECT
     options:
       - names:
           - --exclude
@@ -369,8 +381,100 @@ subcommands:
           - --help
         argument: ""
         description: Show this message and exit.
+  - name: ci_setup
+    description: Launch Galaxy instance, then terminate...
+    usage: planemo ci_setup [OPTIONS]
+    options:
+      - names:
+          - --galaxy_root
+        argument: DIRECTORY
+        description: Root of development galaxy directory to execute command with.
+      - names:
+          - --galaxy_python_version
+        argument: '[3|3.7|3.8|3.9]'
+        description: Python version to start Galaxy under
+      - names:
+          - --extra_tools
+        argument: PATH
+        description: Extra tool sources to include in Galaxy's tool panel (file or directory). These will not be linted/tested/etc... but they will be available to workflows and for interactive use.
+      - names:
+          - --install_galaxy
+        argument: ""
+        description: Download and configure a disposable copy of Galaxy from github.
+      - names:
+          - --galaxy_branch
+        argument: TEXT
+        description: Branch of Galaxy to target (defaults to master) if a Galaxy root isn't specified.
+      - names:
+          - --galaxy_source
+        argument: TEXT
+        description: Git source of Galaxy to target (defaults to the official galaxyproject github source if a Galaxy root isn't specified.
+      - names:
+          - --skip_venv
+        argument: ""
+        description: Do not create or source a virtualenv environment for Galaxy, this should be used to preserve an externally configured virtual environment or conda environment.
+      - names:
+          - --no_cache_galaxy
+        argument: ""
+        description: Skip caching of Galaxy source and dependencies obtained with --install_galaxy. Not caching this results in faster downloads (no git) - so is better on throw away instances such with TravisCI.
+      - names:
+          - --no_cleanup
+        argument: ""
+        description: Do not cleanup temp files created for and by Galaxy.
+      - names:
+          - --galaxy_email
+        argument: TEXT
+        description: E-mail address to use when launching singleuser Galaxy server.
+      - names:
+          - --docker
+          - --no_docker
+        argument: ""
+        description: Run Galaxy tools in Docker if enabled.
+      - names:
+          - --docker_cmd
+        argument: TEXT
+        description: Command used to launch docker (defaults to docker).
+      - names:
+          - --docker_sudo
+          - --no_docker_sudo
+        argument: ""
+        description: Flag to use sudo when running docker.
+      - names:
+          - --docker_host
+        argument: TEXT
+        description: Docker host to target when executing docker commands (defaults to localhost).
+      - names:
+          - --docker_sudo_cmd
+        argument: TEXT
+        description: sudo command to use when --docker_sudo is enabled (defaults to sudo).
+      - names:
+          - --mulled_containers
+          - --biocontainers
+        argument: ""
+        description: Test tools against mulled containers (forces --docker). Disables conda resolution unless any conda option has been set explicitly.
+      - names:
+          - --galaxy_startup_timeout
+        argument: INTEGER RANGE
+        description: Wait for galaxy to start before assuming Galaxy did not start. [x>=1]
+      - names:
+          - --job_config_file
+        argument: FILE
+        description: Job configuration file for Galaxy to target.
+      - names:
+          - --tool_dependency_dir
+        argument: DIRECTORY
+        description: Tool dependency dir for Galaxy to target.
+      - names:
+          - --tool_data_path
+        argument: DIRECTORY
+        description: Directory where data used by tools is located. Required if tests are run in docker and should make use of external reference data.
+      - names:
+          - --help
+        argument: ""
+        description: Show this message and exit.
   - name: clone
     description: Short-cut to quickly clone, fork, and...
+    usage: planemo clone [OPTIONS] TARGET PROJECT
     options:
       - names:
           - --fork
@@ -383,6 +487,7 @@ subcommands:
         description: Show this message and exit.
   - name: conda_build
     description: Perform conda build with Planemo's conda.
+    usage: planemo conda_build [OPTIONS] RECIPE_DIR
     options:
       - names:
           - --conda_prefix
@@ -407,6 +512,7 @@ subcommands:
         description: Show this message and exit.
   - name: conda_env
     description: Activate a conda environment for tool.
+    usage: planemo conda_env [OPTIONS] TOOL_PATH
     options:
       - names:
           - --conda_prefix
@@ -431,6 +537,7 @@ subcommands:
         description: Show this message and exit.
   - name: conda_init
     description: Download and install conda.
+    usage: planemo conda_init [OPTIONS]
     options:
       - names:
           - --conda_prefix
@@ -455,6 +562,7 @@ subcommands:
         description: Show this message and exit.
   - name: conda_install
     description: Install conda packages for tool requirements.
+    usage: planemo conda_install [OPTIONS] TARGET
     options:
       - names:
           - -r
@@ -491,22 +599,9 @@ subcommands:
           - --help
         argument: ""
         description: Show this message and exit.
-  - name: conda_lint
-    description: Check conda recipe for common issues.
-    options:
-      - names:
-          - --report_level
-          - --fail_level
-          - -r
-          - --recursive
-        argument: '[all|warn|error]'
-        description: Recursively perform command for nested conda directories.
-      - names:
-          - --help
-        argument: ""
-        description: Show this message and exit.
   - name: conda_search
     description: Perform conda search with Planemo's conda.
+    usage: planemo conda_search [OPTIONS] TERM
     options:
       - names:
           - --conda_prefix
@@ -531,6 +626,7 @@ subcommands:
         description: Show this message and exit.
   - name: config_init
     description: Initialise global configuration for Planemo.
+    usage: planemo config_init [OPTIONS] PROJECT
     options:
       - names:
           - --template
@@ -538,6 +634,7 @@ subcommands:
         description: --help Show this message and exit.
   - name: container_register
     description: Register multi-requirement containers as...
+    usage: planemo container_register [OPTIONS] TOOL_PATH
     options:
       - names:
           - -r
@@ -590,6 +687,7 @@ subcommands:
         description: Show this message and exit.
   - name: create_alias
     description: Add an alias for a path or a workflow or...
+    usage: planemo create_alias [OPTIONS] OBJ
     options:
       - names:
           - --alias
@@ -605,6 +703,7 @@ subcommands:
         description: Show this message and exit.
   - name: create_gist
     description: Upload file to GitHub as a sharable gist.
+    usage: planemo create_gist [OPTIONS] FILE_PATH
     options:
       - names:
           - --link_type
@@ -620,6 +719,7 @@ subcommands:
         description: Show this message and exit.
   - name: database_create
     description: Create a *development* database.
+    usage: planemo database_create [OPTIONS] IDENTIFIER
     options:
       - names:
           - --postgres
@@ -668,6 +768,7 @@ subcommands:
         description: Show this message and exit.
   - name: database_delete
     description: Delete a *development* database.
+    usage: planemo database_delete [OPTIONS] IDENTIFIER
     options:
       - names:
           - --postgres
@@ -716,6 +817,7 @@ subcommands:
         description: Show this message and exit.
   - name: database_list
     description: List databases in configured database source.
+    usage: planemo database_list [OPTIONS]
     options:
       - names:
           - --postgres
@@ -764,6 +866,7 @@ subcommands:
         description: Show this message and exit.
   - name: delete_alias
     description: List aliases for a path or a workflow or...
+    usage: planemo delete_alias [OPTIONS]
     options:
       - names:
           - --alias
@@ -779,6 +882,7 @@ subcommands:
         description: Show this message and exit.
   - name: docker_build
     description: Build (and optionally cache) Docker images.
+    usage: planemo docker_build [OPTIONS] TOOL_PATH
     options:
       - names:
           - --dockerfile
@@ -805,6 +909,7 @@ subcommands:
         description: Show this message and exit.
   - name: docker_shell
     description: Launch shell in Docker container for a tool.
+    usage: planemo docker_shell [OPTIONS] TOOL_PATH
     options:
       - names:
           - --from_tag
@@ -837,13 +942,20 @@ subcommands:
         description: Show this message and exit.
   - name: dockstore_init
     description: Initialize a .dockstore.yml configuration...
+    usage: planemo dockstore_init [OPTIONS] PROJECT
     options:
+      - names:
+          - --publish
+          - --no_publish
+        argument: ""
+        description: Set publish attribute to true in .dockstore.yml file
       - names:
           - --help
         argument: ""
         description: Show this message and exit.
   - name: docs
     description: Open Planemo documentation in web browser.
+    usage: planemo docs [OPTIONS]
     options:
       - names:
           - --help
@@ -851,6 +963,7 @@ subcommands:
         description: Show this message and exit.
   - name: lint
     description: Check for common errors and best practices.
+    usage: planemo lint [OPTIONS] TOOL_PATH
     options:
       - names:
           - --report_level
@@ -896,6 +1009,7 @@ subcommands:
         description: Show this message and exit.
   - name: list_alias
     description: List aliases for a path or a workflow or...
+    usage: planemo list_alias [OPTIONS]
     options:
       - names:
           - --profile
@@ -907,6 +1021,7 @@ subcommands:
         description: Show this message and exit.
   - name: list_invocations
     description: Get a list of invocations for a particular...
+    usage: planemo list_invocations [OPTIONS] WORKFLOW_IDENTIFIER
     options:
       - names:
           - --profile
@@ -918,6 +1033,7 @@ subcommands:
         description: Show this message and exit.
   - name: list_repos
     description: Find all shed repositories in one or more...
+    usage: planemo list_repos [OPTIONS] PROJECT
     options:
       - names:
           - --exclude
@@ -949,6 +1065,7 @@ subcommands:
         description: Show this message and exit.
   - name: merge_test_reports
     description: Merge tool_test_output.json files from...
+    usage: planemo merge_test_reports [OPTIONS] INPUT_PATHS FILE_PATH
     options:
       - names:
           - --help
@@ -956,6 +1073,7 @@ subcommands:
         description: Show this message and exit.
   - name: mull
     description: Build containers for specified tools.
+    usage: planemo mull [OPTIONS] TOOL_PATH
     options:
       - names:
           - -r
@@ -985,6 +1103,7 @@ subcommands:
         description: Show this message and exit.
   - name: mulled_init
     description: Download and install involucro for mull...
+    usage: planemo mulled_init [OPTIONS]
     options:
       - names:
           - --mulled_conda_version
@@ -1004,6 +1123,7 @@ subcommands:
         description: Show this message and exit.
   - name: normalize
     description: Generate normalized tool XML from input.
+    usage: planemo normalize [OPTIONS] TOOL_PATH
     options:
       - names:
           - --expand_macros
@@ -1023,6 +1143,7 @@ subcommands:
         description: Show this message and exit.
   - name: open
     description: Open latest Planemo test results in a web...
+    usage: planemo open [OPTIONS] PATH
     options:
       - names:
           - --help
@@ -1030,6 +1151,7 @@ subcommands:
         description: Show this message and exit.
   - name: profile_create
     description: Create a profile.
+    usage: planemo profile_create [OPTIONS] PROFILE_NAME
     options:
       - names:
           - --postgres
@@ -1094,6 +1216,7 @@ subcommands:
         description: Show this message and exit.
   - name: profile_delete
     description: Delete a profile.
+    usage: planemo profile_delete [OPTIONS] PROFILE_NAME
     options:
       - names:
           - --postgres
@@ -1142,6 +1265,7 @@ subcommands:
         description: Show this message and exit.
   - name: profile_list
     description: List configured profile names.
+    usage: planemo profile_list [OPTIONS]
     options:
       - names:
           - --help
@@ -1149,6 +1273,7 @@ subcommands:
         description: Show this message and exit.
   - name: project_init
     description: (Experimental) Initialize a new tool project.
+    usage: planemo project_init [OPTIONS] PROJECT
     options:
       - names:
           - --template
@@ -1156,6 +1281,7 @@ subcommands:
         description: --help Show this message and exit.
   - name: pull_request
     description: Short-cut to quickly create a pull request...
+    usage: planemo pull_request [OPTIONS] PROJECT
     options:
       - names:
           - -m
@@ -1168,6 +1294,7 @@ subcommands:
         description: Show this message and exit.
   - name: rerun
     description: Planemo command for rerunning and remapping...
+    usage: planemo rerun [OPTIONS] RERUNNABLE_IDS
     options:
       - names:
           - --profile
@@ -1199,6 +1326,7 @@ subcommands:
         description: Show this message and exit.
   - name: run
     description: Planemo command for running tools and jobs.
+    usage: planemo run [OPTIONS] RUNNABLE_PATH_OR_ID JOB_PATH
     options:
       - names:
           - --galaxy_root
@@ -1206,7 +1334,7 @@ subcommands:
         description: Root of development galaxy directory to execute command with.
       - names:
           - --galaxy_python_version
-        argument: '[3|3.6|3.7|3.8|3.9]'
+        argument: '[3|3.7|3.8|3.9]'
         description: Python version to start Galaxy under
       - names:
           - --extra_tools
@@ -1268,6 +1396,10 @@ subcommands:
         argument: ""
         description: Test tools against mulled containers (forces --docker). Disables conda resolution unless any conda option has been set explicitly.
       - names:
+          - --galaxy_startup_timeout
+        argument: INTEGER RANGE
+        description: Wait for galaxy to start before assuming Galaxy did not start. [x>=1]
+      - names:
           - --job_config_file
         argument: FILE
         description: Job configuration file for Galaxy to target.
@@ -1275,6 +1407,10 @@ subcommands:
           - --tool_dependency_dir
         argument: DIRECTORY
         description: Tool dependency dir for Galaxy to target.
+      - names:
+          - --tool_data_path
+        argument: DIRECTORY
+        description: Directory where data used by tools is located. Required if tests are run in docker and should make use of external reference data.
       - names:
           - --port
         argument: INTEGER
@@ -1542,6 +1678,7 @@ subcommands:
         description: Show this message and exit.
   - name: serve
     description: Launch Galaxy instance with specified tools.
+    usage: planemo serve [OPTIONS] TOOL_PATH
     options:
       - names:
           - --galaxy_root
@@ -1549,7 +1686,7 @@ subcommands:
         description: Root of development galaxy directory to execute command with.
       - names:
           - --galaxy_python_version
-        argument: '[3|3.6|3.7|3.8|3.9]'
+        argument: '[3|3.7|3.8|3.9]'
         description: Python version to start Galaxy under
       - names:
           - --extra_tools
@@ -1611,6 +1748,10 @@ subcommands:
         argument: ""
         description: Test tools against mulled containers (forces --docker). Disables conda resolution unless any conda option has been set explicitly.
       - names:
+          - --galaxy_startup_timeout
+        argument: INTEGER RANGE
+        description: Wait for galaxy to start before assuming Galaxy did not start. [x>=1]
+      - names:
           - --job_config_file
         argument: FILE
         description: Job configuration file for Galaxy to target.
@@ -1618,6 +1759,10 @@ subcommands:
           - --tool_dependency_dir
         argument: DIRECTORY
         description: Tool dependency dir for Galaxy to target.
+      - names:
+          - --tool_data_path
+        argument: DIRECTORY
+        description: Directory where data used by tools is located. Required if tests are run in docker and should make use of external reference data.
       - names:
           - --port
         argument: INTEGER
@@ -1791,6 +1936,7 @@ subcommands:
         description: Show this message and exit.
   - name: share_test
     description: Publish JSON test results as sharable Gist.
+    usage: planemo share_test [OPTIONS] FILE_PATH
     options:
       - names:
           - --help
@@ -1798,6 +1944,7 @@ subcommands:
         description: Show this message and exit.
   - name: shed_build
     description: Create a Galaxy tool tarball.
+    usage: planemo shed_build [OPTIONS] TOOL_PATH
     options:
       - names:
           - --help
@@ -1805,6 +1952,7 @@ subcommands:
         description: Show this message and exit.
   - name: shed_create
     description: Create a repository in a Galaxy Tool Shed.
+    usage: planemo shed_create [OPTIONS] PROJECT
     options:
       - names:
           - -r
@@ -1859,7 +2007,12 @@ subcommands:
         description: Show this message and exit.
   - name: shed_diff
     description: diff between local repository and Tool Shed.
+    usage: planemo shed_diff [OPTIONS] PROJECT
     options:
+      - names:
+          - --shed_target_source
+        argument: testtoolshed
+        description: 'This command will return an exit code of:'
       - names:
           - -r
           - --recursive
@@ -1921,6 +2074,7 @@ subcommands:
         description: Show this message and exit.
   - name: shed_download
     description: Download tool from Tool Shed into directory.
+    usage: planemo shed_download [OPTIONS] PROJECT
     options:
       - names:
           - -r
@@ -1970,6 +2124,7 @@ subcommands:
         description: Show this message and exit.
   - name: shed_init
     description: Bootstrap new Tool Shed .shed.yml file.
+    usage: planemo shed_init [OPTIONS] PROJECT
     options:
       - names:
           - --from_workflow
@@ -2014,6 +2169,7 @@ subcommands:
         description: Show this message and exit.
   - name: shed_lint
     description: Check Tool Shed repository for common issues.
+    usage: planemo shed_lint [OPTIONS] PROJECT
     options:
       - names:
           - -r
@@ -2049,6 +2205,7 @@ subcommands:
         description: Show this message and exit.
   - name: shed_serve
     description: Launch Galaxy with Tool Shed dependencies.
+    usage: planemo shed_serve [OPTIONS] PROJECT
     options:
       - names:
           - -r
@@ -2094,7 +2251,7 @@ subcommands:
         description: Root of development galaxy directory to execute command with.
       - names:
           - --galaxy_python_version
-        argument: '[3|3.6|3.7|3.8|3.9]'
+        argument: '[3|3.7|3.8|3.9]'
         description: Python version to start Galaxy under
       - names:
           - --extra_tools
@@ -2156,6 +2313,10 @@ subcommands:
         argument: ""
         description: Test tools against mulled containers (forces --docker). Disables conda resolution unless any conda option has been set explicitly.
       - names:
+          - --galaxy_startup_timeout
+        argument: INTEGER RANGE
+        description: Wait for galaxy to start before assuming Galaxy did not start. [x>=1]
+      - names:
           - --job_config_file
         argument: FILE
         description: Job configuration file for Galaxy to target.
@@ -2163,6 +2324,10 @@ subcommands:
           - --tool_dependency_dir
         argument: DIRECTORY
         description: Tool dependency dir for Galaxy to target.
+      - names:
+          - --tool_data_path
+        argument: DIRECTORY
+        description: Directory where data used by tools is located. Required if tests are run in docker and should make use of external reference data.
       - names:
           - --port
         argument: INTEGER
@@ -2332,6 +2497,7 @@ subcommands:
         description: Show this message and exit.
   - name: shed_test
     description: Run tests of published shed artifacts.
+    usage: planemo shed_test [OPTIONS] PROJECT
     options:
       - names:
           - -r
@@ -2377,7 +2543,7 @@ subcommands:
         description: Root of development galaxy directory to execute command with.
       - names:
           - --galaxy_python_version
-        argument: '[3|3.6|3.7|3.8|3.9]'
+        argument: '[3|3.7|3.8|3.9]'
         description: Python version to start Galaxy under
       - names:
           - --extra_tools
@@ -2439,6 +2605,10 @@ subcommands:
         argument: ""
         description: Test tools against mulled containers (forces --docker). Disables conda resolution unless any conda option has been set explicitly.
       - names:
+          - --galaxy_startup_timeout
+        argument: INTEGER RANGE
+        description: Wait for galaxy to start before assuming Galaxy did not start. [x>=1]
+      - names:
           - --job_config_file
         argument: FILE
         description: Job configuration file for Galaxy to target.
@@ -2446,6 +2616,10 @@ subcommands:
           - --tool_dependency_dir
         argument: DIRECTORY
         description: Tool dependency dir for Galaxy to target.
+      - names:
+          - --tool_data_path
+        argument: DIRECTORY
+        description: Directory where data used by tools is located. Required if tests are run in docker and should make use of external reference data.
       - names:
           - --update_test_data
         argument: ""
@@ -2505,6 +2679,7 @@ subcommands:
         description: Show this message and exit.
   - name: shed_update
     description: Update Tool Shed repository.
+    usage: planemo shed_update [OPTIONS] PROJECT
     options:
       - names:
           - --report_xunit
@@ -2575,6 +2750,7 @@ subcommands:
         description: Show this message and exit.
   - name: shed_upload
     description: Low-level command to upload tarballs.
+    usage: planemo shed_upload [OPTIONS] PROJECT
     options:
       - names:
           - -r
@@ -2641,13 +2817,15 @@ subcommands:
         description: Show this message and exit.
   - name: syntax
     description: Open tool config syntax page in web browser.
+    usage: planemo syntax [OPTIONS]
     options:
       - names:
           - --help
         argument: ""
         description: Show this message and exit.
   - name: test
-    description: Run specified tool's tests within Galaxy.
+    description: Run specified tool or workflow tests within...
+    usage: planemo test [OPTIONS] TOOL_PATH
     options:
       - names:
           - --failed
@@ -2663,7 +2841,7 @@ subcommands:
         description: Root of development galaxy directory to execute command with.
       - names:
           - --galaxy_python_version
-        argument: '[3|3.6|3.7|3.8|3.9]'
+        argument: '[3|3.7|3.8|3.9]'
         description: Python version to start Galaxy under
       - names:
           - --extra_tools
@@ -2725,6 +2903,10 @@ subcommands:
         argument: ""
         description: Test tools against mulled containers (forces --docker). Disables conda resolution unless any conda option has been set explicitly.
       - names:
+          - --galaxy_startup_timeout
+        argument: INTEGER RANGE
+        description: Wait for galaxy to start before assuming Galaxy did not start. [x>=1]
+      - names:
           - --job_config_file
         argument: FILE
         description: Job configuration file for Galaxy to target.
@@ -2732,6 +2914,10 @@ subcommands:
           - --tool_dependency_dir
         argument: DIRECTORY
         description: Tool dependency dir for Galaxy to target.
+      - names:
+          - --tool_data_path
+        argument: DIRECTORY
+        description: Directory where data used by tools is located. Required if tests are run in docker and should make use of external reference data.
       - names:
           - --test_data
         argument: DIRECTORY
@@ -2965,6 +3151,7 @@ subcommands:
         description: Show this message and exit.
   - name: test_reports
     description: Generate human readable tool test reports.
+    usage: planemo test_reports [OPTIONS] FILE_PATH
     options:
       - names:
           - --test_output
@@ -2996,6 +3183,7 @@ subcommands:
         description: Show this message and exit.
   - name: tool_init
     description: Generate tool outline from given arguments.
+    usage: planemo tool_init [OPTIONS]
     options:
       - names:
           - -i
@@ -3101,6 +3289,7 @@ subcommands:
         description: Show this message and exit.
   - name: training_fill_data_library
     description: Build training template from workflow.
+    usage: planemo training_fill_data_library [OPTIONS] TOOL_PATH
     options:
       - names:
           - --topic_name
@@ -3124,6 +3313,7 @@ subcommands:
         description: Show this message and exit.
   - name: training_generate_from_wf
     description: Create tutorial skeleton from workflow.
+    usage: planemo training_generate_from_wf [OPTIONS] TOOL_PATH
     options:
       - names:
           - --topic_name
@@ -3155,7 +3345,7 @@ subcommands:
         description: Root of development galaxy directory to execute command with.
       - names:
           - --galaxy_python_version
-        argument: '[3|3.6|3.7|3.8|3.9]'
+        argument: '[3|3.7|3.8|3.9]'
         description: Python version to start Galaxy under
       - names:
           - --extra_tools
@@ -3217,6 +3407,10 @@ subcommands:
         argument: ""
         description: Test tools against mulled containers (forces --docker). Disables conda resolution unless any conda option has been set explicitly.
       - names:
+          - --galaxy_startup_timeout
+        argument: INTEGER RANGE
+        description: Wait for galaxy to start before assuming Galaxy did not start. [x>=1]
+      - names:
           - --job_config_file
         argument: FILE
         description: Job configuration file for Galaxy to target.
@@ -3224,6 +3418,10 @@ subcommands:
           - --tool_dependency_dir
         argument: DIRECTORY
         description: Tool dependency dir for Galaxy to target.
+      - names:
+          - --tool_data_path
+        argument: DIRECTORY
+        description: Directory where data used by tools is located. Required if tests are run in docker and should make use of external reference data.
       - names:
           - --port
         argument: INTEGER
@@ -3389,6 +3587,7 @@ subcommands:
         description: Show this message and exit.
   - name: training_init
     description: Build training template from workflow.
+    usage: planemo training_init [OPTIONS] TOOL_PATH
     options:
       - names:
           - --topic_name
@@ -3452,7 +3651,7 @@ subcommands:
         description: Root of development galaxy directory to execute command with.
       - names:
           - --galaxy_python_version
-        argument: '[3|3.6|3.7|3.8|3.9]'
+        argument: '[3|3.7|3.8|3.9]'
         description: Python version to start Galaxy under
       - names:
           - --extra_tools
@@ -3514,6 +3713,10 @@ subcommands:
         argument: ""
         description: Test tools against mulled containers (forces --docker). Disables conda resolution unless any conda option has been set explicitly.
       - names:
+          - --galaxy_startup_timeout
+        argument: INTEGER RANGE
+        description: Wait for galaxy to start before assuming Galaxy did not start. [x>=1]
+      - names:
           - --job_config_file
         argument: FILE
         description: Job configuration file for Galaxy to target.
@@ -3521,6 +3724,10 @@ subcommands:
           - --tool_dependency_dir
         argument: DIRECTORY
         description: Tool dependency dir for Galaxy to target.
+      - names:
+          - --tool_data_path
+        argument: DIRECTORY
+        description: Directory where data used by tools is located. Required if tests are run in docker and should make use of external reference data.
       - names:
           - --port
         argument: INTEGER
@@ -3686,6 +3893,7 @@ subcommands:
         description: Show this message and exit.
   - name: upload_data
     description: Planemo command for uploading data to an...
+    usage: planemo upload_data [OPTIONS] RUNNABLE_PATH_OR_ID JOB_PATH NEW_JOB_PATH
     options:
       - names:
           - --galaxy_root
@@ -3693,7 +3901,7 @@ subcommands:
         description: Root of development galaxy directory to execute command with.
       - names:
           - --galaxy_python_version
-        argument: '[3|3.6|3.7|3.8|3.9]'
+        argument: '[3|3.7|3.8|3.9]'
         description: Python version to start Galaxy under
       - names:
           - --extra_tools
@@ -3755,6 +3963,10 @@ subcommands:
         argument: ""
         description: Test tools against mulled containers (forces --docker). Disables conda resolution unless any conda option has been set explicitly.
       - names:
+          - --galaxy_startup_timeout
+        argument: INTEGER RANGE
+        description: Wait for galaxy to start before assuming Galaxy did not start. [x>=1]
+      - names:
           - --job_config_file
         argument: FILE
         description: Job configuration file for Galaxy to target.
@@ -3762,6 +3974,10 @@ subcommands:
           - --tool_dependency_dir
         argument: DIRECTORY
         description: Tool dependency dir for Galaxy to target.
+      - names:
+          - --tool_data_path
+        argument: DIRECTORY
+        description: Directory where data used by tools is located. Required if tests are run in docker and should make use of external reference data.
       - names:
           - --port
         argument: INTEGER
@@ -3894,6 +4110,7 @@ subcommands:
         description: Show this message and exit.
   - name: workflow_convert
     description: Convert Format 2 workflows to native Galaxy...
+    usage: planemo workflow_convert [OPTIONS] WORKFLOW_PATH_OR_ID
     options:
       - names:
           - -f
@@ -3908,7 +4125,7 @@ subcommands:
         description: Root of development galaxy directory to execute command with.
       - names:
           - --galaxy_python_version
-        argument: '[3|3.6|3.7|3.8|3.9]'
+        argument: '[3|3.7|3.8|3.9]'
         description: Python version to start Galaxy under
       - names:
           - --extra_tools
@@ -3970,6 +4187,10 @@ subcommands:
         argument: ""
         description: Test tools against mulled containers (forces --docker). Disables conda resolution unless any conda option has been set explicitly.
       - names:
+          - --galaxy_startup_timeout
+        argument: INTEGER RANGE
+        description: Wait for galaxy to start before assuming Galaxy did not start. [x>=1]
+      - names:
           - --job_config_file
         argument: FILE
         description: Job configuration file for Galaxy to target.
@@ -3977,6 +4198,10 @@ subcommands:
           - --tool_dependency_dir
         argument: DIRECTORY
         description: Tool dependency dir for Galaxy to target.
+      - names:
+          - --tool_data_path
+        argument: DIRECTORY
+        description: Directory where data used by tools is located. Required if tests are run in docker and should make use of external reference data.
       - names:
           - --port
         argument: INTEGER
@@ -4142,6 +4367,7 @@ subcommands:
         description: Show this message and exit.
   - name: workflow_edit
     description: Open a synchronized Galaxy workflow editor.
+    usage: planemo workflow_edit [OPTIONS] WORKFLOW_PATH_OR_ID
     options:
       - names:
           - --galaxy_root
@@ -4149,7 +4375,7 @@ subcommands:
         description: Root of development galaxy directory to execute command with.
       - names:
           - --galaxy_python_version
-        argument: '[3|3.6|3.7|3.8|3.9]'
+        argument: '[3|3.7|3.8|3.9]'
         description: Python version to start Galaxy under
       - names:
           - --extra_tools
@@ -4211,6 +4437,10 @@ subcommands:
         argument: ""
         description: Test tools against mulled containers (forces --docker). Disables conda resolution unless any conda option has been set explicitly.
       - names:
+          - --galaxy_startup_timeout
+        argument: INTEGER RANGE
+        description: Wait for galaxy to start before assuming Galaxy did not start. [x>=1]
+      - names:
           - --job_config_file
         argument: FILE
         description: Job configuration file for Galaxy to target.
@@ -4218,6 +4448,10 @@ subcommands:
           - --tool_dependency_dir
         argument: DIRECTORY
         description: Tool dependency dir for Galaxy to target.
+      - names:
+          - --tool_data_path
+        argument: DIRECTORY
+        description: Directory where data used by tools is located. Required if tests are run in docker and should make use of external reference data.
       - names:
           - --port
         argument: INTEGER
@@ -4383,6 +4617,7 @@ subcommands:
         description: Show this message and exit.
   - name: workflow_job_init
     description: Initialize a Galaxy workflow job...
+    usage: planemo workflow_job_init [OPTIONS] WORKFLOW_PATH_OR_ID
     options:
       - names:
           - -f
@@ -4414,6 +4649,7 @@ subcommands:
         description: Show this message and exit.
   - name: workflow_lint
     description: Check workflows for syntax errors and best...
+    usage: planemo workflow_lint [OPTIONS] TARGET
     options:
       - names:
           - --report_level
@@ -4432,6 +4668,7 @@ subcommands:
         description: Show this message and exit.
   - name: workflow_test_init
     description: Initialize a Galaxy workflow test...
+    usage: planemo workflow_test_init [OPTIONS] WORKFLOW_PATH_OR_ID
     options:
       - names:
           - -f
@@ -4468,11 +4705,16 @@ subcommands:
         description: Show this message and exit.
   - name: workflow_upload
     description: Upload workflows to github organization.
+    usage: planemo workflow_upload [OPTIONS] TARGET
     options:
       - names:
           - --namespace
         argument: TEXT
         description: Organization or username under which to create or update workflow repository. Must be a valid github username or organization
+      - names:
+          - --github_branch
+        argument: TEXT
+        description: GitHub branch to use for the action. Default is main.
       - names:
           - --dry_run
         argument: ""
@@ -4481,4 +4723,4 @@ subcommands:
           - --help
         argument: ""
         description: Show this message and exit.
-version: planemo, version 0.74.11
+version: planemo, version 0.75.2

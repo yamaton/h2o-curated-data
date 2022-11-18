@@ -1,5 +1,6 @@
 name: gpg
 description: gpg
+usage: gpg [--homedir dir] [--options file] [options] command [args]
 options:
   - names:
       - --version
@@ -125,11 +126,11 @@ options:
   - names:
       - --delete-secret-keys
     argument: name
-    description: Remove key from the secret keyring. In batch mode the key must be specified by fingerprint. The option --yes can be used to advice gpg-agent not to request a confirmation. This extra pre-caution is done because gpg can't be sure that the secret key (as controlled by gpg-agent) is only used for the given OpenPGP public key. If the exclamation mark syntax is used with the fingerprint of a subkey only the secret part of that subkey is deleted; if the exclamation mark is used with the fingerprint of the primary key only the secret part of the primary key is deleted.
+    description: Remove key from the secret keyring. In batch mode the key must be specified by fingerprint. The option --yes can be used to advise gpg-agent not to request a confirmation. This extra pre-caution is done because gpg can't be sure that the secret key (as controlled by gpg-agent) is only used for the given OpenPGP public key. If the exclamation mark syntax is used with the fingerprint of a subkey only the secret part of that subkey is deleted; if the exclamation mark is used with the fingerprint of the primary key only the secret part of the primary key is deleted.
   - names:
       - --delete-secret-and-public-key
     argument: name
-    description: Same as --delete-key, but if a secret key exists, it will be removed first. In batch mode the key must be specified by fingerprint. The option --yes can be used to advice gpg-agent not to request a confirmation.
+    description: Same as --delete-key, but if a secret key exists, it will be removed first. In batch mode the key must be specified by fingerprint. The option --yes can be used to advise gpg-agent not to request a confirmation.
   - names:
       - --export
     argument: ""
@@ -269,6 +270,10 @@ options:
       - --quick-revoke-uid
     argument: user-id user-id-to-revoke
     description: This command revokes a user ID on an existing key. It cannot be used to revoke the last user ID on key (some non-revoked user ID must remain), with revocation reason ``User ID is no longer valid''. If you want to specify a different revocation reason, or to supply supplementary revocation text, you should use the interactive sub-command revuid of --edit-key.
+  - names:
+      - --quick-revoke-sig
+    argument: fpr signing-fpr [names]
+    description: This command revokes the key signatures made by signing-fpr from the key specified by the fingerprint fpr. With names given only the signatures on user ids of the key matching any of the given names are affected (see --quick-sign-key). If a revocation already exists a notice is printed instead of creating a new revocation; no error is returned in this case. Note that key signature revocations may be superseded by a newer key signature and in turn again revoked.
   - names:
       - --quick-set-primary-uid
     argument: user-id primary-user-id
@@ -417,10 +422,6 @@ options:
     argument: ""
     description: When building the trust database, treat any signatures with a certification level below this as invalid. Defaults to 2, which disregards level 1 signatures. Note that level 0 "no particular claim" signatures are always accepted.
   - names:
-      - --trusted-key
-    argument: long key ID
-    description: Assume that the specified key (which must be given as a full 8 byte key ID) is as trustworthy as one of your own secret keys. This option is useful if you don't want to keep your secret keys (or one of them) online but still want to be able to check the validity of a given recipient's or signator's key.
-  - names:
       - --trust-model
     argument: '{pgp|classic|tofu|tofu+pgp|direct|always|auto}'
     description: 'Set what trust model GnuPG should follow. The models are:'
@@ -429,6 +430,11 @@ options:
       - --no-auto-key-locate
     argument: mechanisms
     description: GnuPG can automatically locate and retrieve keys as needed using this option. This happens when encrypting to an email address (in the "user@example.com" form), and there are no "user@example.com" keys on the local keyring. This option takes any number of the mechanisms listed below, in the order they are to be tried. Instead of listing the mechanisms as comma delimited arguments, the option may also be given several times to add more mechanism. The option --no-auto-key-locate or the mechanism "clear" resets the list. The default is "local,wkd".
+  - names:
+      - --auto-key-import
+      - --no-auto-key-import
+    argument: ""
+    description: This is an offline mechanism to get a missing key for signature verification and for later encryption to this key. If this option is enabled and a signature includes an embedded key, that key is used to verify the signature and on verification success that key is imported. The default is --no-auto-key-import.
   - names:
       - --auto-key-retrieve
       - --no-auto-key-retrieve
@@ -713,6 +719,10 @@ options:
     argument: ""
     description: By default the user ID of the signing key is embedded in the data signature. As of now this is only done if the signing key has been specified with local-user using a mail address, or with sender. This information can be helpful for verifier to locate the key; see option --auto-key-retrieve.
   - names:
+      - --include-key-block
+    argument: ""
+    description: This option is used to embed the actual signing key into a data signature. The embedded key is stripped down to a single user id and includes only the signing subkey used to create the signature as well as as valid encryption subkeys. All other info is removed from the key to keep it and thus the signature small. This option is the OpenPGP counterpart to the gpgsm option --include-certs.
+  - names:
       - --personal-cipher-preferences
     argument: string
     description: Set the list of personal cipher preferences to string. Use gpg --version to get a list of available algorithms, and use none to set no preference at all. This allows the user to safely override the algorithm chosen by the recipient key preferences, as GPG will only select an algorithm that is usable by all recipients. The most highly ranked cipher in this list is also used for the --symmetric encryption command.
@@ -925,7 +935,7 @@ options:
   - names:
       - --passphrase-repeat
     argument: "n"
-    description: Specify how many times gpg will request a new passphrase be repeated. This is useful for helping memorize a passphrase. Defaults to 1 repetition.
+    description: Specify how many times gpg will request a new passphrase be repeated. This is useful for helping memorize a passphrase. Defaults to 1 repetition; can be set to 0 to disable any passphrase repetition. Note that a n greater than 1 will pop up the pinentry window n+1 times even if a modern pinentry with two entry fields is used.
   - names:
       - --passphrase-fd
     argument: "n"
@@ -1066,7 +1076,7 @@ options:
   - names:
       - --no-allow-multiple-messages
     argument: ""
-    description: Allow processing of multiple OpenPGP messages contained in a single file or stream. Some programs that call GPG are not prepared to deal with multiple messages being processed together, so this option defaults to no. Note that versions of GPG prior to 1.4.7 always allowed multiple messages.
+    description: Allow processing of multiple OpenPGP messages contained in a single file or stream. Some programs that call GPG are not prepared to deal with multiple messages being processed together, so this option defaults to no. Note that versions of GPG prior to 1.4.7 always allowed multiple messages. Future versions of GnUPG will remove this option.
   - names:
       - --enable-special-filenames
     argument: ""
@@ -1170,7 +1180,7 @@ options:
       - -c
     argument: ""
     description: The string match in this part is done case-sensitive.
-version: gpg (GnuPG) 2.2.19
+version: gpg (GnuPG) 2.2.27
 tldr: |
   > GNU Privacy Guard.
   > See `gpg2` for GNU Privacy Guard 2. Most operating systems symlink `gpg` to `gpg2`.

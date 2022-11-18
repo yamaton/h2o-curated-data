@@ -61,6 +61,7 @@ complete -c gpg -l "lsign-key" -d "Signs a public key with your secret key but m
 complete -c gpg -l "quick-sign-key" -l "quick-lsign-key" -d "Directly sign a key from the passphrase without any further user interaction." -r
 complete -c gpg -l "quick-add-uid" -d "This command adds a new user id to an existing key." -x
 complete -c gpg -l "quick-revoke-uid" -d "This command revokes a user ID on an existing key." -x
+complete -c gpg -l "quick-revoke-sig" -d "This command revokes the key signatures made by signing-fpr from the key specified by the fingerprint fpr." -x
 complete -c gpg -l "quick-set-primary-uid" -d "This command sets or updates the primary user ID flag on an existing key." -x
 complete -c gpg -l "change-passphrase" -l "passwd" -d "Change the passphrase of the secret key belonging to the certificate specified as user-id." -x
 complete -c gpg -l "default-key" -d "Use name as the default key to sign with." -x
@@ -95,9 +96,9 @@ complete -c gpg -l "mangle-dos-filenames" -l "no-mangle-dos-filenames" -d "Older
 complete -c gpg -l "ask-cert-level" -l "no-ask-cert-level" -d "When making a key signature, prompt for a certification level."
 complete -c gpg -l "default-cert-level" -d "The default to use for the check level when signing a key." -x
 complete -c gpg -l "min-cert-level" -d "When building the trust database, treat any signatures with a certification level below this as invalid."
-complete -c gpg -l "trusted-key" -d "Assume that the specified key (which must be given as a full 8 byte key ID) is as trustworthy as one of your own secret keys." -x
 complete -c gpg -l "trust-model" -d "Set what trust model GnuPG should follow." -r
 complete -c gpg -l "auto-key-locate" -l "no-auto-key-locate" -d "GnuPG can automatically locate and retrieve keys as needed using this option." -x
+complete -c gpg -l "auto-key-import" -l "no-auto-key-import" -d "This is an offline mechanism to get a missing key for signature verification and for later encryption to this key."
 complete -c gpg -l "auto-key-retrieve" -l "no-auto-key-retrieve" -d "These options enable or disable the automatic retrieving of keys from a keyserver when verifying signatures made by keys that are not on the local keyring."
 complete -c gpg -l "keyid-format" -d "Select how to display key IDs." -x
 complete -c gpg -l "keyserver" -d "This option is deprecated - please use the --keyserver in \8216dirmngr.conf\8217 instead." -r
@@ -164,6 +165,7 @@ complete -c gpg -s "t" -l "textmode" -l "no-textmode" -d "Treat input files as t
 complete -c gpg -l "force-v4-certs" -l "no-force-v4-certs" -d "These options are obsolete and have no effect since GnuPG 2.1."
 complete -c gpg -l "force-mdc" -l "disable-mdc" -d "These options are obsolete and have no effect since GnuPG 2.2.8. The MDC is always used."
 complete -c gpg -l "disable-signer-uid" -d "By default the user ID of the signing key is embedded in the data signature."
+complete -c gpg -l "include-key-block" -d "This option is used to embed the actual signing key into a data signature."
 complete -c gpg -l "personal-cipher-preferences" -d "Set the list of personal cipher preferences to string." -x
 complete -c gpg -l "personal-digest-preferences" -d "Set the list of personal digest preferences to string." -x
 complete -c gpg -l "personal-compress-preferences" -d "Set the list of personal compression preferences to string." -x

@@ -1,5 +1,6 @@
 name: CrossMap.py
-description: Convert genome coordinates between different reference assemblies
+description: CrossMap.py
+usage: CrossMap.py [-h] [-v] {bed,bam,gff,wig,bigwig,vcf,gvcf,maf,region,viewchain} ...
 options:
   - names:
       - -h
@@ -14,6 +15,7 @@ options:
 subcommands:
   - name: bed
     description: converts BED, bedGraph or other BED-like files. Only genome coordinates (i.e., the first 3 columns) will be updated. Regions mapped to multiple locations to the new assembly will be split. Use the "region" command to liftover large genomic regions. Use the "wig" command if you need bedGraph/bigWig output.
+    usage: CrossMap.py bed [-h] [--chromid {a,s,l}] [--unmap-file UNMAP_FILE] input.chain input.bed [out_bed]
     options:
       - names:
           - -h
@@ -30,6 +32,7 @@ subcommands:
         description: file to save unmapped entries. This will be ignored if [out_bed] was not provided.
   - name: bam
     description: converts BAM, CRAM, or SAM format file. Genome coordinates, header section, all SAM flags, insert size will be updated.
+    usage: CrossMap.py bam [-h] [-m INSERT_SIZE] [-s INSERT_SIZE_STDEV] [-t INSERT_SIZE_FOLD] [-a] [--chromid {a,s,l}] input.chain input.bam [out_bam]
     options:
       - names:
           - -h
@@ -62,6 +65,7 @@ subcommands:
         description: The style of chromosome IDs. "a" = "as-is"; "l" = "long style" (eg. "chr1", "chrX"); "s" = "short style" (eg. "1", "X").
   - name: gff
     description: converts GFF or GTF format file. Genome coordinates will be updated.
+    usage: CrossMap.py gff [-h] [--chromid {a,s,l}] input.chain input.gff [out_gff]
     options:
       - names:
           - -h
@@ -74,6 +78,7 @@ subcommands:
         description: The style of chromosome IDs. "a" = "as-is"; "l" = "long style" (eg. "chr1", "chrX"); "s" = "short style" (eg. "1", "X").
   - name: wig
     description: converts Wiggle or bedGraph format file. Genome coordinates will be updated.
+    usage: CrossMap.py wig [-h] [--chromid {a,s,l}] input.chain input.wig out_wig
     options:
       - names:
           - -h
@@ -86,6 +91,7 @@ subcommands:
         description: The style of chromosome IDs. "a" = "as-is"; "l" = "long style" (eg. "chr1", "chrX"); "s" = "short style" (eg. "1", "X").
   - name: bigwig
     description: converts BigWig file. Genome coordinates will be updated.
+    usage: CrossMap.py bigwig [-h] [--chromid {a,s,l}] input.chain input.bw output.bw
     options:
       - names:
           - -h
@@ -98,6 +104,7 @@ subcommands:
         description: The style of chromosome IDs. "a" = "as-is"; "l" = "long style" (eg. "chr1", "chrX"); "s" = "short style" (eg. "1", "X").
   - name: vcf
     description: converts VCF file. Genome coordinates, header section, reference alleles will be updated.
+    usage: CrossMap.py vcf [-h] [--chromid {a,s,l}] [--no-comp-alleles] [--compress] input.chain input.vcf refgenome.fa out_vcf
     options:
       - names:
           - -h
@@ -118,6 +125,7 @@ subcommands:
         description: If set, compress the output VCF file by calling the system "gzip".
   - name: gvcf
     description: converts GVCF file. Genome coordinates, header section, reference alleles will be updated.
+    usage: CrossMap.py gvcf [-h] [--chromid {a,s,l}] [--no-comp-alleles] [--compress] input.chain input.gvcf refgenome.fa out_gvcf
     options:
       - names:
           - -h
@@ -138,6 +146,7 @@ subcommands:
         description: If set, compress the output VCF file by calling the system "gzip".
   - name: maf
     description: converts MAF (mutation annotation format) file. Genome coordinates and reference alleles will be updated.
+    usage: CrossMap.py maf [-h] [--chromid {a,s,l}] input.chain input.maf refgenome.fa build_name out_maf
     options:
       - names:
           - -h
@@ -150,6 +159,7 @@ subcommands:
         description: The style of chromosome IDs. "a" = "as-is"; "l" = "long style" (eg. "chr1", "chrX"); "s" = "short style" (eg. "1", "X").
   - name: region
     description: converts big genomic regions (in BED format) such as CNV blocks. Genome coordinates will be updated.
+    usage: CrossMap.py region [-h] [--chromid {a,s,l}] [-r MIN_MAP_RATIO] input.chain input.bed [out_bed]
     options:
       - names:
           - -h
@@ -167,10 +177,11 @@ subcommands:
         description: Minimum ratio of bases that must remap.
   - name: viewchain
     description: prints out the content of a chain file into a human readable, block-to-block format.
+    usage: CrossMap.py viewchain [-h] input.chain
     options:
       - names:
           - -h
           - --help
         argument: ""
         description: show this help message and exit
-version: CrossMap 0.6.3
+version: CrossMap 0.6.4

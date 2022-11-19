@@ -1,10 +1,23 @@
 name: tcpdump
 description: tcpdump
+usage: |-
+  tcpdump [ -AbdDefhHIJKlLnNOpqStuUvxX# ] [ -B buffer_size ]
+          [ -c count ] [ --count ] [ -C file_size ]
+          [ -E spi@ipaddr algo:secret,...  ]
+          [ -F file ] [ -G rotate_seconds ] [ -i interface ]
+          [ --immediate-mode ] [ -j tstamp_type ] [ -m module ]
+          [ -M secret ] [ --number ] [ --print ] [ -Q in|out|inout ]
+          [ -r file ] [ -s snaplen ] [ -T type ] [ --version ]
+          [ -V file ] [ -w file ] [ -W filecount ] [ -y datalinktype ]
+          [ -z postrotate-command ] [ -Z user ]
+          [ --time-stamp-precision=tstamp_precision ]
+          [ --micro ] [ --nano ]
+          [ expression ]
 options:
   - names:
       - -A
     argument: ""
-    description: Print each packet (minus its link level header) in ASCII.  Handy for capturing web pages.
+    description: Print each packet (minus its link level header) in ASCII. Handy for capturing web pages.
   - names:
       - -b
     argument: ""
@@ -19,9 +32,13 @@ options:
     argument: count
     description: Exit after receiving count packets.
   - names:
+      - --count
+    argument: ""
+    description: Print only on stderr the packet count when reading capture file(s) instead of parsing/printing the packets. If a filter is specified on the command line, tcpdump counts only packets that were matched by the filter expression.
+  - names:
       - -C
     argument: file_size
-    description: Before  writing  a  raw  packet  to a savefile, check whether the file is currently larger than file_size and, if so, close the current savefile and open a new one. Savefiles after the first savefile will have the name specified with the -w flag, with a number after it, starting  at  1  and  continuing  upward.   The  units  of file_size are millions of bytes (1,000,000 bytes, not 1,048,576 bytes).
+    description: Before writing a raw packet to a savefile, check whether the file is currently larger than file_size and, if so, close the current savefile and open a new one. Savefiles after the first savefile will have the name specified with the -w flag, with a number after it, starting at 1 and continuing upward. The units of file_size are millions of bytes (1,000,000 bytes, not 1,048,576 bytes).
   - names:
       - -d
     argument: ""
@@ -38,27 +55,27 @@ options:
       - -D
       - --list-interfaces
     argument: ""
-    description: Print  the  list  of the network interfaces available on the system and on which tcpdump can capture packets.  For each network interface, a number and an interface name, possibly followed by a text description of the interface, is printed.  The interface name or the number can be supplied to the -i flag to specify an interface on which to capture.
+    description: Print the list of the network interfaces available on the system and on which tcpdump can capture packets. For each network interface, a number and an interface name, possibly followed by a text description of the interface, are printed. The interface name or the number can be supplied to the -i flag to specify an interface on which to capture.
   - names:
       - -e
     argument: ""
-    description: Print the link-level header on each dump line.  This can be used, for example, to print MAC layer addresses for protocols such as Ethernet and IEEE 802.11.
+    description: Print the link-level header on each dump line. This can be used, for example, to print MAC layer addresses for protocols such as Ethernet and IEEE 802.11.
   - names:
       - -E
     argument: ""
-    description: Use spi@ipaddr algo:secret for decrypting IPsec ESP packets that are addressed to addr and contain Security Parameter Index value spi. This combination may  be  repeated with comma or newline separation.
+    description: Use spi@ipaddr algo:secret for decrypting IPsec ESP packets that are addressed to addr and contain Security Parameter Index value spi. This combination may be repeated with comma or newline separation.
   - names:
       - -f
     argument: ""
-    description: Print `foreign' IPv4 addresses numerically rather than symbolically (this option is intended to get around serious brain damage in Sun's NIS  server  —  usually  it hangs forever translating non-local internet numbers).
+    description: Print `foreign' IPv4 addresses numerically rather than symbolically (this option is intended to get around serious brain damage in Sun's NIS server — usually it hangs forever translating non-local internet numbers).
   - names:
       - -F
     argument: file
-    description: Use file as input for the filter expression.  An additional expression given on the command line is ignored.
+    description: Use file as input for the filter expression. An additional expression given on the command line is ignored.
   - names:
       - -G
     argument: rotate_seconds
-    description: If  specified, rotates the dump file specified with the -w option every rotate_seconds seconds.  Savefiles will have the name specified by -w which should include a time format as defined by strftime(3).  If no time format is specified, each new file will overwrite the previous.
+    description: If specified, rotates the dump file specified with the -w option every rotate_seconds seconds. Savefiles will have the name specified by -w which should include a time format as defined by strftime(3). If no time format is specified, each new file will overwrite the previous. Whenever a generated filename is not unique, tcpdump will overwrite the pre-existing data; providing a time specification that is coarser than the capture period is therefore not advised.
   - names:
       - -h
       - --help
@@ -76,7 +93,7 @@ options:
       - -i
       - --interface
     argument: interface
-    description: Listen on interface.  If unspecified, tcpdump searches the system interface list for the lowest numbered, configured up interface (excluding  loopback),  which  may turn out to be, for example, ``eth0''.
+    description: Listen, report the list of link-layer types, report the list of time stamp types, or report the results of compiling a filter expression on interface. If unspecified and if the -d flag is not given, tcpdump searches the system interface list for the lowest numbered, configured up interface (excluding loopback), which may turn out to be, for example, ``eth0''.
   - names:
       - -I
       - --monitor-mode
@@ -85,39 +102,44 @@ options:
   - names:
       - --immediate-mode
     argument: ""
-    description: Capture in "immediate mode".  In this mode, packets are delivered to tcpdump as soon as they arrive, rather than being buffered for efficiency.  This is the default when printing packets rather than saving packets to a ``savefile'' if the packets are being printed to a terminal rather than to a file or pipe.
+    description: Capture in "immediate mode". In this mode, packets are delivered to tcpdump as soon as they arrive, rather than being buffered for efficiency. This is the default when printing packets rather than saving packets to a ``savefile'' if the packets are being printed to a terminal rather than to a file or pipe.
   - names:
       - -j
       - --time-stamp-type
     argument: tstamp_type
-    description: Set  the time stamp type for the capture to tstamp_type.  The names to use for the time stamp types are given in pcap-tstamp(7); not all the types listed there will necessarily be valid for any given interface.
+    description: Set the time stamp type for the capture to tstamp_type. The names to use for the time stamp types are given in pcap-tstamp(7); not all the types listed there will necessarily be valid for any given interface.
   - names:
       - -J
       - --list-time-stamp-types
     argument: ""
-    description: List the supported time stamp types for the interface and exit.  If the time stamp type cannot be set for the interface, no time stamp types are listed.
+    description: List the supported time stamp types for the interface and exit. If the time stamp type cannot be set for the interface, no time stamp types are listed.
   - names:
       - --time-stamp-precision
     argument: tstamp_precision
-    description: When capturing, set the time stamp precision for the capture to tstamp_precision.  Note that availability of high precision time stamps (nanoseconds) and their  actual  accuracy  is  platform  and hardware dependent.  Also note that when writing captures made with nanosecond accuracy to a savefile, the time stamps are written with nanosecond resolution, and the file is written with a different magic number, to indicate that the time stamps are in seconds and nanoseconds; not all programs that read pcap savefiles will be able to read those captures.
+    description: When capturing, set the time stamp precision for the capture to tstamp_precision. Note that availability of high precision time stamps (nanoseconds) and their actual accuracy is platform and hardware dependent. Also note that when writing captures made with nanosecond accuracy to a savefile, the time stamps are written with nanosecond resolution, and the file is written with a different magic number, to indicate that the time stamps are in seconds and nanoseconds; not all programs that read pcap savefiles will be able to read those captures.
+  - names:
+      - --micro
+      - --nano
+    argument: ""
+    description: Shorthands for --time-stamp-precision=micro or --time-stamp-precision=nano, adjusting the time stamp precision accordingly. When reading packets from a savefile, using --micro truncates time stamps if the savefile was created with nanosecond precision. In contrast, a savefile created with microsecond precision will have trailing zeroes added to the time stamp when --nano is used.
   - names:
       - -K
       - --dont-verify-checksums
     argument: ""
-    description: Don't attempt to verify IP, TCP, or UDP checksums.  This is useful for interfaces that perform some or all of those checksum calculation in hardware; otherwise, all outgoing TCP checksums will be flagged as bad.
+    description: Don't attempt to verify IP, TCP, or UDP checksums. This is useful for interfaces that perform some or all of those checksum calculation in hardware; otherwise, all outgoing TCP checksums will be flagged as bad.
   - names:
       - -l
     argument: ""
-    description: Make stdout line buffered.  Useful if you want to see the data while capturing it.
+    description: Make stdout line buffered. Useful if you want to see the data while capturing it. E.g.,
   - names:
       - -L
       - --list-data-link-types
     argument: ""
-    description: List the known data link types for the interface, in the specified mode, and exit.  The list of known data link types may be dependent on the  specified  mode;  for example,  on  some  platforms, a Wi-Fi interface might support one set of data link types when not in monitor mode (for example, it might support only fake Ethernet headers, or might support 802.11 headers but not support 802.11 headers with radio information) and another set of data link types when in monitor mode  (for  example, it might support 802.11 headers, or 802.11 headers with radio information, only in monitor mode).
+    description: List the known data link types for the interface, in the specified mode, and exit. The list of known data link types may be dependent on the specified mode; for example, on some platforms, a Wi-Fi interface might support one set of data link types when not in monitor mode (for example, it might support only fake Ethernet headers, or might support 802.11 headers but not support 802.11 headers with radio information) and another set of data link types when in monitor mode (for example, it might support 802.11 headers, or 802.11 headers with radio information, only in monitor mode).
   - names:
       - -m
     argument: module
-    description: Load SMI MIB module definitions from file module.  This option can be used several times to load several MIB modules into tcpdump.
+    description: Load SMI MIB module definitions from file module. This option can be used several times to load several MIB modules into tcpdump.
   - names:
       - -M
     argument: secret
@@ -129,7 +151,7 @@ options:
   - names:
       - -N
     argument: ""
-    description: Don't print domain name qualification of host names.  E.g., if you give this flag then tcpdump will print ``nic'' instead of ``nic.ddn.mil''.
+    description: Don't print domain name qualification of host names. E.g., if you give this flag then tcpdump will print ``nic'' instead of ``nic.ddn.mil''.
   - names:
       - -#
       - --number
@@ -139,12 +161,16 @@ options:
       - -O
       - --no-optimize
     argument: ""
-    description: Do not run the packet-matching code optimizer.  This is useful only if you suspect a bug in the optimizer.
+    description: Do not run the packet-matching code optimizer. This is useful only if you suspect a bug in the optimizer.
   - names:
       - -p
       - --no-promiscuous-mode
     argument: ""
-    description: Don't  put the interface into promiscuous mode.  Note that the interface might be in promiscuous mode for some other reason; hence, `-p' cannot be used as an abbreviation for `ether host {local-hw-addr} or ether broadcast'.
+    description: Don't put the interface into promiscuous mode. Note that the interface might be in promiscuous mode for some other reason; hence, `-p' cannot be used as an abbreviation for `ether host {local-hw-addr} or ether broadcast'.
+  - names:
+      - --print
+    argument: ""
+    description: Print parsed packet output, even if the raw packets are being saved to a file with the -w flag.
   - names:
       - -Q
       - --direction
@@ -153,11 +179,11 @@ options:
   - names:
       - -q
     argument: ""
-    description: Quick (quiet?) output.  Print less protocol information so output lines are shorter.
+    description: Quick (quiet?) output. Print less protocol information so output lines are shorter.
   - names:
       - -r
     argument: file
-    description: Read packets from file (which was created with the -w option or by other tools that write pcap or pcap-ng files).  Standard input is used if file is ``-''.
+    description: Read packets from file (which was created with the -w option or by other tools that write pcap or pcapng files). Standard input is used if file is ``-''.
   - names:
       - -S
       - --absolute-tcp-sequence-numbers
@@ -167,11 +193,11 @@ options:
       - -s
       - --snapshot-length
     argument: snaplen
-    description: Snarf snaplen bytes of data from each packet rather than the default of 262144 bytes.  Packets truncated because of a limited snapshot are indicated in  the  output with  ``[|proto]'', where proto is the name of the protocol level at which the truncation has occurred.  Note that taking larger snapshots both increases the amount of time it takes to process packets and, effectively, decreases the amount of packet buffering.  This may cause packets to be lost.  You should limit snaplen to the smallest number that will capture the protocol information you're interested in.  Setting snaplen to 0 sets it to the default of 262144, for backwards compatibility with recent older versions of tcpdump.
+    description: Snarf snaplen bytes of data from each packet rather than the default of 262144 bytes. Packets truncated because of a limited snapshot are indicated in the output with ``[|proto]'', where proto is the name of the protocol level at which the truncation has occurred.
   - names:
       - -T
     argument: type
-    description: Force packets selected by "expression" to be interpreted the specified type.  Currently known types are aodv (Ad-hoc On-demand Distance Vector protocol), carp (Common  Address  Redundancy  Protocol),  cnfp  (Cisco  NetFlow protocol), lmp (Link Management Protocol), pgm (Pragmatic General Multicast), pgm_zmtp1 (ZMTP/1.0 inside PGM/EPGM), resp (REdis Serialization Protocol), radius (RADIUS), rpc (Remote Procedure Call), rtp (Real-Time Applications protocol),  rtcp  (Real-Time  Applications control  protocol),  snmp  (Simple Network Management Protocol), tftp (Trivial File Transfer Protocol), vat (Visual Audio Tool), wb (distributed White Board), zmtp1 (ZeroMQ Message Transport Protocol 1.0) and vxlan (Virtual eXtensible Local Area Network).
+    description: Force packets selected by "expression" to be interpreted the specified type. Currently known types are aodv (Ad-hoc On-demand Distance Vector protocol), carp (Common Address Redundancy Protocol), cnfp (Cisco NetFlow protocol), domain (Domain Name System), lmp (Link Management Protocol), pgm (Pragmatic General Multicast), pgm_zmtp1 (ZMTP/1.0 inside PGM/EPGM), ptp (Precision Time Protocol), radius (RADIUS), resp (REdis Serialization Protocol), rpc (Remote Procedure Call), rtcp (Real-Time Applications control protocol), rtp (Real-Time Applications protocol), snmp (Simple Network Management Protocol), someip (SOME/IP), tftp (Trivial File Transfer Protocol), vat (Visual Audio Tool), vxlan (Virtual eXtensible Local Area Network), wb (distributed White Board) and zmtp1 (ZeroMQ Message Transport Protocol 1.0).
   - names:
       - -t
     argument: ""
@@ -183,7 +209,7 @@ options:
   - names:
       - -ttt
     argument: ""
-    description: Print a delta (micro-second resolution) between current and previous line on each dump line.
+    description: Print a delta (microsecond or nanosecond resolution depending on the --time-stamp-precision option) between current and previous line on each dump line. The default is microsecond resolution.
   - names:
       - -tttt
     argument: ""
@@ -191,7 +217,7 @@ options:
   - names:
       - -ttttt
     argument: ""
-    description: Print a delta (micro-second resolution) between current and first line on each dump line.
+    description: Print a delta (microsecond or nanosecond resolution depending on the --time-stamp-precision option) between current and first line on each dump line. The default is microsecond resolution.
   - names:
       - -u
     argument: ""
@@ -200,19 +226,19 @@ options:
       - -U
       - --packet-buffered
     argument: ""
-    description: If  the  -w option is not specified, make the printed packet output ``packet-buffered''; i.e., as the description of the contents of each packet is printed, it will be written to the standard output, rather than, when not writing to a terminal, being written only when the output buffer fills.
+    description: If the -w option is not specified, or if it is specified but the --print flag is also specified, make the printed packet output ``packet-buffered''; i.e., as the description of the contents of each packet is printed, it will be written to the standard output, rather than, when not writing to a terminal, being written only when the output buffer fills.
   - names:
       - -v
     argument: ""
-    description: When  parsing  and  printing,  produce  (slightly more) verbose output.  For example, the time to live, identification, total length and options in an IP packet are printed.  Also enables additional packet integrity checks such as verifying the IP and ICMP header checksum.
+    description: When parsing and printing, produce (slightly more) verbose output. For example, the time to live, identification, total length and options in an IP packet are printed. Also enables additional packet integrity checks such as verifying the IP and ICMP header checksum.
   - names:
       - -vv
     argument: ""
-    description: Even more verbose output.  For example, additional fields are printed from NFS reply packets, and SMB packets are fully decoded.
+    description: Even more verbose output. For example, additional fields are printed from NFS reply packets, and SMB packets are fully decoded.
   - names:
       - -vvv
     argument: ""
-    description: Even more verbose output.  For example, telnet SB ... SE options are printed in full.  With -X Telnet options are printed in hex as well.
+    description: Even more verbose output. For example, telnet SB ... SE options are printed in full. With -X Telnet options are printed in hex as well.
   - names:
       - -V
     argument: file
@@ -220,15 +246,15 @@ options:
   - names:
       - -w
     argument: file
-    description: Write the raw packets to file rather than parsing and printing them out.  They can later be printed with the -r option.  Standard output is used if file is ``-''.
+    description: Write the raw packets to file rather than parsing and printing them out. They can later be printed with the -r option. Standard output is used if file is ``-''.
   - names:
       - -W
-    argument: ""
-    description: Used  in  conjunction  with the -C option, this will limit the number of files created to the specified number, and begin overwriting files from the beginning, thus creating a 'rotating' buffer.  In addition, it will name the files with enough leading 0s to support the maximum number of files, allowing them to sort correctly.
+    argument: filecount
+    description: Used in conjunction with the -C option, this will limit the number of files created to the specified number, and begin overwriting files from the beginning, thus creating a 'rotating' buffer. In addition, it will name the files with enough leading 0s to support the maximum number of files, allowing them to sort correctly.
   - names:
       - -x
     argument: ""
-    description: When  parsing  and printing, in addition to printing the headers of each packet, print the data of each packet (minus its link level header) in hex.  The smaller of the entire packet or snaplen bytes will be printed.  Note that this is the entire link-layer packet, so for link layers that pad (e.g. Ethernet), the padding  bytes will also be printed when the higher layer packet is shorter than the required padding.
+    description: When parsing and printing, in addition to printing the headers of each packet, print the data of each packet (minus its link level header) in hex. The smaller of the entire packet or snaplen bytes will be printed. Note that this is the entire link-layer packet, so for link layers that pad (e.g. Ethernet), the padding bytes will also be printed when the higher layer packet is shorter than the required padding. In the current implementation this flag may have the same effect as -xx if the packet is truncated.
   - names:
       - -xx
     argument: ""
@@ -236,7 +262,7 @@ options:
   - names:
       - -X
     argument: ""
-    description: When  parsing  and printing, in addition to printing the headers of each packet, print the data of each packet (minus its link level header) in hex and ASCII.  This is very handy for analysing new protocols.
+    description: When parsing and printing, in addition to printing the headers of each packet, print the data of each packet (minus its link level header) in hex and ASCII. This is very handy for analysing new protocols. In the current implementation this flag may have the same effect as -XX if the packet is truncated.
   - names:
       - -XX
     argument: ""
@@ -245,16 +271,17 @@ options:
       - -y
       - --linktype
     argument: datalinktype
-    description: Set the data link type to use while capturing packets to datalinktype.
+    description: Set the data link type to use while capturing packets (see -L) or just compiling and dumping packet-matching code (see -d) to datalinktype.
   - names:
       - -z
     argument: postrotate-command
-    description: Used in conjunction with the -C or -G options, this will make tcpdump run " postrotate-command file " where file is the savefile being closed after  each  rotation. For example, specifying -z gzip or -z bzip2 will compress each savefile using gzip or bzip2.
+    description: Used in conjunction with the -C or -G options, this will make tcpdump run " postrotate-command file " where file is the savefile being closed after each rotation. For example, specifying -z gzip or -z bzip2 will compress each savefile using gzip or bzip2.
   - names:
       - -Z
       - --relinquish-privileges
     argument: user
     description: If tcpdump is running as root, after opening the capture device or input savefile, change the user ID to user and the group ID to the primary group of user.
+version: tcpdump version 4.99.1
 tldr: |
   > Dump traffic on a network.
   > More information: <https://www.tcpdump.org>.

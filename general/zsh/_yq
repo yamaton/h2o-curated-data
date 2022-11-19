@@ -21,9 +21,9 @@
             {-P,--prettyPrint}'[pretty print, shorthand for '\''... style = ""'\'']' \
             {-s,--split-exp}'[print each result (or doc) into a file named (exp). \[exp\] argument must return a string. You can use $index in the expression as the result counter.]' \
             '--split-exp-file[Use a file to specify the split-exp expression.]' \
-            {-r,--unwrapScalar}'[unwrap scalar, print the value with no quotes, colors or comments (default true)]' \
+            {-r,--unwrapScalar}'[unwrap scalar, print the value with no quotes, colors or comments. Defaults to true for yaml (default true)]' \
             {-v,--verbose}'[verbose mode]' \
-            '--xml-attribute-prefix[prefix for xml attributes (default "+")]' \
+            '--xml-attribute-prefix[prefix for xml attributes (default "+@")]' \
             '--xml-content-name[name for xml content (if no attribute name is present). (default "+content")]' \
             '--xml-directive-name[name for xml directives (e.g. <!DOCTYPE thing cat>) (default "+directive")]' \
             '--xml-keep-namespace[enables keeping namespace after parsing attributes (default true)]' \
@@ -55,9 +55,9 @@
             {-P,--prettyPrint}'[pretty print, shorthand for '\''... style = ""'\'']' \
             {-s,--split-exp}'[print each result (or doc) into a file named (exp). \[exp\] argument must return a string. You can use $index in the expression as the result counter.]' \
             '--split-exp-file[Use a file to specify the split-exp expression.]' \
-            {-r,--unwrapScalar}'[unwrap scalar, print the value with no quotes, colors or comments (default true)]' \
+            {-r,--unwrapScalar}'[unwrap scalar, print the value with no quotes, colors or comments. Defaults to true for yaml (default true)]' \
             {-v,--verbose}'[verbose mode]' \
-            '--xml-attribute-prefix[prefix for xml attributes (default "+")]' \
+            '--xml-attribute-prefix[prefix for xml attributes (default "+@")]' \
             '--xml-content-name[name for xml content (if no attribute name is present). (default "+content")]' \
             '--xml-directive-name[name for xml directives (e.g. <!DOCTYPE thing cat>) (default "+directive")]' \
             '--xml-keep-namespace[enables keeping namespace after parsing attributes (default true)]' \
@@ -66,6 +66,12 @@
             '--xml-skip-directives[skip over directives (e.g. <!DOCTYPE thing cat>)]' \
             '--xml-skip-proc-inst[skip over process instructions (e.g. <?xml version="1"?>)]' \
             '--xml-strict-mode[enables strict parsing of XML. See https://pkg.go.dev/encoding/xml for more details.]' \
+            "*: :_files"
+
+    }
+
+    function _yq_help {
+        _arguments \
             "*: :_files"
 
     }
@@ -89,9 +95,9 @@
             {-P,--prettyPrint}'[pretty print, shorthand for '\''... style = ""'\'']' \
             {-s,--split-exp}'[print each result (or doc) into a file named (exp). \[exp\] argument must return a string. You can use $index in the expression as the result counter.]' \
             '--split-exp-file[Use a file to specify the split-exp expression.]' \
-            {-r,--unwrapScalar}'[unwrap scalar, print the value with no quotes, colors or comments (default true)]' \
+            {-r,--unwrapScalar}'[unwrap scalar, print the value with no quotes, colors or comments. Defaults to true for yaml (default true)]' \
             {-v,--verbose}'[verbose mode]' \
-            '--xml-attribute-prefix[prefix for xml attributes (default "+")]' \
+            '--xml-attribute-prefix[prefix for xml attributes (default "+@")]' \
             '--xml-content-name[name for xml content (if no attribute name is present). (default "+content")]' \
             '--xml-directive-name[name for xml directives (e.g. <!DOCTYPE thing cat>) (default "+directive")]' \
             '--xml-keep-namespace[enables keeping namespace after parsing attributes (default true)]' \
@@ -113,6 +119,7 @@ function _yq {
         commands=(
             'eval:(default) Apply the expression to each document in each yaml file in sequence'
             'eval-all:Loads _all_ yaml documents of _all_ yaml files and runs expression once'
+            'help:Help about any command'
             'shell-completion:Generate completion script'
         )
         _describe 'command' commands
@@ -137,10 +144,10 @@ function _yq {
         {-P,--prettyPrint}'[pretty print, shorthand for '\''... style = ""'\'']' \
         {-s,--split-exp}'[print each result (or doc) into a file named (exp). \[exp\] argument must return a string. You can use $index in the expression as the result counter.]' \
         '--split-exp-file[Use a file to specify the split-exp expression.]' \
-        {-r,--unwrapScalar}'[unwrap scalar, print the value with no quotes, colors or comments (default true)]' \
+        {-r,--unwrapScalar}'[unwrap scalar, print the value with no quotes, colors or comments. Defaults to true for yaml (default true)]' \
         {-v,--verbose}'[verbose mode]' \
         {-V,--version}'[Print version information and quit]' \
-        '--xml-attribute-prefix[prefix for xml attributes (default "+")]' \
+        '--xml-attribute-prefix[prefix for xml attributes (default "+@")]' \
         '--xml-content-name[name for xml content (if no attribute name is present). (default "+content")]' \
         '--xml-directive-name[name for xml directives (e.g. <!DOCTYPE thing cat>) (default "+directive")]' \
         '--xml-keep-namespace[enables keeping namespace after parsing attributes (default true)]' \
@@ -164,6 +171,10 @@ function _yq {
 
         (eval-all)
             _yq_eval-all
+            ;;
+
+        (help)
+            _yq_help
             ;;
 
         (shell-completion)

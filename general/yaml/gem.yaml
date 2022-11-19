@@ -14,7 +14,12 @@ options:
 subcommands:
   - name: build
     description: Build a gem from a gemspec
+    usage: gem build GEMSPEC_FILE [options]
     options:
+      - names:
+          - --platform
+        argument: PLATFORM
+        description: Specify the platform of gem to build
       - names:
           - --force
         argument: ""
@@ -73,7 +78,8 @@ subcommands:
         argument: ""
         description: Avoid loading any .gemrc file
   - name: cert
-    description: Adjust RubyGems certificate settings
+    description: Manage RubyGems certificates and signing settings
+    usage: gem cert [options]
     options:
       - names:
           - -a
@@ -105,6 +111,11 @@ subcommands:
           - --private-key
         argument: KEY
         description: Key for --sign or --build
+      - names:
+          - -A
+          - --key-algorithm
+        argument: ALGORITHM
+        description: Select which key algorithm to use for --build
       - names:
           - -s
           - --sign
@@ -161,7 +172,8 @@ subcommands:
         argument: ""
         description: Avoid loading any .gemrc file
   - name: check
-    description: Check installed gems
+    description: Check a gem repository for added or missing files
+    usage: gem check [OPTIONS] [GEMNAME ...] [options]
     options:
       - names:
           - -a
@@ -243,12 +255,13 @@ subcommands:
         argument: ""
         description: Avoid loading any .gemrc file
   - name: cleanup
-    description: Cleanup old versions of installed gems in the local repository
+    description: Clean up old versions of installed gems
+    usage: gem cleanup [GEMNAME ...] [options]
     options:
       - names:
           - -n
           - -d
-          - --dryrun
+          - --dry-run
         argument: ""
         description: Do not uninstall gems
       - names:
@@ -269,6 +282,10 @@ subcommands:
           - --no-user-install
         argument: ""
         description: Cleanup in user's home directory instead of GEM_HOME.
+      - names:
+          - --dryrun
+        argument: ""
+        description: Do not uninstall gems
       - names:
           - -h
           - --help
@@ -311,6 +328,7 @@ subcommands:
         description: Avoid loading any .gemrc file
   - name: contents
     description: Display the contents of the installed gems
+    usage: gem contents GEMNAME [GEMNAME ...] [options]
     options:
       - names:
           - -v
@@ -394,6 +412,7 @@ subcommands:
         description: Avoid loading any .gemrc file
   - name: dependency
     description: Show the dependencies of an installed gem
+    usage: gem dependency REGEXP [options]
     options:
       - names:
           - -v
@@ -506,7 +525,201 @@ subcommands:
         argument: ""
         description: Avoid loading any .gemrc file
   - name: environment
-    description: Display RubyGems environmental information
+    description: Display information about the RubyGems environment
+    usage: gem environment [arg] [options]
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: Get help on this command
+      - names:
+          - -V
+          - --verbose
+        argument: ""
+        description: Set the verbose level of output
+      - names:
+          - -V
+          - --no-verbose
+        argument: ""
+        description: Set the verbose level of output
+      - names:
+          - -q
+          - --quiet
+        argument: ""
+        description: Silence command progress meter
+      - names:
+          - --silent
+        argument: ""
+        description: Silence RubyGems output
+      - names:
+          - --config-file
+        argument: FILE
+        description: Use this config file instead of default
+      - names:
+          - --backtrace
+        argument: ""
+        description: Show stack backtrace on errors
+      - names:
+          - --debug
+        argument: ""
+        description: Turn on Ruby debugging
+      - names:
+          - --norc
+        argument: ""
+        description: Avoid loading any .gemrc file
+  - name: fetch
+    description: Download a gem and place it in the current directory
+    usage: gem fetch GEMNAME [GEMNAME ...] [options]
+    options:
+      - names:
+          - -v
+          - --version
+        argument: VERSION
+        description: Specify version of gem to fetch
+      - names:
+          - --platform
+        argument: PLATFORM
+        description: Specify the platform of gem to fetch
+      - names:
+          - --prerelease
+        argument: ""
+        description: Allow prerelease versions of a gem
+      - names:
+          - --no-prerelease
+        argument: ""
+        description: Allow prerelease versions of a gem
+      - names:
+          - --suggestions
+        argument: ""
+        description: Suggest alternates when gems are not found
+      - names:
+          - --no-suggestions
+        argument: ""
+        description: Suggest alternates when gems are not found
+      - names:
+          - -B
+          - --bulk-threshold
+        argument: COUNT
+        description: Threshold for switching to bulk synchronization (default 1000)
+      - names:
+          - -p
+          - --http-proxy
+        argument: "[URL]"
+        description: Use HTTP proxy for remote operations
+      - names:
+          - -s
+          - --source
+        argument: URL
+        description: Append URL to list of remote gem sources
+      - names:
+          - --clear-sources
+        argument: ""
+        description: Clear the gem sources
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: Get help on this command
+      - names:
+          - -V
+          - --verbose
+        argument: ""
+        description: Set the verbose level of output
+      - names:
+          - -V
+          - --no-verbose
+        argument: ""
+        description: Set the verbose level of output
+      - names:
+          - -q
+          - --quiet
+        argument: ""
+        description: Silence command progress meter
+      - names:
+          - --silent
+        argument: ""
+        description: Silence RubyGems output
+      - names:
+          - --config-file
+        argument: FILE
+        description: Use this config file instead of default
+      - names:
+          - --backtrace
+        argument: ""
+        description: Show stack backtrace on errors
+      - names:
+          - --debug
+        argument: ""
+        description: Turn on Ruby debugging
+      - names:
+          - --norc
+        argument: ""
+        description: Avoid loading any .gemrc file
+  - name: generate_index
+    description: Generates the index files for a gem server directory
+    usage: gem generate_index [options]
+    options:
+      - names:
+          - -d
+          - --directory
+        argument: DIRNAME
+        description: repository base dir containing gems subdir
+      - names:
+          - --modern
+        argument: ""
+        description: Generate indexes for RubyGems (always true)
+      - names:
+          - --no-modern
+        argument: ""
+        description: Generate indexes for RubyGems (always true)
+      - names:
+          - --update
+        argument: ""
+        description: Update modern indexes with gems added since the last update
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: Get help on this command
+      - names:
+          - -V
+          - --verbose
+        argument: ""
+        description: Set the verbose level of output
+      - names:
+          - -V
+          - --no-verbose
+        argument: ""
+        description: Set the verbose level of output
+      - names:
+          - -q
+          - --quiet
+        argument: ""
+        description: Silence command progress meter
+      - names:
+          - --silent
+        argument: ""
+        description: Silence RubyGems output
+      - names:
+          - --config-file
+        argument: FILE
+        description: Use this config file instead of default
+      - names:
+          - --backtrace
+        argument: ""
+        description: Show stack backtrace on errors
+      - names:
+          - --debug
+        argument: ""
+        description: Turn on Ruby debugging
+      - names:
+          - --norc
+        argument: ""
+        description: Avoid loading any .gemrc file
+  - name: help
+    description: Provide help on the 'gem' command
+    usage: gem help ARGUMENT [options]
     options:
       - names:
           - -h
@@ -550,6 +763,7 @@ subcommands:
         description: Avoid loading any .gemrc file
   - name: info
     description: Show information for the given gem
+    usage: gem info GEMNAME [options]
     options:
       - names:
           - -i
@@ -677,6 +891,7 @@ subcommands:
         description: Avoid loading any .gemrc file
   - name: install
     description: Install a gem into the local repository
+    usage: gem install [options] GEMNAME [GEMNAME ...] -- --build-flags [options]
     options:
       - names:
           - --platform
@@ -714,7 +929,7 @@ subcommands:
           - -n
           - --bindir
         argument: DIR
-        description: Directory where executables are located
+        description: Directory where executables will be placed when the gem is installed
       - names:
           - --document
         argument: '[TYPES]'
@@ -801,6 +1016,10 @@ subcommands:
         description: Don't attempt to upgrade gems already meeting version requirement
       - names:
           - --minimal-deps
+        argument: ""
+        description: Don't upgrade any dependencies that already meet version requirements
+      - names:
+          - --no-minimal-deps
         argument: ""
         description: Don't upgrade any dependencies that already meet version requirements
       - names:
@@ -914,7 +1133,8 @@ subcommands:
         argument: ""
         description: Avoid loading any .gemrc file
   - name: list
-    description: Display all gems whose name starts with STRING
+    description: Display local gems whose name matches REGEXP
+    usage: gem list [REGEXP ...] [options]
     options:
       - names:
           - -i
@@ -1052,6 +1272,7 @@ subcommands:
         description: Avoid loading any .gemrc file
   - name: lock
     description: Generate a lockdown list of gems
+    usage: gem lock GEMNAME-VERSION [GEMNAME-VERSION ...] [options]
     options:
       - names:
           - -s
@@ -1105,6 +1326,7 @@ subcommands:
         description: Avoid loading any .gemrc file
   - name: mirror
     description: Mirror all gem files (requires rubygems-mirror)
+    usage: gem mirror [options]
     options:
       - names:
           - -h
@@ -1148,6 +1370,7 @@ subcommands:
         description: Avoid loading any .gemrc file
   - name: open
     description: Open gem sources in editor
+    usage: gem open [-e COMMAND] GEMNAME [options]
     options:
       - names:
           - -e
@@ -1201,6 +1424,7 @@ subcommands:
         description: Avoid loading any .gemrc file
   - name: outdated
     description: Display all gems that need updates
+    usage: gem outdated [options]
     options:
       - names:
           - --platform
@@ -1287,16 +1511,17 @@ subcommands:
         description: Avoid loading any .gemrc file
   - name: owner
     description: Manage gem owners of a gem on the push server
+    usage: gem owner GEM [options]
     options:
       - names:
           - -k
           - --key
         argument: KEYNAME
-        description: Use the given API key from ~/.gem/credentials
+        description: Use the given API key from ~/.local/share/gem/credentials
       - names:
           - --otp
         argument: CODE
-        description: Digit code for multifactor authentication
+        description: Digit code for multifactor authentication You can also use the environment variable GEM_HOST_OTP_CODE
       - names:
           - -a
           - --add
@@ -1352,7 +1577,8 @@ subcommands:
         argument: ""
         description: Avoid loading any .gemrc file
   - name: pristine
-    description: Restores installed gems to pristine condition from files located in the gem cache
+    description: Restores installed gems to pristine condition from files
+    usage: gem pristine [GEMNAME ...] [options]
     options:
       - names:
           - --all
@@ -1375,6 +1601,10 @@ subcommands:
         argument: ""
         description: Only restore executables
       - names:
+          - --only-plugins
+        argument: ""
+        description: Only restore plugins
+      - names:
           - -E
           - --env-shebang
         argument: ""
@@ -1384,6 +1614,11 @@ subcommands:
           - --no-env-shebang
         argument: ""
         description: Rewrite executables with a shebang of /usr/bin/env
+      - names:
+          - -i
+          - --install-dir
+        argument: DIR
+        description: Gem repository to get binstubs and plugins installed
       - names:
           - -n
           - --bindir
@@ -1436,16 +1671,17 @@ subcommands:
         description: Avoid loading any .gemrc file
   - name: push
     description: Push a gem up to the gem server
+    usage: gem push GEM [options]
     options:
       - names:
           - -k
           - --key
         argument: KEYNAME
-        description: Use the given API key from ~/.gem/credentials
+        description: Use the given API key from ~/.local/share/gem/credentials
       - names:
           - --otp
         argument: CODE
-        description: Digit code for multifactor authentication
+        description: Digit code for multifactor authentication You can also use the environment variable GEM_HOST_OTP_CODE
       - names:
           - --host
         argument: HOST
@@ -1490,150 +1726,9 @@ subcommands:
           - --norc
         argument: ""
         description: Avoid loading any .gemrc file
-  - name: query
-    description: Query gem information in local or remote repositories
-    options:
-      - names:
-          - -i
-          - --installed
-        argument: ""
-        description: Check for installed gem
-      - names:
-          - -i
-          - --no-installed
-        argument: ""
-        description: Check for installed gem
-      - names:
-          - -I
-        argument: ""
-        description: Equivalent to --no-installed
-      - names:
-          - -v
-          - --version
-        argument: VERSION
-        description: Specify version of gem to query for use with --installed
-      - names:
-          - -n
-          - --name-matches
-        argument: REGEXP
-        description: Name of gem(s) to query on matches the provided REGEXP
-      - names:
-          - -d
-          - --details
-        argument: ""
-        description: Display detailed information of gem(s)
-      - names:
-          - -d
-          - --no-details
-        argument: ""
-        description: Display detailed information of gem(s)
-      - names:
-          - --versions
-        argument: ""
-        description: Display only gem names
-      - names:
-          - --no-versions
-        argument: ""
-        description: Display only gem names
-      - names:
-          - -a
-          - --all
-        argument: ""
-        description: Display all gem versions
-      - names:
-          - -e
-          - --exact
-        argument: ""
-        description: Name of gem(s) to query on matches the provided STRING
-      - names:
-          - --prerelease
-        argument: ""
-        description: Display prerelease versions
-      - names:
-          - --no-prerelease
-        argument: ""
-        description: Display prerelease versions
-      - names:
-          - -u
-          - --update-sources
-        argument: ""
-        description: Update local source cache
-      - names:
-          - -u
-          - --no-update-sources
-        argument: ""
-        description: Update local source cache
-      - names:
-          - -l
-          - --local
-        argument: ""
-        description: Restrict operations to the LOCAL domain
-      - names:
-          - -r
-          - --remote
-        argument: ""
-        description: Restrict operations to the REMOTE domain
-      - names:
-          - -b
-          - --both
-        argument: ""
-        description: Allow LOCAL and REMOTE operations
-      - names:
-          - -B
-          - --bulk-threshold
-        argument: COUNT
-        description: Threshold for switching to bulk synchronization (default 1000)
-      - names:
-          - --clear-sources
-        argument: ""
-        description: Clear the gem sources
-      - names:
-          - -s
-          - --source
-        argument: URL
-        description: Append URL to list of remote gem sources
-      - names:
-          - -h
-          - --help
-        argument: ""
-        description: Get help on this command
-      - names:
-          - -V
-          - --verbose
-        argument: ""
-        description: Set the verbose level of output
-      - names:
-          - -V
-          - --no-verbose
-        argument: ""
-        description: Set the verbose level of output
-      - names:
-          - -q
-          - --quiet
-        argument: ""
-        description: Silence command progress meter
-      - names:
-          - --silent
-        argument: ""
-        description: Silence RubyGems output
-      - names:
-          - --config-file
-        argument: FILE
-        description: Use this config file instead of default
-      - names:
-          - --backtrace
-        argument: ""
-        description: Show stack backtrace on errors
-      - names:
-          - --debug
-        argument: ""
-        description: Turn on Ruby debugging
-      - names:
-          - --norc
-        argument: ""
-        description: Avoid loading any .gemrc file
   - name: rdoc
     description: Generates RDoc for pre-installed gems
+    usage: gem rdoc [args] [options]
     options:
       - names:
           - --all
@@ -1709,7 +1804,8 @@ subcommands:
         argument: ""
         description: Avoid loading any .gemrc file
   - name: search
-    description: Display all gems whose name contains STRING
+    description: Display remote gems whose name matches REGEXP
+    usage: gem search [REGEXP] [options]
     options:
       - names:
           - -i
@@ -1733,11 +1829,6 @@ subcommands:
       - names:
           - -d
           - --details
-        argument: ""
-        description: Display detailed information of gem(s)
-      - names:
-          - -d
-          - --no-details
         argument: ""
         description: Display detailed information of gem(s)
       - names:
@@ -1797,6 +1888,11 @@ subcommands:
         argument: COUNT
         description: Threshold for switching to bulk synchronization (default 1000)
       - names:
+          - -p
+          - --http-proxy
+        argument: "[URL]"
+        description: Use HTTP proxy for remote operations
+      - names:
           - --clear-sources
         argument: ""
         description: Clear the gem sources
@@ -1846,36 +1942,9 @@ subcommands:
         argument: ""
         description: Avoid loading any .gemrc file
   - name: server
-    description: Starts up a web server that hosts the RDoc (requires rubygems-server)
+    description: Starts up a web server that hosts the RDoc (requires
+    usage: gem server [options]
     options:
-      - names:
-          - -p
-          - --port
-        argument: PORT
-        description: port to listen on
-      - names:
-          - -d
-          - --dir
-        argument: GEMDIR
-        description: directories from which to serve gems multiple directories may be provided
-      - names:
-          - --daemon
-        argument: ""
-        description: run as a daemon
-      - names:
-          - --no-daemon
-        argument: ""
-        description: run as a daemon
-      - names:
-          - -b
-          - --bind
-        argument: HOST,HOST
-        description: addresses to bind
-      - names:
-          - -l
-          - --launch
-        argument: '[=COMMAND]'
-        description: launches a browser window COMMAND defaults to 'start' on Windows and 'open' on all other platforms
       - names:
           - -h
           - --help
@@ -1917,7 +1986,8 @@ subcommands:
         argument: ""
         description: Avoid loading any .gemrc file
   - name: signin
-    description: Sign in to any gemcutter-compatible host. It defaults to https://rubygems.org
+    description: Sign in to any gemcutter-compatible host. It defaults to
+    usage: gem signin [options]
     options:
       - names:
           - --host
@@ -1926,7 +1996,7 @@ subcommands:
       - names:
           - --otp
         argument: CODE
-        description: Digit code for multifactor authentication
+        description: Digit code for multifactor authentication You can also use the environment variable GEM_HOST_OTP_CODE
       - names:
           - -h
           - --help
@@ -1968,7 +2038,8 @@ subcommands:
         argument: ""
         description: Avoid loading any .gemrc file
   - name: signout
-    description: Sign out from all the current sessions
+    description: Sign out from all the current sessions.
+    usage: gem signout [options]
     options:
       - names:
           - -h
@@ -2011,7 +2082,8 @@ subcommands:
         argument: ""
         description: Avoid loading any .gemrc file
   - name: sources
-    description: Manage the sources and cache file RubyGems uses to search for gems
+    description: Manage the sources and cache file RubyGems uses to search
+    usage: gem sources [options]
     options:
       - names:
           - -a
@@ -2038,6 +2110,16 @@ subcommands:
           - --update
         argument: ""
         description: Update source cache
+      - names:
+          - -f
+          - --force
+        argument: ""
+        description: Do not show any confirmation prompts and behave as if 'yes' was always answered
+      - names:
+          - -f
+          - --no-force
+        argument: ""
+        description: Do not show any confirmation prompts and behave as if 'yes' was always answered
       - names:
           - -h
           - --help
@@ -2079,7 +2161,8 @@ subcommands:
         argument: ""
         description: Avoid loading any .gemrc file
   - name: specification
-    description: Display gem specification (in YAML)
+    description: Display gem specification (in yaml)
+    usage: gem specification [GEMFILE] [FIELD] [options]
     options:
       - names:
           - -v
@@ -2195,6 +2278,7 @@ subcommands:
         description: Avoid loading any .gemrc file
   - name: stale
     description: List gems along with access times
+    usage: gem stale [options]
     options:
       - names:
           - -h
@@ -2237,7 +2321,8 @@ subcommands:
         argument: ""
         description: Avoid loading any .gemrc file
   - name: uninstall
-    description: Uninstall a gem from the local repository
+    description: Uninstall gems from the local repository
+    usage: gem uninstall GEMNAME [GEMNAME ...] [options]
     options:
       - names:
           - -a
@@ -2374,8 +2459,71 @@ subcommands:
           - --norc
         argument: ""
         description: Avoid loading any .gemrc file
+  - name: unpack
+    description: Unpack an installed gem to the current directory
+    usage: gem unpack GEMNAME [options]
+    options:
+      - names:
+          - --target
+        argument: DIR
+        description: target directory for unpacking
+      - names:
+          - --spec
+        argument: ""
+        description: unpack the gem specification
+      - names:
+          - -v
+          - --version
+        argument: VERSION
+        description: Specify version of gem to unpack
+      - names:
+          - -P
+          - --trust-policy
+        argument: POLICY
+        description: Specify gem trust policy
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: Get help on this command
+      - names:
+          - -V
+          - --verbose
+        argument: ""
+        description: Set the verbose level of output
+      - names:
+          - -V
+          - --no-verbose
+        argument: ""
+        description: Set the verbose level of output
+      - names:
+          - -q
+          - --quiet
+        argument: ""
+        description: Silence command progress meter
+      - names:
+          - --silent
+        argument: ""
+        description: Silence RubyGems output
+      - names:
+          - --config-file
+        argument: FILE
+        description: Use this config file instead of default
+      - names:
+          - --backtrace
+        argument: ""
+        description: Show stack backtrace on errors
+      - names:
+          - --debug
+        argument: ""
+        description: Turn on Ruby debugging
+      - names:
+          - --norc
+        argument: ""
+        description: Avoid loading any .gemrc file
   - name: update
     description: Update installed gems to the latest version
+    usage: gem update GEMNAME [GEMNAME ...] [options]
     options:
       - names:
           - --system
@@ -2412,7 +2560,7 @@ subcommands:
           - -n
           - --bindir
         argument: DIR
-        description: Directory where executables are located
+        description: Directory where executables will be placed when the gem is installed
       - names:
           - --document
         argument: '[TYPES]'
@@ -2499,6 +2647,10 @@ subcommands:
         description: Don't attempt to upgrade gems already meeting version requirement
       - names:
           - --minimal-deps
+        argument: ""
+        description: Don't upgrade any dependencies that already meet version requirements
+      - names:
+          - --no-minimal-deps
         argument: ""
         description: Don't upgrade any dependencies that already meet version requirements
       - names:
@@ -2613,6 +2765,7 @@ subcommands:
         description: Avoid loading any .gemrc file
   - name: which
     description: Find the location of a library file you can require
+    usage: gem which FILE [FILE ...] [options]
     options:
       - names:
           - -a
@@ -2676,6 +2829,7 @@ subcommands:
         description: Avoid loading any .gemrc file
   - name: yank
     description: Remove a pushed gem from the index
+    usage: gem yank -v VERSION [-p PLATFORM] [--key KEY_NAME] [--host HOST] GEM [options]
     options:
       - names:
           - -v
@@ -2689,7 +2843,7 @@ subcommands:
       - names:
           - --otp
         argument: CODE
-        description: Digit code for multifactor authentication
+        description: Digit code for multifactor authentication You can also use the environment variable GEM_HOST_OTP_CODE
       - names:
           - --host
         argument: HOST
@@ -2698,7 +2852,7 @@ subcommands:
           - -k
           - --key
         argument: KEYNAME
-        description: Use the given API key from ~/.gem/credentials
+        description: Use the given API key from ~/.local/share/gem/credentials
       - names:
           - -h
           - --help
@@ -2739,6 +2893,7 @@ subcommands:
           - --norc
         argument: ""
         description: Avoid loading any .gemrc file
+version: 3.3.5
 tldr: |
   > Interact with the package manager for the Ruby programming language.
   > More information: <https://rubygems.org>.

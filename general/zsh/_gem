@@ -4,6 +4,7 @@
 
     function _gem_build {
         _arguments \
+            '--platform[Specify the platform of gem to build]' \
             '--force[skip validation of the spec]' \
             '--strict[consider warnings as errors when validating the spec]' \
             {-o,--output}'[output gem with the given filename]':file:_files \
@@ -29,6 +30,7 @@
             {-b,--build}'[Build private key and self-signed certificate for EMAIL_ADDR]' \
             {-C,--certificate}'[Signing certificate for --sign]' \
             {-K,--private-key}'[Key for --sign or --build]' \
+            {-A,--key-algorithm}'[Select which key algorithm to use for --build]' \
             {-s,--sign}'[Signs CERT with the key from -K and the certificate from -C]' \
             {-d,--days}'[Days before the certificate expires]' \
             {-R,--re-sign}'[Re-signs the certificate from -C with the key from -K]' \
@@ -71,11 +73,12 @@
 
     function _gem_cleanup {
         _arguments \
-            {-n,-d,--dryrun}'[Do not uninstall gems]' \
+            {-n,-d,--dry-run}'[Do not uninstall gems]' \
             {-D,--check-development}'[Check development dependencies while uninstalling (default: true)]' \
             {-D,--no-check-development}'[Check development dependencies while uninstalling (default: true)]' \
             '--user-install[Cleanup in user'\''s home directory instead of GEM_HOME.]' \
             '--no-user-install[Cleanup in user'\''s home directory instead of GEM_HOME.]' \
+            '--dryrun[Do not uninstall gems]' \
             {-h,--help}'[Get help on this command]' \
             {-V,--verbose}'[Set the verbose level of output]' \
             {-V,--no-verbose}'[Set the verbose level of output]' \
@@ -158,6 +161,65 @@
 
     }
 
+    function _gem_fetch {
+        _arguments \
+            {-v,--version}'[Specify version of gem to fetch]' \
+            '--platform[Specify the platform of gem to fetch]' \
+            '--prerelease[Allow prerelease versions of a gem]' \
+            '--no-prerelease[Allow prerelease versions of a gem]' \
+            '--suggestions[Suggest alternates when gems are not found]' \
+            '--no-suggestions[Suggest alternates when gems are not found]' \
+            {-B,--bulk-threshold}'[Threshold for switching to bulk synchronization (default 1000)]' \
+            {-p,--http-proxy}'[Use HTTP proxy for remote operations]' \
+            {-s,--source}'[Append URL to list of remote gem sources]' \
+            '--clear-sources[Clear the gem sources]' \
+            {-h,--help}'[Get help on this command]' \
+            {-V,--verbose}'[Set the verbose level of output]' \
+            {-V,--no-verbose}'[Set the verbose level of output]' \
+            {-q,--quiet}'[Silence command progress meter]' \
+            '--silent[Silence RubyGems output]' \
+            '--config-file[Use this config file instead of default]':file:_files \
+            '--backtrace[Show stack backtrace on errors]' \
+            '--debug[Turn on Ruby debugging]' \
+            '--norc[Avoid loading any .gemrc file]' \
+            "*: :_files"
+
+    }
+
+    function _gem_generate_index {
+        _arguments \
+            {-d,--directory}'[repository base dir containing gems subdir]':file:_files \
+            '--modern[Generate indexes for RubyGems (always true)]' \
+            '--no-modern[Generate indexes for RubyGems (always true)]' \
+            '--update[Update modern indexes with gems added since the last update]' \
+            {-h,--help}'[Get help on this command]' \
+            {-V,--verbose}'[Set the verbose level of output]' \
+            {-V,--no-verbose}'[Set the verbose level of output]' \
+            {-q,--quiet}'[Silence command progress meter]' \
+            '--silent[Silence RubyGems output]' \
+            '--config-file[Use this config file instead of default]':file:_files \
+            '--backtrace[Show stack backtrace on errors]' \
+            '--debug[Turn on Ruby debugging]' \
+            '--norc[Avoid loading any .gemrc file]' \
+            "*: :_files"
+
+    }
+
+    function _gem_help {
+        _arguments \
+            {-h,--help}'[Get help on this command]' \
+            {-V,--verbose}'[Set the verbose level of output]' \
+            {-V,--no-verbose}'[Set the verbose level of output]' \
+            {-q,--quiet}'[Silence command progress meter]' \
+            '--silent[Silence RubyGems output]' \
+            '--config-file[Use this config file instead of default]':file:_files \
+            '--backtrace[Show stack backtrace on errors]' \
+            '--debug[Turn on Ruby debugging]' \
+            '--norc[Avoid loading any .gemrc file]' \
+            "*: :_files"
+
+    }
+
     function _gem_info {
         _arguments \
             {-i,--installed}'[Check for installed gem]' \
@@ -200,7 +262,7 @@
             {-u,--update-sources}'[Update local source cache]' \
             {-u,--no-update-sources}'[Update local source cache]' \
             {-i,--install-dir}'[Gem repository directory to get installed gems]':file:_files \
-            {-n,--bindir}'[Directory where executables are located]':file:_files \
+            {-n,--bindir}'[Directory where executables will be placed when the gem is installed]':file:_files \
             '--document[Generate documentation for installed gems List the documentation types you wish to generate. For example: rdoc,ri]' \
             '--build-root[Temporary installation root. Useful for building packages. Do not use this when installing remote gems.]':file:_files \
             '--vendor[Install gem into the vendor directory. Only for use by gem repackagers.]' \
@@ -221,6 +283,7 @@
             '--development-all[Install development dependencies for all gems (including dev deps themselves)]' \
             '--conservative[Don'\''t attempt to upgrade gems already meeting version requirement]' \
             '--minimal-deps[Don'\''t upgrade any dependencies that already meet version requirements]' \
+            '--no-minimal-deps[Don'\''t upgrade any dependencies that already meet version requirements]' \
             '--post-install-message[Print post install message]' \
             '--no-post-install-message[Print post install message]' \
             {-g,--file}'[Read from a gem dependencies API file and install the listed gems]':file:_files \
@@ -360,8 +423,8 @@
 
     function _gem_owner {
         _arguments \
-            {-k,--key}'[Use the given API key from ~/.gem/credentials]' \
-            '--otp[Digit code for multifactor authentication]' \
+            {-k,--key}'[Use the given API key from ~/.local/share/gem/credentials]' \
+            '--otp[Digit code for multifactor authentication You can also use the environment variable GEM_HOST_OTP_CODE]' \
             {-a,--add}'[Add an owner]' \
             {-r,--remove}'[Remove an owner]' \
             '--host[Use another gemcutter-compatible host]' \
@@ -385,8 +448,10 @@
             '--extensions[Restore gems with extensions in addition to regular gems]' \
             '--no-extensions[Restore gems with extensions in addition to regular gems]' \
             '--only-executables[Only restore executables]' \
+            '--only-plugins[Only restore plugins]' \
             {-E,--env-shebang}'[Rewrite executables with a shebang of /usr/bin/env]' \
             {-E,--no-env-shebang}'[Rewrite executables with a shebang of /usr/bin/env]' \
+            {-i,--install-dir}'[Gem repository to get binstubs and plugins installed]':file:_files \
             {-n,--bindir}'[Directory where executables are located]':file:_files \
             {-v,--version}'[Specify version of gem to restore to pristine condition]' \
             {-h,--help}'[Get help on this command]' \
@@ -404,45 +469,9 @@
 
     function _gem_push {
         _arguments \
-            {-k,--key}'[Use the given API key from ~/.gem/credentials]' \
-            '--otp[Digit code for multifactor authentication]' \
+            {-k,--key}'[Use the given API key from ~/.local/share/gem/credentials]' \
+            '--otp[Digit code for multifactor authentication You can also use the environment variable GEM_HOST_OTP_CODE]' \
             '--host[Push to another gemcutter-compatible host]' \
-            {-h,--help}'[Get help on this command]' \
-            {-V,--verbose}'[Set the verbose level of output]' \
-            {-V,--no-verbose}'[Set the verbose level of output]' \
-            {-q,--quiet}'[Silence command progress meter]' \
-            '--silent[Silence RubyGems output]' \
-            '--config-file[Use this config file instead of default]':file:_files \
-            '--backtrace[Show stack backtrace on errors]' \
-            '--debug[Turn on Ruby debugging]' \
-            '--norc[Avoid loading any .gemrc file]' \
-            "*: :_files"
-
-    }
-
-    function _gem_query {
-        _arguments \
-            {-i,--installed}'[Check for installed gem]' \
-            {-i,--no-installed}'[Check for installed gem]' \
-            '-I[Equivalent to --no-installed]' \
-            {-v,--version}'[Specify version of gem to query for use with --installed]' \
-            {-n,--name-matches}'[Name of gem(s) to query on matches the provided REGEXP]' \
-            {-d,--details}'[Display detailed information of gem(s)]' \
-            {-d,--no-details}'[Display detailed information of gem(s)]' \
-            '--versions[Display only gem names]' \
-            '--no-versions[Display only gem names]' \
-            {-a,--all}'[Display all gem versions]' \
-            {-e,--exact}'[Name of gem(s) to query on matches the provided STRING]' \
-            '--prerelease[Display prerelease versions]' \
-            '--no-prerelease[Display prerelease versions]' \
-            {-u,--update-sources}'[Update local source cache]' \
-            {-u,--no-update-sources}'[Update local source cache]' \
-            {-l,--local}'[Restrict operations to the LOCAL domain]' \
-            {-r,--remote}'[Restrict operations to the REMOTE domain]' \
-            {-b,--both}'[Allow LOCAL and REMOTE operations]' \
-            {-B,--bulk-threshold}'[Threshold for switching to bulk synchronization (default 1000)]' \
-            '--clear-sources[Clear the gem sources]' \
-            {-s,--source}'[Append URL to list of remote gem sources]' \
             {-h,--help}'[Get help on this command]' \
             {-V,--verbose}'[Set the verbose level of output]' \
             {-V,--no-verbose}'[Set the verbose level of output]' \
@@ -486,7 +515,6 @@
             '-I[Equivalent to --no-installed]' \
             {-v,--version}'[Specify version of gem to search for use with --installed]' \
             {-d,--details}'[Display detailed information of gem(s)]' \
-            {-d,--no-details}'[Display detailed information of gem(s)]' \
             '--versions[Display only gem names]' \
             '--no-versions[Display only gem names]' \
             {-a,--all}'[Display all gem versions]' \
@@ -499,6 +527,7 @@
             {-r,--remote}'[Restrict operations to the REMOTE domain]' \
             {-b,--both}'[Allow LOCAL and REMOTE operations]' \
             {-B,--bulk-threshold}'[Threshold for switching to bulk synchronization (default 1000)]' \
+            {-p,--http-proxy}'[Use HTTP proxy for remote operations]' \
             '--clear-sources[Clear the gem sources]' \
             {-s,--source}'[Append URL to list of remote gem sources]' \
             {-h,--help}'[Get help on this command]' \
@@ -516,12 +545,6 @@
 
     function _gem_server {
         _arguments \
-            {-p,--port}'[port to listen on]' \
-            {-d,--dir}'[directories from which to serve gems multiple directories may be provided]':file:_files \
-            '--daemon[run as a daemon]' \
-            '--no-daemon[run as a daemon]' \
-            {-b,--bind}'[addresses to bind]' \
-            {-l,--launch}'[launches a browser window COMMAND defaults to '\''start'\'' on Windows and '\''open'\'' on all other platforms]' \
             {-h,--help}'[Get help on this command]' \
             {-V,--verbose}'[Set the verbose level of output]' \
             {-V,--no-verbose}'[Set the verbose level of output]' \
@@ -538,7 +561,7 @@
     function _gem_signin {
         _arguments \
             '--host[Push to another gemcutter-compatible host]' \
-            '--otp[Digit code for multifactor authentication]' \
+            '--otp[Digit code for multifactor authentication You can also use the environment variable GEM_HOST_OTP_CODE]' \
             {-h,--help}'[Get help on this command]' \
             {-V,--verbose}'[Set the verbose level of output]' \
             {-V,--no-verbose}'[Set the verbose level of output]' \
@@ -574,6 +597,8 @@
             {-r,--remove}'[Remove source]' \
             {-c,--clear-all}'[Remove all sources (clear the cache)]' \
             {-u,--update}'[Update source cache]' \
+            {-f,--force}'[Do not show any confirmation prompts and behave as if '\''yes'\'' was always answered]' \
+            {-f,--no-force}'[Do not show any confirmation prompts and behave as if '\''yes'\'' was always answered]' \
             {-h,--help}'[Get help on this command]' \
             {-V,--verbose}'[Set the verbose level of output]' \
             {-V,--no-verbose}'[Set the verbose level of output]' \
@@ -669,6 +694,25 @@
 
     }
 
+    function _gem_unpack {
+        _arguments \
+            '--target[target directory for unpacking]':file:_files \
+            '--spec[unpack the gem specification]' \
+            {-v,--version}'[Specify version of gem to unpack]' \
+            {-P,--trust-policy}'[Specify gem trust policy]' \
+            {-h,--help}'[Get help on this command]' \
+            {-V,--verbose}'[Set the verbose level of output]' \
+            {-V,--no-verbose}'[Set the verbose level of output]' \
+            {-q,--quiet}'[Silence command progress meter]' \
+            '--silent[Silence RubyGems output]' \
+            '--config-file[Use this config file instead of default]':file:_files \
+            '--backtrace[Show stack backtrace on errors]' \
+            '--debug[Turn on Ruby debugging]' \
+            '--norc[Avoid loading any .gemrc file]' \
+            "*: :_files"
+
+    }
+
     function _gem_update {
         _arguments \
             '--system[Update the RubyGems system software]' \
@@ -678,7 +722,7 @@
             {-u,--update-sources}'[Update local source cache]' \
             {-u,--no-update-sources}'[Update local source cache]' \
             {-i,--install-dir}'[Gem repository directory to get installed gems]':file:_files \
-            {-n,--bindir}'[Directory where executables are located]':file:_files \
+            {-n,--bindir}'[Directory where executables will be placed when the gem is installed]':file:_files \
             '--document[Generate documentation for installed gems List the documentation types you wish to generate. For example: rdoc,ri]' \
             '--build-root[Temporary installation root. Useful for building packages. Do not use this when installing remote gems.]':file:_files \
             '--vendor[Install gem into the vendor directory. Only for use by gem repackagers.]' \
@@ -699,6 +743,7 @@
             '--development-all[Install development dependencies for all gems (including dev deps themselves)]' \
             '--conservative[Don'\''t attempt to upgrade gems already meeting version requirement]' \
             '--minimal-deps[Don'\''t upgrade any dependencies that already meet version requirements]' \
+            '--no-minimal-deps[Don'\''t upgrade any dependencies that already meet version requirements]' \
             '--post-install-message[Print post install message]' \
             '--no-post-install-message[Print post install message]' \
             {-g,--file}'[Read from a gem dependencies API file and install the listed gems]':file:_files \
@@ -751,9 +796,9 @@
         _arguments \
             {-v,--version}'[Specify version of gem to remove]' \
             '--platform[Specify the platform of gem to remove]' \
-            '--otp[Digit code for multifactor authentication]' \
+            '--otp[Digit code for multifactor authentication You can also use the environment variable GEM_HOST_OTP_CODE]' \
             '--host[Yank from another gemcutter-compatible host]' \
-            {-k,--key}'[Use the given API key from ~/.gem/credentials]' \
+            {-k,--key}'[Use the given API key from ~/.local/share/gem/credentials]' \
             {-h,--help}'[Get help on this command]' \
             {-V,--verbose}'[Set the verbose level of output]' \
             {-V,--no-verbose}'[Set the verbose level of output]' \
@@ -775,32 +820,35 @@ function _gem {
         local -a commands
         commands=(
             'build:Build a gem from a gemspec'
-            'cert:Adjust RubyGems certificate settings'
-            'check:Check installed gems'
-            'cleanup:Cleanup old versions of installed gems in the local repository'
+            'cert:Manage RubyGems certificates and signing settings'
+            'check:Check a gem repository for added or missing files'
+            'cleanup:Clean up old versions of installed gems'
             'contents:Display the contents of the installed gems'
             'dependency:Show the dependencies of an installed gem'
-            'environment:Display RubyGems environmental information'
+            'environment:Display information about the RubyGems environment'
+            'fetch:Download a gem and place it in the current directory'
+            'generate_index:Generates the index files for a gem server directory'
+            'help:Provide help on the '\''gem'\'' command'
             'info:Show information for the given gem'
             'install:Install a gem into the local repository'
-            'list:Display all gems whose name starts with STRING'
+            'list:Display local gems whose name matches REGEXP'
             'lock:Generate a lockdown list of gems'
             'mirror:Mirror all gem files (requires rubygems-mirror)'
             'open:Open gem sources in editor'
             'outdated:Display all gems that need updates'
             'owner:Manage gem owners of a gem on the push server'
-            'pristine:Restores installed gems to pristine condition from files located in the gem cache'
+            'pristine:Restores installed gems to pristine condition from files'
             'push:Push a gem up to the gem server'
-            'query:Query gem information in local or remote repositories'
             'rdoc:Generates RDoc for pre-installed gems'
-            'search:Display all gems whose name contains STRING'
-            'server:Starts up a web server that hosts the RDoc (requires rubygems-server)'
-            'signin:Sign in to any gemcutter-compatible host. It defaults to https://rubygems.org'
-            'signout:Sign out from all the current sessions'
-            'sources:Manage the sources and cache file RubyGems uses to search for gems'
-            'specification:Display gem specification (in YAML)'
+            'search:Display remote gems whose name matches REGEXP'
+            'server:Starts up a web server that hosts the RDoc (requires'
+            'signin:Sign in to any gemcutter-compatible host. It defaults to'
+            'signout:Sign out from all the current sessions.'
+            'sources:Manage the sources and cache file RubyGems uses to search'
+            'specification:Display gem specification (in yaml)'
             'stale:List gems along with access times'
-            'uninstall:Uninstall a gem from the local repository'
+            'uninstall:Uninstall gems from the local repository'
+            'unpack:Unpack an installed gem to the current directory'
             'update:Update installed gems to the latest version'
             'which:Find the location of a library file you can require'
             'yank:Remove a pushed gem from the index'
@@ -849,6 +897,18 @@ function _gem {
             _gem_environment
             ;;
 
+        (fetch)
+            _gem_fetch
+            ;;
+
+        (generate_index)
+            _gem_generate_index
+            ;;
+
+        (help)
+            _gem_help
+            ;;
+
         (info)
             _gem_info
             ;;
@@ -889,10 +949,6 @@ function _gem {
             _gem_push
             ;;
 
-        (query)
-            _gem_query
-            ;;
-
         (rdoc)
             _gem_rdoc
             ;;
@@ -927,6 +983,10 @@ function _gem {
 
         (uninstall)
             _gem_uninstall
+            ;;
+
+        (unpack)
+            _gem_unpack
             ;;
 
         (update)

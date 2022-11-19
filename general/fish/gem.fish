@@ -1,43 +1,47 @@
 # Auto-generated with h2o
 
-complete -c gem -n "not __fish_seen_subcommand_from build cert check cleanup contents dependency environment info install list lock mirror open outdated owner pristine push query rdoc search server signin signout sources specification stale uninstall update which yank" -s "h" -l "help" -d "Get help"
-complete -c gem -n "not __fish_seen_subcommand_from build cert check cleanup contents dependency environment info install list lock mirror open outdated owner pristine push query rdoc search server signin signout sources specification stale uninstall update which yank" -s "v" -l "version" -d "Get version"
+complete -c gem -n "not __fish_seen_subcommand_from build cert check cleanup contents dependency environment fetch generate_index help info install list lock mirror open outdated owner pristine push rdoc search server signin signout sources specification stale uninstall unpack update which yank" -s "h" -l "help" -d "Get help"
+complete -c gem -n "not __fish_seen_subcommand_from build cert check cleanup contents dependency environment fetch generate_index help info install list lock mirror open outdated owner pristine push rdoc search server signin signout sources specification stale uninstall unpack update which yank" -s "v" -l "version" -d "Get version"
 
 
 
 complete -k -c gem -n __fish_use_subcommand -x -a yank -d "Remove a pushed gem from the index"
 complete -k -c gem -n __fish_use_subcommand -x -a which -d "Find the location of a library file you can require"
 complete -k -c gem -n __fish_use_subcommand -x -a update -d "Update installed gems to the latest version"
-complete -k -c gem -n __fish_use_subcommand -x -a uninstall -d "Uninstall a gem from the local repository"
+complete -k -c gem -n __fish_use_subcommand -x -a unpack -d "Unpack an installed gem to the current directory"
+complete -k -c gem -n __fish_use_subcommand -x -a uninstall -d "Uninstall gems from the local repository"
 complete -k -c gem -n __fish_use_subcommand -x -a stale -d "List gems along with access times"
-complete -k -c gem -n __fish_use_subcommand -x -a specification -d "Display gem specification (in YAML)"
-complete -k -c gem -n __fish_use_subcommand -x -a sources -d "Manage the sources and cache file RubyGems uses to search for gems"
-complete -k -c gem -n __fish_use_subcommand -x -a signout -d "Sign out from all the current sessions"
-complete -k -c gem -n __fish_use_subcommand -x -a signin -d "Sign in to any gemcutter-compatible host. It defaults to https://rubygems.org"
-complete -k -c gem -n __fish_use_subcommand -x -a server -d "Starts up a web server that hosts the RDoc (requires rubygems-server)"
-complete -k -c gem -n __fish_use_subcommand -x -a search -d "Display all gems whose name contains STRING"
+complete -k -c gem -n __fish_use_subcommand -x -a specification -d "Display gem specification (in yaml)"
+complete -k -c gem -n __fish_use_subcommand -x -a sources -d "Manage the sources and cache file RubyGems uses to search"
+complete -k -c gem -n __fish_use_subcommand -x -a signout -d "Sign out from all the current sessions."
+complete -k -c gem -n __fish_use_subcommand -x -a signin -d "Sign in to any gemcutter-compatible host. It defaults to"
+complete -k -c gem -n __fish_use_subcommand -x -a server -d "Starts up a web server that hosts the RDoc (requires"
+complete -k -c gem -n __fish_use_subcommand -x -a search -d "Display remote gems whose name matches REGEXP"
 complete -k -c gem -n __fish_use_subcommand -x -a rdoc -d "Generates RDoc for pre-installed gems"
-complete -k -c gem -n __fish_use_subcommand -x -a query -d "Query gem information in local or remote repositories"
 complete -k -c gem -n __fish_use_subcommand -x -a push -d "Push a gem up to the gem server"
-complete -k -c gem -n __fish_use_subcommand -x -a pristine -d "Restores installed gems to pristine condition from files located in the gem cache"
+complete -k -c gem -n __fish_use_subcommand -x -a pristine -d "Restores installed gems to pristine condition from files"
 complete -k -c gem -n __fish_use_subcommand -x -a owner -d "Manage gem owners of a gem on the push server"
 complete -k -c gem -n __fish_use_subcommand -x -a outdated -d "Display all gems that need updates"
 complete -k -c gem -n __fish_use_subcommand -x -a open -d "Open gem sources in editor"
 complete -k -c gem -n __fish_use_subcommand -x -a mirror -d "Mirror all gem files (requires rubygems-mirror)"
 complete -k -c gem -n __fish_use_subcommand -x -a lock -d "Generate a lockdown list of gems"
-complete -k -c gem -n __fish_use_subcommand -x -a list -d "Display all gems whose name starts with STRING"
+complete -k -c gem -n __fish_use_subcommand -x -a list -d "Display local gems whose name matches REGEXP"
 complete -k -c gem -n __fish_use_subcommand -x -a install -d "Install a gem into the local repository"
 complete -k -c gem -n __fish_use_subcommand -x -a info -d "Show information for the given gem"
-complete -k -c gem -n __fish_use_subcommand -x -a environment -d "Display RubyGems environmental information"
+complete -k -c gem -n __fish_use_subcommand -x -a help -d "Provide help on the 'gem' command"
+complete -k -c gem -n __fish_use_subcommand -x -a generate_index -d "Generates the index files for a gem server directory"
+complete -k -c gem -n __fish_use_subcommand -x -a fetch -d "Download a gem and place it in the current directory"
+complete -k -c gem -n __fish_use_subcommand -x -a environment -d "Display information about the RubyGems environment"
 complete -k -c gem -n __fish_use_subcommand -x -a dependency -d "Show the dependencies of an installed gem"
 complete -k -c gem -n __fish_use_subcommand -x -a contents -d "Display the contents of the installed gems"
-complete -k -c gem -n __fish_use_subcommand -x -a cleanup -d "Cleanup old versions of installed gems in the local repository"
-complete -k -c gem -n __fish_use_subcommand -x -a check -d "Check installed gems"
-complete -k -c gem -n __fish_use_subcommand -x -a cert -d "Adjust RubyGems certificate settings"
+complete -k -c gem -n __fish_use_subcommand -x -a cleanup -d "Clean up old versions of installed gems"
+complete -k -c gem -n __fish_use_subcommand -x -a check -d "Check a gem repository for added or missing files"
+complete -k -c gem -n __fish_use_subcommand -x -a cert -d "Manage RubyGems certificates and signing settings"
 complete -k -c gem -n __fish_use_subcommand -x -a build -d "Build a gem from a gemspec"
 
 
 
+complete -c gem -n "__fish_seen_subcommand_from build" -l "platform" -d "Specify the platform of gem to build" -x
 complete -c gem -n "__fish_seen_subcommand_from build" -l "force" -d "skip validation of the spec"
 complete -c gem -n "__fish_seen_subcommand_from build" -l "strict" -d "consider warnings as errors when validating the spec"
 complete -c gem -n "__fish_seen_subcommand_from build" -s "o" -l "output" -d "output gem with the given filename" -r
@@ -60,6 +64,7 @@ complete -c gem -n "__fish_seen_subcommand_from cert" -s "r" -l "remove" -d "Rem
 complete -c gem -n "__fish_seen_subcommand_from cert" -s "b" -l "build" -d "Build private key and self-signed certificate for EMAIL_ADDR" -x
 complete -c gem -n "__fish_seen_subcommand_from cert" -s "C" -l "certificate" -d "Signing certificate for --sign" -x
 complete -c gem -n "__fish_seen_subcommand_from cert" -s "K" -l "private-key" -d "Key for --sign or --build" -x
+complete -c gem -n "__fish_seen_subcommand_from cert" -s "A" -l "key-algorithm" -d "Select which key algorithm to use for --build" -x
 complete -c gem -n "__fish_seen_subcommand_from cert" -s "s" -l "sign" -d "Signs CERT with the key from -K and the certificate from -C" -x
 complete -c gem -n "__fish_seen_subcommand_from cert" -s "d" -l "days" -d "Days before the certificate expires" -x
 complete -c gem -n "__fish_seen_subcommand_from cert" -s "R" -l "re-sign" -d "Re-signs the certificate from -C with the key from -K"
@@ -96,11 +101,12 @@ complete -c gem -n "__fish_seen_subcommand_from check" -l "norc" -d "Avoid loadi
 
 
 
-complete -c gem -n "__fish_seen_subcommand_from cleanup" -s "n" -s "d" -l "dryrun" -d "Do not uninstall gems"
+complete -c gem -n "__fish_seen_subcommand_from cleanup" -s "n" -s "d" -l "dry-run" -d "Do not uninstall gems"
 complete -c gem -n "__fish_seen_subcommand_from cleanup" -s "D" -l "check-development" -d "Check development dependencies while uninstalling (default: true)"
 complete -c gem -n "__fish_seen_subcommand_from cleanup" -s "D" -l "no-check-development" -d "Check development dependencies while uninstalling (default: true)"
 complete -c gem -n "__fish_seen_subcommand_from cleanup" -l "user-install" -d "Cleanup in user's home directory instead of GEM_HOME."
 complete -c gem -n "__fish_seen_subcommand_from cleanup" -l "no-user-install" -d "Cleanup in user's home directory instead of GEM_HOME."
+complete -c gem -n "__fish_seen_subcommand_from cleanup" -l "dryrun" -d "Do not uninstall gems"
 complete -c gem -n "__fish_seen_subcommand_from cleanup" -s "h" -l "help" -d "Get help on this command"
 complete -c gem -n "__fish_seen_subcommand_from cleanup" -s "V" -l "verbose" -d "Set the verbose level of output"
 complete -c gem -n "__fish_seen_subcommand_from cleanup" -s "V" -l "no-verbose" -d "Set the verbose level of output"
@@ -173,6 +179,56 @@ complete -c gem -n "__fish_seen_subcommand_from environment" -l "norc" -d "Avoid
 
 
 
+complete -c gem -n "__fish_seen_subcommand_from fetch" -s "v" -l "version" -d "Specify version of gem to fetch" -x
+complete -c gem -n "__fish_seen_subcommand_from fetch" -l "platform" -d "Specify the platform of gem to fetch" -x
+complete -c gem -n "__fish_seen_subcommand_from fetch" -l "prerelease" -d "Allow prerelease versions of a gem"
+complete -c gem -n "__fish_seen_subcommand_from fetch" -l "no-prerelease" -d "Allow prerelease versions of a gem"
+complete -c gem -n "__fish_seen_subcommand_from fetch" -l "suggestions" -d "Suggest alternates when gems are not found"
+complete -c gem -n "__fish_seen_subcommand_from fetch" -l "no-suggestions" -d "Suggest alternates when gems are not found"
+complete -c gem -n "__fish_seen_subcommand_from fetch" -s "B" -l "bulk-threshold" -d "Threshold for switching to bulk synchronization (default 1000)" -x
+complete -c gem -n "__fish_seen_subcommand_from fetch" -s "p" -l "http-proxy" -d "Use HTTP proxy for remote operations" -x
+complete -c gem -n "__fish_seen_subcommand_from fetch" -s "s" -l "source" -d "Append URL to list of remote gem sources" -x
+complete -c gem -n "__fish_seen_subcommand_from fetch" -l "clear-sources" -d "Clear the gem sources"
+complete -c gem -n "__fish_seen_subcommand_from fetch" -s "h" -l "help" -d "Get help on this command"
+complete -c gem -n "__fish_seen_subcommand_from fetch" -s "V" -l "verbose" -d "Set the verbose level of output"
+complete -c gem -n "__fish_seen_subcommand_from fetch" -s "V" -l "no-verbose" -d "Set the verbose level of output"
+complete -c gem -n "__fish_seen_subcommand_from fetch" -s "q" -l "quiet" -d "Silence command progress meter"
+complete -c gem -n "__fish_seen_subcommand_from fetch" -l "silent" -d "Silence RubyGems output"
+complete -c gem -n "__fish_seen_subcommand_from fetch" -l "config-file" -d "Use this config file instead of default" -r
+complete -c gem -n "__fish_seen_subcommand_from fetch" -l "backtrace" -d "Show stack backtrace on errors"
+complete -c gem -n "__fish_seen_subcommand_from fetch" -l "debug" -d "Turn on Ruby debugging"
+complete -c gem -n "__fish_seen_subcommand_from fetch" -l "norc" -d "Avoid loading any .gemrc file"
+
+
+
+complete -c gem -n "__fish_seen_subcommand_from generate_index" -s "d" -l "directory" -d "repository base dir containing gems subdir" -r
+complete -c gem -n "__fish_seen_subcommand_from generate_index" -l "modern" -d "Generate indexes for RubyGems (always true)"
+complete -c gem -n "__fish_seen_subcommand_from generate_index" -l "no-modern" -d "Generate indexes for RubyGems (always true)"
+complete -c gem -n "__fish_seen_subcommand_from generate_index" -l "update" -d "Update modern indexes with gems added since the last update"
+complete -c gem -n "__fish_seen_subcommand_from generate_index" -s "h" -l "help" -d "Get help on this command"
+complete -c gem -n "__fish_seen_subcommand_from generate_index" -s "V" -l "verbose" -d "Set the verbose level of output"
+complete -c gem -n "__fish_seen_subcommand_from generate_index" -s "V" -l "no-verbose" -d "Set the verbose level of output"
+complete -c gem -n "__fish_seen_subcommand_from generate_index" -s "q" -l "quiet" -d "Silence command progress meter"
+complete -c gem -n "__fish_seen_subcommand_from generate_index" -l "silent" -d "Silence RubyGems output"
+complete -c gem -n "__fish_seen_subcommand_from generate_index" -l "config-file" -d "Use this config file instead of default" -r
+complete -c gem -n "__fish_seen_subcommand_from generate_index" -l "backtrace" -d "Show stack backtrace on errors"
+complete -c gem -n "__fish_seen_subcommand_from generate_index" -l "debug" -d "Turn on Ruby debugging"
+complete -c gem -n "__fish_seen_subcommand_from generate_index" -l "norc" -d "Avoid loading any .gemrc file"
+
+
+
+complete -c gem -n "__fish_seen_subcommand_from help" -s "h" -l "help" -d "Get help on this command"
+complete -c gem -n "__fish_seen_subcommand_from help" -s "V" -l "verbose" -d "Set the verbose level of output"
+complete -c gem -n "__fish_seen_subcommand_from help" -s "V" -l "no-verbose" -d "Set the verbose level of output"
+complete -c gem -n "__fish_seen_subcommand_from help" -s "q" -l "quiet" -d "Silence command progress meter"
+complete -c gem -n "__fish_seen_subcommand_from help" -l "silent" -d "Silence RubyGems output"
+complete -c gem -n "__fish_seen_subcommand_from help" -l "config-file" -d "Use this config file instead of default" -r
+complete -c gem -n "__fish_seen_subcommand_from help" -l "backtrace" -d "Show stack backtrace on errors"
+complete -c gem -n "__fish_seen_subcommand_from help" -l "debug" -d "Turn on Ruby debugging"
+complete -c gem -n "__fish_seen_subcommand_from help" -l "norc" -d "Avoid loading any .gemrc file"
+
+
+
 complete -c gem -n "__fish_seen_subcommand_from info" -s "i" -l "installed" -d "Check for installed gem"
 complete -c gem -n "__fish_seen_subcommand_from info" -s "i" -l "no-installed" -d "Check for installed gem"
 complete -c gem -n "__fish_seen_subcommand_from info" -s "I" -d "Equivalent to --no-installed"
@@ -210,7 +266,7 @@ complete -c gem -n "__fish_seen_subcommand_from install" -l "no-prerelease" -d "
 complete -c gem -n "__fish_seen_subcommand_from install" -s "u" -l "update-sources" -d "Update local source cache"
 complete -c gem -n "__fish_seen_subcommand_from install" -s "u" -l "no-update-sources" -d "Update local source cache"
 complete -c gem -n "__fish_seen_subcommand_from install" -s "i" -l "install-dir" -d "Gem repository directory to get installed gems" -r
-complete -c gem -n "__fish_seen_subcommand_from install" -s "n" -l "bindir" -d "Directory where executables are located" -r
+complete -c gem -n "__fish_seen_subcommand_from install" -s "n" -l "bindir" -d "Directory where executables will be placed when the gem is installed" -r
 complete -c gem -n "__fish_seen_subcommand_from install" -l "document" -d "Generate documentation for installed gems List the documentation types you wish to generate." -x
 complete -c gem -n "__fish_seen_subcommand_from install" -l "build-root" -d "Temporary installation root." -r
 complete -c gem -n "__fish_seen_subcommand_from install" -l "vendor" -d "Install gem into the vendor directory."
@@ -231,6 +287,7 @@ complete -c gem -n "__fish_seen_subcommand_from install" -l "development" -d "In
 complete -c gem -n "__fish_seen_subcommand_from install" -l "development-all" -d "Install development dependencies for all gems (including dev deps themselves)"
 complete -c gem -n "__fish_seen_subcommand_from install" -l "conservative" -d "Don't attempt to upgrade gems already meeting version requirement"
 complete -c gem -n "__fish_seen_subcommand_from install" -l "minimal-deps" -d "Don't upgrade any dependencies that already meet version requirements"
+complete -c gem -n "__fish_seen_subcommand_from install" -l "no-minimal-deps" -d "Don't upgrade any dependencies that already meet version requirements"
 complete -c gem -n "__fish_seen_subcommand_from install" -l "post-install-message" -d "Print post install message"
 complete -c gem -n "__fish_seen_subcommand_from install" -l "no-post-install-message" -d "Print post install message"
 complete -c gem -n "__fish_seen_subcommand_from install" -s "g" -l "file" -d "Read from a gem dependencies API file and install the listed gems" -r
@@ -352,8 +409,8 @@ complete -c gem -n "__fish_seen_subcommand_from outdated" -l "norc" -d "Avoid lo
 
 
 
-complete -c gem -n "__fish_seen_subcommand_from owner" -s "k" -l "key" -d "Use the given API key from ~/.gem/credentials" -x
-complete -c gem -n "__fish_seen_subcommand_from owner" -l "otp" -d "Digit code for multifactor authentication" -x
+complete -c gem -n "__fish_seen_subcommand_from owner" -s "k" -l "key" -d "Use the given API key from ~/.local/share/gem/credentials" -x
+complete -c gem -n "__fish_seen_subcommand_from owner" -l "otp" -d "Digit code for multifactor authentication You can also use the environment variable GEM_HOST_OTP_CODE" -x
 complete -c gem -n "__fish_seen_subcommand_from owner" -s "a" -l "add" -d "Add an owner" -x
 complete -c gem -n "__fish_seen_subcommand_from owner" -s "r" -l "remove" -d "Remove an owner" -x
 complete -c gem -n "__fish_seen_subcommand_from owner" -l "host" -d "Use another gemcutter-compatible host" -x
@@ -374,8 +431,10 @@ complete -c gem -n "__fish_seen_subcommand_from pristine" -l "skip" -d "used on 
 complete -c gem -n "__fish_seen_subcommand_from pristine" -l "extensions" -d "Restore gems with extensions in addition to regular gems"
 complete -c gem -n "__fish_seen_subcommand_from pristine" -l "no-extensions" -d "Restore gems with extensions in addition to regular gems"
 complete -c gem -n "__fish_seen_subcommand_from pristine" -l "only-executables" -d "Only restore executables"
+complete -c gem -n "__fish_seen_subcommand_from pristine" -l "only-plugins" -d "Only restore plugins"
 complete -c gem -n "__fish_seen_subcommand_from pristine" -s "E" -l "env-shebang" -d "Rewrite executables with a shebang of /usr/bin/env"
 complete -c gem -n "__fish_seen_subcommand_from pristine" -s "E" -l "no-env-shebang" -d "Rewrite executables with a shebang of /usr/bin/env"
+complete -c gem -n "__fish_seen_subcommand_from pristine" -s "i" -l "install-dir" -d "Gem repository to get binstubs and plugins installed" -r
 complete -c gem -n "__fish_seen_subcommand_from pristine" -s "n" -l "bindir" -d "Directory where executables are located" -r
 complete -c gem -n "__fish_seen_subcommand_from pristine" -s "v" -l "version" -d "Specify version of gem to restore to pristine condition" -x
 complete -c gem -n "__fish_seen_subcommand_from pristine" -s "h" -l "help" -d "Get help on this command"
@@ -390,8 +449,8 @@ complete -c gem -n "__fish_seen_subcommand_from pristine" -l "norc" -d "Avoid lo
 
 
 
-complete -c gem -n "__fish_seen_subcommand_from push" -s "k" -l "key" -d "Use the given API key from ~/.gem/credentials" -x
-complete -c gem -n "__fish_seen_subcommand_from push" -l "otp" -d "Digit code for multifactor authentication" -x
+complete -c gem -n "__fish_seen_subcommand_from push" -s "k" -l "key" -d "Use the given API key from ~/.local/share/gem/credentials" -x
+complete -c gem -n "__fish_seen_subcommand_from push" -l "otp" -d "Digit code for multifactor authentication You can also use the environment variable GEM_HOST_OTP_CODE" -x
 complete -c gem -n "__fish_seen_subcommand_from push" -l "host" -d "Push to another gemcutter-compatible host" -x
 complete -c gem -n "__fish_seen_subcommand_from push" -s "h" -l "help" -d "Get help on this command"
 complete -c gem -n "__fish_seen_subcommand_from push" -s "V" -l "verbose" -d "Set the verbose level of output"
@@ -402,39 +461,6 @@ complete -c gem -n "__fish_seen_subcommand_from push" -l "config-file" -d "Use t
 complete -c gem -n "__fish_seen_subcommand_from push" -l "backtrace" -d "Show stack backtrace on errors"
 complete -c gem -n "__fish_seen_subcommand_from push" -l "debug" -d "Turn on Ruby debugging"
 complete -c gem -n "__fish_seen_subcommand_from push" -l "norc" -d "Avoid loading any .gemrc file"
-
-
-
-complete -c gem -n "__fish_seen_subcommand_from query" -s "i" -l "installed" -d "Check for installed gem"
-complete -c gem -n "__fish_seen_subcommand_from query" -s "i" -l "no-installed" -d "Check for installed gem"
-complete -c gem -n "__fish_seen_subcommand_from query" -s "I" -d "Equivalent to --no-installed"
-complete -c gem -n "__fish_seen_subcommand_from query" -s "v" -l "version" -d "Specify version of gem to query for use with --installed" -x
-complete -c gem -n "__fish_seen_subcommand_from query" -s "n" -l "name-matches" -d "Name of gem(s) to query on matches the provided REGEXP" -x
-complete -c gem -n "__fish_seen_subcommand_from query" -s "d" -l "details" -d "Display detailed information of gem(s)"
-complete -c gem -n "__fish_seen_subcommand_from query" -s "d" -l "no-details" -d "Display detailed information of gem(s)"
-complete -c gem -n "__fish_seen_subcommand_from query" -l "versions" -d "Display only gem names"
-complete -c gem -n "__fish_seen_subcommand_from query" -l "no-versions" -d "Display only gem names"
-complete -c gem -n "__fish_seen_subcommand_from query" -s "a" -l "all" -d "Display all gem versions"
-complete -c gem -n "__fish_seen_subcommand_from query" -s "e" -l "exact" -d "Name of gem(s) to query on matches the provided STRING"
-complete -c gem -n "__fish_seen_subcommand_from query" -l "prerelease" -d "Display prerelease versions"
-complete -c gem -n "__fish_seen_subcommand_from query" -l "no-prerelease" -d "Display prerelease versions"
-complete -c gem -n "__fish_seen_subcommand_from query" -s "u" -l "update-sources" -d "Update local source cache"
-complete -c gem -n "__fish_seen_subcommand_from query" -s "u" -l "no-update-sources" -d "Update local source cache"
-complete -c gem -n "__fish_seen_subcommand_from query" -s "l" -l "local" -d "Restrict operations to the LOCAL domain"
-complete -c gem -n "__fish_seen_subcommand_from query" -s "r" -l "remote" -d "Restrict operations to the REMOTE domain"
-complete -c gem -n "__fish_seen_subcommand_from query" -s "b" -l "both" -d "Allow LOCAL and REMOTE operations"
-complete -c gem -n "__fish_seen_subcommand_from query" -s "B" -l "bulk-threshold" -d "Threshold for switching to bulk synchronization (default 1000)" -x
-complete -c gem -n "__fish_seen_subcommand_from query" -l "clear-sources" -d "Clear the gem sources"
-complete -c gem -n "__fish_seen_subcommand_from query" -s "s" -l "source" -d "Append URL to list of remote gem sources" -x
-complete -c gem -n "__fish_seen_subcommand_from query" -s "h" -l "help" -d "Get help on this command"
-complete -c gem -n "__fish_seen_subcommand_from query" -s "V" -l "verbose" -d "Set the verbose level of output"
-complete -c gem -n "__fish_seen_subcommand_from query" -s "V" -l "no-verbose" -d "Set the verbose level of output"
-complete -c gem -n "__fish_seen_subcommand_from query" -s "q" -l "quiet" -d "Silence command progress meter"
-complete -c gem -n "__fish_seen_subcommand_from query" -l "silent" -d "Silence RubyGems output"
-complete -c gem -n "__fish_seen_subcommand_from query" -l "config-file" -d "Use this config file instead of default" -r
-complete -c gem -n "__fish_seen_subcommand_from query" -l "backtrace" -d "Show stack backtrace on errors"
-complete -c gem -n "__fish_seen_subcommand_from query" -l "debug" -d "Turn on Ruby debugging"
-complete -c gem -n "__fish_seen_subcommand_from query" -l "norc" -d "Avoid loading any .gemrc file"
 
 
 
@@ -463,7 +489,6 @@ complete -c gem -n "__fish_seen_subcommand_from search" -s "i" -l "no-installed"
 complete -c gem -n "__fish_seen_subcommand_from search" -s "I" -d "Equivalent to --no-installed"
 complete -c gem -n "__fish_seen_subcommand_from search" -s "v" -l "version" -d "Specify version of gem to search for use with --installed" -x
 complete -c gem -n "__fish_seen_subcommand_from search" -s "d" -l "details" -d "Display detailed information of gem(s)"
-complete -c gem -n "__fish_seen_subcommand_from search" -s "d" -l "no-details" -d "Display detailed information of gem(s)"
 complete -c gem -n "__fish_seen_subcommand_from search" -l "versions" -d "Display only gem names"
 complete -c gem -n "__fish_seen_subcommand_from search" -l "no-versions" -d "Display only gem names"
 complete -c gem -n "__fish_seen_subcommand_from search" -s "a" -l "all" -d "Display all gem versions"
@@ -476,6 +501,7 @@ complete -c gem -n "__fish_seen_subcommand_from search" -s "l" -l "local" -d "Re
 complete -c gem -n "__fish_seen_subcommand_from search" -s "r" -l "remote" -d "Restrict operations to the REMOTE domain"
 complete -c gem -n "__fish_seen_subcommand_from search" -s "b" -l "both" -d "Allow LOCAL and REMOTE operations"
 complete -c gem -n "__fish_seen_subcommand_from search" -s "B" -l "bulk-threshold" -d "Threshold for switching to bulk synchronization (default 1000)" -x
+complete -c gem -n "__fish_seen_subcommand_from search" -s "p" -l "http-proxy" -d "Use HTTP proxy for remote operations" -x
 complete -c gem -n "__fish_seen_subcommand_from search" -l "clear-sources" -d "Clear the gem sources"
 complete -c gem -n "__fish_seen_subcommand_from search" -s "s" -l "source" -d "Append URL to list of remote gem sources" -x
 complete -c gem -n "__fish_seen_subcommand_from search" -s "h" -l "help" -d "Get help on this command"
@@ -490,12 +516,6 @@ complete -c gem -n "__fish_seen_subcommand_from search" -l "norc" -d "Avoid load
 
 
 
-complete -c gem -n "__fish_seen_subcommand_from server" -s "p" -l "port" -d "port to listen on" -x
-complete -c gem -n "__fish_seen_subcommand_from server" -s "d" -l "dir" -d "directories from which to serve gems multiple directories may be provided" -r
-complete -c gem -n "__fish_seen_subcommand_from server" -l "daemon" -d "run as a daemon"
-complete -c gem -n "__fish_seen_subcommand_from server" -l "no-daemon" -d "run as a daemon"
-complete -c gem -n "__fish_seen_subcommand_from server" -s "b" -l "bind" -d "addresses to bind" -x
-complete -c gem -n "__fish_seen_subcommand_from server" -s "l" -l "launch" -d "launches a browser window COMMAND defaults to 'start' on Windows and 'open' on all other platforms" -x
 complete -c gem -n "__fish_seen_subcommand_from server" -s "h" -l "help" -d "Get help on this command"
 complete -c gem -n "__fish_seen_subcommand_from server" -s "V" -l "verbose" -d "Set the verbose level of output"
 complete -c gem -n "__fish_seen_subcommand_from server" -s "V" -l "no-verbose" -d "Set the verbose level of output"
@@ -509,7 +529,7 @@ complete -c gem -n "__fish_seen_subcommand_from server" -l "norc" -d "Avoid load
 
 
 complete -c gem -n "__fish_seen_subcommand_from signin" -l "host" -d "Push to another gemcutter-compatible host" -x
-complete -c gem -n "__fish_seen_subcommand_from signin" -l "otp" -d "Digit code for multifactor authentication" -x
+complete -c gem -n "__fish_seen_subcommand_from signin" -l "otp" -d "Digit code for multifactor authentication You can also use the environment variable GEM_HOST_OTP_CODE" -x
 complete -c gem -n "__fish_seen_subcommand_from signin" -s "h" -l "help" -d "Get help on this command"
 complete -c gem -n "__fish_seen_subcommand_from signin" -s "V" -l "verbose" -d "Set the verbose level of output"
 complete -c gem -n "__fish_seen_subcommand_from signin" -s "V" -l "no-verbose" -d "Set the verbose level of output"
@@ -539,6 +559,8 @@ complete -c gem -n "__fish_seen_subcommand_from sources" -s "l" -l "list" -d "Li
 complete -c gem -n "__fish_seen_subcommand_from sources" -s "r" -l "remove" -d "Remove source" -x
 complete -c gem -n "__fish_seen_subcommand_from sources" -s "c" -l "clear-all" -d "Remove all sources (clear the cache)"
 complete -c gem -n "__fish_seen_subcommand_from sources" -s "u" -l "update" -d "Update source cache"
+complete -c gem -n "__fish_seen_subcommand_from sources" -s "f" -l "force" -d "Do not show any confirmation prompts and behave as if 'yes' was always answered"
+complete -c gem -n "__fish_seen_subcommand_from sources" -s "f" -l "no-force" -d "Do not show any confirmation prompts and behave as if 'yes' was always answered"
 complete -c gem -n "__fish_seen_subcommand_from sources" -s "h" -l "help" -d "Get help on this command"
 complete -c gem -n "__fish_seen_subcommand_from sources" -s "V" -l "verbose" -d "Set the verbose level of output"
 complete -c gem -n "__fish_seen_subcommand_from sources" -s "V" -l "no-verbose" -d "Set the verbose level of output"
@@ -624,6 +646,22 @@ complete -c gem -n "__fish_seen_subcommand_from uninstall" -l "norc" -d "Avoid l
 
 
 
+complete -c gem -n "__fish_seen_subcommand_from unpack" -l "target" -d "target directory for unpacking" -r
+complete -c gem -n "__fish_seen_subcommand_from unpack" -l "spec" -d "unpack the gem specification"
+complete -c gem -n "__fish_seen_subcommand_from unpack" -s "v" -l "version" -d "Specify version of gem to unpack" -x
+complete -c gem -n "__fish_seen_subcommand_from unpack" -s "P" -l "trust-policy" -d "Specify gem trust policy" -x
+complete -c gem -n "__fish_seen_subcommand_from unpack" -s "h" -l "help" -d "Get help on this command"
+complete -c gem -n "__fish_seen_subcommand_from unpack" -s "V" -l "verbose" -d "Set the verbose level of output"
+complete -c gem -n "__fish_seen_subcommand_from unpack" -s "V" -l "no-verbose" -d "Set the verbose level of output"
+complete -c gem -n "__fish_seen_subcommand_from unpack" -s "q" -l "quiet" -d "Silence command progress meter"
+complete -c gem -n "__fish_seen_subcommand_from unpack" -l "silent" -d "Silence RubyGems output"
+complete -c gem -n "__fish_seen_subcommand_from unpack" -l "config-file" -d "Use this config file instead of default" -r
+complete -c gem -n "__fish_seen_subcommand_from unpack" -l "backtrace" -d "Show stack backtrace on errors"
+complete -c gem -n "__fish_seen_subcommand_from unpack" -l "debug" -d "Turn on Ruby debugging"
+complete -c gem -n "__fish_seen_subcommand_from unpack" -l "norc" -d "Avoid loading any .gemrc file"
+
+
+
 complete -c gem -n "__fish_seen_subcommand_from update" -l "system" -d "Update the RubyGems system software" -x
 complete -c gem -n "__fish_seen_subcommand_from update" -l "platform" -d "Specify the platform of gem to update" -x
 complete -c gem -n "__fish_seen_subcommand_from update" -l "prerelease" -d "Allow prerelease versions of a gem as update targets"
@@ -631,7 +669,7 @@ complete -c gem -n "__fish_seen_subcommand_from update" -l "no-prerelease" -d "A
 complete -c gem -n "__fish_seen_subcommand_from update" -s "u" -l "update-sources" -d "Update local source cache"
 complete -c gem -n "__fish_seen_subcommand_from update" -s "u" -l "no-update-sources" -d "Update local source cache"
 complete -c gem -n "__fish_seen_subcommand_from update" -s "i" -l "install-dir" -d "Gem repository directory to get installed gems" -r
-complete -c gem -n "__fish_seen_subcommand_from update" -s "n" -l "bindir" -d "Directory where executables are located" -r
+complete -c gem -n "__fish_seen_subcommand_from update" -s "n" -l "bindir" -d "Directory where executables will be placed when the gem is installed" -r
 complete -c gem -n "__fish_seen_subcommand_from update" -l "document" -d "Generate documentation for installed gems List the documentation types you wish to generate." -x
 complete -c gem -n "__fish_seen_subcommand_from update" -l "build-root" -d "Temporary installation root." -r
 complete -c gem -n "__fish_seen_subcommand_from update" -l "vendor" -d "Install gem into the vendor directory."
@@ -652,6 +690,7 @@ complete -c gem -n "__fish_seen_subcommand_from update" -l "development" -d "Ins
 complete -c gem -n "__fish_seen_subcommand_from update" -l "development-all" -d "Install development dependencies for all gems (including dev deps themselves)"
 complete -c gem -n "__fish_seen_subcommand_from update" -l "conservative" -d "Don't attempt to upgrade gems already meeting version requirement"
 complete -c gem -n "__fish_seen_subcommand_from update" -l "minimal-deps" -d "Don't upgrade any dependencies that already meet version requirements"
+complete -c gem -n "__fish_seen_subcommand_from update" -l "no-minimal-deps" -d "Don't upgrade any dependencies that already meet version requirements"
 complete -c gem -n "__fish_seen_subcommand_from update" -l "post-install-message" -d "Print post install message"
 complete -c gem -n "__fish_seen_subcommand_from update" -l "no-post-install-message" -d "Print post install message"
 complete -c gem -n "__fish_seen_subcommand_from update" -s "g" -l "file" -d "Read from a gem dependencies API file and install the listed gems" -r
@@ -698,9 +737,9 @@ complete -c gem -n "__fish_seen_subcommand_from which" -l "norc" -d "Avoid loadi
 
 complete -c gem -n "__fish_seen_subcommand_from yank" -s "v" -l "version" -d "Specify version of gem to remove" -x
 complete -c gem -n "__fish_seen_subcommand_from yank" -l "platform" -d "Specify the platform of gem to remove" -x
-complete -c gem -n "__fish_seen_subcommand_from yank" -l "otp" -d "Digit code for multifactor authentication" -x
+complete -c gem -n "__fish_seen_subcommand_from yank" -l "otp" -d "Digit code for multifactor authentication You can also use the environment variable GEM_HOST_OTP_CODE" -x
 complete -c gem -n "__fish_seen_subcommand_from yank" -l "host" -d "Yank from another gemcutter-compatible host" -x
-complete -c gem -n "__fish_seen_subcommand_from yank" -s "k" -l "key" -d "Use the given API key from ~/.gem/credentials" -x
+complete -c gem -n "__fish_seen_subcommand_from yank" -s "k" -l "key" -d "Use the given API key from ~/.local/share/gem/credentials" -x
 complete -c gem -n "__fish_seen_subcommand_from yank" -s "h" -l "help" -d "Get help on this command"
 complete -c gem -n "__fish_seen_subcommand_from yank" -s "V" -l "verbose" -d "Set the verbose level of output"
 complete -c gem -n "__fish_seen_subcommand_from yank" -s "V" -l "no-verbose" -d "Set the verbose level of output"

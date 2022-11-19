@@ -15,14 +15,14 @@ complete -c nc -s "l" -d "Listen for an incoming connection rather than initiati
 complete -c nc -s "M" -d "Set the TTL / hop limit of outgoing packets." -x
 complete -c nc -s "m" -d "Ask the kernel to drop incoming packets whose TTL / hop limit is under minttl." -x
 complete -c nc -s "N" -d "shutdown(2) the network socket after EOF on the input."
-complete -c nc -s "n" -d "Do not do any DNS or service lookups on any specified addresses, hostnames or ports."
+complete -c nc -s "n" -d "Do not perform domain name resolution."
 complete -c nc -s "O" -d "Specify the size of the TCP send buffer." -x
 complete -c nc -s "P" -d "Specifies a username to present to a proxy server that requires authentication." -x
 complete -c nc -s "p" -d "Specify the source port nc should use, subject to privilege restrictions and availability." -x
 complete -c nc -s "q" -d "after EOF on stdin, wait the specified number of seconds and then quit." -x
 complete -c nc -s "r" -d "Choose source and/or destination ports randomly instead of sequentially within a range or in the order that the system assigns them."
 complete -c nc -s "S" -d "Enable the RFC 2385 TCP MD5 signature option."
-complete -c nc -s "s" -d "Send packets from the interface with the source IP address." -r
+complete -c nc -s "s" -d "Set the source address to send packets from, which is useful on machines with multiple interfaces." -r
 complete -c nc -s "T" -d "Change the IPv4 TOS/IPv6 traffic class value." -x
 complete -c nc -s "t" -d "Send RFC 854 DON'T and WON'T responses to RFC 854 DO and WILL requests."
 complete -c nc -s "U" -d "Use UNIX-domain sockets."

@@ -1,0 +1,16 @@
+on: [push]
+name: validate json and create DB
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+      - run: |
+          npm install -g ajv-cli
+      - run: |
+          scripts/createdb
+      - uses: actions/upload-artifact@v3
+        with:
+          path: ./commandspecs.db

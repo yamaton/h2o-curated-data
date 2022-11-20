@@ -1,0 +1,807 @@
+name: ip
+description: ip
+usage: |-
+  ip [ OPTIONS ] OBJECT { COMMAND | help }
+
+  ip [ -force ] -batch filename
+
+  OBJECT := { link | address | addrlabel | route | rule | neigh | ntable | tunnel | tuntap | maddress
+          | mroute | mrule | monitor | xfrm | netns | l2tp | tcp_metrics | token | macsec | vrf |
+          mptcp | ioam }
+
+  OPTIONS := { -V[ersion] | -h[uman-readable] | -s[tatistics] | -d[etails] | -r[esolve] | -iec |
+          -f[amily] { inet | inet6 | link } | -4 | -6 | -B | -0 | -l[oops] { maximum-addr-flush-at‐
+          tempts } | -o[neline] | -rc[vbuf] [size] | -t[imestamp] | -ts[hort] | -n[etns] name |
+          -N[umeric] | -a[ll] | -c[olor] | -br[ief] | -j[son] | -p[retty] }
+options:
+  - names:
+      - -f
+    argument: ""
+    description: '{ inet | inet6 | link } | -4 | -6 | -B | -0 | -l[oops] { maximum-addr-flush-at‐'
+  - names:
+      - -family
+    argument: ""
+    description: '{ inet | inet6 | link } | -4 | -6 | -B | -0 | -l[oops] { maximum-addr-flush-at‐'
+  - names:
+      - -f
+    argument: '{ inet | inet6 | link }'
+    description: '| -4 | -6 | -B | -0 | -l[oops] { maximum-addr-flush-at‐'
+  - names:
+      - -family
+    argument: '{ inet | inet6 | link }'
+    description: '| -4 | -6 | -B | -0 | -l[oops] { maximum-addr-flush-at‐'
+  - names:
+      - -N
+    argument: ""
+    description: '| -a[ll] | -c[olor] | -br[ief] | -j[son] | -p[retty] }'
+  - names:
+      - -Numeric
+    argument: ""
+    description: '| -a[ll] | -c[olor] | -br[ief] | -j[son] | -p[retty] }'
+  - names:
+      - -V
+      - -Version
+    argument: ""
+    description: Print the version of the ip utility and exit.
+  - names:
+      - -h
+      - -human
+      - -human-readable
+    argument: ""
+    description: output statistics with human readable values followed by suffix.
+  - names:
+      - -b
+      - -batch
+    argument: <FILENAME>
+    description: Read commands from provided file or standard input and invoke them. First failure will cause termination of ip.
+  - names:
+      - -force
+    argument: ""
+    description: Don't terminate ip on errors in batch mode. If there were any errors during execution of the commands, the application return code will be non zero.
+  - names:
+      - -s
+      - -stats
+      - -statistics
+    argument: ""
+    description: Output more information. If the option appears twice or more, the amount of information increases. As a rule, the information is statistics or some time values.
+  - names:
+      - -d
+      - -details
+    argument: ""
+    description: Output more detailed information.
+  - names:
+      - -l
+      - -loops
+    argument: <COUNT>
+    description: Specify maximum number of loops the 'ip address flush' logic will attempt before giving up. The default is 10. Zero (0) means loop until all addresses are removed.
+  - names:
+      - -f
+      - -family
+    argument: <FAMILY>
+    description: Specifies the protocol family to use. The protocol family identifier can be one of inet, inet6, bridge, mpls or link. If this option is not present, the protocol family is guessed from other arguments. If the rest of the command line does not give enough information to guess the family, ip falls back to the default one, usually inet or any. link is a special family identifier meaning that no networking protocol is involved.
+  - names:
+      - "-4"
+    argument: ""
+    description: shortcut for -family inet.
+  - names:
+      - "-6"
+    argument: ""
+    description: shortcut for -family inet6.
+  - names:
+      - -B
+    argument: ""
+    description: shortcut for -family bridge.
+  - names:
+      - -M
+    argument: ""
+    description: shortcut for -family mpls.
+  - names:
+      - "-0"
+    argument: ""
+    description: shortcut for -family link.
+  - names:
+      - -o
+      - -oneline
+    argument: ""
+    description: output each record on a single line, replacing line feeds with the '\' character. This is convenient when you want to count records with wc(1) or to grep(1) the output.
+  - names:
+      - -r
+      - -resolve
+    argument: ""
+    description: use the system's name resolver to print DNS names instead of host addresses.
+  - names:
+      - -n
+      - -netns
+    argument: <NETNS>
+    description: 'switches ip to the specified network namespace NETNS. Actually it just simplifies executing of:'
+  - names:
+      - -a
+      - -all
+    argument: ""
+    description: executes specified command over all objects, it depends if command supports this option.
+  - names:
+      - -t
+      - -timestamp
+    argument: ""
+    description: display current time when using monitor option.
+  - names:
+      - -ts
+      - -tshort
+    argument: ""
+    description: Like -timestamp, but use shorter format.
+  - names:
+      - -rc
+      - -rcvbuf
+    argument: <SIZE>
+    description: Set the netlink socket receive buffer size, defaults to 1MB.
+  - names:
+      - -iec
+    argument: ""
+    description: print human readable rates in IEC units (e.g. 1Ki = 1024).
+  - names:
+      - -br
+      - -brief
+    argument: ""
+    description: Print only basic information in a tabular format for better readability. This option is currently only supported by ip addr show , ip link show & ip neigh show commands.
+  - names:
+      - -j
+      - -json
+    argument: ""
+    description: Output results in JavaScript Object Notation (JSON).
+  - names:
+      - -p
+      - -pretty
+    argument: ""
+    description: The default JSON format is compact and more efficient to parse but hard for most users to read. This flag adds indentation for readability.
+subcommands:
+  - name: address
+    aliases:
+      - addr
+      - a
+    description: protocol (IP or IPv6) address on a device.
+    usage: |-
+      ip [ OPTIONS ] address  { COMMAND | help }
+
+      ip address { add | change | replace } IFADDR dev IFNAME [ LIFETIME ] [ CONFFLAG-LIST ]
+
+      ip address del IFADDR dev IFNAME [ mngtmpaddr ]
+
+      ip address { save | flush } [ dev IFNAME ] [ scope SCOPE-ID ] [ metric METRIC ] [ to PREFIX ] [ FLAG-LIST ] [ label PATTERN ] [ up ]
+
+      ip address [ show [ dev IFNAME ] [ scope SCOPE-ID ] [ to PREFIX ] [ FLAG-LIST ] [ label PATTERN ] [ master DEVICE ] [ type TYPE ] [ vrf NAME ] [ up ] ]
+
+      ip address { showdump | restore }
+
+      IFADDR := PREFIX | ADDR peer PREFIX [ broadcast ADDR ] [ anycast ADDR ] [ label LABEL ] [ scope SCOPE-ID ]
+
+      SCOPE-ID := [ host | link | global | NUMBER ]
+
+      FLAG-LIST := [ FLAG-LIST ] FLAG
+
+      FLAG := [ [-]permanent | [-]dynamic | [-]secondary | [-]primary | [-]tentative | [-]deprecated | [-]dadfailed | [-]temporary | CONFFLAG-LIST ]
+
+      CONFFLAG-LIST := [ CONFFLAG-LIST ] CONFFLAG
+
+      CONFFLAG := [ home | mngtmpaddr | nodad | optimstic | noprefixroute | autojoin ]
+
+      LIFETIME := [ valid_lft LFT ] [ preferred_lft LFT ]
+
+      LFT := [ forever | SECONDS ]
+
+      TYPE := [ bridge | bridge_slave | bond | bond_slave | can | dummy | hsr | ifb | ipoib | macvlan | macvtap | vcan | veth | vlan | vxlan | ip6tnl | ipip | sit | gre | gretap | erspan | ip6gre | ip6gretap | ip6erspan | vti | vrf | nlmon | ipvlan | lowpan | geneve | macsec ]
+    options:
+      - names:
+          - -tentative
+        argument: ""
+        description: (IPv6 only) only list addresses which are not in the process of duplicate address detection currently.
+      - names:
+          - -deprecated
+        argument: ""
+        description: (IPv6 only) only list addresses not being deprecated.
+      - names:
+          - -dadfailed
+        argument: ""
+        description: (IPv6 only) only list addresses which have not failed duplicate address detection.
+      - names:
+          - -temporary
+          - -secondary
+        argument: ""
+        description: These flags are aliases for primary.
+      - names:
+          - -temporary
+        argument: or -secondary
+        description: These flags are aliases for primary.
+      - names:
+          - -primary
+        argument: ""
+        description: This is an alias for temporary or secondary.
+    subcommands:
+      - name: add
+        description: add object
+        options: []
+      - name: del
+        description: delete object
+        options: []
+      - name: show
+        aliases:
+          - list
+        description: show object
+        options: []
+  - name: addrlabel
+    description: label configuration for protocol address selection.
+    usage: |-
+      ip addrlabel  { COMMAND | help }
+
+      ip addrlabel { add | del } prefix PREFIX [ dev DEV ] [ label NUMBER ]
+
+      ip addrlabel { list | flush }
+    options: []
+    subcommands:
+      - name: add
+        description: add object
+        options: []
+      - name: del
+        description: delete object
+        options: []
+      - name: show
+        aliases:
+          - list
+        description: show object
+        options: []
+  - name: ioam
+    description: manage IOAM namespaces and IOAM schemas.
+    usage: |-
+      ip ioam  { COMMAND | help }
+
+      ip ioam namespace show
+
+      ip ioam namespace add ID  [ data DATA32 ]  [ wide DATA64 ]
+
+      ip ioam namespace del ID
+
+      ip ioam schema show
+
+      ip ioam schema add ID DATA
+
+      ip ioam schema del ID
+
+      ip ioam namespace set ID schema  { ID | none }
+    options: []
+    subcommands:
+      - name: namespace
+        description: namespace
+        options: []
+        subcommands:
+          - name: add
+            description: add object
+            options: []
+          - name: del
+            description: delete object
+            options: []
+          - name: show
+            aliases:
+              - list
+            description: show object
+            options: []
+      - name: schema
+        description: schema
+        options: []
+        subcommands:
+          - name: add
+            description: add object
+            options: []
+          - name: del
+            description: delete object
+            options: []
+          - name: show
+            aliases:
+              - list
+            description: show object
+            options: []
+  - name: l2tp
+    description: tunnel ethernet over IP (L2TPv3).
+    usage: |-
+      ip [ OPTIONS ] l2tp  { COMMAND | help }
+
+      ip l2tp add tunnel
+              remote ADDR local ADDR
+              tunnel_id ID peer_tunnel_id ID
+              [ encap { ip | udp } ]
+              [ udp_sport PORT  ] [ udp_dport PORT  ]
+              [ udp_csum { on | off } ]
+              [ udp6_csum_tx { on | off } ]
+              [ udp6_csum_rx { on | off } ]
+      ip l2tp add session [ name NAME  ]
+              tunnel_id ID session_id ID peer_session_id ID
+              [ cookie HEXSTR  ] [ peer_cookie HEXSTR  ]
+              [ l2spec_type { none | default } ]
+              [ seq { none | send | recv | both } ]
+      ip l2tp del tunnel tunnel_id ID
+      ip l2tp del session tunnel_id ID session_id ID
+      ip l2tp show tunnel [ tunnel_id ID ]
+      ip l2tp show session [ tunnel_id ID.B ] [ session_id ID ]
+      NAME := STRING
+      ADDR := { IP_ADDRESS | any }
+      PORT := { NUMBER }
+      ID := { NUMBER }
+      HEXSTR := { 8 or 16 hex digits (4 / 8 bytes) }
+    options: []
+    subcommands:
+      - name: add
+        description: add object
+        options: []
+      - name: del
+        description: delete object
+        options: []
+      - name: show
+        aliases:
+          - list
+        description: show object
+        options: []
+  - name: link
+    description: network device.
+    usage: |-
+      ip link  { COMMAND | help }
+
+      ip link add [ link DEVICE ] [ name ] NAME
+              [ txqueuelen PACKETS ]
+              [ address LLADDR ] [ broadcast LLADDR ]
+              [ mtu MTU ] [ index IDX ]
+              [ numtxqueues QUEUE_COUNT ] [ numrxqueues QUEUE_COUNT ]
+              [ gso_max_size BYTES ] [ gso_max_segs SEGMENTS ]
+              type TYPE [ ARGS ]
+
+      ip link delete { DEVICE | group GROUP } type TYPE [ ARGS ]
+
+      ip link set { DEVICE | group GROUP }
+              [ { up | down } ]
+              [ type ETYPE TYPE_ARGS ]
+              [ arp { on | off } ]
+              [ dynamic { on | off } ]
+              [ multicast { on | off } ]
+              [ allmulticast { on | off } ]
+              [ promisc { on | off } ]
+              [ protodown { on | off } ]
+              [ protodown_reason PREASON { on | off } ]
+              [ trailers { on | off } ]
+              [ txqueuelen PACKETS ]
+              [ name NEWNAME ]
+              [ address LLADDR ]
+              [ broadcast LLADDR ]
+              [ mtu MTU ]
+              [ netns { PID | NETNSNAME } ]
+              [ link-netnsid ID ]
+              [ alias NAME ]
+              [ vf NUM [ mac LLADDR ]
+                       [ VFVLAN-LIST ]
+                       [ rate TXRATE ]
+                       [ max_tx_rate TXRATE ]
+                       [ min_tx_rate TXRATE ]
+                       [ spoofchk { on | off } ]
+                       [ query_rss { on | off } ]
+                       [ state { auto | enable | disable } ]
+                       [ trust { on | off } ]
+                       [ node_guid eui64 ]
+                       [ port_guid eui64 ] ]
+              [ { xdp | xdpgeneric | xdpdrv | xdpoffload } { off |
+                      object FILE [ section NAME ] [ verbose ] |
+                      pinned FILE } ]
+              [ master DEVICE ]
+              [ nomaster ]
+              [ vrf NAME ]
+              [ addrgenmode { eui64 | none | stable_secret | random } ]
+              [ macaddr [ MACADDR ]
+                        [ { flush | add | del } MACADDR ]
+                        [ set MACADDR ] ]
+
+                ip link show [ DEVICE | group GROUP ] [ up ] [ master DEVICE ] [ type ETYPE ] [ vrf NAME ]
+
+                ip link xstats type TYPE [ ARGS ]
+
+                ip link afstats [ dev DEVICE ]
+
+                ip link help [ TYPE ]
+
+                TYPE := [ bridge | bond | can | dummy | hsr | ifb | ipoib | macvlan | macvtap | vcan | vxcan | veth | vlan | vxlan | ip6tnl | ipip | sit | gre | gretap | erspan | ip6gre | ip6gretap | ip6erspan | vti | nlmon | ipvlan | ipvtap | lowpan | geneve | bareudp | vrf | macsec | netdevsim | rmnet | xfrm ]
+
+                ETYPE := [ TYPE | bridge_slave | bond_slave ]
+
+                VFVLAN-LIST := [ VFVLAN-LIST ] VFVLAN
+
+                VFVLAN := [ vlan VLANID [ qos VLAN-QOS ] [ proto VLAN-PROTO ] ]
+
+        ip link property add dev DEVICE [ altname NAME .. ]
+
+        ip link property del dev DEVICE [ altname NAME .. ]
+    options: []
+  - name: maddress
+    description: multicast address.
+    usage: |-
+      ip [ OPTIONS ] maddress  { COMMAND | help }
+
+      ip maddress [ add | del ] MULTIADDR dev NAME
+
+      ip maddress show [ dev NAME ]
+    options: []
+  - name: monitor
+    description: watch for netlink messages.
+    usage: ip monitor [ all | OBJECT-LIST ] [ file FILENAME ] [ label ] [ all-nsid ] [ dev DEVICE ]
+    options:
+      - names:
+          - -t
+          - -timestamp
+        argument: ""
+        description: 'Prints timestamp before the event message on the separated line in format:'
+      - names:
+          - -ts
+          - -tshort
+        argument: ""
+        description: 'Prints short timestamp before the event message on the same line in format:'
+  - name: mptcp
+    description: manage MPTCP path manager.
+    usage: |-
+      ip [ OPTIONS ] mptcp { endpoint  | limits  | help  }
+
+      ip mptcp endpoint add IFADDR [ port PORT ] [ dev IFNAME ] [ id ID ] [ FLAG-LIST ]
+
+      ip mptcp endpoint del id ID
+
+      ip mptcp endpoint show [ id ID ]
+
+      ip mptcp endpoint flush
+
+      FLAG-LIST := [ FLAG-LIST ] FLAG
+
+      FLAG := [ signal | subflow | backup ]
+
+      ip mptcp limits set [ subflow SUBFLOW_NR ] [ add_addr_accepted ADD_ADDR_ACCEPTED_NR ]
+
+      ip mptcp limits show
+
+      ip mptcp monitor
+    options: []
+  - name: mroute
+    description: multicast routing cache entry.
+    usage: ip mroute show [ [  to  ] PREFIX ] [ from PREFIX ] [ iif DEVICE ] [ table TABLE_ID ]
+    options: []
+  - name: neighbour
+    description: manage ARP or NDISC cache entries.
+    usage: |-
+      ip [ OPTIONS ] neigh  { COMMAND | help }
+
+      ip neigh { add | del | change | replace } { ADDR [ lladdr LLADDR ] [ nud STATE ] | proxy ADDR } [ dev DEV ] [ router ] [ extern_learn ]
+
+      ip neigh { show | flush } [ proxy ] [ to PREFIX ] [ dev DEV ] [ nud STATE ] [ vrf NAME ]
+
+      ip neigh get ADDR dev DEV
+
+      STATE := { permanent | noarp | stale | reachable | none | incomplete | delay | probe | failed }
+    options: []
+  - name: netns
+    description: manage network namespaces.
+    usage: |-
+      ip [ OPTIONS ] netns  { COMMAND | help }
+
+      ip netns [ list ]
+
+      ip netns add NETNSNAME
+
+      ip netns attach NETNSNAME PID
+
+      ip [-all] netns del [ NETNSNAME ]
+
+      ip netns set NETNSNAME NETNSID
+
+      NETNSID := auto | POSITIVE-INT
+
+      ip netns identify [ PID ]
+
+      ip netns pids NETNSNAME
+
+      ip [-all] netns exec [ NETNSNAME ] command...
+
+      ip netns monitor
+
+      ip netns list-id [ target-nsid POSITIVE-INT ] [ nsid POSITIVE-INT ]
+    options: []
+  - name: ntable
+    description: manage the neighbor cache's operation.
+    usage: |-
+      ip [ OPTIONS ] ntable  { COMMAND | help }
+
+      ip ntable change name NAME [ dev DEV ] [ thresh1 VAL ] [ thresh2 VAL ] [ thresh3 VAL ] [ gc_int MSEC ] [ base_reachable MSEC ] [ retrans MSEC ] [ gc_stale MSEC ] [ delay_probe MSEC ] [ queue LEN ] [ app_probs VAL ] [ ucast_probes VAL ] [ mcast_probes VAL ] [ anycast_delay MSEC ] [ proxy_delay MSEC ] [ proxy_queue LEN ] [ locktime MSEC ]
+
+      ip ntable show [ dev DEV ] [ name NAME ]
+    options: []
+  - name: route
+    description: routing table entry.
+    usage: |-
+      ip [ ip-OPTIONS ] route  { COMMAND | help }
+
+      ip route { show | flush } SELECTOR
+
+      ip route save SELECTOR
+
+      ip route restore
+
+      ip route get ROUTE_GET_FLAGS ADDRESS [ from ADDRESS iif STRING  ] [ oif STRING ] [ mark MARK ] [ tos TOS ] [ vrf NAME ] [ ipproto PROTOCOL ] [ sport NUMBER ] [ dport NUMBER ]
+
+      ip route { add | del | change | append | replace } ROUTE
+
+      SELECTOR := [ root PREFIX ] [ match PREFIX ] [ exact PREFIX ] [ table TABLE_ID ] [ vrf NAME ] [ proto RTPROTO ] [ type TYPE ] [ scope SCOPE ]
+
+      ROUTE := NODE_SPEC [ INFO_SPEC ]
+
+      NODE_SPEC := [ TYPE ] PREFIX [ tos TOS ] [ table TABLE_ID ] [ proto RTPROTO ] [ scope SCOPE ] [ metric METRIC ] [ ttl-propagate { enabled | disabled } ]
+
+      INFO_SPEC := { NH | nhid ID } OPTIONS FLAGS [ nexthop NH ] ...
+
+      NH := [ encap ENCAP ] [ via [ FAMILY ] ADDRESS ] [ dev STRING ] [ weight NUMBER ] NHFLAGS
+
+      FAMILY := [ inet | inet6 | mpls | bridge | link ]
+
+      OPTIONS := FLAGS [ mtu NUMBER ] [ advmss NUMBER ] [ as [ to ] ADDRESS ] rtt TIME ] [ rttvar TIME ] [ reordering NUMBER ] [ window NUMBER ] [ cwnd NUMBER ] [ ssthresh NUMBER ] [ realms REALM ] [ rto_min TIME ] [ initcwnd NUMBER ] [ initrwnd NUMBER ] [ features FEATURES ] [ quickack BOOL ] [ congctl NAME ] [ pref PREF ] [ expires TIME ] [ fastopen_no_cookie BOOL ]
+
+      TYPE := [ unicast | local | broadcast | multicast | throw | unreachable | prohibit | blackhole | nat ]
+
+      TABLE_ID := [ local| main | default | all | NUMBER ]
+
+      SCOPE := [ host | link | global | NUMBER ]
+
+      NHFLAGS := [ onlink | pervasive ]
+
+      RTPROTO := [ kernel | boot | static | NUMBER ]
+
+      FEATURES := [ ecn | ]
+
+      PREF := [ low | medium | high ]
+
+      ENCAP := [ ENCAP_MPLS | ENCAP_IP | ENCAP_BPF | ENCAP_SEG6 | ENCAP_SEG6LOCAL | ENCAP_IOAM6 ]
+
+      ENCAP_MPLS := mpls [ LABEL ] [ ttl TTL ]
+
+      ENCAP_IP := ip id TUNNEL_ID dst REMOTE_IP [ src SRC ] [ tos TOS ] [ ttl TTL ]
+
+      ENCAP_BPF := bpf [ in PROG ] [ out PROG ] [ xmit PROG ] [ headroom SIZE ]
+
+      ENCAP_SEG6 := seg6 mode [ encap | inline | l2encap ] segs SEGMENTS [ hmac KEYID ]
+
+      ENCAP_SEG6LOCAL := seg6local action SEG6_ACTION [ SEG6_ACTION_PARAM ] [ count ]
+
+      ENCAP_IOAM6 := ioam6 trace prealloc type IOAM6_TRACE_TYPE ns IOAM6_NAMESPACE size IOAM6_TRACE_SIZE
+
+      ROUTE_GET_FLAGS :=  [ fibmatch  ]
+    options: []
+  - name: rule
+    description: rule in routing policy database.
+    usage: |-
+      ip [ OPTIONS ] rule { COMMAND | help }
+
+      ip rule [ list [ SELECTOR ]]
+
+      ip rule { add | del } SELECTOR ACTION
+
+      ip rule { flush | save | restore }
+
+      SELECTOR := [ not ] [ from PREFIX ] [ to PREFIX ] [ tos TOS ] [ fwmark FWMARK[/MASK] ] [ iif STRING ] [ oif STRING ] [ pref NUMBER ] [ l3mdev ] [ uidrange NUMBER-NUMBER ] [ ipproto PROTOCOL ] [ sport [ NUMBER | NUMBER-NUMBER ] ] [ dport [ NUMBER | NUMBER-NUMBER ] ] [ tun_id TUN_ID ]
+
+      ACTION := [ table TABLE_ID ] [ protocol PROTO ] [ nat ADDRESS ] [ realms [SRCREALM/]DSTREALM ] [ goto NUMBER ] SUPPRESSOR
+
+      SUPPRESSOR := [ suppress_prefixlength NUMBER ] [ suppress_ifgroup GROUP ]
+
+      TABLE_ID := [ local | main | default | NUMBER ]
+    options: []
+  - name: tcp_metrics
+    aliases:
+      - tcpmetrics
+    description: manage TCP Metrics
+    usage: |-
+      ip [ OPTIONS ] tcp_metrics { COMMAND | help }
+
+      ip tcp_metrics { show | flush } SELECTOR
+
+      ip tcp_metrics delete [ address ] ADDRESS
+
+      SELECTOR := [ [ address ] PREFIX ]
+    options: []
+  - name: token
+    description: manage tokenized interface identifiers.
+    usage: |-
+      ip token { COMMAND | help }
+
+      ip token set TOKEN dev DEV
+
+      ip token del dev DEV
+
+      ip token get [ dev DEV ]
+
+      ip token [ list ]
+    options: []
+  - name: tunnel
+    description: tunnel over IP.
+    usage: |-
+      ip [ OPTIONS ] tunnel { add | change | del | show | prl | 6rd } [ NAME ]
+              [ mode MODE ] [ remote ADDR ] [ local ADDR ]
+              [ [i|o]seq ] [ [i|o]key KEY ] [ [i|o]csum ] ]
+              [ encaplimit ELIM ] [ ttl|hoplimit TTL ]
+              [ tos TOS ] [ flowlabel FLOWLABEL ]
+              [ prl-default ADDR ] [ prl-nodefault ADDR ] [ prl-delete ADDR ]
+              [ 6rd-prefix ADDR ] [ 6rd-relay_prefix ADDR ] [ 6rd-reset ]
+              [ [no]pmtudisc ] [ [no]ignore-df ] [ [no]allow-localremote ]
+              [ dev PHYS_DEV ]
+
+      MODE :=  { ipip | gre | sit | isatap | vti | ip6ip6 | ipip6 | ip6gre | vti6 | any }
+
+      ADDR := { IP_ADDRESS | any }
+
+      TOS := { STRING | 00..ff | inherit | inherit/STRING | inherit/00..ff }
+
+      ELIM := { none | 0..255 }
+
+      TTL := { 1..255 | inherit }
+
+      KEY := { DOTTED_QUAD | NUMBER }
+    options: []
+  - name: vrf
+    description: manage virtual routing and forwarding devices.
+    usage: |-
+      ip vrf  { COMMAND | help }
+
+      ip vrf show [ NAME ]
+
+      ip vrf identify [ PID ]
+
+      ip vrf pids NAME
+
+      ip vrf exec [ NAME ] command...
+    options: []
+  - name: xfrm
+    description: manage IPSec policies.
+    usage: |-
+      ip [ OPTIONS ] xfrm  { COMMAND | help }
+
+      ip xfrm XFRM-OBJECT { COMMAND | help }
+
+      XFRM-OBJECT := state | policy | monitor
+
+      ip xfrm state { add | update } ID [ ALGO-LIST ] [ mode MODE ] [ mark MARK [ mask MASK ] ] [ reqid REQID ] [ seq SEQ ] [ replay-window SIZE ] [ replay-seq SEQ ] [ replay-oseq SEQ ] [ replay-seq-hi SEQ ] [ replay-oseq-hi SEQ ] [ flag FLAG-LIST ] [ sel SELECTOR ] [ LIMIT-LIST ] [ encap ENCAP ] [ coa ADDR[/PLEN] ] [ ctx CTX ] [ extra-flag EXTRA-FLAG-LIST ] [ output-mark OUTPUT-MARK [ mask MASK ] ] [ if_id IF-ID ] [ tfcpad LENGTH ]
+
+      ip xfrm state allocspi ID [ mode MODE ] [ mark MARK [ mask MASK ] ] [ reqid REQID ] [ seq SEQ ] [ min SPI max SPI ]
+
+      ip xfrm state { delete | get } ID [ mark MARK [ mask MASK ] ]
+
+      ip [ -4 | -6 ] xfrm state deleteall [ ID ] [ mode MODE ] [ reqid REQID ] [ flag FLAG-LIST ]
+
+      ip [ -4 | -6 ] xfrm state list [ ID ] [ nokeys ] [ mode MODE ] [ reqid REQID ] [ flag FLAG-LIST ]
+
+      ip xfrm state flush [ proto XFRM-PROTO ]
+
+      ip xfrm state count
+
+      ID := [ src ADDR ] [ dst ADDR ] [ proto XFRM-PROTO ] [ spi SPI ]
+
+      XFRM-PROTO := esp | ah | comp | route2 | hao
+
+      ALGO-LIST := [ ALGO-LIST ] ALGO
+
+      ALGO := { enc | auth } ALGO-NAME ALGO-KEYMAT |
+              auth-trunc ALGO-NAME ALGO-KEYMAT ALGO-TRUNC-LEN |
+              aead ALGO-NAME ALGO-KEYMAT ALGO-ICV-LEN |
+              comp ALGO-NAME
+
+      MODE := transport | tunnel | beet | ro | in_trigger
+
+      FLAG-LIST := [ FLAG-LIST ] FLAG
+
+      FLAG := noecn | decap-dscp | nopmtudisc | wildrecv | icmp | af-unspec | align4 | esn
+
+      SELECTOR := [ src ADDR[/PLEN] ] [ dst ADDR[/PLEN] ] [ dev DEV ]
+              [ UPSPEC ]
+
+      UPSPEC := proto { PROTO |
+              { tcp | udp | sctp | dccp } [ sport PORT ] [ dport PORT ] |
+              { icmp | ipv6-icmp | mobility-header } [ type NUMBER ] [ code NUMBER ] |
+              gre [ key { DOTTED-QUAD | NUMBER } ] }
+
+      LIMIT-LIST := [ LIMIT-LIST ] limit LIMIT
+
+      LIMIT := { time-soft | time-hard | time-use-soft | time-use-hard } SECONDS |
+              { byte-soft | byte-hard } SIZE |
+              { packet-soft | packet-hard } COUNT
+
+      ENCAP := { espinudp | espinudp-nonike | espintcp } SPORT DPORT OADDR
+
+      EXTRA-FLAG-LIST := [ EXTRA-FLAG-LIST ] EXTRA-FLAG
+
+      EXTRA-FLAG := dont-encap-dscp | oseq-may-wrap
+
+      ip xfrm policy { add | update } SELECTOR dir DIR [ ctx CTX ] [ mark MARK [ mask MASK ] ] [ index INDEX ] [ ptype PTYPE ] [ action ACTION ] [ priority PRIORITY ] [ flag FLAG-LIST ] [ if_id IF-ID ] [ LIMIT-LIST ] [ TMPL-LIST ]
+
+      ip xfrm policy { delete | get } { SELECTOR | index INDEX } dir DIR [ ctx CTX ] [ mark MARK [ mask MASK ] ] [ ptype PTYPE ] [ if_id IF-ID ]
+
+      ip [ -4 | -6 ] xfrm policy { deleteall | list } [ nosock ] [ SELECTOR ] [ dir DIR ] [ index INDEX ] [ ptype PTYPE ] [ action ACTION ] [ priority PRIORITY ] [ flag FLAG-LIST]
+
+      ip xfrm policy flush [ ptype PTYPE ]
+
+      ip xfrm policy count
+
+      ip xfrm policy set [ hthresh4 LBITS RBITS ] [ hthresh6 LBITS RBITS ]
+
+      SELECTOR := [ src ADDR[/PLEN] ] [ dst ADDR[/PLEN] ] [ dev DEV ] [ UPSPEC ]
+
+      UPSPEC := proto { PROTO |
+              { tcp | udp | sctp | dccp } [ sport PORT ] [ dport PORT ] |
+              { icmp | ipv6-icmp | mobility-header } [ type NUMBER ] [ code NUMBER ] |
+              gre [ key { DOTTED-QUAD | NUMBER } ] }
+
+      DIR := in | out | fwd
+
+      PTYPE := main | sub
+
+      ACTION := allow | block
+
+      FLAG-LIST := [ FLAG-LIST ] FLAG
+
+      FLAG := localok | icmp
+
+      LIMIT-LIST := [ LIMIT-LIST ] limit LIMIT
+
+      LIMIT := { time-soft | time-hard | time-use-soft | time-use-hard } SECONDS |
+              { byte-soft | byte-hard } SIZE |
+              { packet-soft | packet-hard } COUNT
+
+      TMPL-LIST := [ TMPL-LIST ] tmpl TMPL
+
+      TMPL := ID [ mode MODE ] [ reqid REQID ] [ level LEVEL ]
+
+      ID := [ src ADDR ] [ dst ADDR ] [ proto XFRM-PROTO ] [ spi SPI ]
+
+      XFRM-PROTO := esp | ah | comp | route2 | hao
+
+      MODE := transport | tunnel | beet | ro | in_trigger
+
+      LEVEL := required | use
+
+      ip xfrm monitor [ all-nsid ] [ nokeys ] [ all
+               | LISTofXFRM-OBJECTS ]
+
+      LISTofXFRM-OBJECTS := [ LISTofXFRM-OBJECTS ] XFRM-OBJECT
+
+      XFRM-OBJECT := acquire | expire | SA | policy | aevent | report
+    options: []
+tldr: |
+  > Show / manipulate routing, devices, policy routing and tunnels.
+  > Some subcommands such as `ip address` have their own usage documentation.
+  > More information: <https://www.man7.org/linux/man-pages/man8/ip.8.html>.
+
+  - List interfaces with detailed info:
+
+  `ip address`
+
+  - List interfaces with brief network layer info:
+
+  `ip -brief address`
+
+  - List interfaces with brief link layer info:
+
+  `ip -brief link`
+
+  - Display the routing table:
+
+  `ip route`
+
+  - Show neighbors (ARP table):
+
+  `ip neighbour`
+
+  - Make an interface up/down:
+
+  `ip link set {{interface}} up/down`
+
+  - Add/Delete an IP address to an interface:
+
+  `ip addr add/del {{ip}}/{{mask}} dev {{interface}}`
+
+  - Add a default route:
+
+  `ip route add default via {{ip}} dev {{interface}}`

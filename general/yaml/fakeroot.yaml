@@ -1,0 +1,70 @@
+name: fakeroot
+description: create a fake root environment
+usage: fakeroot [-l|--lib library] [--faked faked-binary] [-i load-file] [-s save-file] [-u|--unknown-is-real ] [-b|--fd-base ] [-h|--help ] [-v|--version ] [--] [command]
+options:
+  - names:
+      - -l
+      - --lib
+    argument: library
+    description: Specify an alternative wrapper library.
+  - names:
+      - --faked
+    argument: binary
+    description: Specify an alternative binary to use as faked.
+  - names:
+      - -s
+    argument: save-file
+    description: Save the fakeroot environment to save-file on exit. This file can be used to restore the environment later using -i. However, this file will leak and fakeroot will behave in odd ways unless you leave the files touched inside the fakeroot alone when outside the environment. Still, this can be useful. For example, it can be used with rsync(1) to back up and restore whole directory trees complete with user, group and device information without needing to be root. See /usr/share/doc/fakeroot/README.saving for more details.
+  - names:
+      - -i
+    argument: load-file
+    description: Load a fakeroot environment previously saved using -s from load-file. Note that this does not implicitly save the file, use -s as well for that behaviour. Using the same file for both -i and -s in a single fakeroot invocation is safe.
+  - names:
+      - -u
+      - --unknown-is-real
+    argument: ""
+    description: Use the real ownership of files previously unknown to fakeroot instead of pretending they are owned by root:root.
+  - names:
+      - -b
+    argument: fd
+    description: Specify fd base (TCP mode only). fd is the minimum file descriptor number to use for TCP connections; this may be important to avoid conflicts with the file descriptors used by the programs being run under fakeroot.
+  - names:
+      - -h
+    argument: ""
+    description: Display help.
+  - names:
+      - -v
+    argument: ""
+    description: Display version.
+  - names:
+      - -rw-r--r--
+    argument: 1 joost    users
+    description: 0 Jul 2 22:58 hda3
+version: fakeroot version 1.28
+tldr: |
+  > Run a command in an environment faking root privileges for file manipulation.
+  > More information: <https://manpages.debian.org/latest/fakeroot/fakeroot.1.html>.
+
+  - Start the default shell as fakeroot:
+
+  `fakeroot`
+
+  - Run a command as fakeroot:
+
+  `fakeroot -- {{command}} {{command_arguments}}`
+
+  - Run a command as fakeroot and save the environment to a file on exit:
+
+  `fakeroot -s {{path/to/file}} -- {{command}} {{command_arguments}}`
+
+  - Load a fakeroot environment and run a command as fakeroot:
+
+  `fakeroot -i {{path/to/file}} -- {{command}} {{command_arguments}}`
+
+  - Run a command keeping the real ownership of files instead of pretending they are owned by root:
+
+  `fakeroot --unknown-is-real -- {{command}} {{command_arguments}}`
+
+  - Display help:
+
+  `fakeroot --help`

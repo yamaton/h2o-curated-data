@@ -1,0 +1,183 @@
+name: som.py
+description: Compares variants by location and alleles (using bcftools isec)
+usage: |-
+  som.py [-h] -o OUTPUT [-l LOCATION] [-R REGIONS_BEDFILE] [-T TARGETS_BEDFILE] [-f FP] [-a AMBI] [--ambi-fp] [--no-ambi-fp] [--count-unk] [--no-count-unk] [-e] [-r REF] [--scratch-prefix SCRATCH_PREFIX] [--keep-scratch] [--continue] [-P] [--feature-table {hcc.strelka.snv,hcc.pisces.snv,hcc.mutect.snv,hcc.varscan2.indel,admix.strelka.snv,generic,hcc.pisces.indel,hcc.strelka.indel,admix.strelka.indel,hcc.varscan2.snv,hcc.mutect.indel}] [--happy-stats] [--bam BAMS] [--normalize-truth] [--normalize-query] [-N] [--fixchr-truth] [--fixchr-query] [--fix-chr-truth] [--fix-chr-query] [--no-fixchr-truth] [--no-fixchr-query] [--no-order-check] [--roc {varscan2.indel,strelka.snv.qss,mutect.snv,strelka.snv,strelka.indel.evs,varscan2.snv,mutect.indel,strelka.indel,strelka.snv.vqsr}] [--bin-afs] [--af-binsize AF_STRAT_BINSIZE] [--af-truth AF_STRAT_TRUTH] [--af-query AF_STRAT_QUERY] [-FN] [--fp-region-size FPR_SIZE] [--ci-level CI_LEVEL] [--logfile LOGFILE] [--verbose | --quiet]
+         truth query
+options:
+  - names:
+      - -h
+      - --help
+    argument: ""
+    description: show this help message and exit
+  - names:
+      - -o
+      - --output
+    argument: OUTPUT
+    description: Output file prefix for statistics and feature table (when selected)
+  - names:
+      - -l
+      - --location
+    argument: LOCATION
+    description: Location for bcftools view (e.g. chr1)
+  - names:
+      - -R
+      - --restrict-regions
+    argument: REGIONS_BEDFILE
+    description: Restrict analysis to given (sparse) regions (using -R in bcftools).
+  - names:
+      - -T
+      - --target-regions
+    argument: TARGETS_BEDFILE
+    description: Restrict analysis to given (dense) regions (using -T in bcftools).
+  - names:
+      - -f
+      - --false-positives
+    argument: FP
+    description: False-positive region bed file to distinguish UNK from FP
+  - names:
+      - -a
+      - --ambiguous
+    argument: AMBI
+    description: Ambiguous region bed file(s) to distinguish from FP (e.g. variant only observed in some replicates)
+  - names:
+      - --ambi-fp
+    argument: ""
+    description: Use FP calls from ambiguous region files also.
+  - names:
+      - --no-ambi-fp
+    argument: ""
+    description: Do not use FP calls from ambiguous region files also.
+  - names:
+      - --count-unk
+    argument: ""
+    description: Assume the truth set covers the whole genome and only count FPs in regions specified by the truth VCF or ambiguous/false-positive regions.
+  - names:
+      - --no-count-unk
+    argument: ""
+    description: Do not use FP calls from ambiguous region files also.
+  - names:
+      - -e
+      - --explain_ambiguous
+    argument: ""
+    description: print a table giving the number of ambiguous events per category
+  - names:
+      - -r
+      - --reference
+    argument: REF
+    description: Specify a reference file.
+  - names:
+      - --scratch-prefix
+    argument: SCRATCH_PREFIX
+    description: Filename prefix for scratch report output.
+  - names:
+      - --keep-scratch
+    argument: ""
+    description: Filename prefix for scratch report output.
+  - names:
+      - --continue
+    argument: ""
+    description: Continue from scratch space (i.e. use VCFs in there if they already exist).
+  - names:
+      - -P
+      - --include-nonpass
+    argument: ""
+    description: Use to include failing variants in comparison.
+  - names:
+      - --feature-table
+    argument: '{hcc.strelka.snv,hcc.pisces.snv,hcc.mutect.snv,hcc.varscan2.indel,admix.strelka.snv,generic,hcc.pisces.indel,hcc.strelka.indel,admix.strelka.indel,hcc.varscan2.snv,hcc.mutect.indel}'
+    description: Select a feature table to output.
+  - names:
+      - --happy-stats
+    argument: ""
+    description: Generate summary.csv.
+  - names:
+      - --bam
+    argument: BAMS
+    description: pass one or more BAM files for feature table extraction
+  - names:
+      - --normalize-truth
+    argument: ""
+    description: Enable running of bcftools norm on the truth file.
+  - names:
+      - --normalize-query
+    argument: ""
+    description: Enable running of bcftools norm on the query file.
+  - names:
+      - -N
+      - --normalize-all
+    argument: ""
+    description: Enable running of bcftools norm on both truth and query file.
+  - names:
+      - --fixchr-truth
+    argument: ""
+    description: 'Add chr prefix to truth file (default: true).'
+  - names:
+      - --fixchr-query
+    argument: ""
+    description: 'Add chr prefix to query file (default: true).'
+  - names:
+      - --fix-chr-truth
+    argument: ""
+    description: Same as --fixchr-truth.
+  - names:
+      - --fix-chr-query
+    argument: ""
+    description: Same as --fixchr-query.
+  - names:
+      - --no-fixchr-truth
+    argument: ""
+    description: 'Disable chr replacement for truth (default: false).'
+  - names:
+      - --no-fixchr-query
+    argument: ""
+    description: 'Add chr prefix to query file (default: false).'
+  - names:
+      - --no-order-check
+    argument: ""
+    description: Disable checking the order of TP features (dev feature).
+  - names:
+      - --roc
+    argument: '{varscan2.indel,strelka.snv.qss,mutect.snv,strelka.snv,strelka.indel.evs,varscan2.snv,mutect.indel,strelka.indel,strelka.snv.vqsr}'
+    description: Create a ROC-style table. This is caller specific - this will override the --feature-table switch!
+  - names:
+      - --bin-afs
+    argument: ""
+    description: Stratify into different AF buckets. This needs to have features available for getting the AF both in truth and query variants.
+  - names:
+      - --af-binsize
+    argument: AF_STRAT_BINSIZE
+    description: Bin size for AF binning (should be < 1). Multiple bin sizes can be specified using a comma, e.g. 0.1,0.2,0.5,0.2 will split at 0.1, 0.3, 0.8 and 1.0.
+  - names:
+      - --af-truth
+    argument: AF_STRAT_TRUTH
+    description: Feature name to use for retrieving AF for truth variants (TP and FN)
+  - names:
+      - --af-query
+    argument: AF_STRAT_QUERY
+    description: Feature name to use for retrieving AF for query variants (FP/UNK/AMBI)
+  - names:
+      - -FN
+      - --count-filtered-fn
+    argument: ""
+    description: Count filtered vs. absent FN numbers. This requires the -P switch (to use all variants) and either the --feature-table or --roc switch.
+  - names:
+      - --fp-region-size
+    argument: FPR_SIZE
+    description: 'How to obtain the normalisation constant for FP rate. By default, this will use the FP region bed file size when using --count-unk and the size of all reference contigs that overlap with the location specified in -l otherwise. This can be overridden with: 1) a number of nucleotides, or 2) "auto" to use the lengths of all contigs that have calls. The resulting value is used as fp.region.size.'
+  - names:
+      - --ci-level
+    argument: CI_LEVEL
+    description: 'Confidence level for precision/recall confidence intervals (default: 0.95)'
+  - names:
+      - --logfile
+    argument: LOGFILE
+    description: Write logging information into file rather than to stderr
+  - names:
+      - --verbose
+    argument: ""
+    description: Raise logging level from warning to info.
+  - names:
+      - --quiet
+    argument: ""
+    description: Set logging level to output errors only.
+version: 0.3.14

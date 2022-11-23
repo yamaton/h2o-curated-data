@@ -1,0 +1,1674 @@
+name: firebase
+description: The Firebase Command Line Tools
+usage: firebase [command]
+options:
+  - names:
+      - -V
+      - --version
+    argument: ""
+    description: output the version number
+  - names:
+      - -P
+      - --project
+    argument: <alias_or_project_id>
+    description: the Firebase project to use for this command
+  - names:
+      - --account
+    argument: ""
+    description: the Google account to use for authorization
+  - names:
+      - -j
+      - --json
+    argument: ""
+    description: output JSON instead of text, also triggers non-interactive mode
+  - names:
+      - --token
+    argument: <token>
+    description: DEPRECATED - will be removed in a future major version - supply an auth token for this command
+  - names:
+      - --non-interactive
+    argument: ""
+    description: error out of the command instead of waiting for prompts
+  - names:
+      - -i
+      - --interactive
+    argument: ""
+    description: force prompts to be displayed
+  - names:
+      - --debug
+    argument: ""
+    description: print verbose debug output and keep a debug log file
+  - names:
+      - -c
+      - --config
+    argument: ""
+    description: path to the firebase.json file to use for configuration
+  - names:
+      - -h
+      - --help
+    argument: ""
+    description: output usage information
+subcommands:
+  - name: appdistribution:distribute
+    description: upload a release binary
+    usage: firebase appdistribution:distribute [options] <release-binary-file>
+    options:
+      - names:
+          - --app
+        argument: <app_id>
+        description: the app id of your Firebase app
+      - names:
+          - --release-notes
+        argument: <string>
+        description: release notes to include
+      - names:
+          - --release-notes-file
+        argument: <file>
+        description: path to file with release notes
+      - names:
+          - --testers
+        argument: <string>
+        description: a comma separated list of tester emails to distribute to
+      - names:
+          - --testers-file
+        argument: <file>
+        description: path to file with a comma separated list of tester emails to distribute to
+      - names:
+          - --groups
+        argument: <string>
+        description: a comma separated list of group aliases to distribute to
+      - names:
+          - --groups-file
+        argument: <file>
+        description: path to file with a comma separated list of group aliases to distribute to
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: output usage information
+  - name: appdistribution:testers:add
+    description: add testers to project
+    usage: firebase appdistribution:testers:add [options] [emails...]
+    options:
+      - names:
+          - --file
+        argument: <file>
+        description: a path to a file containing a list of tester emails to be added
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: output usage information
+  - name: appdistribution:testers:remove
+    description: remove testers from a project
+    usage: firebase appdistribution:testers:remove [options] [emails...]
+    options:
+      - names:
+          - --file
+        argument: <file>
+        description: a path to a file containing a list of tester emails to be removed
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: output usage information
+  - name: apps:list
+    description: 'list the registered apps of a Firebase project. Optionally filter apps by [platform]: IOS, ANDROID or WEB (case insensitive)'
+    usage: firebase apps:list [options] [platform]
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: output usage information
+  - name: apps:android:sha:list
+    description: list the SHA certificate hashes for a given app id.
+    usage: firebase apps:android:sha:list [options] <appId>
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: output usage information
+  - name: apps:android:sha:create
+    description: add a SHA certificate hash for a given app id.
+    usage: firebase apps:android:sha:create [options] <appId> <shaHash>
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: output usage information
+  - name: apps:android:sha:delete
+    description: delete a SHA certificate hash for a given app id.
+    usage: firebase apps:android:sha:delete [options] <appId> <shaId>
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: output usage information
+  - name: auth:export
+    description: Export accounts from your Firebase project into a data file
+    usage: firebase auth:export [options] [dataFile]
+    options:
+      - names:
+          - --format
+        argument: <format>
+        description: Format of exported data (csv, json). Ignored if <dataFile> has format extension.
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: output usage information
+  - name: auth:import
+    description: import users into your Firebase project from a data file(.csv or .json)
+    usage: firebase auth:import [options] [dataFile]
+    options:
+      - names:
+          - --hash-algo
+        argument: <hashAlgo>
+        description: specify the hash algorithm used in password for these accounts
+      - names:
+          - --hash-key
+        argument: <hashKey>
+        description: specify the key used in hash algorithm
+      - names:
+          - --salt-separator
+        argument: <saltSeparator>
+        description: specify the salt separator which will be appended to salt when verifying password. only used by SCRYPT now.
+      - names:
+          - --rounds
+        argument: <rounds>
+        description: specify how many rounds for hash calculation.
+      - names:
+          - --mem-cost
+        argument: <memCost>
+        description: specify the memory cost for firebase scrypt, or cpu/memory cost for standard scrypt
+      - names:
+          - --parallelization
+        argument: <parallelization>
+        description: specify the parallelization for standard scrypt.
+      - names:
+          - --block-size
+        argument: <blockSize>
+        description: specify the block size (normally is 8) for standard scrypt.
+      - names:
+          - --dk-len
+        argument: <dkLen>
+        description: specify derived key length for standard scrypt.
+      - names:
+          - --hash-input-order
+        argument: <hashInputOrder>
+        description: specify the order of password and salt. Possible values are SALT_FIRST and PASSWORD_FIRST. MD5, SHA1, SHA256, SHA512, HMAC_MD5, HMAC_SHA1, HMAC_SHA256, HMAC_SHA512 support this flag.
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: output usage information
+  - name: crashlytics:symbols:upload
+    description: upload symbols for native code, to symbolicate stack traces
+    usage: firebase crashlytics:symbols:upload [options] <symbolFiles...>
+    options:
+      - names:
+          - --app
+        argument: <appID>
+        description: the app id of your Firebase app
+      - names:
+          - --generator
+        argument: '[breakpad|csym]'
+        description: the symbol generator being used, default is breakpad
+      - names:
+          - --dry-run
+        argument: ""
+        description: generate symbols without uploading them
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: output usage information
+  - name: crashlytics:mappingfile:generateid
+    description: generate a mapping file id and write it to an Android resource file, which will be built into the app
+    usage: firebase crashlytics:mappingfile:generateid [options]
+    options:
+      - names:
+          - --resource-file
+        argument: <resourceFile>
+        description: path to the Android resource XML file that will be created or updated.
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: output usage information
+  - name: crashlytics:mappingfile:upload
+    description: upload a ProGuard/R8-compatible mapping file to deobfuscate stack traces
+    usage: firebase crashlytics:mappingfile:upload [options] <mappingFile>
+    options:
+      - names:
+          - --app
+        argument: <appID>
+        description: the app id of your Firebase app
+      - names:
+          - --resource-file
+        argument: <resourceFile>
+        description: path to the Android resource XML file that includes the mapping file id
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: output usage information
+  - name: database:get
+    description: fetch and print JSON data at the specified path
+    usage: firebase database:get [options] <path>
+    options:
+      - names:
+          - -o
+          - --output
+        argument: <filename>
+        description: save output to the specified file
+      - names:
+          - --pretty
+        argument: ""
+        description: pretty print response
+      - names:
+          - --shallow
+        argument: ""
+        description: return shallow response
+      - names:
+          - --export
+        argument: ""
+        description: include priorities in the output response
+      - names:
+          - --order-by
+        argument: <key>
+        description: select a child key by which to order results
+      - names:
+          - --order-by-key
+        argument: ""
+        description: order by key name
+      - names:
+          - --order-by-value
+        argument: ""
+        description: order by primitive value
+      - names:
+          - --limit-to-first
+        argument: <num>
+        description: limit to the first <num> results
+      - names:
+          - --limit-to-last
+        argument: <num>
+        description: limit to the last <num> results
+      - names:
+          - --start-at
+        argument: <val>
+        description: start results at <val> (based on specified ordering)
+      - names:
+          - --end-at
+        argument: <val>
+        description: end results at <val> (based on specified ordering)
+      - names:
+          - --equal-to
+        argument: <val>
+        description: restrict results to <val> (based on specified ordering)
+      - names:
+          - --instance
+        argument: <instance>
+        description: use the database <instance>.firebaseio.com (if omitted, use default database instance)
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: output usage information
+  - name: database:instances:create
+    description: create a realtime database instance
+    usage: firebase database:instances:create [options] <instanceName>
+    options:
+      - names:
+          - -l
+          - --location
+        argument: <location>
+        description: (optional) location for the database instance, defaults to us-central1
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: output usage information
+  - name: database:instances:list
+    description: list realtime database instances, optionally filtered by a specified location
+    usage: firebase database:instances:list [options]
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: output usage information
+  - name: database:profile
+    description: profile the Realtime Database and generate a usage report
+    usage: firebase database:profile [options]
+    options:
+      - names:
+          - -o
+          - --output
+        argument: <filename>
+        description: save the output to the specified file
+      - names:
+          - -d
+          - --duration
+        argument: <seconds>
+        description: collect database usage information for the specified number of seconds
+      - names:
+          - --raw
+        argument: ""
+        description: output the raw stats collected as newline delimited json
+      - names:
+          - --no-collapse
+        argument: ""
+        description: prevent collapsing similar paths into $wildcard locations
+      - names:
+          - -i
+          - --input
+        argument: <filename>
+        description: generate the report based on the specified file instead of streaming logs from the database
+      - names:
+          - --instance
+        argument: <instance>
+        description: use the database <instance>.firebaseio.com (if omitted, use default database instance)
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: output usage information
+  - name: database:push
+    description: add a new JSON object to a list of data in your Firebase
+    usage: firebase database:push [options] <path> [infile]
+    options:
+      - names:
+          - -d
+          - --data
+        argument: <data>
+        description: specify escaped JSON directly
+      - names:
+          - --instance
+        argument: <instance>
+        description: use the database <instance>.firebaseio.com (if omitted, use default database instance)
+      - names:
+          - --disable-triggers
+        argument: ""
+        description: suppress any Cloud functions triggered by this operation
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: output usage information
+  - name: database:remove
+    description: remove data from your Firebase at the specified path
+    usage: firebase database:remove [options] <path>
+    options:
+      - names:
+          - -f
+          - --force
+        argument: ""
+        description: pass this option to bypass confirmation prompt
+      - names:
+          - --instance
+        argument: <instance>
+        description: use the database <instance>.firebaseio.com (if omitted, use default database instance)
+      - names:
+          - --disable-triggers
+        argument: ""
+        description: suppress any Cloud functions triggered by this operation
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: output usage information
+  - name: database:set
+    description: store JSON data at the specified path via STDIN, arg, or file
+    usage: firebase database:set [options] <path> [infile]
+    options:
+      - names:
+          - -d
+          - --data
+        argument: <data>
+        description: specify escaped JSON directly
+      - names:
+          - -f
+          - --force
+        argument: ""
+        description: pass this option to bypass confirmation prompt
+      - names:
+          - --instance
+        argument: <instance>
+        description: use the database <instance>.firebaseio.com (if omitted, use default database instance)
+      - names:
+          - --disable-triggers
+        argument: ""
+        description: suppress any Cloud functions triggered by this operation
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: output usage information
+  - name: database:settings:get
+    description: read the realtime database setting at path
+    usage: firebase database:settings:get [options] <path>
+    options:
+      - names:
+          - --instance
+        argument: <instance>
+        description: use the database <instance>.firebaseio.com (if omitted, uses default database instance)
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: output usage information
+  - name: database:settings:set
+    description: set the realtime database setting at path.
+    usage: firebase database:settings:set [options] <path> <value>
+    options:
+      - names:
+          - --instance
+        argument: <instance>
+        description: use the database <instance>.firebaseio.com (if omitted, use default database instance)
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: output usage information
+  - name: database:update
+    description: update some of the keys for the defined path in your Firebase
+    usage: firebase database:update [options] <path> [infile]
+    options:
+      - names:
+          - -d
+          - --data
+        argument: <data>
+        description: specify escaped JSON directly
+      - names:
+          - -f
+          - --force
+        argument: ""
+        description: pass this option to bypass confirmation prompt
+      - names:
+          - --instance
+        argument: <instance>
+        description: use the database <instance>.firebaseio.com (if omitted, use default database instance)
+      - names:
+          - --disable-triggers
+        argument: ""
+        description: suppress any Cloud functions triggered by this operation
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: output usage information
+  - name: deploy
+    description: deploy code and assets to your Firebase project
+    usage: firebase deploy [options]
+    options:
+      - names:
+          - -f
+          - --force
+        argument: ""
+        description: delete Cloud Functions missing from the current working directory without confirmation
+      - names:
+          - -p
+          - --public
+        argument: <path>
+        description: override the Hosting public directory specified in firebase.json
+      - names:
+          - -m
+          - --message
+        argument: <message>
+        description: an optional message describing this deploy
+      - names:
+          - --only
+        argument: <targets>
+        description: only deploy to specified, comma-separated targets (e.g. "hosting,storage"). For functions, can specify filters with colons to scope function deploys to only those functions (e.g. "--only functions:func1,functions:func2"). When filtering based on export groups (the exported module object keys), use dots to specify group names (e.g. "--only functions:group1.subgroup1,functions:group2)"
+      - names:
+          - --except
+        argument: <targets>
+        description: deploy to all targets except specified (e.g. "database")
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: output usage information
+  - name: emulators:exec
+    description: start the local Firebase emulators, run a test script, then shut down the emulators
+    usage: firebase emulators:exec [options] <script>
+    options:
+      - names:
+          - --only
+        argument: <emulators>
+        description: 'only specific emulators. This is a comma separated list of emulator names. Valid options are: ["auth","functions","firestore","database","hosting","pubsub","storage","eventarc"]'
+      - names:
+          - --inspect-functions
+        argument: '[port]'
+        description: emulate Cloud Functions in debug mode with the node inspector on the given port (9229 if not specified)
+      - names:
+          - --import
+        argument: '[dir]'
+        description: import emulator data from a previous export (see emulators:export)
+      - names:
+          - --export-on-exit
+        argument: '[dir]'
+        description: automatically export emulator data (emulators:export) when the emulators make a clean exit (SIGINT), when no dir is provided the location of --import [dir] is used
+      - names:
+          - --ui
+        argument: ""
+        description: run the Emulator UI
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: output usage information
+  - name: emulators:export
+    description: export data from running emulators
+    usage: firebase emulators:export [options] <path>
+    options:
+      - names:
+          - -f
+          - --force
+        argument: ""
+        description: overwrite any export data in the target directory
+      - names:
+          - --only
+        argument: <emulators>
+        description: 'only specific emulators. This is a comma separated list of emulator names. Valid options are: ["auth","functions","firestore","database","hosting","pubsub","storage","eventarc"]'
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: output usage information
+  - name: emulators:start
+    description: start the local Firebase emulators
+    usage: firebase emulators:start [options]
+    options:
+      - names:
+          - --only
+        argument: <emulators>
+        description: 'only specific emulators. This is a comma separated list of emulator names. Valid options are: ["auth","functions","firestore","database","hosting","pubsub","storage","eventarc"]'
+      - names:
+          - --inspect-functions
+        argument: '[port]'
+        description: emulate Cloud Functions in debug mode with the node inspector on the given port (9229 if not specified)
+      - names:
+          - --import
+        argument: '[dir]'
+        description: import emulator data from a previous export (see emulators:export)
+      - names:
+          - --export-on-exit
+        argument: '[dir]'
+        description: automatically export emulator data (emulators:export) when the emulators make a clean exit (SIGINT), when no dir is provided the location of --import [dir] is used
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: output usage information
+  - name: experimental:functions:shell
+    description: launch full Node shell with emulated functions. (Alias for `firebase functions:shell.)
+    usage: firebase experimental:functions:shell [options]
+    options:
+      - names:
+          - -p
+          - --port
+        argument: <port>
+        description: 'the port on which to emulate functions (default: 5000) (default: 5000)'
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: output usage information
+  - name: experiments:list
+    description: list experiments
+    usage: firebase experiments:list [options]
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: output usage information
+  - name: experiments:describe
+    description: enable an experiment on this machine
+    usage: firebase experiments:describe [options] <experiment>
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: output usage information
+  - name: experiments:enable
+    description: enable an experiment on this machine
+    usage: firebase experiments:enable [options] <experiment>
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: output usage information
+  - name: experiments:disable
+    description: disable an experiment on this machine
+    usage: firebase experiments:disable [options] <experiment>
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: output usage information
+  - name: ext
+    description: display information on how to use ext commands and extensions installed to your project
+    usage: firebase ext [options]
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: output usage information
+  - name: ext:configure
+    description: configure an existing extension instance
+    usage: firebase ext:configure [options] <extensionInstanceId>
+    options:
+      - names:
+          - -f
+          - --force
+        argument: ""
+        description: automatically accept all interactive prompts
+      - names:
+          - --local
+        argument: ""
+        description: deprecated
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: output usage information
+  - name: ext:info
+    description: display information about an extension by name (extensionName@x.y.z for a specific version)
+    usage: firebase ext:info [options] <extensionName>
+    options:
+      - names:
+          - --markdown
+        argument: ""
+        description: output info in Markdown suitable for constructing a README file
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: output usage information
+  - name: ext:export
+    description: export all Extension instances installed on a project to a local Firebase directory
+    usage: firebase ext:export [options]
+    options:
+      - names:
+          - -f
+          - --force
+        argument: ""
+        description: automatically accept all interactive prompts
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: output usage information
+  - name: ext:install
+    description: install an official extension if [extensionName] or [extensionName@version] is provided; or run with `-i` to see all available extensions.
+    usage: firebase ext:install [options] [extensionName]
+    options:
+      - names:
+          - --local
+        argument: ""
+        description: deprecated
+      - names:
+          - -f
+          - --force
+        argument: ""
+        description: automatically accept all interactive prompts
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: output usage information
+  - name: ext:list
+    description: list all the extensions that are installed in your Firebase project
+    usage: firebase ext:list [options]
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: output usage information
+  - name: ext:uninstall
+    description: uninstall an extension that is installed in your Firebase project by instance ID
+    usage: firebase ext:uninstall [options] <extensionInstanceId>
+    options:
+      - names:
+          - --local
+        argument: ""
+        description: deprecated
+      - names:
+          - -f
+          - --force
+        argument: ""
+        description: automatically accept all interactive prompts
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: output usage information
+  - name: ext:update
+    description: update an existing extension instance to the latest version
+    usage: firebase ext:update [options] <extensionInstanceId> [updateSource]
+    options:
+      - names:
+          - --local
+        argument: ""
+        description: deprecated
+      - names:
+          - -f
+          - --force
+        argument: ""
+        description: automatically accept all interactive prompts
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: output usage information
+  - name: firestore:delete
+    description: Delete data from Cloud Firestore.
+    usage: firebase firestore:delete [options] [path]
+    options:
+      - names:
+          - -r
+          - --recursive
+        argument: ""
+        description: Recursive. Delete all documents and subcollections at and under the specified level. May not be passed along with --shallow.
+      - names:
+          - --shallow
+        argument: ""
+        description: Shallow. Delete only documents at the specified level and ignore documents in subcollections. This action can potentially orphan documents nested in subcollections. May not be passed along with -r.
+      - names:
+          - --all-collections
+        argument: ""
+        description: Delete all. Deletes the entire Firestore database, including all collections and documents. Any other flags or arguments will be ignored.
+      - names:
+          - -f
+          - --force
+        argument: ""
+        description: No confirmation. Otherwise, a confirmation prompt will appear.
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: output usage information
+  - name: firestore:indexes
+    description: List indexes in your project's Cloud Firestore database.
+    usage: firebase firestore:indexes [options]
+    options:
+      - names:
+          - --pretty
+        argument: ""
+        description: Pretty print. When not specified the indexes are printed in the JSON specification format.
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: output usage information
+  - name: functions:config:clone
+    description: clone environment config from another project
+    usage: firebase functions:config:clone [options]
+    options:
+      - names:
+          - --from
+        argument: <projectId>
+        description: the project from which to clone configuration
+      - names:
+          - --only
+        argument: <keys>
+        description: a comma-separated list of keys to clone
+      - names:
+          - --except
+        argument: <keys>
+        description: a comma-separated list of keys to not clone
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: output usage information
+  - name: functions:config:export
+    description: Export environment config as environment variables in dotenv format
+    usage: firebase functions:config:export [options]
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: output usage information
+  - name: functions:config:get
+    description: fetch environment config stored at the given path
+    usage: firebase functions:config:get [options] [path]
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: output usage information
+  - name: functions:config:set
+    description: set environment config with key=value syntax
+    usage: firebase functions:config:set [options] [values...]
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: output usage information
+  - name: functions:config:unset
+    description: unset environment config at the specified path(s)
+    usage: firebase functions:config:unset [options] [keys...]
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: output usage information
+  - name: functions:delete
+    description: delete one or more Cloud Functions by name or group name.
+    usage: firebase functions:delete [options] [filters...]
+    options:
+      - names:
+          - --region
+        argument: <region>
+        description: Specify region of the function to be deleted. If omitted, functions from all regions whose names match the filters will be deleted.
+      - names:
+          - -f
+          - --force
+        argument: ""
+        description: automatically accept all interactive prompts
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: output usage information
+  - name: functions:log
+    description: read logs from deployed functions
+    usage: firebase functions:log [options]
+    options:
+      - names:
+          - --only
+        argument: <function_names>
+        description: only show logs of specified, comma-seperated functions (e.g. "funcA,funcB")
+      - names:
+          - -n
+          - --lines
+        argument: <num_lines>
+        description: specify number of log lines to fetch
+      - names:
+          - --open
+        argument: ""
+        description: open logs page in web browser
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: output usage information
+  - name: functions:shell
+    description: launch full Node shell with emulated functions
+    usage: firebase functions:shell [options]
+    options:
+      - names:
+          - -p
+          - --port
+        argument: <port>
+        description: the port on which to emulate functions
+      - names:
+          - --inspect-functions
+        argument: '[port]'
+        description: emulate Cloud Functions in debug mode with the node inspector on the given port (9229 if not specified)
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: output usage information
+  - name: functions:list
+    description: list all deployed functions in your Firebase project
+    usage: firebase functions:list [options]
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: output usage information
+  - name: functions:secrets:access
+    description: Access secret value given secret and its version. Defaults to accessing the latest version.
+    usage: firebase functions:secrets:access [options] <KEY>[@version>
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: output usage information
+  - name: functions:secrets:destroy
+    description: Destroy a secret. Defaults to destroying the latest version.
+    usage: firebase functions:secrets:destroy [options] <KEY>[@version>
+    options:
+      - names:
+          - -f
+          - --force
+        argument: ""
+        description: Destroys a secret without confirmation.
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: output usage information
+  - name: functions:secrets:get
+    description: Get metadata for secret and its versions
+    usage: firebase functions:secrets:get [options] <KEY>
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: output usage information
+  - name: functions:secrets:prune
+    description: Destroys unused secrets
+    usage: firebase functions:secrets:prune [options]
+    options:
+      - names:
+          - -f
+          - --force
+        argument: ""
+        description: Destroys unused secrets without prompt
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: output usage information
+  - name: functions:secrets:set
+    description: Create or update a secret for use in Cloud Functions for Firebase.
+    usage: firebase functions:secrets:set [options] <KEY>
+    options:
+      - names:
+          - -f
+          - --force
+        argument: ""
+        description: Automatically updates functions to use the new secret.
+      - names:
+          - --data-file
+        argument: <dataFile>
+        description: File path from which to read secret data. Set to "-" to read the secret data from stdin.
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: output usage information
+  - name: help
+    description: display help information
+    usage: firebase [options] [command]
+    options:
+      - names:
+          - -V
+          - --version
+        argument: ""
+        description: output the version number
+      - names:
+          - -P
+          - --project
+        argument: <alias_or_project_id>
+        description: the Firebase project to use for this command
+      - names:
+          - --account
+        argument: <email>
+        description: the Google account to use for authorization
+      - names:
+          - -j
+          - --json
+        argument: ""
+        description: output JSON instead of text, also triggers non-interactive mode
+      - names:
+          - --token
+        argument: <token>
+        description: DEPRECATED - will be removed in a future major version - supply an auth token for this command
+      - names:
+          - --non-interactive
+        argument: ""
+        description: error out of the command instead of waiting for prompts
+      - names:
+          - -i
+          - --interactive
+        argument: ""
+        description: force prompts to be displayed
+      - names:
+          - --debug
+        argument: ""
+        description: print verbose debug output and keep a debug log file
+      - names:
+          - -c
+          - --config
+        argument: <path>
+        description: path to the firebase.json file to use for configuration
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: output usage information
+    subcommands:
+      - name: database:instances:list
+        description: list realtime database instances, optionally filtered by a specified location
+        usage: firebase help [options] [command]
+        options:
+          - names:
+              - -h
+              - --help
+            argument: ""
+            description: output usage information
+      - name: ext
+        description: display information on how to use ext commands and extensions installed to your project
+        usage: firebase help [options] [command]
+        options:
+          - names:
+              - -h
+              - --help
+            argument: ""
+            description: output usage information
+      - name: ext:list
+        description: list all the extensions that are installed in your Firebase project
+        usage: firebase help [options] [command]
+        options:
+          - names:
+              - -h
+              - --help
+            argument: ""
+            description: output usage information
+      - name: functions:config:export
+        description: Export environment config as environment variables in dotenv format
+        usage: firebase help [options] [command]
+        options:
+          - names:
+              - -h
+              - --help
+            argument: ""
+            description: output usage information
+      - name: functions:list
+        description: list all deployed functions in your Firebase project
+        usage: firebase help [options] [command]
+        options:
+          - names:
+              - -h
+              - --help
+            argument: ""
+            description: output usage information
+      - name: hosting:sites:list
+        description: list Firebase Hosting sites
+        usage: firebase help [options] [command]
+        options:
+          - names:
+              - -h
+              - --help
+            argument: ""
+            description: output usage information
+      - name: login:list
+        description: list authorized CLI accounts
+        usage: firebase help [options] [command]
+        options:
+          - names:
+              - -h
+              - --help
+            argument: ""
+            description: output usage information
+      - name: projects:list
+        description: list all Firebase projects you have access to
+        usage: firebase help [options] [command]
+        options:
+          - names:
+              - -h
+              - --help
+            argument: ""
+            description: output usage information
+      - name: setup:emulators:database
+        description: downloads the database emulator
+        usage: firebase help [options] [command]
+        options:
+          - names:
+              - -h
+              - --help
+            argument: ""
+            description: output usage information
+      - name: setup:emulators:firestore
+        description: downloads the firestore emulator
+        usage: firebase help [options] [command]
+        options:
+          - names:
+              - -h
+              - --help
+            argument: ""
+            description: output usage information
+      - name: setup:emulators:pubsub
+        description: downloads the pubsub emulator
+        usage: firebase help [options] [command]
+        options:
+          - names:
+              - -h
+              - --help
+            argument: ""
+            description: output usage information
+      - name: setup:emulators:storage
+        description: downloads the storage emulator
+        usage: firebase help [options] [command]
+        options:
+          - names:
+              - -h
+              - --help
+            argument: ""
+            description: output usage information
+      - name: setup:emulators:ui
+        description: downloads the ui emulator
+        usage: firebase help [options] [command]
+        options:
+          - names:
+              - -h
+              - --help
+            argument: ""
+            description: output usage information
+  - name: hosting:channel:create
+    description: create a Firebase Hosting channel
+    usage: firebase hosting:channel:create [options] [channelId]
+    options:
+      - names:
+          - -e
+          - --expires
+        argument: <duration>
+        description: duration string (e.g. 12h or 30d) for channel expiration, max 30d
+      - names:
+          - --site
+        argument: <siteId>
+        description: site for which to create the channel
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: output usage information
+  - name: hosting:channel:delete
+    description: delete a Firebase Hosting channel
+    usage: firebase hosting:channel:delete [options] <channelId>
+    options:
+      - names:
+          - -f
+          - --force
+        argument: ""
+        description: automatically accept all interactive prompts
+      - names:
+          - --site
+        argument: <siteId>
+        description: site in which the channel exists
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: output usage information
+  - name: hosting:channel:deploy
+    description: deploy to a specific Firebase Hosting channel
+    usage: firebase hosting:channel:deploy [options] [channelId]
+    options:
+      - names:
+          - -e
+          - --expires
+        argument: <duration>
+        description: duration string (e.g. 12h, 30d) for channel expiration, max 30d; defaults to 7d
+      - names:
+          - --only
+        argument: <target1,target2...>
+        description: only create previews for specified targets
+      - names:
+          - --open
+        argument: ""
+        description: open a browser to the channel after deploying
+      - names:
+          - --no-authorized-domains
+        argument: ""
+        description: do not sync channel domains with Firebase Auth
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: output usage information
+  - name: hosting:channel:list
+    description: list all Firebase Hosting channels for your project
+    usage: firebase hosting:channel:list [options]
+    options:
+      - names:
+          - --site
+        argument: <siteName>
+        description: list channels for the specified site
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: output usage information
+  - name: hosting:channel:open
+    description: opens the URL for a Firebase Hosting channel
+    usage: firebase hosting:channel:open [options] [channelId]
+    options:
+      - names:
+          - --site
+        argument: <siteId>
+        description: the site to which the channel belongs
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: output usage information
+  - name: hosting:clone
+    description: clone a version from one site to another
+    usage: firebase hosting:clone [options] <source> <targetChannel>
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: output usage information
+  - name: hosting:disable
+    description: stop serving web traffic to your Firebase Hosting site
+    usage: firebase hosting:disable [options]
+    options:
+      - names:
+          - -f
+          - --force
+        argument: ""
+        description: skip confirmation
+      - names:
+          - -s
+          - --site
+        argument: <siteName>
+        description: the site to disable
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: output usage information
+  - name: hosting:sites:create
+    description: create a Firebase Hosting site
+    usage: firebase hosting:sites:create [options] [siteId]
+    options:
+      - names:
+          - --app
+        argument: <appId>
+        description: specify an existing Firebase Web App ID
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: output usage information
+  - name: hosting:sites:delete
+    description: delete a Firebase Hosting site
+    usage: firebase hosting:sites:delete [options] <siteId>
+    options:
+      - names:
+          - -f
+          - --force
+        argument: ""
+        description: automatically accept all interactive prompts
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: output usage information
+  - name: hosting:sites:get
+    description: print info about a Firebase Hosting site
+    usage: firebase hosting:sites:get [options] <siteId>
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: output usage information
+  - name: hosting:sites:list
+    description: list Firebase Hosting sites
+    usage: firebase hosting:sites:list [options]
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: output usage information
+  - name: init
+    description: Interactively configure the current directory as a Firebase project or initialize new features in an already configured Firebase project directory.
+    usage: firebase init [options] [feature]
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: output usage information
+  - name: login
+    description: log the CLI into Firebase
+    usage: firebase login [options]
+    options:
+      - names:
+          - --no-localhost
+        argument: ""
+        description: login from a device without an accessible localhost
+      - names:
+          - --reauth
+        argument: ""
+        description: force reauthentication even if already logged in
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: output usage information
+  - name: login:add
+    description: authorize the CLI for an additional account
+    usage: firebase login:add [options] [email]
+    options:
+      - names:
+          - --no-localhost
+        argument: ""
+        description: copy and paste a code instead of starting a local server for authentication
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: output usage information
+  - name: login:ci
+    description: generate an access token for use in non-interactive environments
+    usage: firebase login:ci [options]
+    options:
+      - names:
+          - --no-localhost
+        argument: ""
+        description: copy and paste a code instead of starting a local server for authentication
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: output usage information
+  - name: login:list
+    description: list authorized CLI accounts
+    usage: firebase login:list [options]
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: output usage information
+  - name: login:use
+    description: set the default account to use for this project directory
+    usage: firebase login:use [options] <email>
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: output usage information
+  - name: logout
+    description: log the CLI out of Firebase
+    usage: firebase logout [options] [email]
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: output usage information
+  - name: open
+    description: quickly open a browser to relevant project resources
+    usage: firebase open [options] [link]
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: output usage information
+  - name: projects:addfirebase
+    description: add Firebase resources to a Google Cloud Platform project
+    usage: firebase projects:addfirebase [options] [projectId]
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: output usage information
+  - name: projects:create
+    description: creates a new Google Cloud Platform project, then adds Firebase resources to the project
+    usage: firebase projects:create [options] [projectId]
+    options:
+      - names:
+          - -n
+          - --display-name
+        argument: <displayName>
+        description: (optional) display name for the project
+      - names:
+          - -o
+          - --organization
+        argument: <organizationId>
+        description: (optional) ID of the parent Google Cloud Platform organization under which to create this project
+      - names:
+          - -f
+          - --folder
+        argument: <folderId>
+        description: (optional) ID of the parent Google Cloud Platform folder in which to create this project
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: output usage information
+  - name: projects:list
+    description: list all Firebase projects you have access to
+    usage: firebase projects:list [options]
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: output usage information
+  - name: remoteconfig:get
+    description: get a Firebase project's Remote Config template
+    usage: firebase remoteconfig:get [options]
+    options:
+      - names:
+          - -v
+          - --version-number
+        argument: <versionNumber>
+        description: grabs the specified version of the template
+      - names:
+          - -o
+          - --output
+        argument: '[filename]'
+        description: write config output to a filename (if omitted, will use the default file path)
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: output usage information
+  - name: remoteconfig:rollback
+    description: roll back a project's published Remote Config template to the one specified by the provided version number
+    usage: firebase remoteconfig:rollback [options]
+    options:
+      - names:
+          - -v
+          - --version-number
+        argument: <versionNumber>
+        description: rollback to the specified version of the template
+      - names:
+          - -f
+          - --force
+        argument: ""
+        description: automatically accept all interactive prompts
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: output usage information
+  - name: remoteconfig:versions:list
+    description: get a list of Remote Config template versions that have been published for a Firebase project
+    usage: firebase remoteconfig:versions:list [options]
+    options:
+      - names:
+          - --limit
+        argument: <maxResults>
+        description: limit the number of versions being returned. Pass '0' to fetch all versions.
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: output usage information
+  - name: serve
+    description: start a local server for your static assets
+    usage: firebase serve [options]
+    options:
+      - names:
+          - -p
+          - --port
+        argument: <port>
+        description: 'the port on which to listen (default: 5000) (default: 5000)'
+      - names:
+          - -o
+          - --host
+        argument: <host>
+        description: 'the host on which to listen (default: localhost) (default: "localhost")'
+      - names:
+          - --only
+        argument: <targets>
+        description: 'only serve specified targets (valid targets are: hosting, functions)'
+      - names:
+          - --except
+        argument: <targets>
+        description: 'serve all except specified targets (valid targets are: hosting, functions)'
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: output usage information
+  - name: setup:emulators:database
+    description: downloads the database emulator
+    usage: firebase setup:emulators:database [options]
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: output usage information
+  - name: setup:emulators:firestore
+    description: downloads the firestore emulator
+    usage: firebase setup:emulators:firestore [options]
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: output usage information
+  - name: setup:emulators:pubsub
+    description: downloads the pubsub emulator
+    usage: firebase setup:emulators:pubsub [options]
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: output usage information
+  - name: setup:emulators:storage
+    description: downloads the storage emulator
+    usage: firebase setup:emulators:storage [options]
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: output usage information
+  - name: setup:emulators:ui
+    description: downloads the ui emulator
+    usage: firebase setup:emulators:ui [options]
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: output usage information
+  - name: target
+    description: display configured deploy targets for the current project
+    usage: firebase target [options] [type]
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: output usage information
+  - name: target:apply
+    description: apply a deploy target to a resource
+    usage: firebase target:apply [options] <type> <name> <resources...>
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: output usage information
+  - name: target:clear
+    description: clear all resources from a named resource target
+    usage: firebase target:clear [options] <type> <target>
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: output usage information
+  - name: target:remove
+    description: remove a resource target
+    usage: firebase target:remove [options] <type> <resource>
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: output usage information
+  - name: use
+    description: set an active Firebase project for your working directory
+    usage: firebase use [options] [alias_or_project_id]
+    options:
+      - names:
+          - --add
+        argument: ""
+        description: create a new project alias interactively
+      - names:
+          - --alias
+        argument: <name>
+        description: create a new alias for the provided project id
+      - names:
+          - --unalias
+        argument: <name>
+        description: remove an already created project alias
+      - names:
+          - --clear
+        argument: ""
+        description: clear the active project selection
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: output usage information
+version: 11.16.1
+tldr: |
+  > Test, manage, and deploy Firebase projects from the command-line.
+  > More information: <https://github.com/firebase/firebase-tools>.
+
+  - Log in to <https://console.firebase.google.com>:
+
+  `firebase login`
+
+  - List existing Firebase projects:
+
+  `firebase projects:list`
+
+  - Start an interactive wizard to create a Firebase project in the current directory:
+
+  `firebase init`
+
+  - Deploy code and assets to the current Firebase project:
+
+  `firebase deploy`
+
+  - Start a local server to statically host the current Firebase project's assets:
+
+  `firebase serve`
+
+  - Start an interactive wizard to open one of many links of the current Firebase project in the default web browser:
+
+  `firebase open`

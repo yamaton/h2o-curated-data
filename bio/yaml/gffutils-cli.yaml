@@ -1,0 +1,165 @@
+name: gffutils-cli
+description: GFF and GTF file manipulation and interconversion
+usage: gffutils-cli [-h] {fetch,children,parents,region,create,common,clean,search,sanitize,rmdups} ...
+options:
+  - names:
+      - -h
+      - --help
+    argument: ""
+    description: show this help message and exit
+subcommands:
+  - name: fetch
+    description: Fetch IDs.
+    usage: gffutils-cli fetch [-h] db ids
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+  - name: children
+    description: Fetch children from the database according to ID.
+    usage: gffutils-cli children [-h] [--limit LIMIT] [--exclude EXCLUDE] [--exclude-self] db [ids]
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --limit
+        argument: LIMIT
+        description: 'Feature type (string), or level (integer). No children below this level will be returned (default: -)'
+      - names:
+          - --exclude
+        argument: EXCLUDE
+        description: 'Comma-separated list of featuretypes to filter out (like grep -v) (default: -)'
+      - names:
+          - --exclude-self
+        argument: ""
+        description: 'Use this to suppress reporting the IDs you''ve provided. (default: False)'
+  - name: parents
+    description: Fetch parents from the database according to ID.
+    usage: gffutils-cli parents [-h] [--limit LIMIT] [--exclude EXCLUDE] [--exclude-self] db [ids]
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --limit
+        argument: LIMIT
+        description: 'Feature type (string), or level (integer). No parents below this level will be returned (default: -)'
+      - names:
+          - --exclude
+        argument: EXCLUDE
+        description: 'Comma-separated list of featuretypes to filter out (like grep -v) (default: -)'
+      - names:
+          - --exclude-self
+        argument: ""
+        description: 'Use this to suppress reporting the IDs you''ve provided. (default: False)'
+  - name: region
+    description: Returns features within provided genomic coordinates.
+    usage: gffutils-cli region [-h] db region
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+  - name: create
+    description: Create a database.
+    usage: gffutils-cli create [-h] [--output OUTPUT] [--force] [--quiet] [--merge MERGE] [--disable-infer-genes] [--disable-infer-transcripts] filename
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --output
+        argument: OUTPUT
+        description: 'Database to create. Default is to append ".db" to the end of the input filename (default: -)'
+      - names:
+          - --force
+        argument: ""
+        description: 'Overwrite an existing database (default: False)'
+      - names:
+          - --quiet
+        argument: ""
+        description: 'Suppress the reporting of timing information when creating the database (default: False)'
+      - names:
+          - --merge
+        argument: MERGE
+        description: 'Merge strategy to be used if if duplicate IDs are found. (default: ''merge'')'
+      - names:
+          - --disable-infer-genes
+        argument: ""
+        description: 'Disable inferring of gene extents for GTF files. Use this if your GTF file already has "gene" featuretypes (default: False)'
+      - names:
+          - --disable-infer-transcripts
+        argument: ""
+        description: 'Disable inferring of transcript extents for GTF files. Use this if your GTF file already has "transcript" featuretypes (default: False)'
+  - name: common
+    description: Identify child features in common (e.g., common exons across multiple isoforms)
+    usage: gffutils-cli common [-h] db
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+  - name: clean
+    description: Perform various QC operations to clean a GFF or GTF file.
+    usage: gffutils-cli clean [-h] filename
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+  - name: search
+    description: Search the attributes.
+    usage: gffutils-cli search [-h] [--featuretype FEATURETYPE] db text
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --featuretype
+        argument: FEATURETYPE
+        description: 'Restrict to a particular featuretype. This can be faster than doing a grep on the output, since it restricts the search space in the database (default: -)'
+  - name: sanitize
+    description: 'Sanitize a GFF file. Might get merged with clean feature later. Cleans and adds useful annotations to a GFF file: - Ensures that start > end in all entries - Adds an entry id (eid) to each entry to make files grep-able Outputs result to stdout unless asked to sanitize in place.'
+    usage: gffutils-cli sanitize [-h] [--in-memory] [--in-place] filename
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --in-memory
+        argument: ""
+        description: 'Load GFF into memory for processing. (default: True)'
+      - names:
+          - --in-place
+        argument: ""
+        description: 'Sanitize file in-place: overwrites current file with sanitized version. (default: False)'
+  - name: rmdups
+    description: Remove duplicates from a GFF file.
+    usage: gffutils-cli rmdups [-h] [--in-place] filename
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --in-place
+        argument: ""
+        description: 'Remove duplicates in place (overwrite current file.) (default: False)'
+version: 0.11.1

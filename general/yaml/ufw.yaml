@@ -1,0 +1,171 @@
+name: ufw
+description: program for managing a netfilter firewall
+usage: |-
+  ufw [--dry-run] enable|disable|reload
+
+  ufw [--dry-run] default allow|deny|reject [incoming|outgoing|routed]
+
+  ufw [--dry-run] logging on|off|LEVEL
+
+  ufw [--dry-run] reset
+
+  ufw [--dry-run] status [verbose|numbered]
+
+  ufw [--dry-run] show REPORT
+
+  ufw [--dry-run] [delete] [insert NUM] [prepend] allow|deny|reject|limit [in|out] [log|log-all] [ PORT[/PROTOCOL] | APPNAME ] [comment COMMENT]
+
+  ufw [--dry-run] [rule] [delete] [insert NUM] [prepend] allow|deny|reject|limit [in|out [on INTERFACE]] [log|log-all] [proto PROTOCOL] [from ADDRESS [port PORT | app APPNAME ]] [to ADDRESS [port PORT | app APPNAME ]] [comment COMMENT]
+
+  ufw [--dry-run] route [delete] [insert NUM] [prepend] allow|deny|reject|limit [in|out on INTERFACE] [log|log-all] [proto PROTOCOL] [from ADDRESS [port PORT | app APPNAME]] [to ADDRESS [port PORT | app APPNAME]] [comment COMMENT]
+
+  ufw [--dry-run] [--force] delete NUM
+
+  ufw [--dry-run] app list|info|default|update
+options:
+  - names:
+      - --version
+    argument: ""
+    description: show program's version number and exit
+  - names:
+      - -h
+      - --help
+    argument: ""
+    description: show help message and exit
+  - names:
+      - --dry-run
+    argument: ""
+    description: don't modify anything, just show the changes
+subcommands:
+  - name: enable
+    description: enables the firewall
+    usage: ufw enable
+    options: []
+  - name: disable
+    description: disables the firewall
+    usage: ufw disable
+    options: []
+  - name: default
+    description: set default policy
+    usage: ufw default ARG
+    options: []
+  - name: logging
+    description: set logging to on|off|LEVEL
+    usage: ufw logging on|off|LEVEL
+    options: []
+    subcommands:
+      - name: "on"
+        description: delete route RULE
+        usage: ufw logging on
+        options: []
+      - name: "off"
+        description: insert route RULE at NUM
+        usage: ufw logging off
+        options: []
+  - name: allow
+    description: add allow rule
+    usage: ufw allow ARGS
+    options: []
+  - name: deny
+    description: add deny rule
+    usage: ufw deny ARGS
+    options: []
+  - name: reject
+    description: add reject rule
+    usage: ufw reject ARGS
+    options: []
+  - name: limit
+    description: add limit rule
+    usage: ufw limit ARGS
+    options: []
+  - name: delete
+    description: delete RULE
+    usage: ufw delete RULE|NUM
+    options: []
+  - name: insert
+    description: insert RULE at NUM
+    usage: ufw insert NUM RULE
+    options: []
+  - name: prepend
+    description: prepend RULE
+    usage: ufw prepend RULE
+    options: []
+  - name: route
+    description: add route RULE
+    usage: ufw route RULE
+    options: []
+    subcommands:
+      - name: delete
+        description: delete route RULE
+        usage: ufw route delete RULE|NUM
+        options: []
+      - name: insert
+        description: insert route RULE at NUM
+        usage: ufw route insert NUM RULE
+        options: []
+  - name: reload
+    description: reload firewall
+    usage: ufw reload
+    options: []
+  - name: reset
+    description: reset firewall
+    usage: ufw reset
+    options: []
+  - name: status
+    description: show firewall status
+    usage: ufw status
+    options: []
+    subcommands:
+      - name: numbered
+        description: show firewall status as numbered list of RULES
+        usage: ufw status numbered
+        options: []
+      - name: verbose
+        description: show verbose firewall status
+        usage: ufw status verbose
+        options: []
+  - name: show
+    description: show firewall report
+    usage: ufw show ARG
+    options: []
+  - name: version
+    description: display version information
+    usage: ufw version
+    options: []
+version: ufw 0.36.1
+tldr: |
+  > Uncomplicated Firewall.
+  > Frontend for iptables aiming to make configuration of a firewall easier.
+  > More information: <https://wiki.ubuntu.com/UncomplicatedFirewall>.
+
+  - Enable ufw:
+
+  `ufw enable`
+
+  - Disable ufw:
+
+  `ufw disable`
+
+  - Show ufw rules, along with their numbers:
+
+  `ufw status numbered`
+
+  - Allow incoming traffic on port 5432 on this host with a comment identifying the service:
+
+  `ufw allow {{5432}} comment "{{Service}}"`
+
+  - Allow only TCP traffic from 192.168.0.4 to any address on this host, on port 22:
+
+  `ufw allow proto {{tcp}} from {{192.168.0.4}} to {{any}} port {{22}}`
+
+  - Deny traffic on port 80 on this host:
+
+  `ufw deny {{80}}`
+
+  - Deny all UDP traffic to ports in range 8412:8500:
+
+  `ufw deny proto {{udp}} from {{any}} to {{any}} port {{8412:8500}}`
+
+  - Delete a particular rule. The rule number can be retrieved from the `ufw status numbered` command:
+
+  `ufw delete {{rule_number}}`

@@ -1,9 +1,28 @@
 name: npm
 description: npm
+usage: |-
+  npm install        install all the dependencies in your project
+  npm install <foo>  add the <foo> dependency to your project
+  npm test           run this project's tests
+  npm run <foo>      run the script named <foo>
+  npm <command> -h   quick help on <command>
+  npm -l             display usage info for all commands
+  npm help <term>    search for help on <term>
+  npm help npm       more involved overview
 options: []
 subcommands:
   - name: access
     description: Set access level on published packages
+    usage: |-
+      npm access public [<package>]
+      npm access restricted [<package>]
+      npm access grant <read-only|read-write> <scope:team> [<package>]
+      npm access revoke <scope:team> [<package>]
+      npm access 2fa-required [<package>]
+      npm access 2fa-not-required [<package>]
+      npm access ls-packages [<user>|<scope>|<scope:team>]
+      npm access ls-collaborators [<package> [<user>]]
+      npm access edit [<package>]
     options: []
     inheritedOptions:
       - names:
@@ -47,17 +66,11 @@ subcommands:
       - login
       - add-user
     description: Add a registry user account
-    options:
-      - names:
-          - --registry
-        argument: URL
-        description: 'The base URL of the npm registry. (default: "https://registry.npmjs.org/")'
-      - names:
-          - --scope
-        argument: String
-        description: Associate an operation with a scope for a scoped registry.
+    usage: npm adduser
+    options: []
   - name: audit
     description: Run a security audit
+    usage: npm audit [fix|signatures]
     options: []
     inheritedOptions:
       - names:
@@ -110,19 +123,28 @@ subcommands:
         options: []
   - name: bin
     description: Display npm bin folder
+    usage: npm bin
     options:
       - names:
           - --global
         argument: ""
         description: Operates in "global" mode, so that packages are installed into the prefix folder instead of the current working directory. See npm help folders for more on the differences in behavior.
   - name: bugs
+    aliases:
+      - issues
     description: Report bugs for a package in a web browser
+    usage: npm bugs [<pkgname> [<pkgname> ...]]
     options: []
     positionalArguments:
       - name: "[<pkgname>]"
         description: ""
   - name: cache
     description: Manipulates packages cache
+    usage: |-
+      npm cache add <package-spec>
+      npm cache clean [<key>]
+      npm cache ls [<name>@<version>]
+      npm cache verify
     options: []
     inheritedOptions:
       - names:
@@ -148,6 +170,7 @@ subcommands:
       - clean-install
       - install-clean
     description: Install a project with a clean slate
+    usage: npm ci
     options:
       - names:
           - --audit
@@ -167,8 +190,11 @@ subcommands:
         description: The shell to use for scripts run with the npm exec, npm run and npm init <pkg> commands.
   - name: completion
     description: Tab Completion for npm
+    usage: npm completion
     options: []
   - name: config
+    aliases:
+      - c
     description: Manage the npm configuration files
     options: []
     inheritedOptions:
@@ -212,6 +238,7 @@ subcommands:
     aliases:
       - ddp
     description: Reduce duplication in the package tree
+    usage: npm dedupe
     options:
       - names:
           - --global-style
@@ -271,8 +298,9 @@ subcommands:
         description: Include the workspace root when workspaces are enabled for a command.
   - name: deprecate
     description: Deprecate a version of a package
+    usage: npm deprecate <package-spec> <message>
     positionalArguments:
-      - name: "<pkg>[@<version>]"
+      - name: "<package-spec>"
         description: ""
       - name: "<message>"
         description: ""
@@ -287,6 +315,7 @@ subcommands:
         description: "This is a one-time password from a two-factor authenticator. It's needed when publishing or changing package permissions with npm access. If not set, and a registry response fails with a challenge for a one-time password, npm will prompt on the command line for one. (default: null)"
   - name: diff
     description: The registry diff command
+    usage: npm diff [...<paths>]
     positionalArguments:
       - name: "[...<paths>]"
         description: ""
@@ -345,6 +374,10 @@ subcommands:
         description: Include the workspace root when workspaces are enabled for a command.
   - name: dist-tag
     description: Modify package distribution tags
+    usage: |-
+      npm dist-tag add <package-spec (with version)> [<tag>]
+      npm dist-tag rm <package-spec> <tag>
+      npm dist-tag ls [<package-spec>]
     options: []
     inheritedOptions:
       - names:
@@ -376,6 +409,7 @@ subcommands:
       - name: "[<pkgname> [<pkgname> ...]]"
         description: ""
     description: Open documentation for a package in a web browser
+    usage: npm docs [<pkgname> [<pkgname> ...]]
     options:
       - names:
           - --browser
@@ -399,6 +433,7 @@ subcommands:
         description: Include the workspace root when workspaces are enabled for a command.
   - name: doctor
     description: Check your npm environment
+    usage: npm doctor
     options:
       - names:
           - --registry
@@ -406,6 +441,7 @@ subcommands:
         description: The base URL of the npm registry.
   - name: edit
     description: Edit an installed package
+    usage: npm edit <pkg>[/<subpkg>...]
     options:
       - names:
           - --editor
@@ -418,8 +454,9 @@ subcommands:
     aliases:
       - why
     description: Explain installed packages
+    usage: npm explain <package-spec>
     positionalArguments:
-      - name: '<folder | specifier>'
+      - name: '<package-spec>'
         description: ""
     options:
       - names:
@@ -427,34 +464,36 @@ subcommands:
         argument: ""
         description: Whether or not to output JSON data, rather than the normal output.
       - names:
+          - -w
           - --workspace
         argument: String
         description: Enable running a command in the context of the configured workspaces of the current project while filtering by running only the workspaces defined by this configuration option.
-      - names:
-          - --workspaces
-        argument: ""
-        description: Set to true to run the command in the context of all configured workspaces.
-      - names:
-          - --include-workspace-root
-        argument: ""
-        description: Include the workspace root when workspaces are enabled for a command.
   - name: explore
     description: Browse an installed package
+    usage: npm explore <pkg> [ -- <command>]
     options: []
   - name: find-dupes
     description: Find duplication in the package tree
+    usage: npm find-dupes
     options: []
   - name: fund
     description: Retrieve funding information
+    usage: npm fund [<package-spec>]
     options: []
   - name: get
     description: Get a value from the npm configuration
+    usage: npm get [<key> ...]
     options: []
   - name: help
     description: Get help on npm
     options: []
   - name: hook
     description: Manage registry hooks
+    usage: |-
+      npm hook add <pkg> <url> <secret> [--type=<type>]
+      npm hook ls [pkg]
+      npm hook rm <id>
+      npm hook update <id> <url> <secret>
     options: []
     inheritedOptions:
       - names:
@@ -504,8 +543,12 @@ subcommands:
     aliases:
       - create
     description: Create a package.json file
+    usage: |-
+      npm init <package-spec> (same as `npx <package-spec>)
+      npm init <@scope> (same as `npx <@scope>/create`)
     options:
       - names:
+          - -y
           - --yes
         argument: ""
         description: Automatically answer "yes" to any prompts that npm might print on the command line.
@@ -514,13 +557,19 @@ subcommands:
         argument: ""
         description: Removes various protections against unfortunate side effects, common mistakes, unnecessary performance degradation, and malicious input.
       - names:
+          - -w
           - --workspace
-        argument: String
+        argument: <workspace-name>
         description: Enable running a command in the context of the configured workspaces of the current project while filtering by running only the workspaces defined by this configuration option.
       - names:
+          - -ws
           - --workspaces
         argument: ""
         description: Set to true to run the command in the context of all configured workspaces.
+      - names:
+          - --no-workspaces-update
+        argument: ""
+        description: Don't update workspaces.
       - names:
           - --include-workspace-root
         argument: ""
@@ -530,6 +579,7 @@ subcommands:
       - i
       - add
     description: Install a package
+    usage: npm install [<package-spec> ...]
     options:
       - names:
           - --save
@@ -600,10 +650,16 @@ subcommands:
         argument: ""
         description: Include the workspace root when workspaces are enabled for a command.
   - name: install-ci-test
+    aliases:
+      - cit
     description: Install a project with a clean slate and run tests
+    usage: npm install-ci-test
     options: []
   - name: install-test
+    aliases:
+      - it
     description: Install package(s) and run tests
+    usage: npm install-test [<package-spec> ...]
     options:
       - names:
           - --save
@@ -677,6 +733,7 @@ subcommands:
     aliases:
       - ln
     description: Symlink a package folder
+    usage: npm link [<package-spec>]
     options:
       - names:
           - --save
@@ -735,25 +792,13 @@ subcommands:
         argument: ""
         description: Include the workspace root when workspaces are enabled for a command.
   - name: ll
-    description: List installed packages
-    options: []
-  - name: logout
-    description: Log out of the registry
-    options:
-      - names:
-          - --registry
-        argument: URL
-        description: 'The base URL of the npm registry. (default: "https://registry.npmjs.org/")'
-      - names:
-          - --scope
-        argument: String
-        description: Associate an operation with a scope for a scoped registry.
-  - name: ls
     aliases:
-      - list
+      - la
     description: List installed packages
+    usage: npm ll [[<@scope>/]<pkg> ...]
     options:
       - names:
+          - -a
           - --all
         argument: ""
         description: When running npm outdated and npm ls, setting --all will show all outdated or installed packages, rather than only those directly depended upon by the current project.
@@ -762,14 +807,17 @@ subcommands:
         argument: ""
         description: Whether or not to output JSON data, rather than the normal output.
       - names:
+          - -l
           - --long
         argument: ""
         description: Show extended information in ls, search, and help-search.
       - names:
+          - -p
           - --parseable
         argument: ""
         description: Show the description in npm search
       - names:
+          - -g
           - --global
         argument: ""
         description: Operates in "global" mode, so that packages are installed into the prefix folder instead of the current working directory. See npm help folders for more on the differences in behavior.
@@ -794,10 +842,80 @@ subcommands:
         argument: ""
         description: When set to true, npm uses unicode characters in the tree output. When false, it uses ascii characters instead of unicode glyphs.
       - names:
+          - -w
           - --workspace
         argument: String
         description: Enable running a command in the context of the configured workspaces of the current project while filtering by running only the workspaces defined by this configuration option.
       - names:
+          - -ws
+          - --workspaces
+        argument: ""
+        description: Set to true to run the command in the context of all configured workspaces.
+      - names:
+          - --include-workspace-root
+        argument: ""
+        description: Include the workspace root when workspaces are enabled for a command.
+  - name: logout
+    description: Log out of the registry
+    usage: npm logout
+    options: []
+  - name: ls
+    aliases:
+      - list
+    description: List installed packages
+    usage: npm ls <package-spec>
+    options:
+      - names:
+          - -a
+          - --all
+        argument: ""
+        description: When running npm outdated and npm ls, setting --all will show all outdated or installed packages, rather than only those directly depended upon by the current project.
+      - names:
+          - --json
+        argument: ""
+        description: Whether or not to output JSON data, rather than the normal output.
+      - names:
+          - -l
+          - --long
+        argument: ""
+        description: Show extended information in ls, search, and help-search.
+      - names:
+          - -p
+          - --parseable
+        argument: ""
+        description: Show the description in npm search
+      - names:
+          - -g
+          - --global
+        argument: ""
+        description: Operates in "global" mode, so that packages are installed into the prefix folder instead of the current working directory. See npm help folders for more on the differences in behavior.
+      - names:
+          - --depth
+        argument: Number
+        description: The depth to go when recursing packages for npm ls.
+      - names:
+          - --omit
+        argument: "{dev|optional|peer}"
+        description: Dependency types to omit from the installation tree on disk.
+      - names:
+          - --link
+        argument: ""
+        description: Used with npm ls, limiting output to only those packages that are linked.
+      - names:
+          - --package-lock-only
+        argument: ""
+        description: If set to true, the current operation will only use the package-lock.json, ignoring node_modules.
+      - names:
+          - --unicode
+        argument: ""
+        description: When set to true, npm uses unicode characters in the tree output. When false, it uses ascii characters instead of unicode glyphs.
+      - names:
+          - -w
+          - --workspace
+        argument: String
+        description: Enable running a command in the context of the configured workspaces of the current project while filtering by running only the workspaces defined by this configuration option.
+      - names:
+          - -ws
           - --workspaces
         argument: ""
         description: Set to true to run the command in the context of all configured workspaces.
@@ -807,33 +925,108 @@ subcommands:
         description: Include the workspace root when workspaces are enabled for a command.
   - name: org
     description: Manage orgs
+    usage: |-
+      npm org set orgname username [developer | admin | owner]
+      npm org rm orgname username
+      npm org ls orgname [<username>]
     options: []
+    subcommands:
+      - name: set
+        description: Sets each of the config keys to the value provided.
+        options: []
+      - name: rm
+        description: Clear a tag that is no longer in use from the package.
+        options: []
+      - name: ls
+        description: Show all the config settings.
+        options: []
   - name: outdated
     description: Check for outdated packages
+    usage: npm outdated [<package-spec> ...]
     options: []
   - name: owner
+    aliases:
+      - author
     description: Manage package owners
+    usage: |-
+      npm owner add <user> <package-spec>
+      npm owner rm <user> <package-spec>
+      npm owner ls <package-spec>
     options: []
+    subcommands:
+      - name: add
+        description: Add a config keys.
+        options: []
+      - name: rm
+        description: Clear a tag that is no longer in use from the package.
+        options: []
+      - name: ls
+        description: Show config settings.
+        options: []
   - name: pack
     description: Create a tarball from a package
+    usage: npm pack <package-spec>
     options: []
   - name: ping
     description: Ping npm registry
+    usage: npm ping
     options: []
   - name: pkg
     description: Manages your package.json
+    usage: |-
+      npm pkg set <key>=<value> [<key>=<value> ...]
+      npm pkg get [<key> [<key> ...]]
+      npm pkg delete <key> [<key> ...]
+      npm pkg set [<array>[<index>].<key>=<value> ...]
+      npm pkg set [<array>[].<key>=<value> ...]
     options: []
+    subcommands:
+      - name: set
+        description: Set a config key-value.
+        options: []
+      - name: delete
+        description: Clear a key.
+        options: []
+      - name: get
+        description: Get a config value.
+        options: []
   - name: prefix
     description: Display prefix
-    options: []
+    usage: npm prefix [-g]
+    options:
+      - names:
+          - -g
+          - --global
+        argument: ""
+        description: Operates in "global" mode, so that packages are installed into the prefix folder instead of the current working directory. See npm help folders for more on the differences in behavior.
   - name: profile
     description: Change settings on your registry profile
+    usage: |-
+      npm profile enable-2fa [auth-only|auth-and-writes]
+      npm profile disable-2fa
+      npm profile get [<key>]
+      npm profile set <key> <value>
     options: []
+    subcommands:
+      - name: enable-2fa
+        description: Enable 2FA.
+        options: []
+      - name: diable-2fa
+        description: Disable 2FA.
+        options: []
+      - name: set
+        description: Sets a config keys value.
+        options: []
+      - name: get
+        description: Get a key-value.
+        options: []
   - name: prune
     description: Remove extraneous packages
+    usage: npm prune [[<@scope>/]<pkg>...]
     options: []
   - name: publish
     description: Publish a package
+    usage: npm publish <package-spec>
     options: []
   - name: rebuild
     description: Rebuild a package
@@ -846,11 +1039,13 @@ subcommands:
     options: []
   - name: root
     description: Display npm root
+    usage: npm root
     options: []
   - name: run-script
     aliases:
       - run
     description: Run arbitrary package scripts
+    usage: npm run-script <command> [-- <args>]
     options:
       - names:
           - --workspace
@@ -881,6 +1076,7 @@ subcommands:
       - s
       - find
     description: Search for packages
+    usage: npm search [search terms ...]
     options:
       - names:
           - --long
@@ -924,21 +1120,26 @@ subcommands:
         description: 'Force offline mode: no network requests will be done during install. To allow the CLI to fill in missing cache data, see --prefer-offline.'
   - name: set
     description: Set a value in the npm configuration
+    usage: npm set <key>=<value> [<key>=<value> ...]
     options: []
   - name: set-script
     description: Set tasks in the scripts section of package.json
+    usage: npm set-script [<script>] [<command>]
     options: []
   - name: shrinkwrap
     description: Lock down dependency versions for publication
+    usage: npm shrinkwrap
     options: []
   - name: star
     description: Mark your favorite packages
+    usage: npm star [<package-spec>...]
     options: []
   - name: stars
     description: View packages marked as favorites
     options: []
   - name: start
     description: Start a package
+    usage: npm start [-- <args>]
     options:
       - names:
           - --ignore-scripts
@@ -950,6 +1151,7 @@ subcommands:
         description: The shell to use for scripts run with the npm exec, npm run and npm init <pkg> commands.
   - name: stop
     description: Stop a package
+    usage: npm stop [-- <args>]
     options:
       - names:
           - --ignore-scripts
@@ -961,6 +1163,12 @@ subcommands:
         description: The shell to use for scripts run with the npm exec, npm run and npm init <pkg> commands.
   - name: team
     description: Manage organization teams and team memberships
+    usage: |-
+      npm team create <scope:team> [--otp <otpcode>]
+      npm team destroy <scope:team> [--otp <otpcode>]
+      npm team add <scope:team> <user> [--otp <otpcode>]
+      npm team rm <scope:team> <user> [--otp <otpcode>]
+      npm team ls <scope>|<scope:team>
     options: []
     inheritedOptions:
       - names:
@@ -996,10 +1204,10 @@ subcommands:
         description: If performed on an organization name, will return a list of existing teams under that organization.
         options: []
   - name: test
+    aliases:
+      - t
     description: Test a package
-    positionalArguments:
-      - name: '[-- <args>]'
-        description: ""
+    usage: npm test [-- <args>]
     options:
       - names:
           - --ignore-scripts
@@ -1011,69 +1219,57 @@ subcommands:
         description: The shell to use for scripts run with the npm exec, npm run and npm init <pkg> commands.
   - name: token
     description: Manage your authentication tokens
+    usage: |-
+      npm token list
+      npm token revoke <id|token>
+      npm token create [--read-only] [--cidr=list]
     options: []
   - name: uninstall
+    aliases:
+      - unlink
+      - remove
+      - rm
     description: Remove a package
-    options: []
+    usage: npm uninstall [<@scope>/]<pkg>...
+    options:
+      - names:
+          - --save
+          - -S
+        argument: ""
+        description: Save installed packages to a package.json file as dependencies.
+      - names:
+          - --no-save
+        argument: ""
+        description: Tell npm not to remove the package from your package.json, npm-shrinkwrap.json, or package-lock.json files.
   - name: unpublish
     description: Remove a package from the registry
+    usage: npm unpublish [<package-spec>]
     options: []
   - name: unstar
     description: Remove an item from your favorite packages
+    usage: npm unstar [<package-spec>...]
     options: []
   - name: update
+    aliases:
+      - upgrade
+      - up
     description: Update packages
     options: []
   - name: version
     description: Bump a package version
-    options:
-      - names:
-          - --allow-same-version
-        argument: ""
-        description: Prevents throwing an error when npm version is used to set the new version to the same value as the current version.
-      - names:
-          - --commit-hooks
-        argument: ""
-        description: Run git commit hooks when using the npm version command.
-      - names:
-          - --git-tag-version
-        argument: ""
-        description: Tag the commit when using the npm version command. Setting this to false results in no commit being made at all.
-      - names:
-          - --json
-        argument: ""
-        description: Whether or not to output JSON data, rather than the normal output.
-      - names:
-          - --preid
-        argument: String
-        description: 'The "prerelease identifier" to use as a prefix for the "prerelease" part of a semver. Like the rc in 1.2.0-rc.8.'
-      - names:
-          - --sign-git-tag
-        argument: ""
-        description: If set to true, then the npm version command will tag the version using -s to add a signature.
-      - names:
-          - --workspace
-        argument: String
-        description: Enable running a command in the context of the configured workspaces of the current project while filtering by running only the workspaces defined by this configuration option.
-      - names:
-          - --workspaces
-        argument: ""
-        description: Set to true to run the command in the context of all configured workspaces.
-      - names:
-          - --include-workspace-root
-        argument: ""
-        description: Include the workspace root when workspaces are enabled for a command.
+    options: []
   - name: view
     aliases:
       - v
       - info
       - show
+    description: View registry info
+    usage: npm view [<package-spec>] [<field>[.subfield]...]
     positionalArguments:
       - name: '[<@scope>/]<pkg>[@<version>]'
         description: ""
       - name: '[<field>[.subfield]...]'
         description: ""
-    description: View registry info
     options:
       - names:
           - --json
@@ -1093,12 +1289,13 @@ subcommands:
         description: Include the workspace root when workspaces are enabled for a command.
   - name: whoami
     description: Display npm username
+    usage: npm whoami
     options:
       - names:
           - --registry
         argument: URL
         description: 'The base URL of the npm registry. (default: "https://registry.npmjs.org/")'
-version: "npm 8.5.5"
+version: "npm 8.19.2"
 tldr: |
   > JavaScript and Node.js package manager.
   > Manage Node.js projects and their module dependencies.

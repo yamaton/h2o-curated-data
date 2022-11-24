@@ -68,11 +68,6 @@ complete -k -c npm -n __fish_use_subcommand -x -a access -d "Set access level on
 
 
 
-complete -c npm -n "__fish_seen_subcommand_from adduser" -l "registry" -d "The base URL of the npm registry." -x
-complete -c npm -n "__fish_seen_subcommand_from adduser" -l "scope" -d "Associate an operation with a scope for a scoped registry." -x
-
-
-
 complete -c npm -n "__fish_seen_subcommand_from bin" -l "global" -d "Operates in \"global\" mode, so that packages are installed into the prefix folder instead of the current working directory."
 
 
@@ -139,16 +134,15 @@ complete -c npm -n "__fish_seen_subcommand_from edit" -l "editor" -d "The comman
 
 
 complete -c npm -n "__fish_seen_subcommand_from explain" -l "json" -d "Whether or not to output JSON data, rather than the normal output."
-complete -c npm -n "__fish_seen_subcommand_from explain" -l "workspace" -d "Enable running a command in the context of the configured workspaces of the current project while filtering by running only the workspaces defined by this configuration option." -x
-complete -c npm -n "__fish_seen_subcommand_from explain" -l "workspaces" -d "Set to true to run the command in the context of all configured workspaces."
-complete -c npm -n "__fish_seen_subcommand_from explain" -l "include-workspace-root" -d "Include the workspace root when workspaces are enabled for a command."
+complete -c npm -n "__fish_seen_subcommand_from explain" -s "w" -l "workspace" -d "Enable running a command in the context of the configured workspaces of the current project while filtering by running only the workspaces defined by this configuration option." -x
 
 
 
-complete -c npm -n "__fish_seen_subcommand_from init" -l "yes" -d "Automatically answer \"yes\" to any prompts that npm might print on the command line."
+complete -c npm -n "__fish_seen_subcommand_from init" -s "y" -l "yes" -d "Automatically answer \"yes\" to any prompts that npm might print on the command line."
 complete -c npm -n "__fish_seen_subcommand_from init" -l "force" -d "Removes various protections against unfortunate side effects, common mistakes, unnecessary performance degradation, and malicious input."
-complete -c npm -n "__fish_seen_subcommand_from init" -l "workspace" -d "Enable running a command in the context of the configured workspaces of the current project while filtering by running only the workspaces defined by this configuration option." -x
-complete -c npm -n "__fish_seen_subcommand_from init" -l "workspaces" -d "Set to true to run the command in the context of all configured workspaces."
+complete -c npm -n "__fish_seen_subcommand_from init" -s "w" -l "workspace" -d "Enable running a command in the context of the configured workspaces of the current project while filtering by running only the workspaces defined by this configuration option." -x
+complete -c npm -n "__fish_seen_subcommand_from init" -o "ws" -l "workspaces" -d "Set to true to run the command in the context of all configured workspaces."
+complete -c npm -n "__fish_seen_subcommand_from init" -l "no-workspaces-update" -d "Don't update workspaces."
 complete -c npm -n "__fish_seen_subcommand_from init" -l "include-workspace-root" -d "Include the workspace root when workspaces are enabled for a command."
 
 
@@ -210,24 +204,39 @@ complete -c npm -n "__fish_seen_subcommand_from link" -l "include-workspace-root
 
 
 
-complete -c npm -n "__fish_seen_subcommand_from logout" -l "registry" -d "The base URL of the npm registry." -x
-complete -c npm -n "__fish_seen_subcommand_from logout" -l "scope" -d "Associate an operation with a scope for a scoped registry." -x
+complete -c npm -n "__fish_seen_subcommand_from ll" -s "a" -l "all" -d "When running npm outdated and npm ls, setting --all will show all outdated or installed packages, rather than only those directly depended upon by the current project."
+complete -c npm -n "__fish_seen_subcommand_from ll" -l "json" -d "Whether or not to output JSON data, rather than the normal output."
+complete -c npm -n "__fish_seen_subcommand_from ll" -s "l" -l "long" -d "Show extended information in ls, search, and help-search."
+complete -c npm -n "__fish_seen_subcommand_from ll" -s "p" -l "parseable" -d "Show the description in npm search"
+complete -c npm -n "__fish_seen_subcommand_from ll" -s "g" -l "global" -d "Operates in \"global\" mode, so that packages are installed into the prefix folder instead of the current working directory."
+complete -c npm -n "__fish_seen_subcommand_from ll" -l "depth" -d "The depth to go when recursing packages for npm ls." -x
+complete -c npm -n "__fish_seen_subcommand_from ll" -l "omit" -d "Dependency types to omit from the installation tree on disk." -x
+complete -c npm -n "__fish_seen_subcommand_from ll" -l "link" -d "Used with npm ls, limiting output to only those packages that are linked."
+complete -c npm -n "__fish_seen_subcommand_from ll" -l "package-lock-only" -d "If set to true, the current operation will only use the package-lock.json, ignoring node_modules."
+complete -c npm -n "__fish_seen_subcommand_from ll" -l "unicode" -d "When set to true, npm uses unicode characters in the tree output."
+complete -c npm -n "__fish_seen_subcommand_from ll" -s "w" -l "workspace" -d "Enable running a command in the context of the configured workspaces of the current project while filtering by running only the workspaces defined by this configuration option." -x
+complete -c npm -n "__fish_seen_subcommand_from ll" -o "ws" -l "workspaces" -d "Set to true to run the command in the context of all configured workspaces."
+complete -c npm -n "__fish_seen_subcommand_from ll" -l "include-workspace-root" -d "Include the workspace root when workspaces are enabled for a command."
 
 
 
-complete -c npm -n "__fish_seen_subcommand_from ls" -l "all" -d "When running npm outdated and npm ls, setting --all will show all outdated or installed packages, rather than only those directly depended upon by the current project."
+complete -c npm -n "__fish_seen_subcommand_from ls" -s "a" -l "all" -d "When running npm outdated and npm ls, setting --all will show all outdated or installed packages, rather than only those directly depended upon by the current project."
 complete -c npm -n "__fish_seen_subcommand_from ls" -l "json" -d "Whether or not to output JSON data, rather than the normal output."
-complete -c npm -n "__fish_seen_subcommand_from ls" -l "long" -d "Show extended information in ls, search, and help-search."
-complete -c npm -n "__fish_seen_subcommand_from ls" -l "parseable" -d "Show the description in npm search"
-complete -c npm -n "__fish_seen_subcommand_from ls" -l "global" -d "Operates in \"global\" mode, so that packages are installed into the prefix folder instead of the current working directory."
+complete -c npm -n "__fish_seen_subcommand_from ls" -s "l" -l "long" -d "Show extended information in ls, search, and help-search."
+complete -c npm -n "__fish_seen_subcommand_from ls" -s "p" -l "parseable" -d "Show the description in npm search"
+complete -c npm -n "__fish_seen_subcommand_from ls" -s "g" -l "global" -d "Operates in \"global\" mode, so that packages are installed into the prefix folder instead of the current working directory."
 complete -c npm -n "__fish_seen_subcommand_from ls" -l "depth" -d "The depth to go when recursing packages for npm ls." -x
 complete -c npm -n "__fish_seen_subcommand_from ls" -l "omit" -d "Dependency types to omit from the installation tree on disk." -x
 complete -c npm -n "__fish_seen_subcommand_from ls" -l "link" -d "Used with npm ls, limiting output to only those packages that are linked."
 complete -c npm -n "__fish_seen_subcommand_from ls" -l "package-lock-only" -d "If set to true, the current operation will only use the package-lock.json, ignoring node_modules."
 complete -c npm -n "__fish_seen_subcommand_from ls" -l "unicode" -d "When set to true, npm uses unicode characters in the tree output."
-complete -c npm -n "__fish_seen_subcommand_from ls" -l "workspace" -d "Enable running a command in the context of the configured workspaces of the current project while filtering by running only the workspaces defined by this configuration option." -x
-complete -c npm -n "__fish_seen_subcommand_from ls" -l "workspaces" -d "Set to true to run the command in the context of all configured workspaces."
+complete -c npm -n "__fish_seen_subcommand_from ls" -s "w" -l "workspace" -d "Enable running a command in the context of the configured workspaces of the current project while filtering by running only the workspaces defined by this configuration option." -x
+complete -c npm -n "__fish_seen_subcommand_from ls" -o "ws" -l "workspaces" -d "Set to true to run the command in the context of all configured workspaces."
 complete -c npm -n "__fish_seen_subcommand_from ls" -l "include-workspace-root" -d "Include the workspace root when workspaces are enabled for a command."
+
+
+
+complete -c npm -n "__fish_seen_subcommand_from prefix" -s "g" -l "global" -d "Operates in \"global\" mode, so that packages are installed into the prefix folder instead of the current working directory."
 
 
 
@@ -268,15 +277,8 @@ complete -c npm -n "__fish_seen_subcommand_from test" -l "script-shell" -d "The 
 
 
 
-complete -c npm -n "__fish_seen_subcommand_from version" -l "allow-same-version" -d "Prevents throwing an error when npm version is used to set the new version to the same value as the current version."
-complete -c npm -n "__fish_seen_subcommand_from version" -l "commit-hooks" -d "Run git commit hooks when using the npm version command."
-complete -c npm -n "__fish_seen_subcommand_from version" -l "git-tag-version" -d "Tag the commit when using the npm version command."
-complete -c npm -n "__fish_seen_subcommand_from version" -l "json" -d "Whether or not to output JSON data, rather than the normal output."
-complete -c npm -n "__fish_seen_subcommand_from version" -l "preid" -d "The \"prerelease identifier\" to use as a prefix for the \"prerelease\" part of a semver." -x
-complete -c npm -n "__fish_seen_subcommand_from version" -l "sign-git-tag" -d "If set to true, then the npm version command will tag the version using -s to add a signature."
-complete -c npm -n "__fish_seen_subcommand_from version" -l "workspace" -d "Enable running a command in the context of the configured workspaces of the current project while filtering by running only the workspaces defined by this configuration option." -x
-complete -c npm -n "__fish_seen_subcommand_from version" -l "workspaces" -d "Set to true to run the command in the context of all configured workspaces."
-complete -c npm -n "__fish_seen_subcommand_from version" -l "include-workspace-root" -d "Include the workspace root when workspaces are enabled for a command."
+complete -c npm -n "__fish_seen_subcommand_from uninstall" -l "save" -s "S" -d "Save installed packages to a package.json file as dependencies."
+complete -c npm -n "__fish_seen_subcommand_from uninstall" -l "no-save" -d "Tell npm not to remove the package from your package.json, npm-shrinkwrap.json, or package-lock.json files."
 
 
 

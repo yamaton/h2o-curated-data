@@ -10,8 +10,6 @@
 
     function _npm_adduser {
         _arguments \
-            '--registry[The base URL of the npm registry. (default: "https://registry.npmjs.org/")]' \
-            '--scope[Associate an operation with a scope for a scoped registry.]' \
             "*: :_files"
 
     }
@@ -150,9 +148,7 @@
     function _npm_explain {
         _arguments \
             '--json[Whether or not to output JSON data, rather than the normal output.]' \
-            '--workspace[Enable running a command in the context of the configured workspaces of the current project while filtering by running only the workspaces defined by this configuration option.]' \
-            '--workspaces[Set to true to run the command in the context of all configured workspaces.]' \
-            '--include-workspace-root[Include the workspace root when workspaces are enabled for a command.]' \
+            {-w,--workspace}'[Enable running a command in the context of the configured workspaces of the current project while filtering by running only the workspaces defined by this configuration option.]' \
             "*: :_files"
 
     }
@@ -195,10 +191,11 @@
 
     function _npm_init {
         _arguments \
-            '--yes[Automatically answer "yes" to any prompts that npm might print on the command line.]' \
+            {-y,--yes}'[Automatically answer "yes" to any prompts that npm might print on the command line.]' \
             '--force[Removes various protections against unfortunate side effects, common mistakes, unnecessary performance degradation, and malicious input.]' \
-            '--workspace[Enable running a command in the context of the configured workspaces of the current project while filtering by running only the workspaces defined by this configuration option.]' \
-            '--workspaces[Set to true to run the command in the context of all configured workspaces.]' \
+            {-w,--workspace}'[Enable running a command in the context of the configured workspaces of the current project while filtering by running only the workspaces defined by this configuration option.]' \
+            {-ws,--workspaces}'[Set to true to run the command in the context of all configured workspaces.]' \
+            '--no-workspaces-update[Don'\''t update workspaces.]' \
             '--include-workspace-root[Include the workspace root when workspaces are enabled for a command.]' \
             "*: :_files"
 
@@ -278,32 +275,43 @@
 
     function _npm_ll {
         _arguments \
+            {-a,--all}'[When running npm outdated and npm ls, setting --all will show all outdated or installed packages, rather than only those directly depended upon by the current project.]' \
+            '--json[Whether or not to output JSON data, rather than the normal output.]' \
+            {-l,--long}'[Show extended information in ls, search, and help-search.]' \
+            {-p,--parseable}'[Show the description in npm search]' \
+            {-g,--global}'[Operates in "global" mode, so that packages are installed into the prefix folder instead of the current working directory. See npm help folders for more on the differences in behavior.]' \
+            '--depth[The depth to go when recursing packages for npm ls.]' \
+            '--omit[Dependency types to omit from the installation tree on disk.]' \
+            '--link[Used with npm ls, limiting output to only those packages that are linked.]' \
+            '--package-lock-only[If set to true, the current operation will only use the package-lock.json, ignoring node_modules.]' \
+            '--unicode[When set to true, npm uses unicode characters in the tree output. When false, it uses ascii characters instead of unicode glyphs.]' \
+            {-w,--workspace}'[Enable running a command in the context of the configured workspaces of the current project while filtering by running only the workspaces defined by this configuration option.]' \
+            {-ws,--workspaces}'[Set to true to run the command in the context of all configured workspaces.]' \
+            '--include-workspace-root[Include the workspace root when workspaces are enabled for a command.]' \
             "*: :_files"
 
     }
 
     function _npm_logout {
         _arguments \
-            '--registry[The base URL of the npm registry. (default: "https://registry.npmjs.org/")]' \
-            '--scope[Associate an operation with a scope for a scoped registry.]' \
             "*: :_files"
 
     }
 
     function _npm_ls {
         _arguments \
-            '--all[When running npm outdated and npm ls, setting --all will show all outdated or installed packages, rather than only those directly depended upon by the current project.]' \
+            {-a,--all}'[When running npm outdated and npm ls, setting --all will show all outdated or installed packages, rather than only those directly depended upon by the current project.]' \
             '--json[Whether or not to output JSON data, rather than the normal output.]' \
-            '--long[Show extended information in ls, search, and help-search.]' \
-            '--parseable[Show the description in npm search]' \
-            '--global[Operates in "global" mode, so that packages are installed into the prefix folder instead of the current working directory. See npm help folders for more on the differences in behavior.]' \
+            {-l,--long}'[Show extended information in ls, search, and help-search.]' \
+            {-p,--parseable}'[Show the description in npm search]' \
+            {-g,--global}'[Operates in "global" mode, so that packages are installed into the prefix folder instead of the current working directory. See npm help folders for more on the differences in behavior.]' \
             '--depth[The depth to go when recursing packages for npm ls.]' \
             '--omit[Dependency types to omit from the installation tree on disk.]' \
             '--link[Used with npm ls, limiting output to only those packages that are linked.]' \
             '--package-lock-only[If set to true, the current operation will only use the package-lock.json, ignoring node_modules.]' \
             '--unicode[When set to true, npm uses unicode characters in the tree output. When false, it uses ascii characters instead of unicode glyphs.]' \
-            '--workspace[Enable running a command in the context of the configured workspaces of the current project while filtering by running only the workspaces defined by this configuration option.]' \
-            '--workspaces[Set to true to run the command in the context of all configured workspaces.]' \
+            {-w,--workspace}'[Enable running a command in the context of the configured workspaces of the current project while filtering by running only the workspaces defined by this configuration option.]' \
+            {-ws,--workspaces}'[Set to true to run the command in the context of all configured workspaces.]' \
             '--include-workspace-root[Include the workspace root when workspaces are enabled for a command.]' \
             "*: :_files"
 
@@ -347,6 +355,7 @@
 
     function _npm_prefix {
         _arguments \
+            {-g,--global}'[Operates in "global" mode, so that packages are installed into the prefix folder instead of the current working directory. See npm help folders for more on the differences in behavior.]' \
             "*: :_files"
 
     }
@@ -489,6 +498,8 @@
 
     function _npm_uninstall {
         _arguments \
+            {--save,-S}'[Save installed packages to a package.json file as dependencies.]' \
+            '--no-save[Tell npm not to remove the package from your package.json, npm-shrinkwrap.json, or package-lock.json files.]' \
             "*: :_files"
 
     }
@@ -513,15 +524,6 @@
 
     function _npm_version {
         _arguments \
-            '--allow-same-version[Prevents throwing an error when npm version is used to set the new version to the same value as the current version.]' \
-            '--commit-hooks[Run git commit hooks when using the npm version command.]' \
-            '--git-tag-version[Tag the commit when using the npm version command. Setting this to false results in no commit being made at all.]' \
-            '--json[Whether or not to output JSON data, rather than the normal output.]' \
-            '--preid[The "prerelease identifier" to use as a prefix for the "prerelease" part of a semver. Like the rc in 1.2.0-rc.8.]' \
-            '--sign-git-tag[If set to true, then the npm version command will tag the version using -s to add a signature.]' \
-            '--workspace[Enable running a command in the context of the configured workspaces of the current project while filtering by running only the workspaces defined by this configuration option.]' \
-            '--workspaces[Set to true to run the command in the context of all configured workspaces.]' \
-            '--include-workspace-root[Include the workspace root when workspaces are enabled for a command.]' \
             "*: :_files"
 
     }

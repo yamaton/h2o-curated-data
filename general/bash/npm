@@ -352,14 +352,6 @@ _npm_access ()
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
 
-_npm_adduser ()
-{
-    local cur word_list
-    word_list=" --registry --scope" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
-}
-
 _npm_audit ()
 {
     local cur word_list
@@ -599,7 +591,7 @@ _npm_edit ()
 _npm_explain ()
 {
     local cur word_list
-    word_list=" --json --workspace --workspaces --include-workspace-root" 
+    word_list=" --json -w --workspace" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -653,7 +645,7 @@ _npm_hook ()
 _npm_init ()
 {
     local cur word_list
-    word_list=" --yes --force --workspace --workspaces --include-workspace-root" 
+    word_list=" -y --yes --force -w --workspace -ws --workspaces --no-workspaces-update --include-workspace-root" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -682,10 +674,10 @@ _npm_link ()
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
 
-_npm_logout ()
+_npm_ll ()
 {
     local cur word_list
-    word_list=" --registry --scope" 
+    word_list=" -a --all --json -l --long -p --parseable -g --global --depth --omit --link --package-lock-only --unicode -w --workspace -ws --workspaces --include-workspace-root" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -693,7 +685,187 @@ _npm_logout ()
 _npm_ls ()
 {
     local cur word_list
-    word_list=" --all --json --long --parseable --global --depth --omit --link --package-lock-only --unicode --workspace --workspaces --include-workspace-root" 
+    word_list=" -a --all --json -l --long -p --parseable -g --global --depth --omit --link --package-lock-only --unicode -w --workspace -ws --workspaces --include-workspace-root" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_npm_org ()
+{
+    local cur word_list
+    local i=1 subcommand_index
+
+    # take the last word that's NOT starting with -
+    while [[ ( $i < $COMP_CWORD ) ]]; do
+        local s="${COMP_WORDS[i]}"
+        case "$s" in
+          org)
+            subcommand_index=$i
+            break
+            ;;
+        esac
+        (( i++ ))
+    done
+
+    while [[ ( $subcommand_index < $COMP_CWORD ) ]]; do
+        local s="${COMP_WORDS[subcommand_index}"
+        case "$s" in
+          set) _npm_set
+            return
+            ;;
+
+          rm) _npm_rm
+            return
+            ;;
+
+          ls) _npm_ls
+            return
+            ;;
+
+          *)  ;; 
+        esac
+        (( subcommand_index++ ))
+    done
+
+    word_list=" set rm ls" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_npm_owner ()
+{
+    local cur word_list
+    local i=1 subcommand_index
+
+    # take the last word that's NOT starting with -
+    while [[ ( $i < $COMP_CWORD ) ]]; do
+        local s="${COMP_WORDS[i]}"
+        case "$s" in
+          owner)
+            subcommand_index=$i
+            break
+            ;;
+        esac
+        (( i++ ))
+    done
+
+    while [[ ( $subcommand_index < $COMP_CWORD ) ]]; do
+        local s="${COMP_WORDS[subcommand_index}"
+        case "$s" in
+          add) _npm_add
+            return
+            ;;
+
+          rm) _npm_rm
+            return
+            ;;
+
+          ls) _npm_ls
+            return
+            ;;
+
+          *)  ;; 
+        esac
+        (( subcommand_index++ ))
+    done
+
+    word_list=" add rm ls" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_npm_pkg ()
+{
+    local cur word_list
+    local i=1 subcommand_index
+
+    # take the last word that's NOT starting with -
+    while [[ ( $i < $COMP_CWORD ) ]]; do
+        local s="${COMP_WORDS[i]}"
+        case "$s" in
+          pkg)
+            subcommand_index=$i
+            break
+            ;;
+        esac
+        (( i++ ))
+    done
+
+    while [[ ( $subcommand_index < $COMP_CWORD ) ]]; do
+        local s="${COMP_WORDS[subcommand_index}"
+        case "$s" in
+          set) _npm_set
+            return
+            ;;
+
+          delete) _npm_delete
+            return
+            ;;
+
+          get) _npm_get
+            return
+            ;;
+
+          *)  ;; 
+        esac
+        (( subcommand_index++ ))
+    done
+
+    word_list=" set delete get" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_npm_prefix ()
+{
+    local cur word_list
+    word_list=" -g --global" 
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+}
+
+_npm_profile ()
+{
+    local cur word_list
+    local i=1 subcommand_index
+
+    # take the last word that's NOT starting with -
+    while [[ ( $i < $COMP_CWORD ) ]]; do
+        local s="${COMP_WORDS[i]}"
+        case "$s" in
+          profile)
+            subcommand_index=$i
+            break
+            ;;
+        esac
+        (( i++ ))
+    done
+
+    while [[ ( $subcommand_index < $COMP_CWORD ) ]]; do
+        local s="${COMP_WORDS[subcommand_index}"
+        case "$s" in
+          enable-2fa) _npm_enable2fa
+            return
+            ;;
+
+          diable-2fa) _npm_diable2fa
+            return
+            ;;
+
+          set) _npm_set
+            return
+            ;;
+
+          get) _npm_get
+            return
+            ;;
+
+          *)  ;; 
+        esac
+        (( subcommand_index++ ))
+    done
+
+    word_list=" enable-2fa diable-2fa set get" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
@@ -788,10 +960,10 @@ _npm_test ()
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }
 
-_npm_version ()
+_npm_uninstall ()
 {
     local cur word_list
-    word_list=" --allow-same-version --commit-hooks --git-tag-version --json --preid --sign-git-tag --workspace --workspaces --include-workspace-root" 
+    word_list=" --save -S --no-save" 
     cur="${COMP_WORDS[COMP_CWORD]}"
     COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
 }

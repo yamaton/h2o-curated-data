@@ -30,7 +30,6 @@ complete -c mtr -s "l" -l "raw" -d "output raw format"
 complete -c mtr -s "p" -l "split" -d "split output"
 complete -c mtr -s "t" -l "curses" -d "use curses terminal interface"
 complete -c mtr -l "displaymode" -d "select initial display mode" -x
-complete -c mtr -s "g" -l "gtk" -d "use GTK+ xwindow interface"
 complete -c mtr -s "n" -l "no-dns" -d "do not resolve host names"
 complete -c mtr -s "b" -l "show-ips" -d "show IP numbers and host names"
 complete -c mtr -s "o" -l "order" -d "select output fields" -x

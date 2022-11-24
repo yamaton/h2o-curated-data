@@ -1,0 +1,222 @@
+name: ss
+description: another utility to investigate sockets
+usage: ss [options] [ FILTER ]
+options:
+  - names:
+      - -h
+      - --help
+    argument: ""
+    description: Show summary of options.
+  - names:
+      - -V
+      - --version
+    argument: ""
+    description: Output version information.
+  - names:
+      - -H
+      - --no-header
+    argument: ""
+    description: Suppress header line.
+  - names:
+      - -O
+      - --oneline
+    argument: ""
+    description: Print each socket's data on a single line.
+  - names:
+      - -n
+      - --numeric
+    argument: ""
+    description: Do not try to resolve service names. Show exact bandwidth values, instead of human-readable.
+  - names:
+      - -r
+      - --resolve
+    argument: ""
+    description: Try to resolve numeric address/ports.
+  - names:
+      - -a
+      - --all
+    argument: ""
+    description: Display both listening and non-listening (for TCP this means established connections) sockets.
+  - names:
+      - -l
+      - --listening
+    argument: ""
+    description: Display only listening sockets (these are omitted by default).
+  - names:
+      - -o
+      - --options
+    argument: ""
+    description: 'Show timer information. For TCP protocol, the output format is:'
+  - names:
+      - -e
+      - --extended
+    argument: ""
+    description: 'Show detailed socket information. The output format is:'
+  - names:
+      - -m
+      - --memory
+    argument: ""
+    description: 'Show socket memory usage. The output format is:'
+  - names:
+      - -p
+      - --processes
+    argument: ""
+    description: Show process using socket.
+  - names:
+      - -i
+      - --info
+    argument: ""
+    description: 'Show internal TCP information.'
+  - names:
+      - --tos
+    argument: ""
+    description: 'Show ToS and priority information.'
+  - names:
+      - --cgroup
+    argument: ""
+    description: 'Show cgroup information.'
+  - names:
+      - -K
+      - --kill
+    argument: ""
+    description: Attempts to forcibly close sockets. This option displays sockets that are successfully closed and silently skips sockets that the kernel does not support closing. It supports IPv4 and IPv6 sockets only.
+  - names:
+      - -s
+      - --summary
+    argument: ""
+    description: Print summary statistics. This option does not parse socket lists obtaining summary from various sources. It is useful when amount of sockets is so huge that parsing /proc/net/tcp is painful.
+  - names:
+      - -E
+      - --events
+    argument: ""
+    description: Continually display sockets as they are destroyed
+  - names:
+      - -Z
+      - --context
+    argument: ""
+    description: As the -p option but also shows process security context.
+  - names:
+      - -z
+      - --contexts
+    argument: ""
+    description: As the -Z option but also shows the socket context. The socket context is taken from the associated inode and is not the actual socket context held by the kernel. Sockets are typically labeled with the context of the creating process, however the context shown will reflect any policy role, type and/or range transition rules applied, and is therefore a useful reference.
+  - names:
+      - -N
+      - --net
+    argument: NSNAME
+    description: Switch to the specified network namespace name.
+  - names:
+      - -b
+      - --bpf
+    argument: ""
+    description: Show socket classic BPF filters (only administrators are allowed to get these information).
+  - names:
+      - "-4"
+      - --ipv4
+    argument: ""
+    description: Display only IP version 4 sockets (alias for -f inet).
+  - names:
+      - "-6"
+      - --ipv6
+    argument: ""
+    description: Display only IP version 6 sockets (alias for -f inet6).
+  - names:
+      - "-0"
+      - --packet
+    argument: ""
+    description: Display PACKET sockets (alias for -f link).
+  - names:
+      - -t
+      - --tcp
+    argument: ""
+    description: Display TCP sockets.
+  - names:
+      - -u
+      - --udp
+    argument: ""
+    description: Display UDP sockets.
+  - names:
+      - -d
+      - --dccp
+    argument: ""
+    description: Display DCCP sockets.
+  - names:
+      - -w
+      - --raw
+    argument: ""
+    description: Display RAW sockets.
+  - names:
+      - -x
+      - --unix
+    argument: ""
+    description: Display Unix domain sockets (alias for -f unix).
+  - names:
+      - -S
+      - --sctp
+    argument: ""
+    description: Display SCTP sockets.
+  - names:
+      - --vsock
+    argument: ""
+    description: Display vsock sockets (alias for -f vsock).
+  - names:
+      - --xdp
+    argument: ""
+    description: Display XDP sockets (alias for -f xdp).
+  - names:
+      - --inet-sockopt
+    argument: ""
+    description: Display inet socket options.
+  - names:
+      - -f
+      - --family
+    argument: FAMILY
+    description: 'Display sockets of type FAMILY. Currently the following families are supported: unix, inet, inet6, link, netlink, vsock, xdp.'
+  - names:
+      - -A
+      - --query
+      - --socket
+    argument: QUERY
+    description: 'List of socket tables to dump, separated by commas. The following identifiers are understood: all, inet, tcp, udp, raw, unix, packet, netlink, unix_dgram, unix_stream, unix_seqpacket, packet_raw, packet_dgram, dccp, sctp, vsock_stream, vsock_dgram, xdp Any item in the list may optionally be prefixed by an exclamation mark (!) to exclude that socket table from being dumped.'
+  - names:
+      - -D
+      - --diag
+    argument: FILE
+    description: Do not display anything, just dump raw information about TCP sockets to FILE after applying filters. If FILE is - stdout is used.
+  - names:
+      - -F
+      - --filter
+    argument: FILE
+    description: Read filter information from FILE. Each line of FILE is interpreted like single command line option. If FILE is - stdin is used.
+version: ss utility, iproute2-5.15.0
+tldr: |
+  > Utility to investigate sockets.
+  > More information: <https://manned.org/ss.8>.
+
+  - Show all TCP/UDP/RAW/UNIX sockets:
+
+  `ss -a {{-t|-u|-w|-x}}`
+
+  - Filter TCP sockets by states, only/exclude:
+
+  `ss {{state/exclude}} {{bucket/big/connected/synchronized/...}}`
+
+  - Show all TCP sockets connected to the local HTTPS port (443):
+
+  `ss -t src :{{443}}`
+
+  - Show all TCP sockets listening on the local 8080 port:
+
+  `ss -lt src :{{8080}}`
+
+  - Show all TCP sockets along with processes connected to a remote ssh port:
+
+  `ss -pt dst :{{ssh}}`
+
+  - Show all UDP sockets connected on specific source and destination ports:
+
+  `ss -u 'sport == :{{source_port}} and dport == :{{destination_port}}'`
+
+  - Show all TCP IPv4 sockets locally connected on the subnet 192.168.0.0/16:
+
+  `ss -4t src {{192.168/16}}`

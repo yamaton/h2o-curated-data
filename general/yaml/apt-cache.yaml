@@ -1,0 +1,182 @@
+name: apt-cache
+description: query the APT cach
+usage: |-
+  apt-cache [-agipns] [-o=config_string] [-c=config_file] {gencaches | showpkg pkg...  | showsrc pkg...  | stats | dump |
+            dumpavail | unmet | search regex...  | show pkg [{=pkg_version_number | /target_release}]...  |
+            depends pkg [{=pkg_version_number | /target_release}]...  |
+            rdepends pkg [{=pkg_version_number | /target_release}]...  | pkgnames [prefix]  |
+            dotty pkg [{=pkg_version_number | /target_release}]...  | xvcg pkg [{=pkg_version_number | /target_release}]...  |
+            policy [pkg...]  | madison pkg...  | {-v | --version} | {-h | --help}}
+options:
+  - names:
+      - -p
+      - --pkg-cache
+    argument: ""
+    description: 'Select the file to store the package cache. The package cache is the primary cache used by all operations. Configuration Item: Dir::Cache::pkgcache.'
+  - names:
+      - -s
+      - --src-cache
+    argument: ""
+    description: 'Select the file to store the source cache. The source is used only by gencaches and it stores a parsed version of the package information from remote sources. When building the package cache the source cache is used to avoid reparsing all of the package files. Configuration Item: Dir::Cache::srcpkgcache.'
+  - names:
+      - -q
+      - --quiet
+    argument: ""
+    description: 'Quiet; produces output suitable for logging, omitting progress indicators. More q''s will produce more quietness up to a maximum of 2. You can also use -q=# to set the quietness level, overriding the configuration file. Configuration Item: quiet.'
+  - names:
+      - -i
+      - --important
+    argument: ""
+    description: 'Print only important dependencies; for use with unmet and depends. Causes only Depends and Pre-Depends relations to be printed. Configuration Item: APT::Cache::Important.'
+  - names:
+      - --no-pre-depends
+      - --no-depends
+      - --no-recommends
+      - --no-suggests
+      - --no-conflicts
+      - --no-breaks
+      - --no-replaces
+      - --no-enhances
+    argument: ""
+    description: 'Per default the depends and rdepends print all dependencies. This can be tweaked with these flags which will omit the specified dependency type. Configuration Item: APT::Cache::ShowDependencyType e.g. APT::Cache::ShowRecommends.'
+  - names:
+      - --implicit
+    argument: ""
+    description: 'Per default depends and rdepends print only dependencies explicitly expressed in the metadata. With this flag it will also show dependencies implicitly added based on the encountered data. A Conflicts: foo e.g. expresses implicitly that this package also conflicts with the package foo from any other architecture. Configuration Item: APT::Cache::ShowImplicit.'
+  - names:
+      - -f
+      - --full
+    argument: ""
+    description: 'Print full package records when searching. Configuration Item: APT::Cache::ShowFull.'
+  - names:
+      - -a
+      - --all-versions
+    argument: ""
+    description: 'Print full records for all available versions. This is the default; to turn it off, use --no-all-versions. If --no-all-versions is specified, only the candidate version will be displayed (the one which would be selected for installation). This option is only applicable to the show command. Configuration Item: APT::Cache::AllVersions.'
+  - names:
+      - -g
+      - --generate
+    argument: ""
+    description: 'Perform automatic package cache regeneration, rather than use the cache as it is. This is the default; to turn it off, use --no-generate. Configuration Item: APT::Cache::Generate.'
+  - names:
+      - --names-only
+      - -n
+    argument: ""
+    description: 'Only search on the package and provided package names, not the long descriptions. Configuration Item: APT::Cache::NamesOnly.'
+  - names:
+      - --all-names
+    argument: ""
+    description: 'Make pkgnames print all names, including virtual packages and missing dependencies. Configuration Item: APT::Cache::AllNames.'
+  - names:
+      - --recurse
+    argument: ""
+    description: 'Make depends and rdepends recursive so that all packages mentioned are printed once. Configuration Item: APT::Cache::RecurseDepends.'
+  - names:
+      - --installed
+    argument: ""
+    description: 'Limit the output of depends and rdepends to packages which are currently installed. Configuration Item: APT::Cache::Installed.'
+  - names:
+      - --with-source
+    argument: filename
+    description: Adds the given file as a source for metadata. Can be repeated to add multiple files. Supported are currently *.deb, *.dsc, *.changes, Sources and Packages files as well as source package directories. Files are matched based on their name only, not their content!
+  - names:
+      - -h
+      - --help
+    argument: ""
+    description: Show a short usage summary.
+  - names:
+      - -v
+      - --version
+    argument: ""
+    description: Show the program version.
+  - names:
+      - -c
+      - --config-file
+    argument: ""
+    description: Configuration File; Specify a configuration file to use. The program will read the default configuration file and then this configuration file. If configuration settings need to be set before the default configuration files are parsed specify a file with the APT_CONFIG environment variable. See apt.conf(5) for syntax information.
+  - names:
+      - -o
+      - --option
+    argument: ""
+    description: Set a Configuration Option; This will set an arbitrary configuration option. The syntax is -o Foo::Bar=bar. -o and --option can be used multiple times to set different options.
+subcommands:
+  - name: gencaches
+    description: Show source records
+    usage: apt-cache gencaches
+    options: []
+  - name: showsrc
+    description: Show source records
+    usage: apt-cache showpkg pkg...
+    options: []
+  - name: dump
+    description: Show a short listing of every package in the cache
+    usage: apt-cache dump
+    options: []
+  - name: dumpavail
+    description: Print out an available list to stdout
+    usage: apt-cache dumpavail
+    options: []
+  - name: unmet
+    description: Display a summary of all unmet dependencies in the package cache.
+    usage: apt-cache unmet
+    options: []
+  - name: show
+    description: Show a readable record for the package
+    usage: apt-cache show pkg...
+    options: []
+  - name: search
+    description: Search the package list for a regex pattern
+    usage: apt-cache search regex
+    options: []
+  - name: depends
+    description: Show raw dependency information for a package
+    usage: apt-cache depends pkg...
+    options: []
+  - name: rdepends
+    description: Show reverse dependency information for a package
+    usage: apt-cache rdepends pkg...
+    options: []
+  - name: pkgnames
+    description: List the names of all packages in the system
+    usage: apt-cache pkgnames [prefix]
+    options: []
+  - name: dotty
+    description: Generates output for use by dotty from the GraphViz package
+    usage: apt-cache dotty pkg...
+    options: []
+  - name: xvcg
+    description: The same as dotty, only for xvcg from the VCG tool
+    usage: apt-cache xvcg pkg...
+    options: []
+  - name: policy
+    description: Show policy settings
+    usage: apt-cache policy [pkg...]
+    options: []
+  - name: madison
+    description: Mimic the output format and a subset of the functionality of the Debian archive management tool, madison
+    usage: apt-cache madison pkg...
+    options: []
+version: apt 2.4.8 (amd64)
+tldr: |
+  > Debian and Ubuntu package query tool.
+  > More information: <https://manpages.debian.org/latest/apt/apt-cache.8.html>.
+
+  - Search for a package in your current sources:
+
+  `apt-cache search {{query}}`
+
+  - Show information about a package:
+
+  `apt-cache show {{package}}`
+
+  - Show whether a package is installed and up to date:
+
+  `apt-cache policy {{package}}`
+
+  - Show dependencies for a package:
+
+  `apt-cache depends {{package}}`
+
+  - Show packages that depend on a particular package:
+
+  `apt-cache rdepends {{package}}`

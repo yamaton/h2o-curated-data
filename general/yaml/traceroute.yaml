@@ -1,0 +1,187 @@
+name: traceroute
+description: print the route packets trace to network host
+usage: traceroute [ -46dFITnreAUDV ] [ -f first_ttl ] [ -g gate,... ] [ -i device ] [ -m max_ttl ] [ -N squeries ] [ -p port ] [ -t tos ] [ -l flow_label ] [ -w MAX,HERE,NEAR ] [ -q nqueries ] [ -s src_addr ] [ -z sendwait ] [ --fwmark=num ] host [ packetlen ]
+options:
+  - names:
+      - "-4"
+    argument: ""
+    description: Use IPv4
+  - names:
+      - "-6"
+    argument: ""
+    description: Use IPv6
+  - names:
+      - -d
+      - --debug
+    argument: ""
+    description: Enable socket level debugging
+  - names:
+      - -F
+      - --dont-fragment
+    argument: ""
+    description: Do not fragment packets
+  - names:
+      - -f
+      - --first
+    argument: first_ttl
+    description: Start from the first_ttl hop (instead from 1)
+  - names:
+      - -g
+      - --gateway
+    argument: gate,...
+    description: Route packets through the specified gateway (maximum 8 for IPv4 and 127 for IPv6)
+  - names:
+      - -I
+      - --icmp
+    argument: ""
+    description: Use ICMP ECHO for tracerouting
+  - names:
+      - -T
+      - --tcp
+    argument: ""
+    description: Use TCP SYN for tracerouting (default port is 80)
+  - names:
+      - -i
+      - --interface
+    argument: device
+    description: Specify a network interface to operate with
+  - names:
+      - -m
+      - --max-hops
+    argument: max_ttl
+    description: Set the max number of hops (max TTL to be reached). Default is 30
+  - names:
+      - -N
+      - --sim-queries
+    argument: squeries
+    description: Set the number of probes to be tried simultaneously (default is 16)
+  - names:
+      - -n
+    argument: ""
+    description: Do not resolve IP addresses to their domain names
+  - names:
+      - -p
+      - --port
+    argument: port
+    description: Set the destination port to use. It is either initial udp port value for "default" method (incremented by each probe, default is 33434), or initial seq for "icmp" (incremented as well, default from 1), or some constant destination port for other methods (with default of 80 for "tcp", 53 for "udp", etc.)
+  - names:
+      - -t
+      - --tos
+    argument: tos
+    description: Set the TOS (IPv4 type of service) or TC (IPv6 traffic class) value for outgoing packets
+  - names:
+      - -l
+      - --flowlabel
+    argument: flow_label
+    description: Use specified flow_label for IPv6 packets
+  - names:
+      - -w
+      - --wait
+    argument: MAX,HERE,NEAR
+    description: Wait for a probe no more than HERE (default 3) times longer than a response from the same hop, or no more than NEAR (default 10) times than some next hop, or MAX (default 5.0) seconds (float point values allowed too)
+  - names:
+      - -q
+      - --queries
+    argument: nqueries
+    description: Set the number of probes per each hop. Default is 3
+  - names:
+      - -r
+    argument: ""
+    description: Bypass the normal routing and send directly to a host on an attached network
+  - names:
+      - -s
+      - --source
+    argument: src_addr
+    description: Use source src_addr for outgoing packets
+  - names:
+      - -z
+      - --sendwait
+    argument: sendwait
+    description: Minimal time interval between probes (default 0). If the value is more than 10, then it specifies a number in milliseconds, else it is a number of seconds (float point values allowed too)
+  - names:
+      - -e
+      - --extensions
+    argument: ""
+    description: Show ICMP extensions (if present), including MPLS
+  - names:
+      - -A
+      - --as-path-lookups
+    argument: ""
+    description: Perform AS path lookups in routing registries and print results directly after the corresponding addresses
+  - names:
+      - -M
+      - --module
+    argument: name
+    description: Use specified module (either builtin or external) for traceroute operations. Most methods have their shortcuts (`-I' means `-M icmp' etc.)
+  - names:
+      - -O
+      - --options
+    argument: OPTS,...
+    description: Use module-specific option OPTS for the traceroute module. Several OPTS allowed, separated by comma. If OPTS is "help", print info about available options
+  - names:
+      - --sport
+    argument: num
+    description: Use source port num for outgoing packets. Implies `-N 1'
+  - names:
+      - --fwmark
+    argument: num
+    description: Set firewall mark for outgoing packets
+  - names:
+      - -U
+      - --udp
+    argument: ""
+    description: Use UDP to particular port for tracerouting (instead of increasing the port per each probe), default port is 53
+  - names:
+      - -UL
+    argument: ""
+    description: Use UDPLITE for tracerouting (default dest port is 53)
+  - names:
+      - -D
+      - --dccp
+    argument: ""
+    description: Use DCCP Request for tracerouting (default port is 33434)
+  - names:
+      - -P
+      - --protocol
+    argument: prot
+    description: Use raw packet of protocol prot for tracerouting
+  - names:
+      - --mtu
+    argument: ""
+    description: Discover MTU along the path being traced. Implies `-F -N 1'
+  - names:
+      - --back
+    argument: ""
+    description: Guess the number of hops in the backward path and print if it differs
+  - names:
+      - -V
+      - --version
+    argument: ""
+    description: Print version info and exit
+  - names:
+      - --help
+    argument: ""
+    description: Read this help and exit
+tldr: |
+  > Print the route packets trace to network host.
+  > More information: <https://manned.org/traceroute>.
+
+  - Traceroute to a host:
+
+  `traceroute {{host}}`
+
+  - Disable IP address and host name mapping:
+
+  `traceroute -n {{host}}`
+
+  - Specify wait time for response:
+
+  `traceroute -w {{0.5}} {{host}}`
+
+  - Specify number of queries per hop:
+
+  `traceroute -q {{5}} {{host}}`
+
+  - Specify size in bytes of probing packet:
+
+  `traceroute {{host}} {{42}}`

@@ -16,63 +16,82 @@ function _clang {
 
     _arguments -C \
         '-#[Print (but do not run) the commands to run for this compilation]' \
-        '--analyzer-output[Static analyzer report output format (html|plist|plist-multi-file|plist-html|sarif|text).]' \
+        '--amdgpu-arch-tool[Tool used for detecting AMD GPU arch in the system.]' \
+        '--analyzer-output[Static analyzer report output format (html|plist|plist-multi-file|plist-html|sarif|sarif-html|text).]' \
         '--analyze[Run the static analyzer]' \
         '-arcmt-migrate-emit-errors[Emit ARC errors even if the migrator can fix them]' \
         '-arcmt-migrate-report-output[Output path for the plist report]' \
-        '-B[Add <dir> to search path for binaries and object files used implicitly]':file:_files \
+        '-B[Search $prefix$file for executables, libraries, and data files. If $prefix is a directory, search $prefix/$file]' \
+        '-b[Pass -b <arg> to the linker on AIX (only).]' \
         '-CC[Include comments from within macros in preprocessed output]' \
         '-cl-denorms-are-zero[OpenCL only. Allow denormals to be flushed to zero.]' \
+        '-cl-ext[OpenCL only. Enable or disable OpenCL extensions/optional features. The argument is a comma-separated sequence of one or more extension names, each prefixed by '\''+'\'' or '\''-'\''.]' \
         '-cl-fast-relaxed-math[OpenCL only. Sets -cl-finite-math-only and -cl-unsafe-math-optimizations, and defines __FAST_RELAXED_MATH__.]' \
         '-cl-finite-math-only[OpenCL only. Allow floating-point optimizations that assume arguments and results are not NaNs or +-Inf.]' \
         '-cl-fp32-correctly-rounded-divide-sqrt[OpenCL only. Specify that single precision floating-point divide and sqrt used in the program source are correctly rounded.]' \
         '-cl-kernel-arg-info[OpenCL only. Generate kernel argument metadata.]' \
         '-cl-mad-enable[OpenCL only. Allow use of less precise MAD computations in the generated binary.]' \
         '-cl-no-signed-zeros[OpenCL only. Allow use of less precise no signed zeros computations in the generated binary.]' \
+        '-cl-no-stdinc[OpenCL only. Disables all standard includes containing non-native compiler types and functions.]' \
         '-cl-opt-disable[OpenCL only. This option disables all optimizations. By default optimizations are enabled.]' \
         '-cl-single-precision-constant[OpenCL only. Treat double precision floating-point constant as single precision constant.]' \
         '-cl-std[OpenCL language standard to compile for.]' \
         '-cl-strict-aliasing[OpenCL only. This option is added for compatibility with OpenCL 1.0.]' \
         '-cl-uniform-work-group-size[OpenCL only. Defines that the global work-size be a multiple of the work-group size specified to clEnqueueNDRangeKernel]' \
-        '-cl-unsafe-math-optimizations[OpenCL only. Allow unsafe floating-point optimizations.  Also implies -cl-no-signed-zeros and -cl-mad-enable.]' \
+        '-cl-unsafe-math-optimizations[OpenCL only. Allow unsafe floating-point optimizations. Also implies -cl-no-signed-zeros and -cl-mad-enable.]' \
         '--config[Specifies configuration file]' \
-        '--cuda-compile-host-device[Compile CUDA code for both host and device (default).  Has no effect on non-CUDA compilations.]' \
+        '--cuda-compile-host-device[Compile CUDA code for both host and device (default). Has no effect on non-CUDA compilations.]' \
         '--cuda-device-only[Compile CUDA code for device only]' \
-        '--cuda-gpu-arch[CUDA GPU architecture (e.g. sm_35).  May be specified more than once.]' \
-        '--cuda-host-only[Compile CUDA code for host only.  Has no effect on non-CUDA compilations.]' \
+        '--cuda-feature[Manually specify the CUDA feature to use]' \
+        '--cuda-host-only[Compile CUDA code for host only. Has no effect on non-CUDA compilations.]' \
         '--cuda-include-ptx[Include PTX for the following GPU architecture (e.g. sm_35) or '\''all'\''. May be specified more than once.]' \
         '--cuda-noopt-device-debug[Enable device-side debug info generation. Disables ptxas optimizations.]' \
         '--cuda-path-ignore-env[Ignore environment variables to detect CUDA installation]' \
         '--cuda-path[CUDA installation path]' \
+        '-cuid[An ID for compilation unit, which should be the same for the same compilation unit but different for different compilation units. It is used to externalize device-side static variables for single source offloading languages CUDA and HIP so that they can be accessed by the host code of the same compilation unit.]' \
         '-cxx-isystem[Add directory to the C++ SYSTEM include search path]':file:_files \
         '-C[Include comments in preprocessed output]' \
         '-c[Only run preprocess, compile, and assemble steps]' \
+        '-darwin-target-variant-triple[Specify the darwin target variant triple]' \
+        '-darwin-target-variant[Generate code for an additional runtime variant of the deployment target]' \
         '-dD[Print macro definitions in -E mode in addition to normal output]' \
         '-dependency-dot[Filename to write DOT-formatted header dependencies to]' \
         '-dependency-file[Filename (or -) to write dependency output to]' \
         '-dI[Print include directives in -E mode in addition to normal output]' \
         '-dM[Print macro definitions in -E mode instead of normal output]' \
+        '-dsym-dir[Directory to output dSYM'\''s (if any) to]':file:_files \
         '-D[Define <macro> to <value> (or 1 if <value> omitted)]' \
         '-emit-ast[Emit Clang AST files for source inputs]' \
-        '-emit-interface-stubs[Generate Inteface Stub Files.]' \
+        '-emit-interface-stubs[Generate Interface Stub Files.]' \
         '-emit-llvm[Use the LLVM representation for assembler and object files]' \
         '-emit-merged-ifs[Generate Interface Stub Files, emit merged text not binary.]' \
+        '--emit-static-lib[Enable linker job to emit a static library.]' \
         '-enable-trivial-auto-var-init-zero-knowing-it-will-be-removed-from-clang[Trivial automatic variable initialization to zero is only here for benchmarks, it'\''ll eventually be removed, and I'\''m OK with that because I'\''m only using it to benchmark]' \
+        '--end-no-unused-arguments[Start emitting warnings for unused driver arguments]' \
+        '-extract-api[Extract API information]' \
         '-E[Only run the preprocessor]' \
+        '-faapcs-bitfield-load[Follows the AAPCS standard that all volatile bit-field write generates at least one load. (ARM only).]' \
+        '-faapcs-bitfield-width[Follow the AAPCS standard requirement stating that volatile bit-field width is dictated by the field container type. (ARM only).]' \
         '-faddrsig[Emit an address-significance table]' \
+        '-falign-loops[N must be a power of two. Align loops to the boundary]' \
         '-faligned-allocation[Enable C++17 aligned allocation functions]' \
         '-fallow-editor-placeholders[Treat editor placeholders as valid source code]' \
+        '-faltivec-src-compat[Source-level compatibility for Altivec vectors (for PowerPC targets). This includes results of vector comparison (scalar for '\''xl'\'', vector for '\''gcc'\'') as well as behavior when initializing with a scalar (splatting for '\''xl'\'', element zero only for '\''gcc'\''). For '\''mixed'\'', the compatibility is as '\''gcc'\'' for '\''vector bool/vector pixel'\'' and as '\''xl'\'' for other types. Current default is '\''mixed'\''.]' \
         '-fansi-escape-codes[Use ANSI escape codes for diagnostics]' \
         '-fapple-kext[Use Apple'\''s kernel extensions ABI]' \
         '-fapple-link-rtlib[Force linking the clang builtins runtime library]' \
         '-fapple-pragma-pack[Enable Apple gcc-compatible #pragma pack handling]' \
         '-fapplication-extension[Restrict code to those available for App Extensions]' \
+        '-fapprox-func[Allow certain math function calls to be replaced with an approximately equivalent calculation]' \
+        '-fasync-exceptions[Enable EH Asynchronous exceptions]' \
+        '-fbasic-block-sections[Place each function'\''s basic blocks in unique sections (ELF Only)]' \
+        '-fbinutils-version[Produced object files can use all ELF features supported by this binutils version and newer. If -fno-integrated-as is specified, the generated assembly will consider GNU as support. '\''none'\'' means that all ELF features can be used, regardless of binutils support. Defaults to 2.26.]' \
         '-fblocks[Enable the '\''blocks'\'' language feature]' \
         '-fborland-extensions[Accept non-standard constructs supported by the Borland compiler]' \
         '-fbuild-session-file[Use the last modification time of <file> as the build session timestamp]':file:_files \
         '-fbuild-session-timestamp[Time when the current build session started]' \
         '-fbuiltin-module-map[Load the clang builtins module map file.]' \
-        '-fc++-static-destructors[Enable C++ static destructor registration (the default)]' \
+        '-fc++-abi[C++ ABI to use. This will override the target C++ ABI.]' \
         '-fcall-saved-x10[Make the x10 register call-saved (AArch64 only)]' \
         '-fcall-saved-x11[Make the x11 register call-saved (AArch64 only)]' \
         '-fcall-saved-x12[Make the x12 register call-saved (AArch64 only)]' \
@@ -82,35 +101,39 @@ function _clang {
         '-fcall-saved-x18[Make the x18 register call-saved (AArch64 only)]' \
         '-fcall-saved-x8[Make the x8 register call-saved (AArch64 only)]' \
         '-fcall-saved-x9[Make the x9 register call-saved (AArch64 only)]' \
-        '-fcf-protection[Instrument control-flow architecture protection. Options: return, branch, full, none.]' \
+        '-fcf-protection[Instrument control-flow architecture protection]' \
         '-fcf-protection[Enable cf-protection in '\''full'\'' mode]' \
         '-fchar8_t[Enable C++ builtin type char8_t]' \
         '-fclang-abi-compat[Attempt to match the ABI of Clang <version>]' \
-        '-fcolor-diagnostics[Use colors in diagnostics]' \
+        '-fcolor-diagnostics[Enable colors in diagnostics]' \
         '-fcomment-block-commands[Treat each comma separated argument in <arg> as a documentation comment block command]' \
+        '-fcommon[Place uninitialized global variables in a common block]' \
         '-fcomplete-member-pointers[Require member pointer base types to be complete if they would be significant under the Microsoft ABI]' \
         '-fconvergent-functions[Assume functions may be convergent]' \
         '-fcoroutines-ts[Enable support for the C++ Coroutines TS]' \
+        '-fcoverage-compilation-dir[The compilation directory to embed in the coverage mapping.]' \
         '-fcoverage-mapping[Generate coverage mapping to enable code coverage analysis]' \
+        '-fcoverage-prefix-map[remap file source paths in coverage mapping]' \
+        '-fcrash-diagnostics-dir[Put crash-report files in <dir>]':file:_files \
         '-fcs-profile-generate[Generate instrumented code to collect context sensitive execution counts into <directory>/default.profraw (overridden by LLVM_PROFILE_FILE env var)]':file:_files \
-        '-fcs-profile-generate[Generate instrumented code to collect context sensitive execution counts into default.profraw (overridden by LLVM_PROFILE_FILE env var)]' \
         '-fcuda-approx-transcendentals[Use approximate transcendental functions]' \
-        '-fcuda-flush-denormals-to-zero[Flush denormal floating point values to zero in CUDA device mode.]' \
-        '-fcuda-short-ptr[Use 32-bit pointers for accessing const/local/shared address spaces.]' \
+        '-fcuda-short-ptr[Use 32-bit pointers for accessing const/local/shared address spaces]' \
         '-fcxx-exceptions[Enable C++ exceptions]' \
-        '-fdata-sections[Place each data in its own section (ELF Only)]' \
-        '-fdebug-compilation-dir[The compilation directory to embed in the debug info.]' \
+        '-fcxx-modules[Enable modules for C++]' \
+        '-fdata-sections[Place each data in its own section]' \
+        '-fdebug-compilation-dir[The compilation directory to embed in the debug info]' \
         '-fdebug-default-version[Default DWARF version to use, if a -g option caused DWARF debug info to be produced]' \
-        '-fdebug-info-for-profiling[Emit extra debug info to make sample profile more accurate.]' \
+        '-fdebug-info-for-profiling[Emit extra debug info to make sample profile more accurate]' \
         '-fdebug-macro[Emit macro debug information]' \
         '-fdebug-prefix-map[remap file source paths in debug info]' \
-        '-fdebug-ranges-base-address[Use DWARF base address selection entries in debug_ranges]' \
+        '-fdebug-ranges-base-address[Use DWARF base address selection entries in .debug_ranges]' \
         '-fdebug-types-section[Place debug types in their own section (ELF Only)]' \
         '-fdeclspec[Allow __declspec as a keyword]' \
         '-fdelayed-template-parsing[Parse templated function definitions at the end of the translation unit]' \
-        '-fdelete-null-pointer-checks[Treat usage of null pointers as undefined behavior.]' \
+        '-fdelete-null-pointer-checks[Treat usage of null pointers as undefined behavior (default)]' \
         '-fdiagnostics-absolute-paths[Print absolute paths in diagnostics]' \
-        '-fdiagnostics-hotness-threshold[Prevent optimization remarks from being output if they do not have at least this profile count]' \
+        '-fdiagnostics-hotness-threshold[Prevent optimization remarks from being output if they do not have at least this profile count. Use '\''auto'\'' to apply the threshold from profile summary]' \
+        '-fdiagnostics-misexpect-tolerance[Prevent misexpect diagnostics from being output if the profile counts are within N% of the expected.]' \
         '-fdiagnostics-parseable-fixits[Print fix-its in machine parseable form]' \
         '-fdiagnostics-print-source-range-info[Print source range spans in numeric form]' \
         '-fdiagnostics-show-hotness[Enable profile hotness information in diagnostic line]' \
@@ -118,89 +141,138 @@ function _clang {
         '-fdiagnostics-show-option[Print option name with mappable diagnostics]' \
         '-fdiagnostics-show-template-tree[Print a template comparison tree for differing templates]' \
         '-fdigraphs[Enable alternative token representations '\''<:'\'', '\'':>'\'', '\''<%'\'', '\''%>'\'', '\''%:'\'', '\''%:%:'\'' (default)]' \
+        '-fdirect-access-external-data[Don'\''t use GOT indirection to reference external data symbols]' \
         '-fdiscard-value-names[Discard value names in LLVM IR]' \
         '-fdollars-in-identifiers[Allow '\''$'\'' in identifiers]' \
         '-fdouble-square-bracket-attributes[Enable '\''\[\[\]\]'\'' attributes in all C and C++ language modes]' \
+        '-fdriver-only[Only run the driver.]' \
         '-fdwarf-exceptions[Use DWARF style exceptions]' \
+        '-feliminate-unused-debug-types[Do not emit debug info for defined but unused types]' \
         '-fembed-bitcode-marker[Embed placeholder LLVM IR data as a marker]' \
-        '-fembed-bitcode[Embed LLVM bitcode (option: off, all, bitcode, marker)]' \
+        '-fembed-bitcode[Embed LLVM bitcode]' \
         '-fembed-bitcode[Embed LLVM IR bitcode as data]' \
+        '-fembed-offload-object[Embed Offloading device-side binary into host object file as a section.]' \
         '-femit-all-decls[Emit all declarations, even if unused]' \
+        '-femit-dwarf-unwind[When to emit DWARF unwind (EH frame) info]' \
         '-femulated-tls[Use emutls functions to access thread_local variables]' \
+        '-fenable-matrix[Enable matrix data type and related builtin functions]' \
         '-fexceptions[Enable support for exception handling]' \
-        '-fexperimental-isel[Enables the experimental global instruction selector]' \
+        '-fexperimental-library[Control whether unstable and experimental library features are enabled. This option enables various library features that are either experimental (also known as TSes), or have been but are not stable yet in the selected Standard Library implementation. It is not recommended to use this option in production code, since neither ABI nor API stability are guaranteed. This is intended to provide a preview of features that will ship in the future for experimentation purposes]' \
         '-fexperimental-new-constant-interpreter[Enable the experimental new constant interpreter]' \
-        '-fexperimental-new-pass-manager[Enables an experimental new pass manager in LLVM.]' \
+        '-fexperimental-relative-c++-abi-vtables[Use the experimental C++ class ABI for classes with virtual tables]' \
+        '-fexperimental-strict-floating-point[Enables experimental strict floating point in LLVM.]' \
+        '-fextend-arguments[Controls how scalar integer arguments are extended in calls to unprototyped and varargs functions]' \
         '-ffast-math[Allow aggressive, lossy floating-point optimizations]' \
-        '-ffile-prefix-map[remap file source paths in debug info and predefined preprocessor macros]' \
+        '-ffile-compilation-dir[The compilation directory to embed in the debug info and coverage mapping.]' \
+        '-ffile-prefix-map[remap file source paths in debug info, predefined preprocessor macros and __builtin_FILE(). Implies -ffile-reproducible.]' \
+        '-ffile-reproducible[Use the target'\''s platform-specific path separator character when expanding the __FILE__ macro]' \
         '-ffine-grained-bitfield-accesses[Use separate accesses for consecutive bitfield runs with legal widths and alignments.]' \
+        '-ffinite-loops[Assume all loops are finite.]' \
+        '-ffixed-a0[Reserve the a0 register (M68k only)]' \
+        '-ffixed-a1[Reserve the a1 register (M68k only)]' \
+        '-ffixed-a2[Reserve the a2 register (M68k only)]' \
+        '-ffixed-a3[Reserve the a3 register (M68k only)]' \
+        '-ffixed-a4[Reserve the a4 register (M68k only)]' \
+        '-ffixed-a5[Reserve the a5 register (M68k only)]' \
+        '-ffixed-a6[Reserve the a6 register (M68k only)]' \
+        '-ffixed-d0[Reserve the d0 register (M68k only)]' \
+        '-ffixed-d1[Reserve the d1 register (M68k only)]' \
+        '-ffixed-d2[Reserve the d2 register (M68k only)]' \
+        '-ffixed-d3[Reserve the d3 register (M68k only)]' \
+        '-ffixed-d4[Reserve the d4 register (M68k only)]' \
+        '-ffixed-d5[Reserve the d5 register (M68k only)]' \
+        '-ffixed-d6[Reserve the d6 register (M68k only)]' \
+        '-ffixed-d7[Reserve the d7 register (M68k only)]' \
         '-ffixed-point[Enable fixed point types]' \
         '-ffixed-r19[Reserve register r19 (Hexagon only)]' \
         '-ffixed-r9[Reserve the r9 register (ARM only)]' \
-        '-ffixed-x10[Reserve the 10 register (AArch64/RISC-V only)]' \
-        '-ffixed-x11[Reserve the 11 register (AArch64/RISC-V only)]' \
-        '-ffixed-x12[Reserve the 12 register (AArch64/RISC-V only)]' \
-        '-ffixed-x13[Reserve the 13 register (AArch64/RISC-V only)]' \
-        '-ffixed-x14[Reserve the 14 register (AArch64/RISC-V only)]' \
-        '-ffixed-x15[Reserve the 15 register (AArch64/RISC-V only)]' \
-        '-ffixed-x16[Reserve the 16 register (AArch64/RISC-V only)]' \
-        '-ffixed-x17[Reserve the 17 register (AArch64/RISC-V only)]' \
-        '-ffixed-x18[Reserve the 18 register (AArch64/RISC-V only)]' \
-        '-ffixed-x19[Reserve the 19 register (AArch64/RISC-V only)]' \
-        '-ffixed-x1[Reserve the 1 register (AArch64/RISC-V only)]' \
-        '-ffixed-x20[Reserve the 20 register (AArch64/RISC-V only)]' \
-        '-ffixed-x21[Reserve the 21 register (AArch64/RISC-V only)]' \
-        '-ffixed-x22[Reserve the 22 register (AArch64/RISC-V only)]' \
-        '-ffixed-x23[Reserve the 23 register (AArch64/RISC-V only)]' \
-        '-ffixed-x24[Reserve the 24 register (AArch64/RISC-V only)]' \
-        '-ffixed-x25[Reserve the 25 register (AArch64/RISC-V only)]' \
-        '-ffixed-x26[Reserve the 26 register (AArch64/RISC-V only)]' \
-        '-ffixed-x27[Reserve the 27 register (AArch64/RISC-V only)]' \
-        '-ffixed-x28[Reserve the 28 register (AArch64/RISC-V only)]' \
-        '-ffixed-x29[Reserve the 29 register (AArch64/RISC-V only)]' \
-        '-ffixed-x2[Reserve the 2 register (AArch64/RISC-V only)]' \
-        '-ffixed-x30[Reserve the 30 register (AArch64/RISC-V only)]' \
-        '-ffixed-x31[Reserve the 31 register (AArch64/RISC-V only)]' \
-        '-ffixed-x3[Reserve the 3 register (AArch64/RISC-V only)]' \
-        '-ffixed-x4[Reserve the 4 register (AArch64/RISC-V only)]' \
-        '-ffixed-x5[Reserve the 5 register (AArch64/RISC-V only)]' \
-        '-ffixed-x6[Reserve the 6 register (AArch64/RISC-V only)]' \
-        '-ffixed-x7[Reserve the 7 register (AArch64/RISC-V only)]' \
-        '-ffixed-x8[Reserve the 8 register (AArch64/RISC-V only)]' \
-        '-ffixed-x9[Reserve the 9 register (AArch64/RISC-V only)]' \
+        '-ffixed-x10[Reserve the x10 register (AArch64/RISC-V only)]' \
+        '-ffixed-x11[Reserve the x11 register (AArch64/RISC-V only)]' \
+        '-ffixed-x12[Reserve the x12 register (AArch64/RISC-V only)]' \
+        '-ffixed-x13[Reserve the x13 register (AArch64/RISC-V only)]' \
+        '-ffixed-x14[Reserve the x14 register (AArch64/RISC-V only)]' \
+        '-ffixed-x15[Reserve the x15 register (AArch64/RISC-V only)]' \
+        '-ffixed-x16[Reserve the x16 register (AArch64/RISC-V only)]' \
+        '-ffixed-x17[Reserve the x17 register (AArch64/RISC-V only)]' \
+        '-ffixed-x18[Reserve the x18 register (AArch64/RISC-V only)]' \
+        '-ffixed-x19[Reserve the x19 register (AArch64/RISC-V only)]' \
+        '-ffixed-x1[Reserve the x1 register (AArch64/RISC-V only)]' \
+        '-ffixed-x20[Reserve the x20 register (AArch64/RISC-V only)]' \
+        '-ffixed-x21[Reserve the x21 register (AArch64/RISC-V only)]' \
+        '-ffixed-x22[Reserve the x22 register (AArch64/RISC-V only)]' \
+        '-ffixed-x23[Reserve the x23 register (AArch64/RISC-V only)]' \
+        '-ffixed-x24[Reserve the x24 register (AArch64/RISC-V only)]' \
+        '-ffixed-x25[Reserve the x25 register (AArch64/RISC-V only)]' \
+        '-ffixed-x26[Reserve the x26 register (AArch64/RISC-V only)]' \
+        '-ffixed-x27[Reserve the x27 register (AArch64/RISC-V only)]' \
+        '-ffixed-x28[Reserve the x28 register (AArch64/RISC-V only)]' \
+        '-ffixed-x29[Reserve the x29 register (AArch64/RISC-V only)]' \
+        '-ffixed-x2[Reserve the x2 register (AArch64/RISC-V only)]' \
+        '-ffixed-x30[Reserve the x30 register (AArch64/RISC-V only)]' \
+        '-ffixed-x31[Reserve the x31 register (AArch64/RISC-V only)]' \
+        '-ffixed-x3[Reserve the x3 register (AArch64/RISC-V only)]' \
+        '-ffixed-x4[Reserve the x4 register (AArch64/RISC-V only)]' \
+        '-ffixed-x5[Reserve the x5 register (AArch64/RISC-V only)]' \
+        '-ffixed-x6[Reserve the x6 register (AArch64/RISC-V only)]' \
+        '-ffixed-x7[Reserve the x7 register (AArch64/RISC-V only)]' \
+        '-ffixed-x8[Reserve the x8 register (AArch64/RISC-V only)]' \
+        '-ffixed-x9[Reserve the x9 register (AArch64/RISC-V only)]' \
         '-fforce-dwarf-frame[Always emit a debug frame section]' \
         '-fforce-emit-vtables[Emits more virtual tables to improve devirtualization]' \
         '-fforce-enable-int128[Enable support for int128_t type]' \
-        '-ffp-contract[Form fused FP ops (e.g. FMAs): fast (everywhere) | on (according to FP_CONTRACT pragma) | off (never fuse). Default is '\''fast'\'' for CUDA/HIP and '\''on'\'' otherwise.]' \
+        '-ffp-contract[Form fused FP ops (e.g. FMAs): fast (fuses across statements disregarding pragmas) | on (only fuses in the same statement unless dictated by pragmas) | off (never fuses) | fast-honor-pragmas (fuses across statements unless diectated by pragmas). Default is '\''fast'\'' for CUDA, '\''fast-honor-pragmas'\'' for HIP, and '\''on'\'' otherwise.]' \
+        '-ffp-eval-method[Specifies the evaluation method to use for floating-point arithmetic.]' \
         '-ffp-exception-behavior[Specifies the exception behavior of floating-point operations.]' \
         '-ffp-model[Controls the semantics of floating-point calculations.]' \
         '-ffreestanding[Assert that the compilation takes place in a freestanding environment]' \
-        '-ffunction-sections[Place each function in its own section (ELF Only)]' \
+        '-ffuchsia-api-level[Set Fuchsia API level]' \
+        '-ffunction-sections[Place each function in its own section]' \
+        '-fglobal-isel[Enables the global instruction selector]' \
         '-fgnu-keywords[Allow GNU-extension keywords regardless of language standard]' \
         '-fgnu-runtime[Generate output compatible with the standard GNU Objective-C runtime]' \
         '-fgnu89-inline[Use the gnu89 inline semantics]' \
         '-fgnuc-version[Sets various macros to claim compatibility with the given GCC version (default is 4.2.1)]' \
-        '-fgpu-allow-device-init[Allow device side init function in HIP]' \
-        '-fgpu-rdc[Generate relocatable device code, also known as separate compilation mode.]' \
-        '-fhip-new-launch-api[Use new kernel launching API for HIP.]' \
+        '-fgpu-allow-device-init[Allow device side init function in HIP (experimental)]' \
+        '-fgpu-default-stream[Specify default stream. The default value is '\''legacy'\''. (HIP only)]' \
+        '-fgpu-defer-diag[Defer host/device related diagnostic messages for CUDA/HIP]' \
+        '-fgpu-flush-denormals-to-zero[Flush denormal floating point values to zero in CUDA/HIP device mode.]' \
+        '-fgpu-rdc[Generate relocatable device code, also known as separate compilation mode]' \
+        '-fgpu-sanitize[Enable sanitizer for AMDGPU target]' \
+        '-fhip-fp32-correctly-rounded-divide-sqrt[Specify that single precision floating-point divide and sqrt used in the program source are correctly rounded (HIP device compilation only)]' \
+        '-fhip-kernel-arg-name[Specify that kernel argument names are preserved (HIP only)]' \
+        '-fhip-new-launch-api[Use new kernel launching API for HIP]' \
+        '-fignore-exceptions[Enable support for ignoring exception handling constructs]' \
         '-fimplicit-module-maps[Implicitly search the file system for module map files.]' \
         '-finline-functions[Inline suitable functions]' \
         '-finline-hint-functions[Inline functions which are (explicitly or implicitly) marked inline]' \
+        '-finput-charset[Specify the default character set for source files]' \
         '-finstrument-function-entry-bare[Instrument function entry only, after inlining, without arguments to the instrumentation call]' \
         '-finstrument-functions-after-inlining[Like -finstrument-functions, but insert the calls after inlining]' \
         '-finstrument-functions[Generate calls to instrument function entry and exit]' \
         '-fintegrated-as[Enable the integrated assembler]' \
         '-fintegrated-cc1[Run cc1 in-process]' \
-        '-fkeep-static-consts[Keep static const variables even if unused]' \
+        '-fintegrated-objemitter[Use internal machine object code emitter.]' \
+        '-fjmc[Enable just-my-code debugging]' \
+        '-fjump-tables[Use jump tables for lowering switches]' \
+        '-fkeep-static-consts[Keep static const variables if unused]' \
         '-flax-vector-conversions[Enable implicit vector bit-casts]' \
         '-flto-jobs[Controls the backend parallelism of -flto=thin (default of 0 means the number of threads will be derived from the number of CPUs detected)]' \
-        '-flto[Set LTO mode to either '\''full'\'' or '\''thin'\'']' \
         '-flto[Enable LTO in '\''full'\'' mode]' \
-        '-fmacro-prefix-map[remap file source paths in predefined preprocessor macros]' \
+        '-flto[Enable LTO in '\''full'\'' mode]' \
+        '-flto[Set LTO mode]' \
+        '-flto[Enable LTO in '\''full'\'' mode]' \
+        '-fmacro-prefix-map[remap file source paths in predefined preprocessor macros and __builtin_FILE(). Implies -ffile-reproducible.]' \
         '-fmath-errno[Require math functions to indicate errors by setting errno]' \
+        '-fmax-tokens[Max total number of preprocessed tokens for -Wmax-tokens.]' \
         '-fmax-type-align[Specify the maximum alignment to enforce on pointers lacking an explicit alignment]' \
+        '-fmemory-profile[Enable heap memory profiling and dump results into <directory>]':file:_files \
+        '-fmemory-profile[Enable heap memory profiling]' \
         '-fmerge-all-constants[Allow merging of constants]' \
+        '-fmessage-length[Format message diagnostics so that they fit within N columns]' \
+        '-fminimize-whitespace[Minimize whitespace when emitting preprocessor output]' \
         '-fmodule-file[Specify the mapping of module name to precompiled module file, or load a module file if name is omitted.]':file:_files \
+        '-fmodule-header[Build a C++20 Header Unit from a header that should be found in the user (fmodule-header=user) or system (fmodule-header=system) search path.]' \
+        '-fmodule-header[Build a C++20 Header Unit from a header.]' \
         '-fmodule-map-file[Load this module map file]':file:_files \
         '-fmodule-name[Specify the name of the module to build]' \
         '-fmodules-cache-path[Specify the module cache path]':file:_files \
@@ -220,8 +292,11 @@ function _clang {
         '-fms-compatibility-version[Dot-separated value representing the Microsoft compiler version number to report in _MSC_VER (0 = don'\''t define it (default))]' \
         '-fms-compatibility[Enable full Microsoft Visual C++ compatibility]' \
         '-fms-extensions[Accept some non-standard constructs supported by the Microsoft compiler]' \
+        '-fms-hotpatch[Ensure that all functions can be hotpatched at runtime]' \
         '-fmsc-version[Microsoft compiler version number to report in _MSC_VER (0 = don'\''t define it (default))]' \
         '-fnew-alignment[Specifies the largest alignment guaranteed by '\''::operator new(size_t)'\'']' \
+        '-fnew-infallible[Enable treating throwing global C++ operator new as always returning valid memory (annotates with __attribute__((returns_nonnull)) and throw()). This is detectable in source.]' \
+        '-fno-aapcs-bitfield-width[Do not follow the AAPCS standard requirement stating that volatile bit-field width is dictated by the field container type. (ARM only).]' \
         '-fno-access-control[Disable C++ access control]' \
         '-fno-addrsig[Don'\''t emit an address-significance table]' \
         '-fno-assume-sane-operator-new[Don'\''t assume that C++'\''s global operator new can'\''t alias any pointer]' \
@@ -230,54 +305,80 @@ function _clang {
         '-fno-builtin[Disable implicit builtin knowledge of functions]' \
         '-fno-c++-static-destructors[Disable C++ static destructor registration]' \
         '-fno-char8_t[Disable C++ builtin type char8_t]' \
+        '-fno-color-diagnostics[Disable colors in diagnostics]' \
         '-fno-common[Compile common globals like normal definitions]' \
         '-fno-complete-member-pointers[Do not require member pointer base types to be complete if they would be significant under the Microsoft ABI]' \
         '-fno-constant-cfstrings[Disable creation of CodeFoundation-type constant strings]' \
         '-fno-coverage-mapping[Disable code coverage analysis]' \
         '-fno-crash-diagnostics[Disable auto-generation of preprocessed source files and a script for reproduction during a clang crash]' \
-        '-fno-debug-info-for-profiling[Do not emit extra debug info for sample profiler.]' \
+        '-fno-cuda-approx-transcendentals[Don'\''t use approximate transcendental functions]' \
+        '-fno-cxx-modules[Disable modules for C++]' \
         '-fno-debug-macro[Do not emit macro debug information]' \
         '-fno-declspec[Disallow __declspec as a keyword]' \
         '-fno-delayed-template-parsing[Disable delayed template parsing]' \
-        '-fno-delete-null-pointer-checks[Do not treat usage of null pointers as undefined behavior.]' \
+        '-fno-delete-null-pointer-checks[Do not treat usage of null pointers as undefined behavior]' \
         '-fno-diagnostics-fixit-info[Do not include fixit information in diagnostics]' \
         '-fno-digraphs[Disallow alternative token representations '\''<:'\'', '\'':>'\'', '\''<%'\'', '\''%>'\'', '\''%:'\'', '\''%:%:'\'']' \
+        '-fno-direct-access-external-data[Use GOT indirection to reference external data symbols]' \
         '-fno-discard-value-names[Do not discard value names in LLVM IR]' \
         '-fno-dollars-in-identifiers[Disallow '\''$'\'' in identifiers]' \
         '-fno-double-square-bracket-attributes[Disable '\''\[\[\]\]'\'' attributes in all C and C++ language modes]' \
         '-fno-elide-constructors[Disable C++ copy constructor elision]' \
         '-fno-elide-type[Do not elide types when printing diagnostics]' \
-        '-fno-experimental-isel[Disables the experimental global instruction selector]' \
-        '-fno-experimental-new-pass-manager[Disables an experimental new pass manager in LLVM.]' \
+        '-fno-eliminate-unused-debug-types[Emit debug info for defined but unused types]' \
+        '-fno-exceptions[Disable support for exception handling]' \
+        '-fno-experimental-relative-c++-abi-vtables[Do not use the experimental C++ class ABI for classes with virtual tables]' \
+        '-fno-file-reproducible[Use the host'\''s platform-specific path separator character when expanding the __FILE__ macro]' \
         '-fno-fine-grained-bitfield-accesses[Use large-integer access for consecutive bitfield runs.]' \
+        '-fno-finite-loops[Do not assume that any loop is finite.]' \
         '-fno-fixed-point[Disable fixed point types]' \
-        '-fno-force-dwarf-frame[Don'\''t always emit a debug frame section]' \
         '-fno-force-enable-int128[Disable support for int128_t type]' \
+        '-fno-global-isel[Disables the global instruction selector]' \
         '-fno-gnu-inline-asm[Disable GNU style inline asm]' \
+        '-fno-gpu-allow-device-init[Don'\''t allow device side init function in HIP (experimental)]' \
+        '-fno-gpu-defer-diag[Don'\''t defer host/device related diagnostic messages for CUDA/HIP]' \
+        '-fno-hip-fp32-correctly-rounded-divide-sqrt[Don'\''t specify that single precision floating-point divide and sqrt used in the program source are correctly rounded (HIP device compilation only)]' \
+        '-fno-hip-kernel-arg-name[Don'\''t specify that kernel argument names are preserved (HIP only)]' \
+        '-fno-hip-new-launch-api[Don'\''t use new kernel launching API for HIP]' \
         '-fno-integrated-as[Disable the integrated assembler]' \
         '-fno-integrated-cc1[Spawn a separate process for each cc1]' \
+        '-fno-integrated-objemitter[Use external machine object code emitter.]' \
         '-fno-jump-tables[Do not use jump tables for lowering switches]' \
+        '-fno-keep-static-consts[Don'\''t keep static const variables if unused]' \
+        '-fno-knr-functions[Disable support for K&R C function declarations]' \
         '-fno-lto[Disable LTO mode (default)]' \
+        '-fno-memory-profile[Disable heap memory profiling]' \
         '-fno-merge-all-constants[Disallow merging of constants]' \
+        '-fno-new-infallible[Disable treating throwing global C++ operator new as always returning valid memory (annotates with __attribute__((returns_nonnull)) and throw()). This is detectable in source.]' \
         '-fno-objc-infer-related-result-type[do not infer Objective-C related result type based on method family]' \
+        '-fno-offload-lto[Disable LTO mode (default) for offload compilation]' \
+        '-fno-openmp-extensions[Disable all Clang extensions for OpenMP directives and clauses]' \
+        '-fno-openmp-new-driver[Don'\''t use the new driver for OpenMP offloading.]' \
         '-fno-operator-names[Do not treat C++ operator name keywords as synonyms for operators]' \
-        '-fno-plt[Do not use the PLT to make function calls]' \
+        '-fno-optimize-sibling-calls[Disable tail call optimization, keeping the call stack accurate]' \
+        '-fno-pch-codegen[Do not generate code for uses of this PCH that assumes an explicit object file will be built for the PCH]' \
+        '-fno-pch-debuginfo[Do not generate debug info for types in an object file built from this PCH and do not generate them elsewhere]' \
+        '-fno-plt[Use GOT indirection instead of PLT to make external function calls (x86 only)]' \
         '-fno-preserve-as-comments[Do not preserve comments in inline assembly]' \
         '-fno-profile-generate[Disable generation of profile instrumentation.]' \
         '-fno-profile-instr-generate[Disable generation of profile instrumentation.]' \
         '-fno-profile-instr-use[Disable using instrumentation data for profile-guided optimization]' \
+        '-fno-pseudo-probe-for-profiling[Do not emit pseudo probes for sample profiling]' \
         '-fno-register-global-dtors-with-atexit[Don'\''t use atexit or __cxa_atexit to register global destructors]' \
-        '-fno-reroll-loops[Turn off loop reroller]' \
         '-fno-rtlib-add-rpath[Do not add -rpath with architecture-specific resource directory to the linker flags]' \
-        '-fno-rtti-data[Control emission of RTTI data]' \
+        '-fno-rtti-data[Disable generation of RTTI data]' \
         '-fno-rtti[Disable generation of rtti information]' \
+        '-fno-sanitize-address-globals-dead-stripping[Disable linker dead stripping of globals in AddressSanitizer]' \
+        '-fno-sanitize-address-outline-instrumentation[Use default code inlining logic for the address sanitizer]' \
         '-fno-sanitize-address-poison-custom-array-cookie[Disable poisoning array cookies when using custom operator new\[\] in AddressSanitizer]' \
         '-fno-sanitize-address-use-after-scope[Disable use-after-scope detection in AddressSanitizer]' \
         '-fno-sanitize-address-use-odr-indicator[Disable ODR indicator globals]' \
-        '-fno-sanitize-blacklist[Don'\''t use blacklist file for sanitizers]' \
         '-fno-sanitize-cfi-canonical-jump-tables[Do not make the jump table addresses canonical in the symbol table]' \
         '-fno-sanitize-cfi-cross-dso[Disable control flow integrity (CFI) checks for cross-DSO calls.]' \
-        '-fno-sanitize-coverage[Disable specified features of coverage instrumentation for Sanitizers]' \
+        '-fno-sanitize-coverage[Disable features of coverage instrumentation for Sanitizers]' \
+        '-fno-sanitize-hwaddress-experimental-aliasing[Disable aliasing mode in HWAddressSanitizer]' \
+        '-fno-sanitize-ignorelist[Don'\''t use ignorelist file for sanitizers]' \
+        '-fno-sanitize-memory-param-retval[Disable detection of uninitialized parameters and return values]' \
         '-fno-sanitize-memory-track-origins[Disable origins tracking in MemorySanitizer]' \
         '-fno-sanitize-memory-use-after-dtor[Disable use-after-destroy detection in MemorySanitizer]' \
         '-fno-sanitize-recover[Disable recovery for specified sanitizers]' \
@@ -286,29 +387,48 @@ function _clang {
         '-fno-sanitize-thread-func-entry-exit[Disable function entry/exit instrumentation in ThreadSanitizer]' \
         '-fno-sanitize-thread-memory-access[Disable memory access instrumentation in ThreadSanitizer]' \
         '-fno-sanitize-trap[Disable trapping for specified sanitizers]' \
+        '-fno-sanitize-trap[Disable trapping for all sanitizers]' \
         '-fno-short-wchar[Force wchar_t to be an unsigned int]' \
         '-fno-show-column[Do not include column number on diagnostics]' \
         '-fno-show-source-location[Do not include source location information with diagnostics]' \
-        '-fno-signed-char[Char is unsigned]' \
+        '-fno-signed-char[char is unsigned]' \
         '-fno-signed-zeros[Allow optimizations that ignore the sign of floating point zeros]' \
         '-fno-spell-checking[Disable spell-checking]' \
+        '-fno-split-machine-functions[Disable late function splitting using profile information (x86 ELF)]' \
+        '-fno-split-stack[Wouldn'\''t use segmented stack]' \
+        '-fno-stack-clash-protection[Disable stack clash protection]' \
         '-fno-stack-protector[Disable the use of stack protectors]' \
-        '-fno-stack-size-section[Don'\''t emit section containing metadata on function stack sizes]' \
         '-fno-standalone-debug[Limit debug information produced to reduce size of debug binary]' \
         '-fno-strict-float-cast-overflow[Relax language rules and try to match the behavior of the target'\''s native float-to-int conversion instructions]' \
+        '-fno-strict-return[Don'\''t treat control flow paths that fall off the end of a non-void function as unreachable]' \
+        '-fno-sycl[Disables SYCL kernels compilation for device]' \
         '-fno-temp-file[Directly create compilation output files. This may lead to incorrect incremental builds if the compiler crashes]' \
         '-fno-threadsafe-statics[Do not emit code to make initialization of local statics thread safe]' \
         '-fno-trigraphs[Do not process trigraph sequences]' \
+        '-fno-unique-section-names[Don'\''t use unique names for text and data sections]' \
         '-fno-unroll-loops[Turn off loop unroller]' \
         '-fno-use-cxa-atexit[Don'\''t use __cxa_atexit for calling destructors]' \
-        '-fno-use-init-array[Don'\''t use .init_array instead of .ctors]' \
+        '-fno-use-init-array[Use .ctors/.dtors instead of .init_array/.fini_array]' \
+        '-fno-visibility-inlines-hidden-static-local-var[Disables -fvisibility-inlines-hidden-static-local-var (this is the default on non-darwin targets)]' \
+        '-fno-xray-function-index[Omit function index section at the expense of single-function patching performance]' \
+        '-fno-zero-initialized-in-bss[Don'\''t place zero initialized data in BSS]' \
         '-fobjc-arc-exceptions[Use EH-safe code when synthesizing retains and releases in -fobjc-arc]' \
         '-fobjc-arc[Synthesize retain and release calls for Objective-C pointers]' \
+        '-fobjc-disable-direct-methods-for-testing[Ignore attribute objc_direct so that direct methods can be tested]' \
+        '-fobjc-encode-cxx-class-template-spec[Fully encode c++ class template specialization]' \
         '-fobjc-exceptions[Enable Objective-C exceptions]' \
         '-fobjc-runtime[Specify the target Objective-C runtime kind and version]' \
         '-fobjc-weak[Enable ARC-style weak references in Objective-C]' \
+        '-foffload-lto[Set LTO mode for offload compilation]' \
+        '-foffload-lto[Enable LTO in '\''full'\'' mode for offload compilation]' \
+        '-fopenmp-extensions[Enable all Clang extensions for OpenMP directives and clauses]' \
+        '-fopenmp-implicit-rpath[Set rpath on OpenMP executables]' \
+        '-fopenmp-new-driver[Use the new driver for OpenMP offloading.]' \
+        '-fopenmp-offload-mandatory[Do not create a host fallback if offloading to the device fails.]' \
         '-fopenmp-simd[Emit OpenMP code only for SIMD-based constructs.]' \
+        '-fopenmp-target-debug[Enable debugging in the OpenMP offloading device RTL]' \
         '-fopenmp-targets[Specify comma-separated list of triples OpenMP offloading targets to be supported]' \
+        '-fopenmp-version[Set OpenMP version (e.g. 45 for OpenMP 4.5, 50 for OpenMP 5.0). Default value is 50.]' \
         '-fopenmp[Parse OpenMP pragmas and generate parallel code.]' \
         '-foptimization-record-file[Specify the output name of the file containing the optimization remarks. Implies -fsave-optimization-record. On Darwin platforms, this cannot be used with multiple -arch <arch> options.]':file:_files \
         '-foptimization-record-passes[Only include passes which match a specified regular expression in the generated optimization record (by default, include all passes)]' \
@@ -318,48 +438,77 @@ function _clang {
         '-fpass-plugin[Load pass plugin from a dynamic shared object file (only with new pass manager).]':file:_files \
         '-fpatchable-function-entry[Generate M NOPs before function entry and N-M NOPs after function entry]' \
         '-fpcc-struct-return[Override the default ABI to return all structs on the stack]' \
+        '-fpch-codegen[Generate code for uses of this PCH that assumes an explicit object file will be built for the PCH]' \
+        '-fpch-debuginfo[Generate debug info for types in an object file built from this PCH and do not generate them elsewhere]' \
+        '-fpch-instantiate-templates[Instantiate templates already while building a PCH]' \
         '-fpch-validate-input-files-content[Validate PCH input files based on content if mtime differs]' \
-        '-fplt[Use the PLT to make function calls]' \
+        '-fplugin-arg-[Pass <arg> to plugin <name>]' \
         '-fplugin[Load the named plugin (dynamic shared object)]':file:_files \
+        '-fprebuilt-implicit-modules[Look up implicit modules in the prebuilt module path]' \
         '-fprebuilt-module-path[Specify the prebuilt module path]':file:_files \
+        '-fproc-stat-report[Save subprocess statistics to the given file]' \
+        '-fproc-stat-report[Print subprocess statistics]' \
         '-fprofile-exclude-files[Instrument only functions from files where names don'\''t match all the regexes separated by a semi-colon]' \
         '-fprofile-filter-files[Instrument only functions from files where names match any regex separated by a semi-colon]' \
+        '-fprofile-function-groups[Partition functions into N groups and select only functions in group i to be instrumented using -fprofile-selected-function-group]' \
         '-fprofile-generate[Generate instrumented code to collect execution counts into <directory>/default.profraw (overridden by LLVM_PROFILE_FILE env var)]':file:_files \
         '-fprofile-generate[Generate instrumented code to collect execution counts into default.profraw (overridden by LLVM_PROFILE_FILE env var)]' \
         '-fprofile-instr-generate[Generate instrumented code to collect execution counts into <file> (overridden by LLVM_PROFILE_FILE env var)]':file:_files \
         '-fprofile-instr-generate[Generate instrumented code to collect execution counts into default.profraw file (overridden by '\''='\'' form of option or LLVM_PROFILE_FILE env var)]' \
         '-fprofile-instr-use[Use instrumentation data for profile-guided optimization]' \
+        '-fprofile-list[Filename defining the list of functions/files to instrument]' \
         '-fprofile-remapping-file[Use the remappings described in <file> to match the profile data against names in the program]':file:_files \
         '-fprofile-sample-accurate[Specifies that the sample profile is accurate]' \
         '-fprofile-sample-use[Enable sample-based profile guided optimizations]' \
+        '-fprofile-selected-function-group[Partition functions into N groups using -fprofile-function-groups and select only functions in group i to be instrumented. The valid range is 0 to N-1 inclusive]' \
+        '-fprofile-update[Set update method of profile counters]' \
         '-fprofile-use[Use instrumentation data for profile-guided optimization. If pathname is a directory, it reads from <pathname>/default.profdata. Otherwise, it reads from file <pathname>.]':file:_files \
+        '-fprotect-parens[Determines whether the optimizer honors parentheses when floating-point expressions are evaluated]' \
+        '-fpseudo-probe-for-profiling[Emit pseudo probes for sample profiling]' \
+        '-frandomize-layout-seed-file[File holding the seed used by the randomize structure layout feature]':file:_files \
+        '-frandomize-layout-seed[The seed used by the randomize structure layout feature]' \
         '-freciprocal-math[Allow division operations to be reassociated]' \
         '-freg-struct-return[Override the default ABI to return small structs in registers]' \
         '-fregister-global-dtors-with-atexit[Use atexit or __cxa_atexit to register global destructors]' \
         '-frelaxed-template-template-args[Enable C++17 relaxed template template argument matching]' \
         '-freroll-loops[Turn on loop reroller]' \
+        '-fropi[Generate read-only position independent code (ARM only)]' \
         '-frtlib-add-rpath[Add -rpath with architecture-specific resource directory to the linker flags]' \
+        '-frwpi[Generate read-write position independent code (ARM only)]' \
+        '-fsanitize-address-destructor[Set destructor type used in ASan instrumentation]' \
         '-fsanitize-address-field-padding[Level of field padding for AddressSanitizer]' \
         '-fsanitize-address-globals-dead-stripping[Enable linker dead stripping of globals in AddressSanitizer]' \
+        '-fsanitize-address-outline-instrumentation[Always generate function calls for address sanitizer instrumentation]' \
         '-fsanitize-address-poison-custom-array-cookie[Enable poisoning array cookies when using custom operator new\[\] in AddressSanitizer]' \
+        '-fsanitize-address-use-after-return[Select the mode of detecting stack use-after-return in AddressSanitizer]' \
         '-fsanitize-address-use-after-scope[Enable use-after-scope detection in AddressSanitizer]' \
         '-fsanitize-address-use-odr-indicator[Enable ODR indicator globals to avoid false ODR violation reports in partially sanitized programs at the cost of an increase in binary size]' \
-        '-fsanitize-blacklist[Path to blacklist file for sanitizers]' \
+        '-fsanitize-blacklist[Alias for -fsanitize-ignorelist=]' \
         '-fsanitize-cfi-canonical-jump-tables[Make the jump table addresses canonical in the symbol table]' \
         '-fsanitize-cfi-cross-dso[Enable control flow integrity (CFI) checks for cross-DSO calls.]' \
         '-fsanitize-cfi-icall-generalize-pointers[Generalize pointers in CFI indirect call type signature checks]' \
+        '-fsanitize-coverage-allowlist[Restrict sanitizer coverage instrumentation exclusively to modules and functions that match the provided special case list, except the blocked ones]' \
+        '-fsanitize-coverage-blacklist[Deprecated, use -fsanitize-coverage-ignorelist= instead]' \
+        '-fsanitize-coverage-ignorelist[Disable sanitizer coverage instrumentation for modules and functions that match the provided special case list, even the allowed ones]' \
+        '-fsanitize-coverage-whitelist[Deprecated, use -fsanitize-coverage-allowlist= instead]' \
         '-fsanitize-coverage[Specify the type of coverage instrumentation for Sanitizers]' \
         '-fsanitize-hwaddress-abi[Select the HWAddressSanitizer ABI to target (interceptor or platform, default interceptor). This option is currently unused.]' \
+        '-fsanitize-hwaddress-experimental-aliasing[Enable aliasing mode in HWAddressSanitizer]' \
+        '-fsanitize-ignorelist[Path to ignorelist file for sanitizers]' \
+        '-fsanitize-memory-param-retval[Enable detection of uninitialized parameters and return values]' \
         '-fsanitize-memory-track-origins[Enable origins tracking in MemorySanitizer]' \
         '-fsanitize-memory-track-origins[Enable origins tracking in MemorySanitizer]' \
         '-fsanitize-memory-use-after-dtor[Enable use-after-destroy detection in MemorySanitizer]' \
+        '-fsanitize-memtag-mode[Set default MTE mode to '\''sync'\'' (default) or '\''async'\'']' \
         '-fsanitize-recover[Enable recovery for specified sanitizers]' \
         '-fsanitize-stats[Enable sanitizer statistics gathering.]' \
-        '-fsanitize-system-blacklist[Path to system blacklist file for sanitizers]' \
+        '-fsanitize-system-blacklist[Alias for -fsanitize-system-ignorelist=]' \
+        '-fsanitize-system-ignorelist[Path to system ignorelist file for sanitizers]' \
         '-fsanitize-thread-atomics[Enable atomic operations instrumentation in ThreadSanitizer (default)]' \
         '-fsanitize-thread-func-entry-exit[Enable function entry/exit instrumentation in ThreadSanitizer (default)]' \
         '-fsanitize-thread-memory-access[Enable memory access instrumentation in ThreadSanitizer (default)]' \
         '-fsanitize-trap[Enable trapping for specified sanitizers]' \
+        '-fsanitize-trap[Enable trapping for all sanitizers]' \
         '-fsanitize-undefined-strip-path-components[Strip (or keep only, if negative) a given number of path components when emitting check metadata.]' \
         '-fsanitize[Turn on runtime checks for various forms of undefined or suspicious behavior. See user manual for available checks]' \
         '-fsave-optimization-record[Generate an optimization record file in a specific format]' \
@@ -367,84 +516,117 @@ function _clang {
         '-fseh-exceptions[Use SEH style exceptions]' \
         '-fshort-enums[Allocate to an enum type only as many bytes as it needs for the declared range of possible values]' \
         '-fshort-wchar[Force wchar_t to be a short unsigned int]' \
-        '-fshow-overloads[Which overload candidates to show when overload resolution fails: best|all; defaults to all]' \
+        '-fshow-overloads[Which overload candidates to show when overload resolution fails. Defaults to '\''all'\'']' \
+        '-fshow-skipped-includes[Show skipped includes in -H output.]' \
+        '-fsigned-char[char is signed]' \
         '-fsized-deallocation[Enable C++14 sized global deallocation functions]' \
         '-fsjlj-exceptions[Use SjLj style exceptions]' \
         '-fslp-vectorize[Enable the superword-level parallelism vectorization passes]' \
         '-fsplit-dwarf-inlining[Provide minimal debug info in the object/executable to facilitate online symbolication/stack traces in the absence of .dwo/.dwp files when using Split DWARF]' \
-        '-fsplit-lto-unit[Enables splitting of the LTO unit.]' \
+        '-fsplit-lto-unit[Enables splitting of the LTO unit]' \
+        '-fsplit-machine-functions[Enable late function splitting using profile information (x86 ELF)]' \
+        '-fsplit-stack[Use segmented stack]' \
+        '-fstack-clash-protection[Enable stack clash protection]' \
         '-fstack-protector-all[Enable stack protectors for all functions]' \
         '-fstack-protector-strong[Enable stack protectors for some functions vulnerable to stack smashing. Compared to -fstack-protector, this uses a stronger heuristic that includes functions containing arrays of any size (and any type), as well as any calls to alloca or the taking of an address from a local variable]' \
-        '-fstack-protector[Enable stack protectors for some functions vulnerable to stack smashing. This uses a loose heuristic which considers functions vulnerable if they contain a char (or 8bit integer) array or constant sized calls to alloca, which are of greater size than ssp-buffer-size (default: 8 bytes). All variable sized calls to alloca are considered vulnerable]' \
+        '-fstack-protector[Enable stack protectors for some functions vulnerable to stack smashing. This uses a loose heuristic which considers functions vulnerable if they contain a char (or 8bit integer) array or constant sized calls to alloca , which are of greater size than ssp-buffer-size (default: 8 bytes). All variable sized calls to alloca are considered vulnerable. A function with a stack protector has a guard value added to the stack frame that is checked on function exit. The guard value must be positioned in the stack frame such that a buffer overflow from a vulnerable variable will overwrite the guard value before overwriting the function'\''s return address. The reference stack guard value is stored in a global variable.]' \
         '-fstack-size-section[Emit section containing metadata on function stack sizes]' \
+        '-fstack-usage[Emit .su file containing information on function stack sizes]' \
         '-fstandalone-debug[Emit full debug info for all types used by the program]' \
         '-fstrict-enums[Enable optimizations based on the strict definition of an enum'\''s value range]' \
+        '-fstrict-flex-arrays[Enable optimizations based on the strict definition of flexible arrays]' \
         '-fstrict-float-cast-overflow[Assume that overflowing float-to-int casts are undefined (default)]' \
-        '-fstrict-return[Always treat control flow paths that fall off the end of a non-void function as unreachable]' \
         '-fstrict-vtable-pointers[Enable optimizations based on the strict rules for overwriting polymorphic C++ objects]' \
+        '-fswift-async-fp[Control emission of Swift async extended frame info]' \
+        '-fsycl[Enables SYCL kernels compilation for device]' \
+        '-fsystem-module[Build this module as a system module. Only used with -emit-module]' \
         '-fthin-link-bitcode[Write minimized bitcode to <file> for the ThinLTO thin link only]' \
         '-fthinlto-index[Perform ThinLTO importing using provided function summary index]' \
+        '-ftime-report[(For new pass manager) '\''per-pass'\'': one report for each pass; '\''per-pass-run'\'': one report for each pass invocation]' \
         '-ftime-trace-granularity[Minimum time granularity (in microseconds) traced by time profiler]' \
+        '-ftime-trace[Turn on time profiler. Generates JSON file based on output filename. Specify the path which stores the tracing output file.]' \
         '-ftime-trace[Turn on time profiler. Generates JSON file based on output filename.]' \
         '-ftrap-function[Issue call to specified function rather than a trap instruction]' \
         '-ftrapv-handler[Specify the function to be called on overflow]' \
         '-ftrapv[Trap on integer overflow]' \
         '-ftrigraphs[Process trigraph sequences]' \
-        '-ftrivial-auto-var-init[Initialize trivial automatic stack variables: uninitialized (default) | pattern]' \
-        '-funique-section-names[Use unique names for text and data sections (ELF Only)]' \
+        '-ftrivial-auto-var-init-stop-after[Stop initializing trivial automatic stack variables after the specified number of instances]' \
+        '-ftrivial-auto-var-init[Initialize trivial automatic stack variables. Defaults to '\''uninitialized'\'']' \
+        '-funique-basic-block-section-names[Use unique names for basic block sections (ELF Only)]' \
+        '-funique-internal-linkage-names[Uniqueify Internal Linkage Symbol Names by appending the MD5 hash of the module path]' \
         '-funroll-loops[Turn on loop unroller]' \
-        '-fuse-init-array[Use .init_array instead of .ctors]' \
+        '-fuse-cuid[Method to generate ID'\''s for compilation units for single source offloading languages CUDA and HIP: '\''hash'\'' (ID'\''s generated by hashing file path and command line options) | '\''random'\'' (ID'\''s generated as random numbers) | '\''none'\'' (disabled). Default is '\''hash'\''. This option will be overridden by option '\''-cuid=\[ID\]'\'' if it is specified.]' \
+        '-fuse-line-directives[Use #line in preprocessed output]' \
         '-fvalidate-ast-input-files-content[Compute and store the hash of input files used to build an AST. Files with mismatching mtime'\''s are considered valid if both contents is identical]' \
         '-fveclib[Use the given vector functions library]' \
         '-fvectorize[Enable the loop vectorization passes]' \
+        '-fverbose-asm[Generate verbose assembly output]' \
         '-fvirtual-function-elimination[Enables dead virtual function elimination optimization. Requires -flto=full]' \
+        '-fvisibility-dllexport[The visibility for dllexport definitions \[-fvisibility-from-dllstorageclass\]]' \
+        '-fvisibility-externs-dllimport[The visibility for dllimport external declarations \[-fvisibility-from-dllstorageclass\]]' \
+        '-fvisibility-externs-nodllstorageclass[The visibility for external declarations without an explicit DLL dllstorageclass \[-fvisibility-from-dllstorageclass\]]' \
+        '-fvisibility-from-dllstorageclass[Set the visibility of symbols in the generated code from their DLL storage class]' \
         '-fvisibility-global-new-delete-hidden[Give global C++ operator new and delete declarations hidden visibility]' \
+        '-fvisibility-inlines-hidden-static-local-var[When -fvisibility-inlines-hidden is enabled, static variables in inline C++ member functions will also be given hidden visibility by default]' \
         '-fvisibility-inlines-hidden[Give inline C++ member functions hidden visibility by default]' \
         '-fvisibility-ms-compat[Give global types '\''default'\'' visibility and global functions and variables '\''hidden'\'' visibility by default]' \
+        '-fvisibility-nodllstorageclass[The visibility for definitions without an explicit DLL export class \[-fvisibility-from-dllstorageclass\]]' \
         '-fvisibility[Set the default symbol visibility for all global declarations]' \
         '-fwasm-exceptions[Use WebAssembly style exceptions]' \
         '-fwhole-program-vtables[Enables whole-program vtable optimization. Requires -flto]' \
         '-fwrapv[Treat signed integer overflow as two'\''s complement]' \
         '-fwritable-strings[Store string literals as writable data]' \
-        '-fxray-always-emit-customevents[Determine whether to always emit __xray_customevent(...) calls even if the function it appears in is not always instrumented.]' \
-        '-fxray-always-emit-typedevents[Determine whether to always emit __xray_typedevent(...) calls even if the function it appears in is not always instrumented.]' \
+        '-fxl-pragma-pack[Enable IBM XL #pragma pack handling]' \
+        '-fxray-always-emit-customevents[Always emit __xray_customevent(...) calls even if the containing function is not always instrumented]' \
+        '-fxray-always-emit-typedevents[Always emit __xray_typedevent(...) calls even if the containing function is not always instrumented]' \
         '-fxray-always-instrument[DEPRECATED: Filename defining the whitelist for imbuing the '\''always instrument'\'' XRay attribute.]' \
         '-fxray-attr-list[Filename defining the list of functions/types for imbuing XRay attributes.]' \
+        '-fxray-function-groups[Only instrument 1 of N groups]' \
+        '-fxray-ignore-loops[Don'\''t instrument functions with loops unless they also meet the minimum function size]' \
         '-fxray-instruction-threshold[Sets the minimum function size to instrument with XRay]' \
-        '-fxray-instrumentation-bundle[Select which XRay instrumentation points to emit. Options: all, none, function, custom. Default is '\''all'\''.]' \
+        '-fxray-instrumentation-bundle[Select which XRay instrumentation points to emit. Options: all, none, function-entry, function-exit, function, custom. Default is '\''all'\''. '\''function'\'' includes both '\''function-entry'\'' and '\''function-exit'\''.]' \
         '-fxray-instrument[Generate XRay instrumentation sleds on function entry and exit]' \
         '-fxray-link-deps[Tells clang to add the link dependencies for XRay.]' \
         '-fxray-modes[List of modes to link in by default into XRay instrumented binaries.]' \
         '-fxray-never-instrument[DEPRECATED: Filename defining the whitelist for imbuing the '\''never instrument'\'' XRay attribute.]' \
+        '-fxray-selected-function-group[When using -fxray-function-groups, select which group of functions to instrument. Valid range is 0 to fxray-function-groups - 1]' \
+        '-fzero-call-used-regs[Clear call-used registers upon function return (AArch64/x86 only)]' \
         '-fzvector[Enable System z vector language extension]' \
         '-F[Add directory to framework include search path]' \
-        '--gcc-toolchain[Use the gcc toolchain at the given directory]' \
+        '--gcc-toolchain[Search for GCC installation in the specified directory on targets which commonly use GCC. The directory usually contains '\''lib{,32,64}/gcc{,-cross}/$triple'\'' and '\''include'\''. If specified, sysroot is skipped for GCC detection. Note: executables (e.g. ld) used by the compiler are not overridden by the selected GCC installation]' \
         '-gcodeview-ghash[Emit type record hashes in a .debug$H section]' \
         '-gcodeview[Generate CodeView debug information]' \
         '-gdwarf-2[Generate source-level debug information with dwarf version 2]' \
         '-gdwarf-3[Generate source-level debug information with dwarf version 3]' \
         '-gdwarf-4[Generate source-level debug information with dwarf version 4]' \
         '-gdwarf-5[Generate source-level debug information with dwarf version 5]' \
+        '-gdwarf32[Enables DWARF32 format for ELF binaries, if debug information emission is enabled.]' \
+        '-gdwarf64[Enables DWARF64 format for ELF binaries, if debug information emission is enabled.]' \
         '-gdwarf[Generate source-level debug information with the default dwarf version]' \
         '-gembed-source[Embed source text in DWARF debug sections]' \
+        '-gen-reproducer[Emit reproducer on (option: off, crash (default), error, always)]' \
         '-gline-directives-only[Emit debug line info directives only]' \
         '-gline-tables-only[Emit debug line number tables only]' \
         '-gmodules[Generate debug info with external references to clang modules or precompiled headers]' \
         '-gno-embed-source[Restore the default behavior of not embedding source text in DWARF debug sections]' \
-        '-gno-inline-line-tables[Don'\''t emit inline line tables]' \
+        '-gno-inline-line-tables[Don'\''t emit inline line tables.]' \
+        '--gpu-bundle-output[Bundle output files of HIP device compilation]' \
+        '--gpu-instrument-lib[Instrument device library for HIP, which is a LLVM bitcode containing __cyg_profile_func_enter and __cyg_profile_func_exit]' \
         '--gpu-max-threads-per-block[Default max threads per block for kernel launch bounds for HIP]' \
-        '-gsplit-dwarf[Set DWARF fission mode to either '\''split'\'' or '\''single'\'']' \
-        '-gz[DWARF debug sections compression type]' \
+        '-gsplit-dwarf[Set DWARF fission mode]' \
         '-gz[DWARF debug sections compression type]' \
         '-G[Put objects of at most <size> bytes into small data section (MIPS / Hexagon)]' \
         '-g[Generate source-level debug information]' \
         '--help-hidden[Display help for hidden options]' \
         '-help[Display available options]' \
-        '--hip-device-lib-path[HIP device library path]' \
         '--hip-device-lib[HIP device library]' \
         '--hip-link[Link clang-offload-bundler bundles for HIP]' \
+        '--hip-path[HIP runtime installation path, used for finding HIP version and adding HIP include path.]' \
+        '--hip-version[HIP version in the format of major.minor.patch]' \
+        '--hipspv-pass-plugin[path to a pass plugin for HIP to SPIR-V passes.]':file:_files \
         '-H[Show header includes and nesting depth]' \
         '-I-[Restrict all prior -I flags to double-quoted inclusion and remove current directory from include path]' \
+        '-ibuiltininc[Enable builtin #include directories even when -nostdinc is used before or after -ibuiltininc. Using -nobuiltininc after the option disables it]' \
         '-idirafter[Add directory to AFTER include search path]' \
         '-iframeworkwithsysroot[Add directory to SYSTEM framework search path, absolute paths are relative to -isysroot]':file:_files \
         '-iframework[Add directory to SYSTEM framework search path]' \
@@ -461,37 +643,63 @@ function _clang {
         '-iwithprefixbefore[Set directory to include search path with prefix]':file:_files \
         '-iwithprefix[Set directory to SYSTEM include search path with prefix]':file:_files \
         '-iwithsysroot[Add directory to SYSTEM include search path, absolute paths are relative to -isysroot]':file:_files \
-        '-I[Add directory to include search path]':file:_files \
-        '--libomptarget-nvptx-path[Path to libomptarget-nvptx libraries]' \
+        '-I[Add directory to the end of the list of include search paths]':file:_files \
+        '--libomptarget-amdgcn-bc-path[Path to libomptarget-amdgcn bitcode library]' \
+        '--libomptarget-amdgpu-bc-path[Path to libomptarget-amdgcn bitcode library]' \
+        '--libomptarget-nvptx-bc-path[Path to libomptarget-nvptx bitcode library]' \
         '-L[Add directory to library search path]':file:_files \
+        '-mabi[Enable quadword atomics ABI on AIX (AIX PPC64 only). Uses lqarx/stqcx. instructions.]' \
+        '-mabi[Enable the default Altivec ABI on AIX (AIX only). Uses only volatile vector registers.]' \
+        '-mabi[Enable the extended Altivec ABI on AIX (AIX only). Uses volatile and nonvolatile vector registers]' \
         '-mabicalls[Enable SVR4-style position-independent code (Mips only)]' \
+        '-maix-struct-return[Return all structs in memory (PPC32 only)]' \
+        '-malign-branch-boundary[Specify the boundary'\''s size to align branches]' \
+        '-malign-branch[Specify types of branches to align]' \
         '-malign-double[Align doubles to two words in structs (x86 only)]' \
+        '-mamdgpu-ieee[Sets the IEEE bit in the expected default floating point mode register. Floating point opcodes that support exception flag gathering quiet and propagate signaling NaN inputs per IEEE 754-2008. This option changes the ABI. (AMDGPU only)]' \
         '-mbackchain[Link stack frames through backchain on System Z]' \
         '-mbranch-protection[Enforce targets of indirect branches and function returns]' \
+        '-mbranches-within-32B-boundaries[Align selected branches (fused, jcc, jmp) within 32-byte boundary]' \
         '-mcmodel[Equivalent to -mcmodel=medium, compatible with RISC-V gcc.]' \
         '-mcmodel[Equivalent to -mcmodel=small, compatible with RISC-V gcc.]' \
         '-mcmse[Allow use of CMSE (Armv8-M Security Extensions)]' \
-        '-mcode-object-v3[Enable code object v3 (AMDGPU only)]' \
+        '-mcode-object-v3[Legacy option to specify code object ABI V3 (AMDGPU only)]' \
+        '-mcode-object-version[Specify code object ABI version. Defaults to 4. (AMDGPU only)]' \
         '-mcrc[Allow use of CRC instructions (ARM/Mips only)]' \
-        '-mcumode[CU wavefront execution mode is used (AMDGPU only)]' \
+        '-mcumode[Specify CU wavefront execution mode (AMDGPU only)]' \
+        '-mdefault-visibility-export-mapping[Mapping between default visibility and export]' \
+        '-mdouble[Force double to be <n> bits]' \
         '-MD[Write a depfile containing user and system headers]' \
-        '-meabi[Set EABI type, e.g. 4, 5 or gnu (default depends on triple)]' \
+        '-meabi[Set EABI type. Default depends on triple)]' \
         '-membedded-data[Place constants in the .rodata section instead of the .sdata section even if they meet the -G <size> threshold (MIPS)]' \
+        '-menable-experimental-extensions[Enable use of experimental RISC-V extensions.]' \
+        '-menable-unsafe-fp-math[Allow unsafe floating-point math optimizations which may decrease precision]' \
+        '-mexec-model[Execution model (WebAssembly only)]' \
         '-mexecute-only[Disallow generation of data access to code sections (ARM only)]' \
         '-mextern-sdata[Assume that externally defined data is in the small data if it meets the -G <size> threshold (MIPS)]' \
         '-mfentry[Insert calls to fentry at function entry (x86/SystemZ only)]' \
+        '-mfix-cmse-cve-2021-35465[Work around VLLDM erratum CVE-2021-35465 (ARM only)]' \
         '-mfix-cortex-a53-835769[Workaround Cortex-A53 erratum 835769 (AArch64 only)]' \
+        '-mfix-cortex-a57-aes-1742098[Work around Cortex-A57 Erratum 1742098 (ARM only)]' \
+        '-mfix-cortex-a72-aes-1655431[Work around Cortex-A72 Erratum 1655431 (ARM only)]' \
         '-mfp32[Use 32-bit floating point registers (MIPS only)]' \
         '-mfp64[Use 64-bit floating point registers (MIPS only)]' \
+        '-mframe-chain[Select the frame chain model used to emit frame records (Arm only).]' \
+        '-mfunction-return[Replace returns with jumps to ``__x86_return_thunk`` (x86 only, error otherwise)]' \
         '-MF[Write depfile output from -MMD, -MD, -MM, or -M to <file>]':file:_files \
-        '-mgeneral-regs-only[Generate code which only uses the general purpose registers (AArch64 only)]' \
+        '-mgeneral-regs-only[Generate code which only uses the general purpose registers (AArch64/x86 only)]' \
         '-mglobal-merge[Enable merging of globals]' \
         '-mgpopt[Use GP relative accesses for symbols known to be in a small data section (MIPS)]' \
         '-MG[Add missing headers to depfile]' \
+        '-mharden-sls[Select straight-line speculation hardening scope (ARM/AArch64/X86 only). <arg> must be: all, none, retbr(ARM/AArch64), blr(ARM/AArch64), comdat(ARM/AArch64), nocomdat(ARM/AArch64), return(X86), indirect-jmp(X86)]' \
+        '-mhvx-ieee-fp[Enable Hexagon HVX IEEE floating-point]' \
         '-mhvx-length[Set Hexagon Vector Length]' \
+        '-mhvx-qfloat[Enable Hexagon HVX QFloat instructions]' \
         '-mhvx[Enable Hexagon Vector eXtensions]' \
         '-mhvx[Enable Hexagon Vector eXtensions]' \
         '-miamcu[Use Intel MCU ABI]' \
+        '-mibt-seal[Optimize fcf-protection=branch/full (requires LTO).]' \
+        '-mignore-xcoff-visibility[Not emit the visibility attribute for asm in AIX OS or give all symbols '\''unspecified'\'' visibility in XCOFF object file]' \
         '--migrate[Run the migrator]' \
         '-mincremental-linker-compatible[(integrated-as) Emit an object file which can be used with an incremental linker]' \
         '-mindirect-jump[Change indirect jump instructions to inhibit speculation]' \
@@ -503,29 +711,41 @@ function _clang {
         '-mlong-double-128[Force long double to be 128 bits]' \
         '-mlong-double-64[Force long double to be 64 bits]' \
         '-mlong-double-80[Force long double to be 80 bits, padded to 128 bits for storage]' \
-        '-mmacosx-version-min[Set Mac OS X deployment target]' \
+        '-mlvi-cfi[Enable only control-flow mitigations for Load Value Injection (LVI)]' \
+        '-mlvi-hardening[Enable all mitigations for Load Value Injection (LVI)]' \
+        '-mmacos-version-min[Set macOS deployment target]' \
         '-mmadd4[Enable the generation of 4-operand madd.s, madd.d and related instructions.]' \
+        '-mmark-bti-property[Add .note.gnu.property with BTI to assembly files (AArch64 only)]' \
         '-MMD[Write a depfile containing user headers]' \
         '-mmemops[Enable generation of memop instructions]' \
+        '-mmlir[Additional arguments to forward to MLIR'\''s option processing]' \
         '-mms-bitfields[Set the default structure layout to be compatible with the Microsoft compiler standard]' \
         '-mmsa[Enable MSA ASE (MIPS only)]' \
         '-mmt[Enable MT ASE (MIPS only)]' \
         '-MM[Like -MMD, but also implies -E and writes to stdout by default]' \
         '-mno-abicalls[Disable SVR4-style position-independent code (Mips only)]' \
-        '-mno-code-object-v3[Disable code object v3 (AMDGPU only)]' \
+        '-mno-bti-at-return-twice[Do not add a BTI instruction after a setjmp or other return-twice construct (Arm/AArch64 only)]' \
+        '-mno-code-object-v3[Legacy option to specify code object ABI V2 (AMDGPU only)]' \
         '-mno-crc[Disallow use of CRC instructions (Mips only)]' \
-        '-mno-cumode[WGP wavefront execution mode is used (AMDGPU only)]' \
+        '-mno-cumode[Specify WGP wavefront execution mode (AMDGPU only)]' \
         '-mno-embedded-data[Do not place constants in the .rodata section instead of the .sdata if they meet the -G <size> threshold (MIPS)]' \
         '-mno-execute-only[Allow generation of data access to code sections (ARM only)]' \
         '-mno-extern-sdata[Do not assume that externally defined data is in the small data if it meets the -G <size> threshold (MIPS)]' \
+        '-mno-fix-cmse-cve-2021-35465[Don'\''t work around VLLDM erratum CVE-2021-35465 (ARM only)]' \
         '-mno-fix-cortex-a53-835769[Don'\''t workaround Cortex-A53 erratum 835769 (AArch64 only)]' \
+        '-mno-fix-cortex-a57-aes-1742098[Don'\''t work around Cortex-A57 Erratum 1742098 (ARM only)]' \
+        '-mno-fix-cortex-a72-aes-1655431[Don'\''t work around Cortex-A72 Erratum 1655431 (ARM only)]' \
         '-mno-global-merge[Disable merging of globals]' \
         '-mno-gpopt[Do not use GP relative accesses for symbols known to be in a small data section (MIPS)]' \
+        '-mno-hvx-ieee-fp[Disable Hexagon HVX IEEE floating-point]' \
+        '-mno-hvx-qfloat[Disable Hexagon HVX QFloat instructions]' \
         '-mno-hvx[Disable Hexagon Vector eXtensions]' \
         '-mno-implicit-float[Don'\''t generate implicit floating point instructions]' \
         '-mno-incremental-linker-compatible[(integrated-as) Emit an object file which cannot be used with an incremental linker]' \
         '-mno-local-sdata[Do not extend the -G behaviour to object local data (MIPS)]' \
         '-mno-long-calls[Restore the default behaviour of not generating long calls]' \
+        '-mno-lvi-cfi[Disable control-flow mitigations for Load Value Injection (LVI)]' \
+        '-mno-lvi-hardening[Disable mitigations for Load Value Injection (LVI)]' \
         '-mno-madd4[Disable the generation of 4-operand madd.s, madd.d and related instructions.]' \
         '-mno-memops[Disable generation of memop instructions]' \
         '-mno-movt[Disallow use of movt/movw pairs (ARM only)]' \
@@ -535,17 +755,18 @@ function _clang {
         '-mno-neg-immediates[Disallow converting instructions with negative immediates to their negation or inversion.]' \
         '-mno-nvj[Disable generation of new-value jumps]' \
         '-mno-nvs[Disable generation of new-value stores]' \
+        '-mno-outline-atomics[Don'\''t generate local calls to out-of-line atomic operations]' \
         '-mno-outline[Disable function outlining (AArch64 only)]' \
         '-mno-packets[Disable generation of instruction packets]' \
         '-mno-relax[Disable linker relaxation]' \
-        '-mno-restrict-it[Allow generation of deprecated IT blocks for ARMv8. It is off by default for ARMv8 Thumb mode]' \
+        '-mno-restrict-it[Allow generation of complex IT blocks.]' \
         '-mno-save-restore[Disable using library calls for save and restore]' \
-        '-mno-sram-ecc[Disable SRAM ECC (AMDGPU only)]' \
+        '-mno-seses[Disable speculative execution side effect suppression (SESES)]' \
         '-mno-stack-arg-probe[Disable stack probes which are enabled by default]' \
+        '-mno-tgsplit[Disable threadgroup split execution mode (AMDGPU only)]' \
         '-mno-tls-direct-seg-refs[Disable direct TLS access through segment registers]' \
         '-mno-unaligned-access[Force all memory accesses to be aligned (AArch32/AArch64 only)]' \
-        '-mno-wavefrontsize64[Wavefront size 32 is used]' \
-        '-mno-xnack[Disable XNACK (AMDGPU only)]' \
+        '-mno-wavefrontsize64[Specify wavefront size 32 mode (AMDGPU only)]' \
         '-mnocrc[Disallow use of CRC instructions (ARM only)]' \
         '-mnop-mcount[Generate mcount/__fentry__ calls as nops. To activate they need to be patched in.]' \
         '-mnvj[Enable generation of new-value jumps]' \
@@ -553,10 +774,11 @@ function _clang {
         '-module-dependency-dir[Directory to dump module dependencies to]' \
         '-module-file-info[Provide information about a particular module file]' \
         '-momit-leaf-frame-pointer[Omit frame pointer setup for leaf functions]' \
+        '-moutline-atomics[Generate local calls to out-of-line atomic operations]' \
         '-moutline[Enable function outlining (AArch64 only)]' \
         '-mpacked-stack[Use packed stack layout (SystemZ only).]' \
         '-mpackets[Enable generation of instruction packets]' \
-        '-mpie-copy-relocations[Use copy relocations support for PIE builds]' \
+        '-mpad-max-prefix-size[Specify maximum number of prefixes to use for padding]' \
         '-mprefer-vector-width[Specifies preferred vector width for auto-vectorization. Defaults to '\''none'\'' which allows target specific decisions.]' \
         '-MP[Create phony target for each dependency (other than main file)]' \
         '-mqdsp6-compat[Enable hexagon-qdsp6 backward compatibility]' \
@@ -564,34 +786,53 @@ function _clang {
         '-mrecord-mcount[Generate a __mcount_loc section entry for each __fentry__ call.]' \
         '-mrelax-all[(integrated-as) Relax all machine instructions]' \
         '-mrelax[Enable linker relaxation]' \
-        '-mrestrict-it[Disallow generation of deprecated IT blocks for ARMv8. It is on by default for ARMv8 Thumb mode.]' \
+        '-mrestrict-it[Disallow generation of complex IT blocks.]' \
         '-mrtd[Make StdCall calling convention the default]' \
         '-msave-restore[Enable using library calls for save and restore]' \
+        '-mseses[Enable speculative execution side effect suppression (SESES). Includes LVI control flow integrity mitigations]' \
         '-msign-return-address[Select return address signing scope]' \
+        '-mskip-rax-setup[Skip setting up RAX register when passing variable arguments (x86 only)]' \
+        '-msmall-data-limit[Put global and static data smaller than the limit into a special section]' \
         '-msoft-float[Use software floating point]' \
-        '-msram-ecc[Enable SRAM ECC (AMDGPU only)]' \
         '-mstack-alignment[Set the stack alignment]' \
         '-mstack-arg-probe[Enable stack probes]' \
         '-mstack-probe-size[Set the stack probe size]' \
+        '-mstack-protector-guard-offset[Use the given offset for addressing the stack-protector guard]' \
+        '-mstack-protector-guard-reg[Use the given reg for addressing the stack-protector guard]' \
+        '-mstack-protector-guard-symbol[Use the given symbol for addressing the stack-protector guard]' \
+        '-mstack-protector-guard[Use the given guard (global, tls) for addressing the stack-protector guard]' \
         '-mstackrealign[Force realign the stack at entry to every function]' \
-        '-mthread-model[The thread model to use, e.g. posix, single (posix by default)]' \
+        '-msve-vector-bits[Specify the size in bits of an SVE vector register. Defaults to the vector length agnostic value of "scalable". (AArch64 only)]' \
+        '-msvr4-struct-return[Return small structs in registers (PPC32 only)]' \
+        '-mtargetos[Set the deployment target to be the specified OS and OS version]' \
+        '-mtgsplit[Enable threadgroup split execution mode (AMDGPU only)]' \
+        '-mthread-model[The thread model to use. Defaults to '\''posix'\'')]' \
         '-mtls-direct-seg-refs[Enable direct TLS access through segment registers (default)]' \
         '-mtls-size[Specify bit size of immediate TLS offsets (AArch64 ELF only): 12 (for 4KB) | 24 (for 16MB, default) | 32 (for 4GB) | 48 (for 256TB, needs -mcmodel=large)]' \
         '-mtp[Thread pointer access method (AArch32/AArch64 only)]' \
+        '-mtune[Only supported on X86, RISC-V and SystemZ. Otherwise accepted for compatibility with GCC.]' \
         '-MT[Specify name of main file output in depfile]' \
         '-munaligned-access[Allow memory accesses to be unaligned (AArch32/AArch64 only)]' \
+        '-munsafe-fp-atomics[Enable unsafe floating point atomic instructions (AMDGPU only)]' \
+        '-mvscale-max[Specify the vscale maximum. Defaults to the vector length agnostic value of "0". (AArch64 only)]' \
+        '-mvscale-min[Specify the vscale minimum. Defaults to "1". (AArch64 only)]' \
         '-MV[Use NMake/Jom format for the depfile]' \
-        '-mwavefrontsize64[Wavefront size 64 is used]' \
-        '-mxnack[Enable XNACK (AMDGPU only)]' \
+        '-mwavefrontsize64[Specify wavefront size 64 mode (AMDGPU only)]' \
         '-M[Like -MD, but also implies -E and writes to stdout by default]' \
-        '--no-cuda-gpu-arch[Remove GPU architecture (e.g. sm_35) from the list of GPUs to compile for. '\''all'\'' resets the list to its default value.]' \
         '--no-cuda-include-ptx[Do not include PTX for the following GPU architecture (e.g. sm_35) or '\''all'\''. May be specified more than once.]' \
         '--no-cuda-version-check[Don'\''t error out if the detected version of the CUDA install is too low for the requested CUDA gpu architecture.]' \
+        '--no-gpu-bundle-output[Do not bundle output files of HIP device compilation]' \
+        '-no-hip-rt[Do not link against HIP runtime libraries]' \
+        '--no-offload-arch[Remove CUDA/HIP offloading device architecture (e.g. sm_35, gfx906) from the list of devices to compile for. '\''all'\'' resets the list to its default value.]' \
+        '--no-offload-new-driver[Don'\''t Use the new driver for offloading compilation.]' \
         '--no-system-header-prefix[Treat all #include paths starting with <prefix> as not including a system header.]' \
         '-nobuiltininc[Disable builtin #include directories]' \
+        '-nogpuinc[Do not add include paths for CUDA/HIP and do not include the default CUDA/HIP wrapper headers]' \
         '-nogpulib[Do not link device library for CUDA/HIP device compilation]' \
+        '-nohipwrapperinc[Do not include the default HIP wrapper headers and include paths]' \
         '-nostdinc++[Disable standard #include directories for the C++ standard library]' \
         '-ObjC++[Treat source input files as Objective-C++ inputs]' \
+        '-objcmt-allowlist-dir-path[Only modify files with a filename contained in the provided directory path]' \
         '-objcmt-atomic-property[Make migration to '\''atomic'\'' properties]' \
         '-objcmt-migrate-all[Enable migration to modern ObjC]' \
         '-objcmt-migrate-annotation[Enable migration to property and method annotations]' \
@@ -607,21 +848,35 @@ function _clang {
         '-objcmt-migrate-subscripting[Enable migration to modern ObjC subscripting]' \
         '-objcmt-ns-nonatomic-iosonly[Enable migration to use NS_NONATOMIC_IOSONLY macro for setting property'\''s '\''atomic'\'' attribute]' \
         '-objcmt-returns-innerpointer-property[Enable migration to annotate property with NS_RETURNS_INNER_POINTER]' \
-        '-objcmt-whitelist-dir-path[Only modify files with a filename contained in the provided directory path]' \
+        '-objcmt-whitelist-dir-path[Alias for -objcmt-allowlist-dir-path]' \
         '-ObjC[Treat source input files as Objective-C inputs]' \
+        '-object-file-name[Set the output <file> for debug infos]':file:_files \
+        '--offload-arch[CUDA offloading device architecture (e.g. sm_35), or HIP offloading target ID in the form of a device architecture followed by target ID features delimited by a colon. Each target ID feature is a pre-defined string followed by a plus or minus sign (e.g. gfx908:xnack+:sramecc-). May be specified more than once.]' \
+        '--offload-device-only[Only compile for the offloading device.]' \
+        '--offload-host-device[Only compile for the offloading host.]' \
+        '--offload-host-only[Only compile for the offloading host.]' \
+        '--offload-link[Use the new offloading linker to perform the link job.]' \
+        '--offload-new-driver[Use the new driver for offloading compilation.]' \
+        '--offload[Specify comma-separated list of offloading target triples (CUDA and HIP only)]' \
         '-o[Write output to <file>]':file:_files \
+        '-pedantic[Warn on language extensions]' \
         '-pg[Enable mcount instrumentation]' \
         '-pipe[Use pipes between commands, when possible]' \
         '--precompile[Only precompile the input]' \
+        '-print-diagnostic-options[Print all of Clang'\''s warning options]' \
         '-print-effective-triple[Print the effective target triple]' \
         '-print-file-name[Print the full library path of <file>]':file:_files \
         '-print-ivar-layout[Enable Objective-C Ivar layout bitmap print trace]' \
         '-print-libgcc-file-name[Print the library path for the currently used compiler runtime library ("libgcc.a" or "libclang_rt.builtins.*.a")]' \
+        '-print-multiarch[Print the multiarch target triple]' \
         '-print-prog-name[Print the full program path of <name>]' \
         '-print-resource-dir[Print the resource directory pathname]' \
+        '-print-rocm-search-dirs[Print the paths used for finding ROCm installation]' \
+        '-print-runtime-dir[Print the directory pathname containing clangs runtime libraries]' \
         '-print-search-dirs[Print the paths used for finding libraries and programs]' \
         '-print-supported-cpus[Print supported cpu models for the given target (if target is not specified, it will print the supported cpus for the default target)]' \
         '-print-target-triple[Print the normalized target triple]' \
+        '-print-targets[Print the registered targets]' \
         '-pthread[Support POSIX threads in generated code]' \
         '--ptxas-path[Path to ptxas (used for compiling CUDA code)]' \
         '-P[Disable linemarker output in -E mode]' \
@@ -631,6 +886,8 @@ function _clang {
         '-relocatable-pch[Whether to build a relocatable precompiled header]' \
         '-rewrite-legacy-objc[Rewrite Legacy Objective-C source to C++]' \
         '-rewrite-objc[Rewrite Objective-C source to C++]' \
+        '--rocm-device-lib-path[ROCm device library path. Alternative to rocm-path.]' \
+        '--rocm-path[ROCm installation path, used for finding and automatically linking required bitcode libraries.]' \
         '-Rpass-analysis[Report transformation analysis from optimization passes whose name matches the given POSIX regular expression]' \
         '-Rpass-missed[Report missed transformations by optimization passes whose name matches the given POSIX regular expression]' \
         '-Rpass[Report transformations performed by optimization passes whose name matches the given POSIX regular expression]' \
@@ -642,11 +899,13 @@ function _clang {
         '-save-temps[Save intermediate compilation results]' \
         '-serialize-diagnostics[Serialize compiler diagnostics to a file]' \
         '-shared-libsan[Dynamically link the sanitizer runtime]' \
+        '--start-no-unused-arguments[Don'\''t emit warnings about unused arguments for the following arguments]' \
         '-static-libsan[Statically link the sanitizer runtime]' \
         '-static-openmp[Use the static host OpenMP runtime while linking.]' \
         '-std[Language standard to compile for]' \
         '-stdlib++-isystem[Use directory as the C++ standard library include path]':file:_files \
         '-stdlib[C++ standard library to use]' \
+        '-sycl-std[SYCL language standard to compile for.]' \
         '--system-header-prefix[Treat all #include paths starting with <prefix> as including a system header.]' \
         '-S[Only run preprocess and compilation steps]' \
         '--target[Generate code for the given target]' \
@@ -672,12 +931,15 @@ function _clang {
         '-W[Enable the specified warning]' \
         '-w[Suppress all warnings]' \
         '-Xanalyzer[Pass <arg> to the static analyzer]' \
+        '-Xarch_device[Pass <arg> to the CUDA/HIP device compilation]' \
+        '-Xarch_host[Pass <arg> to the CUDA/HIP host compilation]' \
         '-Xassembler[Pass <arg> to the assembler]' \
         '-Xclang[Pass <arg> to the clang compiler]' \
         '-Xcuda-fatbinary[Pass <arg> to fatbinary invocation]' \
         '-Xcuda-ptxas[Pass <arg> to the ptxas assembler]' \
         '-Xlinker[Pass <arg> to the linker]' \
-        '-Xopenmp-target[<arg> Pass <arg> to the target offloading toolchain identified by <triple>.]' \
+        '-Xoffload-linker[Pass <arg> to the offload linkers or the ones idenfied by -<triple>]' \
+        '-Xopenmp-target[Pass <arg> to the target offloading toolchain identified by <triple>.]' \
         '-Xopenmp-target[Pass <arg> to the target offloading toolchain.]' \
         '-Xpreprocessor[Pass <arg> to the preprocessor]' \
         '-x[Treat subsequent input files as having type <language>]' \

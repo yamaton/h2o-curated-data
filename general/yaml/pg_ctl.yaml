@@ -1,0 +1,146 @@
+name: pg_ctl
+description: initialize, start, stop, or control a PostgreSQL server
+usage: |-
+  pg_ctl init[db]   [-D DATADIR] [-s] [-o OPTIONS]
+  pg_ctl start      [-D DATADIR] [-l FILENAME] [-W] [-t SECS] [-s]
+                    [-o OPTIONS] [-p PATH] [-c]
+  pg_ctl stop       [-D DATADIR] [-m SHUTDOWN-MODE] [-W] [-t SECS] [-s]
+  pg_ctl restart    [-D DATADIR] [-m SHUTDOWN-MODE] [-W] [-t SECS] [-s]
+                    [-o OPTIONS] [-c]
+  pg_ctl reload     [-D DATADIR] [-s]
+  pg_ctl status     [-D DATADIR]
+  pg_ctl promote    [-D DATADIR] [-W] [-t SECS] [-s]
+  pg_ctl logrotate  [-D DATADIR] [-s]
+  pg_ctl kill       SIGNALNAME PID
+options: []
+inheritedOptions:
+  - names:
+      - -D
+      - --pgdata
+    argument: DATADIR
+    description: location of the database storage area
+  - names:
+      - -s
+      - --silent
+    argument: ""
+    description: only print errors, no informational messages
+  - names:
+      - -t
+      - --timeout
+    argument: SECS
+    description: seconds to wait when using -w option
+  - names:
+      - -V
+      - --version
+    argument: ""
+    description: output version information, then exit
+  - names:
+      - -w
+      - --wait
+    argument: ""
+    description: wait until operation completes (default)
+  - names:
+      - -W
+      - --no-wait
+    argument: ""
+    description: do not wait until operation completes
+  - names:
+      - -?
+      - --help
+    argument: ""
+    description: show this help, then exit
+  - names:
+      - -c
+      - --core-files
+    argument: ""
+    description: allow postgres to produce core files
+  - names:
+      - -l
+      - --log
+    argument: FILENAME
+    description: write (or append) server log to FILENAME
+  - names:
+      - -o
+      - --options
+    argument: OPTIONS
+    description: command line options to pass to postgres (PostgreSQL server executable) or initdb
+  - names:
+      - -p
+    argument: PATH-TO-POSTGRES
+    description: normally not necessary
+  - names:
+      - -m
+      - --mode
+    argument: MODE
+    description: MODE can be "smart", "fast", or "immediate"
+subcommands:
+  - name: init
+    description: creates a new PostgreSQL database cluster
+    usage: pg_ctl init [-D DATADIR] [-s] [-o OPTIONS]
+    options: []
+  - name: start
+    description: launches a new server
+    usage: |-
+      pg_ctl start [-D DATADIR] [-l FILENAME] [-W] [-t SECS] [-s]
+                   [-o OPTIONS] [-p PATH] [-c]
+    options: []
+  - name: stop
+    description: shuts down the server that is running in the specified data directory
+    usage: |-
+      pg_ctl stop [-D DATADIR] [-m SHUTDOWN-MODE] [-W] [-t SECS] [-s]
+    options: []
+  - name: restart
+    description: effectively executes a stop followed by a start
+    usage: |-
+      pg_ctl restart [-D DATADIR] [-m SHUTDOWN-MODE] [-W] [-t SECS] [-s]
+                     [-o OPTIONS] [-c]
+    options: []
+  - name: reload
+    description: sends the postgres server process a SIGHUP signal
+    usage: |-
+      pg_ctl reload [-D DATADIR] [-s]
+    options: []
+  - name: status
+    description: checks whether a server is running in the specified data directory
+    usage: |-
+      pg_ctl status [-D DATADIR]
+    options: []
+  - name: promote
+    description: commands the standby server to end standby mode and begin read-write operations
+    usage: |-
+      pg_ctl promote [-D DATADIR] [-W] [-t SECS] [-s]
+    options: []
+  - name: logrotate
+    description: rotates the server log file
+    usage: |-
+      pg_ctl logrotate [-D DATADIR] [-s]
+    options: []
+  - name: kill
+    description: sends a signal to a specified proces
+    usage: |-
+      pg_ctl kill SIGNALNAME PID
+    options: []
+version: pg_ctl (PostgreSQL) 15.1
+tldr: |
+  > Utility for controlling a PostgreSQL server and database cluster.
+  > More information: <https://www.postgresql.org/docs/current/app-pg-ctl.html>.
+
+  - Initialize a new PostgreSQL database cluster:
+
+  `pg_ctl -D {{data_directory}} init`
+
+  - Start a PostgreSQL server:
+
+  `pg_ctl -D {{data_directory}} start`
+
+  - Stop a PostgreSQL server:
+
+  `pg_ctl -D {{data_directory}} stop`
+
+  - Restart a PostgreSQL server:
+
+  `pg_ctl -D {{data_directory}} restart`
+
+  - Reload the PostgreSQL server configuration:
+
+  `pg_ctl -D {{data_directory}} reload`

@@ -1,0 +1,237 @@
+name: pg_dumpall
+description: extracts a PostgreSQL database cluster into an SQL script file
+usage: pg_dumpall [OPTION]...
+options:
+  - names:
+      - -f
+      - --file
+    argument: FILENAME
+    description: output file name
+  - names:
+      - -v
+      - --verbose
+    argument: ""
+    description: verbose mode
+  - names:
+      - -V
+      - --version
+    argument: ""
+    description: output version information, then exit
+  - names:
+      - --lock-wait-timeout
+    argument: TIMEOUT
+    description: fail after waiting TIMEOUT for a table lock
+  - names:
+      - -?
+      - --help
+    argument: ""
+    description: show this help, then exit
+  - names:
+      - -a
+      - --data-only
+    argument: ""
+    description: dump only the data, not the schema
+  - names:
+      - -c
+      - --clean
+    argument: ""
+    description: clean (drop) databases before recreating
+  - names:
+      - -E
+      - --encoding
+    argument: ENCODING
+    description: dump the data in encoding ENCODING
+  - names:
+      - -g
+      - --globals-only
+    argument: ""
+    description: dump only global objects, no databases
+  - names:
+      - -O
+      - --no-owner
+    argument: ""
+    description: skip restoration of object ownership
+  - names:
+      - -r
+      - --roles-only
+    argument: ""
+    description: dump only roles, no databases or tablespaces
+  - names:
+      - -s
+      - --schema-only
+    argument: ""
+    description: dump only the schema, no data
+  - names:
+      - -S
+      - --superuser
+    argument: NAME
+    description: superuser user name to use in the dump
+  - names:
+      - -t
+      - --tablespaces-only
+    argument: ""
+    description: dump only tablespaces, no databases or roles
+  - names:
+      - -x
+      - --no-privileges
+    argument: ""
+    description: do not dump privileges (grant/revoke)
+  - names:
+      - --binary-upgrade
+    argument: ""
+    description: for use by upgrade utilities only
+  - names:
+      - --column-inserts
+    argument: ""
+    description: dump data as INSERT commands with column names
+  - names:
+      - --disable-dollar-quoting
+    argument: ""
+    description: disable dollar quoting, use SQL standard quoting
+  - names:
+      - --disable-triggers
+    argument: ""
+    description: disable triggers during data-only restore
+  - names:
+      - --exclude-database
+    argument: PATTERN
+    description: exclude databases whose name matches PATTERN
+  - names:
+      - --extra-float-digits
+    argument: NUM
+    description: override default setting for extra_float_digits
+  - names:
+      - --if-exists
+    argument: ""
+    description: use IF EXISTS when dropping objects
+  - names:
+      - --inserts
+    argument: ""
+    description: dump data as INSERT commands, rather than COPY
+  - names:
+      - --load-via-partition-root
+    argument: ""
+    description: load partitions via the root table
+  - names:
+      - --no-comments
+    argument: ""
+    description: do not dump comments
+  - names:
+      - --no-publications
+    argument: ""
+    description: do not dump publications
+  - names:
+      - --no-role-passwords
+    argument: ""
+    description: do not dump passwords for roles
+  - names:
+      - --no-security-labels
+    argument: ""
+    description: do not dump security label assignments
+  - names:
+      - --no-subscriptions
+    argument: ""
+    description: do not dump subscriptions
+  - names:
+      - --no-sync
+    argument: ""
+    description: do not wait for changes to be written safely to disk
+  - names:
+      - --no-table-access-method
+    argument: ""
+    description: do not dump table access methods
+  - names:
+      - --no-tablespaces
+    argument: ""
+    description: do not dump tablespace assignments
+  - names:
+      - --no-toast-compression
+    argument: ""
+    description: do not dump TOAST compression methods
+  - names:
+      - --no-unlogged-table-data
+    argument: ""
+    description: do not dump unlogged table data
+  - names:
+      - --on-conflict-do-nothing
+    argument: ""
+    description: add ON CONFLICT DO NOTHING to INSERT commands
+  - names:
+      - --quote-all-identifiers
+    argument: ""
+    description: quote all identifiers, even if not key words
+  - names:
+      - --rows-per-insert
+    argument: NROWS
+    description: number of rows per INSERT; implies --inserts
+  - names:
+      - --use-set-session-authorization
+    argument: ""
+    description: use SET SESSION AUTHORIZATION commands instead of ALTER OWNER commands to set ownership
+  - names:
+      - -d
+      - --dbname
+    argument: CONNSTR
+    description: connect using connection string
+  - names:
+      - -h
+      - --host
+    argument: HOSTNAME
+    description: database server host or socket directory
+  - names:
+      - -l
+      - --database
+    argument: DBNAME
+    description: alternative default database
+  - names:
+      - -p
+      - --port
+    argument: PORT
+    description: database server port number
+  - names:
+      - -U
+      - --username
+    argument: NAME
+    description: connect as specified database user
+  - names:
+      - -w
+      - --no-password
+    argument: ""
+    description: never prompt for password
+  - names:
+      - -W
+      - --password
+    argument: ""
+    description: force password prompt (should happen automatically)
+  - names:
+      - --role
+    argument: ROLENAME
+    description: do SET ROLE before dump
+version: pg_dumpall (PostgreSQL) 15.1
+tldr: |
+  > Extract a PostgreSQL database cluster into a script file or other archive file.
+  > More information: <https://www.postgresql.org/docs/current/app-pg-dumpall.html>.
+
+  - Dump all databases:
+
+  `pg_dumpall > {{path/to/file.sql}}`
+
+  - Dump all databases using a specific username:
+
+  `pg_dumpall --username={{username}} > {{path/to/file.sql}}`
+
+  - Same as above, customize host and port:
+
+  `pg_dumpall -h {{host}} -p {{port}} > {{output_file.sql}}`
+
+  - Dump all databases into a custom-format archive file with moderate compression:
+
+  `pg_dumpall -Fc > {{output_file.dump}}`
+
+  - Dump only database data into an SQL-script file:
+
+  `pg_dumpall --data-only > {{path/to/file.sql}}`
+
+  - Dump only schema (data definitions) into an SQL-script file:
+
+  `pg_dumpall -s > {{output_file.sql}}`

@@ -1,0 +1,233 @@
+name: pg_restore
+description: restores a PostgreSQL database from an archive created by pg_dump.
+usage: pg_restore [OPTION]... [FILE]
+options:
+  - names:
+      - -d
+      - --dbname
+    argument: NAME
+    description: connect to database name
+  - names:
+      - -f
+      - --file
+    argument: FILENAME
+    description: output file name (- for stdout)
+  - names:
+      - -F
+      - --format
+    argument: c|d|t
+    description: backup file format (should be automatic)
+  - names:
+      - -l
+      - --list
+    argument: ""
+    description: print summarized TOC of the archive
+  - names:
+      - -v
+      - --verbose
+    argument: ""
+    description: verbose mode
+  - names:
+      - -V
+      - --version
+    argument: ""
+    description: output version information, then exit
+  - names:
+      - -?
+      - --help
+    argument: ""
+    description: show this help, then exit
+  - names:
+      - -a
+      - --data-only
+    argument: ""
+    description: restore only the data, no schema
+  - names:
+      - -c
+      - --clean
+    argument: ""
+    description: clean (drop) database objects before recreating
+  - names:
+      - -C
+      - --create
+    argument: ""
+    description: create the target database
+  - names:
+      - -e
+      - --exit-on-error
+    argument: ""
+    description: exit on error, default is to continue
+  - names:
+      - -I
+      - --index
+    argument: NAME
+    description: restore named index
+  - names:
+      - -j
+      - --jobs
+    argument: NUM
+    description: use this many parallel jobs to restore
+  - names:
+      - -L
+      - --use-list
+    argument: FILENAME
+    description: use table of contents from this file for selecting/ordering output
+  - names:
+      - -n
+      - --schema
+    argument: NAME
+    description: restore only objects in this schema
+  - names:
+      - -N
+      - --exclude-schema
+    argument: NAME
+    description: do not restore objects in this schema
+  - names:
+      - -O
+      - --no-owner
+    argument: ""
+    description: skip restoration of object ownership
+  - names:
+      - -P
+      - --function
+    argument: NAME(args)
+    description: restore named function
+  - names:
+      - -s
+      - --schema-only
+    argument: ""
+    description: restore only the schema, no data
+  - names:
+      - -S
+      - --superuser
+    argument: NAME
+    description: superuser user name to use for disabling triggers
+  - names:
+      - -t
+      - --table
+    argument: NAME
+    description: restore named relation (table, view, etc.)
+  - names:
+      - -T
+      - --trigger
+    argument: NAME
+    description: restore named trigger
+  - names:
+      - -x
+      - --no-privileges
+    argument: ""
+    description: skip restoration of access privileges (grant/revoke)
+  - names:
+      - "-1"
+      - --single-transaction
+    argument: ""
+    description: restore as a single transaction
+  - names:
+      - --disable-triggers
+    argument: ""
+    description: disable triggers during data-only restore
+  - names:
+      - --enable-row-security
+    argument: ""
+    description: enable row security
+  - names:
+      - --if-exists
+    argument: ""
+    description: use IF EXISTS when dropping objects
+  - names:
+      - --no-comments
+    argument: ""
+    description: do not restore comments
+  - names:
+      - --no-data-for-failed-tables
+    argument: ""
+    description: do not restore data of tables that could not be created
+  - names:
+      - --no-publications
+    argument: ""
+    description: do not restore publications
+  - names:
+      - --no-security-labels
+    argument: ""
+    description: do not restore security labels
+  - names:
+      - --no-subscriptions
+    argument: ""
+    description: do not restore subscriptions
+  - names:
+      - --no-table-access-method
+    argument: ""
+    description: do not restore table access methods
+  - names:
+      - --no-tablespaces
+    argument: ""
+    description: do not restore tablespace assignments
+  - names:
+      - --section
+    argument: SECTION
+    description: restore named section (pre-data, data, or post-data)
+  - names:
+      - --strict-names
+    argument: ""
+    description: require table and/or schema include patterns to match at least one entity each
+  - names:
+      - --use-set-session-authorization
+    argument: ""
+    description: use SET SESSION AUTHORIZATION commands instead of ALTER OWNER commands to set ownership
+  - names:
+      - -h
+      - --host
+    argument: HOSTNAME
+    description: database server host or socket directory
+  - names:
+      - -p
+      - --port
+    argument: PORT
+    description: database server port number
+  - names:
+      - -U
+      - --username
+    argument: NAME
+    description: connect as specified database user
+  - names:
+      - -w
+      - --no-password
+    argument: ""
+    description: never prompt for password
+  - names:
+      - -W
+      - --password
+    argument: ""
+    description: force password prompt (should happen automatically)
+  - names:
+      - --role
+    argument: ROLENAME
+    description: do SET ROLE before restore
+version: pg_restore (PostgreSQL) 15.1
+tldr: |
+  > Restore a PostgreSQL database from an archive file created by pg_dump.
+  > More information: <https://www.postgresql.org/docs/current/app-pgrestore.html>.
+
+  - Restore an archive into an existing database:
+
+  `pg_restore -d {{db_name}} {{archive_file.dump}}`
+
+  - Same as above, customize username:
+
+  `pg_restore -U {{username}} -d {{db_name}} {{archive_file.dump}}`
+
+  - Same as above, customize host and port:
+
+  `pg_restore -h {{host}} -p {{port}} -d {{db_name}} {{archive_file.dump}}`
+
+  - List database objects included in the archive:
+
+  `pg_restore --list {{archive_file.dump}}`
+
+  - Clean database objects before creating them:
+
+  `pg_restore --clean -d {{db_name}} {{archive_file.dump}}`
+
+  - Use multiple jobs to do the restoring:
+
+  `pg_restore -j {{2}} -d {{db_name}} {{archive_file.dump}}`

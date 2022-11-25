@@ -1,0 +1,211 @@
+name: psql
+description: the PostgreSQL interactive terminal
+usage: psql [OPTION]... [DBNAME [USERNAME]]
+options:
+  - names:
+      - -c
+      - --command
+    argument: COMMAND
+    description: run only single command (SQL or internal) and exit
+  - names:
+      - -d
+      - --dbname
+    argument: DBNAME
+    description: 'database name to connect to (default: "vierbein")'
+  - names:
+      - -f
+      - --file
+    argument: FILENAME
+    description: execute commands from file, then exit
+  - names:
+      - -l
+      - --list
+    argument: ""
+    description: list available databases, then exit
+  - names:
+      - -v
+      - --set
+      - --variable
+    argument: NAME=VALUE
+    description: set psql variable NAME to VALUE (e.g., -v ON_ERROR_STOP=1)
+  - names:
+      - -V
+      - --version
+    argument: ""
+    description: output version information, then exit
+  - names:
+      - -X
+      - --no-psqlrc
+    argument: ""
+    description: do not read startup file (~/.psqlrc)
+  - names:
+      - "-1"
+      - --single-transaction
+    argument: ("one")
+    description: execute as a single transaction (if non-interactive)
+  - names:
+      - -?
+      - --help
+    argument: '[=options]'
+    description: show this help, then exit
+  - names:
+      - --help
+    argument: commands
+    description: list backslash commands, then exit
+  - names:
+      - --help
+    argument: variables
+    description: list special variables, then exit
+  - names:
+      - -a
+      - --echo-all
+    argument: ""
+    description: echo all input from script
+  - names:
+      - -b
+      - --echo-errors
+    argument: ""
+    description: echo failed commands
+  - names:
+      - -e
+      - --echo-queries
+    argument: ""
+    description: echo commands sent to server
+  - names:
+      - -E
+      - --echo-hidden
+    argument: ""
+    description: display queries that internal commands generate
+  - names:
+      - -L
+      - --log-file
+    argument: FILENAME
+    description: send session log to file
+  - names:
+      - -n
+      - --no-readline
+    argument: ""
+    description: disable enhanced command line editing (readline)
+  - names:
+      - -o
+      - --output
+    argument: FILENAME
+    description: send query results to file (or |pipe)
+  - names:
+      - -q
+      - --quiet
+    argument: ""
+    description: run quietly (no messages, only query output)
+  - names:
+      - -s
+      - --single-step
+    argument: ""
+    description: single-step mode (confirm each query)
+  - names:
+      - -S
+      - --single-line
+    argument: ""
+    description: single-line mode (end of line terminates SQL command)
+  - names:
+      - -A
+      - --no-align
+    argument: ""
+    description: unaligned table output mode
+  - names:
+      - --csv
+    argument: ""
+    description: CSV (Comma-Separated Values) table output mode
+  - names:
+      - -F
+      - --field-separator
+    argument: STRING
+    description: 'field separator for unaligned output (default: "|")'
+  - names:
+      - -H
+      - --html
+    argument: ""
+    description: HTML table output mode
+  - names:
+      - -P
+      - --pset
+    argument: VAR[=ARG]
+    description: set printing option VAR to ARG (see \pset command)
+  - names:
+      - -R
+      - --record-separator
+    argument: STRING
+    description: 'record separator for unaligned output (default: newline)'
+  - names:
+      - -t
+      - --tuples-only
+    argument: ""
+    description: print rows only
+  - names:
+      - -T
+      - --table-attr
+    argument: TEXT
+    description: set HTML table tag attributes (e.g., width, border)
+  - names:
+      - -x
+      - --expanded
+    argument: ""
+    description: turn on expanded table output
+  - names:
+      - -z
+      - --field-separator-zero
+    argument: ""
+    description: set field separator for unaligned output to zero byte
+  - names:
+      - "-0"
+      - --record-separator-zero
+    argument: ""
+    description: set record separator for unaligned output to zero byte
+  - names:
+      - -h
+      - --host
+    argument: HOSTNAME
+    description: 'database server host or socket directory (default: "local socket")'
+  - names:
+      - -p
+      - --port
+    argument: PORT
+    description: 'database server port (default: "5432")'
+  - names:
+      - -U
+      - --username
+    argument: USERNAME
+    description: 'database user name (default: "vierbein")'
+  - names:
+      - -w
+      - --no-password
+    argument: ""
+    description: never prompt for password
+  - names:
+      - -W
+      - --password
+    argument: ""
+    description: force password prompt (should happen automatically)
+version: psql (PostgreSQL) 15.1
+tldr: |
+  > PostgreSQL command-line client.
+  > More information: <https://www.postgresql.org/docs/current/app-psql.html>.
+
+  - Connect to the database. By default, it connects to the local socket using port 5432 with the currently logged in user:
+
+  `psql {{database}}`
+
+  - Connect to the database on given server host running on given port with given username, without a password prompt:
+
+  `psql -h {{host}} -p {{port}} -U {{username}} {{database}}`
+
+  - Connect to the database; user will be prompted for password:
+
+  `psql -h {{host}} -p {{port}} -U {{username}} -W {{database}}`
+
+  - Execute a single SQL query or PostgreSQL command on the given database (useful in shell scripts):
+
+  `psql -c '{{query}}' {{database}}`
+
+  - Execute commands from a file on the given database:
+
+  `psql {{database}} -f {{file.sql}}`

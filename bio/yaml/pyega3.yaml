@@ -1,0 +1,121 @@
+name: pyega3
+description: Download from the European Genome-phenome Archive
+usage: pyega3 [-h] [-d] [-cf CONFIG_FILE] [-sf SERVER_FILE] [-c CONNECTIONS] [-t] [-ms MAX_SLICE_SIZE] [-j] [-v] {datasets,files,fetch} ...
+options:
+  - names:
+      - -h
+      - --help
+    argument: ""
+    description: show this help message and exit
+  - names:
+      - -d
+      - --debug
+    argument: ""
+    description: Extra debugging messages
+  - names:
+      - -cf
+      - --config-file
+    argument: CONFIG_FILE
+    description: JSON file containing credentials/config e.g.{"username":"user1","password":"toor"}
+  - names:
+      - -sf
+      - --server-file
+    argument: SERVER_FILE
+    description: JSON file containing server config e.g.{"url_auth":"aai url","url_api":"api url", "url_api_ticket":"htsget url", "client_secret":"client secret"}
+  - names:
+      - -c
+      - --connections
+    argument: CONNECTIONS
+    description: 'Download using specified number of connections (default: 1 connection)'
+  - names:
+      - -t
+      - --test
+    argument: ""
+    description: Test user activated
+  - names:
+      - -ms
+      - --max-slice-size
+    argument: MAX_SLICE_SIZE
+    description: 'Set maximum size for each slice in bytes (default: 100 MB)'
+  - names:
+      - -j
+      - --json
+    argument: ""
+    description: Output data in JSON format instead of tables
+  - names:
+      - -v
+      - --version
+    argument: ""
+    description: Displays the client's version number. Please note, this aborts any additional actions.
+subcommands:
+  - name: datasets
+    description: List authorized datasets
+    usage: pyega3 datasets [-h]
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+  - name: files
+    description: List files in a specified dataset
+    usage: pyega3 files [-h] identifier
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+  - name: fetch
+    description: Fetch a dataset or file
+    usage: pyega3 fetch [-h] [--reference-name REFERENCE_NAME] [--reference-md5 REFERENCE_MD5] [--start START] [--end END] [--format {BAM,CRAM}] [--max-retries MAX_RETRIES] [--retry-wait RETRY_WAIT] [--output-dir OUTPUT_DIR] [--delete-temp-files] identifier
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --reference-name
+          - -r
+        argument: REFERENCE_NAME
+        description: The reference sequence name, for example 'chr1', '1', or 'chrX'. If unspecified, all data is returned.
+      - names:
+          - --reference-md5
+          - -m
+        argument: REFERENCE_MD5
+        description: The MD5 checksum uniquely representing the requested reference sequence as a lower-case hexadecimal string, calculated as the MD5 of the upper-case sequence excluding all whitespace characters.
+      - names:
+          - --start
+          - -s
+        argument: START
+        description: The start position of the range on the reference, 0-based, inclusive. If specified, reference-name or reference-md5 must also be specified.
+      - names:
+          - --end
+          - -e
+        argument: END
+        description: The end position of the range on the reference, 0-based exclusive. If specified, reference-name or reference-md5 must also be specified.
+      - names:
+          - --format
+          - -f
+        argument: '{BAM,CRAM}'
+        description: The format of data to request.
+      - names:
+          - --max-retries
+          - -M
+        argument: MAX_RETRIES
+        description: The maximum number of times to retry a failed transfer. Any negative number means infinite number of retries.
+      - names:
+          - --retry-wait
+          - -W
+        argument: RETRY_WAIT
+        description: The number of seconds to wait before retrying a failed transfer.
+      - names:
+          - --output-dir
+        argument: OUTPUT_DIR
+        description: 'Output directory. The files will be saved into this directory. Must exist. Default: the current working directory.'
+      - names:
+          - --delete-temp-files
+        argument: ""
+        description: Do not keep those temporary, partial files which were left on the disk after a failed transfer.
+version: 4.0.5

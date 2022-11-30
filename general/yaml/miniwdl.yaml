@@ -1,0 +1,324 @@
+name: miniwdl
+description: Workflow Description Language developer tools & local runner
+usage: |-
+  miniwdl [-h] [--version]
+          {check,configure,run,run_self_test,run-self-test,zip,localize,eval} ...
+options:
+  - names:
+      - -h
+      - --help
+    argument: ""
+    description: show this help message and exit
+  - names:
+      - --version
+    argument: ""
+    description: show miniwdl package version information
+subcommands:
+  - name: check
+    description: Validate a WDL document; show an outline with lint warnings
+    usage: |-
+      miniwdl check [-h] [--strict] [--suppress Warning1,Warning2] [--no-suppress] [-p DIR]
+                    [--no-outside-imports] [--no-quant-check] [--debug]
+                    WDL_URI [WDL_URI ...]
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --strict
+        argument: ""
+        description: exit with nonzero status code if any lint warnings are shown (in addition to syntax and type errors)
+      - names:
+          - --suppress
+        argument: Warning1,Warning2
+        description: comma-separated set of warnings to disable globally e.g. StringCoercion,NonemptyCoercion
+      - names:
+          - --no-suppress
+        argument: ""
+        description: show warnings even if they have inline suppression comments
+      - names:
+          - -p
+          - --path
+        argument: DIR
+        description: local directory to search for imports (can supply multiple times)
+      - names:
+          - --no-outside-imports
+        argument: ""
+        description: deny local imports from outside directory of main WDL file (or --path)
+      - names:
+          - --no-quant-check
+        argument: ""
+        description: relax static typechecking of optional types, and permit coercion of T to Array[T] (discouraged; for backwards compatibility with older WDL)
+      - names:
+          - --debug
+        argument: ""
+        description: maximally verbose logging & exception tracebacks
+  - name: configure
+    description: Generate runner config file / display effective config
+    usage: miniwdl configure [-h] [--show] [--force] [FILE]
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --show
+        argument: ""
+        description: just show effective configuration
+      - names:
+          - --force
+        argument: ""
+        description: overwrite existing .cfg file
+  - name: run
+    description: Run workflow/task locally with built-in runtime
+    usage: |-
+      miniwdl run [-h] [-i INPUT.json] [--empty input_key] [--none input_key] [--task TASK_NAME]
+                  [-j] [-d DIR] [--error-json] [-o OUT.json] [-v] [--no-color] [--log-json]
+                  [--cfg FILE] [--runtime-defaults JSON] [--no-cache] [--env VARNAME[=VALUE]]
+                  [--copy-input-files] [--copy-input-files-for TASK_NAME] [--as-me] [-p DIR]
+                  [--no-outside-imports] [--no-quant-check] [--debug]
+                  URI [input_key=value ...]
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - -i
+          - --input
+        argument: INPUT.json
+        description: INPUT.json Cromwell-style input JSON object, filename, or -; command-line inputs will be merged in
+      - names:
+          - --empty
+        argument: input_key
+        description: explicitly set a string input to the empty string OR an array input to the empty array
+      - names:
+          - --none
+        argument: input_key
+        description: explicitly set an optional input to None (to override a default)
+      - names:
+          - --task
+        argument: TASK_NAME
+        description: name of task to run (for WDL documents with multiple tasks & no workflow)
+      - names:
+          - -j
+          - --json
+        argument: ""
+        description: just print Cromwell-style input JSON to standard output, then exit
+      - names:
+          - -d
+          - --dir
+        argument: DIR
+        description: directory under which to create a timestamp-named subdirectory for this run (defaults to current working directory); supply '.' or 'some/dir/.' to instead run in this directory exactly
+      - names:
+          - --error-json
+        argument: ""
+        description: upon failure, print error information JSON to standard output (in addition to standard error logging)
+      - names:
+          - -o
+        argument: OUT.json
+        description: write JSON output/error to specified file instead of standard output (implies --error-json)
+      - names:
+          - -v
+          - --verbose
+        argument: ""
+        description: increase logging detail & stream tasks' stderr
+      - names:
+          - --no-color
+        argument: ""
+        description: disable colored logging and status bar on terminal (also set by NO_COLOR environment variable)
+      - names:
+          - --log-json
+        argument: ""
+        description: write all logs in JSON
+      - names:
+          - --cfg
+        argument: FILE
+        description: configuration file to load (in preference to file named by MINIWDL_CFG environment, or XDG_CONFIG_{HOME,DIRS}/miniwdl.cfg)
+      - names:
+          - --runtime-defaults
+        argument: JSON
+        description: default runtime settings for all tasks (JSON filename or literal object e.g. '{"maxRetries":2}')
+      - names:
+          - --no-cache
+        argument: ""
+        description: override any configuration enabling cache lookup for call outputs & downloaded files
+      - names:
+          - --env
+        argument: VARNAME[=VALUE]
+        description: Environment variable to pass through to [or set outright in] all task environments (can supply multiple times; warning, non-portable side channel)
+      - names:
+          - --copy-input-files
+        argument: ""
+        description: copy input files for each task and mount them read/write (unblocks task commands that mv/rm/write them)
+      - names:
+          - --copy-input-files-for
+        argument: TASK_NAME
+        description: copy input files only for specifically named task (can supply multiple times)
+      - names:
+          - --as-me
+        argument: ""
+        description: run all containers as the invoking user uid:gid (more secure, but potentially blocks task commands e.g. apt-get)
+      - names:
+          - -p
+          - --path
+        argument: DIR
+        description: local directory to search for imports (can supply multiple times)
+      - names:
+          - --no-outside-imports
+        argument: ""
+        description: deny local imports from outside directory of main WDL file (or --path)
+      - names:
+          - --no-quant-check
+        argument: ""
+        description: relax static typechecking of optional types, and permit coercion of T to Array[T] (discouraged; for backwards compatibility with older WDL)
+      - names:
+          - --debug
+        argument: ""
+        description: maximally verbose logging & exception tracebacks
+  - name: zip
+    description: Zip WDL source
+    usage: |-
+      miniwdl zip [-h] [-o ZIP_FILE] [-f] [--input JSON_OR_FILE] [-p DIR] [--no-outside-imports]
+                  [--no-quant-check] [--debug]
+                  WDL_FILE
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - -o
+          - --output
+        argument: ZIP_FILE
+        description: destination filename [WDL_FILE.zip]
+      - names:
+          - -f
+          - --force
+        argument: ""
+        description: overwrite existing file
+      - names:
+          - -p
+          - --path
+        argument: DIR
+        description: local directory to search for imports (can supply multiple times)
+      - names:
+          - --no-outside-imports
+        argument: ""
+        description: deny local imports from outside directory of main WDL file (or --path)
+      - names:
+          - --no-quant-check
+        argument: ""
+        description: relax static typechecking of optional types, and permit coercion of T to Array[T] (discouraged; for backwards compatibility with older WDL)
+      - names:
+          - --debug
+        argument: ""
+        description: maximally verbose logging & exception tracebacks
+  - name: localize
+    description: Download URI input Files to local cache for use in subsequent runs
+    usage: |-
+      miniwdl localize [-h] [--task TASK_NAME] [--file URI] [--directory URI] [--no-cache]
+                       [--cfg FILE] [-v] [--no-color] [--log-json] [-p DIR]
+                       [--no-outside-imports] [--no-quant-check] [--debug]
+                       [DOC.wdl] [INPUT.json]
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --task
+        argument: TASK_NAME
+        description: name of task (for WDL documents with multiple tasks & no workflow)
+      - names:
+          - --file
+        argument: URI
+        description: additional File URI to process; if present then WDL & JSON may be omitted
+      - names:
+          - --directory
+        argument: URI
+        description: additional Directory URI to process; if present then WDL & JSON may be omitted
+      - names:
+          - --no-cache
+        argument: ""
+        description: if a URI is already cached, re-download and replace it
+      - names:
+          - --cfg
+        argument: FILE
+        description: configuration file to load (in preference to file named by MINIWDL_CFG environment, or XDG_CONFIG_{HOME,DIRS}/miniwdl.cfg)
+      - names:
+          - -v
+          - --verbose
+        argument: ""
+        description: increase logging detail & stream tasks' stderr
+      - names:
+          - --no-color
+        argument: ""
+        description: disable colored logging and status bar on terminal (also set by NO_COLOR environment variable)
+      - names:
+          - --log-json
+        argument: ""
+        description: write all logs in JSON
+      - names:
+          - -p
+          - --path
+        argument: DIR
+        description: local directory to search for imports (can supply multiple times)
+      - names:
+          - --no-outside-imports
+        argument: ""
+        description: deny local imports from outside directory of main WDL file (or --path)
+      - names:
+          - --no-quant-check
+        argument: ""
+        description: relax static typechecking of optional types, and permit coercion of T to Array[T] (discouraged; for backwards compatibility with older WDL)
+      - names:
+          - --debug
+        argument: ""
+        description: maximally verbose logging & exception tracebacks
+  - name: eval
+    description: Evaluate a WDL expression
+    usage: |-
+      miniwdl eval [-h] [--wdl-version WDL_VERSION] [--type] [-p DIR] [--no-outside-imports]
+                   [--no-quant-check] [--debug]
+                   [DECL ...] EXPR
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --wdl-version
+          - -v
+        argument: WDL_VERSION
+        description: 'WDL version (default: development)'
+      - names:
+          - --type
+          - -t
+        argument: ""
+        description: report type as well as JSON value
+      - names:
+          - -p
+          - --path
+        argument: DIR
+        description: local directory to search for imports (can supply multiple times)
+      - names:
+          - --no-outside-imports
+        argument: ""
+        description: deny local imports from outside directory of main WDL file (or --path)
+      - names:
+          - --no-quant-check
+        argument: ""
+        description: relax static typechecking of optional types, and permit coercion of T to Array[T] (discouraged; for backwards compatibility with older WDL)
+      - names:
+          - --debug
+        argument: ""
+        description: maximally verbose logging & exception tracebacks
+version: miniwdl v1.8.0

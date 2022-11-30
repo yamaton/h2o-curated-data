@@ -1,0 +1,542 @@
+name: shasta
+description: De novo assembly from Oxford Nanopore reads
+options:
+  - names:
+      - -h
+      - --help
+    argument: ""
+    description: Write a help message.
+  - names:
+      - -v
+      - --version
+    argument: ""
+    description: Identify the Shasta version.
+  - names:
+      - --config
+    argument: arg
+    description: Configuration name. Can be the name of a built-in configuration or the name of a configuration file.
+  - names:
+      - --input
+    argument: arg
+    description: Names of input files containing reads. Specify at least one.
+  - names:
+      - --assemblyDirectory
+    argument: arg (=ShastaRun)
+    description: Name of the output directory. If command is assemble, this directory must not exist.
+  - names:
+      - --command
+    argument: arg (=assemble)
+    description: 'Command to run. Must be one of: assemble, saveBinaryData, cleanupBinaryData, explore, createBashCompletionScript'
+  - names:
+      - --memoryMode
+    argument: arg (=anonymous)
+    description: 'Specify whether allocated memory is anonymous or backed by a filesystem. Allowed values: anonymous, filesystem.'
+  - names:
+      - --memoryBacking
+    argument: arg (=4K)
+    description: 'Specify the type of pages used to back memory. Allowed values: disk, 4K , 2M (for best performance). All combinations (memoryMode, memoryBacking) are allowed except for (anonymous, disk). Some combinations require root privilege, which is obtained using sudo and may result in a password prompting depending on your sudo set up.'
+  - names:
+      - --threads
+    argument: arg (=0)
+    description: Number of threads, or 0 to use one thread per virtual processor.
+  - names:
+      - --suppressStdoutLog
+    argument: ""
+    description: Suppress echoing stdout to stdout.log.
+  - names:
+      - --exploreAccess
+    argument: arg (=user)
+    description: 'Specify allowed access for --command explore. Allowed values: user, local, unrestricted. DO NOT CHANGE FROM DEFAULT VALUE WITHOUT UNDERSTANDING THE SECURITY IMPLICATIONS.'
+  - names:
+      - --port
+    argument: arg (=17100)
+    description: Port to be used by the http server (command --explore).
+  - names:
+      - --alignmentsPafFile
+    argument: arg
+    description: The name of a PAF file containing alignments of reads to a reference. Only used for --command explore, for display of the alignment candidate graph. Experimental.
+  - names:
+      - --Reads.representation
+    argument: arg (=1)
+    description: 'Read representation: 0 = raw sequence, 1 (default) = Run-Length Encoded (RLE) sequence. Experimental. Do not use.'
+  - names:
+      - --Reads.minReadLength
+    argument: arg (=10000)
+    description: Read length cutoff. Shorter reads are discarded.
+  - names:
+      - --Reads.desiredCoverage
+    argument: arg (=0)
+    description: Reduce coverage to desired value. If not zero, specifies desired coverage (number of bases). The read length cutoff specified via --Reads.minReadLength is increased to reduce coverage to the specified value. Power of 10 multipliers can be used, for example 120Gb to request 120 Gb of coverage.
+  - names:
+      - --Reads.noCache
+    argument: ""
+    description: If set, skip the Linux cache when loading reads. This is done by specifying the O_DIRECT flag when opening input files containing reads.
+  - names:
+      - --Reads.palindromicReads.skipFlagging
+    argument: ""
+    description: Skip flagging palindromic reads. Oxford Nanopore reads should be flagged for better results.
+  - names:
+      - --Reads.palindromicReads.maxSkip
+    argument: arg (=100)
+    description: Used for palindromic read detection.
+  - names:
+      - --Reads.palindromicReads.maxDrift
+    argument: arg (=100)
+    description: Used for palindromic read detection.
+  - names:
+      - --Reads.palindromicReads.maxMarkerFrequency
+    argument: arg (=10)
+    description: Used for palindromic read detection.
+  - names:
+      - --Reads.palindromicReads.alignedFractionThreshold
+    argument: arg (=0.1)
+    description: Used for palindromic read detection.
+  - names:
+      - --Reads.palindromicReads.nearDiagonalFractionThreshold
+    argument: arg (=0.1)
+    description: Used for palindromic read detection.
+  - names:
+      - --Reads.palindromicReads.deltaThreshold
+    argument: arg (=100)
+    description: Used for palindromic read detection.
+  - names:
+      - --Kmers.generationMethod
+    argument: arg (=0)
+    description: 'Method to generate marker k-mers: 0 = random, 1 = random, excluding globally overenriched k-mers,2 = random, excluding k-mers overenriched even in a single read,3 = read from file.4 = random, excluding k-mers appearing in two copies close to each other even in a single read.'
+  - names:
+      - --Kmers.k
+    argument: arg (=10)
+    description: Length of marker k-mers (in run-length space).
+  - names:
+      - --Kmers.probability
+    argument: arg (=0.1)
+    description: Fraction k-mers used as a marker.
+  - names:
+      - --Kmers.enrichmentThreshold
+    argument: arg (=100.)
+    description: Enrichment threshold for Kmers.generationMethod 1 and 2.
+  - names:
+      - --Kmers.distanceThreshold
+    argument: arg (=1000)
+    description: Distance threshold, in RLE bases, for Kmers.generationMethod 4
+  - names:
+      - --Kmers.file
+    argument: arg
+    description: The absolute path of a file containing the k-mers to be used as markers, one per line. A relative path is not accepted. Only used if Kmers.generationMethod is 3.
+  - names:
+      - --MinHash.version
+    argument: arg (=0)
+    description: Controls the version of the LowHash algorithm to use. Can be 0 (default) or 1.(experimental).
+  - names:
+      - --MinHash.m
+    argument: arg (=4)
+    description: The number of consecutive markers that define a MinHash/LowHash feature.
+  - names:
+      - --MinHash.hashFraction
+    argument: arg (=0.01)
+    description: Defines how low a hash has to be to be used with the LowHash algorithm.
+  - names:
+      - --MinHash.minHashIterationCount
+    argument: arg (=10)
+    description: The number of MinHash/LowHash iterations, or 0 to let --MinHash.alignmentCandidatesPerRead control the number of iterations.
+  - names:
+      - --MinHash.alignmentCandidatesPerRead
+    argument: arg (=20)
+    description: If --MinHash.minHashIterationCount is 0, MinHash iteration is stopped when the average number of alignment candidates that each read is involved in reaches this value. If --MinHash.minHashIterationCount is not 0, this is not used.
+  - names:
+      - --MinHash.minBucketSize
+    argument: arg (=0)
+    description: The minimum bucket size to be used by the LowHash algorithm.
+  - names:
+      - --MinHash.maxBucketSize
+    argument: arg (=10)
+    description: The maximum bucket size to be used by the LowHash algorithm.
+  - names:
+      - --MinHash.minFrequency
+    argument: arg (=2)
+    description: The minimum number of times a pair of reads must be found by the MinHash/LowHash algorithm in order to be considered a candidate alignment.
+  - names:
+      - --MinHash.allPairs
+    argument: ""
+    description: Skip the MinHash algorithm and mark all pairs of reads as alignmentcandidates with both orientation. This should only be used for experimentation on very small runs because it is very time consuming.
+  - names:
+      - --Align.alignMethod
+    argument: arg (=3)
+    description: The alignment method to be used to create the read graph & the marker graph. 0 = old Shasta method, 1 = SeqAn (slow), 3 = banded SeqAn, 4 = new Shasta method (experimental).
+  - names:
+      - --Align.maxSkip
+    argument: arg (=30)
+    description: The maximum number of markers that an alignment is allowed to skip.
+  - names:
+      - --Align.maxDrift
+    argument: arg (=30)
+    description: The maximum amount of marker drift that an alignment is allowed to tolerate between successive markers.
+  - names:
+      - --Align.maxTrim
+    argument: arg (=30)
+    description: The maximum number of unaligned markers tolerated at the beginning and end of an alignment.
+  - names:
+      - --Align.maxMarkerFrequency
+    argument: arg (=10)
+    description: Marker frequency threshold. Markers more frequent than this value in either of two oriented reads being aligned are discarded and not used to compute the alignment.
+  - names:
+      - --Align.minAlignedMarkerCount
+    argument: arg (=100)
+    description: The minimum number of aligned markers for an alignment to be used.
+  - names:
+      - --Align.minAlignedFraction
+    argument: arg (=0)
+    description: The minimum fraction of aligned markers for an alignment to be used.
+  - names:
+      - --Align.matchScore
+    argument: arg (=6)
+    description: Match score for marker alignments (only used for alignment methods 1 and 3).
+  - names:
+      - --Align.mismatchScore
+    argument: arg (=-1)
+    description: Mismatch score for marker alignments (only used for alignment methods 1 and 3).
+  - names:
+      - --Align.gapScore
+    argument: arg (=-1)
+    description: Gap score for marker alignments (only used for alignment methods 1 and 3).
+  - names:
+      - --Align.downsamplingFactor
+    argument: arg (=0.10000000000000001)
+    description: Downsampling factor (only used for alignment method 3).
+  - names:
+      - --Align.bandExtend
+    argument: arg (=10)
+    description: Amount to extend the downsampled band (only used for alignment method 3).
+  - names:
+      - --Align.maxBand
+    argument: arg (=1000)
+    description: Maximum alignment band (only used for alignment method 3).
+  - names:
+      - --Align.sameChannelReadAlignment.suppressDeltaThreshold
+    argument: arg (=0)
+    description: If not zero, alignments between reads from the same nanopore channel and close in time are suppressed. The "read" meta data fields from the FASTA or FASTQ header are checked. If their difference, in absolute value, is less than the value of this option, the alignment is suppressed. This can help avoid assembly artifact. This check is only done if the two reads have identical meta data fields "runid", "sampleid", and "ch". If any of these meta data fields are missing, this check is suppressed and this option has no effect.
+  - names:
+      - --Align.suppressContainments
+    argument: ""
+    description: Suppress containment alignments, that is alignments in which one read is entirely contained in another read, except possibly for up to maxTrim markers at the beginning and end.
+  - names:
+      - --Align.align4.deltaX
+    argument: arg (=200)
+    description: Only used for alignment method 4 (experimental).
+  - names:
+      - --Align.align4.deltaY
+    argument: arg (=10)
+    description: Only used for alignment method 4 (experimental).
+  - names:
+      - --Align.align4.minEntryCountPerCell
+    argument: arg (=10)
+    description: Only used for alignment method 4 (experimental).
+  - names:
+      - --Align.align4.maxDistanceFromBoundary
+    argument: arg (=100)
+    description: Only used for alignment method 4 (experimental).
+  - names:
+      - --ReadGraph.creationMethod
+    argument: arg (=0)
+    description: The method used to create the read graph (0 default, 1 or 2 experimental).
+  - names:
+      - --ReadGraph.maxAlignmentCount
+    argument: arg (=6)
+    description: The maximum number of alignments to be kept for each read.
+  - names:
+      - --ReadGraph.maxChimericReadDistance
+    argument: arg (=2)
+    description: Used for chimeric read detection.
+  - names:
+      - --ReadGraph.strandSeparationMethod
+    argument: arg (=1)
+    description: 'Strand separation method: 0 = no strand separation, 1 = limited strand separation, 2 = strict strand separation.'
+  - names:
+      - --ReadGraph.crossStrandMaxDistance
+    argument: arg (=6)
+    description: Maximum distance (edges) for strand separation method 1.
+  - names:
+      - --ReadGraph.removeConflicts
+    argument: ""
+    description: Remove conflicts from the read graph. Experimental - do not use.
+  - names:
+      - --ReadGraph.markerCountPercentile
+    argument: arg (=0.015)
+    description: Percentile for --ReadGraph.markerCount (only used when --ReadGraph.creationMet hod is 2).
+  - names:
+      - --ReadGraph.alignedFractionPercentile
+    argument: arg (=0.12)
+    description: Percentile for adaptive selection of --ReadGraph.alignedFraction (only used when --ReadGraph.creationMethod is 2).
+  - names:
+      - --ReadGraph.maxSkipPercentile
+    argument: arg (=0.12)
+    description: Percentile for adaptive selection of --ReadGraph.maxSkip (only used when --ReadGraph.creationMethod is 2).
+  - names:
+      - --ReadGraph.maxDriftPercentile
+    argument: arg (=0.12)
+    description: Percentile for adaptive selection of --ReadGraph.maxDrift (only used when --ReadGraph.creationMethod is 2).
+  - names:
+      - --ReadGraph.maxTrimPercentile
+    argument: arg (=0.015)
+    description: Percentile for adaptive selection of --ReadGraph.maxTrim (only used when --ReadGraph.creationMethod is 2).
+  - names:
+      - --ReadGraph.flagInconsistentAlignments
+    argument: ""
+    description: Flag inconsistent alignments. Experimental.
+  - names:
+      - --ReadGraph.flagInconsistentAlignments.triangleErrorThreshold
+    argument: arg (=200)
+    description: Triangle error threshold, in markers, for flagging inconsistent alignments. Only used if --ReadGraph.flagInconsiste ntAlignments is set. Experimental.
+  - names:
+      - --ReadGraph.flagInconsistentAlignments.leastSquareErrorThreshold
+    argument: arg (=200)
+    description: Least square error threshold, in markers, for flagging inconsistent alignments. Only used if --ReadGraph.flagInconsistentAlignments is set. Experimental.
+  - names:
+      - --ReadGraph.flagInconsistentAlignments.leastSquareMaxDistance
+    argument: arg (=1)
+    description: Least square max distance for flagging inconsistent alignments. Only used if --ReadGraph.flagInconsistentAlignments is set. Experimental.
+  - names:
+      - --MarkerGraph.minCoverage
+    argument: arg (=10)
+    description: Minimum coverage (number of supporting oriented reads) for a marker graph vertex to be created.Specifying 0 causes a suitable value of this parameter to be selected automatically.
+  - names:
+      - --MarkerGraph.maxCoverage
+    argument: arg (=100)
+    description: Maximum coverage (number of supporting oriented reads) for a marker graph vertex.
+  - names:
+      - --MarkerGraph.minCoveragePerStrand
+    argument: arg (=0)
+    description: Minimum coverage (number of supporting oriented reads) for each strand for a marker graph vertex.
+  - names:
+      - --MarkerGraph.minEdgeCoverage
+    argument: arg (=6)
+    description: Minimum edge coverage (number of supporting oriented reads) for a marker graph edge to be created.Experimental. Only used with --Assembly.mode 1.
+  - names:
+      - --MarkerGraph.minEdgeCoveragePerStrand
+    argument: arg (=2)
+    description: Minimum edge coverage (number of supporting oriented reads) on each strand for a marker graph edge to be created.Experimental. Only used with --Assembly.mode 1.
+  - names:
+      - --MarkerGraph.allowDuplicateMarkers
+    argument: ""
+    description: Specifies whether to allow more than one marker on the same oriented read on a single marker graph vertex. Experimental.
+  - names:
+      - --MarkerGraph.cleanupDuplicateMarkers
+    argument: ""
+    description: Specifies whether to clean up marker graph vertices with more than one marker on the same oriented read. Experimental.
+  - names:
+      - --MarkerGraph.duplicateMarkersPattern1Threshold
+    argument: arg (=0.5)
+    description: Used when cleaning up marker graph vertices with more than one marker on the same oriented read. Experimental.
+  - names:
+      - --MarkerGraph.lowCoverageThreshold
+    argument: arg (=0)
+    description: Used during approximate transitive reduction. Marker graph edges with coverage lower than this value are always marked as removed regardless of reachability.
+  - names:
+      - --MarkerGraph.highCoverageThreshold
+    argument: arg (=256)
+    description: Used during approximate transitive reduction. Marker graph edges with coverage higher than this value are never marked as removed regardless of reachability.
+  - names:
+      - --MarkerGraph.maxDistance
+    argument: arg (=30)
+    description: Used during approximate transitive reduction.
+  - names:
+      - --MarkerGraph.edgeMarkerSkipThreshold
+    argument: arg (=100)
+    description: Used during approximate transitive reduction.
+  - names:
+      - --MarkerGraph.pruneIterationCount
+    argument: arg (=6)
+    description: Number of prune iterations.
+  - names:
+      - --MarkerGraph.simplifyMaxLength
+    argument: arg (=10,100,1000)
+    description: Maximum lengths (in markers) used at each iteration of simplifyMarkerGraph.
+  - names:
+      - --MarkerGraph.crossEdgeCoverageThreshold
+    argument: arg (=0)
+    description: Experimental. Cross edge coverage threshold. If this is not zero, assembly graph cross-edges with average edge coverage less than this value are removed, together with the corresponding marker graph edges. A cross edge is defined as an edge v0->v1 with out-degree(v0)>1, in-degree(v1)>1.
+  - names:
+      - --MarkerGraph.reverseTransitiveReduction
+    argument: ""
+    description: Perform approximate reverse transitive reduction of the marker graph.
+  - names:
+      - --MarkerGraph.peakFinder.minAreaFraction
+    argument: arg (=0.080000000000000002)
+    description: Used in the automatic selection of --MarkerGraph.minCoverage when --MarkerGraph.minCoverage is set to 0.
+  - names:
+      - --MarkerGraph.peakFinder.areaStartIndex
+    argument: arg (=2)
+    description: Used in the automatic selection of --MarkerGraph.minCoverage when --MarkerGraph.minCoverage is set to 0.
+  - names:
+      - --MarkerGraph.secondaryEdges.maxSkip
+    argument: arg (=1000000)
+    description: Maximum number of markers skipped by a secondary edge (mode 2 assembly only).
+  - names:
+      - --MarkerGraph.secondaryEdges.split.errorRateThreshold
+    argument: arg (=0.25)
+    description: Error rate threshold used for splitting secondary edges (mode 2 assembly only).
+  - names:
+      - --MarkerGraph.secondaryEdges.split.minCoverage
+    argument: arg (=4)
+    description: Minimum coverage for secondary edges generated during splitting (mode 2 assembly only).
+  - names:
+      - --Assembly.mode
+    argument: arg (=0)
+    description: Assembly mode (0=default, 1=experimental).
+  - names:
+      - --Assembly.crossEdgeCoverageThreshold
+    argument: arg (=3)
+    description: Maximum average edge coverage for a cross edge of the assembly graph to be removed.
+  - names:
+      - --Assembly.markerGraphEdgeLengthThresholdForConsensus
+    argument: arg (=1000)
+    description: Controls assembly of long marker graph edges.
+  - names:
+      - --Assembly.consensusCaller
+    argument: arg (=Modal)
+    description: Selects the consensus caller for repeat counts. See the documentation for available choices.
+  - names:
+      - --Assembly.storeCoverageData
+    argument: ""
+    description: Used to request storing coverage data in binary format.
+  - names:
+      - --Assembly.storeCoverageDataCsvLengthThreshold
+    argument: arg (=0)
+    description: Used to specify the minimum length of an assembled segment for which coverage data in csv format should be stored. If 0, no coverage data in csv format is stored.
+  - names:
+      - --Assembly.writeReadsByAssembledSegment
+    argument: ""
+    description: Used to request writing the reads that contributed to assembling each segment.
+  - names:
+      - --Assembly.pruneLength
+    argument: arg (=0)
+    description: Prune length (in markers) for pruning of the assembly graph. Assembly graph leaves shorter than this number of markers are iteratively pruned. Set to zero to suppress pruning of the assembly graph. Assembly graph pruning takes place separately and in addition to marker graph pruning.
+  - names:
+      - --Assembly.detangleMethod
+    argument: arg (=0)
+    description: Specify the method used to detangle the assembly graph. 0 = no detangling, 1 = strict detangling, 2 = less strict detangling, controlled by Assembly.detangle.* options.
+  - names:
+      - --Assembly.detangle.diagonalReadCountMin
+    argument: arg (=1)
+    description: Minimum number of reads on detangle matrix diagonal elements required for detangling.
+  - names:
+      - --Assembly.detangle.offDiagonalReadCountMax
+    argument: arg (=2)
+    description: Maximum number of reads on detangle matrix off-diagonal elements allowed for detangling.
+  - names:
+      - --Assembly.detangle.offDiagonalRatio
+    argument: arg (=0.29999999999999999)
+    description: Maximum ratio of total off-diagonal elements over diagonal element allowed for detangling.
+  - names:
+      - --Assembly.iterative
+    argument: ""
+    description: Used to request iterative assembly (experimental).
+  - names:
+      - --Assembly.iterative.iterationCount
+    argument: arg (=3)
+    description: Number of iterations for iterative assembly (experimental).
+  - names:
+      - --Assembly.iterative.pseudoPathAlignMatchScore
+    argument: arg (=1)
+    description: Pseudopath alignment match score for iterative assembly (experimental).
+  - names:
+      - --Assembly.iterative.pseudoPathAlignMismatchScore
+    argument: arg (=-1)
+    description: Pseudopath alignment mismatch score for iterative assembly (experimental).
+  - names:
+      - --Assembly.iterative.pseudoPathAlignGapScore
+    argument: arg (=-1)
+    description: Pseudopath alignment gap score for iterative assembly (experimental).
+  - names:
+      - --Assembly.iterative.mismatchSquareFactor
+    argument: arg (=3)
+    description: Mismatch square factor for iterative assembly (experimental).
+  - names:
+      - --Assembly.iterative.minScore
+    argument: arg (=0)
+    description: Minimum pseudo-alignment score for iterative assembly (experimental).
+  - names:
+      - --Assembly.iterative.maxAlignmentCount
+    argument: arg (=6)
+    description: Maximum number of read graph neighbors for iterative assembly (experimental).
+  - names:
+      - --Assembly.iterative.bridgeRemovalIterationCount
+    argument: arg (=3)
+    description: Number of read graph bridge removal iterations for iterative assembly (experimental).
+  - names:
+      - --Assembly.iterative.bridgeRemovalMaxDistance
+    argument: arg (=2)
+    description: Maximum distance for read graph bridge removal for iterative assembly (experimental).
+  - names:
+      - --Assembly.mode2.strongBranchThreshold
+    argument: arg (=2)
+    description: Minimum number of supporting reads required for a strong branch. Only used in Mode 2 assembly.
+  - names:
+      - --Assembly.mode2.epsilon
+    argument: arg (=0.10000000000000001)
+    description: Epsilon for the Bayesian model used for phasing and for bubble removal.This is the probability that a read appears on the wrong branch of a diploid bubble. Only used in Mode 2 assembly.
+  - names:
+      - --Assembly.mode2.bubbleRemoval.minConcordantReadCount
+    argument: arg (=3)
+    description: Minimum number of concordant reads for bubble removal. Only used in Mode 2 assembly.
+  - names:
+      - --Assembly.mode2.bubbleRemoval.maxDiscordantReadCount
+    argument: arg (=6)
+    description: Maximum number of discordant reads for bubble removal. Only used in Mode 2 assembly.
+  - names:
+      - --Assembly.mode2.bubbleRemoval.minLogP
+    argument: arg (=30)
+    description: Minimul log(P) (in decibels) for bubble removal. Only used in Mode 2 assembly.
+  - names:
+      - --Assembly.mode2.bubbleRemoval.componentSizeThreshold
+    argument: arg (=10)
+    description: Component size threshold for bubble removal. Only used in Mode 2 assembly.
+  - names:
+      - --Assembly.mode2.phasing.minConcordantReadCount
+    argument: arg (=2)
+    description: Minimum number of concordant reads for phasing. Only used in Mode 2 assembly.
+  - names:
+      - --Assembly.mode2.phasing.maxDiscordantReadCount
+    argument: arg (=1)
+    description: Maximum number of discordant reads for phasing. Only used in Mode 2 assembly.
+  - names:
+      - --Assembly.mode2.phasing.minLogP
+    argument: arg (=10)
+    description: Minimul log(P) (in decibels) for phasing. Only used in Mode 2 assembly.
+  - names:
+      - --Assembly.mode2.superbubble.maxSize
+    argument: arg (=50)
+    description: Maximum size (number of edges) of a superbubble to be processed. Only used in Mode 2 assembly.
+  - names:
+      - --Assembly.mode2.superbubble.maxChunkSize
+    argument: arg (=20)
+    description: Maximum size (numbef of edges) of a superbubble chunk to be processed. Only used in Mode 2 assembly.
+  - names:
+      - --Assembly.mode2.superbubble.maxChunkPathCount
+    argument: arg (=20)
+    description: Maximum number of paths to be processed in a superbubble chunk. Only used in Mode 2 assembly.
+  - names:
+      - --Assembly.mode2.superbubble.edgeLengthThreshold
+    argument: arg (=6)
+    description: Edge length threshold (in markers) for superbubble removal. Only used in Mode 2 assembly.
+  - names:
+      - --Assembly.mode2.suppressGfaOutput
+    argument: ""
+    description: Suppress all GFA output (Mode 2 assembly only).
+  - names:
+      - --Assembly.mode2.suppressFastaOutput
+    argument: ""
+    description: Suppress all FASTA output (Mode 2 assembly only).
+  - names:
+      - --Assembly.mode2.suppressDetailedOutput
+    argument: ""
+    description: Suppress output of detailed representation of the assembly (Mode 2 assembly only).
+  - names:
+      - --Assembly.mode2.suppressPhasedOutput
+    argument: ""
+    description: Suppress output of phased representation of the assembly (Mode 2 assembly only).
+  - names:
+      - --Assembly.mode2.suppressHaploidOutput
+    argument: ""
+    description: Suppress output of haploid representation of the assembly (Mode 2 assembly only).
+version: Shasta Release 0.11.1

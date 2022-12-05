@@ -1,0 +1,144 @@
+name: ngrep
+description: network grep
+usage: ngrep <-hNXViwqpevxlDtTRMC> <-IO pcap_dump > < -n num > < -d dev > < -A num > < -s snaplen > < -S limitlen > < -W normal|byline|single|none > < -c cols > < -P char > < -F file > < match expression > < bpf filter >
+options:
+  - names:
+      - -h
+    argument: ""
+    description: Display help/usage information.
+  - names:
+      - -N
+    argument: ""
+    description: Show sub-protocol number along with single-character identifier (useful when observing raw or unknown protocols).
+  - names:
+      - -X
+    argument: ""
+    description: Treat the match expression as a hexadecimal string. See the explanation of match expression below.
+  - names:
+      - -V
+    argument: ""
+    description: Display version information.
+  - names:
+      - -i
+    argument: ""
+    description: Ignore case for the regex expression.
+  - names:
+      - -w
+    argument: ""
+    description: Match the regex expression as a word.
+  - names:
+      - -q
+    argument: ""
+    description: Be quiet; don't output any information other than packet headers and their payloads (if relevant).
+  - names:
+      - -p
+    argument: ""
+    description: Don't put the interface into promiscuous mode.
+  - names:
+      - -e
+    argument: ""
+    description: Show empty packets. Normally empty packets are discarded because they have no payload to search. If specified, empty packets will be shown, regardless of the specified regex expression.
+  - names:
+      - -v
+    argument: ""
+    description: Invert the match; only display packets that don't match.
+  - names:
+      - -x
+    argument: ""
+    description: Dump packet contents as hexadecimal as well as ASCII.
+  - names:
+      - -l
+    argument: ""
+    description: Make stdout line buffered.
+  - names:
+      - -C
+    argument: ""
+    description: Colorize matches in ASCII output.
+  - names:
+      - -D
+    argument: ""
+    description: When reading pcap_dump files, replay them at their recorded time intervals (mimic realtime).
+  - names:
+      - -t
+    argument: ""
+    description: Print a timestamp in the form of YYYY/MM/DD HH:MM:SS.UUUUUU everytime a packet is matched.
+  - names:
+      - -T
+    argument: ""
+    description: Print a timestamp in the form of +S.UUUUUU, indicating the delta between packet matches. Specify a second time to indicate the delta since the first packet match.
+  - names:
+      - -R
+    argument: ""
+    description: Do not try to drop privileges to the DROPPRIVS_USER.
+  - names:
+      - -c
+    argument: cols
+    description: Explicitly set the console width to ``cols''. Note that this is the console width, and not the full width of what ngrep prints out as payloads; depending on the output mode ngrep may print less than ``cols'' bytes per line (indentation).
+  - names:
+      - -F
+    argument: file
+    description: Read in the bpf filter from the specified filename. This is a compatibility option for users familiar with tcpdump. Please note that specifying ``-F'' will override any bpf filter specified on the command-line.
+  - names:
+      - -P
+    argument: char
+    description: Specify an alternate character to signify non-printable characters when displayed. The default is ``.''.
+  - names:
+      - -K
+    argument: num
+    description: Kill matching TCP connections (like tcpkill). The numeric argument controls how many RST segments are sent.
+  - names:
+      - -W
+    argument: normal|byline|single|none
+    description: Specify an alternate manner for displaying packets, when not in hexadecimal mode. The ``byline'' mode honors embedded linefeeds, wrapping text only when a linefeed is encountered (useful for observing HTTP transactions, for instance). The ``none'' mode doesn't wrap under any circumstance (entire payload is displayed on one line). The ``single'' mode is conceptually the same as ``none'', except that everything including IP and source/destination header information is all on one line. ``normal'' is the default mode and is only included for completeness. This option is incompatible with ``-x''.
+  - names:
+      - -s
+    argument: snaplen
+    description: Set the bpf caplen to snaplen (default 65536).
+  - names:
+      - -S
+    argument: limitlen
+    description: Set the upper limit on the size of packets that ngrep will look at. Useful for looking at only the first N bytes of packets without changing the BPF snaplen.
+  - names:
+      - -I
+    argument: pcap_dump
+    description: Input file pcap_dump into ngrep. Works with any pcap-compatible dump file format. This option is useful for searching for a wide range of different patterns over the same packet stream.
+  - names:
+      - -O
+    argument: pcap_dump
+    description: Output matched packets to a pcap-compatible dump file. This feature does not interfere with normal output to stdout.
+  - names:
+      - -n
+    argument: num
+    description: Match only num packets total, then exit.
+  - names:
+      - -d
+    argument: dev
+    description: By default ngrep will select a default interface to listen on. Use this option to force ngrep to listen on interface dev.
+  - names:
+      - -A
+    argument: num
+    description: Dump num packets of trailing context after matching a packet.
+version: '1.47'
+tldr: |
+  > Filter network traffic packets using regular expressions.
+  > More information: <https://github.com/jpr5/ngrep>.
+
+  - Capture traffic of all interfaces:
+
+  `ngrep -d any`
+
+  - Capture traffic of a specific interface:
+
+  `ngrep -d {{eth0}}`
+
+  - Capture traffic crossing port 22 of interface eth0:
+
+  `ngrep -d {{eth0}} port {{22}}`
+
+  - Capture traffic from or to a host:
+
+  `ngrep host {{www.example.com}}`
+
+  - Filter keyword 'User-Agent:' of interface eth0:
+
+  `ngrep -d {{eth0}} '{{User-Agent:}}'`

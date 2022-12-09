@@ -1,0 +1,602 @@
+name: fairseq-train
+description: Train a new model on one or across multiple GPUs
+usage: |-
+  fairseq-train [-h] [--no-progress-bar] [--log-interval LOG_INTERVAL] [--log-format {json,none,simple,tqdm}] [--log-file LOG_FILE] [--aim-repo AIM_REPO] [--aim-run-hash AIM_RUN_HASH] [--tensorboard-logdir TENSORBOARD_LOGDIR] [--wandb-project WANDB_PROJECT] [--azureml-logging] [--seed SEED] [--cpu] [--tpu] [--bf16] [--memory-efficient-bf16] [--fp16] [--memory-efficient-fp16] [--fp16-no-flatten-grads] [--fp16-init-scale FP16_INIT_SCALE] [--fp16-scale-window FP16_SCALE_WINDOW] [--fp16-scale-tolerance FP16_SCALE_TOLERANCE] [--on-cpu-convert-precision] [--min-loss-scale MIN_LOSS_SCALE] [--threshold-loss-scale THRESHOLD_LOSS_SCALE] [--amp] [--amp-batch-retries AMP_BATCH_RETRIES] [--amp-init-scale AMP_INIT_SCALE] [--amp-scale-window AMP_SCALE_WINDOW] [--user-dir USER_DIR] [--empty-cache-freq EMPTY_CACHE_FREQ] [--all-gather-list-size ALL_GATHER_LIST_SIZE] [--model-parallel-size MODEL_PARALLEL_SIZE] [--quantization-config-path QUANTIZATION_CONFIG_PATH] [--profile] [--reset-logging]
+                [--suppress-crashes] [--use-plasma-view] [--plasma-path PLASMA_PATH] [--criterion {adaptive_loss,composite_loss,cross_entropy,ctc,fastspeech2,hubert,label_smoothed_cross_entropy,latency_augmented_label_smoothed_cross_entropy,label_smoothed_cross_entropy_with_alignment,label_smoothed_cross_entropy_with_ctc,label_smoothed_cross_entropy_with_rdrop,legacy_masked_lm_loss,masked_lm,model,nat_loss,sentence_prediction,sentence_prediction_adapters,sentence_ranking,tacotron2,speech_to_unit,speech_to_unit_2pass,speech_to_spectrogram,speech_to_spectrogram_2pass,speech_unit_lm_criterion,wav2vec,vocab_parallel_cross_entropy}] [--tokenizer {moses,nltk,space}] [--bpe {byte_bpe,bytes,characters,fastbpe,gpt2,bert,hf_byte_bpe,sentencepiece,subword_nmt}] [--optimizer {adadelta,adafactor,adagrad,adam,adamax,composite,cpu_adam,lamb,nag,sgd}] [--lr-scheduler {cosine,fixed,inverse_sqrt,manual,pass_through,polynomial_decay,reduce_lr_on_plateau,step,tri_stage,triangular}]
+                [--scoring {bert_score,sacrebleu,bleu,chrf,meteor,wer}] [--task TASK] [--num-workers NUM_WORKERS] [--skip-invalid-size-inputs-valid-test] [--max-tokens MAX_TOKENS] [--batch-size BATCH_SIZE] [--required-batch-size-multiple REQUIRED_BATCH_SIZE_MULTIPLE] [--required-seq-len-multiple REQUIRED_SEQ_LEN_MULTIPLE] [--dataset-impl {raw,lazy,cached,mmap,fasta,huffman}] [--data-buffer-size DATA_BUFFER_SIZE] [--train-subset TRAIN_SUBSET] [--valid-subset VALID_SUBSET] [--combine-valid-subsets] [--ignore-unused-valid-subsets] [--validate-interval VALIDATE_INTERVAL] [--validate-interval-updates VALIDATE_INTERVAL_UPDATES] [--validate-after-updates VALIDATE_AFTER_UPDATES] [--fixed-validation-seed FIXED_VALIDATION_SEED] [--disable-validation] [--max-tokens-valid MAX_TOKENS_VALID] [--batch-size-valid BATCH_SIZE_VALID] [--max-valid-steps MAX_VALID_STEPS] [--curriculum CURRICULUM] [--gen-subset GEN_SUBSET] [--num-shards NUM_SHARDS] [--shard-id SHARD_ID] [--grouped-shuffling]
+                [--update-epoch-batch-itr UPDATE_EPOCH_BATCH_ITR] [--update-ordered-indices-seed] [--distributed-world-size DISTRIBUTED_WORLD_SIZE] [--distributed-num-procs DISTRIBUTED_NUM_PROCS] [--distributed-rank DISTRIBUTED_RANK] [--distributed-backend DISTRIBUTED_BACKEND] [--distributed-init-method DISTRIBUTED_INIT_METHOD] [--distributed-port DISTRIBUTED_PORT] [--device-id DEVICE_ID] [--distributed-no-spawn] [--ddp-backend {c10d,fully_sharded,legacy_ddp,no_c10d,pytorch_ddp,slowmo}] [--ddp-comm-hook {none,fp16}] [--bucket-cap-mb BUCKET_CAP_MB] [--fix-batches-to-gpus] [--find-unused-parameters] [--gradient-as-bucket-view] [--fast-stat-sync] [--heartbeat-timeout HEARTBEAT_TIMEOUT] [--broadcast-buffers] [--slowmo-momentum SLOWMO_MOMENTUM] [--slowmo-base-algorithm SLOWMO_BASE_ALGORITHM] [--localsgd-frequency LOCALSGD_FREQUENCY] [--nprocs-per-node NPROCS_PER_NODE] [--pipeline-model-parallel] [--pipeline-balance PIPELINE_BALANCE] [--pipeline-devices PIPELINE_DEVICES]
+                [--pipeline-chunks PIPELINE_CHUNKS] [--pipeline-encoder-balance PIPELINE_ENCODER_BALANCE] [--pipeline-encoder-devices PIPELINE_ENCODER_DEVICES] [--pipeline-decoder-balance PIPELINE_DECODER_BALANCE] [--pipeline-decoder-devices PIPELINE_DECODER_DEVICES] [--pipeline-checkpoint {always,never,except_last}] [--zero-sharding {none,os}] [--no-reshard-after-forward] [--fp32-reduce-scatter] [--cpu-offload] [--use-sharded-state] [--not-fsdp-flatten-parameters] [--arch ARCH] [--max-epoch MAX_EPOCH] [--max-update MAX_UPDATE] [--stop-time-hours STOP_TIME_HOURS] [--clip-norm CLIP_NORM] [--sentence-avg] [--update-freq UPDATE_FREQ] [--lr LR] [--stop-min-lr STOP_MIN_LR] [--use-bmuf] [--skip-remainder-batch] [--save-dir SAVE_DIR] [--restore-file RESTORE_FILE] [--continue-once CONTINUE_ONCE] [--finetune-from-model FINETUNE_FROM_MODEL] [--reset-dataloader] [--reset-lr-scheduler] [--reset-meters] [--reset-optimizer] [--optimizer-overrides OPTIMIZER_OVERRIDES]
+                [--save-interval SAVE_INTERVAL] [--save-interval-updates SAVE_INTERVAL_UPDATES] [--keep-interval-updates KEEP_INTERVAL_UPDATES] [--keep-interval-updates-pattern KEEP_INTERVAL_UPDATES_PATTERN] [--keep-last-epochs KEEP_LAST_EPOCHS] [--keep-best-checkpoints KEEP_BEST_CHECKPOINTS] [--no-save] [--no-epoch-checkpoints] [--no-last-checkpoints] [--no-save-optimizer-state] [--best-checkpoint-metric BEST_CHECKPOINT_METRIC] [--maximize-best-checkpoint-metric] [--patience PATIENCE] [--checkpoint-suffix CHECKPOINT_SUFFIX] [--checkpoint-shard-count CHECKPOINT_SHARD_COUNT] [--load-checkpoint-on-all-dp-ranks] [--write-checkpoints-asynchronously] [--store-ema] [--ema-decay EMA_DECAY] [--ema-start-update EMA_START_UPDATE] [--ema-seed-model EMA_SEED_MODEL] [--ema-update-freq EMA_UPDATE_FREQ] [--ema-fp32]
+options:
+  - names:
+      - -h
+      - --help
+    argument: ""
+    description: show this help message and exit
+  - names:
+      - --no-progress-bar
+    argument: ""
+    description: disable progress bar
+  - names:
+      - --log-interval
+    argument: LOG_INTERVAL
+    description: log progress every N batches (when progress bar is disabled)
+  - names:
+      - --log-format
+    argument: '{json,none,simple,tqdm}'
+    description: log format to use
+  - names:
+      - --log-file
+    argument: LOG_FILE
+    description: log file to copy metrics to.
+  - names:
+      - --aim-repo
+    argument: AIM_REPO
+    description: path to Aim repository
+  - names:
+      - --aim-run-hash
+    argument: AIM_RUN_HASH
+    description: Aim run hash. If skipped, creates or continues run based on save_dir
+  - names:
+      - --tensorboard-logdir
+    argument: TENSORBOARD_LOGDIR
+    description: 'path to save logs for tensorboard, should match --logdir of running tensorboard (default: no tensorboard logging)'
+  - names:
+      - --wandb-project
+    argument: WANDB_PROJECT
+    description: Weights and Biases project name to use for logging
+  - names:
+      - --azureml-logging
+    argument: ""
+    description: Log scalars to AzureML context
+  - names:
+      - --seed
+    argument: SEED
+    description: pseudo random number generator seed
+  - names:
+      - --cpu
+    argument: ""
+    description: use CPU instead of CUDA
+  - names:
+      - --tpu
+    argument: ""
+    description: use TPU instead of CUDA
+  - names:
+      - --bf16
+    argument: ""
+    description: use bfloat16; implies --tpu
+  - names:
+      - --memory-efficient-bf16
+    argument: ""
+    description: use a memory-efficient version of BF16 training; implies --bf16
+  - names:
+      - --fp16
+    argument: ""
+    description: use FP16
+  - names:
+      - --memory-efficient-fp16
+    argument: ""
+    description: use a memory-efficient version of FP16 training; implies --fp16
+  - names:
+      - --fp16-no-flatten-grads
+    argument: ""
+    description: don't flatten FP16 grads tensor
+  - names:
+      - --fp16-init-scale
+    argument: FP16_INIT_SCALE
+    description: default FP16 loss scale
+  - names:
+      - --fp16-scale-window
+    argument: FP16_SCALE_WINDOW
+    description: number of updates before increasing loss scale
+  - names:
+      - --fp16-scale-tolerance
+    argument: FP16_SCALE_TOLERANCE
+    description: pct of updates that can overflow before decreasing the loss scale
+  - names:
+      - --on-cpu-convert-precision
+    argument: ""
+    description: if set, the floating point conversion to fp16/bf16 runs on CPU. This reduces bus transfer time and GPU memory usage.
+  - names:
+      - --min-loss-scale
+    argument: MIN_LOSS_SCALE
+    description: minimum FP16/AMP loss scale, after which training is stopped
+  - names:
+      - --threshold-loss-scale
+    argument: THRESHOLD_LOSS_SCALE
+    description: threshold FP16 loss scale from below
+  - names:
+      - --amp
+    argument: ""
+    description: use automatic mixed precision
+  - names:
+      - --amp-batch-retries
+    argument: AMP_BATCH_RETRIES
+    description: number of retries of same batch after reducing loss scale with AMP
+  - names:
+      - --amp-init-scale
+    argument: AMP_INIT_SCALE
+    description: default AMP loss scale
+  - names:
+      - --amp-scale-window
+    argument: AMP_SCALE_WINDOW
+    description: number of updates before increasing AMP loss scale
+  - names:
+      - --user-dir
+    argument: USER_DIR
+    description: path to a python module containing custom extensions (tasks and/or architectures)
+  - names:
+      - --empty-cache-freq
+    argument: EMPTY_CACHE_FREQ
+    description: how often to clear the PyTorch CUDA cache (0 to disable)
+  - names:
+      - --all-gather-list-size
+    argument: ALL_GATHER_LIST_SIZE
+    description: number of bytes reserved for gathering stats from workers
+  - names:
+      - --model-parallel-size
+    argument: MODEL_PARALLEL_SIZE
+    description: total number of GPUs to parallelize model over
+  - names:
+      - --quantization-config-path
+    argument: QUANTIZATION_CONFIG_PATH
+    description: path to quantization config file
+  - names:
+      - --profile
+    argument: ""
+    description: enable autograd profiler emit_nvtx
+  - names:
+      - --reset-logging
+    argument: ""
+    description: when using Hydra, reset the logging at the beginning of training
+  - names:
+      - --suppress-crashes
+    argument: ""
+    description: suppress crashes when training with the hydra_train entry point so that the main method can return a value (useful for sweeps)
+  - names:
+      - --use-plasma-view
+    argument: ""
+    description: Store indices and sizes in shared memory
+  - names:
+      - --plasma-path
+    argument: PLASMA_PATH
+    description: path to run plasma_store, defaults to /tmp/plasma. Paths outside /tmp tend to fail.
+  - names:
+      - --criterion
+      - --tokenizer
+      - --bpe
+      - --optimizer
+      - --lr-scheduler
+      - --scoring
+      - --task
+    argument: '{adaptive_loss,composite_loss,cross_entropy,ctc,fastspeech2,hubert,label_smoothed_cross_entropy,latency_augmented_label_smoothed_cross_entropy,label_smoothed_cross_entropy_with_alignment,label_smoothed_cross_entropy_with_ctc,label_smoothed_cross_entropy_with_rdrop,legacy_masked_lm_loss,masked_lm,model,nat_loss,sentence_prediction,sentence_prediction_adapters,sentence_ranking,tacotron2,speech_to_unit,speech_to_unit_2pass,speech_to_spectrogram,speech_to_spectrogram_2pass,speech_unit_lm_criterion,wav2vec,vocab_parallel_cross_entropy}'
+    description: task
+  - names:
+      - --num-workers
+    argument: NUM_WORKERS
+    description: how many subprocesses to use for data loading
+  - names:
+      - --skip-invalid-size-inputs-valid-test
+    argument: ""
+    description: ignore too long or too short lines in valid and test set
+  - names:
+      - --max-tokens
+    argument: MAX_TOKENS
+    description: maximum number of tokens in a batch
+  - names:
+      - --batch-size
+      - --max-sentences
+    argument: BATCH_SIZE
+    description: number of examples in a batch
+  - names:
+      - --required-batch-size-multiple
+    argument: REQUIRED_BATCH_SIZE_MULTIPLE
+    description: batch size will be a multiplier of this value
+  - names:
+      - --required-seq-len-multiple
+    argument: REQUIRED_SEQ_LEN_MULTIPLE
+    description: maximum sequence length in batch will be a multiplier of this value
+  - names:
+      - --dataset-impl
+    argument: '{raw,lazy,cached,mmap,fasta,huffman}'
+    description: output dataset implementation
+  - names:
+      - --data-buffer-size
+    argument: DATA_BUFFER_SIZE
+    description: Number of batches to preload
+  - names:
+      - --train-subset
+    argument: TRAIN_SUBSET
+    description: data subset to use for training (e.g. train, valid, test)
+  - names:
+      - --valid-subset
+    argument: VALID_SUBSET
+    description: comma separated list of data subsets to use for validation (e.g. train, valid, test)
+  - names:
+      - --combine-valid-subsets
+      - --combine-val
+    argument: ""
+    description: comma separated list of data subsets to use for validation (e.g. train, valid, test)
+  - names:
+      - --ignore-unused-valid-subsets
+    argument: ""
+    description: do not raise error if valid subsets are ignored
+  - names:
+      - --validate-interval
+    argument: VALIDATE_INTERVAL
+    description: validate every N epochs
+  - names:
+      - --validate-interval-updates
+    argument: VALIDATE_INTERVAL_UPDATES
+    description: validate every N updates
+  - names:
+      - --validate-after-updates
+    argument: VALIDATE_AFTER_UPDATES
+    description: dont validate until reaching this many updates
+  - names:
+      - --fixed-validation-seed
+    argument: FIXED_VALIDATION_SEED
+    description: specified random seed for validation
+  - names:
+      - --disable-validation
+    argument: ""
+    description: disable validation
+  - names:
+      - --max-tokens-valid
+    argument: MAX_TOKENS_VALID
+    description: maximum number of tokens in a validation batch (defaults to --max-tokens)
+  - names:
+      - --batch-size-valid
+      - --max-sentences-valid
+    argument: BATCH_SIZE_VALID
+    description: batch size of the validation batch (defaults to --batch-size)
+  - names:
+      - --max-valid-steps
+      - --nval
+    argument: MAX_VALID_STEPS
+    description: How many batches to evaluate
+  - names:
+      - --curriculum
+    argument: CURRICULUM
+    description: don't shuffle batches for first N epochs
+  - names:
+      - --gen-subset
+    argument: GEN_SUBSET
+    description: data subset to generate (train, valid, test)
+  - names:
+      - --num-shards
+    argument: NUM_SHARDS
+    description: shard generation over N shards
+  - names:
+      - --shard-id
+    argument: SHARD_ID
+    description: id of the shard to generate (id < num_shards)
+  - names:
+      - --grouped-shuffling
+    argument: ""
+    description: shuffle batches in groups of num_shards to enable similar sequence lengths on each GPU worker when batches are sorted by length
+  - names:
+      - --update-epoch-batch-itr
+    argument: UPDATE_EPOCH_BATCH_ITR
+    description: if true then prevents the reuse the epoch batch iterator by setting can_reuse_epoch_itr to false, defaults to --grouped-shuffling )
+  - names:
+      - --update-ordered-indices-seed
+    argument: ""
+    description: if true then increment seed with epoch for getting batch iterators, defautls to False.
+  - names:
+      - --distributed-world-size
+    argument: DISTRIBUTED_WORLD_SIZE
+    description: 'total number of GPUs across all nodes (default: all visible GPUs)'
+  - names:
+      - --distributed-num-procs
+    argument: DISTRIBUTED_NUM_PROCS
+    description: 'total number of processes to fork (default: all visible GPUs)'
+  - names:
+      - --distributed-rank
+    argument: DISTRIBUTED_RANK
+    description: rank of the current worker
+  - names:
+      - --distributed-backend
+    argument: DISTRIBUTED_BACKEND
+    description: distributed backend
+  - names:
+      - --distributed-init-method
+    argument: DISTRIBUTED_INIT_METHOD
+    description: typically tcp://hostname:port that will be used to establish initial connetion
+  - names:
+      - --distributed-port
+    argument: DISTRIBUTED_PORT
+    description: port number (not required if using --distributed-init-method)
+  - names:
+      - --device-id
+      - --local_rank
+    argument: DEVICE_ID
+    description: which GPU to use (by default looks for $LOCAL_RANK, usually configured automatically)
+  - names:
+      - --distributed-no-spawn
+    argument: ""
+    description: do not spawn multiple processes even if multiple GPUs are visible
+  - names:
+      - --ddp-backend
+    argument: '{c10d,fully_sharded,legacy_ddp,no_c10d,pytorch_ddp,slowmo}'
+    description: DistributedDataParallel backend
+  - names:
+      - --ddp-comm-hook
+    argument: '{none,fp16}'
+    description: communication hook
+  - names:
+      - --bucket-cap-mb
+    argument: BUCKET_CAP_MB
+    description: bucket size for reduction
+  - names:
+      - --fix-batches-to-gpus
+    argument: ""
+    description: don't shuffle batches between GPUs; this reduces overall randomness and may affect precision but avoids the cost of re-reading the data
+  - names:
+      - --find-unused-parameters
+    argument: ""
+    description: disable unused parameter detection (not applicable to --ddp-backend=legacy_ddp)
+  - names:
+      - --gradient-as-bucket-view
+    argument: ""
+    description: when set to True, gradients will be views pointing to different offsets of allreduce communication buckets. This can reduce peak memory usage, where the saved memory size will be equal to the total gradients size. --gradient-as-bucket-view=gradient_as_bucket_view)
+  - names:
+      - --fast-stat-sync
+    argument: ""
+    description: '[deprecated] this is now defined per Criterion'
+  - names:
+      - --heartbeat-timeout
+    argument: HEARTBEAT_TIMEOUT
+    description: kill the job if no progress is made in N seconds; set to -1 to disable
+  - names:
+      - --broadcast-buffers
+    argument: ""
+    description: Copy non-trainable parameters between GPUs, such as batchnorm population statistics
+  - names:
+      - --slowmo-momentum
+    argument: SLOWMO_MOMENTUM
+    description: SlowMo momentum term; by default use 0.0 for 16 GPUs, 0.2 for 32 GPUs; 0.5 for 64 GPUs, 0.6 for > 64 GPUs
+  - names:
+      - --slowmo-base-algorithm
+    argument: SLOWMO_BASE_ALGORITHM
+    description: Base algorithm. Either 'localsgd' or 'sgp'. Please refer to the documentation of 'slowmo_base_algorithm' parameter in https://fairscale.readthedocs.io/en/latest/api/experimental/nn/slowmo_ddp.html for more details
+  - names:
+      - --localsgd-frequency
+    argument: LOCALSGD_FREQUENCY
+    description: Local SGD allreduce frequency
+  - names:
+      - --nprocs-per-node
+    argument: NPROCS_PER_NODE
+    description: number of GPUs in each node. An allreduce operation across GPUs in a node is very fast. Hence, we do allreduce across GPUs in a node, and gossip across different nodes
+  - names:
+      - --pipeline-model-parallel
+    argument: ""
+    description: if set, use pipeline model parallelism across GPUs
+  - names:
+      - --pipeline-balance
+    argument: PIPELINE_BALANCE
+    description: partition the model into N_K pieces, where each piece contains N_i layers. The sum(args.pipeline_balance) should equal the total number of layers in the model
+  - names:
+      - --pipeline-devices
+    argument: PIPELINE_DEVICES
+    description: a list of device indices indicating which device to place each of the N_K partitions. The length of this list should equal the length of the --pipeline-balance argument
+  - names:
+      - --pipeline-chunks
+    argument: PIPELINE_CHUNKS
+    description: microbatch count for pipeline model parallelism
+  - names:
+      - --pipeline-encoder-balance
+    argument: PIPELINE_ENCODER_BALANCE
+    description: partition the pipeline parallel encoder into N_K pieces, where each piece contains N_i layers. The sum(args.pipeline_encoder_balance) should equal the total number of encoder layers in the model
+  - names:
+      - --pipeline-encoder-devices
+    argument: PIPELINE_ENCODER_DEVICES
+    description: a list of device indices indicating which device to place each of the N_K partitions. The length of this list should equal the length of the --pipeline-encoder-balance argument
+  - names:
+      - --pipeline-decoder-balance
+    argument: PIPELINE_DECODER_BALANCE
+    description: partition the pipeline parallel decoder into N_K pieces, where each piece contains N_i layers. The sum(args.pipeline_decoder_balance) should equal the total number of decoder layers in the model
+  - names:
+      - --pipeline-decoder-devices
+    argument: PIPELINE_DECODER_DEVICES
+    description: a list of device indices indicating which device to place each of the N_K partitions. The length of this list should equal the length of the --pipeline-decoder-balance argument
+  - names:
+      - --pipeline-checkpoint
+    argument: '{always,never,except_last}'
+    description: checkpointing mode for pipeline model parallelism
+  - names:
+      - --zero-sharding
+    argument: '{none,os}'
+    description: ZeRO sharding
+  - names:
+      - --no-reshard-after-forward
+    argument: ""
+    description: don't reshard parameters after forward pass
+  - names:
+      - --fp32-reduce-scatter
+    argument: ""
+    description: reduce-scatter grads in FP32
+  - names:
+      - --cpu-offload
+    argument: ""
+    description: offload FP32 params to CPU
+  - names:
+      - --use-sharded-state
+    argument: ""
+    description: use sharded checkpoint files
+  - names:
+      - --not-fsdp-flatten-parameters
+    argument: ""
+    description: not flatten parameter param for fsdp
+  - names:
+      - --arch
+      - -a
+    argument: ARCH
+    description: model architecture
+  - names:
+      - --max-epoch
+    argument: MAX_EPOCH
+    description: force stop training at specified epoch
+  - names:
+      - --max-update
+    argument: MAX_UPDATE
+    description: force stop training at specified update
+  - names:
+      - --stop-time-hours
+    argument: STOP_TIME_HOURS
+    description: force stop training after specified cumulative time (if >0)
+  - names:
+      - --clip-norm
+    argument: CLIP_NORM
+    description: clip threshold of gradients
+  - names:
+      - --sentence-avg
+    argument: ""
+    description: normalize gradients by the number of sentences in a batch (default is to normalize by number of tokens)
+  - names:
+      - --update-freq
+    argument: UPDATE_FREQ
+    description: update parameters every N_i batches, when in epoch i
+  - names:
+      - --lr
+    argument: LR
+    description: 'learning rate for the first N epochs; all epochs >N using LR_N (note: this may be interpreted differently depending on --lr-scheduler)'
+  - names:
+      - --stop-min-lr
+    argument: STOP_MIN_LR
+    description: stop training when the learning rate reaches this minimum
+  - names:
+      - --use-bmuf
+    argument: ""
+    description: specify global optimizer for syncing models on different GPUs/shards
+  - names:
+      - --skip-remainder-batch
+    argument: ""
+    description: if set, include the last (partial) batch of each epoch in training (default is to skip it).
+  - names:
+      - --save-dir
+    argument: SAVE_DIR
+    description: path to save checkpoints
+  - names:
+      - --restore-file
+    argument: RESTORE_FILE
+    description: 'filename from which to load checkpoint (default: <save-dir>/checkpoint_last.pt'
+  - names:
+      - --continue-once
+    argument: CONTINUE_ONCE
+    description: continues from this checkpoint, unless a checkpoint indicated in 'restore_file' option is present
+  - names:
+      - --finetune-from-model
+    argument: FINETUNE_FROM_MODEL
+    description: finetune from a pretrained model; note that meters and lr scheduler will be reset
+  - names:
+      - --reset-dataloader
+    argument: ""
+    description: if set, does not reload dataloader state from the checkpoint
+  - names:
+      - --reset-lr-scheduler
+    argument: ""
+    description: if set, does not load lr scheduler state from the checkpoint
+  - names:
+      - --reset-meters
+    argument: ""
+    description: if set, does not load meters from the checkpoint
+  - names:
+      - --reset-optimizer
+    argument: ""
+    description: if set, does not load optimizer state from the checkpoint
+  - names:
+      - --optimizer-overrides
+    argument: OPTIMIZER_OVERRIDES
+    description: a dictionary used to override optimizer args when loading a checkpoint
+  - names:
+      - --save-interval
+    argument: SAVE_INTERVAL
+    description: save a checkpoint every N epochs
+  - names:
+      - --save-interval-updates
+    argument: SAVE_INTERVAL_UPDATES
+    description: save a checkpoint (and validate) every N updates
+  - names:
+      - --keep-interval-updates
+    argument: KEEP_INTERVAL_UPDATES
+    description: keep the last N checkpoints saved with --save-interval-updates
+  - names:
+      - --keep-interval-updates-pattern
+    argument: KEEP_INTERVAL_UPDATES_PATTERN
+    description: when used with --keep-interval-updates, skips deleting any checkpoints with update X where X % keep_interval_updates_pattern == 0
+  - names:
+      - --keep-last-epochs
+    argument: KEEP_LAST_EPOCHS
+    description: keep last N epoch checkpoints
+  - names:
+      - --keep-best-checkpoints
+    argument: KEEP_BEST_CHECKPOINTS
+    description: keep best N checkpoints based on scores
+  - names:
+      - --no-save
+    argument: ""
+    description: don't save models or checkpoints
+  - names:
+      - --no-epoch-checkpoints
+    argument: ""
+    description: only store last and best checkpoints
+  - names:
+      - --no-last-checkpoints
+    argument: ""
+    description: don't store last checkpoints
+  - names:
+      - --no-save-optimizer-state
+    argument: ""
+    description: don't save optimizer-state as part of checkpoint
+  - names:
+      - --best-checkpoint-metric
+    argument: BEST_CHECKPOINT_METRIC
+    description: metric to use for saving "best" checkpoints
+  - names:
+      - --maximize-best-checkpoint-metric
+    argument: ""
+    description: select the largest metric value for saving "best" checkpoints
+  - names:
+      - --patience
+    argument: PATIENCE
+    description: early stop training if valid performance doesn't improve for N consecutive validation runs; note that this is influenced by --validate-interval
+  - names:
+      - --checkpoint-suffix
+    argument: CHECKPOINT_SUFFIX
+    description: suffix to add to the checkpoint file name
+  - names:
+      - --checkpoint-shard-count
+    argument: CHECKPOINT_SHARD_COUNT
+    description: Number of shards containing the checkpoint - if the checkpoint is over 300GB, it is preferable to split it into shards to prevent OOM on CPU while loading the checkpoint
+  - names:
+      - --load-checkpoint-on-all-dp-ranks
+    argument: ""
+    description: 'load checkpoints on all data parallel devices (default: only load on rank 0 and broadcast to other devices)'
+  - names:
+      - --write-checkpoints-asynchronously
+      - --save-async
+    argument: ""
+    description: 'Write checkpoints asynchronously in a separate thread. NOTE: This feature is currently being tested.'
+  - names:
+      - --store-ema
+      - --ema-decay
+    argument: EMA_DECAY
+    description: decay for exponential moving average model
+  - names:
+      - --ema-start-update
+    argument: EMA_START_UPDATE
+    description: start EMA update after this many model updates
+  - names:
+      - --ema-seed-model
+    argument: EMA_SEED_MODEL
+    description: Seed to load EMA model from. Used to load EMA model separately from the actual model.
+  - names:
+      - --ema-update-freq
+    argument: EMA_UPDATE_FREQ
+    description: Do EMA update every this many model updates
+  - names:
+      - --ema-fp32
+    argument: ""
+    description: If true, store EMA model in fp32 even if model is in fp16
+version: '0.12.2'

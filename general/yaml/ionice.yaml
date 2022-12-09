@@ -1,0 +1,66 @@
+name: ionice
+description: set or get process I/O scheduling class and priority
+usage: |-
+  ionice [options] -p <pid>...
+  ionice [options] -P <pgid>...
+  ionice [options] -u <uid>...
+  ionice [options] <command>
+options:
+  - names:
+      - -c
+      - --class
+    argument: <class>
+    description: 'name or number of scheduling class,  0: none, 1: realtime, 2: best-effort, 3: idle'
+  - names:
+      - -n
+      - --classdata
+    argument: <num>
+    description: priority (0..7) in the specified scheduling class, only for the realtime and best-effort classes
+  - names:
+      - -p
+      - --pid
+    argument: <pid>...
+    description: act on these already running processes
+  - names:
+      - -P
+      - --pgid
+    argument: <pgrp>...
+    description: act on already running processes in these groups
+  - names:
+      - -t
+      - --ignore
+    argument: ""
+    description: ignore failures
+  - names:
+      - -u
+      - --uid
+    argument: <uid>...
+    description: act on already running processes owned by these users
+  - names:
+      - -h
+      - --help
+    argument: ""
+    description: display this help
+  - names:
+      - -V
+      - --version
+    argument: ""
+    description: display version
+version: ionice from util-linux 2.37.2
+tldr: |
+  > Get or set program I/O scheduling class and priority.
+  > Scheduling classes: 1 (realtime), 2 (best-effort), 3 (idle).
+  > Priority levels: 0 (the highest) - 7 (the lowest).
+  > More information: <https://manned.org/ionice>.
+
+  - Set I/O scheduling class of a running process:
+
+  `ionice -c {{scheduling_class}} -p {{pid}}`
+
+  - Run a command with custom I/O scheduling class and priority:
+
+  `ionice -c {{scheduling_class}} -n {{priority}} {{command}}`
+
+  - Print the I/O scheduling class and priority of a running process:
+
+  `ionice -p {{pid}}`

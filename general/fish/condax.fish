@@ -55,6 +55,7 @@ complete -c condax -n "__fish_seen_subcommand_from inject" -l "config" -d "Custo
 
 complete -c condax -n "__fish_seen_subcommand_from install" -s "c" -l "channel" -d "Use the channels specified to install." -r
 complete -c condax -n "__fish_seen_subcommand_from install" -s "f" -l "force" -d "Modify existing environment and files in CONDAX_BIN_DIR."
+complete -c condax -n "__fish_seen_subcommand_from install" -l "file" -d "Specify Conda environment file in YAML." -r
 complete -c condax -n "__fish_seen_subcommand_from install" -s "h" -l "help" -d "Show this message and exit."
 complete -c condax -n "__fish_seen_subcommand_from install" -s "v" -l "verbose" -d "Raise verbosity level."
 complete -c condax -n "__fish_seen_subcommand_from install" -s "q" -l "quiet" -d "Decrease verbosity level."

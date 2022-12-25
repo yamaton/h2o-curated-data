@@ -28,6 +28,98 @@ subcommands:
         argument: ""
         description: Show this message and exit.
     subcommands:
+      - name: cache-create
+        description: Create an empty cache at the given location.
+        usage: qiime tools cache-create [OPTIONS]
+        options:
+          - names:
+              - --cache
+            argument: PATH
+            description: Path to a nonexistent directory to be created as a cache.
+          - names:
+              - --help
+            argument: ""
+            description: Show this message and exit.
+      - name: cache-fetch
+        description: Fetches an artifact out of a cache into a .qza.
+        usage: qiime tools cache-fetch [OPTIONS]
+        options:
+          - names:
+              - --cache
+            argument: DIRECTORY
+            description: Path to an existing cache to load from.   [required]
+          - names:
+              - --key
+            argument: TEXT
+            description: The key to the artifact being loaded.   [required]
+          - names:
+              - --output-path
+            argument: PATH
+            description: Path to put the .qza we are loading the artifact into.   [required]
+          - names:
+              - --help
+            argument: ""
+            description: Show this message and exit.
+      - name: cache-garbage-collection
+        description: Runs garbage collection on the cache at the
+        usage: qiime tools cache-garbage-collection [OPTIONS]
+        options:
+          - names:
+              - --cache
+            argument: DIRECTORY
+            description: Path to an existing cache to run garbage collection on.
+          - names:
+              - --help
+            argument: ""
+            description: Show this message and exit.
+      - name: cache-remove
+        description: Removes a given key from a cache.
+        usage: qiime tools cache-remove [OPTIONS]
+        options:
+          - names:
+              - --cache
+            argument: DIRECTORY
+            description: Path to an existing cache to remove the key from.   [required]
+          - names:
+              - --key
+            argument: TEXT
+            description: The key to remove from the cache.   [required]
+          - names:
+              - --help
+            argument: ""
+            description: Show this message and exit.
+      - name: cache-status
+        description: Checks the status of the cache.
+        usage: qiime tools cache-status [OPTIONS]
+        options:
+          - names:
+              - --cache
+            argument: DIRECTORY
+            description: Path to an existing cache to check the status of.
+          - names:
+              - --help
+            argument: ""
+            description: Show this message and exit.
+      - name: cache-store
+        description: Stores a .qza in the cache under a key.
+        usage: qiime tools cache-store [OPTIONS]
+        options:
+          - names:
+              - --cache
+            argument: DIRECTORY
+            description: Path to an existing cache to save into. [required]
+          - names:
+              - --artifact-path
+            argument: FILE
+            description: Path to a .qza to save into the cache. [required]
+          - names:
+              - --key
+            argument: TEXT
+            description: The key to save the artifact under (must be a valid
+          - names:
+              - --help
+            argument: ""
+            description: Show this message and exit.
       - name: cast-metadata
         description: Designate metadata column types.
         usage: qiime tools cast-metadata [OPTIONS] METADATA...
@@ -145,6 +237,11 @@ subcommands:
         description: Take a peek at a QIIME 2 Artifact or Visualization.
         usage: qiime tools peek [OPTIONS] ARTIFACT/VISUALIZATION
         options:
+          - names:
+              - --tsv
+              - --no-tsv
+            argument: ""
+            description: Print as machine-readable tab separated values.
           - names:
               - --help
             argument: ""
@@ -501,6 +598,114 @@ subcommands:
               - --help
             argument: ""
             description: Show this message and exit.
+      - name: ancombc
+        description: Analysis of Composition of Microbiomes with Bias Correction
+        usage: qiime composition ancombc [OPTIONS]
+        options:
+          - names:
+              - --i-table
+            argument: ARTIFACT FeatureTable[Frequency]
+            description: The feature table to be used for ANCOM computation.
+          - names:
+              - --p-formula
+            argument: TEXT
+            description: How the microbial absolute abundances for each taxon depend on the variables within the `metadata`.
+          - names:
+              - --p-prv-cut
+            argument: NUMBER
+            description: 'A numerical fraction between 0-1. Taxa with prevalences less than this value will be excluded from the analysis. [default: 0.1]'
+          - names:
+              - --p-lib-cut
+            argument: INTEGER
+            description: A numerical threshold for filtering samples based on library sizes. Samples with library sizes less than this value will be excluded from the analysis.
+          - names:
+              - --p-neg-lb
+              - --p-no-neg-lb
+            argument: ""
+            description: 'Whether to classify a taxon as a structural zero using its asymptotic lower bound. [default: False]'
+          - names:
+              - --p-tol
+            argument: NUMBER
+            description: 'The iteration convergence tolerance for the E-M algorithm. [default: 1e-05]'
+          - names:
+              - --p-max-iter
+            argument: INTEGER
+            description: 'The maximum number of iterations for the E-M algorithm. [default: 100]'
+          - names:
+              - --p-conserve
+              - --p-no-conserve
+            argument: ""
+            description: Whether to use a conservative variance estimator for the test statistic. It is recommended if the sample size is small and/or the number of differentially abundant taxa is believed to be large.
+          - names:
+              - --p-alpha
+            argument: NUMBER
+            description: 'Level of significance. [default: 0.05]'
+          - names:
+              - --m-metadata-file
+            argument: METADATA...
+            description: (multiple The sample metadata.
+          - names:
+              - --p-reference-levels
+            argument: TEXT...
+            description: List[Str] Define the reference level(s) to be used for
+          - names:
+              - --o-differentials
+            argument: ARTIFACT FeatureData[DifferentialAbundance]
+            description: The calculated per-feature differentials. [required]
+          - names:
+              - --output-dir
+            argument: PATH
+            description: Output unspecified results to a directory
+          - names:
+              - --verbose
+              - --quiet
+            argument: ""
+            description: Display verbose output to stdout and/or stderr during execution of this action. Or silence output if execution is successful (silence is golden).
+          - names:
+              - --example-data
+            argument: PATH
+            description: Write example data and exit.
+          - names:
+              - --citations
+            argument: ""
+            description: Show citations and exit.
+          - names:
+              - --help
+            argument: ""
+            description: Show this message and exit.
+      - name: tabulate
+        description: View tabular output from ANCOM-BC.
+        usage: qiime composition tabulate [OPTIONS]
+        options:
+          - names:
+              - --i-data
+            argument: ARTIFACT FeatureData[DifferentialAbundance]
+            description: The ANCOM-BC output to be tabulated. [required]
+          - names:
+              - --o-visualization
+            argument: VISUALIZATION
+            description: '[required]'
+          - names:
+              - --output-dir
+            argument: PATH
+            description: Output unspecified results to a directory
+          - names:
+              - --verbose
+              - --quiet
+            argument: ""
+            description: Display verbose output to stdout and/or stderr during execution of this action. Or silence output if execution is successful (silence is golden).
+          - names:
+              - --example-data
+            argument: PATH
+            description: Write example data and exit.
+          - names:
+              - --citations
+            argument: ""
+            description: Show citations and exit.
+          - names:
+              - --help
+            argument: ""
+            description: Show this message and exit.
   - name: cutadapt
     description: Plugin for removing adapter sequences, primers, and other unwanted sequence from sequence data.
     usage: qiime cutadapt [OPTIONS] COMMAND [ARGS]...
@@ -727,6 +932,26 @@ subcommands:
             argument: ""
             description: Discard reads in which no adapter was found.
           - names:
+              - --p-max-expected-errors
+            argument: NUMBER
+            description: Range(0, None) Discard reads that exceed maximum expected
+          - names:
+              - --p-max-n
+            argument: NUMBER
+            description: Discard reads with more than COUNT N bases. If
+          - names:
+              - --p-quality-cutoff-5end
+            argument: INTEGER
+            description: Range(0, None) Trim nucleotides with Phred score quality lower
+          - names:
+              - --p-quality-cutoff-3end
+            argument: INTEGER
+            description: Range(0, None) Trim nucleotides with Phred score quality lower
+          - names:
+              - --p-quality-base
+            argument: INTEGER
+            description: Range(0, None) How the Phred score is encoded (33 or 64).
+          - names:
               - --o-trimmed-sequences
             argument: ARTIFACT SampleData[PairedEndSequencesWithQuality]
             description: The resulting trimmed sequences. [required]
@@ -811,6 +1036,26 @@ subcommands:
               - --p-no-discard-untrimmed
             argument: ""
             description: Discard reads in which no adapter was found.
+          - names:
+              - --p-max-expected-errors
+            argument: NUMBER
+            description: Range(0, None) Discard reads that exceed maximum expected erroneous
+          - names:
+              - --p-max-n
+            argument: NUMBER
+            description: Discard reads with more than COUNT N bases. If
+          - names:
+              - --p-quality-cutoff-5end
+            argument: INTEGER
+            description: Range(0, None) Trim nucleotides with Phred score quality lower than
+          - names:
+              - --p-quality-cutoff-3end
+            argument: INTEGER
+            description: Range(0, None) Trim nucleotides with Phred score quality lower than
+          - names:
+              - --p-quality-base
+            argument: INTEGER
+            description: Range(0, None) How the Phred score is encoded (33 or 64).
           - names:
               - --o-trimmed-sequences
             argument: ARTIFACT SampleData[SequencesWithQuality]
@@ -4408,6 +4653,34 @@ subcommands:
               - --help
             argument: ""
             description: Show this message and exit.
+          - names:
+              - --p-where
+            argument: ''''
+            description: IN ("left palm", "right palm")' \
+          - names:
+              - --p-where
+            argument: '''body-site'
+            description: IN ("left palm", "right palm")' \
+          - names:
+              - --o-filtered-table
+            argument: filtered-table.qza
+            description: '# ### example: filter to subject1 gut'
+          - names:
+              - --o-filtered-table
+            argument: filtered-table.qza
+            description: '# ### example: filter to gut or abx'
+          - names:
+              - --o-filtered-table
+            argument: filtered-table.qza
+            description: '# ### example: filter to subject1 not gut'
+          - names:
+              - --o-filtered-table
+            argument: filtered-table.qza
+            description: '# ### example: filter min features'
+          - names:
+              - --o-filtered-table
+            argument: filtered-table.qza
+            description: '# ### example: filter min frequency'
       - name: filter-seqs
         description: Filter features from sequences
         usage: qiime feature-table filter-seqs [OPTIONS]
@@ -8746,6 +9019,14 @@ subcommands:
             argument: ""
             description: 'Merge sequences with identical prefixes. If a sequence is identical to the prefix of two or more longer sequences, it is clustered with the shortest of them. If they are equally long, it is clustered with the most abundant. [default: False]'
           - names:
+              - --p-min-seq-length
+            argument: INTEGER
+            description: Range(1, None) Discard sequences shorter than this integer.
+          - names:
+              - --p-min-unique-size
+            argument: INTEGER
+            description: Range(1, None) Discard sequences with a post-dereplication
+          - names:
               - --o-dereplicated-table
             argument: ARTIFACT FeatureTable[Frequency]
             description: The table of dereplicated sequences. [required]
@@ -8803,14 +9084,14 @@ subcommands:
               - --help
             argument: ""
             description: Show this message and exit.
-      - name: join-pairs
-        description: Join paired-end reads.
-        usage: qiime vsearch join-pairs [OPTIONS]
+      - name: merge-pairs
+        description: Merge paired-end reads.
+        usage: qiime vsearch merge-pairs [OPTIONS]
         options:
           - names:
               - --i-demultiplexed-seqs
             argument: ""
-            description: ARTIFACT SampleData[PairedEndSequencesWithQuality] The demultiplexed paired-end sequences to be joined.
+            description: ARTIFACT SampleData[PairedEndSequencesWithQuality] The demultiplexed paired-end sequences to be merged.
           - names:
               - --p-truncqual
             argument: INTEGER
@@ -8827,35 +9108,35 @@ subcommands:
               - --p-allowmergestagger
               - --p-no-allowmergestagger
             argument: ""
-            description: Allow joining of staggered read pairs.
+            description: Allow merging of staggered read pairs.
           - names:
               - --p-minovlen
             argument: INTEGER
-            description: Minimum overlap length of forward and reverse reads
+            description: Minimum length of the area of overlap between reads
           - names:
               - --p-maxdiffs
             argument: INTEGER
-            description: Maximum number of mismatches in the forward/reverse
+            description: Maximum number of mismatches in the area of overlap
           - names:
               - --p-minmergelen
             argument: INTEGER
-            description: Range(0, None) Minimum length of the joined read to be retained.
+            description: Range(0, None) Minimum length of the merged read to be retained.
           - names:
               - --p-maxmergelen
             argument: INTEGER
-            description: Range(0, None) Maximum length of the joined read to be retained.
+            description: Range(0, None) Maximum length of the merged read to be retained.
           - names:
               - --p-maxee
             argument: NUMBER
-            description: Maximum number of expected errors in the joined read
+            description: Maximum number of expected errors in the merged read
           - names:
               - --p-threads
             argument: INTEGER Range(0, 8, inclusive_end=True)
             description: The number of threads to use for computation. Does
           - names:
-              - --o-joined-sequences
+              - --o-merged-sequences
             argument: ARTIFACT SampleData[JoinedSequencesWithQuality]
-            description: The joined sequences. [required]
+            description: The merged sequences. [required]
           - names:
               - --output-dir
             argument: PATH
@@ -9015,4 +9296,4 @@ subcommands:
               - --help
             argument: ""
             description: Show this message and exit.
-version: q2cli version 2022.8.0
+version: q2cli version 2022.11.1

@@ -1,0 +1,355 @@
+name: mypy
+description: type check your Python code
+usage: |-
+  mypy [-h] [-v] [-V] [more options; see below]
+       [-m MODULE] [-p PACKAGE] [-c PROGRAM_TEXT] [files ...]
+options:
+  - names:
+      - --enable-incomplete-feature
+    argument: FEATURE
+    description: Enable support of incomplete/experimental features for early preview
+  - names:
+      - -h
+      - --help
+    argument: ""
+    description: Show this help message and exit
+  - names:
+      - -v
+      - --verbose
+    argument: ""
+    description: More verbose messages
+  - names:
+      - -V
+      - --version
+    argument: ""
+    description: Show program's version number and exit
+  - names:
+      - --config-file
+    argument: CONFIG_FILE
+    description: Configuration file, must have a [mypy] section (defaults to mypy.ini, .mypy.ini, pyproject.toml, setup.cfg, ~/.config/mypy/config, ~/.config/mypy/config, ~/.mypy.ini)
+  - names:
+      - --warn-unused-configs
+    argument: ""
+    description: 'Warn about unused ''[mypy-<pattern>]'' or ''[[tool.mypy.overrides]]'' config sections (inverse: --no-warn-unused-configs)'
+  - names:
+      - --no-namespace-packages
+    argument: ""
+    description: 'Support namespace packages (PEP 420, __init__.pyless) (inverse: --namespace-packages)'
+  - names:
+      - --ignore-missing-imports
+    argument: ""
+    description: Silently ignore imports of missing modules
+  - names:
+      - --follow-imports
+    argument: '{normal,silent,skip,error}'
+    description: How to treat imports (default normal)
+  - names:
+      - --python-executable
+    argument: EXECUTABLE
+    description: Python executable used for finding PEP 561 compliant installed packages and stubs
+  - names:
+      - --no-site-packages
+    argument: ""
+    description: Do not search for installed PEP 561 compliant packages
+  - names:
+      - --no-silence-site-packages
+    argument: ""
+    description: Do not silence errors in PEP 561 compliant installed packages
+  - names:
+      - --python-version
+    argument: x.y
+    description: Type check code assuming it will be running on Python x.y
+  - names:
+      - "-2"
+      - --py2
+    argument: ""
+    description: Use Python 2 mode (same as --python-version 2.7)
+  - names:
+      - --platform
+    argument: PLATFORM
+    description: Type check special-cased code for the given OS platform (defaults to sys.platform)
+  - names:
+      - --always-true
+    argument: NAME
+    description: Additional variable to be considered True (may be repeated)
+  - names:
+      - --always-false
+    argument: NAME
+    description: Additional variable to be considered False (may be repeated)
+  - names:
+      - --disallow-any-unimported
+    argument: ""
+    description: Disallow Any types resulting from unfollowed imports
+  - names:
+      - --disallow-any-expr
+    argument: ""
+    description: Disallow all expressions that have type Any
+  - names:
+      - --disallow-any-decorated
+    argument: ""
+    description: Disallow functions that have Any in their signature after decorator transformation
+  - names:
+      - --disallow-any-explicit
+    argument: ""
+    description: Disallow explicit Any in type positions
+  - names:
+      - --disallow-any-generics
+    argument: ""
+    description: 'Disallow usage of generic types that do not specify explicit type parameters (inverse: --allow-any-generics)'
+  - names:
+      - --disallow-subclassing-any
+    argument: ""
+    description: 'Disallow subclassing values of type ''Any'' when defining classes (inverse: --allow-subclassingany)'
+  - names:
+      - --disallow-untyped-calls
+    argument: ""
+    description: 'Disallow calling functions without type annotations from functions with type annotations (inverse: --allow-untyped-calls)'
+  - names:
+      - --disallow-untyped-defs
+    argument: ""
+    description: 'Disallow defining functions without type annotations or with incomplete type annotations (inverse: --allow-untyped-defs)'
+  - names:
+      - --disallow-incomplete-defs
+    argument: ""
+    description: 'Disallow defining functions with incomplete type annotations (inverse: --allow-incomplete-defs)'
+  - names:
+      - --check-untyped-defs
+    argument: ""
+    description: 'Type check the interior of functions without type annotations (inverse: --no-check-untyped-defs)'
+  - names:
+      - --disallow-untyped-decorators
+    argument: ""
+    description: 'Disallow decorating typed functions with untyped decorators (inverse: --allow-untyped-decorators)'
+  - names:
+      - --implicit-optional
+    argument: ""
+    description: 'Assume arguments with default values of None are Optional (inverse: --no-implicit-optional)'
+  - names:
+      - --no-strict-optional
+    argument: ""
+    description: 'Disable strict Optional checks (inverse: --strictoptional)'
+  - names:
+      - --warn-redundant-casts
+    argument: ""
+    description: 'Warn about casting an expression to its inferred type (inverse: --no-warn-redundant-casts)'
+  - names:
+      - --warn-unused-ignores
+    argument: ""
+    description: 'Warn about unneeded ''# type: ignore'' comments (inverse: --no-warn-unused-ignores)'
+  - names:
+      - --no-warn-no-return
+    argument: ""
+    description: 'Do not warn about functions that end without returning (inverse: --warn-no-return)'
+  - names:
+      - --warn-return-any
+    argument: ""
+    description: 'Warn about returning values of type Any from nonAny typed functions (inverse: --no-warn-returnany)'
+  - names:
+      - --warn-unreachable
+    argument: ""
+    description: 'Warn about statements or expressions inferred to be unreachable (inverse: --no-warn-unreachable)'
+  - names:
+      - --allow-untyped-globals
+    argument: ""
+    description: 'Suppress toplevel errors caused by missing annotations (inverse: --disallow-untyped-globals)'
+  - names:
+      - --allow-redefinition
+    argument: ""
+    description: 'Allow unconditional variable redefinition with a new type (inverse: --disallow-redefinition)'
+  - names:
+      - --no-implicit-reexport
+    argument: ""
+    description: 'Treat imports as private unless aliased (inverse: --implicit-reexport)'
+  - names:
+      - --strict-equality
+    argument: ""
+    description: 'Prohibit equality, identity, and container checks for non-overlapping types (inverse: --no-strictequality)'
+  - names:
+      - --strict-concatenate
+    argument: ""
+    description: 'Make arguments prepended via Concatenate be truly positional-only (inverse: --no-strict-concatenate)'
+  - names:
+      - --strict
+    argument: ""
+    description: 'Strict mode; enables the following flags: --warnunused-configs, --disallow-any-generics, --disallow-subclassing-any, --disallow-untypedcalls, --disallow-untyped-defs, --disallowincomplete-defs, --check-untyped-defs, --disallowuntyped-decorators, --warn-redundant-casts, --warn-unused-ignores, --warn-return-any, --noimplicit-reexport, --strict-equality, --strictconcatenate'
+  - names:
+      - --disable-error-code
+    argument: NAME
+    description: Disable a specific error code
+  - names:
+      - --enable-error-code
+    argument: NAME
+    description: Enable a specific error code
+  - names:
+      - --show-error-context
+    argument: ""
+    description: 'Precede errors with "note:" messages explaining context (inverse: --hide-error-context)'
+  - names:
+      - --show-column-numbers
+    argument: ""
+    description: 'Show column numbers in error messages (inverse: --hide-column-numbers)'
+  - names:
+      - --show-error-end
+    argument: ""
+    description: 'Show end line/end column numbers in error messages. This implies --show-column-numbers (inverse: --hide-error-end)'
+  - names:
+      - --hide-error-codes
+    argument: ""
+    description: 'Hide error codes in error messages (inverse: --show-error-codes)'
+  - names:
+      - --pretty
+    argument: ""
+    description: 'Use visually nicer output in error messages: Use soft word wrap, show source code snippets, and show error location markers (inverse: --no-pretty)'
+  - names:
+      - --no-color-output
+    argument: ""
+    description: 'Do not colorize error messages (inverse: --coloroutput)'
+  - names:
+      - --no-error-summary
+    argument: ""
+    description: 'Do not show error stats summary (inverse: --errorsummary)'
+  - names:
+      - --show-absolute-path
+    argument: ""
+    description: 'Show absolute paths to files (inverse: --hideabsolute-path)'
+  - names:
+      - --no-incremental
+    argument: ""
+    description: 'Disable module cache (inverse: --incremental)'
+  - names:
+      - --cache-dir
+    argument: DIR
+    description: Store module cache info in the given folder in incremental mode (defaults to '.mypy_cache')
+  - names:
+      - --sqlite-cache
+    argument: ""
+    description: 'Use a sqlite database to store the cache (inverse: --no-sqlite-cache)'
+  - names:
+      - --cache-fine-grained
+    argument: ""
+    description: Include fine-grained dependency information in the cache for the mypy daemon
+  - names:
+      - --skip-version-check
+    argument: ""
+    description: Allow using cache written by older mypy version
+  - names:
+      - --skip-cache-mtime-checks
+    argument: ""
+    description: Skip cache internal consistency checks based on mtime
+  - names:
+      - --pdb
+    argument: ""
+    description: Invoke pdb on fatal error
+  - names:
+      - --show-traceback
+      - --tb
+    argument: ""
+    description: Show traceback on fatal error
+  - names:
+      - --raise-exceptions
+    argument: ""
+    description: Raise exception on fatal error
+  - names:
+      - --custom-typing-module
+    argument: MODULE
+    description: Use a custom typing module
+  - names:
+      - --disable-recursive-aliases
+    argument: ""
+    description: Disable experimental support for recursive type aliases
+  - names:
+      - --custom-typeshed-dir
+    argument: DIR
+    description: Use the custom typeshed in DIR
+  - names:
+      - --warn-incomplete-stub
+    argument: ""
+    description: 'Warn if missing type annotation in typeshed, only relevant with --disallow-untyped-defs or --disallow-incomplete-defs enabled (inverse: --nowarn-incomplete-stub)'
+  - names:
+      - --shadow-file
+    argument: SOURCE_FILE SHADOW_FILE
+    description: When encountering SOURCE_FILE, read and type check the contents of SHADOW_FILE instead.
+  - names:
+      - --any-exprs-report
+    argument: DIR
+    description: Generate a report.
+  - names:
+      - --cobertura-xml-report
+    argument: DIR
+    description: Generate a report.
+  - names:
+      - --html-report
+    argument: DIR
+    description: Generate a report.
+  - names:
+      - --linecount-report
+    argument: DIR
+    description: Generate a report.
+  - names:
+      - --linecoverage-report
+    argument: DIR
+    description: Generate a report.
+  - names:
+      - --lineprecision-report
+    argument: DIR
+    description: Generate a report.
+  - names:
+      - --txt-report
+    argument: DIR
+    description: Generate a report.
+  - names:
+      - --xml-report
+    argument: DIR
+    description: Generate a report.
+  - names:
+      - --xslt-html-report
+    argument: DIR
+    description: Generate a report.
+  - names:
+      - --xslt-txt-report
+    argument: DIR
+    description: Generate a report.
+  - names:
+      - --junit-xml
+    argument: JUNIT_XML
+    description: Write junit.xml to the given file
+  - names:
+      - --find-occurrences
+    argument: CLASS.MEMBER
+    description: Print out all usages of a class member (experimental)
+  - names:
+      - --scripts-are-modules
+    argument: ""
+    description: Script x becomes module x instead of __main__
+  - names:
+      - --install-types
+    argument: ""
+    description: 'Install detected missing library stub packages using pip (inverse: --no-install-types)'
+  - names:
+      - --non-interactive
+    argument: ""
+    description: 'Install stubs without asking for confirmation and hide errors, with --install-types (inverse: --interactive)'
+  - names:
+      - --explicit-package-bases
+    argument: ""
+    description: 'Use current directory and MYPYPATH to determine module names of files passed (inverse: --noexplicit-package-bases)'
+  - names:
+      - --exclude
+    argument: PATTERN
+    description: Regular expression to match file names, directory names or paths which mypy should ignore while recursively discovering files to check, e.g. --exclude '/setup\.py$'. May be specified more than once, eg. --exclude a --exclude b
+  - names:
+      - -m
+      - --module
+    argument: MODULE
+    description: Type-check module; can repeat for more modules
+  - names:
+      - -p
+      - --package
+    argument: PACKAGE
+    description: Type-check package recursively; can be repeated
+  - names:
+      - -c
+      - --command
+    argument: PROGRAM_TEXT
+    description: Type-check program passed in as string
+version: 'mypy 0.991 (compiled: yes)'

@@ -1,0 +1,192 @@
+name: kneaddata
+description: quality control on metagenomic sequencing data
+usage: kneaddata [-h] [--version] [-v] [-i1 INPUT1] [-i2 INPUT2] [-un UNPAIRED] -o OUTPUT_DIR [-s SCRATCH_DIR] [-db REFERENCE_DB] [--bypass-trim] [--output-prefix OUTPUT_PREFIX] [-t <1>] [-p <1>] [-q {phred33,phred64}] [--run-bmtagger] [--bypass-trf] [--run-trf] [--run-fastqc-start] [--run-fastqc-end] [--store-temp-output] [--remove-intermediate-output] [--cat-final-output] [--log-level {DEBUG,INFO,WARNING,ERROR,CRITICAL}] [--log LOG] [--trimmomatic TRIMMOMATIC_PATH] [--run-trim-repetitive] [--max-memory MAX_MEMORY] [--trimmomatic-options TRIMMOMATIC_OPTIONS] [--sequencer-source {NexteraPE,TruSeq2,TruSeq3,none}] [--bowtie2 BOWTIE2_PATH] [--bowtie2-options BOWTIE2_OPTIONS] [--decontaminate-pairs {strict,lenient,unpaired}] [--reorder] [--serial] [--bmtagger BMTAGGER_PATH] [--trf TRF_PATH] [--match MATCH] [--mismatch MISMATCH] [--delta DELTA] [--pm PM] [--pi PI] [--minscore MINSCORE] [--maxperiod MAXPERIOD] [--fastqc FASTQC_PATH]
+options:
+  - names:
+      - -h
+      - --help
+    argument: ""
+    description: show this help message and exit
+  - names:
+      - -v
+      - --verbose
+    argument: ""
+    description: additional output is printed
+  - names:
+      - --version
+    argument: ""
+    description: show program's version number and exit
+  - names:
+      - -i1
+      - --input1
+    argument: INPUT1
+    description: Pair 1 input FASTQ file
+  - names:
+      - -i2
+      - --input2
+    argument: INPUT2
+    description: Pair 2 input FASTQ file
+  - names:
+      - -un
+      - --unpaired
+    argument: UNPAIRED
+    description: unparied input FASTQ file
+  - names:
+      - -o
+      - --output
+    argument: OUTPUT_DIR
+    description: directory to write output files
+  - names:
+      - -s
+      - --scratch
+    argument: SCRATCH_DIR
+    description: directory to write temp files
+  - names:
+      - -db
+      - --reference-db
+    argument: REFERENCE_DB
+    description: location of reference database (additional arguments add databases)
+  - names:
+      - --bypass-trim
+    argument: ""
+    description: bypass the trim step
+  - names:
+      - --output-prefix
+    argument: OUTPUT_PREFIX
+    description: 'prefix for all output files [ DEFAULT : $SAMPLE_kneaddata ]'
+  - names:
+      - -t
+      - --threads
+    argument: <1>
+    description: 'number of threads [ Default : 1 ]'
+  - names:
+      - -p
+      - --processes
+    argument: <1>
+    description: 'number of processes [ Default : 1 ]'
+  - names:
+      - -q
+      - --quality-scores
+    argument: '{phred33,phred64}'
+    description: 'quality scores [ DEFAULT : phred33 ]'
+  - names:
+      - --run-bmtagger
+    argument: ""
+    description: run BMTagger instead of Bowtie2 to identify contaminant reads
+  - names:
+      - --bypass-trf
+    argument: ""
+    description: option to bypass the removal of tandem repeats
+  - names:
+      - --run-trf
+    argument: ""
+    description: legacy option to run the removal of tandem repeats (now run by default)
+  - names:
+      - --run-fastqc-start
+    argument: ""
+    description: run fastqc at the beginning of the workflow
+  - names:
+      - --run-fastqc-end
+    argument: ""
+    description: run fastqc at the end of the workflow
+  - names:
+      - --store-temp-output
+    argument: ""
+    description: 'store temp output files [ DEFAULT : temp output files are removed ]'
+  - names:
+      - --remove-intermediate-output
+    argument: ""
+    description: 'remove intermediate output files [ DEFAULT : intermediate output files are stored ]'
+  - names:
+      - --cat-final-output
+    argument: ""
+    description: 'concatenate all final output files [ DEFAULT : final output is not concatenated ]'
+  - names:
+      - --log-level
+    argument: '{DEBUG,INFO,WARNING,ERROR,CRITICAL}'
+    description: 'level of log messages [ DEFAULT : DEBUG ]'
+  - names:
+      - --log
+    argument: LOG
+    description: 'log file [ DEFAULT : $OUTPUT_DIR/$SAMPLE_kneaddata.log ]'
+  - names:
+      - --trimmomatic
+    argument: TRIMMOMATIC_PATH
+    description: 'path to trimmomatic [ DEFAULT : $PATH ]'
+  - names:
+      - --run-trim-repetitive
+    argument: ""
+    description: Trim fastqc generated overrepresented sequences
+  - names:
+      - --max-memory
+    argument: MAX_MEMORY
+    description: 'max amount of memory [ DEFAULT : 500m ]'
+  - names:
+      - --trimmomatic-options
+    argument: TRIMMOMATIC_OPTIONS
+    description: 'options for trimmomatic [ DEFAULT : MINLEN:60 ILLUMINACLIP:/-SE.fa:2:30:10 SLIDINGWINDOW:4:20 MINLEN:50 ] MINLEN is set to 50 percent of total input read length. The user can alternatively specify a length (in bases) for MINLEN.'
+  - names:
+      - --sequencer-source
+    argument: '{NexteraPE,TruSeq2,TruSeq3,none}'
+    description: 'options for sequencer-source [ DEFAULT : NexteraPE]'
+  - names:
+      - --bowtie2
+    argument: BOWTIE2_PATH
+    description: 'path to bowtie2 [ DEFAULT : $PATH ]'
+  - names:
+      - --bowtie2-options
+    argument: BOWTIE2_OPTIONS
+    description: 'options for bowtie2 [ DEFAULT : --very-sensitive-local ]'
+  - names:
+      - --decontaminate-pairs
+    argument: '{strict,lenient,unpaired}'
+    description: 'options for filtering of paired end reads (strict=''remove both R1+R2 if either align'', lenient=''remove only if both R1+R2 align'', unpaired=''ignore pairing and remove as single end'') [ DEFAULT : strict ]'
+  - names:
+      - --reorder
+    argument: ""
+    description: 'order the sequences in the same order as the input [ DEFAULT : Sequences are not ordered ]'
+  - names:
+      - --serial
+    argument: ""
+    description: filter the input in serial for multiple databases so a subset of reads are processed in each database search
+  - names:
+      - --bmtagger
+    argument: BMTAGGER_PATH
+    description: 'path to BMTagger [ DEFAULT : $PATH ]'
+  - names:
+      - --trf
+    argument: TRF_PATH
+    description: 'path to TRF [ DEFAULT : $PATH ]'
+  - names:
+      - --match
+    argument: MATCH
+    description: 'matching weight [ DEFAULT : 2 ]'
+  - names:
+      - --mismatch
+    argument: MISMATCH
+    description: 'mismatching penalty [ DEFAULT : 7 ]'
+  - names:
+      - --delta
+    argument: DELTA
+    description: 'indel penalty [ DEFAULT : 7 ]'
+  - names:
+      - --pm
+    argument: PM
+    description: 'match probability [ DEFAULT : 80 ]'
+  - names:
+      - --pi
+    argument: PI
+    description: 'indel probability [ DEFAULT : 10 ]'
+  - names:
+      - --minscore
+    argument: MINSCORE
+    description: 'minimum alignment score to report [ DEFAULT : 50 ]'
+  - names:
+      - --maxperiod
+    argument: MAXPERIOD
+    description: 'maximum period size to report [ DEFAULT : 500 ]'
+  - names:
+      - --fastqc
+    argument: FASTQC_PATH
+    description: 'path to fastqc [ DEFAULT : $PATH ]'
+version: kneaddata v0.12.0

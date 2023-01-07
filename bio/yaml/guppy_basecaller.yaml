@@ -1,0 +1,554 @@
+name: guppy_basecaller
+description: Guppy Basecalling Software
+usage: |-
+  With config file:
+      guppy_basecaller -i <input path> -s <save path> -c <config file> [options]
+
+  With flowcell and kit name:
+      guppy_basecaller -i <input path> -s <save path> --flowcell <flowcell name> --kit <kit name>
+
+  List supported flowcells and kits:
+      guppy_basecaller --print_workflows
+
+  Use GPU for basecalling:
+      guppy_basecaller -i <input path> -s <save path> -c <config file> --device <cuda device name> [options]
+options:
+  - names:
+      - --adapter_pt_range_scale
+    argument: ""
+    description: Set polyT/adapter range scale for setting read scaling median absolute deviation.
+  - names:
+      - --as_cpu_threads_per_scaler
+    argument: ""
+    description: Number of CPU worker threads per adapter scaler.
+  - names:
+      - --dmean_threshold
+    argument: ""
+    description: Threshold for coarse stall event detection
+  - names:
+      - --dmean_win_size
+    argument: ""
+    description: Window size for coarse stall event detection
+  - names:
+      - --as_gpu_runners_per_device
+    argument: ""
+    description: Number of runners per GPU device for adapter scaling.
+  - names:
+      - --jump_threshold
+    argument: ""
+    description: Threshold level for rna stall detection
+  - names:
+      - --max_search_len
+    argument: ""
+    description: Maximum number of samples to search through for the stall
+  - names:
+      - --as_model_file
+    argument: ""
+    description: Path to JSON model file for adapter scaling.
+  - names:
+      - --noisiest_section_scaling_max_size
+    argument: ""
+    description: Threshold read size in samples under which nosiest-section scaling will be performed.
+  - names:
+      - --as_num_scalers
+    argument: ""
+    description: Number of parallel scalers for adapter scaling.
+  - names:
+      - --override_scaling
+    argument: ""
+    description: Manually provide scaling parameters rather than estimating them from each read.
+  - names:
+      - --pt_median_offset
+    argument: ""
+    description: Set polyT median offset for setting read scaling median.
+  - names:
+      - --pt_minimum_read_start_index
+    argument: ""
+    description: Set minimum index for read start sample required to attempt polyT scaling.
+  - names:
+      - --pt_required_adapter_drop
+    argument: ""
+    description: Set minimum required current drop from adapter max to polyT detection.
+  - names:
+      - --pt_scaling
+    argument: ""
+    description: Enable polyT/adapter max detection for read scaling.
+  - names:
+      - --as_reads_per_runner
+    argument: ""
+    description: Maximum reads per runner for adapter scaling.
+  - names:
+      - --scaling_mad
+    argument: ""
+    description: Median absolute deviation to use for manual scaling.
+  - names:
+      - --scaling_med
+    argument: ""
+    description: Median current value to use for manual scaling.
+  - names:
+      - --trim_min_events
+    argument: ""
+    description: Adapter trimmer minimum stride intervals after stall that must be seen.
+  - names:
+      - --trim_strategy
+    argument: ""
+    description: 'Trimming strategy to apply: ''dna'' or ''rna'' (or ''none'' to disable trimming)'
+  - names:
+      - --trim_threshold
+    argument: ""
+    description: Threshold above which data will be trimmed (in standard deviations of current level distribution).
+  - names:
+      - --use_quantile_scaling
+    argument: ""
+    description: Use quantiles to calculate scaling values when basecalling
+  - names:
+      - --alignment_filtering
+    argument: ""
+    description: Specify whether to filter reads based on their alignment status
+  - names:
+      - --align_type
+    argument: ""
+    description: Specify whether you want full or coarse alignment. Valid values are (auto/full/coarse).
+  - names:
+      - --bed_file
+    argument: ""
+    description: Path to .bed file containing areas of interest in reference genome.
+  - names:
+      - -a
+      - --align_ref
+    argument: ""
+    description: Reference FASTA or index file.
+  - names:
+      - --minimap_opt_string
+    argument: ""
+    description: Specify minimap2 options. See `guppy_basecaller --minimap_opt_string --help` for details).
+  - names:
+      - --num_alignment_threads
+    argument: ""
+    description: Number of worker threads to use for alignment.
+  - names:
+      - --allow_inferior_barcodes
+    argument: ""
+    description: Reads will still be classified even if both the barcodes at the front and rear (if applicable) were not the best scoring barcodes above the min_score.
+  - names:
+      - --barcode_kits
+    argument: ""
+    description: Space separated list of barcoding kit(s) or expansion kit(s) to detect against. Must be in double quotes.
+  - names:
+      - --detect_adapter
+    argument: ""
+    description: Detect adapter sequences at the front and rear of the read.
+  - names:
+      - --detect_barcodes
+    argument: ""
+    description: Detect barcode sequences at the front and rear of the read.
+  - names:
+      - --detect_mid_strand_adapter
+    argument: ""
+    description: Detect adapter sequences within reads.
+  - names:
+      - --detect_mid_strand_barcodes
+    argument: ""
+    description: Search for barcodes through the entire length of the read.
+  - names:
+      - --detect_primer
+    argument: ""
+    description: Detect primer sequences at the front and rear of the read.
+  - names:
+      - --disable_trim_barcodes
+    argument: ""
+    description: Disable trimming of barcodes from the sequences in the output files. By default is false, barcodes will be trimmed.
+  - names:
+      - --front_window_size
+    argument: ""
+    description: Window size for the beginning barcode.
+  - names:
+      - --min_score_adapter
+    argument: ""
+    description: Minimum score for an adapter to be considered a valid alignment.
+  - names:
+      - --min_score_adapter_mid
+    argument: ""
+    description: Minimum score for a mid-strand adapter to be considered a valid alignment.
+  - names:
+      - --min_score_barcode_front
+    argument: ""
+    description: Minimum score to consider a front barcode to be a valid barcode alignment.
+  - names:
+      - --min_score_barcode_mask
+    argument: ""
+    description: Minimum score for a barcode context to be considered a valid alignment.
+  - names:
+      - --min_score_barcode_mid
+    argument: ""
+    description: Minimum score for a barcode to be detected in the middle of a read.
+  - names:
+      - --min_score_barcode_rear
+    argument: ""
+    description: Minimum score to consider a rear barcode to be a valid alignment (and min_score_front will then be used for the front only when this is set).
+  - names:
+      - --min_score_primer
+    argument: ""
+    description: Minimum score for a primer to be considered to be a valid alignment.
+  - names:
+      - --num_barcoding_buffers
+    argument: ""
+    description: Number of GPU memory buffers to allocate to perform barcoding into. Controls level of parallelism on GPU for barcoding.
+  - names:
+      - --num_barcoding_threads
+    argument: ""
+    description: Number of worker threads to use for barcoding.
+  - names:
+      - --num_extra_bases_trim
+    argument: ""
+    description: How vigorous to be in trimming the barcode. Default is 0 i.e. the length of the detected barcode. A positive integer means extra bases will be trimmed, a negative number is how many fewer bases (less vigorous) will be trimmed.
+  - names:
+      - --num_mid_barcoding_buffers
+    argument: ""
+    description: Number of GPU memory buffers to allocate to perform barcoding into. Controls level of parallelism on GPU for mid barcoding.
+  - names:
+      - --num_reads_per_barcoding_buffer
+    argument: ""
+    description: The maximum number of reads to process at once in each barcoding buffer.
+  - names:
+      - --rear_window_size
+    argument: ""
+    description: Window size for the ending barcode.
+  - names:
+      - --require_barcodes_both_ends
+    argument: ""
+    description: Reads will only be classified if there is a barcode above the min_score at both ends of the read.
+  - names:
+      - --trim_adapters
+    argument: ""
+    description: Trim the adapters from the sequences in the output files.
+  - names:
+      - --trim_primers
+    argument: ""
+    description: Trim the primers from the sequences in the output files.
+  - names:
+      - --beam_cut
+    argument: ""
+    description: Beam score cutoff for beam search decoding.
+  - names:
+      - --beam_width
+    argument: ""
+    description: Beam width to use in beam search decode.
+  - names:
+      - --builtin_scripts
+    argument: ""
+    description: Whether to use GPU kernels that were included at compile-time.
+  - names:
+      - --chunk_size
+    argument: ""
+    description: Stride intervals per chunk.
+  - names:
+      - --chunks_per_caller
+    argument: ""
+    description: Soft limit on number of chunks in each caller's queue. New reads will not be queued while this is exceeded.
+  - names:
+      - --chunks_per_runner
+    argument: ""
+    description: Maximum chunks per runner.
+  - names:
+      - --cpu_threads_per_caller
+    argument: ""
+    description: Number of CPU worker threads per basecaller.
+  - names:
+      - --disable_qscore_filtering
+    argument: ""
+    description: Disable filtering of reads into PASS/FAIL folders based on min qscore.
+  - names:
+      - --duplex_window_size_max
+    argument: ""
+    description: Maximum window size to use for prefix search in duplex decoding.
+  - names:
+      - --duplex_window_size_min
+    argument: ""
+    description: Minimum window size to use for prefix search in duplex decoding.
+  - names:
+      - --gpu_runners_per_device
+    argument: ""
+    description: Number of runners per GPU device.
+  - names:
+      - --high_priority_threshold
+    argument: ""
+    description: Number of high priority chunks to process for each medium priority chunk.
+  - names:
+      - --int8_mode
+    argument: ""
+    description: Enable quantised int8 mode for kernels which support it.
+  - names:
+      - -k
+      - --kernel_path
+    argument: ""
+    description: Path to GPU kernel files location (only needed if builtin_scripts is false).
+  - names:
+      - --log_speed_frequency
+    argument: ""
+    description: How often to print out basecalling speed.
+  - names:
+      - --medium_priority_threshold
+    argument: ""
+    description: Number of medium priority chunks to process for each low priority chunk.
+  - names:
+      - --min_qscore
+    argument: ""
+    description: Minimum acceptable qscore for a read to be filtered into the PASS folder.
+  - names:
+      - -m
+      - --model_file
+    argument: ""
+    description: Path to JSON model file.
+  - names:
+      - --num_base_mod_threads
+    argument: ""
+    description: The number of threads to use for Remora modified base detection in GPU basecalling mode.
+  - names:
+      - --num_callers
+    argument: ""
+    description: Number of parallel basecallers to create.
+  - names:
+      - --overlap
+    argument: ""
+    description: Overlap between chunks (in stride intervals).
+  - names:
+      - --post_out
+    argument: ""
+    description: Return full posterior matrix in output fast5 file and/or called read message from server.
+  - names:
+      - --qscore_offset
+    argument: ""
+    description: Qscore calibration offset.
+  - names:
+      - --qscore_scale
+    argument: ""
+    description: Qscore calibration scale factor.
+  - names:
+      - --reverse_sequence
+    argument: ""
+    description: Reverse the called sequence (for RNA sequencing).
+  - names:
+      - --stay_penalty
+    argument: ""
+    description: Scaling factor to apply to stay probability calculation during transducer decode.
+  - names:
+      - --temp_bias
+    argument: ""
+    description: Temperature adjustment for bias vector in softmax layer of RNN.
+  - names:
+      - --temp_weight
+    argument: ""
+    description: Temperature adjustment for weight matrix in softmax layer of RNN.
+  - names:
+      - --u_substitution
+    argument: ""
+    description: Substitute 'U' for 'T' in the called sequence (for RNA sequencing).
+  - names:
+      - --calib_detect
+    argument: ""
+    description: Enable calibration strand detection and filtering.
+  - names:
+      - --calib_reference
+    argument: ""
+    description: Reference FASTA file containing calibration strand.
+  - names:
+      - --additional_lamp_context_bases
+    argument: ""
+    description: Number of bases from a lamp FIP barcode context to append to the front and read of the FIP barcode before performing matching. Default is 2.
+  - names:
+      - --lamp_kit
+    argument: ""
+    description: LAMP barcoding kit to perform LAMP detection against.
+  - names:
+      - --min_length_lamp_context
+    argument: ""
+    description: Minimum align length for a LAMP barcode mask context to be classified.
+  - names:
+      - --min_length_lamp_target
+    argument: ""
+    description: Minimum align length for a LAMP target to be classified.
+  - names:
+      - --min_score_lamp
+    argument: ""
+    description: Minimum score for a LAMP barcode to be classified.
+  - names:
+      - --min_score_lamp_mask
+    argument: ""
+    description: Minimum score for a LAMP barcode mask context to be classified.
+  - names:
+      - --min_score_lamp_target
+    argument: ""
+    description: Minimum score for a LAMP target to be classified.
+  - names:
+      - --max_pipeline_reads
+    argument: ""
+    description: Maximum number of reads that can be processed by the pipeline at any one time.
+  - names:
+      - --index
+    argument: ""
+    description: Output BAM index file.
+  - names:
+      - --bam_methylation_threshold
+    argument: ""
+    description: The value below which a predicted methylation probability will not be emitted into a BAM file, expressed as a percentage.
+  - names:
+      - --bam_out
+    argument: ""
+    description: Output BAM files.
+  - names:
+      - --barcode_nested_output_folder
+    argument: ""
+    description: 'If flagged output FastQ/BAM files will be written to a nested folder structure, based on: protocol_group/barcode_arrangement/sample/protocol/qscore_pass_fail/'
+  - names:
+      - --compress_fastq
+    argument: ""
+    description: Compress fastq output files with gzip.
+  - names:
+      - -c
+      - --config
+    argument: ""
+    description: Configuration file for application.
+  - names:
+      - -d
+      - --data_path
+    argument: ""
+    description: Path to use for loading any data files the application requires.
+  - names:
+      - -x
+      - --device
+    argument: ""
+    description: 'Specify GPU device: ''auto'', or ''cuda:<device_id>''.'
+  - names:
+      - --flowcell
+    argument: ""
+    description: Flowcell to find a configuration for.
+  - names:
+      - --input_file_list
+    argument: ""
+    description: Optional file containing list of input fast5/pod5 files to process from the input_path.
+  - names:
+      - -i
+      - --input_path
+    argument: ""
+    description: Path to input files.
+  - names:
+      - --kit
+    argument: ""
+    description: Kit to find a configuration for.
+  - names:
+      - --load_scaling_info_from_read_files
+    argument: ""
+    description: If flagged, scaling information in source fast5 or pod5 files will read and used if present.
+  - names:
+      - --moves_out
+    argument: ""
+    description: Return move table in output BAM file.
+  - names:
+      - --nested_output_folder
+    argument: ""
+    description: 'If flagged output FastQ/BAM files will be written to a nested folder structure, based on: protocol_group/sample/protocol/qscore_pass_fail/barcode_arrangement/'
+  - names:
+      - --print_workflows
+    argument: ""
+    description: Output available workflows.
+  - names:
+      - --progress_stats_frequency
+    argument: ""
+    description: Frequency in seconds in which to report progress statistics, if supplied will replace the default progress display.
+  - names:
+      - -z
+      - --quiet
+    argument: ""
+    description: Quiet mode. Nothing will be output to STDOUT if this option is set.
+  - names:
+      - --read_batch_size
+    argument: ""
+    description: Maximum batch size, in reads, for grouping input files.
+  - names:
+      - -l
+      - --read_id_list
+    argument: ""
+    description: File containing list of read ids to filter to.
+  - names:
+      - -q
+      - --records_per_fastq
+    argument: ""
+    description: Maximum number of records per fastq file, 0 means use a single file (per run id, per batch).
+  - names:
+      - -r
+      - --recursive
+    argument: ""
+    description: Search for input file recursively.
+  - names:
+      - --resume
+    argument: ""
+    description: Resume a previous basecall run using the same output folder.
+  - names:
+      - --sample_sheet
+    argument: ""
+    description: Optional file containing sample sheet. Used to provide an alias for barcode results.
+  - names:
+      - -s
+      - --save_path
+    argument: ""
+    description: Path to save output files.
+  - names:
+      - -h
+      - --help
+    argument: ""
+    description: Display the application usage help.
+  - names:
+      - -v
+      - --version
+    argument: ""
+    description: Display the application version information.
+  - names:
+      - --skip_model_versions
+    argument: ""
+    description: Skip display of model versions in output of available workflows when using --print_workflows.
+  - names:
+      - --trace_category_logs
+    argument: ""
+    description: Enable trace logs - list of strings with the desired names.
+  - names:
+      - --trace_domains_config
+    argument: ""
+    description: Configuration file containing list of trace domains to include in verbose logging (if enabled)
+  - names:
+      - --verbose_logs
+    argument: ""
+    description: Enable verbose logs.
+  - names:
+      - --do_read_splitting
+    argument: ""
+    description: Perform read splitting based on mid-strand adapter detection.
+  - names:
+      - --max_read_split_depth
+    argument: ""
+    description: The maximum number of iterations of read splitting that should be performed.
+  - names:
+      - --min_score_read_splitting
+    argument: ""
+    description: Minimum alignment score for the mid adapter on which to split the read.
+  - names:
+      - --num_read_splitting_buffers
+    argument: ""
+    description: Number of GPU memory buffers to allocate to perform read splitting. Controls level of parallelism on GPU for read splitting using mid adapter detection.
+  - names:
+      - --num_read_splitting_threads
+    argument: ""
+    description: Number of worker threads to use for read splitting.
+  - names:
+      - --disable_pings
+    argument: ""
+    description: Disable the transmission of telemetry pings.
+  - names:
+      - --ping_segment_duration
+    argument: ""
+    description: Duration in minutes of each ping segment.
+  - names:
+      - --ping_url
+    argument: ""
+    description: URL to send pings to.
+version: Version 6.4.2+97a7f06

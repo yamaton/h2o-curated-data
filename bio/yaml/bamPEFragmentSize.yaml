@@ -1,0 +1,78 @@
+name: bamPEFragmentSize
+description: calculates the fragment sizes for read pairs given a BAM file from paired-end sequencing.Several regions are sampled depending on the size of the enome and number of processors to estimate thesummary statistics on the fragment lengths.
+usage: bamPEFragmentSize [-h] [--bamfiles bam files [bam files ...]] [--histogram FILE] [--plotFileFormat FILETYPE] [--numberOfProcessors INT] [--samplesLabel SAMPLESLABEL [SAMPLESLABEL ...]] [--plotTitle PLOTTITLE] [--maxFragmentLength MAXFRAGMENTLENGTH] [--logScale] [--binSize INT] [--distanceBetweenBins INT] [--blackListFileName BED file] [--table FILE] [--outRawFragmentLengths FILE] [--verbose] [--version]
+options:
+  - names:
+      - -h
+      - --help
+    argument: ""
+    description: show this help message and exit
+  - names:
+      - --bamfiles
+      - -b
+    argument: bam files [bam files ...]
+    description: List of BAM files to process
+  - names:
+      - --histogram
+      - -hist
+      - -o
+    argument: FILE
+    description: Save a .png file with a histogram of the fragment length distribution.
+  - names:
+      - --plotFileFormat
+    argument: FILETYPE
+    description: 'Image format type. If given, this option overrides the image format based on the plotFile ending. The available options are: png, eps, pdf, svg and plotly.'
+  - names:
+      - --numberOfProcessors
+      - -p
+    argument: INT
+    description: 'Number of processors to use. The default is to use 1. (Default: 1)'
+  - names:
+      - --samplesLabel
+    argument: SAMPLESLABEL [SAMPLESLABEL ...]
+    description: Labels for the samples plotted. The default is to use the file name of the sample. The sample labels should be separated by spaces and quoted if a label itselfcontains a space E.g. --samplesLabel label-1 "label 2"
+  - names:
+      - --plotTitle
+      - -T
+    argument: PLOTTITLE
+    description: 'Title of the plot, to be printed on top of the generated image. Leave blank for no title. (Default: )'
+  - names:
+      - --maxFragmentLength
+    argument: MAXFRAGMENTLENGTH
+    description: 'The maximum fragment length in the histogram. A value of 0 (the default) indicates to use twice the mean fragment length. (Default: 0)'
+  - names:
+      - --logScale
+    argument: ""
+    description: Plot on the log scale
+  - names:
+      - --binSize
+      - -bs
+    argument: INT
+    description: 'Length in bases of the window used to sample the genome. (Default: 1000)'
+  - names:
+      - --distanceBetweenBins
+      - -n
+    argument: INT
+    description: 'To reduce the computation time, not every possible genomic bin is sampled. This option allows you to set the distance between bins actually sampled from. Larger numbers are sufficient for high coverage samples, while smaller values are useful for lower coverage samples. Note that if you specify a value that results in too few (<1000) reads sampled, the value will be decreased. (Default: 1000000)'
+  - names:
+      - --blackListFileName
+      - -bl
+    argument: BED file
+    description: A BED file containing regions that should be excluded from all analyses. Currently this works by rejecting genomic chunks that happen to overlap an entry. Consequently, for BAM files, if a read partially overlaps a blacklisted region or a fragment spans over it, then the read/fragment might still be considered.
+  - names:
+      - --table
+    argument: FILE
+    description: In addition to printing read and fragment length metrics to the screen, write them to the given file in tabular format.
+  - names:
+      - --outRawFragmentLengths
+    argument: FILE
+    description: Save the fragment (or read if the input is single-end) length and their associated number of occurrences to a tab-separated file. Columns are length, number of occurrences, and the sample label.
+  - names:
+      - --verbose
+    argument: ""
+    description: Set if processing data messages are wanted.
+  - names:
+      - --version
+    argument: ""
+    description: show program's version number and exit
+version: bamPEFragmentSize 3.5.1

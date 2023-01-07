@@ -1,0 +1,96 @@
+name: bigwigCompare
+description: compares two bigWig files based on the number of mapped reads
+usage: bigwigCompare [-h] [--version] [--binSize INT bp] [--region CHR:START:END] [--blackListFileName BED file [BED file ...]] [--numberOfProcessors INT] [--verbose] --outFileName FILENAME [--outFileFormat {bigwig,bedgraph}] [--deepBlueURL DEEPBLUEURL] [--userKey USERKEY] [--deepBlueTempDir DEEPBLUETEMPDIR] [--deepBlueKeepTemp] --bigwig1 Bigwig file --bigwig2 Bigwig file [--scaleFactors SCALEFACTORS] [--pseudocount PSEUDOCOUNT [PSEUDOCOUNT ...]] [--skipZeroOverZero] [--operation {log2,ratio,subtract,add,mean,reciprocal_ratio,first,second}] [--skipNonCoveredRegions]
+options:
+  - names:
+      - -h
+      - --help
+    argument: ""
+    description: show this help message and exit
+  - names:
+      - --bigwig1
+      - -b1
+    argument: Bigwig file
+    description: 'Bigwig file 1. Usually the file for the treatment. (default: None)'
+  - names:
+      - --bigwig2
+      - -b2
+    argument: Bigwig file
+    description: 'Bigwig file 2. Usually the file for the control. (default: None)'
+  - names:
+      - --scaleFactors
+    argument: SCALEFACTORS
+    description: 'Set this parameter to multipy the bigwig values by a constant. The format is scaleFactor1:scaleFactor2. For example 0.7:1 to scale the first bigwig file by 0.7 while not scaling the second bigwig file (default: None)'
+  - names:
+      - --pseudocount
+    argument: PSEUDOCOUNT [PSEUDOCOUNT ...]
+    description: 'A small number to avoid x/0. Only useful together with --operation log2 or --operation ratio. You can specify different values as pseudocounts for the numerator and the denominator by providing two values (the first value is used as the numerator pseudocount and the second the denominator pseudocount). (Default: 1)'
+  - names:
+      - --skipZeroOverZero
+    argument: ""
+    description: 'Skip bins where BOTH BAM files lack coverage. This is determined BEFORE any applicable pseudocount is added. (default: False)'
+  - names:
+      - --operation
+    argument: '{log2,ratio,subtract,add,mean,reciprocal_ratio,first,second}'
+    description: 'The default is to output the log2ratio of the two samples. The reciprocal ratio returns the the negative of the inverse of the ratio if the ratio is less than 0. The resulting values are interpreted as negative fold changes. Instead of performing a computation using both files, the scaled signal can alternatively be output for the first or second file using the ''--operation first'' or ''--operation second'' (Default: log2)'
+  - names:
+      - --skipNonCoveredRegions
+      - --skipNAs
+    argument: ""
+    description: 'This parameter determines if non-covered regions (regions without a score) in the bigWig files should be skipped. The default is to treat those regions as having a value of zero. The decision to skip non-covered regions depends on the interpretation of the data. Non-covered regions in a bigWig file may represent repetitive regions that should be skipped. Alternatively, the interpretation of non-covered regions as zeros may be wrong and this option should be used (default: False)'
+  - names:
+      - --version
+    argument: ""
+    description: show program's version number and exit
+  - names:
+      - --binSize
+      - -bs
+    argument: INT bp
+    description: 'Size of the bins, in bases, for the output of the bigwig/bedgraph file. (Default: 50)'
+  - names:
+      - --region
+      - -r
+    argument: CHR:START:END
+    description: 'Region of the genome to limit the operation to - this is useful when testing parameters to reduce the computing time. The format is chr:start:end, for example --region chr10 or --region chr10:456700:891000. (default: None)'
+  - names:
+      - --blackListFileName
+      - -bl
+    argument: BED file [BED file ...]
+    description: 'A BED or GTF file containing regions that should be excluded from all analyses. Currently this works by rejecting genomic chunks that happen to overlap an entry. Consequently, for BAM files, if a read partially overlaps a blacklisted region or a fragment spans over it, then the read/fragment might still be considered. Please note that you should adjust the effective genome size, if relevant. (default: None)'
+  - names:
+      - --numberOfProcessors
+      - -p
+    argument: INT
+    description: 'Number of processors to use. Type "max/2" to use half the maximum number of processors or "max" to use all available processors. (Default: 1)'
+  - names:
+      - --verbose
+      - -v
+    argument: ""
+    description: 'Set to see processing messages. (default: False)'
+  - names:
+      - --outFileName
+      - -o
+    argument: FILENAME
+    description: 'Output file name. (default: None)'
+  - names:
+      - --outFileFormat
+      - -of
+    argument: '{bigwig,bedgraph}'
+    description: 'Output file type. Either "bigwig" or "bedgraph". (default: bigwig)'
+  - names:
+      - --deepBlueURL
+    argument: DEEPBLUEURL
+    description: 'For remote files bedgraph/wiggle files hosted on deepBlue, this specifies the server URL. The default is "http://deepblue.mpi-inf.mpg.de/xmlrpc", which should not be changed without good reason. (default: http://deepblue.mpi-inf.mpg.de/xmlrpc)'
+  - names:
+      - --userKey
+    argument: USERKEY
+    description: 'For remote files bedgraph/wiggle files hosted on deepBlue, this specifies the user key to use for access. The default is "anonymous_key", which suffices for public datasets. If you need access to a restricted access/private dataset, then request a key from deepBlue and specify it here. (default: anonymous_key)'
+  - names:
+      - --deepBlueTempDir
+    argument: DEEPBLUETEMPDIR
+    description: 'If specified, temporary files from preloading datasets from deepBlue will be written here (note, this directory must exist). If not specified, where ever temporary files would normally be written on your system is used. (default: None)'
+  - names:
+      - --deepBlueKeepTemp
+    argument: ""
+    description: 'If specified, temporary bigWig files from preloading deepBlue datasets are not deleted. A message will be printed noting where these files are and what sample they correspond to. These can then be used if you wish to analyse the same sample with the same regions again. (default: False)'
+version: bigwigCompare 3.5.1

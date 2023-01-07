@@ -1,0 +1,199 @@
+name: multiBigwigSummary
+description: computes the average scores for each of the files in every genomic region
+usage: multiBigwigSummary [-h] [--version]  ...
+options:
+  - names:
+      - -h
+      - --help
+    argument: ""
+    description: show this help message and exit
+  - names:
+      - --version
+    argument: ""
+    description: show program's version number and exit
+subcommands:
+  - name: bins
+    description: The average score is based on equally sized bins (10 kilobases by default), which consecutively cover the entire genome.
+    usage: multiBigwigSummary bins -b file1.bw file2.bw -o results.npz
+    options:
+      - names:
+          - --bwfiles
+          - -b
+        argument: FILE1 FILE2 [FILE1 FILE2 ...]
+        description: 'List of bigWig files, separated by spaces. (default: None)'
+      - names:
+          - --outFileName
+          - -out
+          - -o
+        argument: OUTFILENAME
+        description: 'File name to save the compressed matrix file (npz format) needed by the "plotPCA" and "plotCorrelation" tools. (default: None)'
+      - names:
+          - --help
+          - -h
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --labels
+          - -l
+        argument: sample1 sample2 [sample1 sample2 ...]
+        description: 'User defined labels instead of default labels from file names. Multiple labels have to be separated by spaces, e.g., --labels sample1 sample2 sample3 (default: None)'
+      - names:
+          - --smartLabels
+        argument: ""
+        description: 'Instead of manually specifying labels for the input bigWig files, this causes deepTools to use the file name after removing the path and extension. (default: False)'
+      - names:
+          - --chromosomesToSkip
+        argument: chr1 chr2 [chr1 chr2 ...]
+        description: 'List of chromosomes that you do not want to be included. Useful to remove "random" or "extra" chr. (default: None)'
+      - names:
+          - --binSize
+          - -bs
+        argument: INT
+        description: 'Size (in bases) of the windows sampled from the genome. (Default: 10000)'
+      - names:
+          - --distanceBetweenBins
+          - -n
+        argument: INT
+        description: 'By default, multiBigwigSummary considers adjacent bins of the specified --binSize. However, to reduce the computation time, a larger distance between bins can be given. Larger distances results in fewer considered bins. (Default: 0)'
+      - names:
+          - --version
+        argument: ""
+        description: show program's version number and exit
+      - names:
+          - --region
+          - -r
+        argument: CHR:START:END
+        description: 'Region of the genome to limit the operation to - this is useful when testing parameters to reduce the computing time. The format is chr:start:end, for example --region chr10 or --region chr10:456700:891000. (default: None)'
+      - names:
+          - --blackListFileName
+          - -bl
+        argument: BED file [BED file ...]
+        description: 'A BED or GTF file containing regions that should be excluded from all analyses. Currently this works by rejecting genomic chunks that happen to overlap an entry. Consequently, for BAM files, if a read partially overlaps a blacklisted region or a fragment spans over it, then the read/fragment might still be considered. Please note that you should adjust the effective genome size, if relevant. (default: None)'
+      - names:
+          - --numberOfProcessors
+          - -p
+        argument: INT
+        description: 'Number of processors to use. Type "max/2" to use half the maximum number of processors or "max" to use all available processors. (Default: 1)'
+      - names:
+          - --verbose
+          - -v
+        argument: ""
+        description: 'Set to see processing messages. (default: False)'
+      - names:
+          - --outRawCounts
+        argument: FILE
+        description: 'Save average scores per region for each bigWig file to a single tab-delimited file. (default: None)'
+      - names:
+          - --deepBlueURL
+        argument: DEEPBLUEURL
+        description: 'For remote files bedgraph/wiggle files hosted on deepBlue, this specifies the server URL. The default is "http://deepblue.mpi-inf.mpg.de/xmlrpc", which should not be changed without good reason. (default: http://deepblue.mpi-inf.mpg.de/xmlrpc)'
+      - names:
+          - --userKey
+        argument: USERKEY
+        description: 'For remote files bedgraph/wiggle files hosted on deepBlue, this specifies the user key to use for access. The default is "anonymous_key", which suffices for public datasets. If you need access to a restricted access/private dataset, then request a key from deepBlue and specify it here. (default: anonymous_key)'
+      - names:
+          - --deepBlueTempDir
+        argument: DEEPBLUETEMPDIR
+        description: 'If specified, temporary files from preloading datasets from deepBlue will be written here (note, this directory must exist). If not specified, where ever temporary files would normally be written on your system is used. (default: None)'
+      - names:
+          - --deepBlueKeepTemp
+        argument: ""
+        description: 'If specified, temporary bigWig files from preloading deepBlue datasets are not deleted. A message will be printed noting where these files are and what sample they correspond to. These can then be used if you wish to analyse the same sample with the same regions again. (default: False)'
+  - name: BED-file
+    description: The user provides a BED file that contains all regions that should be considered for the analysis.
+    usage: multiBigwigSummary BED-file -b file1.bw file2.bw -o results.npz --BED selection.bed
+    options:
+      - names:
+          - --bwfiles
+          - -b
+        argument: FILE1 FILE2 [FILE1 FILE2 ...]
+        description: 'List of bigWig files, separated by spaces. (default: None)'
+      - names:
+          - --outFileName
+          - -out
+          - -o
+        argument: OUTFILENAME
+        description: 'File name to save the compressed matrix file (npz format) needed by the "plotPCA" and "plotCorrelation" tools. (default: None)'
+      - names:
+          - --BED
+        argument: file1.bed file2.bed [file1.bed file2.bed ...]
+        description: 'Limits the analysis to the regions specified in this file. (default: None)'
+      - names:
+          - --help
+          - -h
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --labels
+          - -l
+        argument: sample1 sample2 [sample1 sample2 ...]
+        description: 'User defined labels instead of default labels from file names. Multiple labels have to be separated by spaces, e.g., --labels sample1 sample2 sample3 (default: None)'
+      - names:
+          - --smartLabels
+        argument: ""
+        description: 'Instead of manually specifying labels for the input bigWig files, this causes deepTools to use the file name after removing the path and extension. (default: False)'
+      - names:
+          - --chromosomesToSkip
+        argument: chr1 chr2 [chr1 chr2 ...]
+        description: 'List of chromosomes that you do not want to be included. Useful to remove "random" or "extra" chr. (default: None)'
+      - names:
+          - --version
+        argument: ""
+        description: show program's version number and exit
+      - names:
+          - --region
+          - -r
+        argument: CHR:START:END
+        description: 'Region of the genome to limit the operation to - this is useful when testing parameters to reduce the computing time. The format is chr:start:end, for example --region chr10 or --region chr10:456700:891000. (default: None)'
+      - names:
+          - --blackListFileName
+          - -bl
+        argument: BED file [BED file ...]
+        description: 'A BED or GTF file containing regions that should be excluded from all analyses. Currently this works by rejecting genomic chunks that happen to overlap an entry. Consequently, for BAM files, if a read partially overlaps a blacklisted region or a fragment spans over it, then the read/fragment might still be considered. Please note that you should adjust the effective genome size, if relevant. (default: None)'
+      - names:
+          - --numberOfProcessors
+          - -p
+        argument: INT
+        description: 'Number of processors to use. Type "max/2" to use half the maximum number of processors or "max" to use all available processors. (Default: 1)'
+      - names:
+          - --verbose
+          - -v
+        argument: ""
+        description: 'Set to see processing messages. (default: False)'
+      - names:
+          - --outRawCounts
+        argument: FILE
+        description: 'Save average scores per region for each bigWig file to a single tab-delimited file. (default: None)'
+      - names:
+          - --metagene
+        argument: ""
+        description: 'When either a BED12 or GTF file are used to provide regions, perform the computation on the merged exons, rather than using the genomic interval defined by the 5-prime and 3-prime most transcript bound (i.e., columns 2 and 3 of a BED file). If a BED3 or BED6 file is used as input, then columns 2 and 3 are used as an exon. (Default: False)'
+      - names:
+          - --transcriptID
+        argument: TRANSCRIPTID
+        description: 'When a GTF file is used to provide regions, only entries with this value as their feature (column 3) will be processed as transcripts. (Default: transcript)'
+      - names:
+          - --exonID
+        argument: EXONID
+        description: 'When a GTF file is used to provide regions, only entries with this value as their feature (column 3) will be processed as exons. CDS would be another common value for this. (Default: exon)'
+      - names:
+          - --transcript_id_designator
+        argument: TRANSCRIPT_ID_DESIGNATOR
+        description: 'Each region has an ID (e.g., ACTB) assigned to it, which for BED files is either column 4 (if it exists) or the interval bounds. For GTF files this is instead stored in the last column as a key:value pair (e.g., as ''transcript_id "ACTB"'', for a key of transcript_id and a value of ACTB). In some cases it can be convenient to use a different identifier. To do so, set this to the desired key. (Default: transcript_id)'
+      - names:
+          - --deepBlueURL
+        argument: DEEPBLUEURL
+        description: 'For remote files bedgraph/wiggle files hosted on deepBlue, this specifies the server URL. The default is "http://deepblue.mpi-inf.mpg.de/xmlrpc", which should not be changed without good reason. (default: http://deepblue.mpi-inf.mpg.de/xmlrpc)'
+      - names:
+          - --userKey
+        argument: USERKEY
+        description: 'For remote files bedgraph/wiggle files hosted on deepBlue, this specifies the user key to use for access. The default is "anonymous_key", which suffices for public datasets. If you need access to a restricted access/private dataset, then request a key from deepBlue and specify it here. (default: anonymous_key)'
+      - names:
+          - --deepBlueTempDir
+        argument: DEEPBLUETEMPDIR
+        description: 'If specified, temporary files from preloading datasets from deepBlue will be written here (note, this directory must exist). If not specified, where ever temporary files would normally be written on your system is used. (default: None)'
+      - names:
+          - --deepBlueKeepTemp
+        argument: ""
+        description: 'If specified, temporary bigWig files from preloading deepBlue datasets are not deleted. A message will be printed noting where these files are and what sample they correspond to. These can then be used if you wish to analyse the same sample with the same regions again. (default: False)'
+version: multiBigwigSummary 3.5.1

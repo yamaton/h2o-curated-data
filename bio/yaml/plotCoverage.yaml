@@ -1,0 +1,128 @@
+name: plotCoverage
+description: plot and assess the sequencing depth of a given sample
+usage: plotCoverage --bamfiles FILE1 FILE2 [FILE1 FILE2 ...] [--help] [--plotFile PLOTFILE] [--labels sample1 sample2 [sample1 sample2 ...]] [--smartLabels] [--plotTitle PLOTTITLE] [--skipZeros] [--numberOfSamples NUMBEROFSAMPLES] [--BED FILE1.bed FILE2.bed [FILE1.bed FILE2.bed ...]] [--outRawCounts FILE] [--outCoverageMetrics FILE] [--coverageThresholds COVERAGETHRESHOLDS] [--plotHeight PLOTHEIGHT] [--plotWidth PLOTWIDTH] [--plotFileFormat FILETYPE] [--region CHR:START:END] [--blackListFileName BED file [BED file ...]] [--numberOfProcessors INT] [--verbose] [--extendReads [INT bp]] [--ignoreDuplicates] [--minMappingQuality INT] [--centerReads] [--samFlagInclude INT] [--samFlagExclude INT] [--minFragmentLength INT] [--maxFragmentLength INT] [--version]
+options:
+  - names:
+      - --version
+    argument: ""
+    description: show program's version number and exit
+  - names:
+      - --bamfiles
+    argument: FILE1 FILE2
+    description: '[FILE1 FILE2 ...], -b FILE1 FILE2 [FILE1 FILE2 ...] List of indexed BAM files separated by spaces.'
+  - names:
+      - --help
+      - -h
+    argument: ""
+    description: show this help message and exit
+  - names:
+      - --plotFile
+      - -o
+    argument: PLOTFILE
+    description: File name to save the plot to.
+  - names:
+      - --labels
+      - -l
+    argument: sample1 sample2 [sample1 sample2 ...]
+    description: User defined labels instead of default labels from file names. Multiple labels have to be separated by spaces, e.g. --labels sample1 sample2 sample3
+  - names:
+      - --smartLabels
+    argument: ""
+    description: Instead of manually specifying labels for the input BAM files, this causes deepTools to use the file name after removing the path and extension.
+  - names:
+      - --plotTitle
+      - -T
+    argument: PLOTTITLE
+    description: 'Title of the plot, to be printed on top of the generated image. Leave blank for no title. (Default: )'
+  - names:
+      - --skipZeros
+    argument: ""
+    description: By setting this option, genomic regions that have zero or nan values in _all_ samples are excluded.
+  - names:
+      - --numberOfSamples
+      - -n
+    argument: NUMBEROFSAMPLES
+    description: 'Number of 1 bp regions to sample. (Default: 1000000)'
+  - names:
+      - --BED
+    argument: FILE1.bed FILE2.bed [FILE1.bed FILE2.bed ...]
+    description: Limits the coverage analysis to the regions specified in these files. This overrides --numberOfSamples. Due to memory requirements, it is inadvised to combine this with --outRawCounts or many tens of thousands of regions, as per-base coverage is used!
+  - names:
+      - --outRawCounts
+    argument: FILE
+    description: Save raw counts (coverages) to file.
+  - names:
+      - --outCoverageMetrics
+    argument: FILE
+    description: Save percentage of bins/regions above the specified thresholds to the specified file. The coverage thresholds are specified by --coverageThresholds. If no coverage thresholds are specified, the file will be empty.
+  - names:
+      - --coverageThresholds
+      - -ct
+    argument: COVERAGETHRESHOLDS
+    description: The percentage of reported bins/regions with signal at least as high as the given threshold. This can be specified multiple times.
+  - names:
+      - --plotHeight
+    argument: PLOTHEIGHT
+    description: 'Plot height in cm. (Default: 5.0)'
+  - names:
+      - --plotWidth
+    argument: PLOTWIDTH
+    description: 'Plot width in cm. The minimum value is 1 cm. (Default: 15.0)'
+  - names:
+      - --plotFileFormat
+    argument: FILETYPE
+    description: 'Image format type. If given, this option overrides the image format based on the plotFile ending. The available options are: png, eps, pdf, svg and plotly.'
+  - names:
+      - --region
+      - -r
+    argument: CHR:START:END
+    description: Region of the genome to limit the operation to - this is useful when testing parameters to reduce the computing time. The format is chr:start:end, for example --region chr10 or --region chr10:456700:891000.
+  - names:
+      - --blackListFileName
+      - -bl
+    argument: BED file [BED file ...]
+    description: A BED or GTF file containing regions that should be excluded from all analyses. Currently this works by rejecting genomic chunks that happen to overlap an entry. Consequently, for BAM files, if a read partially overlaps a blacklisted region or a fragment spans over it, then the read/fragment might still be considered. Please note that you should adjust the effective genome size, if relevant.
+  - names:
+      - --numberOfProcessors
+      - -p
+    argument: INT
+    description: 'Number of processors to use. Type "max/2" to use half the maximum number of processors or "max" to use all available processors. (Default: 1)'
+  - names:
+      - --verbose
+      - -v
+    argument: ""
+    description: Set to see processing messages.
+  - names:
+      - --extendReads
+      - -e
+    argument: '[INT bp]'
+    description: 'This parameter allows the extension of reads to fragment size. If set, each read is extended, without exception. *NOTE*: This feature is generally NOT recommended for spliced-read data, such as RNA-seq, as it would extend reads over skipped regions. *Single-end*: Requires a user specified value for the final fragment length. Reads that already exceed this fragment length will not be extended. *Paired-end*: Reads with mates are always extended to match the fragment size defined by the two read mates. Unmated reads, mate reads that map too far apart (>4x fragment length) or even map to different chromosomes are treated like single-end reads. The input of a fragment length value is optional. If no value is specified, it is estimated from the data (mean of the fragment size of all mate reads).'
+  - names:
+      - --ignoreDuplicates
+    argument: ""
+    description: If set, reads that have the same orientation and start position will be considered only once. If reads are paired, the mate's position also has to coincide to ignore a read.
+  - names:
+      - --minMappingQuality
+    argument: INT
+    description: If set, only reads that have a mapping quality score of at least this are considered.
+  - names:
+      - --centerReads
+    argument: ""
+    description: By adding this option, reads are centered with respect to the fragment length. For paired-end data, the read is centered at the fragment length defined by the two ends of the fragment. For single-end data, the given fragment length is used. This option is useful to get a sharper signal around enriched regions.
+  - names:
+      - --samFlagInclude
+    argument: INT
+    description: 'Include reads based on the SAM flag. For example, to get only reads that are the first mate, use a flag of 64. This is useful to count properly paired reads only once, as otherwise the second mate will be also considered for the coverage. (Default: None)'
+  - names:
+      - --samFlagExclude
+    argument: INT
+    description: 'Exclude reads based on the SAM flag. For example, to get only reads that map to the forward strand, use --samFlagExclude 16, where 16 is the SAM flag for reads that map to the reverse strand. (Default: None)'
+  - names:
+      - --minFragmentLength
+    argument: INT
+    description: 'The minimum fragment length needed for read/pair inclusion. This option is primarily useful in ATACseq experiments, for filtering mono- or di-nucleosome fragments. (Default: 0)'
+  - names:
+      - --maxFragmentLength
+    argument: INT
+    description: 'The maximum fragment length needed for read/pair inclusion. (Default: 0)'
+version: plotCoverage 3.5.1

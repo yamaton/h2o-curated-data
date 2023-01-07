@@ -1,0 +1,193 @@
+name: RepeatMasker
+description: Mask repetitive DNA
+usage: RepeatMasker [-options] <seqfiles(s) in fasta format>
+options:
+  - names:
+      - -h
+      - -help
+    argument: ""
+    description: Detailed help
+  - names:
+      - -e
+      - -engine
+    argument: '[crossmatch|wublast|abblast|ncbi|rmblast|hmmer]'
+    description: 'Use an alternate search engine to the default. Note: ''ncbi'' and ''rmblast'' are both aliases for the rmblastn search engine engine. The generic NCBI blastn program is not sensitive enough for use with RepeatMasker at this time.'
+  - names:
+      - -par
+      - -parallel
+    argument: '[number]'
+    description: 'The number of sequence batch jobs [50kb minimum] to run in parallel. RepeatMasker will fork off this number of parallel jobs, each running the search engine specified. For each search engine invocation ( where applicable ) a fixed the number of cores/threads is used:'
+  - names:
+      - -s
+    argument: ""
+    description: Slow search; 0-5% more sensitive, 2-3 times slower than default
+  - names:
+      - -q
+    argument: ""
+    description: Quick search; 5-10% less sensitive, 2-5 times faster than default
+  - names:
+      - -qq
+    argument: ""
+    description: Rush job; about 10% less sensitive, 4->10 times faster than default (quick searches are fine under most circumstances) repeat options
+  - names:
+      - -nolow
+    argument: ""
+    description: Does not mask low_complexity DNA or simple repeats
+  - names:
+      - -noint
+    argument: ""
+    description: Only masks low complex/simple repeats (no interspersed repeats)
+  - names:
+      - -norna
+    argument: ""
+    description: Does not mask small RNA (pseudo) genes
+  - names:
+      - -alu
+    argument: ""
+    description: Only masks Alus (and 7SLRNA, SVA and LTR5)(only for primate DNA)
+  - names:
+      - -div
+    argument: '[number]'
+    description: Masks only those repeats < x percent diverged from consensus seq
+  - names:
+      - -lib
+    argument: '[filename]'
+    description: Allows use of a custom library (e.g. from another species)
+  - names:
+      - -cutoff
+    argument: '[number]'
+    description: Sets cutoff score for masking repeats when using -lib (default 225)
+  - names:
+      - -species
+    argument: <query species>
+    description: Specify the species or clade of the input sequence. The species name must be a valid NCBI Taxonomy Database species name and be contained in the RepeatMasker repeat database.
+  - names:
+      - -is_only
+    argument: ""
+    description: Only clips E coli insertion elements out of fasta and .qual files
+  - names:
+      - -is_clip
+    argument: ""
+    description: 'Clips IS elements before analysis (default: IS only reported)'
+  - names:
+      - -no_is
+    argument: ""
+    description: Skips bacterial insertion element check
+  - names:
+      - -gc
+    argument: '[number]'
+    description: Use matrices calculated for 'number' percentage background GC level
+  - names:
+      - -gccalc
+    argument: ""
+    description: RepeatMasker calculates the GC content even for batch files/small seqs
+  - names:
+      - -frag
+    argument: '[number]'
+    description: Maximum sequence length masked without fragmenting (default 60000)
+  - names:
+      - -nocut
+    argument: ""
+    description: Skips the steps in which repeats are excised
+  - names:
+      - -noisy
+    argument: ""
+    description: Prints search engine progress report to screen (defaults to .stderr file)
+  - names:
+      - -nopost
+    argument: ""
+    description: 'Do not postprocess the results of the run ( i.e. call ProcessRepeats). NOTE: This options should only be used when ProcessRepeats will be run manually on the results.'
+  - names:
+      - -dir
+    argument: '[directory name]'
+    description: Writes output to this directory (default is query file directory, "-dir ." will write to current directory).
+  - names:
+      - -a
+      - -alignments
+    argument: ""
+    description: Writes alignments in .align output file
+  - names:
+      - -inv
+    argument: ""
+    description: Alignments are presented in the orientation of the repeat (with option -a)
+  - names:
+      - -lcambig
+    argument: ""
+    description: Outputs ambiguous DNA transposon fragments using a lower case name. All other repeats are listed in upper case. Ambiguous fragments match multiple repeat elements and can only be called based on flanking repeat information.
+  - names:
+      - -small
+    argument: ""
+    description: Returns complete .masked sequence in lower case
+  - names:
+      - -xsmall
+    argument: ""
+    description: Returns repetitive regions in lowercase (rest capitals) rather than masked
+  - names:
+      - -x
+    argument: ""
+    description: Returns repetitive regions masked with Xs rather than Ns
+  - names:
+      - -poly
+    argument: ""
+    description: Reports simple repeats that may be polymorphic (in file.poly)
+  - names:
+      - -source
+    argument: ""
+    description: Includes for each annotation the HSP "evidence". Currently this option is only available with the "-html" output format listed below.
+  - names:
+      - -html
+    argument: ""
+    description: Creates an additional output file in xhtml format.
+  - names:
+      - -ace
+    argument: ""
+    description: Creates an additional output file in ACeDB format
+  - names:
+      - -gff
+    argument: ""
+    description: Creates an additional Gene Feature Finding format output
+  - names:
+      - -u
+    argument: ""
+    description: Creates an additional annotation file not processed by ProcessRepeats
+  - names:
+      - -xm
+    argument: ""
+    description: Creates an additional output file in cross_match format (for parsing)
+  - names:
+      - -no_id
+    argument: ""
+    description: Leaves out final column with unique ID for each element (was default)
+  - names:
+      - -e
+    argument: (xcln)
+    description: Calculates repeat densities (in .tbl) excluding runs of >=20 N/Xs in the query
+  - names:
+      - -default_search_engine
+    argument: <string>
+    description: The default search engine to use
+  - names:
+      - -hmmer_dir
+    argument: <string>
+    description: The path to the HMMER profile HMM search software.
+  - names:
+      - -abblast_dir
+    argument: <string>
+    description: The path to the installation of the ABBLAST sequence alignment program.
+  - names:
+      - -libdir
+    argument: <string>
+    description: Path to the RepeatMasker libraries directory.
+  - names:
+      - -rmblast_dir
+    argument: <string>
+    description: The path to the installation of the RMBLAST sequence alignment program.
+  - names:
+      - -crossmatch_dir
+    argument: <string>
+    description: The path Phil Green's cross_match program ( phrap program suite ).
+  - names:
+      - -trf_prgm
+    argument: <string>
+    description: The full path including the name for the TRF program.
+version: 4.1.2-p1

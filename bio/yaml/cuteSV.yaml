@@ -1,0 +1,140 @@
+name: cuteSV
+description: Long read based human genomic structural variation detection
+usage: "cuteSV [-h] [--version] [-t THREADS] [-b BATCHES] [-S SAMPLE] [--retain_work_dir] [--report_readid] [-p MAX_SPLIT_PARTS] [-q MIN_MAPQ] [-r MIN_READ_LEN] [-md MERGE_DEL_THRESHOLD] [-mi MERGE_INS_THRESHOLD] [-s MIN_SUPPORT] [-l MIN_SIZE] [-L MAX_SIZE] [-sl MIN_SIGLENGTH] [--genotype] [--gt_round GT_ROUND] [-Ivcf IVCF] [--max_cluster_bias_INS MAX_CLUSTER_BIAS_INS] [--diff_ratio_merging_INS DIFF_RATIO_MERGING_INS] [--max_cluster_bias_DEL MAX_CLUSTER_BIAS_DEL] [--diff_ratio_merging_DEL DIFF_RATIO_MERGING_DEL] [--max_cluster_bias_INV MAX_CLUSTER_BIAS_INV] [--max_cluster_bias_DUP MAX_CLUSTER_BIAS_DUP] [--max_cluster_bias_TRA MAX_CLUSTER_BIAS_TRA] [--diff_ratio_filtering_TRA DIFF_RATIO_FILTERING_TRA] [--remain_reads_ratio REMAIN_READS_RATIO] [BAM] reference output work_dir"
+positionalArguments:
+  - name: '[BAM]'
+    description: Sorted .bam file from NGMLR or Minimap2.
+  - name: reference
+    description: The reference genome in fasta format.
+  - name: output
+    description: Output VCF format file.
+  - name: work_dir
+    description: Work-directory for distributed jobs
+options:
+  - names:
+      - -h
+      - --help
+    argument: ""
+    description: show this help message and exit
+  - names:
+      - --version
+      - -v
+    argument: ""
+    description: show program's version number and exit
+  - names:
+      - -t
+      - --threads
+    argument: THREADS
+    description: Number of threads to use.[16]
+  - names:
+      - -b
+      - --batches
+    argument: BATCHES
+    description: Batch of genome segmentation interval.[10000000]
+  - names:
+      - -S
+      - --sample
+    argument: SAMPLE
+    description: Sample name/id
+  - names:
+      - --retain_work_dir
+    argument: ""
+    description: Enable to retain temporary folder and files.
+  - names:
+      - --report_readid
+    argument: ""
+    description: Enable to report supporting read ids for each SV.
+  - names:
+      - -p
+      - --max_split_parts
+    argument: MAX_SPLIT_PARTS
+    description: Maximum number of split segments a read may be aligned before it is ignored. All split segments are considered when using -1. (Recommand -1 when applying assembly-based alignment.)[7]
+  - names:
+      - -q
+      - --min_mapq
+    argument: MIN_MAPQ
+    description: Minimum mapping quality value of alignment to be taken into account.[20]
+  - names:
+      - -r
+      - --min_read_len
+    argument: MIN_READ_LEN
+    description: Ignores reads that only report alignments with not longer than bp.[500]
+  - names:
+      - -md
+      - --merge_del_threshold
+    argument: MERGE_DEL_THRESHOLD
+    description: Maximum distance of deletion signals to be merged. In our paper, I used -md 500 to process HG002 real human sample data.[0]
+  - names:
+      - -mi
+      - --merge_ins_threshold
+    argument: MERGE_INS_THRESHOLD
+    description: Maximum distance of insertion signals to be merged. In our paper, I used -mi 500 to process HG002 real human sample data.[100]
+  - names:
+      - -s
+      - --min_support
+    argument: MIN_SUPPORT
+    description: Minimum number of reads that support a SV to be reported.[10]
+  - names:
+      - -l
+      - --min_size
+    argument: MIN_SIZE
+    description: Minimum size of SV to be reported.[30]
+  - names:
+      - -L
+      - --max_size
+    argument: MAX_SIZE
+    description: Maximum size of SV to be reported. All SVs are reported when using -1. [100000]
+  - names:
+      - -sl
+      - --min_siglength
+    argument: MIN_SIGLENGTH
+    description: Minimum length of SV signal to be extracted.[10]
+  - names:
+      - --genotype
+    argument: ""
+    description: Enable to generate genotypes.
+  - names:
+      - --gt_round
+    argument: GT_ROUND
+    description: Maximum round of iteration for alignments searching if perform genotyping.[500]
+  - names:
+      - -Ivcf
+    argument: IVCF
+    description: Optional given vcf file. Enable to perform force calling. [NULL]
+  - names:
+      - --max_cluster_bias_INS
+    argument: MAX_CLUSTER_BIAS_INS
+    description: Maximum distance to cluster read together for insertion.[100]
+  - names:
+      - --diff_ratio_merging_INS
+    argument: DIFF_RATIO_MERGING_INS
+    description: Do not merge breakpoints with basepair identity more than [0.3] for insertion.
+  - names:
+      - --max_cluster_bias_DEL
+    argument: MAX_CLUSTER_BIAS_DEL
+    description: Maximum distance to cluster read together for deletion.[200]
+  - names:
+      - --diff_ratio_merging_DEL
+    argument: DIFF_RATIO_MERGING_DEL
+    description: Do not merge breakpoints with basepair identity more than [0.5] for deletion.
+  - names:
+      - --max_cluster_bias_INV
+    argument: MAX_CLUSTER_BIAS_INV
+    description: Maximum distance to cluster read together for inversion.[500]
+  - names:
+      - --max_cluster_bias_DUP
+    argument: MAX_CLUSTER_BIAS_DUP
+    description: Maximum distance to cluster read together for duplication.[500]
+  - names:
+      - --max_cluster_bias_TRA
+    argument: MAX_CLUSTER_BIAS_TRA
+    description: Maximum distance to cluster read together for translocation.[50]
+  - names:
+      - --diff_ratio_filtering_TRA
+    argument: DIFF_RATIO_FILTERING_TRA
+    description: Filter breakpoints with basepair identity less than [0.6] for translocation.
+  - names:
+      - --remain_reads_ratio
+    argument: REMAIN_READS_RATIO
+    description: The ratio of reads remained in cluster. Set lower when the alignment data have high quality but recommand over 0.5.[1.0]
+version: cuteSV 2.0.2

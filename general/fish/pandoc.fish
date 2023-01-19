@@ -1,7 +1,7 @@
 # Auto-generated with h2o
 
-complete -c pandoc -s "f" -s "r" -l "from" -l "read" -d "Specify input format" -x
-complete -c pandoc -s "t" -s "w" -l "to" -l "write" -d "Specify output format" -x
+complete -c pandoc -s "f" -s "r" -l "from" -l "read" -d "Specify input format." -x
+complete -c pandoc -s "t" -s "w" -l "to" -l "write" -d "Specify output format." -x
 complete -c pandoc -s "o" -l "output" -d "Write output to FILE instead of stdout." -r
 complete -c pandoc -l "data-dir" -d "Specify the user data directory to search for pandoc data files." -r
 complete -c pandoc -s "d" -l "defaults" -d "Specify a set of default option settings." -r
@@ -81,7 +81,7 @@ complete -c pandoc -l "epub-embed-font" -d "Embed the specified font in the EPUB
 complete -c pandoc -l "epub-chapter-level" -d "Specify the heading level at which to split the EPUB into separate \8220chapter\8221 files." -r
 complete -c pandoc -l "epub-subdirectory" -d "Specify the subdirectory in the OCF container that is to hold the EPUB-specific contents." -r
 complete -c pandoc -l "ipynb-output" -d "Determines how ipynb output cells are treated." -x
-complete -c pandoc -l "pdf-engine" -d "Use the specified engine when producing PDF output." -x
+complete -c pandoc -l "pdf-engine" -d "Use the specified engine when producing PDF output." -r
 complete -c pandoc -l "pdf-engine-opt" -d "Use the given string as a command-line argument to the pdf-engine." -r
 complete -c pandoc -s "C" -l "citeproc" -d "Process the citations in the file, replacing them with rendered citations and adding a bibliography."
 complete -c pandoc -l "bibliography" -d "Set the bibliography field in the document\8217s metadata to FILE, overriding any value set in the metadata." -r

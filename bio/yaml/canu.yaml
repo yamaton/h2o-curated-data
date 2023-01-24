@@ -1,19 +1,19 @@
 name: canu
-description: canu
+description: A single molecule sequence assembler for genomes large and small.
 usage: |-
   canu [-version] [-citation] \
        [-haplotype | -correct | -trim | -assemble | -trim-assemble] \
        [-s <assembly-specifications-file>] \
-         -p <assembly-prefix> \
-         -d <assembly-directory> \
+        -p <assembly-prefix> \
+        -d <assembly-directory> \
          genomeSize=<number>[g|m|k] \
        [other-options] \
        [-haplotype{NAME} illumina.fastq.gz] \
        [-corrected] \
        [-trimmed] \
        [-pacbio |
-         -nanopore |
-         -pacbio-hifi] file1 file2 ...
+        -nanopore |
+        -pacbio-hifi] file1 file2 ...
 options:
   - names:
       - -p
@@ -70,4 +70,1116 @@ options:
       - -pacbio-hifi
     argument: <files>
     description: Specify PacBio HiFi fasta/fastq
+  - names:
+      - -batMemory
+    argument: ""
+    description: Approximate maximum memory usage, in gigabytes, default is the maxMemory limit
+  - names:
+      - -batOptions
+    argument: ""
+    description: Advanced options to bogart
+  - names:
+      - -batStageSpace
+    argument: ""
+    description: Amount of local disk space needed to stage data for unitig construction jobs
+  - names:
+      - -batThreads
+    argument: ""
+    description: Number of threads to use; default is the maxThreads limit
+  - names:
+      - -cnsConcurrency
+    argument: ""
+    description: If grid not enabled, number of unitig consensus jobs to run at the same time; default is n_proc / n_threads
+  - names:
+      - -cnsConsensus
+    argument: ""
+    description: Which consensus algorithm to use; 'pbdagcon' (fast, reliable); 'utgcns' (multialignment output); 'quick' (single read mosaic); default 'pbdagcon'
+  - names:
+      - -cnsErrorRate
+    argument: ""
+    description: Consensus expects alignments at about this error rate
+  - names:
+      - -cnsMaxCoverage
+    argument: ""
+    description: Limit unitig consensus to at most this coverage; default '40' = unlimited
+  - names:
+      - -cnsMemory
+    argument: ""
+    description: Amount of memory, in gigabytes, to use for unitig consensus jobs
+  - names:
+      - -cnsPartitions
+    argument: ""
+    description: Attempt to create this many consensus jobs; default '0' = based on the largest tig
+  - names:
+      - -cnsStageSpace
+    argument: ""
+    description: Amount of local disk space needed to stage data for unitig consensus jobs
+  - names:
+      - -cnsThreads
+    argument: ""
+    description: Number of threads to use for unitig consensus jobs
+  - names:
+      - -contigFilter
+    argument: ""
+    description: 'Parameters to filter out ''unassembled'' unitigs. Five values: minReads minLength singleReadSpan lowCovFraction lowCovDepth'
+  - names:
+      - -corConcurrency
+    argument: ""
+    description: If grid not enabled, number of read correction jobs to run at the same time; default is n_proc / n_threads
+  - names:
+      - -corConsensus
+    argument: ""
+    description: Which consensus algorithm to use; only 'falcon' is supported; default 'falcon'
+  - names:
+      - -corErrorRate
+    argument: ""
+    description: Only use raw alignments below this error rate to construct corrected reads
+  - names:
+      - -corFilter
+    argument: ""
+    description: Method to filter short reads from correction; 'quick' or 'expensive'; default 'expensive'
+  - names:
+      - -corMaxEvidenceCoverageGlobal
+    argument: ""
+    description: 'Limit reads used for correction to supporting at most this coverage; default: ''1.0x'' = 1.0 * estimated coverage'
+  - names:
+      - -corMaxEvidenceCoverageLocal
+    argument: ""
+    description: 'Limit reads being corrected to at most this much evidence coverage; default: ''2.0x'' = 2.0 * estimated coverage'
+  - names:
+      - -corMaxEvidenceErate
+    argument: ""
+    description: 'Limit read correction to only overlaps at or below this fraction error; default: unlimited'
+  - names:
+      - -corMemory
+    argument: ""
+    description: Amount of memory, in gigabytes, to use for read correction jobs
+  - names:
+      - -corMhapBlockSize
+    argument: ""
+    description: Number of reads per GB of memory allowed (mhapMemory)
+  - names:
+      - -cormhapConcurrency
+    argument: ""
+    description: If grid not enabled, number of mhap overlaps for correction jobs to run at the same time; default is n_proc / n_threads
+  - names:
+      - -corMhapFilterThreshold
+    argument: ""
+    description: Value between 0 and 1. kmers which comprise more than this percentage of the input are downweighted
+  - names:
+      - -corMhapFilterUnique
+    argument: ""
+    description: 'Expert option: True or false, supress the low-frequency k-mer distribution based on them being likely noise and not true overlaps. Threshold auto-computed based on error rate and coverage.'
+  - names:
+      - -cormhapMemory
+    argument: ""
+    description: Amount of memory, in gigabytes, to use for mhap overlaps for correction jobs
+  - names:
+      - -corMhapMerSize
+    argument: ""
+    description: K-mer size for seeds in mhap
+  - names:
+      - -corMhapNoTf
+    argument: ""
+    description: 'Expert option: True or false, do not use tf weighting, only idf of tf-idf.'
+  - names:
+      - -corMhapOptions
+    argument: ""
+    description: 'Expert option: free-form parameters to pass to MHAP.'
+  - names:
+      - -corMhapOrderedMerSize
+    argument: ""
+    description: K-mer size for second-stage filter in mhap
+  - names:
+      - -corMhapPipe
+    argument: ""
+    description: Report results to a pipe instead of *large* files.
+  - names:
+      - -corMhapSensitivity
+    argument: ""
+    description: 'Coarse sensitivity level: ''low'', ''normal'' or ''high''. Set automatically based on coverage; ''high'' <= 30x < ''normal'' < 60x <= ''low'''
+  - names:
+      - -cormhapStageSpace
+    argument: ""
+    description: Amount of local disk space needed to stage data for mhap overlaps for correction jobs
+  - names:
+      - -cormhapThreads
+    argument: ""
+    description: Number of threads to use for mhap overlaps for correction jobs
+  - names:
+      - -corMhapVersion
+    argument: ""
+    description: Version of the MHAP jar file to use
+  - names:
+      - -corMinCoverage
+    argument: ""
+    description: 'Minimum number of bases supporting each corrected base, if less than this sequences are split; default based on input read coverage: 0 <= 30x < 4 < 60x <= 4'
+  - names:
+      - -corMinEvidenceLength
+    argument: ""
+    description: 'Limit read correction to only overlaps longer than this; default: unlimited'
+  - names:
+      - -corMMapBlockSize
+    argument: ""
+    description: Number of reads per 1GB; memory * blockSize = the size of block loaded into memory per job
+  - names:
+      - -cormmapConcurrency
+    argument: ""
+    description: If grid not enabled, number of mmap overlaps for correction jobs to run at the same time; default is n_proc / n_threads
+  - names:
+      - -cormmapMemory
+    argument: ""
+    description: Amount of memory, in gigabytes, to use for mmap overlaps for correction jobs
+  - names:
+      - -corMMapMerSize
+    argument: ""
+    description: K-mer size for seeds in minmap
+  - names:
+      - -cormmapStageSpace
+    argument: ""
+    description: Amount of local disk space needed to stage data for mmap overlaps for correction jobs
+  - names:
+      - -cormmapThreads
+    argument: ""
+    description: Number of threads to use for mmap overlaps for correction jobs
+  - names:
+      - -corOutCoverage
+    argument: ""
+    description: Only correct the longest reads up to this coverage; default 40
+  - names:
+      - -corOverlapper
+    argument: ""
+    description: Which overlap algorithm to use for correction
+  - names:
+      - -corovlConcurrency
+    argument: ""
+    description: If grid not enabled, number of overlaps for correction jobs to run at the same time; default is n_proc / n_threads
+  - names:
+      - -corOvlErrorRate
+    argument: ""
+    description: Overlaps above this error rate are not computed
+  - names:
+      - -corOvlFilter
+    argument: ""
+    description: Filter overlaps based on expected kmers vs observed kmers
+  - names:
+      - -corOvlFrequentMers
+    argument: ""
+    description: Do not seed overlaps with these kmers
+  - names:
+      - -corOvlHashBits
+    argument: ""
+    description: Width of the kmer hash. Width 22=1gb, 23=2gb, 24=4gb, 25=8gb. Plus 10b per corOvlHashBlockLength
+  - names:
+      - -corOvlHashBlockLength
+    argument: ""
+    description: Amount of sequence (bp) to load into the overlap hash table
+  - names:
+      - -corOvlHashLoad
+    argument: ""
+    description: Maximum hash table load. If set too high, table lookups are inefficent; if too low, search overhead dominates run time; default 0.75
+  - names:
+      - -corovlMemory
+    argument: ""
+    description: Amount of memory, in gigabytes, to use for overlaps for correction jobs
+  - names:
+      - -corOvlMerDistinct
+    argument: ""
+    description: K-mer frequency threshold; the least frequent fraction of distinct mers can seed overlaps
+  - names:
+      - -corOvlMerSize
+    argument: ""
+    description: K-mer size for seeds in overlaps
+  - names:
+      - -corOvlMerThreshold
+    argument: ""
+    description: K-mer frequency threshold; mers more frequent than this count are ignored
+  - names:
+      - -corOvlRefBlockLength
+    argument: ""
+    description: Amount of sequence (bp) to search against the hash table per batch
+  - names:
+      - -corovlStageSpace
+    argument: ""
+    description: Amount of local disk space needed to stage data for overlaps for correction jobs
+  - names:
+      - -corovlThreads
+    argument: ""
+    description: Number of threads to use for overlaps for correction jobs
+  - names:
+      - -corPartitionMin
+    argument: ""
+    description: Don't make a read correction partition with fewer than N reads
+  - names:
+      - -corPartitions
+    argument: ""
+    description: Partition read correction into N jobs
+  - names:
+      - -corReAlign
+    argument: ""
+    description: 'Refine overlaps by computing the actual alignment: ''true'' or ''false''. Not useful for overlapper=ovl. Uses corOvlErrorRate'
+  - names:
+      - -correctedErrorRate
+    argument: ""
+    description: Expected fraction error in an alignment of two corrected reads
+  - names:
+      - -corStageSpace
+    argument: ""
+    description: Amount of local disk space needed to stage data for read correction jobs
+  - names:
+      - -corThreads
+    argument: ""
+    description: Number of threads to use for read correction jobs
+  - names:
+      - -enableOEA
+    argument: ""
+    description: 'Do overlap error adjustment - comprises two steps: read error detection (RED) and overlap error adjustment (OEA); default ''true'''
+  - names:
+      - -executiveMemory
+    argument: ""
+    description: Amount of memory, in GB, to reserve for the Canu exective process
+  - names:
+      - -executiveThreads
+    argument: ""
+    description: Number of threads to reserve for the Canu exective process
+  - names:
+      - -genomeSize
+    argument: ""
+    description: An estimate of the size of the genome
+  - names:
+      - -gnuplot
+    argument: ""
+    description: Path to the gnuplot executable
+  - names:
+      - -gnuplotImageFormat
+    argument: ""
+    description: 'Image format that gnuplot will generate. Default: based on gnuplot, ''png'', ''svg'' or ''gif'''
+  - names:
+      - -gridEngine
+    argument: ""
+    description: Grid engine configuration, not documented
+  - names:
+      - -gridEngineArrayMaxJobs
+    argument: ""
+    description: Grid engine configuration, not documented
+  - names:
+      - -gridEngineArrayName
+    argument: ""
+    description: Grid engine configuration, not documented
+  - names:
+      - -gridEngineArrayOption
+    argument: ""
+    description: Grid engine configuration, not documented
+  - names:
+      - -gridEngineArraySubmitID
+    argument: ""
+    description: Grid engine configuration, not documented
+  - names:
+      - -gridEngineJobID
+    argument: ""
+    description: Grid engine configuration, not documented
+  - names:
+      - -gridEngineMemoryOption
+    argument: ""
+    description: Grid engine configuration, not documented
+  - names:
+      - -gridEngineMemoryPerJob
+    argument: ""
+    description: Grid engine configuration, not documented
+  - names:
+      - -gridEngineMemoryUnits
+    argument: ""
+    description: Grid engine configuration, not documented
+  - names:
+      - -gridEngineNameOption
+    argument: ""
+    description: Grid engine configuration, not documented
+  - names:
+      - -gridEngineNameToJobIDCommand
+    argument: ""
+    description: Grid engine configuration, not documented
+  - names:
+      - -gridEngineNameToJobIDCommandNoArrayGrid
+    argument: ""
+    description: engine configuration, not documented
+  - names:
+      - -gridEngineOutputOption
+    argument: ""
+    description: Grid engine configuration, not documented
+  - names:
+      - -gridEngineResourceOption
+    argument: ""
+    description: Grid engine configuration, not documented
+  - names:
+      - -gridEngineStageOption
+    argument: ""
+    description: Grid engine configuration, not documented
+  - names:
+      - -gridEngineSubmitCommand
+    argument: ""
+    description: Grid engine configuration, not documented
+  - names:
+      - -gridEngineTaskID
+    argument: ""
+    description: Grid engine configuration, not documented
+  - names:
+      - -gridEngineThreadsOption
+    argument: ""
+    description: Grid engine configuration, not documented
+  - names:
+      - -gridOptions
+    argument: ""
+    description: Grid engine options applied to all jobs
+  - names:
+      - -gridOptionsbat
+    argument: ""
+    description: Grid engine options applied to unitig construction jobs
+  - names:
+      - -gridOptionscns
+    argument: ""
+    description: Grid engine options applied to unitig consensus jobs
+  - names:
+      - -gridOptionscor
+    argument: ""
+    description: Grid engine options applied to read correction jobs
+  - names:
+      - -gridOptionscormhap
+    argument: ""
+    description: Grid engine options applied to mhap overlaps for correction jobs
+  - names:
+      - -gridOptionscormmap
+    argument: ""
+    description: Grid engine options applied to mmap overlaps for correction jobs
+  - names:
+      - -gridOptionscorovl
+    argument: ""
+    description: Grid engine options applied to overlaps for correction jobs
+  - names:
+      - -gridOptionsExecutive
+    argument: ""
+    description: Grid engine options applied to the canu executive script
+  - names:
+      - -gridOptionshap
+    argument: ""
+    description: Grid engine options applied to haplotype assignment jobs
+  - names:
+      - -gridOptionsJobName
+    argument: ""
+    description: Grid jobs job-name suffix
+  - names:
+      - -gridOptionsmeryl
+    argument: ""
+    description: Grid engine options applied to mer counting jobs
+  - names:
+      - -gridOptionsobtmhap
+    argument: ""
+    description: Grid engine options applied to mhap overlaps for trimming jobs
+  - names:
+      - -gridOptionsobtmmap
+    argument: ""
+    description: Grid engine options applied to mmap overlaps for trimming jobs
+  - names:
+      - -gridOptionsobtovl
+    argument: ""
+    description: Grid engine options applied to overlaps for trimming jobs
+  - names:
+      - -gridOptionsoea
+    argument: ""
+    description: Grid engine options applied to overlap error adjustment jobs
+  - names:
+      - -gridOptionsovb
+    argument: ""
+    description: Grid engine options applied to overlap store bucketizing jobs
+  - names:
+      - -gridOptionsovs
+    argument: ""
+    description: Grid engine options applied to overlap store sorting jobs
+  - names:
+      - -gridOptionsred
+    argument: ""
+    description: Grid engine options applied to read error detection jobs
+  - names:
+      - -gridOptionsutgmhap
+    argument: ""
+    description: Grid engine options applied to mhap overlaps for unitig construction jobs
+  - names:
+      - -gridOptionsutgmmap
+    argument: ""
+    description: Grid engine options applied to mmap overlaps for unitig construction jobs
+  - names:
+      - -gridOptionsutgovl
+    argument: ""
+    description: Grid engine options applied to overlaps for unitig construction jobs
+  - names:
+      - -hapConcurrency
+    argument: ""
+    description: Unused, there is only one process
+  - names:
+      - -hapMemory
+    argument: ""
+    description: Amount of memory, in gigabytes, to use for haplotype assignment
+  - names:
+      - -hapStageSpace
+    argument: ""
+    description: Amount of local disk space needed to stage data for haplotype assignment jobs
+  - names:
+      - -hapThreads
+    argument: ""
+    description: Number of threads to use for haplotype assignment
+  - names:
+      - -hapUnknownFraction
+    argument: ""
+    description: Fraction of allowed unknown bases before they are included in the assembly, between 0-1; default 0.05
+  - names:
+      - -homoPolyCompress
+    argument: ""
+    description: Compute everything but consensus sequences using homopolymer compressed reads
+  - names:
+      - -java
+    argument: ""
+    description: Java interpreter to use; at least version 1.8; default 'java'
+  - names:
+      - -javaUse64Bit
+    argument: ""
+    description: Java interpreter supports the -d64 or -d32 flags; default auto
+  - names:
+      - -maxInputCoverage
+    argument: ""
+    description: If input coverage is high, downsample to something reasonable; default 200
+  - names:
+      - -maxMemory
+    argument: ""
+    description: Maximum memory to use by any component of the assembler
+  - names:
+      - -maxThreads
+    argument: ""
+    description: Maximum number of compute threads to use by any component of the assembler
+  - names:
+      - -merylConcurrency
+    argument: ""
+    description: Unused, there is only one process
+  - names:
+      - -merylMemory
+    argument: ""
+    description: Amount of memory, in gigabytes, to use for mer counting
+  - names:
+      - -merylStageSpace
+    argument: ""
+    description: Amount of local disk space needed to stage data for mer counting jobs
+  - names:
+      - -merylThreads
+    argument: ""
+    description: Number of threads to use for mer counting
+  - names:
+      - -minimap
+    argument: ""
+    description: Path to minimap2; default 'minimap2'
+  - names:
+      - -minInputCoverage
+    argument: ""
+    description: Stop if input coverage is too low; default 10
+  - names:
+      - -minMemory
+    argument: ""
+    description: Minimum amount of memory needed to compute the assembly (do not set unless prompted!)
+  - names:
+      - -minOverlapLength
+    argument: ""
+    description: Overlaps shorter than this length are not computed; default 500
+  - names:
+      - -minReadLength
+    argument: ""
+    description: Reads shorter than this length are not loaded into the assembler; default 1000
+  - names:
+      - -minThreads
+    argument: ""
+    description: Minimum number of compute threads suggested to compute the assembly
+  - names:
+      - -objectStore
+    argument: ""
+    description: Type of object storage used; not ready for production yet
+  - names:
+      - -objectStoreClient
+    argument: ""
+    description: Path to the command line client used to access the object storage
+  - names:
+      - -objectStoreClientDA
+    argument: ""
+    description: Path to the command line client used to download files from object storage
+  - names:
+      - -objectStoreClientUA
+    argument: ""
+    description: Path to the command line client used to upload files to object storage
+  - names:
+      - -objectStoreNameSpace
+    argument: ""
+    description: Object store parameters; specific to the type of objectStore used
+  - names:
+      - -objectStoreProject
+    argument: ""
+    description: Object store project; specific to the type of objectStore used
+  - names:
+      - -obtErrorRate
+    argument: ""
+    description: Stringency of overlaps to use for trimming
+  - names:
+      - -obtMhapBlockSize
+    argument: ""
+    description: Number of reads per GB of memory allowed (mhapMemory)
+  - names:
+      - -obtmhapConcurrency
+    argument: ""
+    description: If grid not enabled, number of mhap overlaps for trimming jobs to run at the same time; default is n_proc / n_threads
+  - names:
+      - -obtMhapFilterThreshold
+    argument: ""
+    description: Value between 0 and 1. kmers which comprise more than this percentage of the input are downweighted
+  - names:
+      - -obtMhapFilterUnique
+    argument: ""
+    description: 'Expert option: True or false, supress the low-frequency k-mer distribution based on them being likely noise and not true overlaps. Threshold auto-computed based on error rate and coverage.'
+  - names:
+      - -obtmhapMemory
+    argument: ""
+    description: Amount of memory, in gigabytes, to use for mhap overlaps for trimming jobs
+  - names:
+      - -obtMhapMerSize
+    argument: ""
+    description: K-mer size for seeds in mhap
+  - names:
+      - -obtMhapNoTf
+    argument: ""
+    description: 'Expert option: True or false, do not use tf weighting, only idf of tf-idf.'
+  - names:
+      - -obtMhapOptions
+    argument: ""
+    description: 'Expert option: free-form parameters to pass to MHAP.'
+  - names:
+      - -obtMhapOrderedMerSize
+    argument: ""
+    description: K-mer size for second-stage filter in mhap
+  - names:
+      - -obtMhapPipe
+    argument: ""
+    description: Report results to a pipe instead of *large* files.
+  - names:
+      - -obtMhapSensitivity
+    argument: ""
+    description: 'Coarse sensitivity level: ''low'', ''normal'' or ''high''. Set automatically based on coverage; ''high'' <= 30x < ''normal'' < 60x <= ''low'''
+  - names:
+      - -obtmhapStageSpace
+    argument: ""
+    description: Amount of local disk space needed to stage data for mhap overlaps for trimming jobs
+  - names:
+      - -obtmhapThreads
+    argument: ""
+    description: Number of threads to use for mhap overlaps for trimming jobs
+  - names:
+      - -obtMhapVersion
+    argument: ""
+    description: Version of the MHAP jar file to use
+  - names:
+      - -obtMMapBlockSize
+    argument: ""
+    description: Number of reads per 1GB; memory * blockSize = the size of block loaded into memory per job
+  - names:
+      - -obtmmapConcurrency
+    argument: ""
+    description: If grid not enabled, number of mmap overlaps for trimming jobs to run at the same time; default is n_proc / n_threads
+  - names:
+      - -obtmmapMemory
+    argument: ""
+    description: Amount of memory, in gigabytes, to use for mmap overlaps for trimming jobs
+  - names:
+      - -obtMMapMerSize
+    argument: ""
+    description: K-mer size for seeds in minmap
+  - names:
+      - -obtmmapStageSpace
+    argument: ""
+    description: Amount of local disk space needed to stage data for mmap overlaps for trimming jobs
+  - names:
+      - -obtmmapThreads
+    argument: ""
+    description: Number of threads to use for mmap overlaps for trimming jobs
+  - names:
+      - -obtOverlapper
+    argument: ""
+    description: Which overlap algorithm to use for overlap based trimming
+  - names:
+      - -obtovlConcurrency
+    argument: ""
+    description: If grid not enabled, number of overlaps for trimming jobs to run at the same time; default is n_proc / n_threads
+  - names:
+      - -obtOvlErrorRate
+    argument: ""
+    description: Overlaps at or below this error rate are used to trim reads
+  - names:
+      - -obtOvlFilter
+    argument: ""
+    description: Filter overlaps based on expected kmers vs observed kmers
+  - names:
+      - -obtOvlFrequentMers
+    argument: ""
+    description: Do not seed overlaps with these kmers
+  - names:
+      - -obtOvlHashBits
+    argument: ""
+    description: Width of the kmer hash. Width 22=1gb, 23=2gb, 24=4gb, 25=8gb. Plus 10b per obtOvlHashBlockLength
+  - names:
+      - -obtOvlHashBlockLength
+    argument: ""
+    description: Amount of sequence (bp) to load into the overlap hash table
+  - names:
+      - -obtOvlHashLoad
+    argument: ""
+    description: Maximum hash table load. If set too high, table lookups are inefficent; if too low, search overhead dominates run time; default 0.75
+  - names:
+      - -obtovlMemory
+    argument: ""
+    description: Amount of memory, in gigabytes, to use for overlaps for trimming jobs
+  - names:
+      - -obtOvlMerDistinct
+    argument: ""
+    description: K-mer frequency threshold; the least frequent fraction of distinct mers can seed overlaps
+  - names:
+      - -obtOvlMerSize
+    argument: ""
+    description: K-mer size for seeds in overlaps
+  - names:
+      - -obtOvlMerThreshold
+    argument: ""
+    description: K-mer frequency threshold; mers more frequent than this count are ignored
+  - names:
+      - -obtOvlRefBlockLength
+    argument: ""
+    description: Amount of sequence (bp) to search against the hash table per batch
+  - names:
+      - -obtovlStageSpace
+    argument: ""
+    description: Amount of local disk space needed to stage data for overlaps for trimming jobs
+  - names:
+      - -obtovlThreads
+    argument: ""
+    description: Number of threads to use for overlaps for trimming jobs
+  - names:
+      - -obtReAlign
+    argument: ""
+    description: 'Refine overlaps by computing the actual alignment: ''true'' or ''false''. Not useful for overlapper=ovl. Uses obtOvlErrorRate'
+  - names:
+      - -oeaBatchLength
+    argument: ""
+    description: Number of bases per overlap error correction batch
+  - names:
+      - -oeaBatchSize
+    argument: ""
+    description: Number of reads per overlap error correction batch
+  - names:
+      - -oeaConcurrency
+    argument: ""
+    description: If grid not enabled, number of overlap error adjustment jobs to run at the same time; default is n_proc / n_threads
+  - names:
+      - -oeaErrorRate
+    argument: ""
+    description: Only use overlaps with at most this much fraction error to find errors in reads; default utgOvlErrorRate, 0.003 for HiFi reads
+  - names:
+      - -oeaHaploConfirm
+    argument: ""
+    description: This many or more reads will confirm a true haplotype difference; default 5
+  - names:
+      - -oeaMaskTrivial
+    argument: ""
+    description: Mask trivial DNA in Overlap Error Adjustment; default off; on for HiFi reads
+  - names:
+      - -oeaMemory
+    argument: ""
+    description: Amount of memory, in gigabytes, to use for overlap error adjustment jobs
+  - names:
+      - -oeaStageSpace
+    argument: ""
+    description: Amount of local disk space needed to stage data for overlap error adjustment jobs
+  - names:
+      - -oeaThreads
+    argument: ""
+    description: Number of threads to use for overlap error adjustment jobs
+  - names:
+      - -onFailure
+    argument: ""
+    description: Full path to command to run on failure
+  - names:
+      - -onSuccess
+    argument: ""
+    description: Full path to command to run on successful completion
+  - names:
+      - -ovbConcurrency
+    argument: ""
+    description: If grid not enabled, number of overlap store bucketizing jobs to run at the same time; default is n_proc / n_threads
+  - names:
+      - -ovbMemory
+    argument: ""
+    description: Amount of memory, in gigabytes, to use for overlap store bucketizing jobs
+  - names:
+      - -ovbStageSpace
+    argument: ""
+    description: Amount of local disk space needed to stage data for overlap store bucketizing jobs
+  - names:
+      - -ovbThreads
+    argument: ""
+    description: Number of threads to use for overlap store bucketizing jobs
+  - names:
+      - -ovsConcurrency
+    argument: ""
+    description: If grid not enabled, number of overlap store sorting jobs to run at the same time; default is n_proc / n_threads
+  - names:
+      - -ovsMemory
+    argument: ""
+    description: Amount of memory, in gigabytes, to use for overlap store sorting jobs
+  - names:
+      - -ovsStageSpace
+    argument: ""
+    description: Amount of local disk space needed to stage data for overlap store sorting jobs
+  - names:
+      - -ovsThreads
+    argument: ""
+    description: Number of threads to use for overlap store sorting jobs
+  - names:
+      - -preExec
+    argument: ""
+    description: A command line to run at the start of Canu execution scripts
+  - names:
+      - -purgeOverlaps
+    argument: ""
+    description: 'When to delete intermediate overlap files: never, normal (default), aggressive, dangerous'
+  - names:
+      - -rawErrorRate
+    argument: ""
+    description: Expected fraction error in an alignment of two uncorrected reads
+  - names:
+      - -readSamplingBias
+    argument: ""
+    description: Score reads as 'random * length^bias', keep the highest scoring reads
+  - names:
+      - -redBatchLength
+    argument: ""
+    description: Number of bases per fragment error detection batch
+  - names:
+      - -redBatchSize
+    argument: ""
+    description: Number of reads per fragment error detection batch
+  - names:
+      - -redConcurrency
+    argument: ""
+    description: If grid not enabled, number of read error detection jobs to run at the same time; default is n_proc / n_threads
+  - names:
+      - -redMemory
+    argument: ""
+    description: Amount of memory, in gigabytes, to use for read error detection jobs
+  - names:
+      - -redStageSpace
+    argument: ""
+    description: Amount of local disk space needed to stage data for read error detection jobs
+  - names:
+      - -redThreads
+    argument: ""
+    description: Number of threads to use for read error detection jobs
+  - names:
+      - -saveMerCounts
+    argument: ""
+    description: Save full mer counting results, sometimes useful
+  - names:
+      - -saveOverlaps
+    argument: ""
+    description: 'Do not remove the overlap stores. Default: false = remove overlap stores when they''re no longer needed'
+  - names:
+      - -saveReadCorrections
+    argument: ""
+    description: Save intermediate read correction files, almost never a good idea
+  - names:
+      - -saveReadHaplotypes
+    argument: ""
+    description: Save intermediate read haplotype files, almost never a good idea
+  - names:
+      - -saveReads
+    argument: ""
+    description: Save intermediate corrected and trimmed reads to asm.correctedReads.fasta.gz and asm.trimmedReads.fasta.gz
+  - names:
+      - -shell
+    argument: ""
+    description: Command interpreter to use; sh-compatible (e.g., bash), NOT C-shell (csh or tcsh); default '/bin/sh'
+  - names:
+      - -showNext
+    argument: ""
+    description: Don't run any commands, just report what would run
+  - names:
+      - -stageDirectory
+    argument: ""
+    description: If set, copy heavily used data to this node-local location
+  - names:
+      - -stopAfter
+    argument: ""
+    description: Stop after a specific algorithm step is completed
+  - names:
+      - -stopOnLowCoverage
+    argument: ""
+    description: Stop if raw, corrected or trimmed read coverage is low
+  - names:
+      - -trimReadsCoverage
+    argument: ""
+    description: Minimum depth of evidence to retain bases; default '2
+  - names:
+      - -trimReadsOverlap
+    argument: ""
+    description: Minimum overlap between evidence to make contiguous trim; default '500'
+  - names:
+      - -unitigger
+    argument: ""
+    description: Which unitig algorithm to use; only 'bogart' supported; default 'bogart'
+  - names:
+      - -useGrid
+    argument: ""
+    description: If 'true', enable grid-based execution; if 'false', run all jobs on the local machine; if 'remote', create jobs for grid execution but do not submit; default 'true'
+  - names:
+      - -useGridbat
+    argument: ""
+    description: If 'true', run module unitig construction under grid control; if 'false' run locally.
+  - names:
+      - -useGridcns
+    argument: ""
+    description: If 'true', run module unitig consensus under grid control; if 'false' run locally.
+  - names:
+      - -useGridcor
+    argument: ""
+    description: If 'true', run module read correction under grid control; if 'false' run locally.
+  - names:
+      - -useGridcormhap
+    argument: ""
+    description: If 'true', run module mhap overlaps for correction under grid control; if 'false' run locally.
+  - names:
+      - -useGridcormmap
+    argument: ""
+    description: If 'true', run module mmap overlaps for correction under grid control; if 'false' run locally.
+  - names:
+      - -useGridcorovl
+    argument: ""
+    description: If 'true', run module overlaps for correction under grid control; if 'false' run locally.
+  - names:
+      - -useGridhap
+    argument: ""
+    description: If 'true', run module haplotype assignment under grid control; if 'false' run locally.
+  - names:
+      - -useGridmeryl
+    argument: ""
+    description: If 'true', run module mer counting under grid control; if 'false' run locally.
+  - names:
+      - -useGridobtmhap
+    argument: ""
+    description: If 'true', run module mhap overlaps for trimming under grid control; if 'false' run locally.
+  - names:
+      - -useGridobtmmap
+    argument: ""
+    description: If 'true', run module mmap overlaps for trimming under grid control; if 'false' run locally.
+  - names:
+      - -useGridobtovl
+    argument: ""
+    description: If 'true', run module overlaps for trimming under grid control; if 'false' run locally.
+  - names:
+      - -useGridoea
+    argument: ""
+    description: If 'true', run module overlap error adjustment under grid control; if 'false' run locally.
+  - names:
+      - -useGridovb
+    argument: ""
+    description: If 'true', run module overlap store bucketizing under grid control; if 'false' run locally.
+  - names:
+      - -useGridovs
+    argument: ""
+    description: If 'true', run module overlap store sorting under grid control; if 'false' run locally.
+  - names:
+      - -useGridred
+    argument: ""
+    description: If 'true', run module read error detection under grid control; if 'false' run locally.
+  - names:
+      - -useGridutgmhap
+    argument: ""
+    description: If 'true', run module mhap overlaps for unitig construction under grid control; if 'false' run locally.
+  - names:
+      - -useGridutgmmap
+    argument: ""
+    description: If 'true', run module mmap overlaps for unitig construction under grid control; if 'false' run locally.
+  - names:
+      - -useGridutgovl
+    argument: ""
+    description: If 'true', run module overlaps for unitig construction under grid control; if 'false' run locally.
+  - names:
+      - -utgBubbleDeviation
+    argument: ""
+    description: Overlaps this much above mean of contig will be used to identify bubbles
+  - names:
+      - -utgChimeraType
+    argument: ""
+    description: 'When to filter reads for contig construction: none, chimera (missing middle), uncovered (missing middle or ends), deadend (missing middle or end or no neighbor) (default)'
+  - names:
+      - -utgErrorRate
+    argument: ""
+    description: Overlaps at or below this error rate are used to construct contigs
+  - names:
+      - -utgGraphDeviation
+    argument: ""
+    description: Overlaps this much above median will not be used for initial graph construction
+  - names:
+      - -utgMhapBlockSize
+    argument: ""
+    description: Number of reads per GB of memory allowed (mhapMemory)
+  - names:
+      - -utgmhapConcurrency
+    argument: ""
+    description: If grid not enabled, number of mhap overlaps for unitig construction jobs to run at the same time; default is n_proc / n_threads
+  - names:
+      - -utgMhapFilterThreshold
+    argument: ""
+    description: Value between 0 and 1. kmers which comprise more than this percentage of the input are downweighted
+  - names:
+      - -utgMhapFilterUnique
+    argument: ""
+    description: 'Expert option: True or false, supress the low-frequency k-mer distribution based on them being likely noise and not true overlaps. Threshold auto-computed based on error rate and coverage.'
+  - names:
+      - -utgmhapMemory
+    argument: ""
+    description: Amount of memory, in gigabytes, to use for mhap overlaps for unitig construction jobs
+  - names:
+      - -utgMhapMerSize
+    argument: ""
+    description: K-mer size for seeds in mhap
+  - names:
+      - -utgMhapNoTf
+    argument: ""
+    description: 'Expert option: True or false, do not use tf weighting, only idf of tf-idf.'
+  - names:
+      - -utgMhapOptions
+    argument: ""
+    description: 'Expert option: free-form parameters to pass to MHAP.'
+  - names:
+      - -utgMhapOrderedMerSize
+    argument: ""
+    description: K-mer size for second-stage filter in mhap
+  - names:
+      - -utgMhapPipe
+    argument: ""
+    description: Report results to a pipe instead of *large* files.
+  - names:
+      - -utgMhapSensitivity
+    argument: ""
+    description: 'Coarse sensitivity level: ''low'', ''normal'' or ''high''. Set automatically based on coverage; ''high'' <= 30x < ''normal'' < 60x <= ''low'''
+  - names:
+      - -utgmhapStageSpace
+    argument: ""
+    description: Amount of local disk space needed to stage data for mhap overlaps for unitig construction jobs
+  - names:
+      - -utgmhapThreads
+    argument: ""
+    description: Number of threads to use for mhap overlaps for unitig construction jobs
+  - names:
+      - -utgMhapVersion
+    argument: ""
+    description: Version of the MHAP jar file to use
+  - names:
+      - -utgMMapBlockSize
+    argument: ""
+    description: Number of reads per 1GB; memory * blockSize = the size of block loaded into memory per job
+  - names:
+      - -utgmmapConcurrency
+    argument: ""
+    description: If grid not enabled, number of mmap overlaps for unitig construction jobs to run at the same time; default is n_proc / n_threads
+  - names:
+      - -utgmmapMemory
+    argument: ""
+    description: Amount of memory, in gigabytes, to use for mmap overlaps for unitig construction jobs
+  - names:
+      - -utgMMapMerSize
+    argument: ""
+    description: K-mer size for seeds in minmap
+  - names:
+      - -utgmmapStageSpace
+    argument: ""
+    description: Amount of local disk space needed to stage data for mmap overlaps for unitig construction jobs
+  - names:
+      - -utgmmapThreads
+    argument: ""
+    description: Number of threads to use for mmap overlaps for unitig construction jobs
+  - names:
+      - -utgOverlapper
+    argument: ""
+    description: Which overlap algorithm to use for unitig construction
+  - names:
+      - -utgovlConcurrency
+    argument: ""
+    description: If grid not enabled, number of overlaps for unitig construction jobs to run at the same time; default is n_proc / n_threads
+  - names:
+      - -utgOvlErrorRate
+    argument: ""
+    description: Overlaps at or below this error rate are used to trim reads
+  - names:
+      - -utgOvlFilter
+    argument: ""
+    description: Filter overlaps based on expected kmers vs observed kmers
+  - names:
+      - -utgOvlFrequentMers
+    argument: ""
+    description: Do not seed overlaps with these kmers
+  - names:
+      - -utgOvlHashBits
+    argument: ""
+    description: Width of the kmer hash. Width 22=1gb, 23=2gb, 24=4gb, 25=8gb. Plus 10b per utgOvlHashBlockLength
+  - names:
+      - -utgOvlHashBlockLength
+    argument: ""
+    description: Amount of sequence (bp) to load into the overlap hash table
+  - names:
+      - -utgOvlHashLoad
+    argument: ""
+    description: Maximum hash table load. If set too high, table lookups are inefficent; if too low, search overhead dominates run time; default 0.75
+  - names:
+      - -utgovlMemory
+    argument: ""
+    description: Amount of memory, in gigabytes, to use for overlaps for unitig construction jobs
+  - names:
+      - -utgOvlMerDistinct
+    argument: ""
+    description: K-mer frequency threshold; the least frequent fraction of distinct mers can seed overlaps
+  - names:
+      - -utgOvlMerSize
+    argument: ""
+    description: K-mer size for seeds in overlaps
+  - names:
+      - -utgOvlMerThreshold
+    argument: ""
+    description: K-mer frequency threshold; mers more frequent than this count are ignored
+  - names:
+      - -utgOvlRefBlockLength
+    argument: ""
+    description: Amount of sequence (bp) to search against the hash table per batch
+  - names:
+      - -utgovlStageSpace
+    argument: ""
+    description: Amount of local disk space needed to stage data for overlaps for unitig construction jobs
+  - names:
+      - -utgovlThreads
+    argument: ""
+    description: Number of threads to use for overlaps for unitig construction jobs
+  - names:
+      - -utgReAlign
+    argument: ""
+    description: 'Refine overlaps by computing the actual alignment: ''true'' or ''false''. Not useful for overlapper=ovl. Uses utgOvlErrorRate'
+  - names:
+      - -utgRepeatConfusedBP
+    argument: ""
+    description: Repeats where the next best edge is at least this many bp shorter will not be split
+  - names:
+      - -utgRepeatConfusedPC
+    argument: ""
+    description: Repeats where the next best edge is at least this many percent shorter will not be split
+  - names:
+      - -utgRepeatDeviation
+    argument: ""
+    description: Overlaps this much above mean unitig error rate will not be used for repeat splitting
 version: canu 2.2

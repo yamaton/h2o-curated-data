@@ -1,0 +1,4247 @@
+name: gt
+description: The GenomeTools genome analysis system.
+usage: gt [option ...] [tool | script] [argument ...]
+options:
+  - names:
+      - -i
+    argument: ""
+    description: enter interactive mode after executing 'tool' or 'script'
+  - names:
+      - -q
+    argument: ""
+    description: suppress warnings
+  - names:
+      - -test
+    argument: ""
+    description: perform unit tests and exit
+  - names:
+      - -seed
+    argument: ""
+    description: set seed for random number generator manually. 0 generates a seed from current time and process id
+  - names:
+      - -help
+    argument: ""
+    description: display help and exit
+  - names:
+      - -version
+    argument: ""
+    description: display version information and exit
+subcommands:
+  - name: bed_to_gff3
+    description: Parse BED file and convert it to GFF3.
+    usage: gt bed_to_gff3 [BED_file]
+    options:
+      - names:
+          - -featuretype
+        argument: ""
+        description: 'Set type of parsed BED features default: BED_feature'
+      - names:
+          - -thicktype
+        argument: ""
+        description: 'Set type of parsed thick BED features default: BED_thick_feature'
+      - names:
+          - -blocktype
+        argument: ""
+        description: 'Set type of parsed BED blocks default: BED_block'
+      - names:
+          - -o
+        argument: ""
+        description: 'redirect output to specified file default: undefined'
+      - names:
+          - -gzip
+        argument: ""
+        description: 'write gzip compressed output file default: no'
+      - names:
+          - -bzip2
+        argument: ""
+        description: 'write bzip2 compressed output file default: no'
+      - names:
+          - -force
+        argument: ""
+        description: 'force writing to output file default: no'
+      - names:
+          - -help
+        argument: ""
+        description: display help and exit
+      - names:
+          - -version
+        argument: ""
+        description: display version information and exit
+  - name: cds
+    description: Add CDS (coding sequence) features to exon features given in GFF3 file.
+    usage: gt cds [option ...] [GFF3_file]
+    options:
+      - names:
+          - -minorflen
+        argument: ""
+        description: 'set the minimum length an open reading frame (ORF) must have to be added as a CDS feature (measured in amino acids) default: 64'
+      - names:
+          - -startcodon
+        argument: ""
+        description: 'require than an ORF must begin with a start codon default: no'
+      - names:
+          - -finalstopcodon
+        argument: ""
+        description: 'require that the final ORF must end with a stop codon default: no'
+      - names:
+          - -seqfile
+        argument: ""
+        description: 'set the sequence file from which to take the sequences default: undefined'
+      - names:
+          - -encseq
+        argument: ""
+        description: 'set the encoded sequence indexname from which to take the sequences default: undefined'
+      - names:
+          - -seqfiles
+        argument: ""
+        description: set the sequence files from which to extract the features use '--' to terminate the list of sequence files
+      - names:
+          - -matchdesc
+        argument: ""
+        description: 'search the sequence descriptions from the input files for the desired sequence IDs (in GFF3), reporting the first match default: no'
+      - names:
+          - -matchdescstart
+        argument: ""
+        description: 'exactly match the sequence descriptions from the input files for the desired sequence IDs (in GFF3) from the beginning to the first whitespace default: no'
+      - names:
+          - -usedesc
+        argument: ""
+        description: 'use sequence descriptions to map the sequence IDs (in GFF3) to actual sequence entries. If a description contains a sequence range (e.g., III:1000001..2000000), the first part is used as sequence ID (''III'') and the first range position as offset (''1000001'') default: no'
+      - names:
+          - -regionmapping
+        argument: ""
+        description: 'set file containing sequence-region to sequence file mapping default: undefined'
+      - names:
+          - -v
+        argument: ""
+        description: 'be verbose default: no'
+      - names:
+          - -o
+        argument: ""
+        description: 'redirect output to specified file default: undefined'
+      - names:
+          - -gzip
+        argument: ""
+        description: 'write gzip compressed output file default: no'
+      - names:
+          - -bzip2
+        argument: ""
+        description: 'write bzip2 compressed output file default: no'
+      - names:
+          - -force
+        argument: ""
+        description: 'force writing to output file default: no'
+      - names:
+          - -help
+        argument: ""
+        description: display help and exit
+      - names:
+          - -version
+        argument: ""
+        description: display version information and exit
+  - name: chain2dim
+    description: Chain pairwise matches.
+    usage: gt chain2dim [options] -m matchfile
+    options:
+      - names:
+          - '-'
+        argument: ""
+        description: If no parameter is given, compute local chains with maximums score.
+      - names:
+          - -local
+        argument: ""
+        description: const
+      - names:
+          - -global
+        argument: ov
+        description: 'default: 1.00'
+  - name: chseqids
+    description: Change sequence ids by the mapping given in a mapping file.
+    usage: gt chseqids [option ...] mapping_file [GFF3_file]
+    options:
+      - names:
+          - -sort
+        argument: ""
+        description: 'sort the GFF3 features after changing the sequence ids (memory consumption is proportional to the input file size) default: no'
+      - names:
+          - -v
+        argument: ""
+        description: 'be verbose default: no'
+      - names:
+          - -o
+        argument: ""
+        description: 'redirect output to specified file default: undefined'
+      - names:
+          - -gzip
+        argument: ""
+        description: 'write gzip compressed output file default: no'
+      - names:
+          - -bzip2
+        argument: ""
+        description: 'write bzip2 compressed output file default: no'
+      - names:
+          - -force
+        argument: ""
+        description: 'force writing to output file default: no'
+      - names:
+          - -help
+        argument: ""
+        description: display help and exit
+      - names:
+          - -version
+        argument: ""
+        description: display version information and exit
+  - name: clean
+    description: Remove all files in the current directory which are automatically created by gt.
+    usage: gt clean
+    options:
+      - names:
+          - -help
+        argument: ""
+        description: display help and exit
+      - names:
+          - -version
+        argument: ""
+        description: display version information and exit
+  - name: compreads
+    description: Call a fastq file compression tool.
+    usage: gt compreads [option ...] tool [argument ...]
+    options:
+      - names:
+          - -help
+        argument: ""
+        description: display help and exit
+      - names:
+          - -version
+        argument: ""
+        description: display version information and exit
+    subcommands:
+      - name: compress
+        description: Generates compact encoding for fastq data.
+        usage: gt compreads compress [option ...] (-files file [...])
+        options:
+          - names:
+              - -descs
+            argument: ""
+            description: 'encode descriptions default: no'
+          - names:
+              - -files
+            argument: ""
+            description: File(s) containing reads.
+          - names:
+              - -name
+            argument: ""
+            description: 'specify base name for HCR to be generated. Only mandatory, if more than one file was given. default: undefined'
+          - names:
+              - -smap
+            argument: ""
+            description: 'file containing alphabet description. If "-smap" is not set, dna alphabet is used. default: undefined'
+          - names:
+              - -qrange
+            argument: ""
+            description: 'specify range of quality values. All values smaller or equal to the lower bound will be converted to the lower bound. All values equal or larger than the upper bound will be converted to the upper bound. default: undefined'
+          - names:
+              - -srate
+            argument: ""
+            description: 'sampling rate, set to sensible default depending on sampling method default: undefined'
+          - names:
+              - -stype
+            argument: ""
+            description: 'type of sampling one of regular - page - none default: page'
+          - names:
+              - -help
+            argument: ""
+            description: display help and exit
+          - names:
+              - -version
+            argument: ""
+            description: display version information and exit
+      - name: decompress
+        description: Decodes a file of compressed reads.
+        usage: gt compreads decompress [option ...] (-file file)
+        options:
+          - names:
+              - -v
+            argument: ""
+            description: 'be verbose default: no'
+          - names:
+              - -descs
+            argument: ""
+            description: 'enable description decoding default: no'
+          - names:
+              - -file
+            argument: ""
+            description: 'specify base name of files containing HCR. default: undefined'
+          - names:
+              - -name
+            argument: ""
+            description: 'specify base name for decoded hcr (suffix will be ".fastq") default: undefined'
+          - names:
+              - -smap
+            argument: ""
+            description: 'specify file containing alphabetdescription (file must be an .al1 file). If "-smap" is not set, dna alphabet is used. default: undefined'
+          - names:
+              - -range
+            argument: ""
+            description: 'decode multiple consecutive reads. If range is not specified, the entire file will be decoded. default: undefined'
+          - names:
+              - -width
+            argument: ""
+            description: 'set width of output, 0 disables formatting. line breaks in quality strings can cause problems with parsers, use with care default: 0'
+          - names:
+              - -help
+            argument: ""
+            description: display help and exit
+          - names:
+              - -version
+            argument: ""
+            description: display version information and exit
+      - name: refcompress
+        description: Generates compact encoding for fastq data using Reference Compressed Reads (RCR).
+        usage: gt compreads refcompress [option ...] (-bam file -ref file)
+        options:
+          - names:
+              - -v
+            argument: ""
+            description: 'be verbose default: no'
+          - names:
+              - -mquals
+            argument: ""
+            description: 'store mapping quality for each read default: no'
+          - names:
+              - -quals
+            argument: ""
+            description: 'store all quality values for each read, this implies enabling of option "vquals" default: no'
+          - names:
+              - -vquals
+            argument: ""
+            description: 'store quality values of read positions having variations compared to reference default: no'
+          - names:
+              - -descs
+            argument: ""
+            description: 'store read name for each read default: no'
+          - names:
+              - -ureads
+            argument: ""
+            description: 'store unmapped reads in a separated fastq file (base name will be the value given in name and suffix will be " _unmapped.fastq" default: no'
+          - names:
+              - -ref
+            argument: ""
+            description: 'Index file (generated by the gt encseq tool) for reference genome. default: undefined'
+          - names:
+              - -bam
+            argument: ""
+            description: 'File containing alignment of reads to genome (sorted ".bam" file). default: undefined'
+          - names:
+              - -name
+            argument: ""
+            description: 'specify base name for RCR to be generated. If not set, base name will be set to base name of value given for option "bam" default: undefined'
+          - names:
+              - -help
+            argument: ""
+            description: display help and exit
+          - names:
+              - -version
+            argument: ""
+            description: display version information and exit
+      - name: refdecompress
+        description: Decodes a given RCR (Reference Compressed Reads).
+        usage: gt compreads refdecompress [option ...] (-file file)
+        options:
+          - names:
+              - -v
+            argument: ""
+            description: 'be verbose default: no'
+          - names:
+              - -qnames
+            argument: ""
+            description: 'decode read names, default is to just number them default: no'
+          - names:
+              - -ref
+            argument: ""
+            description: 'Index file (generated by the gt encseq tool) for reference genome. default: undefined'
+          - names:
+              - -rcr
+            argument: ""
+            description: 'specify base name of file containing RCR. default: undefined'
+          - names:
+              - -name
+            argument: ""
+            description: 'specify base name for decoded RCR (suffix will be ".rcr.decoded") default: undefined'
+          - names:
+              - -help
+            argument: ""
+            description: display help and exit
+          - names:
+              - -version
+            argument: ""
+            description: display version information and exit
+  - name: condenseq
+    description: Call one of the CONDENSER tools to prepare or manipulate redundancy compressed genomic data.
+    usage: gt condenseq tool [option ...]
+    options:
+      - names:
+          - -help
+        argument: ""
+        description: display help and exit
+      - names:
+          - -version
+        argument: ""
+        description: display version information and exit
+  - name: congruence
+    description: Call a congruence subtool and pass argument(s) to it.
+    usage: gt congruence [option ...] congruence_tool [argument ...]
+    options:
+      - names:
+          - -help
+        argument: ""
+        description: display help and exit
+      - names:
+          - -version
+        argument: ""
+        description: display version information and exit
+    subcommands:
+      - name: spacedseed
+        description: Match spaced seeds.
+        usage: gt congruence spacedseed [options]
+        options:
+          - names:
+              - -esa
+            argument: ""
+            description: 'Specify index (enhanced suffix array) default: undefined'
+          - names:
+              - -pck
+            argument: ""
+            description: 'Specify index (packed index) default: undefined'
+          - names:
+              - -q
+            argument: ""
+            description: Specify files containing the query sequences
+          - names:
+              - -v
+            argument: ""
+            description: 'be verbose default: no'
+          - names:
+              - -help
+            argument: ""
+            description: display help and exit
+          - names:
+              - -version
+            argument: ""
+            description: display version information and exit
+  - name: convertseq
+    description: Parse and convert sequence file formats (FASTA/FASTQ, GenBank, EMBL).
+    usage: gt convertseq [options] file [...]
+    options:
+      - names:
+          - -v
+        argument: ""
+        description: 'be verbose default: no'
+      - names:
+          - -r
+        argument: ""
+        description: 'reverse complement sequences default: no'
+      - names:
+          - -showfilelengthvalues
+        argument: ""
+        description: 'show filelengths default: no'
+      - names:
+          - -noseq
+        argument: ""
+        description: 'do not show sequences default: no'
+      - names:
+          - -fastawidth
+        argument: ""
+        description: 'FASTA output line width, 0 for unlimited default: 60'
+      - names:
+          - -contractdnawc
+        argument: ""
+        description: 'replace stretches of DNA wildcards with a single ''N'' default: no'
+      - names:
+          - -contractproteinwc
+        argument: ""
+        description: 'replace stretches of protein wildcards with a single ''X'' default: no'
+      - names:
+          - -o
+        argument: ""
+        description: 'redirect output to specified file default: undefined'
+      - names:
+          - -gzip
+        argument: ""
+        description: 'write gzip compressed output file default: no'
+      - names:
+          - -bzip2
+        argument: ""
+        description: 'write bzip2 compressed output file default: no'
+      - names:
+          - -force
+        argument: ""
+        description: 'force writing to output file default: no'
+      - names:
+          - -help
+        argument: ""
+        description: display help and exit
+      - names:
+          - -version
+        argument: ""
+        description: display version information and exit
+  - name: csa
+    description: Transform spliced alignments from GFF3 file into consensus spliced alignments.
+    usage: gt csa [option ...] [GFF3_file]
+    options:
+      - names:
+          - -join-length
+        argument: ""
+        description: 'set join length for the spliced alignment clustering default: 300'
+      - names:
+          - -v
+        argument: ""
+        description: 'be verbose default: no'
+      - names:
+          - -o
+        argument: ""
+        description: 'redirect output to specified file default: undefined'
+      - names:
+          - -gzip
+        argument: ""
+        description: 'write gzip compressed output file default: no'
+      - names:
+          - -bzip2
+        argument: ""
+        description: 'write bzip2 compressed output file default: no'
+      - names:
+          - -force
+        argument: ""
+        description: 'force writing to output file default: no'
+      - names:
+          - -help
+        argument: ""
+        description: display help and exit
+      - names:
+          - -version
+        argument: ""
+        description: display version information and exit
+  - name: dot
+    description: Prints feature graphs in dotfile format.
+    usage: gt dot [option ...] [files]
+    options:
+      - names:
+          - -help
+        argument: ""
+        description: display help and exit
+      - names:
+          - -version
+        argument: ""
+        description: display version information and exit
+  - name: dupfeat
+    description: Duplicate internal feature nodes in given GFF3 files.
+    usage: gt dupfeat [option ...] [GFF3_file ...]
+    options:
+      - names:
+          - -dest
+        argument: ""
+        description: 'set destination type default: undefined'
+      - names:
+          - -source
+        argument: ""
+        description: 'set source type default: undefined'
+      - names:
+          - -o
+        argument: ""
+        description: 'redirect output to specified file default: undefined'
+      - names:
+          - -gzip
+        argument: ""
+        description: 'write gzip compressed output file default: no'
+      - names:
+          - -bzip2
+        argument: ""
+        description: 'write bzip2 compressed output file default: no'
+      - names:
+          - -force
+        argument: ""
+        description: 'force writing to output file default: no'
+      - names:
+          - -help
+        argument: ""
+        description: display help and exit
+      - names:
+          - -version
+        argument: ""
+        description: display version information and exit
+  - name: encseq
+    description: Call an encoded sequence manipulation tool and pass argument(s) to it.
+    usage: gt encseq [option ...] tool [argument ...]
+    options:
+      - names:
+          - -help
+        argument: ""
+        description: display help and exit
+      - names:
+          - -version
+        argument: ""
+        description: display version information and exit
+    subcommands:
+      - name: bench
+        description: Perform benchmark on extractions from encseq.
+        usage: gt encseq bench [option ...] indexname
+        options:
+          - names:
+              - -ccext
+            argument: ""
+            description: 'specify number of random character extractions default: 0'
+          - names:
+              - -solepr
+            argument: ""
+            description: 'prepare data structure for sequences ordered by their length default: no'
+          - names:
+              - -v
+            argument: ""
+            description: 'be verbose default: no'
+          - names:
+              - -help
+            argument: ""
+            description: display help and exit
+          - names:
+              - -version
+            argument: ""
+            description: display version information and exit
+      - name: bitextract
+        description: Extracts internal data from encoded sequences.
+        usage: gt encseq bitextract [option ...] [indexname]
+        options:
+          - names:
+              - -mirrored
+            argument: ""
+            description: 'mirror sequence default: no'
+          - names:
+              - -stoppos
+            argument: ""
+            description: 'output stop positions default: undefined'
+          - names:
+              - -specialranges
+            argument: ""
+            description: 'output special ranges default: no'
+          - names:
+              - -bitpos
+            argument: ""
+            description: 'extract and display two bit encoding for position default: undefined'
+          - names:
+              - -dir
+            argument: ""
+            description: 'specify reading direction (fwd, cpl, rev, rcl) default: fwd'
+          - names:
+              - -help
+            argument: ""
+            description: display help and exit
+          - names:
+              - -version
+            argument: ""
+            description: display version information and exit
+      - name: check
+        description: Check the consistency of an encoded sequence file.
+        usage: gt encseq check [option ...] [file]
+        options:
+          - names:
+              - -scantrials
+            argument: ""
+            description: 'specify number of scan trials default: 0'
+          - names:
+              - -multicharcmptrials
+            argument: ""
+            description: 'specify number of multicharacter trials default: 0'
+          - names:
+              - -prefixlength
+            argument: ""
+            description: 'prefix length default: 0'
+          - names:
+              - -nocheckunit
+            argument: ""
+            description: 'do not run checkextractunitatpos default: no'
+          - names:
+              - -mirrored
+            argument: ""
+            description: 'use mirrored encseq default: no'
+          - names:
+              - -v
+            argument: ""
+            description: 'be verbose default: no'
+          - names:
+              - -help
+            argument: ""
+            description: display help and exit
+          - names:
+              - -version
+            argument: ""
+            description: display version information and exit
+      - name: decode
+        description: Decode/extract encoded sequences.
+        usage: gt encseq decode (sequence_file|indexname)
+        options:
+          - names:
+              - -mirrored
+            argument: ""
+            description: 'virtually append the reverse complement of each sequence default: no'
+          - names:
+              - -lossless
+            argument: ""
+            description: 'allow lossless original sequence retrieval default: no'
+          - names:
+              - -dir
+            argument: ""
+            description: 'specify reading direction (fwd, cpl, rev, rcl) default: fwd'
+          - names:
+              - -seq
+            argument: ""
+            description: 'extract sequence identified by its number default: undefined'
+          - names:
+              - -seqrange
+            argument: ""
+            description: 'extract multiple consecutive sequences default: undefined'
+          - names:
+              - -output
+            argument: ""
+            description: 'specify output format (choose from fasta|concat) default: fasta'
+          - names:
+              - -range
+            argument: ""
+            description: 'concatenated range to extract (implies ''-output concat'') default: undefined'
+          - names:
+              - -sepchar
+            argument: ""
+            description: 'specify character to print as GT_SEPARATOR default: |'
+          - names:
+              - -help
+            argument: ""
+            description: display help for basic options and exit
+          - names:
+              - -help+
+            argument: ""
+            description: display help for all options and exit
+          - names:
+              - -version
+            argument: ""
+            description: display version information and exit
+      - name: encode
+        description: Encode sequence files (FASTA/FASTQ, GenBank, EMBL) efficiently.
+        usage: gt encseq encode sequence_file [sequence_file [sequence_file ...]]
+        options:
+          - names:
+              - -showstats
+            argument: ""
+            description: 'show compression results default: no'
+          - names:
+              - -ssp
+            argument: ""
+            description: 'output sequence separator positions to file default: yes'
+          - names:
+              - -des
+            argument: ""
+            description: 'output sequence descriptions to file default: yes'
+          - names:
+              - -sds
+            argument: ""
+            description: 'output sequence description separator positions to file default: yes'
+          - names:
+              - -md5
+            argument: ""
+            description: 'output MD5 sums to file default: yes'
+          - names:
+              - -clipdesc
+            argument: ""
+            description: 'clip descriptions after first whitespace default: no'
+          - names:
+              - -sat
+            argument: ""
+            description: 'specify kind of sequence representation by one of the keywords direct, bytecompress, eqlen, bit, uchar, ushort, uint32 default: undefined'
+          - names:
+              - -dna
+            argument: ""
+            description: 'input is DNA sequence default: no'
+          - names:
+              - -protein
+            argument: ""
+            description: 'input is protein sequence default: no'
+          - names:
+              - -dust
+            argument: ""
+            description: 'mask low-complexity regions using the dust algorithm default: no'
+          - names:
+              - -dustwindow
+            argument: ""
+            description: 'windowsize for the dust algorithm default: 64'
+          - names:
+              - -dustthreshold
+            argument: ""
+            description: 'threshold for the dust algorithm default: 2.00'
+          - names:
+              - -dustlink
+            argument: ""
+            description: 'Max. distance between regions masked by dust before merging. default: 1'
+          - names:
+              - -indexname
+            argument: ""
+            description: 'specify name for index to be generated default: undefined'
+          - names:
+              - -smap
+            argument: ""
+            description: 'specify file containing a symbol mapping default: undefined'
+          - names:
+              - -lossless
+            argument: ""
+            description: 'allow lossless original sequence retrieval default: no'
+          - names:
+              - -v
+            argument: ""
+            description: 'be verbose default: no'
+          - names:
+              - -help
+            argument: ""
+            description: display help for basic options and exit
+          - names:
+              - -help+
+            argument: ""
+            description: display help for all options and exit
+          - names:
+              - -version
+            argument: ""
+            description: display version information and exit
+      - name: info
+        description: Display meta-information about an encoded sequence.
+        usage: gt encseq info [option ...] indexname
+        options:
+          - names:
+              - -nomap
+            argument: ""
+            description: 'do not map encoded sequence (gives less information) default: no'
+          - names:
+              - -mirrored
+            argument: ""
+            description: 'use mirrored encoded sequence (DNA only) default: no'
+          - names:
+              - -noindexname
+            argument: ""
+            description: 'do not output index name default: no'
+          - names:
+              - -show_alphabet
+            argument: ""
+            description: 'output alphabet definition default: no'
+          - names:
+              - -n50
+            argument: ""
+            description: 'show N50 values (minimum length of largest sequences for covering at least 50% of total sequence length) default: no'
+          - names:
+              - -o
+            argument: ""
+            description: 'redirect output to specified file default: undefined'
+          - names:
+              - -gzip
+            argument: ""
+            description: 'write gzip compressed output file default: no'
+          - names:
+              - -bzip2
+            argument: ""
+            description: 'write bzip2 compressed output file default: no'
+          - names:
+              - -force
+            argument: ""
+            description: 'force writing to output file default: no'
+          - names:
+              - -help
+            argument: ""
+            description: display help and exit
+          - names:
+              - -version
+            argument: ""
+            description: display version information and exit
+      - name: md5
+        description: Display MD5 sums for an encoded sequence.
+        usage: gt encseq md5 [option ...] indexname
+        options:
+          - names:
+              - -fromindex
+            argument: ""
+            description: 'use MD5 table from .md5 file default: yes'
+          - names:
+              - -o
+            argument: ""
+            description: 'redirect output to specified file default: undefined'
+          - names:
+              - -gzip
+            argument: ""
+            description: 'write gzip compressed output file default: no'
+          - names:
+              - -bzip2
+            argument: ""
+            description: 'write bzip2 compressed output file default: no'
+          - names:
+              - -force
+            argument: ""
+            description: 'force writing to output file default: no'
+          - names:
+              - -help
+            argument: ""
+            description: display help and exit
+          - names:
+              - -version
+            argument: ""
+            description: display version information and exit
+      - name: sample
+        description: Decode/extract encoded sequences by random choice.
+        usage: gt encseq sample (sequence_file|indexname)
+        options:
+          - names:
+              - -mirrored
+            argument: ""
+            description: 'virtually append the reverse complement of each sequence default: no'
+          - names:
+              - -lossless
+            argument: ""
+            description: 'allow lossless original sequence retrieval default: no'
+          - names:
+              - -dir
+            argument: ""
+            description: 'specify reading direction (fwd, cpl, rev, rcl) default: fwd'
+          - names:
+              - -length
+            argument: ""
+            description: 'minimum length to be extracted default: undefined'
+          - names:
+              - -seqrange
+            argument: ""
+            description: 'extract multiple consecutive sequences default: undefined'
+          - names:
+              - -output
+            argument: ""
+            description: 'specify output format (choose from fasta|concat) default: fasta'
+          - names:
+              - -sepchar
+            argument: ""
+            description: 'specify character to print as GT_SEPARATOR default: |'
+          - names:
+              - -help
+            argument: ""
+            description: display help for basic options and exit
+          - names:
+              - -help+
+            argument: ""
+            description: display help for all options and exit
+          - names:
+              - -version
+            argument: ""
+            description: display version information and exit
+
+  - name: encseq2spm
+    description: Compute suffix prefix matches from encoded sequence.
+    usage: gt encseq2spm [option ...] [file]
+    options:
+      - names:
+          - -l
+        argument: ""
+        description: 'specify the minimum length default: 0'
+      - names:
+          - -parts
+        argument: ""
+        description: 'specify the number of parts default: 0'
+      - names:
+          - -memlimit
+        argument: ""
+        description: 'specify maximal amount of memory to be used during index construction (in bytes, the keywords ''MB'' and ''GB'' are allowed) default: undefined'
+      - names:
+          - -singlestrand
+        argument: ""
+        description: 'use only the forward strand of the sequence default: no'
+      - names:
+          - -spm
+        argument: ""
+        description: 'specify output for spms default: undefined'
+      - names:
+          - -ii
+        argument: ""
+        description: 'specify the input sequence default: undefined'
+      - names:
+          - -v
+        argument: ""
+        description: 'be verbose default: no'
+      - names:
+          - -help
+        argument: ""
+        description: display help and exit
+      - names:
+          - -version
+        argument: ""
+        description: display version information and exit
+  - name: eval
+    description: Compare annotation files and show accuracy measures (prediction vs. reference).
+    usage: gt eval reference_file prediction_file
+    options:
+      - names:
+          - -nuc
+        argument: ""
+        description: 'evaluate nucleotide level (memory consumption is proportional to the input file sizes) default: yes'
+      - names:
+          - -ltr
+        argument: ""
+        description: 'evaluate a LTR retrotransposon prediction instead of a gene prediction (all LTR_retrotransposon elements are considered to have an undetermined strand) default: no'
+      - names:
+          - -ltrdelta
+        argument: ""
+        description: 'set allowed delta for LTR borders to be considered equal default: 20'
+      - names:
+          - -v
+        argument: ""
+        description: 'be verbose default: no'
+      - names:
+          - -o
+        argument: ""
+        description: 'redirect output to specified file default: undefined'
+      - names:
+          - -gzip
+        argument: ""
+        description: 'write gzip compressed output file default: no'
+      - names:
+          - -bzip2
+        argument: ""
+        description: 'write bzip2 compressed output file default: no'
+      - names:
+          - -force
+        argument: ""
+        description: 'force writing to output file default: no'
+      - names:
+          - -help
+        argument: ""
+        description: display help and exit
+      - names:
+          - -version
+        argument: ""
+        description: display version information and exit
+  - name: extractfeat
+    description: Extract features given in GFF3 file from sequence file.
+    usage: gt extractfeat [option ...] [GFF3_file]
+    options:
+      - names:
+          - -type
+        argument: ""
+        description: 'set type of features to extract default: undefined'
+      - names:
+          - -join
+        argument: ""
+        description: 'join feature sequences in the same subgraph into a single one default: no'
+      - names:
+          - -translate
+        argument: ""
+        description: 'translate the features (of a DNA sequence) into protein default: no'
+      - names:
+          - -seqid
+        argument: ""
+        description: 'add sequence ID of extracted features to FASTA descriptions default: no'
+      - names:
+          - -target
+        argument: ""
+        description: 'add target ID(s) of extracted features to FASTA descriptions default: no'
+      - names:
+          - -coords
+        argument: ""
+        description: 'add location of extracted features to FASTA descriptions default: no'
+      - names:
+          - -retainids
+        argument: ""
+        description: 'use ID attributes of extracted features as FASTA descriptions default: no'
+      - names:
+          - -gcode
+        argument: ""
+        description: 'specify genetic code to use default: 1'
+      - names:
+          - -seqfile
+        argument: ""
+        description: 'set the sequence file from which to take the sequences default: undefined'
+      - names:
+          - -encseq
+        argument: ""
+        description: 'set the encoded sequence indexname from which to take the sequences default: undefined'
+      - names:
+          - -seqfiles
+        argument: ""
+        description: set the sequence files from which to extract the features use '--' to terminate the list of sequence files
+      - names:
+          - -matchdesc
+        argument: ""
+        description: 'search the sequence descriptions from the input files for the desired sequence IDs (in GFF3), reporting the first match default: no'
+      - names:
+          - -matchdescstart
+        argument: ""
+        description: 'exactly match the sequence descriptions from the input files for the desired sequence IDs (in GFF3) from the beginning to the first whitespace default: no'
+      - names:
+          - -usedesc
+        argument: ""
+        description: 'use sequence descriptions to map the sequence IDs (in GFF3) to actual sequence entries. If a description contains a sequence range (e.g., III:1000001..2000000), the first part is used as sequence ID (''III'') and the first range position as offset (''1000001'') default: no'
+      - names:
+          - -regionmapping
+        argument: ""
+        description: 'set file containing sequence-region to sequence file mapping default: undefined'
+      - names:
+          - -v
+        argument: ""
+        description: 'be verbose default: no'
+      - names:
+          - -width
+        argument: ""
+        description: 'set output width for FASTA sequence printing (0 disables formatting) default: 0'
+      - names:
+          - -o
+        argument: ""
+        description: 'redirect output to specified file default: undefined'
+      - names:
+          - -gzip
+        argument: ""
+        description: 'write gzip compressed output file default: no'
+      - names:
+          - -bzip2
+        argument: ""
+        description: 'write bzip2 compressed output file default: no'
+      - names:
+          - -force
+        argument: ""
+        description: 'force writing to output file default: no'
+      - names:
+          - -help
+        argument: ""
+        description: display help and exit
+      - names:
+          - -version
+        argument: ""
+        description: display version information and exit
+  - name: extractseq
+    description: Extract sequences from given sequence file(s) or fastaindex.
+    usage: gt extractseq [option ...] [sequence_file(s)] | fastaindex
+    options:
+      - names:
+          - -frompos
+        argument: ""
+        description: 'extract sequence from this position counting from 1 on default: 0'
+      - names:
+          - -topos
+        argument: ""
+        description: 'extract sequence up to this position counting from 1 on default: 0'
+      - names:
+          - -match
+        argument: ""
+        description: 'extract all sequences whose description matches the given pattern. The given pattern must be a valid extended regular expression. default: undefined'
+      - names:
+          - -keys
+        argument: ""
+        description: 'extract substrings for keys in specified file default: undefined'
+      - names:
+          - -width
+        argument: ""
+        description: 'set output width for FASTA sequence printing (0 disables formatting) default: 0'
+      - names:
+          - -o
+        argument: ""
+        description: 'redirect output to specified file default: undefined'
+      - names:
+          - -gzip
+        argument: ""
+        description: 'write gzip compressed output file default: no'
+      - names:
+          - -bzip2
+        argument: ""
+        description: 'write bzip2 compressed output file default: no'
+      - names:
+          - -force
+        argument: ""
+        description: 'force writing to output file default: no'
+      - names:
+          - -help
+        argument: ""
+        description: display help and exit
+      - names:
+          - -version
+        argument: ""
+        description: display version information and exit
+  - name: fastq_sample
+    description: Print samples by random choice from given FASTQ files using at least n sequence-chars.
+    usage: gt fastq_sample [option ...] -length <n> <fastq_file> [<fastq_file>...]
+    options:
+      - names:
+          - -length
+        argument: ""
+        description: 'minimum number of chars to be chosen default: undefined'
+      - names:
+          - -help
+        argument: ""
+        description: display help and exit
+      - names:
+          - -version
+        argument: ""
+        description: display version information and exit
+  - name: featureindex
+    description: Retrieve annotations from a persistent feature index as GFF3 output.
+    usage: gt featureindex [option ...] indexfilename
+    options:
+      - names:
+          - -range
+        argument: ""
+        description: 'range constraint for index query default: undefined'
+      - names:
+          - -seqid
+        argument: ""
+        description: 'sequence region default: undefined'
+      - names:
+          - -retain
+        argument: ""
+        description: 'retain attributes default: yes'
+      - names:
+          - -backend
+        argument: ""
+        description: 'database backend to use choose from [sqlite] default: sqlite'
+      - names:
+          - -filename
+        argument: ""
+        description: 'filename for feature database (sqlite backend only) default: undefined'
+      - names:
+          - -v
+        argument: ""
+        description: 'be verbose default: no'
+      - names:
+          - -help
+        argument: ""
+        description: display help and exit
+      - names:
+          - -version
+        argument: ""
+        description: display version information and exit
+  - name: fingerprint
+    description: Compute MD5 fingerprints for each sequence given in a set of sequence files.
+    usage: gt fingerprint [option ...] sequence_file [...]
+    options:
+      - names:
+          - -check
+        argument: ""
+        description: 'compare all fingerprints contained in the given checklist file with checksums in given sequence_files(s). The comparison is successful, if all fingerprints given in checkfile can be found in the sequence_file(s) in the exact same quantity and vice versa. default: undefined'
+      - names:
+          - -duplicates
+        argument: ""
+        description: 'show duplicate fingerprints from given sequence_file(s). default: no'
+      - names:
+          - -extract
+        argument: ""
+        description: 'extract the sequence(s) with the given fingerprint from sequence file(s) and show them on stdout. default: undefined'
+      - names:
+          - -width
+        argument: ""
+        description: 'set output width for FASTA sequence printing (0 disables formatting) default: 0'
+      - names:
+          - -o
+        argument: ""
+        description: 'redirect output to specified file default: undefined'
+      - names:
+          - -gzip
+        argument: ""
+        description: 'write gzip compressed output file default: no'
+      - names:
+          - -bzip2
+        argument: ""
+        description: 'write bzip2 compressed output file default: no'
+      - names:
+          - -force
+        argument: ""
+        description: 'force writing to output file default: no'
+      - names:
+          - -help
+        argument: ""
+        description: display help and exit
+      - names:
+          - -version
+        argument: ""
+        description: display version information and exit
+  - name: genomediff
+    description: 'Calculates Kr: pairwise distances between genomes.'
+    usage: gt genomediff [option ...] (INDEX | -indexname NAME SEQFILE SEQFILE [...])
+    options:
+      - names:
+          - -indextype
+        argument: ""
+        description: 'specify type of index, one of: esa|pck|encseq. Where encseq is an encoded sequence and an enhanced suffix array will be constructed only in memory. default: encseq'
+      - names:
+          - -indexname
+        argument: ""
+        description: 'Basename of encseq to construct. default: undefined'
+      - names:
+          - -unitfile
+        argument: ""
+        description: 'specifies genomic units, see below for description. default: undefined'
+      - names:
+          - -mirrored
+        argument: ""
+        description: 'virtually append the reverse complement of each sequence default: no'
+      - names:
+          - -pl
+        argument: ""
+        description: 'specify prefix length for bucket sort recommendation: use without argument; then a reasonable prefix length is automatically determined. default: 0'
+      - names:
+          - -dc
+        argument: ""
+        description: 'specify difference cover value default: 0'
+      - names:
+          - -memlimit
+        argument: ""
+        description: 'specify maximal amount of memory to be used during index construction (in bytes, the keywords ''MB'' and ''GB'' are allowed) default: undefined'
+      - names:
+          - -v
+        argument: ""
+        description: 'be verbose default: no'
+      - names:
+          - -help
+        argument: ""
+        description: display help for basic options and exit
+      - names:
+          - -help+
+        argument: ""
+        description: display help for all options and exit
+      - names:
+          - -version
+        argument: ""
+        description: display version information and exit
+  - name: gff3
+    description: Parse, possibly transform, and output GFF3 files.
+    usage: gt gff3 [option ...] [GFF3_file ...]
+    options:
+      - names:
+          - -sort
+        argument: ""
+        description: 'sort the GFF3 features (memory consumption is proportional to the input file size(s)) default: no'
+      - names:
+          - -sortlines
+        argument: ""
+        description: 'sort the GFF3 features on a strict line basis (not sorted asdefined by GenomeTools) default: no'
+      - names:
+          - -sortnum
+        argument: ""
+        description: 'enable natural numeric sorting for sequence regions (not sorted as defined by GenomeTools) default: no'
+      - names:
+          - -tidy
+        argument: ""
+        description: 'try to tidy the GFF3 files up during parsing default: no'
+      - names:
+          - -retainids
+        argument: ""
+        description: 'when available, use the original IDs provided in the source file (memory consumption is proportional to the input file size(s)) default: no'
+      - names:
+          - -checkids
+        argument: ""
+        description: 'make sure the ID attributes are unique within the scope of each GFF3_file, as required by GFF3 specification (memory consumption is proportional to the input file size(s)). If features with the same Parent attribute are not separated by a ''###'' line the GFF3 parser tries to treat them as a multi-line feature. This requires at least matching sequence IDs and types. default: no'
+      - names:
+          - -addids
+        argument: ""
+        description: 'add missing "##sequence-region" lines automatically default: yes'
+      - names:
+          - -fixregionboundaries
+        argument: ""
+        description: 'automatically adjust "##sequence-region" lines to contain all their features (memory consumption is proportional to the input file size(s)) default: no'
+      - names:
+          - -addintrons
+        argument: ""
+        description: 'add intron features between existing exon features default: no'
+      - names:
+          - -offset
+        argument: ""
+        description: 'transform all features by the given offset default: undefined'
+      - names:
+          - -offsetfile
+        argument: ""
+        description: 'transform all features by the offsets given in file default: undefined'
+      - names:
+          - -setsource
+        argument: ""
+        description: 'set the ''source'' value (2nd column) of each feature default: undefined'
+      - names:
+          - -typecheck
+        argument: ""
+        description: 'use an ontology given in an OBO file to validate parent-child relationships. If no argument is given, the sofa.obo file from the gtdata/obo_files directory is used. If an argument is given, it is used as an OBO filename. In the case that such a file does not exist ''.obo'' is added to the argument and loading the resulting filename from the gtdata/obo_files directory is attempted. default: undefined'
+      - names:
+          - -xrfcheck
+        argument: ""
+        description: 'check Dbxref and Ontology_term attributes for correct syntax according to a abbreviation definition file. If no argument is given, the GO.xrf_abbs file from the gtdata/xrf_abbr directory is used. If an argument is given, it is used as an specific filename for an abbreviation file. In the case that such a file does not exist, ''.xrf_abbr'' is added to the argument and loading the resulting filename from the gtdata/xrf_abbr directory is attempted. default: undefined'
+      - names:
+          - -show
+        argument: ""
+        description: 'show GFF3 output default: yes'
+      - names:
+          - -v
+        argument: ""
+        description: 'be verbose default: no'
+      - names:
+          - -width
+        argument: ""
+        description: 'set output width for FASTA sequence printing (0 disables formatting) default: 0'
+      - names:
+          - -o
+        argument: ""
+        description: 'redirect output to specified file default: undefined'
+      - names:
+          - -gzip
+        argument: ""
+        description: 'write gzip compressed output file default: no'
+      - names:
+          - -bzip2
+        argument: ""
+        description: 'write bzip2 compressed output file default: no'
+      - names:
+          - -force
+        argument: ""
+        description: 'force writing to output file default: no'
+      - names:
+          - -help
+        argument: ""
+        description: display help and exit
+      - names:
+          - -version
+        argument: ""
+        description: display version information and exit
+  - name: gff3_to_gtf
+    description: Parse GFF3 file(s) and show them as GTF2.2.
+    usage: gt gff3_to_gtf [GFF3_file ...]
+    options:
+      - names:
+          - -o
+        argument: ""
+        description: 'redirect output to specified file default: undefined'
+      - names:
+          - -gzip
+        argument: ""
+        description: 'write gzip compressed output file default: no'
+      - names:
+          - -bzip2
+        argument: ""
+        description: 'write bzip2 compressed output file default: no'
+      - names:
+          - -force
+        argument: ""
+        description: 'force writing to output file default: no'
+      - names:
+          - -help
+        argument: ""
+        description: display help and exit
+      - names:
+          - -version
+        argument: ""
+        description: display version information and exit
+  - name: gff3validator
+    description: Strictly validate given GFF3 files.
+    usage: gt gff3validator [option ...] [GFF3_file ...]
+    options:
+      - names:
+          - -typecheck
+        argument: ""
+        description: "use an ontology given in an OBO file to validate parent-child relationships. If no argument is given, the sofa.obo file from the gtdata/obo_files directory is used. If an argument is given, it is used as an OBO filename. In the case that such a file does not exist '.obo' is added to the argument and loading the resulting filename from the gtdata/obo_files directory is attempted. default: undefined"
+      - names:
+          - -xrfcheck
+        argument: ""
+        description: 'check Dbxref and Ontology_term attributes for correct syntax according to a abbreviation definition file. If no argument is given, the GO.xrf_abbs file from the gtdata/xrf_abbr directory is used. If an argument is given, it is used as an specific filename for an abbreviation file. In the case that such a file does not exist, ''.xrf_abbr'' is added to the argument and loading the resulting filename from the gtdata/xrf_abbr directory is attempted. default: undefined'
+      - names:
+          - -help
+        argument: ""
+        description: display help and exit
+      - names:
+          - -version
+        argument: ""
+        description: display version information and exit
+  - name: gtf_to_gff3
+    description: Parse GTF2.2 file and convert it to GFF3.
+    usage: gt gtf_to_gff3 [GTF_file]
+    options:
+      - names:
+          - -tidy
+        argument: ""
+        description: 'try to tidy the GTF file up during parsing default: no'
+      - names:
+          - -o
+        argument: ""
+        description: 'redirect output to specified file default: undefined'
+      - names:
+          - -gzip
+        argument: ""
+        description: 'write gzip compressed output file default: no'
+      - names:
+          - -bzip2
+        argument: ""
+        description: 'write bzip2 compressed output file default: no'
+      - names:
+          - -force
+        argument: ""
+        description: 'force writing to output file default: no'
+      - names:
+          - -help
+        argument: ""
+        description: display help and exit
+      - names:
+          - -version
+        argument: ""
+        description: display version information and exit
+  - name: hop
+    description: Cognate sequence-based homopolymer error correction.
+    usage: gt hop -<mode> -c <encseq> -map <sam/bam> -reads <fastq> [options...]
+    options:
+      - names:
+          - -c
+        argument: ""
+        description: cognate sequence (encoded using gt encseq encode)
+      - names:
+          - -map
+        argument: ""
+        description: 'mapping of reads to the cognate sequence it must be in SAM/BAM format, and sorted by coordinate (can be prepared e.g. using: samtools sort)'
+      - names:
+          - -sam
+        argument: ""
+        description: 'mapping file is SAM default: BAM'
+      - names:
+          - -aggressive
+        argument: ""
+        description: correct as much as possible
+      - names:
+          - -moderate
+        argument: ""
+        description: mediate between sensitivity and precision
+      - names:
+          - -conservative
+        argument: ""
+        description: correct only most likely errors
+      - names:
+          - -expert
+        argument: ""
+        description: manually select correction criteria
+      - names:
+          - -reads
+        argument: ""
+        description: uncorrected read file(s) in FastQ format; the corrected reads are output in the currect working directory in files which are named as the input files, each prepended by a prefix (see -outprefix option) -reads allows one to output the reads in the same order as in the input and is mandatory if the SAM contains more than a single primary alignment for each read (e.g. output of bwasw) see also -o option as an alternative
+      - names:
+          - -outprefix
+        argument: ""
+        description: 'prefix for output filenames (corrected reads)when -reads is specified the prefix is prepended to each input filename default: hop_'
+      - names:
+          - -o
+        argument: ""
+        description: 'output file for corrected reads (see also -reads/-outprefix) if -o is used, reads are output in a single file in the order they are found in the SAM file (which usually differ from the original order) this will only work if the reads were aligned with a software which only includes 1 alignment for each read (e.g. bwa) default: undefined'
+      - names:
+          - -v
+        argument: ""
+        description: 'be verbose default: no'
+      - names:
+          - -help
+        argument: ""
+        description: display help for basic options and exit
+      - names:
+          - -help+
+        argument: ""
+        description: display help for all options and exit
+      - names:
+          - -version
+        argument: ""
+        description: display version information and exit
+  - name: id_to_md5
+    description: Change sequence IDs in given GFF3 files to MD5 fingerprints of the corresponding sequences.
+    usage: gt id_to_md5 [option ...] [GFF3_file ...]
+    options:
+      - names:
+          - -seqfile
+        argument: ""
+        description: 'set the sequence file from which to take the sequences default: undefined'
+      - names:
+          - -encseq
+        argument: ""
+        description: 'set the encoded sequence indexname from which to take the sequences default: undefined'
+      - names:
+          - -seqfiles
+        argument: ""
+        description: set the sequence files from which to extract the features use '--' to terminate the list of sequence files
+      - names:
+          - -matchdesc
+        argument: ""
+        description: 'search the sequence descriptions from the input files for the desired sequence IDs (in GFF3), reporting the first match default: no'
+      - names:
+          - -matchdescstart
+        argument: ""
+        description: 'exactly match the sequence descriptions from the input files for the desired sequence IDs (in GFF3) from the beginning to the first whitespace default: no'
+      - names:
+          - -usedesc
+        argument: ""
+        description: 'use sequence descriptions to map the sequence IDs (in GFF3) to actual sequence entries. If a description contains a sequence range (e.g., III:1000001..2000000), the first part is used as sequence ID (''III'') and the first range position as offset (''1000001'') default: no'
+      - names:
+          - -regionmapping
+        argument: ""
+        description: 'set file containing sequence-region to sequence file mapping default: undefined'
+      - names:
+          - -subtargetids
+        argument: ""
+        description: 'substitute the target IDs with MD5 sums default: yes'
+      - names:
+          - -v
+        argument: ""
+        description: 'be verbose default: no'
+      - names:
+          - -o
+        argument: ""
+        description: 'redirect output to specified file default: undefined'
+      - names:
+          - -gzip
+        argument: ""
+        description: 'write gzip compressed output file default: no'
+      - names:
+          - -bzip2
+        argument: ""
+        description: 'write bzip2 compressed output file default: no'
+      - names:
+          - -force
+        argument: ""
+        description: 'force writing to output file default: no'
+      - names:
+          - -help
+        argument: ""
+        description: display help and exit
+      - names:
+          - -version
+        argument: ""
+        description: display version information and exit
+  - name: inlineseq_add
+    description: Adds inline sequences from external source to GFF3 input.
+    usage: gt inlineseq_add [options] [GFF3_file ...]
+    options:
+      - names:
+          - -seqfile
+        argument: ""
+        description: 'set the sequence file from which to take the sequences default: undefined'
+      - names:
+          - -encseq
+        argument: ""
+        description: 'set the encoded sequence indexname from which to take the sequences default: undefined'
+      - names:
+          - -seqfiles
+        argument: ""
+        description: set the sequence files from which to extract the features use '--' to terminate the list of sequence files
+      - names:
+          - -matchdesc
+        argument: ""
+        description: 'search the sequence descriptions from the input files for the desired sequence IDs (in GFF3), reporting the first match default: no'
+      - names:
+          - -matchdescstart
+        argument: ""
+        description: 'exactly match the sequence descriptions from the input files for the desired sequence IDs (in GFF3) from the beginning to the first whitespace default: no'
+      - names:
+          - -usedesc
+        argument: ""
+        description: 'use sequence descriptions to map the sequence IDs (in GFF3) to actual sequence entries. If a description contains a sequence range (e.g., III:1000001..2000000), the first part is used as sequence ID (''III'') and the first range position as offset (''1000001'') default: no'
+      - names:
+          - -regionmapping
+        argument: ""
+        description: 'set file containing sequence-region to sequence file mapping default: undefined'
+      - names:
+          - -o
+        argument: ""
+        description: 'redirect output to specified file default: undefined'
+      - names:
+          - -gzip
+        argument: ""
+        description: 'write gzip compressed output file default: no'
+      - names:
+          - -bzip2
+        argument: ""
+        description: 'write bzip2 compressed output file default: no'
+      - names:
+          - -force
+        argument: ""
+        description: 'force writing to output file default: no'
+      - names:
+          - -help
+        argument: ""
+        description: display help and exit
+      - names:
+          - -version
+        argument: ""
+        description: display version information and exit
+  - name: inlineseq_split
+    description: Split GFF3 annotations with inline sequences into separate files.
+    usage: gt inlineseq_split (-seqfile <seqfile> | -gff3file <gff3file>) [GFF3_file]
+    options:
+      - names:
+          - -seqfile
+        argument: ""
+        description: 'output file for sequences as FASTA default: undefined'
+      - names:
+          - -gff3file
+        argument: ""
+        description: 'output file for annotations as GFF3 default: undefined'
+      - names:
+          - -help
+        argument: ""
+        description: display help and exit
+      - names:
+          - -version
+        argument: ""
+        description: display version information and exit
+  - name: interfeat
+    description: Add intermediary features between outside features in given GFF3 file(s).
+    usage: gt interfeat [option ...] [GFF3_file ...]
+    options:
+      - names:
+          - -outside
+        argument: ""
+        description: 'set outside type default: exon'
+      - names:
+          - -inter
+        argument: ""
+        description: 'set intermediary type default: intron'
+      - names:
+          - -o
+        argument: ""
+        description: 'redirect output to specified file default: undefined'
+      - names:
+          - -gzip
+        argument: ""
+        description: 'write gzip compressed output file default: no'
+      - names:
+          - -bzip2
+        argument: ""
+        description: 'write bzip2 compressed output file default: no'
+      - names:
+          - -force
+        argument: ""
+        description: 'force writing to output file default: no'
+      - names:
+          - -help
+        argument: ""
+        description: display help and exit
+      - names:
+          - -version
+        argument: ""
+        description: display version information and exit
+  - name: loccheck
+    description: Checks parent-child containment in GFF3 input.
+    usage: gt loccheck [GFF3_file ...]
+    options:
+      - names:
+          - -help
+        argument: ""
+        description: display help and exit
+      - names:
+          - -version
+        argument: ""
+        description: display version information and exit
+  - name: ltrclustering
+    description: Cluster features of LTRs.
+    usage: gt ltrclustering [option ...] indexname [GFF3_file ...]
+    options:
+      - names:
+          - -psmall
+        argument: ""
+        description: 'specify how many percent of the smaller sequence a match needs to cover in order to cluster the two sequences of the match. default: 0'
+      - names:
+          - -plarge
+        argument: ""
+        description: 'specify how many percent of the larger sequence a match needs to cover in order to cluster the two sequences of the match. default: 0'
+      - names:
+          - -o
+        argument: ""
+        description: 'redirect output to specified file default: undefined'
+      - names:
+          - -gzip
+        argument: ""
+        description: 'write gzip compressed output file default: no'
+      - names:
+          - -bzip2
+        argument: ""
+        description: 'write bzip2 compressed output file default: no'
+      - names:
+          - -force
+        argument: ""
+        description: 'force writing to output file default: no'
+      - names:
+          - -help
+        argument: ""
+        description: display help and exit
+      - names:
+          - -version
+        argument: ""
+        description: display version information and exit
+  - name: ltrdigest
+    description: Identifies and annotates sequence features in LTR retrotransposon candidates.
+    usage: gt ltrdigest [option ...] gff3_file
+    options:
+      - names:
+          - -outfileprefix
+        argument: ""
+        description: prefix for output files (e.g. 'foo' will create files called 'foo_*.csv' and 'foo_*.fas') Omit this option for GFF3 output only.
+      - names:
+          - -metadata
+        argument: ""
+        description: 'output metadata (run conditions) to separate file default: yes'
+      - names:
+          - -seqnamelen
+        argument: ""
+        description: 'set maximal length of sequence names in FASTA headers (e.g. for clustalw or similar tools) default: 20'
+      - names:
+          - -pptlen
+        argument: ""
+        description: 'required PPT length range default: 8 30'
+      - names:
+          - -uboxlen
+        argument: ""
+        description: 'required U-box length range default: 3 30'
+      - names:
+          - -uboxdist
+        argument: ""
+        description: 'allowed U-box distance range from PPT default: 0'
+      - names:
+          - -pptradius
+        argument: ""
+        description: 'radius around beginning of 3'' LTR to search for PPT default: 30'
+      - names:
+          - -trnas
+        argument: ""
+        description: tRNA library in multiple FASTA format for PBS detection Omit this option to disable PBS search.
+      - names:
+          - -pbsalilen
+        argument: ""
+        description: 'required PBS/tRNA alignment length range default: 11 30'
+      - names:
+          - -pbsoffset
+        argument: ""
+        description: 'allowed PBS offset from LTR boundary range default: 0 5'
+      - names:
+          - -pbstrnaoffset
+        argument: ""
+        description: 'allowed PBS/tRNA 3'' end alignment offset range default: 0 5'
+      - names:
+          - -pbsmaxedist
+        argument: ""
+        description: 'maximal allowed PBS/tRNA alignment unit edit distance default: 1'
+      - names:
+          - -pbsradius
+        argument: ""
+        description: 'radius around end of 5'' LTR to search for PBS default: 30'
+      - names:
+          - -hmms
+        argument: ""
+        description: profile HMM models for domain detection (separate by spaces, finish with --) in HMMER3 format Omit this option to disable pHMM search.
+      - names:
+          - -pdomcutoff
+        argument: ""
+        description: 'model-specific score cutoff choose from TC (trusted cutoff) | GA (gathering cutoff) | NONE (no cutoffs) default: NONE'
+      - names:
+          - -aliout
+        argument: ""
+        description: 'output pHMM to amino acid sequence alignments default: no'
+      - names:
+          - -aaout
+        argument: ""
+        description: 'output amino acid sequences for protein domain hits default: no'
+      - names:
+          - -allchains
+        argument: ""
+        description: 'output features from all chains and unchained features, labeled with chain numbers default: no'
+      - names:
+          - -force_recreate
+        argument: ""
+        description: 'force recreation of hmmpressed profiles. default: no'
+      - names:
+          - -v
+        argument: ""
+        description: 'be verbose default: no'
+      - names:
+          - -o
+        argument: ""
+        description: 'redirect output to specified file default: undefined'
+      - names:
+          - -gzip
+        argument: ""
+        description: 'write gzip compressed output file default: no'
+      - names:
+          - -bzip2
+        argument: ""
+        description: 'write bzip2 compressed output file default: no'
+      - names:
+          - -force
+        argument: ""
+        description: 'force writing to output file default: no'
+      - names:
+          - -seqfile
+        argument: ""
+        description: 'set the sequence file from which to take the sequences default: undefined'
+      - names:
+          - -encseq
+        argument: ""
+        description: 'set the encoded sequence indexname from which to take the sequences default: undefined'
+      - names:
+          - -seqfiles
+        argument: ""
+        description: set the sequence files from which to extract the features use '--' to terminate the list of sequence files
+      - names:
+          - -matchdesc
+        argument: ""
+        description: 'search the sequence descriptions from the input files for the desired sequence IDs (in GFF3), reporting the first match default: no'
+      - names:
+          - -matchdescstart
+        argument: ""
+        description: 'exactly match the sequence descriptions from the input files for the desired sequence IDs (in GFF3) from the beginning to the first whitespace default: no'
+      - names:
+          - -usedesc
+        argument: ""
+        description: 'use sequence descriptions to map the sequence IDs (in GFF3) to actual sequence entries. If a description contains a sequence range (e.g., III:1000001..2000000), the first part is used as sequence ID (''III'') and the first range position as offset (''1000001'') default: no'
+      - names:
+          - -regionmapping
+        argument: ""
+        description: 'set file containing sequence-region to sequence file mapping default: undefined'
+      - names:
+          - -help
+        argument: ""
+        description: display help for basic options and exit
+      - names:
+          - -help+
+        argument: ""
+        description: display help for all options and exit
+      - names:
+          - -version
+        argument: ""
+        description: display version information and exit
+  - name: ltrharvest
+    description: Predict LTR retrotransposons.
+    usage: gt ltrharvest [option ...] -index <indexname>
+    options:
+      - names:
+          - -index
+        argument: ""
+        description: 'specify the name of the enhanced suffix array index (mandatory) default: undefined'
+      - names:
+          - -range
+        argument: ""
+        description: 'specify range in the input sequence(s) in which LTR pairs are searched default: 0 0'
+      - names:
+          - -seed
+        argument: ""
+        description: 'specify minimum seed length for exact repeats default: 30'
+      - names:
+          - -minlenltr
+        argument: ""
+        description: 'specify minimum length for each LTR default: 100'
+      - names:
+          - -maxlenltr
+        argument: ""
+        description: 'specify maximum length for each LTR default: 1000'
+      - names:
+          - -mindistltr
+        argument: ""
+        description: 'specify minimum distance of LTR startpositions default: 1000'
+      - names:
+          - -maxdistltr
+        argument: ""
+        description: 'specify maximum distance of LTR startpositions default: 15000'
+      - names:
+          - -similar
+        argument: ""
+        description: 'specify similaritythreshold in range [1..100%] default: 85.00'
+      - names:
+          - -mintsd
+        argument: ""
+        description: 'specify minimum length for each TSD default: 4'
+      - names:
+          - -maxtsd
+        argument: ""
+        description: 'specify maximum length for each TSD default: 20'
+      - names:
+          - -motif
+        argument: ""
+        description: 'specify 2 nucleotides startmotif + 2 nucleotides endmotif: **** default: undefined'
+      - names:
+          - -motifmis
+        argument: ""
+        description: 'specify maximum number of mismatches in motif [0,3] default: 4'
+      - names:
+          - -vic
+        argument: ""
+        description: 'specify the number of nucleotides (to the left and to the right) that will be searched for TSDs and/or motifs around 5'' and 3'' boundary of predicted LTR retrotransposons default: 60'
+      - names:
+          - -overlaps
+        argument: ""
+        description: 'specify no|best|all default: best'
+      - names:
+          - -xdrop
+        argument: ""
+        description: 'specify xdropbelowscore for extension-alignment default: 5'
+      - names:
+          - -mat
+        argument: ""
+        description: 'specify matchscore for extension-alignment default: 2'
+      - names:
+          - -mis
+        argument: ""
+        description: 'specify mismatchscore for extension-alignment default: -2'
+      - names:
+          - -ins
+        argument: ""
+        description: 'specify insertionscore for extension-alignment default: -3'
+      - names:
+          - -del
+        argument: ""
+        description: 'specify deletionscore for extension-alignment default: -3'
+      - names:
+          - -v
+        argument: ""
+        description: 'verbose mode default: no'
+      - names:
+          - -tabout
+        argument: ""
+        description: 'show ''old'' tabular output instead of GFF3 on stdout default: yes'
+      - names:
+          - -seqids
+        argument: ""
+        description: 'use sequence descriptions instead of sequence numbers in GFF3 output default: no'
+      - names:
+          - -md5
+        argument: ""
+        description: 'add MD5 hashes to seqids in GFF3 output default: no'
+      - names:
+          - -longoutput
+        argument: ""
+        description: 'additional motif/TSD output default: no'
+      - names:
+          - -out
+        argument: ""
+        description: 'specify FASTA outputfilename default: undefined'
+      - names:
+          - -outinner
+        argument: ""
+        description: 'specify FASTA outputfilename for inner regions default: undefined'
+      - names:
+          - -gff3
+        argument: ""
+        description: 'specify GFF3 outputfilename default: undefined'
+      - names:
+          - -help
+        argument: ""
+        description: display help for basic options and exit
+      - names:
+          - -help+
+        argument: ""
+        description: display help for all options and exit
+      - names:
+          - -version
+        argument: ""
+        description: display version information and exit
+  - name: matchtool
+    description: Parse match formats and/or invoke matching tools.
+    usage: gt matchtool [option ...]
+    options:
+      - names:
+          - -type
+        argument: ""
+        description: 'choose match file format: OPENMATCH: ''open match'' format, e.g. vmatch BLASTOUT : tabular BLAST output (-m 8) BLASTALLP: invoke BLASTALL with blastp BLASTALLN: invoke BLASTALL with blastn BLASTP : invoke blastp BLASTN : invoke blastn LAST : invoke LAST SW : use Smith-Waterman default: OPENMATCH'
+      - names:
+          - -matchfile
+        argument: ""
+        description: 'set input file name default: undefined'
+      - names:
+          - -db
+        argument: ""
+        description: 'set database file name default: undefined'
+      - names:
+          - -swminlen
+        argument: ""
+        description: 'set minimum required alignment length (for Smith-Waterman alignment) default: 10'
+      - names:
+          - -swmaxedist
+        argument: ""
+        description: 'set maximum allowed edit distance (for Smith-Waterman alignment) default: 0'
+      - names:
+          - -query
+        argument: ""
+        description: 'set query file name default: undefined'
+      - names:
+          - -help
+        argument: ""
+        description: display help and exit
+      - names:
+          - -version
+        argument: ""
+        description: display version information and exit
+  - name: matstat
+    description: Compute matching statistics.
+    usage: gt matstat [options ...] -query queryfile [...]
+    options:
+      - names:
+          - -fmi
+        argument: ""
+        description: 'specify fmindex default: undefined'
+      - names:
+          - -esa
+        argument: ""
+        description: 'specify suffix array default: undefined'
+      - names:
+          - -pck
+        argument: ""
+        description: 'specify packed index default: undefined'
+      - names:
+          - -query
+        argument: ""
+        description: specify queryfiles
+      - names:
+          - -min
+        argument: ""
+        description: 'only output length if >= given minimum length default: 0'
+      - names:
+          - -max
+        argument: ""
+        description: 'only output length if <= given maximum length default: 0'
+      - names:
+          - -output
+        argument: ""
+        description: set output flags (sequence, querypos, subjectpos)
+      - names:
+          - -help
+        argument: ""
+        description: display help and exit
+      - names:
+          - -version
+        argument: ""
+        description: display version information and exit
+  - name: md5_to_id
+    description: Change MD5 fingerprints used as sequence IDs in given GFF3 files to ``regular'' ones.
+    usage: gt md5_to_id [option ...] [GFF3_file ...]
+    options:
+      - names:
+          - -v
+        argument: ""
+        description: 'be verbose default: no'
+      - names:
+          - -o
+        argument: ""
+        description: 'redirect output to specified file default: undefined'
+      - names:
+          - -gzip
+        argument: ""
+        description: 'write gzip compressed output file default: no'
+      - names:
+          - -bzip2
+        argument: ""
+        description: 'write bzip2 compressed output file default: no'
+      - names:
+          - -force
+        argument: ""
+        description: 'force writing to output file default: no'
+      - names:
+          - -help
+        argument: ""
+        description: display help and exit
+      - names:
+          - -version
+        argument: ""
+        description: display version information and exit
+  - name: merge
+    description: Merge sorted GFF3 files in sorted fashion.
+    usage: gt merge [option ...] [GFF3_file ...]
+    options:
+      - names:
+          - -retainids
+        argument: ""
+        description: 'when available, use the original IDs provided in the source file (memory consumption is proportional to the input file size(s)) default: no'
+      - names:
+          - -tidy
+        argument: ""
+        description: 'try to tidy the GFF3 files up during parsing default: no'
+      - names:
+          - -o
+        argument: ""
+        description: 'redirect output to specified file default: undefined'
+      - names:
+          - -gzip
+        argument: ""
+        description: 'write gzip compressed output file default: no'
+      - names:
+          - -bzip2
+        argument: ""
+        description: 'write bzip2 compressed output file default: no'
+      - names:
+          - -force
+        argument: ""
+        description: 'force writing to output file default: no'
+      - names:
+          - -help
+        argument: ""
+        description: display help and exit
+      - names:
+          - -version
+        argument: ""
+        description: display version information and exit
+  - name: mergefeat
+    description: Merge adjacent features without children of the same type in given GFF3 file(s).
+    usage: gt mergefeat [option ...] [GFF3_file ...]
+    options:
+      - names:
+          - -o
+        argument: ""
+        description: 'redirect output to specified file default: undefined'
+      - names:
+          - -gzip
+        argument: ""
+        description: 'write gzip compressed output file default: no'
+      - names:
+          - -bzip2
+        argument: ""
+        description: 'write bzip2 compressed output file default: no'
+      - names:
+          - -force
+        argument: ""
+        description: 'force writing to output file default: no'
+      - names:
+          - -help
+        argument: ""
+        description: display help and exit
+      - names:
+          - -version
+        argument: ""
+        description: display version information and exit
+  - name: mgth
+    description: Metagenomethreader, for predicting genes in metagenomeprojects.
+    usage: gt mgth [option ...] XML-File Query-FASTA-File Hit-FASTA-File
+    options:
+      - names:
+          - -s
+        argument: ""
+        description: 'score for synonymic base exchanges default: 1.00'
+      - names:
+          - -n
+        argument: ""
+        description: 'score for non-synonymic base exchanges default: -1.00'
+      - names:
+          - -b
+        argument: ""
+        description: 'score for blast-hit-end within query sequence default: -10.00'
+      - names:
+          - -q
+        argument: ""
+        description: 'score for stop-codon within querysequence default: -2.00'
+      - names:
+          - -h
+        argument: ""
+        description: 'score for stop-codon within hitsequence default: -5.00'
+      - names:
+          - -l
+        argument: ""
+        description: 'score for leaving a gene on forward/reverse strand or enter a gene on forward/reverse strand default: -2.00'
+      - names:
+          - -p
+        argument: ""
+        description: 'max. span between coding-regions resume as one prediction default: 400.00'
+      - names:
+          - -f
+        argument: ""
+        description: 'max. span between coding-regions in different reading frames resume as coding-regions in the optimal reading-frame default: 200.00'
+      - names:
+          - -c
+        argument: ""
+        description: 'db-name for fcgi-db default: nucleotide'
+      - names:
+          - -o
+        argument: ""
+        description: 'name for resulting output-file default: output'
+      - names:
+          - -k
+        argument: ""
+        description: 'name for the Hit-Sequence-DB default: nucleotide database'
+      - names:
+          - -t
+        argument: ""
+        description: 'true or false if a Hit-FASTA-File exist default: no'
+      - names:
+          - -r
+        argument: ""
+        description: 'format of the output-file default: 1'
+      - names:
+          - -a
+        argument: ""
+        description: 'minimum length of the as-sequence default: 15'
+      - names:
+          - -d
+        argument: ""
+        description: 'minimum percent-value for hit-statistic-output default: 0.00'
+      - names:
+          - -e
+        argument: ""
+        description: 'use of alternative start-codons default: 1'
+      - names:
+          - -m
+        argument: ""
+        description: 'search for homology default: no'
+      - names:
+          - -g
+        argument: ""
+        description: 'testmodus, output without creating date default: no'
+      - names:
+          - -x
+        argument: ""
+        description: 'extend the EGTs to max default: no'
+      - names:
+          - -help
+        argument: ""
+        description: display help and exit
+      - names:
+          - -version
+        argument: ""
+        description: display version information and exit
+  - name: mkfeatureindex
+    description: Creates a new FeatureIndex from annotation data.
+    usage: gt mkfeatureindex [option ...] <input filename(s)>
+    options:
+      - names:
+          - -force
+        argument: ""
+        description: 'force writing to output file default: no'
+      - names:
+          - -backend
+        argument: ""
+        description: 'database backend to use choose from [sqlite] default: sqlite'
+      - names:
+          - -input
+        argument: ""
+        description: 'input data format choose from gff|bed|gtf default: gff'
+      - names:
+          - -filename
+        argument: ""
+        description: 'filename for feature database (sqlite backend only) default: undefined'
+      - names:
+          - -v
+        argument: ""
+        description: 'be verbose default: no'
+      - names:
+          - -help
+        argument: ""
+        description: display help and exit
+      - names:
+          - -version
+        argument: ""
+        description: display version information and exit
+  - name: mkfmindex
+    description: Compute FM-index.
+    usage: gt mkfmindex [option ...] -ii indexfile [...]
+    options:
+      - names:
+          - -fmout
+        argument: ""
+        description: 'specify name of FM-index to be generated (mandatory if more than one input index is specified) default: undefined'
+      - names:
+          - -ii
+        argument: ""
+        description: specify indices to be used
+      - names:
+          - -size
+        argument: ""
+        description: 'specify size (tiny, small, medium, big) default: medium'
+      - names:
+          - -noindexpos
+        argument: ""
+        description: 'store no index positions (hence the positions of matches in the index cannot be retrieved) default: no'
+      - names:
+          - -help
+        argument: ""
+        description: display help and exit
+      - names:
+          - -version
+        argument: ""
+        description: display version information and exit
+  - name: mmapandread
+    description: Map the supplied files into memory and read them once.
+    usage: gt mmapandread file [...]
+    options:
+      - names:
+          - -help
+        argument: ""
+        description: display help and exit
+      - names:
+          - -version
+        argument: ""
+        description: display version information and exit
+  - name: orffinder
+    description: Identifies ORFs (open reading frames) in sequences.
+    usage: gt orffinder [option ...] [indexname] [GFF3_file ...]
+    options:
+      - names:
+          - -types
+        argument: ""
+        description: Specify regions which should be searched for open reading frames, e.g. 'LTR_retrotransposon'
+      - names:
+          - -allorfs
+        argument: ""
+        description: 'search for all ORFs instead of only the longest default: no'
+      - names:
+          - -min
+        argument: ""
+        description: 'minimum length of ORF default: 30'
+      - names:
+          - -max
+        argument: ""
+        description: 'maximum length of ORF default: 10000'
+      - names:
+          - -v
+        argument: ""
+        description: 'be verbose default: no'
+      - names:
+          - -o
+        argument: ""
+        description: 'redirect output to specified file default: undefined'
+      - names:
+          - -gzip
+        argument: ""
+        description: 'write gzip compressed output file default: no'
+      - names:
+          - -bzip2
+        argument: ""
+        description: 'write bzip2 compressed output file default: no'
+      - names:
+          - -force
+        argument: ""
+        description: 'force writing to output file default: no'
+      - names:
+          - -seqfile
+        argument: ""
+        description: 'set the sequence file from which to take the sequences default: undefined'
+      - names:
+          - -encseq
+        argument: ""
+        description: 'set the encoded sequence indexname from which to take the sequences default: undefined'
+      - names:
+          - -seqfiles
+        argument: ""
+        description: set the sequence files from which to extract the features use '--' to terminate the list of sequence files
+      - names:
+          - -matchdesc
+        argument: ""
+        description: 'search the sequence descriptions from the input files for the desired sequence IDs (in GFF3), reporting the first match default: no'
+      - names:
+          - -matchdescstart
+        argument: ""
+        description: 'exactly match the sequence descriptions from the input files for the desired sequence IDs (in GFF3) from the beginning to the first whitespace default: no'
+      - names:
+          - -usedesc
+        argument: ""
+        description: 'use sequence descriptions to map the sequence IDs (in GFF3) to actual sequence entries. If a description contains a sequence range (e.g., III:1000001..2000000), the first part is used as sequence ID (''III'') and the first range position as offset (''1000001'') default: no'
+      - names:
+          - -regionmapping
+        argument: ""
+        description: 'set file containing sequence-region to sequence file mapping default: undefined'
+      - names:
+          - -help
+        argument: ""
+        description: display help and exit
+      - names:
+          - -version
+        argument: ""
+        description: display version information and exit
+  - name: packedindex
+    description: Call apacked index subtool and pass argument(s) to it.
+    usage: gt packedindex [option ...] index_tool [argument ...]
+    options:
+      - names:
+          - -help
+        argument: ""
+        description: display help and exit
+      - names:
+          - -version
+        argument: ""
+        description: display version information and exit
+  - name: prebwt
+    description: Precompute bwt-bounds for some prefix length.
+    usage: gt prebwt [options] -pck indexname
+    options:
+      - names:
+          - -pck
+        argument: ""
+        description: 'Specify index (packed index) default: undefined'
+      - names:
+          - -maxdepth
+        argument: ""
+        description: 'specify maximum depth (value > 0) default: 0'
+      - names:
+          - -help
+        argument: ""
+        description: display help and exit
+      - names:
+          - -version
+        argument: ""
+        description: display version information and exit
+  - name: readjoiner
+    description: 'Readjoiner: a string graph-based sequence assembler.'
+    usage: gt readjoiner [option ...] tool [argument ...]
+    options:
+      - names:
+          - -help
+        argument: ""
+        description: display help and exit
+      - names:
+          - -version
+        argument: ""
+        description: display version information and exit
+  - name: repfind
+    description: Compute maximal exact matches (and more).
+    usage: gt repfind [options] -ii indexname
+    options:
+      - names:
+          - -l
+        argument: ""
+        description: 'Specify minimum length of matches default: 0'
+      - names:
+          - -f
+        argument: ""
+        description: 'Compute forward matches default: yes'
+      - names:
+          - -r
+        argument: ""
+        description: 'Compute reverse matches default: no'
+      - names:
+          - -p
+        argument: ""
+        description: 'Compute matches on reverse strand default: no'
+      - names:
+          - -seedlength
+        argument: ""
+        description: 'Specify minimum length of seed default: 0'
+      - names:
+          - -maxfreq
+        argument: ""
+        description: 'Specify maximal frequency of maximal exact matches in reference sequence default: 0'
+      - names:
+          - -extendxdrop
+        argument: ""
+        description: 'Extend seed to both sides using xdrop algorithm, optional parameter specifies sensitivity default: 97'
+      - names:
+          - -xdropbelow
+        argument: ""
+        description: 'Specify xdrop cutoff score (argument 0 means undefined). If undefined an optimal value is determined automatically depending on the error rate default: 0'
+      - names:
+          - -extendgreedy
+        argument: ""
+        description: 'Extend seed to both sides using greedy algorithm with trimming of waves, optional parameter specifies sensitivity default: 97'
+      - names:
+          - -minidentity
+        argument: ""
+        description: 'Specify minimum identity of matches   as integer in the range from 70 to 99 (for xdrop and greedy extension) default: 80'
+      - names:
+          - -ii
+        argument: ""
+        description: 'Specify input index default: undefined'
+      - names:
+          - -outfmt
+        argument: ""
+        description: 'specify what information about the matches to display alignment: show alignment (possibly followed by'
+      - names:
+          - -evalue
+        argument: ""
+        description: 'switch on evalue filtering of matches (optional argument specifies evalue threshold) default: 10.00'
+      - names:
+          - -scan
+        argument: ""
+        description: 'scan index rather than map it to main memory default: no'
+      - names:
+          - -v
+        argument: ""
+        description: 'be verbose default: no'
+      - names:
+          - -help
+        argument: ""
+        description: display help and exit
+      - names:
+          - -version
+        argument: ""
+        description: display version information and exit
+  - name: scriptfilter
+    description: Get info about and validate Lua script filters.
+    usage: gt scriptfilter [option ...] [script file(s)]
+    options:
+      - names:
+          - -showinfo
+        argument: ""
+        description: 'show information about filter default: yes'
+      - names:
+          - -validate
+        argument: ""
+        description: 'validate filter function default: yes'
+      - names:
+          - -oneline
+        argument: ""
+        description: 'show compact information on one line default: no'
+      - names:
+          - -scriptname
+        argument: ""
+        description: 'show script name default: yes'
+      - names:
+          - -help
+        argument: ""
+        description: display help and exit
+      - names:
+          - -version
+        argument: ""
+        description: display version information and exit
+  - name: seed_extend
+    description: Calculate local alignments using the seed and extend algorithm.
+    usage: gt seed_extend [option ...] encseq_basename [encseq_basename]
+    options:
+      - names:
+          - -ii
+        argument: ""
+        description: Input index for encseq encoded sequences
+      - names:
+          - -qii
+        argument: ""
+        description: Query input index (encseq)
+      - names:
+          - -seedlength
+        argument: ""
+        description: 'Minimum length of a seed default: logarithm of input length with alphabet size as log-base'
+      - names:
+          - -spacedseed
+        argument: ""
+        description: 'use spaced seed of length specified by option -seedlength (optional argument specifies weight of spaced seed) default: 0'
+      - names:
+          - -diagbandwidth
+        argument: ""
+        description: 'Logarithm of diagonal band width in the range from 0 to 10 (for filter) default: 6'
+      - names:
+          - -mincoverage
+        argument: ""
+        description: 'Minimum coverage in two neighbouring diagonal bands (for filter) default: 2.5 x seedlength'
+      - names:
+          - -diagband-stat
+        argument: ""
+        description: 'Compute statistics from diagonal band scores; parameter specifies kind of statistics, possible choices are sum default: sum'
+      - names:
+          - -maxfreq
+        argument: ""
+        description: 'Maximum frequency of a k-mer (for filter) default: undefined'
+      - names:
+          - -memlimit
+        argument: ""
+        description: 'Maximum memory usage to determine the maximum frequency of a k-mer (for filter) default: undefined'
+      - names:
+          - -extendxdrop
+        argument: ""
+        description: 'Extend seed to both sides using xdrop algorithm, optional parameter specifies sensitivity default: 97'
+      - names:
+          - -xdropbelow
+        argument: ""
+        description: 'Specify xdrop cutoff score (0 means automatically defined depending on minidentity) default: 0'
+      - names:
+          - -extendgreedy
+        argument: ""
+        description: 'Extend seed to both sides using greedy algorithm, optional parameter specifies sensitivity default: 97'
+      - names:
+          - -maxmat
+        argument: ""
+        description: 'compute maximal matches of minimum length specified by option -l default: 1'
+      - names:
+          - -l
+        argument: ""
+        description: 'Minimum length of aligned sequences default: undefined'
+      - names:
+          - -minidentity
+        argument: ""
+        description: 'Minimum identity of matches (for seed extension) default: 80'
+      - names:
+          - -evalue
+        argument: ""
+        description: 'switch on evalue filtering of matches (optional argument specifies evalue threshold) default: 10.00'
+      - names:
+          - -outfmt
+        argument: ""
+        description: 'specify what information about the matches to display alignment: show alignment (possibly followed by'
+      - names:
+          - -ani
+        argument: ""
+        description: 'output average nucleotide identity determined from the computed matches (which are not output) default: no'
+      - names:
+          - -no-reverse
+        argument: ""
+        description: 'do not compute matches on reverse complemented strand default: no'
+      - names:
+          - -no-forward
+        argument: ""
+        description: 'do not compute matches on forward strand default: no'
+      - names:
+          - -use-apos
+        argument: ""
+        description: 'Discard a seed only if both apos and bpos overlap with a previous successful alignment default: no'
+      - names:
+          - -parts
+        argument: ""
+        description: 'Divide data into specified number of parts default: 1'
+      - names:
+          - -kmerfile
+        argument: ""
+        description: 'Use pre-calculated k-mers from file (if exist) default: yes'
+      - names:
+          - -v
+        argument: ""
+        description: 'be verbose default: no'
+      - names:
+          - -help
+        argument: ""
+        description: display help and exit
+      - names:
+          - -version
+        argument: ""
+        description: display version information and exit
+  - name: select
+    description: Select certain features (specified by the used options) from given GFF3 file(s).
+    usage: gt select [option ...] [GFF3_file ...]
+    options:
+      - names:
+          - -retainids
+        argument: ""
+        description: 'when available, use the original IDs provided in the source file (memory consumption is proportional to the input file size(s)) default: no'
+      - names:
+          - -seqid
+        argument: ""
+        description: 'select feature with the given sequence ID (all comments are selected). default: undefined'
+      - names:
+          - -source
+        argument: ""
+        description: 'select feature with the given source (the source is column 2 in regular GFF3 lines) default: undefined'
+      - names:
+          - -contain
+        argument: ""
+        description: 'select all features which are contained in the given range default: undefined'
+      - names:
+          - -overlap
+        argument: ""
+        description: 'select all features which do overlap with the given range default: undefined'
+      - names:
+          - -strand
+        argument: ""
+        description: 'select all top-level features(i.e., features without parents) whose strand equals the given one (must be one of ''+-.?'') default: undefined'
+      - names:
+          - -targetstrand
+        argument: ""
+        description: 'select all top-level features (i.e., features without parents) which have exactly one target attribute whose strand equals the given one (must be one of ''+-.?'') default: undefined'
+      - names:
+          - -targetbest
+        argument: ""
+        description: 'if multiple top-level features (i.e., features without parents) with exactly one target attribute have the same target_id, keep only the feature with the best score. If -targetstrand is used at the same time, this option is applied after -targetstrand. Memory consumption is proportional to the input file size(s). default: no'
+      - names:
+          - -hascds
+        argument: ""
+        description: 'select all top-level features which do have a CDS child default: no'
+      - names:
+          - --maxgenelength
+        argument: ""
+        description: 'select genes up to the given maximum length. default: undefined'
+      - names:
+          - -maxgenenum
+        argument: ""
+        description: 'select the first genes up to the given maximum number default: undefined'
+      - names:
+          - -mingenescore
+        argument: ""
+        description: 'select genes with the given minimum score default: undefined'
+      - names:
+          - -maxgenescore
+        argument: ""
+        description: 'select genes with the given maximum score default: undefined'
+      - names:
+          - -minaveragessp
+        argument: ""
+        description: 'set the minimum average splice site probability. default: undefined'
+      - names:
+          - -rule_files
+        argument: ""
+        description: specify Lua filter rule files to be used for selection (terminate list with '--')
+      - names:
+          - -rule_logic
+        argument: ""
+        description: 'select how multiple Lua files should be combined choose from AND|OR default: AND'
+      - names:
+          - -dropped_file
+        argument: ""
+        description: 'save non-selected features to file   default: undefined'
+      - names:
+          - -v
+        argument: ""
+        description: 'be verbose default: no'
+      - names:
+          - -o
+        argument: ""
+        description: 'redirect output to specified file default: undefined'
+      - names:
+          - -gzip
+        argument: ""
+        description: 'write gzip compressed output file default: no'
+      - names:
+          - -bzip2
+        argument: ""
+        description: 'write bzip2 compressed output file default: no'
+      - names:
+          - -force
+        argument: ""
+        description: 'force writing to output file default: no'
+      - names:
+          - -help
+        argument: ""
+        description: display help and exit
+      - names:
+          - -version
+        argument: ""
+        description: display version information and exit
+  - name: seq
+    description: Parse the given sequence file(s) and construct the corresponding index files.
+    usage: gt seq [option ...] sequence_file [...]
+    options:
+      - names:
+          - -recreate
+        argument: ""
+        description: 'recreate index files, even if they exist already default: no'
+      - names:
+          - -showfasta
+        argument: ""
+        description: 'show all sequences (in FASTA format) default: no'
+      - names:
+          - -showseqnum
+        argument: ""
+        description: 'show sequence with given number (sequences are counted from 1 unless -seqnum_from_0 is specified) default: undefined'
+      - names:
+          - -showseqlength
+        argument: ""
+        description: 'show length of sequence with given number (sequences are counted from 1 unless -seqnum_from_0 is specified) default: undefined'
+      - names:
+          - -showseqnum_inputfile
+        argument: ""
+        description: 'show sequence with given numbers specified line by line in given file (sequences are counted from 1 unless -seqnum_from_0 is specified) default: undefined'
+      - names:
+          - -seqnum_from_0
+        argument: ""
+        description: 'for options -showseqnum and -showseqnum_inputfile: count sequence numbers from 0 instead of 1 default: no'
+      - names:
+          - -gc-content
+        argument: ""
+        description: 'print GC-content (for DNA files) default: no'
+      - names:
+          - -stat
+        argument: ""
+        description: 'show sequence statistics default: no'
+      - names:
+          - -seqlengthdistri
+        argument: ""
+        description: 'show sequence length distribution default: no'
+      - names:
+          - -width
+        argument: ""
+        description: 'set output width for FASTA sequence printing (0 disables formatting) default: 0'
+      - names:
+          - -o
+        argument: ""
+        description: 'redirect output to specified file default: undefined'
+      - names:
+          - -gzip
+        argument: ""
+        description: 'write gzip compressed output file default: no'
+      - names:
+          - -bzip2
+        argument: ""
+        description: 'write bzip2 compressed output file default: no'
+      - names:
+          - -force
+        argument: ""
+        description: 'force writing to output file default: no'
+      - names:
+          - -help
+        argument: ""
+        description: display help and exit
+      - names:
+          - -version
+        argument: ""
+        description: display version information and exit
+  - name: seqfilter
+    description: Filter the given sequence file(s) and show the results on stdout.
+    usage: gt seqfilter [option ...] [sequence_file ...]
+    options:
+      - names:
+          - -minlength
+        argument: ""
+        description: 'set minimum length a sequence must have to pass the filter default: undefined'
+      - names:
+          - -maxlength
+        argument: ""
+        description: 'set maximum length a sequence can have to pass the filter default: undefined'
+      - names:
+          - -maxseqnum
+        argument: ""
+        description: 'set the maximum number of sequences which can pass the filter default: undefined'
+      - names:
+          - -sample
+        argument: ""
+        description: 'set a probability for each sequence to pass the filter default: 1.00'
+      - names:
+          - -step
+        argument: ""
+        description: 'only every ''step''-th sequence passes the filter default: 1'
+      - names:
+          - -nowildcards
+        argument: ""
+        description: 'filter out seqences containing wildcards default: no'
+      - names:
+          - -width
+        argument: ""
+        description: 'set output width for FASTA sequence printing (0 disables formatting) default: 0'
+      - names:
+          - -o
+        argument: ""
+        description: 'redirect output to specified file default: undefined'
+      - names:
+          - -gzip
+        argument: ""
+        description: 'write gzip compressed output file default: no'
+      - names:
+          - -bzip2
+        argument: ""
+        description: 'write bzip2 compressed output file default: no'
+      - names:
+          - -force
+        argument: ""
+        description: 'force writing to output file default: no'
+      - names:
+          - -help
+        argument: ""
+        description: display help and exit
+      - names:
+          - -version
+        argument: ""
+        description: display version information and exit
+  - name: seqids
+    description: Show sequence IDs from annotation file.
+    usage: gt seqids [GFF3_file]
+    options:
+      - names:
+          - -help
+        argument: ""
+        description: display help and exit
+      - names:
+          - -version
+        argument: ""
+        description: display version information and exit
+  - name: seqmutate
+    description: Mutate the sequences of the given sequence file(s).
+    usage: gt seqmutate [option ...] [sequence_file ...]
+    options:
+      - names:
+          - -rate
+        argument: ""
+        description: 'set the mutation rate default: 1'
+      - names:
+          - -width
+        argument: ""
+        description: 'set output width for FASTA sequence printing (0 disables formatting) default: 0'
+      - names:
+          - -o
+        argument: ""
+        description: 'redirect output to specified file default: undefined'
+      - names:
+          - -gzip
+        argument: ""
+        description: 'write gzip compressed output file default: no'
+      - names:
+          - -bzip2
+        argument: ""
+        description: 'write bzip2 compressed output file default: no'
+      - names:
+          - -force
+        argument: ""
+        description: 'force writing to output file default: no'
+      - names:
+          - -help
+        argument: ""
+        description: display help and exit
+      - names:
+          - -version
+        argument: ""
+        description: display version information and exit
+  - name: seqorder
+    description: Output sequences as MultiFasta in specified order.
+    usage: gt seqorder (-invert|-sort|-revsort|-shuffle|-sorthdr|-sorthdrnum) encseq
+    options:
+      - names:
+          - -invert
+        argument: ""
+        description: 'invert order of sequences default: no'
+      - names:
+          - -sort
+        argument: ""
+        description: 'sort sequences lexicographically (by actual sequence) default: no'
+      - names:
+          - -revsort
+        argument: ""
+        description: 'sort sequences in reverse lexicographic order default: no'
+      - names:
+          - -sorthdr
+        argument: ""
+        description: 'sort sequences lexicographically by sequence header default: no'
+      - names:
+          - -sorthdrnum
+        argument: ""
+        description: 'sort sequences numerically by sequence header default: no'
+      - names:
+          - -shuffle
+        argument: ""
+        description: 'shuffle sequences pseudo-randomly default: no'
+      - names:
+          - -sortlength
+        argument: ""
+        description: 'sort by decreasing length default: no'
+      - names:
+          - -help
+        argument: ""
+        description: display help and exit
+      - names:
+          - -version
+        argument: ""
+        description: display version information and exit
+  - name: seqstat
+    description: Calculate statistics for fasta file(s).
+    usage: gt seqstat [options] file [...]
+    options:
+      - names:
+          - -v
+        argument: ""
+        description: 'be verbose default: no'
+      - names:
+          - -distlen
+        argument: ""
+        description: 'show distribution of sequence length. default: no'
+      - names:
+          - -b
+        argument: ""
+        description: 'bucket size for distlen option default: 100'
+      - names:
+          - -binary
+        argument: ""
+        description: 'use a binary format for distlen output output filename: <first_input_filename>.distlen bucketsize: 1 default: no'
+      - names:
+          - -contigs
+        argument: ""
+        description: 'summary of contigs set statistics. default: yes'
+      - names:
+          - -nstats
+        argument: ""
+        description: list of N-values to calculate statistics for, terminated by '--'; if none given, N50 and N80 will be calculated
+      - names:
+          - -genome
+        argument: ""
+        description: 'set genome length for NG50/NG80 calculation default: 0'
+      - names:
+          - -help
+        argument: ""
+        description: display help for basic options and exit
+      - names:
+          - -help+
+        argument: ""
+        description: display help for all options and exit
+      - names:
+          - -version
+        argument: ""
+        description: display version information and exit
+  - name: seqtransform
+    description: Perform simple transformations on the given sequence file(s).
+    usage: gt seqtransform [option ...] [sequence_file ...]
+    options:
+      - names:
+          - -addstopaminos
+        argument: ""
+        description: 'append stop amino acids (''*'') to given protein sequences, if not already present default: no'
+      - names:
+          - -width
+        argument: ""
+        description: 'set output width for FASTA sequence printing (0 disables formatting) default: 0'
+      - names:
+          - -o
+        argument: ""
+        description: 'redirect output to specified file default: undefined'
+      - names:
+          - -gzip
+        argument: ""
+        description: 'write gzip compressed output file default: no'
+      - names:
+          - -bzip2
+        argument: ""
+        description: 'write bzip2 compressed output file default: no'
+      - names:
+          - -force
+        argument: ""
+        description: 'force writing to output file default: no'
+      - names:
+          - -help
+        argument: ""
+        description: display help and exit
+      - names:
+          - -version
+        argument: ""
+        description: display version information and exit
+  - name: seqtranslate
+    description: Translates a nucleotide sequence into a protein sequence.
+    usage: gt seqtranslate [option ...] [files]
+    options:
+      - names:
+          - -reverse
+        argument: ""
+        description: 'also translate reverse complements default: yes'
+      - names:
+          - -fastawidth
+        argument: ""
+        description: 'width of the FASTA output, 0 for unlimited default: 60'
+      - names:
+          - -o
+        argument: ""
+        description: 'redirect output to specified file default: undefined'
+      - names:
+          - -gzip
+        argument: ""
+        description: 'write gzip compressed output file default: no'
+      - names:
+          - -bzip2
+        argument: ""
+        description: 'write bzip2 compressed output file default: no'
+      - names:
+          - -force
+        argument: ""
+        description: 'force writing to output file default: no'
+      - names:
+          - -help
+        argument: ""
+        description: display help and exit
+      - names:
+          - -version
+        argument: ""
+        description: display version information and exit
+  - name: sequniq
+    description: Filter out repeated sequences in given sequence files.
+    usage: gt sequniq [option ...] sequence_file [...]
+    options:
+      - names:
+          - -rev
+        argument: ""
+        description: 'also filter out sequences whose reverse complement is identical to a sequence already output default: no'
+      - names:
+          - -v
+        argument: ""
+        description: 'be verbose default: no'
+      - names:
+          - -width
+        argument: ""
+        description: 'set output width for FASTA sequence printing (0 disables formatting) default: 0'
+      - names:
+          - -o
+        argument: ""
+        description: 'redirect output to specified file default: undefined'
+      - names:
+          - -gzip
+        argument: ""
+        description: 'write gzip compressed output file default: no'
+      - names:
+          - -bzip2
+        argument: ""
+        description: 'write bzip2 compressed output file default: no'
+      - names:
+          - -force
+        argument: ""
+        description: 'force writing to output file default: no'
+      - names:
+          - -help
+        argument: ""
+        description: display help and exit
+      - names:
+          - -version
+        argument: ""
+        description: display version information and exit
+  - name: shredder
+    description: Shredder sequence file(s) into consecutive pieces of random length.
+    usage: gt shredder [option ...] [sequence_file ...]
+    options:
+      - names:
+          - -coverage
+        argument: ""
+        description: 'set the number of times the sequence_file is shreddered default: 1'
+      - names:
+          - -minlength
+        argument: ""
+        description: 'set the minimum length of the shreddered fragments default: 300'
+      - names:
+          - -maxlength
+        argument: ""
+        description: 'set the maximum length of the shreddered fragments default: 700'
+      - names:
+          - -overlap
+        argument: ""
+        description: 'set the overlap between consecutive pieces default: 0'
+      - names:
+          - -sample
+        argument: ""
+        description: 'take samples of the generated sequences pieces with the given probability default: 1.00'
+      - names:
+          - -clipdesc
+        argument: ""
+        description: 'clip descriptions after first space (fooled by ''\t'', ''\n'' etc) adds offset and length to ensure unique identifier default: no'
+      - names:
+          - -width
+        argument: ""
+        description: 'set output width for FASTA sequence printing (0 disables formatting) default: 0'
+      - names:
+          - -o
+        argument: ""
+        description: 'redirect output to specified file default: undefined'
+      - names:
+          - -gzip
+        argument: ""
+        description: 'write gzip compressed output file default: no'
+      - names:
+          - -bzip2
+        argument: ""
+        description: 'write bzip2 compressed output file default: no'
+      - names:
+          - -force
+        argument: ""
+        description: 'force writing to output file default: no'
+      - names:
+          - -help
+        argument: ""
+        description: display help and exit
+      - names:
+          - -version
+        argument: ""
+        description: display version information and exit
+  - name: shulengthdist
+    description: Compute distribution of pairwise shustring lengths.
+    usage: gt shulengthdist [options] -ii indexname
+    options:
+      - names:
+          - -ii
+        argument: ""
+        description: 'Specify input index default: undefined'
+      - names:
+          - -scan
+        argument: ""
+        description: 'scan index rather than mapping it to main memory default: no'
+      - names:
+          - -v
+        argument: ""
+        description: 'be verbose default: no'
+      - names:
+          - -help
+        argument: ""
+        description: display help and exit
+      - names:
+          - -version
+        argument: ""
+        description: display version information and exit
+  - name: simreads
+    description: Simulate sequencing reads from random positions in the input sequence(s).
+    usage: gt simreads [option ...] <encseq>
+    options:
+      - names:
+          - -num
+        argument: ""
+        description: 'desired number of reads default: undefined'
+      - names:
+          - -coverage
+        argument: ""
+        description: 'desired coverage of the reads default: undefined'
+      - names:
+          - -len
+        argument: ""
+        description: 'fixed read length default: undefined'
+      - names:
+          - -minlen
+        argument: ""
+        description: 'minimal read length default: undefined'
+      - names:
+          - -maxlen
+        argument: ""
+        description: 'maximal read length default: undefined'
+      - names:
+          - -distlen
+        argument: ""
+        description: 'use read length distribution file (in the output format of the seqstat tool) default: undefined'
+      - names:
+          - -o
+        argument: ""
+        description: 'redirect output to specified file default: undefined'
+      - names:
+          - -gzip
+        argument: ""
+        description: 'write gzip compressed output file default: no'
+      - names:
+          - -bzip2
+        argument: ""
+        description: 'write bzip2 compressed output file default: no'
+      - names:
+          - -force
+        argument: ""
+        description: 'force writing to output file default: no'
+      - names:
+          - -p
+        argument: ""
+        description: 'show a progress bar default: no'
+      - names:
+          - -v
+        argument: ""
+        description: 'be verbose default: no'
+      - names:
+          - -ss
+        argument: ""
+        description: 'simulate reads in forward direction only default: no'
+      - names:
+          - -help
+        argument: ""
+        description: display help for basic options and exit
+      - names:
+          - -help+
+        argument: ""
+        description: display help for all options and exit
+      - names:
+          - -version
+        argument: ""
+        description: display version information and exit
+  - name: sketch
+    description: Create graphical representation of GFF3 annotation files.
+    usage: gt sketch [option ...] image_file [GFF3_file ...]
+    options:
+      - names:
+          - -pipe
+        argument: ""
+        description: 'use pipe mode (i.e., show all gff3 features on stdout) default: no'
+      - names:
+          - -flattenfiles
+        argument: ""
+        description: 'do not group tracks by source file name and remove file names from track description default: no'
+      - names:
+          - -seqid
+        argument: ""
+        description: 'sequence region identifier default: first one in file'
+      - names:
+          - -start
+        argument: ""
+        description: 'start position default: first region start'
+      - names:
+          - -end
+        argument: ""
+        description: 'end position default: last region end'
+      - names:
+          - -width
+        argument: ""
+        description: 'target image width (in pixel) default: 800'
+      - names:
+          - -style
+        argument: ""
+        description: 'style file to use default: undefined'
+      - names:
+          - -format
+        argument: ""
+        description: 'output graphics format choose from png|pdf|svg|ps default: png'
+      - names:
+          - -input
+        argument: ""
+        description: 'input data format choose from gff|bed|gtf default: gff'
+      - names:
+          - -addintrons
+        argument: ""
+        description: 'add intron features between existing exon features (before drawing) default: no'
+      - names:
+          - -unsafe
+        argument: ""
+        description: 'enable unsafe mode for style file default: no'
+      - names:
+          - -v
+        argument: ""
+        description: 'be verbose default: no'
+      - names:
+          - -force
+        argument: ""
+        description: 'force writing to output file default: no'
+      - names:
+          - -help
+        argument: ""
+        description: display help and exit
+      - names:
+          - -version
+        argument: ""
+        description: display version information and exit
+  - name: sketch_page
+    description: Draw a multi-page PDF/PS representation of an annotation file.
+    usage: gt sketch_page outfile annotationfile
+    options:
+      - names:
+          - -seqid
+        argument: ""
+        description: 'sequence region to draw default: first in file'
+      - names:
+          - -text
+        argument: ""
+        description: 'text to show in header default: file name'
+      - names:
+          - -fontsize
+        argument: ""
+        description: 'header and footer font size (in points) default: 10.00'
+      - names:
+          - -range
+        argument: ""
+        description: 'range to draw (e.g. 100 10000) default: full range'
+      - names:
+          - -linewidth
+        argument: ""
+        description: 'base width of a single repeated unit default: 2000'
+      - names:
+          - -width
+        argument: ""
+        description: 'page width in millimeters (default: DIN A4) default: 210.00'
+      - names:
+          - -height
+        argument: ""
+        description: 'page height in millimeters (default: DIN A4) default: 297.00'
+      - names:
+          - -format
+        argument: ""
+        description: 'output format choose from: pdf|ps default: pdf'
+      - names:
+          - -style
+        argument: ""
+        description: 'style file to use default: gtdata/sketch/default.style'
+      - names:
+          - -help
+        argument: ""
+        description: display help for basic options and exit
+      - names:
+          - -help+
+        argument: ""
+        description: display help for all options and exit
+      - names:
+          - -version
+        argument: ""
+        description: display version information and exit
+  - name: snpper
+    description: Annotates SNPs according to their effect on the genome as given by a genomic annotation.
+    usage: gt snpper [option ...] GFF3_file [GVF_file]
+    options:
+      - names:
+          - -trans_table
+        argument: ""
+        description: 'NCBI translation table number, choose from: * 1: Standard * 2: Vertebrate Mitochondrial * 3: Yeast Mitochondrial * 4: Mold Mitochondrial; Protozoan Mitochondrial; Coelenterate Mitochondrial; Mycoplasma; Spiroplasma * 5: Invertebrate Mitochondrial * 6: Ciliate Nuclear; Dasycladacean Nuclear; Hexamita Nuclear * 9: Echinoderm Mitochondrial; Flatworm Mitochondrial * 10: Euplotid Nuclear * 11: Bacterial, Archaeal and Plant Plastid * 12: Alternative Yeast Nuclear * 13: Ascidian Mitochondrial * 14: Alternative Flatworm Mitochondrial * 15: Blepharisma Macronuclear * 16: Chlorophycean Mitochondrial * 21: Trematode Mitochondrial * 22: Scenedesmus obliquus Mitochondrial * 23: Thraustochytrium Mitochondrial * 24: Pterobranchia Mitochondrial * 25: Candidate Division SR1 and Gracilibacteria default: 1'
+      - names:
+          - -seqfile
+        argument: ""
+        description: 'set the sequence file from which to take the sequences default: undefined'
+      - names:
+          - -encseq
+        argument: ""
+        description: 'set the encoded sequence indexname from which to take the sequences default: undefined'
+      - names:
+          - -seqfiles
+        argument: ""
+        description: set the sequence files from which to extract the features use '--' to terminate the list of sequence files
+      - names:
+          - -matchdesc
+        argument: ""
+        description: 'search the sequence descriptions from the input files for the desired sequence IDs (in GFF3), reporting the first match default: no'
+      - names:
+          - -matchdescstart
+        argument: ""
+        description: 'exactly match the sequence descriptions from the input files for the desired sequence IDs (in GFF3) from the beginning to the first whitespace default: no'
+      - names:
+          - -usedesc
+        argument: ""
+        description: 'use sequence descriptions to map the sequence IDs (in GFF3) to actual sequence entries. If a description contains a sequence range (e.g., III:1000001..2000000), the first part is used as sequence ID (''III'') and the first range position as offset (''1000001'') default: no'
+      - names:
+          - -regionmapping
+        argument: ""
+        description: 'set file containing sequence-region to sequence file mapping default: undefined'
+      - names:
+          - -o
+        argument: ""
+        description: 'redirect output to specified file default: undefined'
+      - names:
+          - -gzip
+        argument: ""
+        description: 'write gzip compressed output file default: no'
+      - names:
+          - -bzip2
+        argument: ""
+        description: 'write bzip2 compressed output file default: no'
+      - names:
+          - -force
+        argument: ""
+        description: 'force writing to output file default: no'
+      - names:
+          - -help
+        argument: ""
+        description: display help and exit
+      - names:
+          - -version
+        argument: ""
+        description: display version information and exit
+  - name: speck
+    description: Checks spec definition compliance in GFF3 input.
+    usage: gt speck [options] [GFF3_file ...]
+    options:
+      - names:
+          - -specfile
+        argument: ""
+        description: 'file with specification definition default: undefined'
+      - names:
+          - -colored
+        argument: ""
+        description: 'show colored output default: yes'
+      - names:
+          - -provideindex
+        argument: ""
+        description: 'provide feature index in specfile namespace (requires O(n) memory for n input features) default: no'
+      - names:
+          - -sort
+        argument: ""
+        description: 'sort input before checking (requires O(n) memory for n input features) default: no'
+      - names:
+          - -failhard
+        argument: ""
+        description: 'stop processing and report runtime errors instead of recording them in the results default: no'
+      - names:
+          - -output
+        argument: ""
+        description: 'output format choose from: [json, text, html, statsonly, tabular] or give path to output driver default: text'
+      - names:
+          - -typecheck
+        argument: ""
+        description: 'use an ontology given in an OBO file to validate parent-child relationships. If no argument is given, the sofa.obo file from the gtdata/obo_files directory is used. If an argument is given, it is used as an OBO filename. In the case that such a file does not exist ''.obo'' is added to the argument and loading the resulting filename from the gtdata/obo_files directory is attempted. default: so'
+      - names:
+          - -seqfile
+        argument: ""
+        description: 'set the sequence file from which to take the sequences default: undefined'
+      - names:
+          - -encseq
+        argument: ""
+        description: 'set the encoded sequence indexname from which to take the sequences default: undefined'
+      - names:
+          - -seqfiles
+        argument: ""
+        description: set the sequence files from which to extract the features use '--' to terminate the list of sequence files
+      - names:
+          - -matchdesc
+        argument: ""
+        description: 'search the sequence descriptions from the input files for the desired sequence IDs (in GFF3), reporting the first match default: no'
+      - names:
+          - -matchdescstart
+        argument: ""
+        description: 'exactly match the sequence descriptions from the input files for the desired sequence IDs (in GFF3) from the beginning to the first whitespace default: no'
+      - names:
+          - -usedesc
+        argument: ""
+        description: 'use sequence descriptions to map the sequence IDs (in GFF3) to actual sequence entries. If a description contains a sequence range (e.g., III:1000001..2000000), the first part is used as sequence ID (''III'') and the first range position as offset (''1000001'') default: no'
+      - names:
+          - -regionmapping
+        argument: ""
+        description: 'set file containing sequence-region to sequence file mapping default: undefined'
+      - names:
+          - -o
+        argument: ""
+        description: 'redirect output to specified file default: undefined'
+      - names:
+          - -gzip
+        argument: ""
+        description: 'write gzip compressed output file default: no'
+      - names:
+          - -bzip2
+        argument: ""
+        description: 'write bzip2 compressed output file default: no'
+      - names:
+          - -force
+        argument: ""
+        description: 'force writing to output file default: no'
+      - names:
+          - -v
+        argument: ""
+        description: 'be verbose default: no'
+      - names:
+          - -help
+        argument: ""
+        description: display help and exit
+      - names:
+          - -version
+        argument: ""
+        description: display version information and exit
+  - name: splicesiteinfo
+    description: Show information about splice sites given in GFF3 files.
+    usage: gt splicesiteinfo [option ...] [GFF3_file ...]
+    options:
+      - names:
+          - -seqfile
+        argument: ""
+        description: 'set the sequence file from which to take the sequences default: undefined'
+      - names:
+          - -encseq
+        argument: ""
+        description: 'set the encoded sequence indexname from which to take the sequences default: undefined'
+      - names:
+          - -seqfiles
+        argument: ""
+        description: set the sequence files from which to extract the features use '--' to terminate the list of sequence files
+      - names:
+          - -matchdesc
+        argument: ""
+        description: 'search the sequence descriptions from the input files for the desired sequence IDs (in GFF3), reporting the first match default: no'
+      - names:
+          - -matchdescstart
+        argument: ""
+        description: 'exactly match the sequence descriptions from the input files for the desired sequence IDs (in GFF3) from the beginning to the first whitespace default: no'
+      - names:
+          - -usedesc
+        argument: ""
+        description: 'use sequence descriptions to map the sequence IDs (in GFF3) to actual sequence entries. If a description contains a sequence range (e.g., III:1000001..2000000), the first part is used as sequence ID (''III'') and the first range position as offset (''1000001'') default: no'
+      - names:
+          - -regionmapping
+        argument: ""
+        description: 'set file containing sequence-region to sequence file mapping default: undefined'
+      - names:
+          - -addintrons
+        argument: ""
+        description: 'add intron features between existing exon features (before computing the information to be shown) default: no'
+      - names:
+          - -o
+        argument: ""
+        description: 'redirect output to specified file default: undefined'
+      - names:
+          - -gzip
+        argument: ""
+        description: 'write gzip compressed output file default: no'
+      - names:
+          - -bzip2
+        argument: ""
+        description: 'write bzip2 compressed output file default: no'
+      - names:
+          - -force
+        argument: ""
+        description: 'force writing to output file default: no'
+      - names:
+          - -help
+        argument: ""
+        description: display help and exit
+      - names:
+          - -version
+        argument: ""
+        description: display version information and exit
+  - name: splitfasta
+    description: Split the supplied fasta file.
+    usage: gt splitfasta [option ...] fastafile
+    options:
+      - names:
+          - -numfiles
+        argument: ""
+        description: 'set the number of target files default: 0'
+      - names:
+          - -targetsize
+        argument: ""
+        description: 'set the target file size in MB default: 50'
+      - names:
+          - -splitdesc
+        argument: ""
+        description: 'put every fasta entry in a separate file named by its description in the given directory default: undefined'
+      - names:
+          - -width
+        argument: ""
+        description: 'set output width for FASTA sequence printing (0 disables formatting) default: 0'
+      - names:
+          - -force
+        argument: ""
+        description: 'force writing to output file default: no'
+      - names:
+          - -help
+        argument: ""
+        description: display help and exit
+      - names:
+          - -version
+        argument: ""
+        description: display version information and exit
+  - name: stat
+    description: Show statistics about features contained in GFF3 files.
+    usage: gt stat [option ...] [GFF3_file ...]
+    options:
+      - names:
+          - -genelengthdistri
+        argument: ""
+        description: 'show gene length distribution default: no'
+      - names:
+          - -genescoredistri
+        argument: ""
+        description: 'show gene score distribution default: no'
+      - names:
+          - -exonlengthdistri
+        argument: ""
+        description: 'show exon length distribution default: no'
+      - names:
+          - -exonnumberdistri
+        argument: ""
+        description: 'show exon number distribution default: no'
+      - names:
+          - -intronlengthdistri
+        argument: ""
+        description: 'show intron length distribution default: no'
+      - names:
+          - -cdslengthdistri
+        argument: ""
+        description: 'show CDS length distribution (measured in amino acids) default: no'
+      - names:
+          - -source
+        argument: ""
+        description: 'show the set of used source tags (column 2 in regular GFF3 lines) default: no'
+      - names:
+          - -addintrons
+        argument: ""
+        description: 'add intron features between existing exon features (before computing stats) default: no'
+      - names:
+          - -v
+        argument: ""
+        description: 'be verbose default: no'
+      - names:
+          - -o
+        argument: ""
+        description: 'redirect output to specified file default: undefined'
+      - names:
+          - -gzip
+        argument: ""
+        description: 'write gzip compressed output file default: no'
+      - names:
+          - -bzip2
+        argument: ""
+        description: 'write bzip2 compressed output file default: no'
+      - names:
+          - -force
+        argument: ""
+        description: 'force writing to output file default: no'
+      - names:
+          - -help
+        argument: ""
+        description: display help and exit
+      - names:
+          - -version
+        argument: ""
+        description: display version information and exit
+  - name: suffixerator
+    description: Compute enhanced suffix array.
+    usage: gt suffixerator [option ...] (-db file [...] | -ii index)
+    options:
+      - names:
+          - -ssp
+        argument: ""
+        description: 'output sequence separator positions to file default: yes'
+      - names:
+          - -des
+        argument: ""
+        description: 'output sequence descriptions to file default: yes'
+      - names:
+          - -sds
+        argument: ""
+        description: 'output sequence description separator positions to file default: yes'
+      - names:
+          - -md5
+        argument: ""
+        description: 'output MD5 sums to file default: yes'
+      - names:
+          - -clipdesc
+        argument: ""
+        description: 'clip descriptions after first whitespace default: no'
+      - names:
+          - -sat
+        argument: ""
+        description: 'specify kind of sequence representation by one of the keywords direct, bytecompress, eqlen, bit, uchar, ushort, uint32 default: undefined'
+      - names:
+          - -dna
+        argument: ""
+        description: 'input is DNA sequence default: no'
+      - names:
+          - -protein
+        argument: ""
+        description: 'input is protein sequence default: no'
+      - names:
+          - -dust
+        argument: ""
+        description: 'mask low-complexity regions using the dust algorithm default: no'
+      - names:
+          - -dustwindow
+        argument: ""
+        description: 'windowsize for the dust algorithm default: 64'
+      - names:
+          - -dustthreshold
+        argument: ""
+        description: 'threshold for the dust algorithm default: 2.00'
+      - names:
+          - -dustlink
+        argument: ""
+        description: 'Max. distance between regions masked by dust before merging. default: 1'
+      - names:
+          - -indexname
+        argument: ""
+        description: 'specify name for index to be generated default: undefined'
+      - names:
+          - -db
+        argument: ""
+        description: specify database files
+      - names:
+          - -smap
+        argument: ""
+        description: 'specify file containing a symbol mapping default: undefined'
+      - names:
+          - -lossless
+        argument: ""
+        description: 'allow lossless original sequence retrieval default: no'
+      - names:
+          - -mirrored
+        argument: ""
+        description: 'virtually append the reverse complement of each sequence default: no'
+      - names:
+          - -pl
+        argument: ""
+        description: 'specify prefix length for bucket sort recommendation: use without argument; then a reasonable prefix length is automatically determined. default: 0'
+      - names:
+          - -dc
+        argument: ""
+        description: 'specify difference cover value default: 0'
+      - names:
+          - -spmopt
+        argument: ""
+        description: 'optimize esa-construction for suffix-prefix matching default: 0'
+      - names:
+          - -memlimit
+        argument: ""
+        description: 'specify maximal amount of memory to be used during index construction (in bytes, the keywords ''MB'' and ''GB'' are allowed) default: undefined'
+      - names:
+          - -kys
+        argument: ""
+        description: 'output/sort according to keys of the form |key| in fasta header default: nosort'
+      - names:
+          - -dir
+        argument: ""
+        description: 'specify reading direction (fwd, cpl, rev, rcl) default: fwd'
+      - names:
+          - -suf
+        argument: ""
+        description: 'output suffix array (suftab) to file default: no'
+      - names:
+          - -lcp
+        argument: ""
+        description: 'output lcp table (lcptab) to file default: no'
+      - names:
+          - -bwt
+        argument: ""
+        description: 'output Burrows-Wheeler Transformation (bwttab) to file default: no'
+      - names:
+          - -bck
+        argument: ""
+        description: 'output bucket table to file default: no'
+      - names:
+          - -v
+        argument: ""
+        description: 'be verbose default: no'
+      - names:
+          - -showprogress
+        argument: ""
+        description: 'show a progress bar default: no'
+      - names:
+          - -ii
+        argument: ""
+        description: 'specify existing encoded sequence default: undefined'
+      - names:
+          - -help
+        argument: ""
+        description: display help for basic options and exit
+      - names:
+          - -help+
+        argument: ""
+        description: display help for all options and exit
+      - names:
+          - -version
+        argument: ""
+        description: display version information and exit
+  - name: tagerator
+    description: Map short sequence tags in given index.
+    usage: gt tagerator [options] -q tagfile [-esa|-pck] indexname
+    options:
+      - names:
+          - -q
+        argument: ""
+        description: Specify files containing the short sequence tags
+      - names:
+          - -e
+        argument: ""
+        description: 'Specify the allowed number of differences (replacements/insertions/deletions) default: -1'
+      - names:
+          - -esa
+        argument: ""
+        description: 'Specify index (enhanced suffix array) default: undefined'
+      - names:
+          - -pck
+        argument: ""
+        description: 'Specify index (packed index) default: undefined'
+      - names:
+          - -nod
+        argument: ""
+        description: 'Do not compute direct matches default: no'
+      - names:
+          - -nop
+        argument: ""
+        description: 'Do not compute palindromic matches (i.e. no reverse complemented matches.) default: no'
+      - names:
+          - -best
+        argument: ""
+        description: 'Compute only best matches, i.e. only for smallest edit distance with matches default: no'
+      - names:
+          - -maxocc
+        argument: ""
+        description: 'specify max number of match-occurrences default: 0'
+      - names:
+          - -skpp
+        argument: ""
+        description: 'Skip prefix of pattern (only in pdiff mode) default: no'
+      - names:
+          - -withwildcards
+        argument: ""
+        description: 'output matches containing wildcard characters (e.g. N); only relevant for approximate matching default: yes'
+      - names:
+          - -output
+        argument: ""
+        description: use combination of the following keywords to specify output tagnum show ordinal number of tag tagseq show tag sequence dblength show length of match in database dbstartpos show start position of match in database abspos show absolute value of dbstartpos dbsequence show sequence of match strand show strand edist show edit distance tagstartpos show start position of match in tag (only for -maxocc) taglength show length of match in tag (only for -maxocc) tagsuffixseq show suffix tag involved in match (only for -maxocc)
+      - names:
+          - -v
+        argument: ""
+        description: 'be verbose default: no'
+      - names:
+          - -help
+        argument: ""
+        description: display help and exit
+      - names:
+          - -version
+        argument: ""
+        description: display version information and exit
+  - name: tallymer
+    description: Call a tallymer subtool and pass argument(s) to it.
+    usage: gt tallymer [option ...] tallymer_tool [argument ...]
+    options:
+      - names:
+          - -help
+        argument: ""
+        description: display help and exit
+      - names:
+          - -version
+        argument: ""
+        description: display version information and exit
+    subcommands:
+      - name: mkindex
+        description: Count and index k-mers in the given enhanced suffix array for a fixed value of k.
+        usage: gt tallymer mkindex [options] -esa suffixerator-index [options]
+        options:
+          - names:
+              - -esa
+            argument: ""
+            description: 'specify suffixerator-index (mandatory option) default: undefined'
+          - names:
+              - -mersize
+            argument: ""
+            description: 'Specify the mer size. default: 20'
+          - names:
+              - -minocc
+            argument: ""
+            description: 'Specify the minimum occurrence number for the mers to output/index default: 0'
+          - names:
+              - -maxocc
+            argument: ""
+            description: 'Specify the maximum occurrence number for the mers to output/index default: 0'
+          - names:
+              - -pl
+            argument: ""
+            description: 'specify prefix length for bucket boundary construction recommendation: use without argument; then a reasonable prefix length is automatically determined default: 0'
+          - names:
+              - -indexname
+            argument: ""
+            description: 'store the mers specified by options -maxocc and -minocc in an index default: undefined'
+          - names:
+              - -counts
+            argument: ""
+            description: 'store counts of the mers default: no'
+          - names:
+              - -scan
+            argument: ""
+            description: 'read enhanced suffix array sequentially instead of mapping it to memory default: no'
+          - names:
+              - -v
+            argument: ""
+            description: 'be verbose default: no'
+          - names:
+              - -help
+            argument: ""
+            description: display help and exit
+          - names:
+              - -version
+            argument: ""
+            description: display version information and exit
+      - name: occratio
+        description: Compute occurrence ratio for a set of sequences represented by an enhanced suffix array.
+        usage: gt tallymer occratio [options] -esa suffixerator-index [options]
+        options:
+          - names:
+              - -esa
+            argument: ""
+            description: 'specify suffixerator-index (mandatory option) default: undefined'
+          - names:
+              - -minmersize
+            argument: ""
+            description: 'specify minimum mer size for which to compute the occurrence distribution default: 0'
+          - names:
+              - -maxmersize
+            argument: ""
+            description: 'specify maximum mer size for which to compute the occurrence distribution default: 0'
+          - names:
+              - -step
+            argument: ""
+            description: 'specify step size when specifying mer sizes default: 1'
+          - names:
+              - -mersizes
+            argument: ""
+            description: specify mer sizes as non-empty sequence of non decreasing positive integers
+          - names:
+              - -output
+            argument: ""
+            description: 'use combination of the following keywords: unique nonunique nonuniquemulti relative total to specify kind of output'
+          - names:
+              - -scan
+            argument: ""
+            description: 'read suffixerator-index sequentially instead of mapping it to memory default: no'
+          - names:
+              - -v
+            argument: ""
+            description: 'be verbose default: no'
+          - names:
+              - -help
+            argument: ""
+            description: display help and exit
+          - names:
+              - -version
+            argument: ""
+            description: display version information and exit
+      - name: search
+        description: Search a set of k-mers in an index constructed by ``gt tallymer mkindex''.
+        usage: gt tallymer search [options] -tyr tallymer-index -q queryfile0 [queryfile1..] [options]
+        options:
+          - names:
+              - -tyr
+            argument: ""
+            description: 'specify tallymer-index default: undefined'
+          - names:
+              - -q
+            argument: ""
+            description: specify query file names
+          - names:
+              - -strand
+            argument: ""
+            description: 'specify the strand to be searched: use f (for forward strand) or p (for reverse complemented strand) or fp (for both); default is f default: f'
+          - names:
+              - -output
+            argument: ""
+            description: specify output flags (qseqnum, qpos, counts, sequence)
+          - names:
+              - -v
+            argument: ""
+            description: 'be verbose default: no'
+          - names:
+              - -help
+            argument: ""
+            description: display help and exit
+          - names:
+              - -version
+            argument: ""
+            description: display version information and exit
+  - name: tirvish
+    description: Identify Terminal Inverted Repeat (TIR) elements,such as DNA transposons.
+    usage: gt tirvish [option ...] -index INDEXNAME
+    options:
+      - names:
+          - -index
+        argument: ""
+        description: 'specify the name of the enhanced suffix array index (mandatory) default: undefined'
+      - names:
+          - -seed
+        argument: ""
+        description: 'specify minimum seed length for exact repeats default: 20'
+      - names:
+          - -mintirlen
+        argument: ""
+        description: 'specify minimum length for each TIR default: 100'
+      - names:
+          - -maxtirlen
+        argument: ""
+        description: 'specify maximum length for each TIR default: 1000'
+      - names:
+          - -mintirdist
+        argument: ""
+        description: 'specify minimum distance of TIRs default: 500'
+      - names:
+          - -maxtirdist
+        argument: ""
+        description: 'specify maximum distance of TIRs default: 10000'
+      - names:
+          - -mat
+        argument: ""
+        description: 'specify matchscore for extension-alignment default: 2'
+      - names:
+          - -mis
+        argument: ""
+        description: 'specify mismatchscore for extension-alignment default: -2'
+      - names:
+          - -ins
+        argument: ""
+        description: 'specify insertionscore for extension-alignment default: -3'
+      - names:
+          - -del
+        argument: ""
+        description: 'specify deletionscore for extension-alignment default: -3'
+      - names:
+          - -xdrop
+        argument: ""
+        description: 'specify xdropbelowscore for extension-alignment default: 5'
+      - names:
+          - -similar
+        argument: ""
+        description: 'specify TIR similarity threshold in therange [1..100%] default: 85.00'
+      - names:
+          - -overlaps
+        argument: ""
+        description: 'specify no|best|longest|all default: best'
+      - names:
+          - -mintsd
+        argument: ""
+        description: 'specify minimum length for each TSD default: 2'
+      - names:
+          - -maxtsd
+        argument: ""
+        description: 'specify maximum length for each TSD default: 11'
+      - names:
+          - -vic
+        argument: ""
+        description: 'specify the number of nucleotides (to the left and to the right) that will be searched for TSDs around 5'' and 3'' boundary of predicted TIRs default: 60'
+      - names:
+          - -hmms
+        argument: ""
+        description: profile HMM models for domain detection (separate by spaces, finish with --) in HMMER3 format Omit this option to disable pHMM search.
+      - names:
+          - -pdomevalcutoff
+        argument: ""
+        description: global E-value cutoff for pHMM search default 1E-6
+      - names:
+          - -pdomcutoff
+        argument: ""
+        description: 'model-specific score cutoff choose from TC (trusted cutoff) | GA (gathering cutoff) | NONE (no cutoffs) default: GA'
+      - names:
+          - -refseqs
+        argument: ""
+        description: 'specify the name of the gene sequences to scan for inside candidates default: undefined'
+      - names:
+          - -seqids
+        argument: ""
+        description: 'use sequence descriptions instead of sequence numbers in GFF3 output default: yes'
+      - names:
+          - -md5
+        argument: ""
+        description: 'add MD5 hashes to seqids in GFF3 output default: no'
+      - names:
+          - -help
+        argument: ""
+        description: display help for basic options and exit
+      - names:
+          - -help+
+        argument: ""
+        description: display help for all options and exit
+      - names:
+          - -version
+        argument: ""
+        description: display version information and exit
+  - name: uniq
+    description: Filter out repeated feature node graphs in a sorted GFF3 file.
+    usage: gt uniq [option ...] [GFF3_file]
+    options:
+      - names:
+          - -v
+        argument: ""
+        description: 'be verbose default: no'
+      - names:
+          - -o
+        argument: ""
+        description: 'redirect output to specified file default: undefined'
+      - names:
+          - -gzip
+        argument: ""
+        description: 'write gzip compressed output file default: no'
+      - names:
+          - -bzip2
+        argument: ""
+        description: 'write bzip2 compressed output file default: no'
+      - names:
+          - -force
+        argument: ""
+        description: 'force writing to output file default: no'
+      - names:
+          - -help
+        argument: ""
+        description: display help and exit
+      - names:
+          - -version
+        argument: ""
+        description: display version information and exit
+  - name: uniquesub
+    description: Compute length of minimum unique prefixes.
+    usage: gt uniquesub [options ...] -query queryfile [...]
+    options:
+      - names:
+          - -fmi
+        argument: ""
+        description: 'specify fmindex default: undefined'
+      - names:
+          - -esa
+        argument: ""
+        description: 'specify suffix array default: undefined'
+      - names:
+          - -pck
+        argument: ""
+        description: 'specify packed index default: undefined'
+      - names:
+          - -query
+        argument: ""
+        description: specify queryfiles
+      - names:
+          - -min
+        argument: ""
+        description: 'only output length if >= given minimum length default: 0'
+      - names:
+          - -max
+        argument: ""
+        description: 'only output length if <= given maximum length default: 0'
+      - names:
+          - -output
+        argument: ""
+        description: set output flags (sequence, querypos)
+      - names:
+          - -help
+        argument: ""
+        description: display help and exit
+      - names:
+          - -version
+        argument: ""
+        description: display version information and exit
+  - name: wtree
+    description: Call an wtree manipulation tool and pass argument(s) to it.
+    usage: gt wtree [option ...] tool [argument ...]
+    options:
+      - names:
+          - -help
+        argument: ""
+        description: display help and exit
+      - names:
+          - -version
+        argument: ""
+        description: display version information and exit
+version: gt (GenomeTools) 1.6.2

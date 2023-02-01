@@ -1,12 +1,16 @@
-name: singularity
-description: singularity
-usage: singularity [global options...]
+name: apptainer
+description: Linux container platform optimized for High Performance Computing (HPC) and Enterprise Performance Computing (EPC)
+usage: apptainer [global options...]
 options:
+  - names:
+      - --build-config
+    argument: ""
+    description: use configuration needed for building containers
   - names:
       - -c
       - --config
     argument: string
-    description: specify a configuration file (for root or unprivileged installation only)
+    description: specify a configuration file (for root or unprivileged installation only) (default "~/.local/share/condax/envs/apptainer/etc/apptainer/apptainer.conf")
   - names:
       - -d
       - --debug
@@ -16,7 +20,7 @@ options:
       - -h
       - --help
     argument: ""
-    description: help for singularity
+    description: help for apptainer
   - names:
       - --nocolor
     argument: ""
@@ -39,30 +43,17 @@ options:
   - names:
       - --version
     argument: ""
-    description: version for singularity
+    description: version for apptainer
 subcommands:
   - name: build
-    description: Build a Singularity image
-    usage: singularity build [local options...] <IMAGE PATH> <BUILD SPEC>
+    description: Build an Apptainer image
+    usage: apptainer build [local options...] <IMAGE PATH> <BUILD SPEC>
     options:
-      - names:
-          - --arch
-        argument: string
-        description: architecture for remote build (default "amd64")
       - names:
           - -B
           - --bind
-        argument: strings
-        description: a user-bind path specification. spec has the format src[:dest[:opts]],where src and dest are outside and inside paths. If dest is not given,it is set equal to src. Mount options ('opts') may be specified as 'ro'(read-only) or 'rw' (read/write, which is the default).Multiple bind paths can be given by a comma separated list. (not supported with remote build)
-      - names:
-          - --builder
-        argument: string
-        description: remote Build Service URL, setting this implies --remote
-      - names:
-          - -d
-          - --detached
-        argument: ""
-        description: submit build job and print build ID (no real-time logs and requires --remote)
+        argument: stringArray
+        description: a user-bind path specification. spec has the format src[:dest[:opts]],where src and dest are outside and inside paths. If dest is not given,it is set equal to src. Mount options ('opts') may be specified as 'ro'(read-only) or 'rw' (read/write, which is the default).Multiple bind paths can be given by a comma separated list.
       - names:
           - --disable-cache
         argument: ""
@@ -80,7 +71,7 @@ subcommands:
           - -f
           - --fakeroot
         argument: ""
-        description: build using user namespace to fake root user (requires a privileged installation)
+        description: build with the appearance of running as root (default when building from a definition file unprivileged)
       - names:
           - --fix-perms
         argument: ""
@@ -104,13 +95,17 @@ subcommands:
         argument: string
         description: container Library URL
       - names:
+          - --mount
+        argument: stringArray
+        description: a mount specification e.g. 'type=bind,source=/opt,destination=/hostopt'.
+      - names:
           - --no-cleanup
         argument: ""
         description: do NOT clean up bundle after failed build, can be helpful for debugging
       - names:
-          - --nohttps
+          - --no-https
         argument: ""
-        description: do NOT use HTTPS with the docker:// transport (useful for local docker registries without a certificate)
+        description: use http instead of https for docker:// oras:// and library://<hostname>/... URIs
       - names:
           - -T
           - --notest
@@ -119,7 +114,11 @@ subcommands:
       - names:
           - --nv
         argument: ""
-        description: inject host Nvidia libraries during build for post and test sections (not supported with remote build)
+        description: inject host Nvidia libraries during build for post and test sections
+      - names:
+          - --nvccli
+        argument: ""
+        description: use nvidia-container-cli for GPU setup (experimental)
       - names:
           - --passphrase
         argument: ""
@@ -127,16 +126,11 @@ subcommands:
       - names:
           - --pem-path
         argument: string
-        description: enter an path to a PEM formated RSA key for an encrypted container
-      - names:
-          - -r
-          - --remote
-        argument: ""
-        description: build image remotely (does not require root)
+        description: enter an path to a PEM formatted RSA key for an encrypted container
       - names:
           - --rocm
         argument: ""
-        description: inject host Rocm libraries during build for post and test sections (not supported with remote build)
+        description: inject host Rocm libraries during build for post and test sections
       - names:
           - -s
           - --sandbox
@@ -151,9 +145,17 @@ subcommands:
           - --update
         argument: ""
         description: run definition over existing container (skips header)
+      - names:
+          - --userns
+        argument: ""
+        description: build without using setuid even if available
+      - names:
+          - --writable-tmpfs
+        argument: ""
+        description: during the %test section, makes the file system accessible as read-write with non persistent data (with overlay support only)
   - name: cache
     description: Manage the local cache
-    usage: singularity cache
+    usage: apptainer cache
     options:
       - names:
           - -h
@@ -162,8 +164,8 @@ subcommands:
         description: help for cache
     subcommands:
       - name: clean
-        description: Clean your local Singularity cache
-        usage: singularity cache clean [clean options...]
+        description: Clean your local Apptainer cache
+        usage: apptainer cache clean [clean options...]
         options:
           - names:
               - -D
@@ -191,8 +193,8 @@ subcommands:
             argument: strings
             description: 'a list of cache types to clean (possible values: library, oci, shub, blob, net, oras, all) (default [all])'
       - name: list
-        description: List your local Singularity cache
-        usage: singularity cache list [list options...]
+        description: List your local Apptainer cache
+        usage: apptainer cache list [list options...]
         options:
           - names:
               - -h
@@ -211,7 +213,7 @@ subcommands:
             description: include cache entries in the output
   - name: capability
     description: Manage Linux capabilities for users and groups
-    usage: singularity capability
+    usage: apptainer capability
     options:
       - names:
           - -h
@@ -221,7 +223,7 @@ subcommands:
     subcommands:
       - name: add
         description: Add capabilities to a user or group (requires root)
-        usage: singularity capability add [add options...] <capabilities>
+        usage: apptainer capability add [add options...] <capabilities>
         options:
           - names:
               - -g
@@ -238,9 +240,14 @@ subcommands:
               - --user
             argument: string
             description: manage capabilities for a user
+        subcommands:
+          - name: capabilities
+            description: manual "man 7 capabilities".
+            usage: ""
+            options: []
       - name: avail
         description: Show description for available capabilities
-        usage: singularity capability avail [capabilities]
+        usage: apptainer capability avail [capabilities]
         options:
           - names:
               - -h
@@ -249,7 +256,7 @@ subcommands:
             description: help for avail
       - name: drop
         description: Remove capabilities from a user or group (requires root)
-        usage: singularity capability drop [drop options...] <capabilities>
+        usage: apptainer capability drop [drop options...] <capabilities>
         options:
           - names:
               - -g
@@ -268,7 +275,68 @@ subcommands:
             description: manage capabilities for a user
       - name: list
         description: Show capabilities for a given user or group
-        usage: singularity capability list [user/group]
+        usage: apptainer capability list [user/group]
+        options:
+          - names:
+              - -h
+              - --help
+            argument: ""
+            description: help for list
+  - name: checkpoint
+    description: Manage container checkpoint state (experimental)
+    usage: apptainer checkpoint
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: help for checkpoint
+    subcommands:
+      - name: create
+        description: Create empty checkpoint storage (experimental)
+        usage: apptainer checkpoint create <name>
+        options:
+          - names:
+              - -h
+              - --help
+            argument: ""
+            description: help for create
+        subcommands:
+          - name: apptainer
+            description: checkpoint create <name>
+            usage: ""
+            options: []
+      - name: delete
+        description: Delete a checkpoint (experimental)
+        usage: apptainer checkpoint delete <name>
+        options:
+          - names:
+              - -h
+              - --help
+            argument: ""
+            description: help for delete
+        subcommands:
+          - name: apptainer
+            description: checkpoint delete <name>
+            usage: ""
+            options: []
+      - name: instance
+        description: Checkpoint the state of a running instance (experimental)
+        usage: apptainer checkpoint instance <instance-name>
+        options:
+          - names:
+              - -h
+              - --help
+            argument: ""
+            description: help for instance
+          - names:
+              - -H
+              - --home
+            argument: string
+            description: a home directory specification. spec can either be a src path or src:dest pair. src is the source path of the home directory outside the container and dest overrides the home directory within the container. (default "~")
+      - name: list
+        description: List local checkpoints (experimental)
+        usage: apptainer checkpoint list
         options:
           - names:
               - -h
@@ -276,8 +344,8 @@ subcommands:
             argument: ""
             description: help for list
   - name: completion
-    description: generate the autocompletion script for the specified shell
-    usage: singularity completion [flags]
+    description: Generate the autocompletion script for the specified shell
+    usage: apptainer completion [flags]
     options:
       - names:
           - -h
@@ -286,8 +354,8 @@ subcommands:
         description: help for completion
     subcommands:
       - name: bash
-        description: generate the autocompletion script for bash
-        usage: singularity completion bash
+        description: Generate the autocompletion script for bash
+        usage: apptainer completion bash
         options:
           - names:
               - -h
@@ -299,8 +367,8 @@ subcommands:
             argument: ""
             description: disable completion descriptions
       - name: fish
-        description: generate the autocompletion script for fish
-        usage: singularity completion fish [flags]
+        description: Generate the autocompletion script for fish
+        usage: apptainer completion fish [flags]
         options:
           - names:
               - -h
@@ -312,8 +380,8 @@ subcommands:
             argument: ""
             description: disable completion descriptions
       - name: powershell
-        description: generate the autocompletion script for powershell
-        usage: singularity completion powershell [flags]
+        description: Generate the autocompletion script for powershell
+        usage: apptainer completion powershell [flags]
         options:
           - names:
               - -h
@@ -325,8 +393,8 @@ subcommands:
             argument: ""
             description: disable completion descriptions
       - name: zsh
-        description: generate the autocompletion script for zsh
-        usage: singularity completion zsh [flags]
+        description: Generate the autocompletion script for zsh
+        usage: apptainer completion zsh [flags]
         options:
           - names:
               - -h
@@ -338,8 +406,8 @@ subcommands:
             argument: ""
             description: disable completion descriptions
   - name: config
-    description: Manage various singularity configuration (root user only)
-    usage: singularity config
+    description: Manage various apptainer configuration (root user only)
+    usage: apptainer config
     options:
       - names:
           - -h
@@ -349,7 +417,7 @@ subcommands:
     subcommands:
       - name: fakeroot
         description: Manage fakeroot user mappings entries (root user only)
-        usage: singularity config fakeroot <option> <user>
+        usage: apptainer config fakeroot <option> <user>
         options:
           - names:
               - -a
@@ -377,14 +445,14 @@ subcommands:
             argument: ""
             description: remove the user fakeroot mapping entry preventing him to use the fakeroot feature
       - name: global
-        description: Edit singularity.conf from command line (root user only or unprivileged installation)
-        usage: singularity config global <option> <directive> [value,...]
+        description: Edit apptainer.conf from command line (root user only or unprivileged installation)
+        usage: apptainer config global <option> <directive> [value,...]
         options:
           - names:
               - -d
               - --dry-run
             argument: ""
-            description: dump resulting configuration on stdout but doesn't write it to singularity.conf
+            description: dump resulting configuration on stdout but doesn't write it to apptainer.conf
           - names:
               - -g
               - --get
@@ -412,7 +480,7 @@ subcommands:
             description: unset value of the configuration directive (for multi-value directives, it will remove matching values)
   - name: delete
     description: Deletes requested image from the library
-    usage: singularity delete [arch] <imageRef> [flags]
+    usage: apptainer delete [delete options...] <imageRef> [flags]
     options:
       - names:
           - -A
@@ -433,9 +501,13 @@ subcommands:
           - --library
         argument: string
         description: delete images from the provided library
+      - names:
+          - --no-https
+        argument: ""
+        description: use http instead of https for docker:// oras:// and library://<hostname>/... URIs
   - name: exec
     description: Run a command within a container
-    usage: singularity exec [exec options...] <container> <command>
+    usage: apptainer exec [exec options...] <container> <command>
     options:
       - names:
           - --add-caps
@@ -459,10 +531,22 @@ subcommands:
         argument: stringArray
         description: a user-bind path specification. spec has the format src[:dest[:opts]], where src and dest are outside and inside paths. If dest is not given, it is set equal to src. Mount options ('opts') may be specified as 'ro' (read-only) or 'rw' (read/write, which is the default). Multiple bind paths can be given by a comma separated list.
       - names:
+          - --blkio-weight
+        argument: int
+        description: Block IO relative weight in range 10-1000, 0 to disable
+      - names:
+          - --blkio-weight-device
+        argument: strings
+        description: Device specific block IO relative weight
+      - names:
           - -e
           - --cleanenv
         argument: ""
         description: clean environment before running container
+      - names:
+          - --compat
+        argument: ""
+        description: apply settings for increased OCI/Docker compatibility. Infers --containall, --no-init, --no-umask, --no-eval, --writable-tmpfs.
       - names:
           - -c
           - --contain
@@ -474,9 +558,25 @@ subcommands:
         argument: ""
         description: contain not only file systems, but also PID, IPC, and environment
       - names:
+          - --cpu-shares
+        argument: int
+        description: CPU shares for container (default -1)
+      - names:
+          - --cpus
+        argument: string
+        description: Number of CPUs available to container
+      - names:
+          - --cpuset-cpus
+        argument: string
+        description: List of host CPUs available to container
+      - names:
+          - --cpuset-mems
+        argument: string
+        description: List of host memory nodes available to container
+      - names:
           - --disable-cache
         argument: ""
-        description: dont use cache, and dont create cache
+        description: do not use or create cache
       - names:
           - --dns
         argument: string
@@ -491,8 +591,8 @@ subcommands:
         description: a comma separated capability list to drop
       - names:
           - --env
-        argument: strings
-        description: pass environment variable to contained process
+        argument: stringToString
+        description: pass environment variable to contained process (default [])
       - names:
           - --env-file
         argument: string
@@ -501,7 +601,7 @@ subcommands:
           - -f
           - --fakeroot
         argument: ""
-        description: run container in new user namespace as uid 0
+        description: run container with the appearance of running as root
       - names:
           - --fusemount
         argument: strings
@@ -530,6 +630,22 @@ subcommands:
         argument: ""
         description: let root user keep privileges in container (root only)
       - names:
+          - --memory
+        argument: string
+        description: Memory limit in bytes
+      - names:
+          - --memory-reservation
+        argument: string
+        description: Memory soft limit in bytes
+      - names:
+          - --memory-swap
+        argument: string
+        description: Swap limit, use -1 for unlimited swap
+      - names:
+          - --mount
+        argument: stringArray
+        description: a mount specification e.g. 'type=bind,source=/opt,destination=/hostopt'.
+      - names:
           - -n
           - --net
         argument: ""
@@ -537,15 +653,23 @@ subcommands:
       - names:
           - --network
         argument: string
-        description: specify desired network type separated by commas, each network will bring up a dedicated interface inside container (default "bridge")
+        description: specify desired network type separated by commas, each network will bring up a dedicated interface inside container
       - names:
           - --network-args
         argument: strings
         description: specify network arguments to pass to CNI plugins
       - names:
+          - --no-eval
+        argument: ""
+        description: do not shell evaluate env vars or OCI container CMD/ENTRYPOINT/ARGS
+      - names:
           - --no-home
         argument: ""
         description: do NOT mount users home directory if /home is not the current working directory
+      - names:
+          - --no-https
+        argument: ""
+        description: use http instead of https for docker:// oras:// and library://<hostname>/... URIs
       - names:
           - --no-init
         argument: ""
@@ -553,7 +677,7 @@ subcommands:
       - names:
           - --no-mount
         argument: strings
-        description: disable one or more mount xxx options set in singularity.conf
+        description: disable one or more 'mount xxx' options set in apptainer.conf and/or specify absolute destination path to disable a 'bind path' entry
       - names:
           - --no-privs
         argument: ""
@@ -563,17 +687,17 @@ subcommands:
         argument: ""
         description: do not propagate umask to the container, set default 0022 umask
       - names:
-          - --nohttps
-        argument: ""
-        description: do NOT use HTTPS with the docker:// transport (useful for local docker registries without a certificate)
-      - names:
-          - --nonet
-        argument: ""
-        description: disable VM network handling
-      - names:
           - --nv
         argument: ""
-        description: enable experimental Nvidia support
+        description: enable Nvidia support
+      - names:
+          - --nvccli
+        argument: ""
+        description: use nvidia-container-cli for GPU setup (experimental)
+      - names:
+          - --oom-kill-disable
+        argument: ""
+        description: Disable OOM killer
       - names:
           - -o
           - --overlay
@@ -586,12 +710,16 @@ subcommands:
       - names:
           - --pem-path
         argument: string
-        description: enter an path to a PEM formated RSA key for an encrypted container
+        description: enter an path to a PEM formatted RSA key for an encrypted container
       - names:
           - -p
           - --pid
         argument: ""
         description: run container in a new PID namespace
+      - names:
+          - --pids-limit
+        argument: int
+        description: Limit number of container PIDs, use -1 for unlimited
       - names:
           - --pwd
         argument: string
@@ -610,10 +738,14 @@ subcommands:
         argument: strings
         description: enable security features (SELinux, Apparmor, Seccomp)
       - names:
+          - --unsquash
+        argument: ""
+        description: Convert SIF file to temporary sandbox before running
+      - names:
           - -u
           - --userns
         argument: ""
-        description: run container in a new user namespace, allowing Singularity to run completely unprivileged on recent kernels. This disables some features of Singularity, for example it only works with sandbox images.
+        description: run container in a new user namespace
       - names:
           - --uts
         argument: ""
@@ -647,14 +779,14 @@ subcommands:
           - -w
           - --writable
         argument: ""
-        description: by default all Singularity containers are available as read only. This option makes the file system accessible as read/write.
+        description: by default all Apptainer containers are available as read only. This option makes the file system accessible as read/write.
       - names:
           - --writable-tmpfs
         argument: ""
         description: makes the file system accessible as read-write with non persistent data (with overlay support only)
   - name: help
     description: Help about any command
-    usage: singularity help [command] [flags]
+    usage: apptainer help [command] [flags]
     options:
       - names:
           - -h
@@ -663,7 +795,7 @@ subcommands:
         description: help for help
   - name: inspect
     description: Show metadata for an image
-    usage: singularity inspect [inspect options...] <image path>
+    usage: apptainer inspect [inspect options...] <image path>
     options:
       - names:
           - --all
@@ -677,7 +809,7 @@ subcommands:
           - -d
           - --deffile
         argument: ""
-        description: show the Singularity recipe file that was used to generate the image
+        description: show the Apptainer definition file that was used to generate the image
       - names:
           - -e
           - --environment
@@ -724,7 +856,7 @@ subcommands:
         description: show the test script for the image
   - name: instance
     description: Manage containers running as services
-    usage: singularity instance
+    usage: apptainer instance
     options:
       - names:
           - -h
@@ -733,8 +865,8 @@ subcommands:
         description: help for instance
     subcommands:
       - name: list
-        description: List all running and named Singularity instances
-        usage: singularity instance list [list options...] [<instance name glob>]
+        description: List all running and named Apptainer instances
+        usage: apptainer instance list [list options...] [<instance name glob>]
         options:
           - names:
               - -h
@@ -758,7 +890,7 @@ subcommands:
             description: if running as root, list instances from "<username>"
       - name: start
         description: Start a named instance of the given container image
-        usage: singularity instance start [start options...] <container path> <instance name> [startscript args...]
+        usage: apptainer instance start [start options...] <container path> <instance name> [startscript args...]
         options:
           - names:
               - --add-caps
@@ -778,6 +910,14 @@ subcommands:
             argument: stringArray
             description: a user-bind path specification. spec has the format src[:dest[:opts]], where src and dest are outside and inside paths. If dest is not given, it is set equal to src. Mount options ('opts') may be specified as 'ro' (read-only) or 'rw' (read/write, which is the default). Multiple bind paths can be given by a comma separated list.
           - names:
+              - --blkio-weight
+            argument: int
+            description: Block IO relative weight in range 10-1000, 0 to disable
+          - names:
+              - --blkio-weight-device
+            argument: strings
+            description: Device specific block IO relative weight
+          - names:
               - --boot
             argument: ""
             description: execute /sbin/init to boot container (root only)
@@ -786,6 +926,10 @@ subcommands:
               - --cleanenv
             argument: ""
             description: clean environment before running container
+          - names:
+              - --compat
+            argument: ""
+            description: apply settings for increased OCI/Docker compatibility. Infers --containall, --no-init, --no-umask, --no-eval, --writable-tmpfs.
           - names:
               - -c
               - --contain
@@ -797,9 +941,33 @@ subcommands:
             argument: ""
             description: contain not only file systems, but also PID, IPC, and environment
           - names:
+              - --cpu-shares
+            argument: int
+            description: CPU shares for container (default -1)
+          - names:
+              - --cpus
+            argument: string
+            description: Number of CPUs available to container
+          - names:
+              - --cpuset-cpus
+            argument: string
+            description: List of host CPUs available to container
+          - names:
+              - --cpuset-mems
+            argument: string
+            description: List of host memory nodes available to container
+          - names:
               - --disable-cache
             argument: ""
-            description: dont use cache, and dont create cache
+            description: do not use or create cache
+          - names:
+              - --dmtcp-launch
+            argument: string
+            description: checkpoint for dmtcp to save container process state to (experimental)
+          - names:
+              - --dmtcp-restart
+            argument: string
+            description: checkpoint for dmtcp to use to restart container process (experimental)
           - names:
               - --dns
             argument: string
@@ -814,8 +982,8 @@ subcommands:
             description: a comma separated capability list to drop
           - names:
               - --env
-            argument: strings
-            description: pass environment variable to contained process
+            argument: stringToString
+            description: pass environment variable to contained process (default [])
           - names:
               - --env-file
             argument: string
@@ -824,7 +992,7 @@ subcommands:
               - -f
               - --fakeroot
             argument: ""
-            description: run container in new user namespace as uid 0
+            description: run container with the appearance of running as root
           - names:
               - --fusemount
             argument: strings
@@ -844,9 +1012,30 @@ subcommands:
             argument: string
             description: set container hostname
           - names:
+              - -i
+              - --ipc
+            argument: ""
+            description: run container in a new IPC namespace
+          - names:
               - --keep-privs
             argument: ""
             description: let root user keep privileges in container (root only)
+          - names:
+              - --memory
+            argument: string
+            description: Memory limit in bytes
+          - names:
+              - --memory-reservation
+            argument: string
+            description: Memory soft limit in bytes
+          - names:
+              - --memory-swap
+            argument: string
+            description: Swap limit, use -1 for unlimited swap
+          - names:
+              - --mount
+            argument: stringArray
+            description: a mount specification e.g. 'type=bind,source=/opt,destination=/hostopt'.
           - names:
               - -n
               - --net
@@ -855,15 +1044,23 @@ subcommands:
           - names:
               - --network
             argument: string
-            description: specify desired network type separated by commas, each network will bring up a dedicated interface inside container (default "bridge")
+            description: specify desired network type separated by commas, each network will bring up a dedicated interface inside container
           - names:
               - --network-args
             argument: strings
             description: specify network arguments to pass to CNI plugins
           - names:
+              - --no-eval
+            argument: ""
+            description: do not shell evaluate env vars or OCI container CMD/ENTRYPOINT/ARGS
+          - names:
               - --no-home
             argument: ""
             description: do NOT mount users home directory if /home is not the current working directory
+          - names:
+              - --no-https
+            argument: ""
+            description: use http instead of https for docker:// oras:// and library://<hostname>/... URIs
           - names:
               - --no-init
             argument: ""
@@ -871,7 +1068,7 @@ subcommands:
           - names:
               - --no-mount
             argument: strings
-            description: disable one or more mount xxx options set in singularity.conf
+            description: disable one or more 'mount xxx' options set in apptainer.conf and/or specify absolute destination path to disable a 'bind path' entry
           - names:
               - --no-privs
             argument: ""
@@ -881,13 +1078,17 @@ subcommands:
             argument: ""
             description: do not propagate umask to the container, set default 0022 umask
           - names:
-              - --nohttps
-            argument: ""
-            description: do NOT use HTTPS with the docker:// transport (useful for local docker registries without a certificate)
-          - names:
               - --nv
             argument: ""
-            description: enable experimental Nvidia support
+            description: enable Nvidia support
+          - names:
+              - --nvccli
+            argument: ""
+            description: use nvidia-container-cli for GPU setup (experimental)
+          - names:
+              - --oom-kill-disable
+            argument: ""
+            description: Disable OOM killer
           - names:
               - -o
               - --overlay
@@ -900,11 +1101,15 @@ subcommands:
           - names:
               - --pem-path
             argument: string
-            description: enter an path to a PEM formated RSA key for an encrypted container
+            description: enter an path to a PEM formatted RSA key for an encrypted container
           - names:
               - --pid-file
             argument: string
             description: write instance PID to the file with the given name
+          - names:
+              - --pids-limit
+            argument: int
+            description: Limit number of container PIDs, use -1 for unlimited
           - names:
               - --rocm
             argument: ""
@@ -919,10 +1124,14 @@ subcommands:
             argument: strings
             description: enable security features (SELinux, Apparmor, Seccomp)
           - names:
+              - --unsquash
+            argument: ""
+            description: Convert SIF file to temporary sandbox before running
+          - names:
               - -u
               - --userns
             argument: ""
-            description: run container in a new user namespace, allowing Singularity to run completely unprivileged on recent kernels. This disables some features of Singularity, for example it only works with sandbox images.
+            description: run container in a new user namespace
           - names:
               - --uts
             argument: ""
@@ -936,14 +1145,33 @@ subcommands:
               - -w
               - --writable
             argument: ""
-            description: by default all Singularity containers are available as read only. This option makes the file system accessible as read/write.
+            description: by default all Apptainer containers are available as read only. This option makes the file system accessible as read/write.
           - names:
               - --writable-tmpfs
             argument: ""
             description: makes the file system accessible as read-write with non persistent data (with overlay support only)
+      - name: stats
+        description: Get stats for a named instance
+        usage: apptainer instance stats [stats options...] <instance name>
+        options:
+          - names:
+              - -h
+              - --help
+            argument: ""
+            description: help for stats
+          - names:
+              - -j
+              - --json
+            argument: ""
+            description: output stats in json
+          - names:
+              - -u
+              - --user
+            argument: string
+            description: view stats for an instance belonging to a user (root only)
       - name: stop
         description: Stop a named instance of a given container image
-        usage: singularity instance stop [stop options...] [instance]
+        usage: apptainer instance stop [stop options...] [instance]
         options:
           - names:
               - -a
@@ -977,7 +1205,7 @@ subcommands:
             description: if running as root, stop instances belonging to user
   - name: key
     description: Manage OpenPGP keys
-    usage: singularity key [key options...]
+    usage: apptainer key [key options...]
     options:
       - names:
           - -h
@@ -987,7 +1215,7 @@ subcommands:
     subcommands:
       - name: export
         description: Export a public or private key into a specific file
-        usage: singularity key export [export options...] <output-file>
+        usage: apptainer key export [export options...] <output-file>
         options:
           - names:
               - -a
@@ -1005,13 +1233,18 @@ subcommands:
             argument: ""
             description: help for export
           - names:
+              - -d
+              - --keysdir
+            argument: string
+            description: set local keyring dir path, an alternative way is to set environment variable 'APPTAINER_KEYSDIR' (default "~/.apptainer/keys")
+          - names:
               - -s
               - --secret
             argument: ""
             description: export a secret key
       - name: import
         description: Import a local key into the local or global keyring
-        usage: singularity key import [import options...] <input-key>
+        usage: apptainer key import [import options...] <input-key>
         options:
           - names:
               - -g
@@ -1024,12 +1257,17 @@ subcommands:
             argument: ""
             description: help for import
           - names:
+              - -d
+              - --keysdir
+            argument: string
+            description: set local keyring dir path, an alternative way is to set environment variable 'APPTAINER_KEYSDIR' (default "~/.apptainer/keys")
+          - names:
               - --new-password
             argument: ""
             description: set a new password to the private key
       - name: list
         description: List keys in your local or in the global keyring
-        usage: singularity key list
+        usage: apptainer key list
         options:
           - names:
               - -g
@@ -1042,13 +1280,18 @@ subcommands:
             argument: ""
             description: help for list
           - names:
+              - -d
+              - --keysdir
+            argument: string
+            description: set local keyring dir path, an alternative way is to set environment variable 'APPTAINER_KEYSDIR' (default "~/.apptainer/keys")
+          - names:
               - -s
               - --secret
             argument: ""
             description: list private keys instead of the default which displays public ones
       - name: newpair
         description: Create a new key pair
-        usage: singularity key newpair
+        usage: apptainer key newpair
         options:
           - names:
               - -b
@@ -1071,6 +1314,11 @@ subcommands:
             argument: ""
             description: help for newpair
           - names:
+              - -d
+              - --keysdir
+            argument: string
+            description: set local keyring dir path, an alternative way is to set environment variable 'APPTAINER_KEYSDIR' (default "~/.apptainer/keys")
+          - names:
               - -N
               - --name
             argument: string
@@ -1084,10 +1332,10 @@ subcommands:
               - -U
               - --push
             argument: ""
-            description: specify to push the public key to the remote keystore (default true)
+            description: specify to push the public key to the remote keystore
       - name: pull
         description: Download a public key from a key server
-        usage: singularity key pull [pull options...] <fingerprint>
+        usage: apptainer key pull [pull options...] <fingerprint>
         options:
           - names:
               - -g
@@ -1100,13 +1348,18 @@ subcommands:
             argument: ""
             description: help for pull
           - names:
+              - -d
+              - --keysdir
+            argument: string
+            description: set local keyring dir path, an alternative way is to set environment variable 'APPTAINER_KEYSDIR' (default "~/.apptainer/keys")
+          - names:
               - -u
               - --url
             argument: string
             description: specify the key server URL
       - name: push
         description: Upload a public key to a key server
-        usage: singularity key push [push options...] <fingerprint>
+        usage: apptainer key push [push options...] <fingerprint>
         options:
           - names:
               - -g
@@ -1119,14 +1372,24 @@ subcommands:
             argument: ""
             description: help for push
           - names:
+              - -d
+              - --keysdir
+            argument: string
+            description: set local keyring dir path, an alternative way is to set environment variable 'APPTAINER_KEYSDIR' (default "~/.apptainer/keys")
+          - names:
               - -u
               - --url
             argument: string
             description: specify the key server URL
       - name: remove
         description: Remove a local public key from your local or the global keyring
-        usage: singularity key remove <fingerprint>
+        usage: apptainer key remove <fingerprint>
         options:
+          - names:
+              - -b
+              - --both
+            argument: ""
+            description: remove both public and private keys
           - names:
               - -g
               - --global
@@ -1137,9 +1400,24 @@ subcommands:
               - --help
             argument: ""
             description: help for remove
+          - names:
+              - -d
+              - --keysdir
+            argument: string
+            description: set local keyring dir path, an alternative way is to set environment variable 'APPTAINER_KEYSDIR' (default "~/.apptainer/keys")
+          - names:
+              - -p
+              - --public
+            argument: ""
+            description: remove public keys only
+          - names:
+              - -s
+              - --secret
+            argument: ""
+            description: remove secret keys only
       - name: search
         description: Search for keys on a key server
-        usage: singularity key search [search options...] <search_string>
+        usage: apptainer key search [search options...] <search_string>
         options:
           - names:
               - -h
@@ -1156,9 +1434,14 @@ subcommands:
               - --url
             argument: string
             description: specify the key server URL
+        subcommands:
+          - name: public
+            description: keys matching the argument passed to the command line. You can
+            usage: ""
+            options: []
   - name: oci
     description: Manage OCI containers
-    usage: singularity oci
+    usage: apptainer oci
     options:
       - names:
           - -h
@@ -1168,7 +1451,7 @@ subcommands:
     subcommands:
       - name: attach
         description: Attach console to a running container process (root user only)
-        usage: singularity oci attach <container_ID>
+        usage: apptainer oci attach <container_ID>
         options:
           - names:
               - -h
@@ -1177,7 +1460,7 @@ subcommands:
             description: help for attach
       - name: create
         description: Create a container from a bundle directory (root user only)
-        usage: singularity oci create -b <bundle_path> [create options...] <container_ID>
+        usage: apptainer oci create -b <bundle_path> [create options...] <container_ID>
         options:
           - names:
               - -b
@@ -1213,7 +1496,7 @@ subcommands:
             description: specify the path to unix socket for state synchronization
       - name: delete
         description: Delete container (root user only)
-        usage: singularity oci delete <container_ID>
+        usage: apptainer oci delete <container_ID>
         options:
           - names:
               - -h
@@ -1222,7 +1505,7 @@ subcommands:
             description: help for delete
       - name: exec
         description: Execute a command within container (root user only)
-        usage: singularity oci exec <container_ID> <command> <args>
+        usage: apptainer oci exec <container_ID> <command> <args>
         options:
           - names:
               - -h
@@ -1231,7 +1514,7 @@ subcommands:
             description: help for exec
       - name: kill
         description: Kill a container (root user only)
-        usage: singularity oci kill [kill options...] <container_ID>
+        usage: apptainer oci kill [kill options...] <container_ID>
         options:
           - names:
               - -f
@@ -1255,7 +1538,7 @@ subcommands:
             description: timeout in second before killing container
       - name: mount
         description: Mount create an OCI bundle from SIF image (root user only)
-        usage: singularity oci mount <sif_image> <bundle_path>
+        usage: apptainer oci mount <sif_image> <bundle_path>
         options:
           - names:
               - -h
@@ -1264,7 +1547,7 @@ subcommands:
             description: help for mount
       - name: pause
         description: Suspends all processes inside the container (root user only)
-        usage: singularity oci pause <container_ID>
+        usage: apptainer oci pause <container_ID>
         options:
           - names:
               - -h
@@ -1273,7 +1556,7 @@ subcommands:
             description: help for pause
       - name: resume
         description: Resumes all processes previously paused inside the container (root user only)
-        usage: singularity oci resume <container_ID>
+        usage: apptainer oci resume <container_ID>
         options:
           - names:
               - -h
@@ -1282,7 +1565,7 @@ subcommands:
             description: help for resume
       - name: run
         description: Create/start/attach/delete a container from a bundle directory (root user only)
-        usage: singularity oci run -b <bundle_path> [run options...] <container_ID>
+        usage: apptainer oci run -b <bundle_path> [run options...] <container_ID>
         options:
           - names:
               - -b
@@ -1314,7 +1597,7 @@ subcommands:
             description: specify the path to unix socket for state synchronization
       - name: start
         description: Start container process (root user only)
-        usage: singularity oci start <container_ID>
+        usage: apptainer oci start <container_ID>
         options:
           - names:
               - -h
@@ -1323,7 +1606,7 @@ subcommands:
             description: help for start
       - name: state
         description: Query state of a container (root user only)
-        usage: singularity oci state <container_ID>
+        usage: apptainer oci state <container_ID>
         options:
           - names:
               - -h
@@ -1337,7 +1620,7 @@ subcommands:
             description: specify the path to unix socket for state synchronization
       - name: umount
         description: Umount delete bundle (root user only)
-        usage: singularity oci umount <bundle_path>
+        usage: apptainer oci umount <bundle_path>
         options:
           - names:
               - -h
@@ -1346,7 +1629,7 @@ subcommands:
             description: help for umount
       - name: update
         description: Update container cgroups resources (root user only)
-        usage: singularity oci update [update options...] <container_ID>
+        usage: apptainer oci update [update options...] <container_ID>
         options:
           - names:
               - -f
@@ -1360,7 +1643,7 @@ subcommands:
             description: help for update
   - name: overlay
     description: Manage an EXT3 writable overlay image
-    usage: singularity overlay
+    usage: apptainer overlay
     options:
       - names:
           - -h
@@ -1370,12 +1653,17 @@ subcommands:
     subcommands:
       - name: create
         description: Create EXT3 writable overlay image
-        usage: singularity overlay create <options> image
+        usage: apptainer overlay create <options> image
         options:
           - names:
               - --create-dir
             argument: strings
             description: directory to create as part of the overlay layout
+          - names:
+              - -f
+              - --fakeroot
+            argument: ""
+            description: make overlay layout usable by actions run with --fakeroot
           - names:
               - -h
               - --help
@@ -1386,9 +1674,14 @@ subcommands:
               - --size
             argument: int
             description: size of the EXT3 writable overlay in MiB (default 64)
+          - names:
+              - -S
+              - --sparse
+            argument: ""
+            description: create a sparse overlay
   - name: plugin
-    description: Manage Singularity plugins
-    usage: singularity plugin [plugin options...]
+    description: Manage Apptainer plugins
+    usage: apptainer plugin [plugin options...]
     options:
       - names:
           - -h
@@ -1397,13 +1690,9 @@ subcommands:
         description: help for plugin
     subcommands:
       - name: compile
-        description: Compile a Singularity plugin
-        usage: singularity plugin compile [compile options...] <host_path>
+        description: Compile an Apptainer plugin
+        usage: apptainer plugin compile [compile options...] <host_path>
         options:
-          - names:
-              - --disable-minor-check
-            argument: ""
-            description: disable minor package version check
           - names:
               - -h
               - --help
@@ -1416,7 +1705,7 @@ subcommands:
             description: path of the SIF output file
       - name: create
         description: Create a plugin skeleton directory
-        usage: singularity plugin create <host_path> <name>
+        usage: apptainer plugin create <host_path> <name>
         options:
           - names:
               - -h
@@ -1424,8 +1713,8 @@ subcommands:
             argument: ""
             description: help for create
       - name: disable
-        description: disable an installed Singularity plugin
-        usage: singularity plugin disable <name>
+        description: disable an installed Apptainer plugin
+        usage: apptainer plugin disable <name>
         options:
           - names:
               - -h
@@ -1433,8 +1722,8 @@ subcommands:
             argument: ""
             description: help for disable
       - name: enable
-        description: Enable an installed Singularity plugin
-        usage: singularity plugin enable <name>
+        description: Enable an installed Apptainer plugin
+        usage: apptainer plugin enable <name>
         options:
           - names:
               - -h
@@ -1442,8 +1731,8 @@ subcommands:
             argument: ""
             description: help for enable
       - name: inspect
-        description: Inspect a singularity plugin (either an installed one or an image)
-        usage: singularity plugin inspect (<name>|<image>)
+        description: Inspect an Apptainer plugin (either an installed one or an image)
+        usage: apptainer plugin inspect (<name>|<image>)
         options:
           - names:
               - -h
@@ -1451,8 +1740,8 @@ subcommands:
             argument: ""
             description: help for inspect
       - name: install
-        description: Install a compiled Singularity plugin
-        usage: singularity plugin install <plugin_path>
+        description: Install a compiled Apptainer plugin
+        usage: apptainer plugin install <plugin_path>
         options:
           - names:
               - -h
@@ -1460,8 +1749,8 @@ subcommands:
             argument: ""
             description: help for install
       - name: list
-        description: List installed Singularity plugins
-        usage: singularity plugin list [list options...]
+        description: List installed Apptainer plugins
+        usage: apptainer plugin list [list options...]
         options:
           - names:
               - -h
@@ -1470,7 +1759,7 @@ subcommands:
             description: help for list
       - name: uninstall
         description: Uninstall removes the named plugin from the system
-        usage: singularity plugin uninstall <name>
+        usage: apptainer plugin uninstall <name>
         options:
           - names:
               - -h
@@ -1479,7 +1768,7 @@ subcommands:
             description: help for uninstall
   - name: pull
     description: Pull an image from a URI
-    usage: singularity pull [pull options...] [output file] <URI>
+    usage: apptainer pull [pull options...] [output file] <URI>
     options:
       - names:
           - --arch
@@ -1492,7 +1781,7 @@ subcommands:
       - names:
           - --disable-cache
         argument: ""
-        description: dont use cached images/blobs and dont create them
+        description: do not use or create cached images/blobs
       - names:
           - --docker-login
         argument: ""
@@ -1516,12 +1805,12 @@ subcommands:
         argument: ""
         description: do NOT clean up bundle after failed build, can be helpful for debugging
       - names:
-          - --nohttps
+          - --no-https
         argument: ""
-        description: do NOT use HTTPS with the docker:// transport (useful for local docker registries without a certificate)
+        description: use http instead of https for docker:// oras:// and library://<hostname>/... URIs
   - name: push
     description: Upload image to the provided URI
-    usage: singularity push [push options...] <image> <URI>
+    usage: apptainer push [push options...] <image> <URI>
     options:
       - names:
           - -U
@@ -1542,15 +1831,19 @@ subcommands:
           - --library
         argument: string
         description: the library to push to
+      - names:
+          - --no-https
+        argument: ""
+        description: use http instead of https for docker:// oras:// and library://<hostname>/... URIs
   - name: remote
-    description: Manage singularity remote endpoints, keyservers and OCI/Docker registry credentials
-    usage: singularity remote [remote options...]
+    description: Manage apptainer remote endpoints, keyservers and OCI/Docker registry credentials
+    usage: apptainer remote [remote options...]
     options:
       - names:
           - -c
           - --config
         argument: string
-        description: path to the file holding remote endpoint configurations (default "~/.singularity/remote.yaml")
+        description: path to the file holding remote endpoint configurations (default "~/.apptainer/remote.yaml")
       - names:
           - -h
           - --help
@@ -1558,8 +1851,8 @@ subcommands:
         description: help for remote
     subcommands:
       - name: add
-        description: Add a new singularity remote endpoint
-        usage: singularity remote add [add options...] <remote_name> <remote_URI>
+        description: Add a new apptainer remote endpoint
+        usage: apptainer remote add [add options...] <remote_name> <remote_URI>
         options:
           - names:
               - -g
@@ -1572,6 +1865,11 @@ subcommands:
             argument: ""
             description: help for add
           - names:
+              - -i
+              - --insecure
+            argument: ""
+            description: allow connection to an insecure http remote.
+          - names:
               - --no-login
             argument: ""
             description: skip automatic login step
@@ -1580,13 +1878,13 @@ subcommands:
             argument: string
             description: path to the file holding auth token for login (remote endpoints only)
         subcommands:
-          - name: singularity
+          - name: apptainer
             description: remote add [add options...] <remote_name> <remote_URI>
             usage: ""
             options: []
       - name: add-keyserver
         description: Add a keyserver (root user only)
-        usage: singularity remote add-keyserver [options] [remoteName] <keyserver_url>
+        usage: apptainer remote add-keyserver [options] [remoteName] <keyserver_url>
         options:
           - names:
               - -h
@@ -1604,8 +1902,8 @@ subcommands:
             argument: uint32
             description: define the keyserver order
       - name: list
-        description: List all singularity remote endpoints, keyservers, and OCI credentials that are configured
-        usage: singularity remote list
+        description: List all apptainer remote endpoints, keyservers, and OCI credentials that are configured
+        usage: apptainer remote list
         options:
           - names:
               - -h
@@ -1613,8 +1911,8 @@ subcommands:
             argument: ""
             description: help for list
       - name: login
-        description: Login to a singularity remote endpoint, an OCI/Docker registry or a keyserver using credentials
-        usage: singularity remote login [login options...] <remote_name|registry_uri>
+        description: Login to an Apptainer remote endpoint, an OCI/Docker registry or a keyserver using credentials
+        usage: apptainer remote login [login options...] <remote_name|registry_uri>
         options:
           - names:
               - -h
@@ -1645,8 +1943,8 @@ subcommands:
             argument: string
             description: username to authenticate with (required for Docker/OCI registry login)
       - name: logout
-        description: Log out from a singularity remote endpoint, an OCI/Docker registry or a keyserver
-        usage: singularity remote logout <remote_name|registry_uri>
+        description: Log out from an Apptainer remote endpoint, an OCI/Docker registry or a keyserver
+        usage: apptainer remote logout <remote_name|registry_uri>
         options:
           - names:
               - -h
@@ -1654,8 +1952,8 @@ subcommands:
             argument: ""
             description: help for logout
       - name: remove
-        description: Remove an existing singularity remote endpoint
-        usage: singularity remote remove [remove options...] <remote_name>
+        description: Remove an existing apptainer remote endpoint
+        usage: apptainer remote remove [remove options...] <remote_name>
         options:
           - names:
               - -g
@@ -1669,7 +1967,7 @@ subcommands:
             description: help for remove
       - name: remove-keyserver
         description: Remove a keyserver (root user only)
-        usage: singularity remote remove-keyserver [remoteName] <keyserver_url>
+        usage: apptainer remote remove-keyserver [remoteName] <keyserver_url>
         options:
           - names:
               - -h
@@ -1677,8 +1975,8 @@ subcommands:
             argument: ""
             description: help for remove-keyserver
       - name: status
-        description: Check the status of the singularity services at an endpoint, and your authentication token
-        usage: singularity remote status [remote_name]
+        description: Check the status of the apptainer services at an endpoint, and your authentication token
+        usage: apptainer remote status [remote_name]
         options:
           - names:
               - -h
@@ -1686,8 +1984,8 @@ subcommands:
             argument: ""
             description: help for status
       - name: use
-        description: Set a singularity remote endpoint to be actively used
-        usage: singularity remote use [use options...] <remote_name>
+        description: Set an Apptainer remote endpoint to be actively used
+        usage: apptainer remote use [use options...] <remote_name>
         options:
           - names:
               - -e
@@ -1701,7 +1999,7 @@ subcommands:
             description: help for use
   - name: run
     description: Run the user-defined default command within a container
-    usage: singularity run [run options...] <container>
+    usage: apptainer run [run options...] <container>
     options:
       - names:
           - --add-caps
@@ -1725,10 +2023,22 @@ subcommands:
         argument: stringArray
         description: a user-bind path specification. spec has the format src[:dest[:opts]], where src and dest are outside and inside paths. If dest is not given, it is set equal to src. Mount options ('opts') may be specified as 'ro' (read-only) or 'rw' (read/write, which is the default). Multiple bind paths can be given by a comma separated list.
       - names:
+          - --blkio-weight
+        argument: int
+        description: Block IO relative weight in range 10-1000, 0 to disable
+      - names:
+          - --blkio-weight-device
+        argument: strings
+        description: Device specific block IO relative weight
+      - names:
           - -e
           - --cleanenv
         argument: ""
         description: clean environment before running container
+      - names:
+          - --compat
+        argument: ""
+        description: apply settings for increased OCI/Docker compatibility. Infers --containall, --no-init, --no-umask, --no-eval, --writable-tmpfs.
       - names:
           - -c
           - --contain
@@ -1740,9 +2050,25 @@ subcommands:
         argument: ""
         description: contain not only file systems, but also PID, IPC, and environment
       - names:
+          - --cpu-shares
+        argument: int
+        description: CPU shares for container (default -1)
+      - names:
+          - --cpus
+        argument: string
+        description: Number of CPUs available to container
+      - names:
+          - --cpuset-cpus
+        argument: string
+        description: List of host CPUs available to container
+      - names:
+          - --cpuset-mems
+        argument: string
+        description: List of host memory nodes available to container
+      - names:
           - --disable-cache
         argument: ""
-        description: dont use cache, and dont create cache
+        description: do not use or create cache
       - names:
           - --dns
         argument: string
@@ -1757,8 +2083,8 @@ subcommands:
         description: a comma separated capability list to drop
       - names:
           - --env
-        argument: strings
-        description: pass environment variable to contained process
+        argument: stringToString
+        description: pass environment variable to contained process (default [])
       - names:
           - --env-file
         argument: string
@@ -1767,7 +2093,7 @@ subcommands:
           - -f
           - --fakeroot
         argument: ""
-        description: run container in new user namespace as uid 0
+        description: run container with the appearance of running as root
       - names:
           - --fusemount
         argument: strings
@@ -1796,6 +2122,22 @@ subcommands:
         argument: ""
         description: let root user keep privileges in container (root only)
       - names:
+          - --memory
+        argument: string
+        description: Memory limit in bytes
+      - names:
+          - --memory-reservation
+        argument: string
+        description: Memory soft limit in bytes
+      - names:
+          - --memory-swap
+        argument: string
+        description: Swap limit, use -1 for unlimited swap
+      - names:
+          - --mount
+        argument: stringArray
+        description: a mount specification e.g. 'type=bind,source=/opt,destination=/hostopt'.
+      - names:
           - -n
           - --net
         argument: ""
@@ -1803,15 +2145,23 @@ subcommands:
       - names:
           - --network
         argument: string
-        description: specify desired network type separated by commas, each network will bring up a dedicated interface inside container (default "bridge")
+        description: specify desired network type separated by commas, each network will bring up a dedicated interface inside container
       - names:
           - --network-args
         argument: strings
         description: specify network arguments to pass to CNI plugins
       - names:
+          - --no-eval
+        argument: ""
+        description: do not shell evaluate env vars or OCI container CMD/ENTRYPOINT/ARGS
+      - names:
           - --no-home
         argument: ""
         description: do NOT mount users home directory if /home is not the current working directory
+      - names:
+          - --no-https
+        argument: ""
+        description: use http instead of https for docker:// oras:// and library://<hostname>/... URIs
       - names:
           - --no-init
         argument: ""
@@ -1819,7 +2169,7 @@ subcommands:
       - names:
           - --no-mount
         argument: strings
-        description: disable one or more mount xxx options set in singularity.conf
+        description: disable one or more 'mount xxx' options set in apptainer.conf and/or specify absolute destination path to disable a 'bind path' entry
       - names:
           - --no-privs
         argument: ""
@@ -1829,17 +2179,17 @@ subcommands:
         argument: ""
         description: do not propagate umask to the container, set default 0022 umask
       - names:
-          - --nohttps
-        argument: ""
-        description: do NOT use HTTPS with the docker:// transport (useful for local docker registries without a certificate)
-      - names:
-          - --nonet
-        argument: ""
-        description: disable VM network handling
-      - names:
           - --nv
         argument: ""
-        description: enable experimental Nvidia support
+        description: enable Nvidia support
+      - names:
+          - --nvccli
+        argument: ""
+        description: use nvidia-container-cli for GPU setup (experimental)
+      - names:
+          - --oom-kill-disable
+        argument: ""
+        description: Disable OOM killer
       - names:
           - -o
           - --overlay
@@ -1852,12 +2202,16 @@ subcommands:
       - names:
           - --pem-path
         argument: string
-        description: enter an path to a PEM formated RSA key for an encrypted container
+        description: enter an path to a PEM formatted RSA key for an encrypted container
       - names:
           - -p
           - --pid
         argument: ""
         description: run container in a new PID namespace
+      - names:
+          - --pids-limit
+        argument: int
+        description: Limit number of container PIDs, use -1 for unlimited
       - names:
           - --pwd
         argument: string
@@ -1876,10 +2230,14 @@ subcommands:
         argument: strings
         description: enable security features (SELinux, Apparmor, Seccomp)
       - names:
+          - --unsquash
+        argument: ""
+        description: Convert SIF file to temporary sandbox before running
+      - names:
           - -u
           - --userns
         argument: ""
-        description: run container in a new user namespace, allowing Singularity to run completely unprivileged on recent kernels. This disables some features of Singularity, for example it only works with sandbox images.
+        description: run container in a new user namespace
       - names:
           - --uts
         argument: ""
@@ -1913,14 +2271,14 @@ subcommands:
           - -w
           - --writable
         argument: ""
-        description: by default all Singularity containers are available as read only. This option makes the file system accessible as read/write.
+        description: by default all Apptainer containers are available as read only. This option makes the file system accessible as read/write.
       - names:
           - --writable-tmpfs
         argument: ""
         description: makes the file system accessible as read-write with non persistent data (with overlay support only)
   - name: run-help
     description: Show the user-defined help for an image
-    usage: singularity run-help <image path>
+    usage: apptainer run-help <image path>
     options:
       - names:
           - --app
@@ -1933,7 +2291,7 @@ subcommands:
         description: help for run-help
   - name: search
     description: Search a Container Library for images
-    usage: singularity search [search options...] <search_query>
+    usage: apptainer search [search options...] <search_query>
     options:
       - names:
           - --arch
@@ -1951,10 +2309,10 @@ subcommands:
       - names:
           - --signed
         argument: ""
-        description: architecture to search for
+        description: search for only signed images
   - name: shell
     description: Run a shell within a container
-    usage: singularity shell [shell options...] <container>
+    usage: apptainer shell [shell options...] <container>
     options:
       - names:
           - --add-caps
@@ -1978,10 +2336,22 @@ subcommands:
         argument: stringArray
         description: a user-bind path specification. spec has the format src[:dest[:opts]], where src and dest are outside and inside paths. If dest is not given, it is set equal to src. Mount options ('opts') may be specified as 'ro' (read-only) or 'rw' (read/write, which is the default). Multiple bind paths can be given by a comma separated list.
       - names:
+          - --blkio-weight
+        argument: int
+        description: Block IO relative weight in range 10-1000, 0 to disable
+      - names:
+          - --blkio-weight-device
+        argument: strings
+        description: Device specific block IO relative weight
+      - names:
           - -e
           - --cleanenv
         argument: ""
         description: clean environment before running container
+      - names:
+          - --compat
+        argument: ""
+        description: apply settings for increased OCI/Docker compatibility. Infers --containall, --no-init, --no-umask, --no-eval, --writable-tmpfs.
       - names:
           - -c
           - --contain
@@ -1993,9 +2363,25 @@ subcommands:
         argument: ""
         description: contain not only file systems, but also PID, IPC, and environment
       - names:
+          - --cpu-shares
+        argument: int
+        description: CPU shares for container (default -1)
+      - names:
+          - --cpus
+        argument: string
+        description: Number of CPUs available to container
+      - names:
+          - --cpuset-cpus
+        argument: string
+        description: List of host CPUs available to container
+      - names:
+          - --cpuset-mems
+        argument: string
+        description: List of host memory nodes available to container
+      - names:
           - --disable-cache
         argument: ""
-        description: dont use cache, and dont create cache
+        description: do not use or create cache
       - names:
           - --dns
         argument: string
@@ -2010,8 +2396,8 @@ subcommands:
         description: a comma separated capability list to drop
       - names:
           - --env
-        argument: strings
-        description: pass environment variable to contained process
+        argument: stringToString
+        description: pass environment variable to contained process (default [])
       - names:
           - --env-file
         argument: string
@@ -2020,7 +2406,7 @@ subcommands:
           - -f
           - --fakeroot
         argument: ""
-        description: run container in new user namespace as uid 0
+        description: run container with the appearance of running as root
       - names:
           - --fusemount
         argument: strings
@@ -2049,6 +2435,22 @@ subcommands:
         argument: ""
         description: let root user keep privileges in container (root only)
       - names:
+          - --memory
+        argument: string
+        description: Memory limit in bytes
+      - names:
+          - --memory-reservation
+        argument: string
+        description: Memory soft limit in bytes
+      - names:
+          - --memory-swap
+        argument: string
+        description: Swap limit, use -1 for unlimited swap
+      - names:
+          - --mount
+        argument: stringArray
+        description: a mount specification e.g. 'type=bind,source=/opt,destination=/hostopt'.
+      - names:
           - -n
           - --net
         argument: ""
@@ -2056,15 +2458,23 @@ subcommands:
       - names:
           - --network
         argument: string
-        description: specify desired network type separated by commas, each network will bring up a dedicated interface inside container (default "bridge")
+        description: specify desired network type separated by commas, each network will bring up a dedicated interface inside container
       - names:
           - --network-args
         argument: strings
         description: specify network arguments to pass to CNI plugins
       - names:
+          - --no-eval
+        argument: ""
+        description: do not shell evaluate env vars or OCI container CMD/ENTRYPOINT/ARGS
+      - names:
           - --no-home
         argument: ""
         description: do NOT mount users home directory if /home is not the current working directory
+      - names:
+          - --no-https
+        argument: ""
+        description: use http instead of https for docker:// oras:// and library://<hostname>/... URIs
       - names:
           - --no-init
         argument: ""
@@ -2072,7 +2482,7 @@ subcommands:
       - names:
           - --no-mount
         argument: strings
-        description: disable one or more mount xxx options set in singularity.conf
+        description: disable one or more 'mount xxx' options set in apptainer.conf and/or specify absolute destination path to disable a 'bind path' entry
       - names:
           - --no-privs
         argument: ""
@@ -2082,17 +2492,17 @@ subcommands:
         argument: ""
         description: do not propagate umask to the container, set default 0022 umask
       - names:
-          - --nohttps
-        argument: ""
-        description: do NOT use HTTPS with the docker:// transport (useful for local docker registries without a certificate)
-      - names:
-          - --nonet
-        argument: ""
-        description: disable VM network handling
-      - names:
           - --nv
         argument: ""
-        description: enable experimental Nvidia support
+        description: enable Nvidia support
+      - names:
+          - --nvccli
+        argument: ""
+        description: use nvidia-container-cli for GPU setup (experimental)
+      - names:
+          - --oom-kill-disable
+        argument: ""
+        description: Disable OOM killer
       - names:
           - -o
           - --overlay
@@ -2105,12 +2515,16 @@ subcommands:
       - names:
           - --pem-path
         argument: string
-        description: enter an path to a PEM formated RSA key for an encrypted container
+        description: enter an path to a PEM formatted RSA key for an encrypted container
       - names:
           - -p
           - --pid
         argument: ""
         description: run container in a new PID namespace
+      - names:
+          - --pids-limit
+        argument: int
+        description: Limit number of container PIDs, use -1 for unlimited
       - names:
           - --pwd
         argument: string
@@ -2138,10 +2552,14 @@ subcommands:
         argument: ""
         description: execute SyOS shell
       - names:
+          - --unsquash
+        argument: ""
+        description: Convert SIF file to temporary sandbox before running
+      - names:
           - -u
           - --userns
         argument: ""
-        description: run container in a new user namespace, allowing Singularity to run completely unprivileged on recent kernels. This disables some features of Singularity, for example it only works with sandbox images.
+        description: run container in a new user namespace
       - names:
           - --uts
         argument: ""
@@ -2175,14 +2593,14 @@ subcommands:
           - -w
           - --writable
         argument: ""
-        description: by default all Singularity containers are available as read only. This option makes the file system accessible as read/write.
+        description: by default all Apptainer containers are available as read only. This option makes the file system accessible as read/write.
       - names:
           - --writable-tmpfs
         argument: ""
         description: makes the file system accessible as read-write with non persistent data (with overlay support only)
   - name: sif
-    description: siftool is a program for Singularity Image Format (SIF) file manipulation
-    usage: singularity sif
+    description: Manipulate Singularity Image Format (SIF) images
+    usage: apptainer sif
     options:
       - names:
           - -h
@@ -2191,13 +2609,13 @@ subcommands:
         description: help for sif
     subcommands:
       - name: add
-        description: Add a data object to a SIF file
-        usage: singularity sif add <containerfile> <dataobjectfile> [flags]
+        description: Add data object
+        usage: apptainer sif add <sif_path> <object_path> [flags]
         options:
           - names:
               - --alignment
             argument: int
-            description: 'set alignment constraint [default: aligned on page size]'
+            description: 'set alignment [default: 4096 with -datatype 4-Partition, 0 otherwise]'
           - names:
               - --datatype
             argument: int
@@ -2240,8 +2658,8 @@ subcommands:
             argument: int32
             description: 'the signature hash used (with -datatype 5-Signature) [NEEDED, no default]:'
       - name: del
-        description: Delete a specified object descriptor and data from SIF file
-        usage: singularity sif del <descriptorid> <containerfile> [flags]
+        description: Delete data object
+        usage: apptainer sif del <id> <sif_path>
         options:
           - names:
               - -h
@@ -2249,8 +2667,8 @@ subcommands:
             argument: ""
             description: help for del
       - name: dump
-        description: Extract and output data objects from SIF files
-        usage: singularity sif dump <descriptorid> <containerfile>
+        description: Dump data object
+        usage: apptainer sif dump <id> <sif_path>
         options:
           - names:
               - -h
@@ -2258,8 +2676,8 @@ subcommands:
             argument: ""
             description: help for dump
       - name: header
-        description: Display SIF global headers
-        usage: singularity sif header <containerfile>
+        description: Display global header
+        usage: apptainer sif header <sif_path>
         options:
           - names:
               - -h
@@ -2267,8 +2685,8 @@ subcommands:
             argument: ""
             description: help for header
       - name: info
-        description: Display detailed information of object descriptors
-        usage: singularity sif info <descriptorid> <containerfile>
+        description: Display data object info
+        usage: apptainer sif info <id> <sif_path>
         options:
           - names:
               - -h
@@ -2276,8 +2694,8 @@ subcommands:
             argument: ""
             description: help for info
       - name: list
-        description: List object descriptors from SIF files
-        usage: singularity sif list <containerfile>
+        description: List data objects
+        usage: apptainer sif list <sif_path>
         options:
           - names:
               - -h
@@ -2285,8 +2703,8 @@ subcommands:
             argument: ""
             description: help for list
       - name: new
-        description: Create a new empty SIF image file
-        usage: singularity sif new <containerfile>
+        description: Create SIF image
+        usage: apptainer sif new <sif_path>
         options:
           - names:
               - -h
@@ -2295,7 +2713,7 @@ subcommands:
             description: help for new
       - name: setprim
         description: Set primary system partition
-        usage: singularity sif setprim <descriptorid> <containerfile> [flags]
+        usage: apptainer sif setprim <id> <sif_path>
         options:
           - names:
               - -h
@@ -2304,7 +2722,7 @@ subcommands:
             description: help for setprim
   - name: sign
     description: Attach digital signature(s) to an image
-    usage: singularity sign [sign options...] <image path>
+    usage: apptainer sign [sign options...] <image path>
     options:
       - names:
           - -g
@@ -2320,7 +2738,7 @@ subcommands:
           - -k
           - --keyidx
         argument: int
-        description: private key to use (index from 'key list')
+        description: private key to use (index from 'key list --secret')
       - names:
           - -i
           - --sif-id
@@ -2328,7 +2746,7 @@ subcommands:
         description: sign object with the specified ID
   - name: test
     description: Run the user-defined tests within a container
-    usage: singularity test [exec options...] <image path>
+    usage: apptainer test [exec options...] <image path>
     options:
       - names:
           - --add-caps
@@ -2352,10 +2770,22 @@ subcommands:
         argument: stringArray
         description: a user-bind path specification. spec has the format src[:dest[:opts]], where src and dest are outside and inside paths. If dest is not given, it is set equal to src. Mount options ('opts') may be specified as 'ro' (read-only) or 'rw' (read/write, which is the default). Multiple bind paths can be given by a comma separated list.
       - names:
+          - --blkio-weight
+        argument: int
+        description: Block IO relative weight in range 10-1000, 0 to disable
+      - names:
+          - --blkio-weight-device
+        argument: strings
+        description: Device specific block IO relative weight
+      - names:
           - -e
           - --cleanenv
         argument: ""
         description: clean environment before running container
+      - names:
+          - --compat
+        argument: ""
+        description: apply settings for increased OCI/Docker compatibility. Infers --containall, --no-init, --no-umask, --no-eval, --writable-tmpfs.
       - names:
           - -c
           - --contain
@@ -2367,9 +2797,25 @@ subcommands:
         argument: ""
         description: contain not only file systems, but also PID, IPC, and environment
       - names:
+          - --cpu-shares
+        argument: int
+        description: CPU shares for container (default -1)
+      - names:
+          - --cpus
+        argument: string
+        description: Number of CPUs available to container
+      - names:
+          - --cpuset-cpus
+        argument: string
+        description: List of host CPUs available to container
+      - names:
+          - --cpuset-mems
+        argument: string
+        description: List of host memory nodes available to container
+      - names:
           - --disable-cache
         argument: ""
-        description: dont use cache, and dont create cache
+        description: do not use or create cache
       - names:
           - --dns
         argument: string
@@ -2384,8 +2830,8 @@ subcommands:
         description: a comma separated capability list to drop
       - names:
           - --env
-        argument: strings
-        description: pass environment variable to contained process
+        argument: stringToString
+        description: pass environment variable to contained process (default [])
       - names:
           - --env-file
         argument: string
@@ -2394,7 +2840,7 @@ subcommands:
           - -f
           - --fakeroot
         argument: ""
-        description: run container in new user namespace as uid 0
+        description: run container with the appearance of running as root
       - names:
           - --fusemount
         argument: strings
@@ -2423,6 +2869,22 @@ subcommands:
         argument: ""
         description: let root user keep privileges in container (root only)
       - names:
+          - --memory
+        argument: string
+        description: Memory limit in bytes
+      - names:
+          - --memory-reservation
+        argument: string
+        description: Memory soft limit in bytes
+      - names:
+          - --memory-swap
+        argument: string
+        description: Swap limit, use -1 for unlimited swap
+      - names:
+          - --mount
+        argument: stringArray
+        description: a mount specification e.g. 'type=bind,source=/opt,destination=/hostopt'.
+      - names:
           - -n
           - --net
         argument: ""
@@ -2430,15 +2892,23 @@ subcommands:
       - names:
           - --network
         argument: string
-        description: specify desired network type separated by commas, each network will bring up a dedicated interface inside container (default "bridge")
+        description: specify desired network type separated by commas, each network will bring up a dedicated interface inside container
       - names:
           - --network-args
         argument: strings
         description: specify network arguments to pass to CNI plugins
       - names:
+          - --no-eval
+        argument: ""
+        description: do not shell evaluate env vars or OCI container CMD/ENTRYPOINT/ARGS
+      - names:
           - --no-home
         argument: ""
         description: do NOT mount users home directory if /home is not the current working directory
+      - names:
+          - --no-https
+        argument: ""
+        description: use http instead of https for docker:// oras:// and library://<hostname>/... URIs
       - names:
           - --no-init
         argument: ""
@@ -2446,7 +2916,7 @@ subcommands:
       - names:
           - --no-mount
         argument: strings
-        description: disable one or more mount xxx options set in singularity.conf
+        description: disable one or more 'mount xxx' options set in apptainer.conf and/or specify absolute destination path to disable a 'bind path' entry
       - names:
           - --no-privs
         argument: ""
@@ -2456,17 +2926,17 @@ subcommands:
         argument: ""
         description: do not propagate umask to the container, set default 0022 umask
       - names:
-          - --nohttps
-        argument: ""
-        description: do NOT use HTTPS with the docker:// transport (useful for local docker registries without a certificate)
-      - names:
-          - --nonet
-        argument: ""
-        description: disable VM network handling
-      - names:
           - --nv
         argument: ""
-        description: enable experimental Nvidia support
+        description: enable Nvidia support
+      - names:
+          - --nvccli
+        argument: ""
+        description: use nvidia-container-cli for GPU setup (experimental)
+      - names:
+          - --oom-kill-disable
+        argument: ""
+        description: Disable OOM killer
       - names:
           - -o
           - --overlay
@@ -2479,12 +2949,16 @@ subcommands:
       - names:
           - --pem-path
         argument: string
-        description: enter an path to a PEM formated RSA key for an encrypted container
+        description: enter an path to a PEM formatted RSA key for an encrypted container
       - names:
           - -p
           - --pid
         argument: ""
         description: run container in a new PID namespace
+      - names:
+          - --pids-limit
+        argument: int
+        description: Limit number of container PIDs, use -1 for unlimited
       - names:
           - --pwd
         argument: string
@@ -2503,10 +2977,14 @@ subcommands:
         argument: strings
         description: enable security features (SELinux, Apparmor, Seccomp)
       - names:
+          - --unsquash
+        argument: ""
+        description: Convert SIF file to temporary sandbox before running
+      - names:
           - -u
           - --userns
         argument: ""
-        description: run container in a new user namespace, allowing Singularity to run completely unprivileged on recent kernels. This disables some features of Singularity, for example it only works with sandbox images.
+        description: run container in a new user namespace
       - names:
           - --uts
         argument: ""
@@ -2540,14 +3018,14 @@ subcommands:
           - -w
           - --writable
         argument: ""
-        description: by default all Singularity containers are available as read only. This option makes the file system accessible as read/write.
+        description: by default all Apptainer containers are available as read only. This option makes the file system accessible as read/write.
       - names:
           - --writable-tmpfs
         argument: ""
         description: makes the file system accessible as read-write with non persistent data (with overlay support only)
   - name: verify
     description: Verify cryptographic signatures attached to an image
-    usage: singularity verify [verify options...] <image path>
+    usage: apptainer verify [verify options...] <image path>
     options:
       - names:
           - -a
@@ -2589,39 +3067,12 @@ subcommands:
         argument: string
         description: specify a URL for a key server
   - name: version
-    description: Show the version for Singularity
-    usage: singularity version
+    description: Show the version for Apptainer
+    usage: apptainer version
     options:
       - names:
           - -h
           - --help
         argument: ""
         description: help for version
-version: singularity version 3.8.6
-tldr: |
-  > Manage Singularity containers and images.
-  > More information: <https://singularity-docs.readthedocs.io/en/latest/#commands>.
-
-  - Download a remote image from Sylabs Cloud:
-
-  `singularity pull --name {{image.sif}} {{library://godlovedc/funny/lolcow:latest}}`
-
-  - Rebuild a remote image using the latest Singularity image format:
-
-  `singularity build {{image.sif}} {{docker://godlovedc/lolcow}}`
-
-  - Start a container from an image and get a shell inside it:
-
-  `singularity shell {{image.sif}}`
-
-  - Start a container from an image and run a command:
-
-  `singularity exec {{image.sif}} {{command}}`
-
-  - Start a container from an image and execute the internal runscript:
-
-  `singularity run {{image.sif}}`
-
-  - Build a singularity image from a recipe file:
-
-  `sudo singularity build {{image.sif}} {{recipe}}`
+version: apptainer version 1.1.5

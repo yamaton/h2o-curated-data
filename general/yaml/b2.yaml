@@ -1,0 +1,1096 @@
+name: b2
+description: The command-line tool that gives easy access to all of the capabilities of B2 Cloud Storage
+usage: |-
+  b2 authorize-account [-h] [--profile PROFILE]  [applicationKeyId] [applicationKey]
+  b2 cancel-all-unfinished-large-files [-h] [--profile PROFILE] bucketName
+  b2 cancel-large-file [-h] [--profile PROFILE] fileId
+  b2 clear-account [-h] [--profile PROFILE]
+  b2 copy-file-by-id [-h] [--profile PROFILE] [--fetchMetadata] [--contentType CONTENTTYPE] [--range RANGE]
+                     [--info INFO | --noInfo] [--destinationServerSideEncryption {SSE-B2,SSE-C}]
+                     [--destinationServerSideEncryptionAlgorithm {AES256}] [--sourceServerSideEncryption {SSE-C}]
+                     [--sourceServerSideEncryptionAlgorithm {AES256}] [--fileRetentionMode {compliance,governance}]
+                     [--retainUntil TIMESTAMP] [--legalHold {on,off}]
+                     sourceFileId destinationBucketName b2FileName
+  b2 create-bucket [-h] [--profile PROFILE] [--bucketInfo BUCKETINFO] [--corsRules CORSRULES] [--lifecycleRules LIFECYCLERULES]
+                   [--fileLockEnabled] [--replication REPLICATION] [--defaultServerSideEncryption {SSE-B2,none}]
+                   [--defaultServerSideEncryptionAlgorithm {AES256}]
+                   bucketName bucketType
+  b2 create-key [-h] [--profile PROFILE] [--bucket BUCKET] [--namePrefix NAMEPREFIX] [--duration DURATION] [--allCapabilities]
+                keyName [capabilities]
+  b2 delete-bucket [-h] [--profile PROFILE] bucketName
+  b2 delete-file-version [-h] [--profile PROFILE] [fileName] fileId
+  b2 delete-key [-h] [--profile PROFILE] applicationKeyId
+  b2 download-file-by-id [-h] [--profile PROFILE] [--noProgress] [--threads THREADS] [--sourceServerSideEncryption {SSE-C}]
+                         [--sourceServerSideEncryptionAlgorithm {AES256}] [--write-buffer-size BYTES] [--skip-hash-verification]
+                         [--max-download-streams-per-file MAX_DOWNLOAD_STREAMS_PER_FILE]
+                         fileId localFileName
+  b2 download-file-by-name [-h] [--profile PROFILE] [--noProgress] [--threads THREADS] [--sourceServerSideEncryption {SSE-C}]
+                           [--sourceServerSideEncryptionAlgorithm {AES256}] [--write-buffer-size BYTES]
+                           [--skip-hash-verification] [--max-download-streams-per-file MAX_DOWNLOAD_STREAMS_PER_FILE]
+                           bucketName b2FileName localFileName
+  b2 get-account-info [-h] [--profile PROFILE]
+  b2 get-bucket [-h] [--profile PROFILE] [--showSize] bucketName
+  b2 get-file-info [-h] [--profile PROFILE] fileId
+  b2 get-download-auth [-h] [--profile PROFILE] [--prefix PREFIX] [--duration DURATION] bucketName
+  b2 get-download-url-with-auth [-h] [--profile PROFILE] [--duration DURATION] bucketName fileName
+  b2 hide-file [-h] [--profile PROFILE] bucketName fileName
+  b2 list-buckets [-h] [--profile PROFILE] [--json]
+  b2 list-keys [-h] [--profile PROFILE] [--long]
+  b2 list-parts [-h] [--profile PROFILE] largeFileId
+  b2 list-unfinished-large-files [-h] [--profile PROFILE] bucketName
+  b2 ls [-h] [--profile PROFILE] [--long] [--json] [--replication] [--versions] [--recursive] [--withWildcard]
+        bucketName [folderName]
+  b2 rm [-h] [--profile PROFILE] [--dryRun] [--threads THREADS] [--queueSize QUEUESIZE] [--noProgress] [--failFast] [--versions]
+        [--recursive] [--withWildcard]
+        bucketName [folderName]
+  b2 make-url [-h] [--profile PROFILE] fileId
+  b2 make-friendly-url [-h] [--profile PROFILE] bucketName fileName
+  b2 sync [-h] [--profile PROFILE] [--noProgress] [--dryRun] [--allowEmptySource] [--excludeAllSymlinks] [--threads THREADS]
+          [--syncThreads SYNCTHREADS] [--downloadThreads DOWNLOADTHREADS] [--uploadThreads UPLOADTHREADS]
+          [--compareVersions {none,modTime,size}] [--compareThreshold MILLIS] [--excludeRegex REGEX] [--includeRegex REGEX]
+          [--excludeDirRegex REGEX] [--excludeIfModifiedAfter TIMESTAMP] [--destinationServerSideEncryption {SSE-B2,SSE-C}]
+          [--destinationServerSideEncryptionAlgorithm {AES256}] [--sourceServerSideEncryption {SSE-C}]
+          [--sourceServerSideEncryptionAlgorithm {AES256}] [--write-buffer-size BYTES] [--skip-hash-verification]
+          [--max-download-streams-per-file MAX_DOWNLOAD_STREAMS_PER_FILE] [--incrementalMode] [--skipNewer | --replaceNewer]
+          [--delete | --keepDays DAYS]
+          source destination
+  b2 update-bucket [-h] [--profile PROFILE] [--bucketInfo BUCKETINFO] [--corsRules CORSRULES] [--lifecycleRules LIFECYCLERULES]
+                   [--defaultRetentionMode {compliance,governance,none}] [--defaultRetentionPeriod period]
+                   [--replication REPLICATION] [--fileLockEnabled] [--defaultServerSideEncryption {SSE-B2,none}]
+                   [--defaultServerSideEncryptionAlgorithm {AES256}]
+                   bucketName [bucketType]
+  b2 upload-file [-h] [--profile PROFILE] [--noProgress] [--quiet] [--contentType CONTENTTYPE] [--minPartSize MINPARTSIZE]
+                 [--sha1 SHA1] [--threads THREADS] [--info INFO] [--destinationServerSideEncryption {SSE-B2,SSE-C}]
+                 [--destinationServerSideEncryptionAlgorithm {AES256}] [--legalHold {on,off}]
+                 [--fileRetentionMode {compliance,governance}] [--retainUntil TIMESTAMP] [--incrementalMode]
+                 bucketName localFilePath b2FileName
+  b2 update-file-legal-hold [-h] [--profile PROFILE] [fileName] fileId {on,off}
+  b2 update-file-retention [-h] [--profile PROFILE] [--retainUntil TIMESTAMP] [--bypassGovernance]
+                           [fileName] fileId {governance,compliance,none}
+  b2 replication-setup [-h] [--profile PROFILE] [--destination-profile DESTINATION_PROFILE] [--name NAME] [--priority PRIORITY]
+                       [--file-name-prefix PREFIX] [--include-existing-files]
+                       SOURCE_BUCKET_NAME DESTINATION_BUCKET_NAME
+  b2 replication-delete [-h] [--profile PROFILE] SOURCE_BUCKET_NAME REPLICATION_RULE_NAME
+  b2 replication-pause [-h] [--profile PROFILE] SOURCE_BUCKET_NAME REPLICATION_RULE_NAME
+  b2 replication-unpause [-h] [--profile PROFILE] SOURCE_BUCKET_NAME REPLICATION_RULE_NAME
+  b2 replication-status [-h] [--profile PROFILE] [--rule REPLICATION_RULE_NAME] [--destination-profile DESTINATION_PROFILE]
+                        [--dont-scan-destination] [--output-format {console,json,csv}] [--noProgress]
+                        [--columns COLUMN ONE,COLUMN TWO]
+                        SOURCE_BUCKET_NAME
+  b2 version [-h] [--profile PROFILE]
+  b2 license [-h] [--profile PROFILE]
+options:
+  - names:
+      - -h
+      - --help
+    argument: ""
+    description: show this help message and exit
+subcommands:
+  - name: authorize-account
+    description: Prompts for Backblaze applicationKeyId and applicationKey (unless they are given on the command line).
+    usage: b2 authorize-account [-h] [--profile PROFILE]  [applicationKeyId] [applicationKey]
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --profile
+        argument: PROFILE
+        description: set profile
+  - name: cancel-all-unfinished-large-files
+    description: Lists all large files that have been started but not finished and cancels them. Any parts that have been uploaded will be deleted.
+    usage: b2 cancel-all-unfinished-large-files [-h] [--profile PROFILE] bucketName
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --profile
+        argument: PROFILE
+        description: set profile
+  - name: cancel-large-file
+    description: Cancels a large file upload. Used to undo a start-large-file.
+    usage: b2 cancel-large-file [-h] [--profile PROFILE] fileId
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --profile
+        argument: PROFILE
+        description: set profile
+  - name: clear-account
+    description: Erases everything in local cache.
+    usage: b2 clear-account [-h] [--profile PROFILE]
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --profile
+        argument: PROFILE
+        description: set profile
+  - name: copy-file-by-id
+    description: Copy a file version to the given bucket (server-side, not via download+upload).
+    usage: |-
+      b2 copy-file-by-id [-h] [--profile PROFILE] [--fetchMetadata] [--contentType CONTENTTYPE] [--range RANGE]
+                     [--info INFO | --noInfo] [--destinationServerSideEncryption {SSE-B2,SSE-C}]
+                     [--destinationServerSideEncryptionAlgorithm {AES256}] [--sourceServerSideEncryption {SSE-C}]
+                     [--sourceServerSideEncryptionAlgorithm {AES256}] [--fileRetentionMode {compliance,governance}]
+                     [--retainUntil TIMESTAMP] [--legalHold {on,off}]
+                     sourceFileId destinationBucketName b2FileName
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --profile
+        argument: PROFILE
+        description: set profile
+      - names:
+          - --fetchMetadata
+        argument: ""
+        description: ""
+      - names:
+          - --contentType
+        argument: CONTENTTYPE
+        description: ""
+      - names:
+          - --range
+        argument: RANGE
+        description: ""
+      - names:
+          - --info
+        argument: INFO
+        description: ""
+      - names:
+          - --noInfo
+        argument: ""
+        description: ""
+      - names:
+          - --destinationServerSideEncryption
+        argument: '{SSE-B2,SSE-C}'
+        description: ""
+      - names:
+          - --destinationServerSideEncryptionAlgorithm
+        argument: '{AES256}'
+        description: ""
+      - names:
+          - --sourceServerSideEncryption
+        argument: '{SSE-C}'
+        description: ""
+      - names:
+          - --sourceServerSideEncryptionAlgorithm
+        argument: '{AES256}'
+        description: ""
+      - names:
+          - --fileRetentionMode
+        argument: '{compliance,governance}'
+        description: ""
+      - names:
+          - --retainUntil
+        argument: TIMESTAMP
+        description: ""
+      - names:
+          - --legalHold
+        argument: '{on,off}'
+        description: ""
+  - name: create-bucket
+    description: Creates a new bucket. Prints the ID of the bucket created.
+    usage: |-
+      b2 create-bucket [-h] [--profile PROFILE] [--bucketInfo BUCKETINFO] [--corsRules CORSRULES] [--lifecycleRules LIFECYCLERULES]
+                      [--fileLockEnabled] [--replication REPLICATION] [--defaultServerSideEncryption {SSE-B2,none}]
+                      [--defaultServerSideEncryptionAlgorithm {AES256}]
+                      bucketName bucketType
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --profile
+        argument: PROFILE
+        description: set profile
+      - names:
+          - --bucketInfo
+        argument: BUCKETINFO
+        description: ""
+      - names:
+          - --corsRules
+        argument: CORSRULES
+        description: ""
+      - names:
+          - --lifecycleRules
+        argument: LIFECYCLERULES
+        description: ""
+      - names:
+          - --fileLockEnabled
+        argument: ""
+        description: If given, the bucket will have the file lock mechanism enabled. This parameter cannot be changed after bucket creation.
+      - names:
+          - --replication
+        argument: REPLICATION
+        description: ""
+      - names:
+          - --defaultServerSideEncryption
+        argument: '{SSE-B2,none}'
+        description: ""
+      - names:
+          - --defaultServerSideEncryptionAlgorithm
+        argument: '{AES256}'
+        description: ""
+  - name: create-key
+    description: Creates a new application key. Prints the application key information.
+    usage: |-
+      b2 create-key [-h] [--profile PROFILE] [--bucket BUCKET] [--namePrefix NAMEPREFIX] [--duration DURATION] [--allCapabilities]
+                    keyName [capabilities]
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --profile
+        argument: PROFILE
+        description: set profile
+      - names:
+          - --bucket
+        argument: BUCKET
+        description: ""
+      - names:
+          - --namePrefix
+        argument: NAMEPREFIX
+        description: ""
+      - names:
+          - --duration
+        argument: DURATION
+        description: ""
+      - names:
+          - --allCapabilities
+        argument: ""
+        description: ""
+  - name: delete-bucket
+    description: Deletes the bucket with the given name.
+    usage: b2 delete-bucket [-h] [--profile PROFILE] bucketName
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --profile
+        argument: PROFILE
+        description: set profile
+  - name: delete-file-version
+    description: Permanently and irrevocably deletes one version of a file.
+    usage: b2 delete-file-version [-h] [--profile PROFILE] [fileName] fileId
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --profile
+        argument: PROFILE
+        description: set profile
+  - name: delete-key
+    description: Deletes the specified application key by its ID.
+    usage: b2 delete-key [-h] [--profile PROFILE] applicationKeyId
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --profile
+        argument: PROFILE
+        description: set profile
+  - name: download-file-by-id
+    description: Downloads the given file, and stores it in the given local file.
+    usage: |-
+      b2 download-file-by-id [-h] [--profile PROFILE] [--noProgress] [--threads THREADS] [--sourceServerSideEncryption {SSE-C}]
+                            [--sourceServerSideEncryptionAlgorithm {AES256}] [--write-buffer-size BYTES] [--skip-hash-verification]
+                            [--max-download-streams-per-file MAX_DOWNLOAD_STREAMS_PER_FILE]
+                            fileId localFileName
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --profile
+        argument: PROFILE
+        description: set profile
+      - names:
+          - --noProgress
+        argument: ""
+        description: ""
+      - names:
+          - --threads
+        argument: THREADS
+        description: ""
+      - names:
+          - --sourceServerSideEncryption
+        argument: '{SSE-C}'
+        description: ""
+      - names:
+          - --sourceServerSideEncryptionAlgorithm
+        argument: '{AES256}'
+        description: ""
+      - names:
+          - --write-buffer-size
+        argument: BYTES
+        description: ""
+      - names:
+          - --skip-hash-verification
+        argument: ""
+        description: ""
+      - names:
+          - --max-download-streams-per-file
+        argument: MAX_DOWNLOAD_STREAMS_PER_FILE
+        description: ""
+  - name: download-file-by-name
+    description: Downloads the given file, and stores it in the given local file.
+    usage: |-
+      b2 download-file-by-name [-h] [--profile PROFILE] [--noProgress] [--threads THREADS] [--sourceServerSideEncryption {SSE-C}]
+                              [--sourceServerSideEncryptionAlgorithm {AES256}] [--write-buffer-size BYTES]
+                              [--skip-hash-verification] [--max-download-streams-per-file MAX_DOWNLOAD_STREAMS_PER_FILE]
+                              bucketName b2FileName localFileName
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --profile
+        argument: PROFILE
+        description: set profile
+      - names:
+          - --noProgress
+        argument: ""
+        description: ""
+      - names:
+          - --threads
+        argument: THREADS
+        description: ""
+      - names:
+          - --sourceServerSideEncryption
+        argument: '{SSE-C}'
+        description: ""
+      - names:
+          - --sourceServerSideEncryptionAlgorithm
+        argument: '{AES256}'
+        description: ""
+      - names:
+          - --write-buffer-size
+        argument: BYTES
+        description: ""
+      - names:
+          - --skip-hash-verification
+        argument: ""
+        description: ""
+      - names:
+          - --max-download-streams-per-file
+        argument: MAX_DOWNLOAD_STREAMS_PER_FILE
+        description: ""
+  - name: get-account-info
+    description: Shows the account ID, key, auth token, URLs, and what capabilities the current application keys has.
+    usage: b2 get-account-info [-h] [--profile PROFILE]
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --profile
+        argument: PROFILE
+        description: set profile
+  - name: get-bucket
+    description: Prints all of the information about the bucket, including bucket info, CORS rules and lifecycle rules.
+    usage: b2 get-bucket [-h] [--profile PROFILE] [--showSize] bucketName
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --profile
+        argument: PROFILE
+        description: set profile
+      - names:
+          - --showSize
+        argument: ""
+        description: Show file size
+  - name: get-file-info
+    description: Prints all of the information about the file, but not its contents.
+    usage: b2 get-file-info [-h] [--profile PROFILE] fileId
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+  - name: get-download-auth
+    description: Prints an authorization token that is valid only for downloading files from the given bucket.
+    usage: b2 get-download-auth [-h] [--profile PROFILE] [--prefix PREFIX] [--duration DURATION] bucketName
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --profile
+        argument: PROFILE
+        description: set profile
+      - names:
+          - --prefix
+        argument: PREFIX
+        description: set prefix
+      - names:
+          - --duration
+        argument: DURATION
+        description: set duration
+  - name: get-download-url-with-auth
+    description: Prints a URL to download the given file.
+    usage: b2 get-download-url-with-auth [-h] [--profile PROFILE] [--duration DURATION] bucketName fileName
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --profile
+        argument: PROFILE
+        description: set profile
+      - names:
+          - --duration
+        argument: DURATION
+        description: set duration
+  - name: hide-file
+    description: Uploads a new, hidden, version of the given file.
+    usage: b2 hide-file [-h] [--profile PROFILE] bucketName fileName
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --profile
+        argument: PROFILE
+        description: set profile
+  - name: list-buckets
+    description: Lists all of the buckets in the current account.
+    usage: b2 list-buckets [-h] [--profile PROFILE] [--json]
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --profile
+        argument: PROFILE
+        description: set profile
+      - names:
+          - --json
+        argument: ""
+        description: Get outputs as JSON
+  - name: list-keys
+    description: Lists the application keys for the current account.
+    usage: b2 list-keys [-h] [--profile PROFILE] [--long]
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --profile
+        argument: PROFILE
+        description: set profile
+      - names:
+          - --long
+        argument: ""
+        description: Get detailed outputs
+  - name: list-parts
+    description: Lists all of the parts that have been uploaded for the given large file, which must be a file that was started but not finished or canceled.
+    usage: b2 list-parts [-h] [--profile PROFILE] largeFileId
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+  - name: list-unfinished-large-files
+    description: Lists all of the large files in the bucket that were started, but not finished or canceled.
+    usage: b2 list-unfinished-large-files [-h] [--profile PROFILE] bucketName
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --profile
+        argument: PROFILE
+        description: set profile
+  - name: ls
+    description: Using the file naming convention that / separates folder names from their contents, returns a list of the files and folders in a given folder. If no folder name is given, lists all files at the top level.
+    usage: |-
+      b2 ls [-h] [--profile PROFILE] [--long] [--json] [--replication] [--versions] [--recursive] [--withWildcard]
+            bucketName [folderName]
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --profile
+        argument: PROFILE
+        description: set profile
+      - names:
+          - --long
+        argument: ""
+        description: Get detailed outputs
+      - names:
+          - --json
+        argument: ""
+        description: Get outputs as JSON
+      - names:
+          - --replication
+        argument: ""
+        description: replication
+      - names:
+          - --versions
+        argument: ""
+        description: Show versions
+      - names:
+          - --recursive
+        argument: ""
+        description: Show outputs recursively
+      - names:
+          - --withWildCard
+        argument: ""
+        description: Use wildcard
+  - name: rm
+    description: Removes a "folder" or a set of files matching a pattern. **Use with caution.**
+    usage: |-
+      b2 rm [-h] [--profile PROFILE] [--dryRun] [--threads THREADS] [--queueSize QUEUESIZE] [--noProgress] [--failFast] [--versions]
+            [--recursive] [--withWildcard]
+            bucketName [folderName]
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --profile
+        argument: PROFILE
+        description: set profile
+      - names:
+          - --dryRun
+        argument: ""
+        description: Do not really execute
+      - names:
+          - --threads
+        argument: THREADS
+        description: Set number of threads
+      - names:
+          - --noProgress
+        argument: ""
+        description: Do not show progress
+      - names:
+          - --failFast
+        argument: ""
+        description: Set fail-fast
+      - names:
+          - --versions
+        argument: ""
+        description: Show versions
+      - names:
+          - --recursive
+        argument: ""
+        description: Show outputs recursively
+      - names:
+          - --withWildCard
+        argument: ""
+        description: Use wildcard
+  - name: make-url
+    description: Prints an URL that can be used to download the given file, if it is public.
+    usage: b2 make-url [-h] [--profile PROFILE] fileId
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --profile
+        argument: PROFILE
+        description: set profile
+  - name: make-friendly-url
+    description: Prints a short URL that can be used to download the given file, if it is public.
+    usage: b2 make-friendly-url [-h] [--profile PROFILE] bucketName fileName
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --profile
+        argument: PROFILE
+        description: set profile
+  - name: sync
+    description: Copies multiple files from source to destination. Optionally deletes or hides destination files that the source does not have.
+    usage: |-
+      b2 sync [-h] [--profile PROFILE] [--noProgress] [--dryRun] [--allowEmptySource] [--excludeAllSymlinks] [--threads THREADS]
+              [--syncThreads SYNCTHREADS] [--downloadThreads DOWNLOADTHREADS] [--uploadThreads UPLOADTHREADS]
+              [--compareVersions {none,modTime,size}] [--compareThreshold MILLIS] [--excludeRegex REGEX] [--includeRegex REGEX]
+              [--excludeDirRegex REGEX] [--excludeIfModifiedAfter TIMESTAMP] [--destinationServerSideEncryption {SSE-B2,SSE-C}]
+              [--destinationServerSideEncryptionAlgorithm {AES256}] [--sourceServerSideEncryption {SSE-C}]
+              [--sourceServerSideEncryptionAlgorithm {AES256}] [--write-buffer-size BYTES] [--skip-hash-verification]
+              [--max-download-streams-per-file MAX_DOWNLOAD_STREAMS_PER_FILE] [--incrementalMode] [--skipNewer | --replaceNewer]
+              [--delete | --keepDays DAYS]
+              source destination
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --profile
+        argument: PROFILE
+        description: set profile
+      - names:
+          - --noProgress
+        argument: ""
+        description: Do not show progress
+      - names:
+          - --dryRun
+        argument: ""
+        description: Do not really execute
+      - names:
+          - --allowEmptySource
+        argument: ""
+        description: Allow empty source
+      - names:
+          - --excludeAllSymlinks
+        argument: ""
+        description: Exclude all symlinks
+      - names:
+          - --threads
+        argument: THREADS
+        description: Set number of threads
+      - names:
+          - --syncThreads
+        argument: SYNCTHREADS
+        description: Sync threads
+      - names:
+          - --downloadThreads
+        argument: DOWNLOADTHREADS
+        description: Set download threads
+      - names:
+          - --uploadThreads
+        argument: UPLOADTHREADS
+        description: Set upload threads
+      - names:
+          - --compareVersions
+        argument: '{none,modTime,size}'
+        description: Compare version
+      - names:
+          - --compareThreshold
+        argument: MILLIS
+        description: Comare thresholds
+      - names:
+          - --excludeRegex
+        argument: REGEX
+        description: Exclude regular expressions
+      - names:
+          - --includeRegex
+        argument: REGEX
+        description: Include regular expressions
+      - names:
+          - --excludeDirRegex
+        argument: REGEX
+        description: Exclude regular expressions for directories
+      - names:
+          - --excludeIfModifiedAfter
+        argument: TIMESTAMP
+        description: ""
+      - names:
+          - --destinationServerSideEncryption
+        argument: '{SSE-B2,SSE-C}'
+        description: ""
+      - names:
+          - --destinationServerSideEncryptionAlgorithm
+        argument: '{AES256}'
+        description: ""
+      - names:
+          - --sourceServerSideEncryption
+        argument: '{SSE-C}'
+        description: ""
+      - names:
+          - --sourceServerSideEncryptionAlgorithm
+        argument: '{AES256}'
+        description: ""
+      - names:
+          - --write-buffer-size
+        argument: BYTES
+        description: ""
+      - names:
+          - --skip-hash-verification
+        argument: ""
+        description: ""
+      - names:
+          - --max-download-streams-per-file
+        argument: MAX_DOWNLOAD_STREAMS_PER_FILE
+        description: ""
+      - names:
+          - --incrementalMode
+        argument: ""
+        description: ""
+      - names:
+          - --skipNewer
+        argument: ""
+        description: ""
+      - names:
+          - --replaceNewer
+        argument: ""
+        description: ""
+      - names:
+          - --delete
+        argument: ""
+        description: ""
+      - names:
+          - --keepDays
+        argument: DAYS
+        description: ""
+  - name: update-bucket
+    description: Updates the bucketType of an existing bucket. Prints the ID of the bucket updated.
+    usage: |-
+      b2 update-bucket [-h] [--profile PROFILE] [--bucketInfo BUCKETINFO] [--corsRules CORSRULES] [--lifecycleRules LIFECYCLERULES]
+                      [--defaultRetentionMode {compliance,governance,none}] [--defaultRetentionPeriod period]
+                      [--replication REPLICATION] [--fileLockEnabled] [--defaultServerSideEncryption {SSE-B2,none}]
+                      [--defaultServerSideEncryptionAlgorithm {AES256}]
+                      bucketName [bucketType]
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --profile
+        argument: PROFILE
+        description: set profile
+      - names:
+          - --bucketInfo
+        argument: BUCKETINFO
+        description: ""
+      - names:
+          - --corsRules
+        argument: CORSRULES
+        description: ""
+      - names:
+          - --lifecycleRules
+        argument: LIFECYCLERULES
+        description: ""
+      - names:
+          - --defaultRetentionMode
+        argument: '{compliance,governance,none}'
+        description: ""
+      - names:
+          - --defaultRetentionPeriod
+        argument: period
+        description: ""
+      - names:
+          - --replication
+        argument: REPLICATION
+        description: ""
+      - names:
+          - --fileLockEnabled
+        argument: ""
+        description: If given, the bucket will have the file lock mechanism enabled. This parameter cannot be changed back.
+      - names:
+          - --defaultServerSideEncryption
+        argument: '{SSE-B2,none}'
+        description: ""
+      - names:
+          - --defaultServerSideEncryptionAlgorithm
+        argument: '{AES256}'
+        description: ""
+  - name: upload-file
+    description: Uploads one file to the given bucket. Uploads the contents of the local file, and assigns the given name to the B2 file, possibly setting options like server-side encryption and retention.
+    usage: |-
+      b2 upload-file [-h] [--profile PROFILE] [--noProgress] [--quiet] [--contentType CONTENTTYPE] [--minPartSize MINPARTSIZE]
+                    [--sha1 SHA1] [--threads THREADS] [--info INFO] [--destinationServerSideEncryption {SSE-B2,SSE-C}]
+                    [--destinationServerSideEncryptionAlgorithm {AES256}] [--legalHold {on,off}]
+                    [--fileRetentionMode {compliance,governance}] [--retainUntil TIMESTAMP] [--incrementalMode]
+                    bucketName localFilePath b2FileName
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --profile
+        argument: PROFILE
+        description: set profile
+      - names:
+          - --noProgress
+        argument: ""
+        description: Do not show progress
+      - names:
+          - --quiet
+        argument: ""
+        description: Minimize output
+      - names:
+          - --contentType
+        argument: CONTENTTYPE
+        description: ""
+      - names:
+          - --minPartSize
+        argument: MINPARTSIZE
+        description: ""
+      - names:
+          - --sha1
+        argument: SHA1
+        description: ""
+      - names:
+          - --threads
+        argument: THREADS
+        description: ""
+      - names:
+          - --info
+        argument: INFO
+        description: ""
+      - names:
+          - --destinationServerSideEncryption
+        argument: '{SSE-B2,SSE-C}'
+        description: ""
+      - names:
+          - --destinationServerSideEncryptionAlgorithm
+        argument: '{AES256}'
+        description: ""
+      - names:
+          - --legalHold
+        argument: '{on,off}'
+        description: ""
+      - names:
+          - --fileRetentionMode
+        argument: '{compliance,governance}'
+        description: ""
+      - names:
+          - --retainUntil
+        argument: TIMESTAMP
+        description: ""
+      - names:
+          - --incrementalMode
+        argument: ""
+        description: ""
+  - name: update-file-legal-hold
+    description: Only works in buckets with fileLockEnabled=true.
+    usage: b2 update-file-legal-hold [-h] [--profile PROFILE] [fileName] fileId {on,off}
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --profile
+        argument: PROFILE
+        description: set profile
+  - name: update-file-retention
+    description: Only works in buckets with fileLockEnabled=true. Providing a retentionMode other than none requires providing retainUntil, which has to be a future timestamp in the form of an integer representing milliseconds since epoch.
+    usage: |-
+      b2 update-file-retention [-h] [--profile PROFILE] [--retainUntil TIMESTAMP] [--bypassGovernance]
+                              [fileName] fileId {governance,compliance,none}
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --profile
+        argument: PROFILE
+        description: set profile
+      - names:
+          - --retainUntil
+        argument: TIMESTAMP
+        description: Retain until the TIMESTAMP
+      - names:
+          - --bypassGovernance
+        argument: ""
+        description: set bypass governance
+  - name: replication-setup
+    description: Sets up replication between two buckets (potentially from different accounts), creating and replacing keys if necessary.
+    usage: |-
+      b2 replication-setup [-h] [--profile PROFILE] [--destination-profile DESTINATION_PROFILE] [--name NAME] [--priority PRIORITY]
+                          [--file-name-prefix PREFIX] [--include-existing-files]
+                          SOURCE_BUCKET_NAME DESTINATION_BUCKET_NAME
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --profile
+        argument: PROFILE
+        description: set profile
+      - names:
+          - --destination-profile
+        argument: DESTINATION_PROFILE
+        description: set destination profile
+      - names:
+          - --name
+        argument: NAME
+        description: name for the new replication rule on the source side
+      - names:
+          - --priority
+        argument: PRIORITY
+        description: priority for the new replication rule on the source side [1-2147483647]. Will be set automatically when not specified.
+      - names:
+          - --file-name-prefix
+        argument: PREFIX
+        description: only replicate files starting with PREFIX
+      - names:
+          - --include-existing-files
+        argument: ""
+        description: if given, also replicates files uploaded prior to creation of the replication rule
+  - name: replication-delete
+    description: Deletes a replication rule
+    usage: b2 replication-delete [-h] [--profile PROFILE] SOURCE_BUCKET_NAME REPLICATION_RULE_NAME
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --profile
+        argument: PROFILE
+        description: set profile
+  - name: replication-pause
+    description: Pauses a replication rule
+    usage: b2 replication-pause [-h] [--profile PROFILE] SOURCE_BUCKET_NAME REPLICATION_RULE_NAME
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --profile
+        argument: PROFILE
+        description: set profile
+  - name: replication-unpause
+    description: Unpauses a replication rule
+    usage: b2 replication-unpause [-h] [--profile PROFILE] SOURCE_BUCKET_NAME REPLICATION_RULE_NAME
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --profile
+        argument: PROFILE
+        description: set profile
+  - name: replication-status
+    description: Inspects files in only source or both source and destination buckets (potentially from different accounts) and provides detailed replication statistics.
+    usage: |-
+      b2 replication-status [-h] [--profile PROFILE] [--rule REPLICATION_RULE_NAME] [--destination-profile DESTINATION_PROFILE]
+                            [--dont-scan-destination] [--output-format {console,json,csv}] [--noProgress]
+                            [--columns COLUMN ONE,COLUMN TWO]
+                            SOURCE_BUCKET_NAME
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --profile
+        argument: PROFILE
+        description: set profile
+      - names:
+          - --rule
+        argument: REPLICATION_RULE_NAME
+        description: ""
+      - names:
+          - --destination-profile
+        argument: DESTINATION_PROFILE
+        description: ""
+      - names:
+          - --dont-scan-destination
+        argument: ""
+        description: ""
+      - names:
+          - --output-format
+        argument: '{console,json,csv}'
+        description: ""
+      - names:
+          - --noProgress
+        argument: ""
+        description: ""
+      - names:
+          - --columns
+        argument: COLUMN ONE,COLUMN TWO
+        description: ""
+  - name: version
+    description:  Prints the version number of this tool.
+    usage: b2 version [-h] [--profile PROFILE]
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --profile
+        argument: PROFILE
+        description: set profile
+  - name: license
+    description: Prints the license of B2 Command line tool and all libraries shipped with it.
+    usage: b2 license [-h] [--profile PROFILE]
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --profile
+        argument: PROFILE
+        description: set profile
+version: b2 command line tool, version 3.7.1

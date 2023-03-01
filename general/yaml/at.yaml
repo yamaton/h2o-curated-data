@@ -1,0 +1,83 @@
+name: at
+description: executes commands at a specified time
+usage: |-
+  at [-V] [-q queue] [-f file] [-u username] [-mMlv] timespec ...
+  at [-V] [-q queue] [-f file] [-u username] [-mMkv] [-t time]
+  at -c job [...]
+  at [-V] -l [-o timeformat] [job ...]
+  at [-rd] job [...]
+  at -b
+options:
+  - names:
+      - -V
+    argument: ""
+    description: prints the version number to standard error and exit successfully.
+  - names:
+      - -q
+    argument: queue
+    description: uses the specified queue. A queue designation consists of a single letter; valid queue designations range from a to z and A to Z. The a queue is the default for at and the b queue for batch. Queues with higher letters run with increased niceness. The special queue "=" is reserved for jobs which are currently running.
+  - names:
+      - -m
+    argument: ""
+    description: Send mail to the user when the job has completed even if there was no output.
+  - names:
+      - -M
+    argument: ""
+    description: Never send mail to the user.
+  - names:
+      - -u
+    argument: username
+    description: Sends mail to username rather than the current user.
+  - names:
+      - -f
+    argument: file
+    description: Reads the job from file rather than standard input.
+  - names:
+      - -t
+    argument: time
+    description: run the job at time, given in the format [[CC]YY]MMDDhhmm[.ss]
+  - names:
+      - -l
+    argument: ""
+    description: Is an alias for atq.
+  - names:
+      - -r
+    argument: ""
+    description: Is an alias for atrm.
+  - names:
+      - -d
+    argument: ""
+    description: Is an alias for atrm.
+  - names:
+      - -b
+    argument: ""
+    description: is an alias for batch.
+  - names:
+      - -v
+    argument: ""
+    description: Shows the time the job will be executed before reading the job.
+  - names:
+      - -c
+    argument: ""
+    description: cats the jobs listed on the command line to standard output.
+  - names:
+      - -o
+    argument: fmt
+    description: strftime-like time format used for the job list
+version: at version 3.2.5
+tldr: |
+  > Execute commands once at a later time.
+  > Service atd (or atrun) should be running for the actual executions.
+  > More information: <https://manned.org/at>.
+
+  - Execute commands from standard input in 5 minutes (press `Ctrl + D` when done):
+
+  `at now + 5 minutes`
+
+  - Execute a command from standard input at 10:00 AM today:
+
+  `echo "{{./make_db_backup.sh}}" | at 1000`
+
+  - Execute commands from a given file next Tuesday:
+
+  `at -f {{path/to/file}} 9:30 PM Tue`

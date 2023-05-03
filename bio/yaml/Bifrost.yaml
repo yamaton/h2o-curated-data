@@ -1,0 +1,238 @@
+name: Bifrost
+description: Highly parallel construction, indexing and querying of colored and compacted de Bruijn graphs
+usage: Bifrost [COMMAND] [PARAMETERS]
+options: []
+subcommands:
+  - name: build
+    description: Build a compacted de Bruijn graph, with or without colors
+    usage: Bifrost build -s <SEQ_FILE> -r <REF_FILE> -o <OUT_FILE> [options]
+    options:
+      - names:
+          - -s
+          - --input-seq-file
+        description: Input sequence file in fasta/fastq(.gz) format
+        argument: <input sequence file>
+      - names:
+          - -r
+          - --input-ref-file
+        description: Input reference file in fasta/fastq(.gz) or gfa(.gz) format
+        argument: <input reference file>
+      - names:
+          - -o
+          - --output-file
+        description: Prefix for output file(s)
+        argument: <output prefix>
+      - names:
+          - -t
+          - --threads
+        description: Number of threads (default is 1)
+        argument: <number of threads>
+      - names:
+          - -k
+          - --kmer-length
+        description: Length of k-mers (default is 31)
+        argument: <kmer length>
+      - names:
+          - -m
+          - --min-length
+        description: Length of minimizers (default is automatically chosen)
+        argument: <minimizer length>
+      - names:
+          - -B
+          - --bloom-bits
+        description: Number of Bloom filter bits per k-mer (default is 14)
+        argument: <bloom filter bits>
+      - names:
+          - -l
+          - --load-mbbf
+        description: Input Blocked Bloom Filter file, skips filtering step (default is no input)
+        argument: <input blocked bloom filter file>
+      - names:
+          - -w
+          - --write-mbbf
+        description: Output Blocked Bloom Filter file (default is no output)
+        argument: <output blocked bloom filter file>
+      - names:
+          - -c
+          - --colors
+        description: Color the compacted de Bruijn graph (default is no coloring)
+        argument: ''
+      - names:
+          - -i
+          - --clip-tips
+        description: Clip tips shorter than k k-mers in length
+        argument: ''
+      - names:
+          - -d
+          - --del-isolated
+        description: Delete isolated contigs shorter than k k-mers in length
+        argument: ''
+      - names:
+          - -f
+          - --fasta-out
+        description: Output file is in fasta format (only sequences) instead of gfa (unless graph is colored)
+        argument: ''
+      - names:
+          - -b
+          - --bfg-out
+        description: Output file is in bfg/bfi format (Bifrost graph and index) instead of gfa (unless graph is colored)
+        argument: ''
+      - names:
+          - -n
+          - --no-compress-out
+        description: Output files must be uncompressed
+        argument: ''
+      - names:
+          - -N
+          - --no-index-out
+        description: No index file is created
+        argument: ''
+      - names:
+          - -v
+          - --verbose
+        description: Print information messages during execution
+        argument: ''
+  - name: update
+    description: Update a compacted (colored) de Bruijn graph with new sequences
+    usage: Bifrost -g <GRAPH_FILE> -s <SEQ_FILE> -r <REF_FILE> -o <OUT_FILE> [OPTIONS]
+    options:
+      - names:
+          - -g
+          - --input-graph-file
+        description: Input graph file to update in gfa(.gz) or bfg format
+        argument: <input graph file>
+      - names:
+          - -s
+          - --input-seq-file
+        description: Input sequence file in fasta/fastq(.gz) format
+        argument: <input sequence file>
+      - names:
+          - -r
+          - --input-ref-file
+        description: Input reference file in fasta/fastq(.gz) or gfa(.gz) format
+        argument: <input reference file>
+      - names:
+          - -o
+          - --output-file
+        description: Prefix for output file(s)
+        argument: <output prefix>
+      - names:
+          - -I
+          - --input-index-file
+        description: Input index file associated with graph to update in bfi format
+        argument: <input index file>
+      - names:
+          - -C
+          - --input-color-file
+        description: Input color file associated with graph to update in color.bfg format
+        argument: <input color file>
+      - names:
+          - -t
+          - --threads
+        description: Number of threads (default is 1)
+        argument: <number of threads>
+      - names:
+          - -k
+          - --kmer-length
+        description: Length of k-mers (default is read from input graph file if built with Bifrost or 31)
+        argument: <kmer length>
+      - names:
+          - -m
+          - --min-length
+        description: Length of minimizers (default is read from input graph file if built with Bifrost or automatically chosen)
+        argument: <minimizer length>
+      - names:
+          - -i
+          - --clip-tips
+        description: Clip tips shorter than k k-mers in length
+        argument: ''
+      - names:
+          - -d
+          - --del-isolated
+        description: Delete isolated contigs shorter than k k-mers in length
+        argument: ''
+      - names:
+          - -f
+          - --fasta-out
+        description: Output file is in fasta format (only sequences) instead of gfa (unless colors are output)
+        argument: ''
+      - names:
+          - -b
+          - --bfg-out
+        description: Output file is in bfg/bfi format (Bifrost graph and index) instead of gfa (unless graph is colored)
+        argument: ''
+      - names:
+          - -n
+          - --no-compress-out
+        description: Output files must be uncompressed
+        argument: ''
+      - names:
+          - -N
+          - --no-index-out
+        description: No index file is created
+        argument: ''
+      - names:
+          - -v
+          - --verbose
+        description: Print information messages during execution
+        argument: ''
+  - name: query
+    description: Query a compacted (colored) de Bruijn graph
+    usage: query [PARAMETERS]
+    options:
+      - names:
+          - -g
+          - --input-graph-file
+        description: Input graph file to query in gfa(.gz) or bfg
+        argument: <input graph file>
+      - names:
+          - -q
+          - --input-query-file
+        description: Input query file in fasta/fastq(.gz)
+        argument: <input query file>
+      - names:
+          - -o
+          - --output-file
+        description: Prefix for output file
+        argument: <output prefix>
+      - names:
+          - -e
+          - --ratio-kmers
+        description: Ratio of k-mers from queries that must occur in the graph (default is 0.8)
+        argument: <ratio of k-mers>
+      - names:
+          - -I
+          - --input-index-file
+        description: Input index file associated with graph to query in bfi format
+        argument: <input index file>
+      - names:
+          - -C
+          - --input-color-file
+        description: Input color file associated with the graph to query in color.bfg format, presence/absence of queries will be output for each color
+        argument: <input color file>
+      - names:
+          - -t
+          - --threads
+        description: Number of threads (default is 1)
+        argument: <number of threads>
+      - names:
+          - -k
+          - --kmer-length
+        description: Length of k-mers (default is read from input graph file if built with Bifrost or 31)
+        argument: <kmer length>
+      - names:
+          - -m
+          - --min-length
+        description: Length of minimizers (default is read from input graph file if built with Bifrost or automatically chosen)
+        argument: <minimizer length>
+      - names:
+          - -a
+          - --approximate
+        description: Graph is searched with exact and inexact k-mers (1 substitution or indel) from queries
+        argument: ''
+      - names:
+          - -v
+          - --verbose
+        description: Print information messages during execution
+        argument: ''
+version: Bifrost 1.2.0

@@ -1,0 +1,222 @@
+name: conda-lock
+description: Lightweight lockfile for conda environments
+usage: conda-lock [OPTIONS] COMMAND [ARGS]...
+options:
+  - names:
+      - --version
+    argument: ""
+    description: Show the version and exit.
+  - names:
+      - --help
+    argument: ""
+    description: Show this message and exit.
+subcommands:
+  - name: lock
+    description: Generate fully reproducible lock files for conda environments.
+    usage: conda-lock lock [OPTIONS]
+    options:
+      - names:
+          - --conda
+        argument: TEXT
+        description: path (or name) of the conda/mamba executable to use.
+      - names:
+          - --mamba
+          - --no-mamba
+        argument: ""
+        description: don't attempt to use or install mamba.
+      - names:
+          - --micromamba
+          - --no-micromamba
+        argument: ""
+        description: don't attempt to use or install micromamba.
+      - names:
+          - -p
+          - --platform
+        argument: TEXT
+        description: generate lock files for the following platforms
+      - names:
+          - -c
+          - --channel
+        argument: TEXT
+        description: Override the channels to use when solving the environment. These will replace the channels as listed in the various source files.
+      - names:
+          - --dev-dependencies
+          - --no-dev-dependencies
+        argument: ""
+        description: include dev dependencies in the lockfile (where applicable)
+      - names:
+          - -f
+          - --file
+        argument: PATH
+        description: path to a conda environment specification(s)
+      - names:
+          - -k
+          - --kind
+        argument: TEXT
+        description: Kind of lock file(s) to generate [should be one of 'lock', 'explicit', or 'env'].
+      - names:
+          - --filename-template
+        argument: TEXT
+        description: Template for single-platform (explicit, env) lock file names. Filename must include {platform} token, and must not end in '.yml'. For a full list and description of available tokens, see the command help text.
+      - names:
+          - --lockfile
+        argument: TEXT
+        description: Path to a conda-lock.yml to create or update
+      - names:
+          - --strip-auth
+        argument: ""
+        description: Strip the basic auth credentials from the lockfile.
+      - names:
+          - -e
+          - --extras
+          - --category
+        argument: TEXT
+        description: When used in conjunction with input sources that support extras/categories (pyproject.toml) will add the deps from those extras to the render specification
+      - names:
+          - --filter-categories
+          - --filter-extras
+        argument: ""
+        description: In conjunction with extras this will prune out dependencies that do not have the extras specified when loading files.
+      - names:
+          - --check-input-hash
+        argument: ""
+        description: Check existing input hashes in lockfiles before regenerating lock files. If no files were updated exit with exit code 4. Incompatible with --strip-auth
+      - names:
+          - --log-level
+        argument: '[DEBUG|INFO|WARNING|ERROR|CRITICAL]'
+        description: Log level.
+      - names:
+          - --pdb
+        argument: ""
+        description: Drop into a postmortem debugger if condalock crashes
+      - names:
+          - --virtual-package-spec
+        argument: PATH
+        description: Specify a set of virtual packages to use.
+      - names:
+          - --update
+        argument: TEXT
+        description: Packages to update to their latest versions. If empty, update all.
+      - names:
+          - --pypi_to_conda_lookup_file
+        argument: TEXT
+        description: Location of the lookup file containing Pypi package names to conda names.
+      - names:
+          - --md
+          - --metadata
+        argument: '[timestamp|git_sha|git_user_name|git_user_email|input_md5|input_sha]'
+        description: Metadata fields to include in lock-file
+      - names:
+          - --mdy
+          - --metadata-yaml
+          - --metadata-json
+        argument: PATH
+        description: YAML or JSON file(s) containing structured metadata to add to metadata section of the lockfile.
+      - names:
+          - --help
+        argument: ""
+        description: Show this message and exit.
+  - name: install
+    description: Create an environment from the lockfile
+    usage: conda-lock install [OPTIONS] [LOCK_FILE]
+    options:
+      - names:
+          - --conda
+        argument: TEXT
+        description: path (or name) of the conda/mamba executable to use.
+      - names:
+          - --mamba
+          - --no-mamba
+        argument: ""
+        description: don't attempt to use or install mamba.
+      - names:
+          - --micromamba
+          - --no-micromamba
+        argument: ""
+        description: don't attempt to use or install micromamba.
+      - names:
+          - --copy
+        argument: ""
+        description: Install using `--copy` to prevent links. This is useful for building containers
+      - names:
+          - -p
+          - --prefix
+        argument: TEXT
+        description: Full path to environment location (i.e. prefix).
+      - names:
+          - -n
+          - --name
+        argument: TEXT
+        description: Name of environment.
+      - names:
+          - --auth
+        argument: TEXT
+        description: The auth file provided as string. Has precedence over `--auth-file`.
+      - names:
+          - --auth-file
+        argument: TEXT
+        description: Path to the authentication file.
+      - names:
+          - --validate-platform
+          - --no-validate-platform
+        argument: ""
+        description: Whether the platform compatibility between your lockfile and the host system should be validated.
+      - names:
+          - --log-level
+        argument: '[DEBUG|INFO|WARNING|ERROR|CRITICAL]'
+        description: Log level.
+      - names:
+          - --dev
+          - --no-dev
+        argument: ""
+        description: install dev dependencies from the lockfile (where applicable)
+      - names:
+          - -E
+          - --extras
+        argument: TEXT
+        description: include extra dependencies from the lockfile (where applicable)
+      - names:
+          - --help
+        argument: ""
+        description: Show this message and exit.
+  - name: render
+    description: Render multi-platform lockfile into single-platform env or...
+    usage: conda-lock render [OPTIONS] [LOCK_FILE]
+    options:
+      - names:
+          - --dev-dependencies
+          - --no-dev-dependencies
+        argument: ""
+        description: include dev dependencies in the lockfile (where applicable)
+      - names:
+          - -k
+          - --kind
+        argument: '[explicit|env]'
+        description: Kind of lock file(s) to generate.
+      - names:
+          - --filename-template
+        argument: TEXT
+        description: Template for the lock file names. Filename must include {platform} token, and must not end in '.yml'. For a full list and description of available tokens, see the command help text.
+      - names:
+          - -e
+          - --extras
+        argument: TEXT
+        description: When used in conjunction with input sources that support extras (pyproject.toml) will add the deps from those extras to the input specification
+      - names:
+          - --log-level
+        argument: '[DEBUG|INFO|WARNING|ERROR|CRITICAL]'
+        description: Log level.
+      - names:
+          - --pdb
+        argument: ""
+        description: Drop into a postmortem debugger if condalock crashes
+      - names:
+          - -p
+          - --platform
+        argument: TEXT
+        description: render lock files for the following platforms
+      - names:
+          - --help
+        argument: ""
+        description: Show this message and exit.
+version: conda-lock, version 1.4.0

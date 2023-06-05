@@ -1,5 +1,5 @@
 name: qiime
-description: qiime
+description: Command line interface for QIIME 2
 usage: qiime [OPTIONS] COMMAND [ARGS]...
 options:
   - names:
@@ -61,7 +61,7 @@ subcommands:
             argument: ""
             description: Show this message and exit.
       - name: cache-garbage-collection
-        description: Runs garbage collection on the cache at the
+        description: Runs garbage collection on the cache at the specified location.
         usage: qiime tools cache-garbage-collection [OPTIONS]
         options:
           - names:
@@ -233,6 +233,46 @@ subcommands:
               - --help
             argument: ""
             description: Show this message and exit.
+      - name: list-formats
+        description: List the available formats.
+        usage: qiime tools list-formats [OPTIONS] [QUERIES]...
+        options:
+          - names:
+              - --importable
+            argument: ""
+            description: List the importable formats.
+          - names:
+              - --exportable
+            argument: ""
+            description: List the exportable formats.
+          - names:
+              - --strict
+            argument: ""
+            description: Show only exact matches for the format argument(s).
+          - names:
+              - --tsv
+            argument: ""
+            description: Print as machine readable tab-separated values.
+          - names:
+              - --help
+            argument: ""
+            description: Show this message and exit.
+      - name: list-types
+        description: List the available semantic types.
+        usage: qiime tools list-types [OPTIONS] [QUERIES]...
+        options:
+          - names:
+              - --strict
+            argument: ""
+            description: Show only exact matches for the type argument(s).
+          - names:
+              - --tsv
+            argument: ""
+            description: Print as machine readable tab-separated values.
+          - names:
+              - --help
+            argument: ""
+            description: Show this message and exit.
       - name: peek
         description: Take a peek at a QIIME 2 Artifact or Visualization.
         usage: qiime tools peek [OPTIONS] ARTIFACT/VISUALIZATION
@@ -241,7 +281,7 @@ subcommands:
               - --tsv
               - --no-tsv
             argument: ""
-            description: Print as machine-readable tab separated values.
+            description: Print as machine-readable tab-separated values.
           - names:
               - --help
             argument: ""
@@ -574,6 +614,11 @@ subcommands:
             argument: TEXT Choices('mean_difference', 'f_statistic')
             description: The method applied to visualize fold difference in feature abundances across groups for volcano plots.
           - names:
+              - --p-filter-missing
+              - --p-no-filter-missing
+            argument: ""
+            description: 'If True, samples with missing metadata values will be filtered from the table prior to analysis. If False, an error will be raised if there are any missing metadata values. [default: False]'
+          - names:
               - --o-visualization
             argument: VISUALIZATION
             description: '[required]'
@@ -605,7 +650,7 @@ subcommands:
           - names:
               - --i-table
             argument: ARTIFACT FeatureTable[Frequency]
-            description: The feature table to be used for ANCOM computation.
+            description: The feature table to be used for ANCOM-BC computation. [required]
           - names:
               - --p-formula
             argument: TEXT
@@ -652,6 +697,71 @@ subcommands:
               - --o-differentials
             argument: ARTIFACT FeatureData[DifferentialAbundance]
             description: The calculated per-feature differentials. [required]
+          - names:
+              - --output-dir
+            argument: PATH
+            description: Output unspecified results to a directory
+          - names:
+              - --verbose
+              - --quiet
+            argument: ""
+            description: Display verbose output to stdout and/or stderr during execution of this action. Or silence output if execution is successful (silence is golden).
+          - names:
+              - --example-data
+            argument: PATH
+            description: Write example data and exit.
+          - names:
+              - --citations
+            argument: ""
+            description: Show citations and exit.
+          - names:
+              - --help
+            argument: ""
+            description: Show this message and exit.
+      - name: da-barplot
+        description: Differential abundance bar plots
+        usage: qiime composition da-barplot [OPTIONS]
+        options:
+          - names:
+              - --i-data
+            argument: ARTIFACT FeatureData[DifferentialAbundance]
+            description: The ANCOM-BC output to be plotted. [required]
+          - names:
+              - --p-effect-size-label
+            argument: TEXT
+            description: 'Label for effect sizes in `data`. [default: ''lfc'']'
+          - names:
+              - --p-feature-id-label
+            argument: TEXT
+            description: 'Label for feature ids in `data`. [default: ''id'']'
+          - names:
+              - --p-error-label
+            argument: TEXT
+            description: Label for effect size errors in `data`.
+          - names:
+              - --p-significance-label
+            argument: TEXT
+            description: Label for statistical significance level in `data`.
+          - names:
+              - --p-significance-threshold
+            argument: PROPORTION Range(0.0, 1.0, inclusive_end=True)
+            description: Exclude features with statistical significance level greater (i.e., less significant) than this threshold.
+          - names:
+              - --p-level-delimiter
+            argument: TEXT
+            description: If feature ids encode hierarchical information, split the levels when generating feature labels in the visualization using this delimiter. [optional]
+          - names:
+              - --p-effect-size-threshold
+            argument: NUMBER
+            description: Range(0.0, None) Exclude features with an absolute value of effect
+          - names:
+              - --m-feature-ids-file
+            argument: METADATA...
+            description: (multiple Exclude features if their ids are not included in
+          - names:
+              - --o-visualization
+            argument: VISUALIZATION
+            description: '[required]'
           - names:
               - --output-dir
             argument: PATH
@@ -728,7 +838,7 @@ subcommands:
         description: Show this message and exit.
     subcommands:
       - name: demux-paired
-        description: Demultiplex paired-end sequence data with barcodes in-
+        description: Demultiplex paired-end sequence data with barcodes in-sequence.
         usage: qiime cutadapt demux-paired [OPTIONS]
         options:
           - names:
@@ -802,7 +912,7 @@ subcommands:
             argument: ""
             description: Show this message and exit.
       - name: demux-single
-        description: Demultiplex single-end sequence data with barcodes in-
+        description: Demultiplex single-end sequence data with barcodes in-sequence.
         usage: qiime cutadapt demux-single [OPTIONS]
         options:
           - names:
@@ -860,7 +970,7 @@ subcommands:
             argument: ""
             description: Show this message and exit.
       - name: trim-paired
-        description: Find and remove adapters in demultiplexed paired-end
+        description: Find and remove adapters in demultiplexed paired-end sequences.
         usage: qiime cutadapt trim-paired [OPTIONS]
         options:
           - names:
@@ -977,7 +1087,7 @@ subcommands:
             argument: ""
             description: Show this message and exit.
       - name: trim-single
-        description: Find and remove adapters in demultiplexed single-end
+        description: Find and remove adapters in demultiplexed single-end sequences.
         usage: qiime cutadapt trim-single [OPTIONS]
         options:
           - names:
@@ -1348,7 +1458,7 @@ subcommands:
           - names:
               - --p-pooling-method
             argument: TEXT Choices('independent', 'pseudo')
-            description: 'The method used to pool samples for denoising. "independent": Samples are denoised indpendently. "pseudo": The pseudo-pooling method is used to approximate pooling of samples. In short, samples are denoised independently once, ASVs detected in at least 2 samples are recorded, and samples are denoised independently a second time, but this time with prior knowledge of the recorded ASVs and thus higher sensitivity to those ASVs.'
+            description: 'The method used to pool samples for denoising. "independent": Samples are denoised independently. "pseudo": The pseudo-pooling method is used to approximate pooling of samples. In short, samples are denoised independently once, ASVs detected in at least 2 samples are recorded, and samples are denoised independently a second time, but this time with prior knowledge of the recorded ASVs and thus higher sensitivity to those ASVs.'
           - names:
               - --p-chimera-method
             argument: TEXT Choices('consensus', 'none', 'pooled')
@@ -1733,7 +1843,7 @@ subcommands:
         description: Show this message and exit.
     subcommands:
       - name: emp-paired
-        description: Demultiplex paired-end sequence data generated with the
+        description: Demultiplex paired-end sequence data generated with the EMP protocol.
         usage: qiime demux emp-paired [OPTIONS]
         options:
           - names:
@@ -2089,6 +2199,26 @@ subcommands:
             argument: ""
             description: Display verbose output to stdout and/or stderr during execution of this action. Or silence output if execution is successful (silence is golden).
           - names:
+              - --recycle-pool
+            argument: TEXT
+            description: 'Use a cache pool for pipeline resumption. QIIME 2 will cache your results in this pool for reuse by future invocations. These pool are retained until deleted by the user. If not provided, QIIME 2 will create a pool which is automatically reused by invocations of the same action and removed if the action is successful. Note: these pools are local to the cache you are using.'
+          - names:
+              - --no-recycle
+            argument: ""
+            description: Do not recycle results from a previous failed pipeline run or save the results from this run for future recycling.
+          - names:
+              - --parallel
+            argument: ""
+            description: Execute your action in parallel. This flag will use your default parallel config.
+          - names:
+              - --parallel-config
+            argument: FILE
+            description: Execute your action in parallel using a config at the indicated path.
+          - names:
+              - --use-cache
+            argument: DIRECTORY
+            description: 'Specify the cache to be used for the intermediate work of this pipeline. If not provided, the default cache under $TMP/qiime2/<uname> will be used. IMPORTANT FOR HPC USERS: If you are on an HPC system and are using parallel execution it is important to set this to a location that is globally accessible to all nodes in the cluster.'
+          - names:
               - --example-data
             argument: PATH
             description: Write example data and exit.
@@ -2217,6 +2347,26 @@ subcommands:
             argument: ""
             description: Display verbose output to stdout and/or stderr during execution of this action. Or silence output if execution is successful (silence is golden).
           - names:
+              - --recycle-pool
+            argument: TEXT
+            description: 'Use a cache pool for pipeline resumption. QIIME 2 will cache your results in this pool for reuse by future invocations. These pool are retained until deleted by the user. If not provided, QIIME 2 will create a pool which is automatically reused by invocations of the same action and removed if the action is successful. Note: these pools are local to the cache you are using.'
+          - names:
+              - --no-recycle
+            argument: ""
+            description: Do not recycle results from a previous failed pipeline run or save the results from this run for future recycling.
+          - names:
+              - --parallel
+            argument: ""
+            description: Execute your action in parallel. This flag will use your default parallel config.
+          - names:
+              - --parallel-config
+            argument: FILE
+            description: Execute your action in parallel using a config at the indicated path.
+          - names:
+              - --use-cache
+            argument: DIRECTORY
+            description: 'Specify the cache to be used for the intermediate work of this pipeline. If not provided, the default cache under $TMP/qiime2/<uname> will be used. IMPORTANT FOR HPC USERS: If you are on an HPC system and are using parallel execution it is important to set this to a location that is globally accessible to all nodes in the cluster.'
+          - names:
               - --example-data
             argument: PATH
             description: Write example data and exit.
@@ -2291,16 +2441,16 @@ subcommands:
         options:
           - names:
               - --i-table
-            argument: ARTIFACT FeatureTable
-            description: The feature table containing the samples over which
+            argument: 'ARTIFACT FeatureTable[Frequency | RelativeFrequency | PresenceAbsence]'
+            description: The feature table containing the samples over which beta diversity should be computed. [required]
           - names:
-              - --i-table
-            argument: ARTIFACT FeatureTableFrequency | RelativeFrequency |   PresenceAbsence
-            description: The feature table containing the samples over which
+              - --p-metric
+            argument: '{aitchison, braycurtis, canberra, canberra_adkins, chebyshev, cityblock, correlation, cosine, dice, euclidean, hamming, jaccard, jensenshannon, kulsinski, matching, minkowski, rogerstanimoto, russellrao, seuclidean, sokalmichener, sokalsneath, sqeuclidean, yule}'
+            description: 'A pseudocount to handle zeros for compositional metrics. This is ignored for other metrics. [default: 1]'
           - names:
               - --p-pseudocount
             argument: INTEGER
-            description: Range(1, None) A pseudocount to handle zeros for compositional
+            description: 'A pseudocount to handle zeros for compositional metrics. This is ignored for other metrics. [default: 1]'
           - names:
               - --o-distance-matrix
             argument: ARTIFACT
@@ -2314,6 +2464,26 @@ subcommands:
               - --quiet
             argument: ""
             description: Display verbose output to stdout and/or stderr during execution of this action. Or silence output if execution is successful (silence is golden).
+          - names:
+              - --recycle-pool
+            argument: TEXT
+            description: 'Use a cache pool for pipeline resumption. QIIME 2 will cache your results in this pool for reuse by future invocations. These pool are retained until deleted by the user. If not provided, QIIME 2 will create a pool which is automatically reused by invocations of the same action and removed if the action is successful. Note: these pools are local to the cache you are using.'
+          - names:
+              - --no-recycle
+            argument: ""
+            description: Do not recycle results from a previous failed pipeline run or save the results from this run for future recycling.
+          - names:
+              - --parallel
+            argument: ""
+            description: Execute your action in parallel. This flag will use your default parallel config.
+          - names:
+              - --parallel-config
+            argument: FILE
+            description: Execute your action in parallel using a config at the indicated path.
+          - names:
+              - --use-cache
+            argument: DIRECTORY
+            description: 'Specify the cache to be used for the intermediate work of this pipeline. If not provided, the default cache under $TMP/qiime2/<uname> will be used. IMPORTANT FOR HPC USERS: If you are on an HPC system and are using parallel execution it is important to set this to a location that is globally accessible to all nodes in the cluster.'
           - names:
               - --example-data
             argument: PATH
@@ -2342,7 +2512,11 @@ subcommands:
           - names:
               - --p-method
             argument: TEXT Choices('spearman', 'pearson')
-            description: The correlation test to be applied in the Mantel test.
+            description: 'The correlation test to be applied in the Mantel test. [default: ''spearman'']'
+          - names:
+              - --p-permutations
+            argument: INTEGER
+            description: 'The number of permutations to be run when computing p-values. Supplying a value of zero will disable permutation testing and p-values will not be calculated (this results in *much* quicker execution time if p-values are not desired). [default: 999]'
           - names:
               - --p-intersect-ids
               - --p-no-intersect-ids
@@ -2357,17 +2531,13 @@ subcommands:
             argument: TEXT
             description: 'Label for `metadata-distance-matrix` in the output visualization. [default: ''Distance Matrix'']'
           - names:
-              - --p-permutations
-            argument: INTEGER
-            description: Range(0, None) The number of permutations to be run when computing
+              - --o-metadata-distance-matrix
+            argument: ARTIFACT
+            description: 'The Distance Matrix produced from the metadata column and used in the mantel test [required]'
           - names:
               - --o-mantel-scatter-visualization
             argument: VISUALIZATION
             description: Scatter plot rendering of the manteltest results
-          - names:
-              - --o-metadata-distance-matrix
-            argument: ARTIFACT
-            description: DistanceMatrix The Distance Matrix produced from the metadata column
           - names:
               - --output-dir
             argument: PATH
@@ -2377,6 +2547,26 @@ subcommands:
               - --quiet
             argument: ""
             description: Display verbose output to stdout and/or stderr during execution of this action. Or silence output if execution is successful (silence is golden).
+          - names:
+              - --recycle-pool
+            argument: TEXT
+            description: 'Use a cache pool for pipeline resumption. QIIME 2 will cache your results in this pool for reuse by future invocations. These pool are retained until deleted by the user. If not provided, QIIME 2 will create a pool which is automatically reused by invocations of the same action and removed if the action is successful. Note: these pools are local to the cache you are using.'
+          - names:
+              - --no-recycle
+            argument: ""
+            description: Do not recycle results from a previous failed pipeline run or save the results from this run for future recycling.
+          - names:
+              - --parallel
+            argument: ""
+            description: Execute your action in parallel. This flag will use your default parallel config.
+          - names:
+              - --parallel-config
+            argument: FILE
+            description: Execute your action in parallel using a config at the indicated path.
+          - names:
+              - --use-cache
+            argument: DIRECTORY
+            description: 'Specify the cache to be used for the intermediate work of this pipeline. If not provided, the default cache under $TMP/qiime2/<uname> will be used. IMPORTANT FOR HPC USERS: If you are on an HPC system and are using parallel execution it is important to set this to a location that is globally accessible to all nodes in the cluster.'
           - names:
               - --example-data
             argument: PATH
@@ -2390,13 +2580,13 @@ subcommands:
             argument: ""
             description: Show this message and exit.
       - name: beta-group-significance
-        description: Beta diversity group significance
+        description: Determine whether groups of samples are significantly different from one another using a permutation-based statistical test.
         usage: qiime diversity beta-group-significance [OPTIONS]
         options:
           - names:
               - --i-distance-matrix
             argument: ARTIFACT
-            description: DistanceMatrix Matrix of distances between pairs of samples.
+            description: Matrix of distances between pairs of samples.
           - names:
               - --m-metadata-file
               - --m-metadata-column
@@ -2441,21 +2631,25 @@ subcommands:
             argument: ""
             description: Show this message and exit.
       - name: beta-phylogenetic
-        description: Beta diversity (phylogenetic)
+        description: Computes a user-specified phylogenetic beta diversity metric for all pairs of samples in a feature table.
         usage: qiime diversity beta-phylogenetic [OPTIONS]
         options:
           - names:
               - --i-table
-            argument: ARTIFACT FeatureTable
-            description: The feature table containing the samples over which
-          - names:
-              - --i-table
-            argument: ARTIFACT FeatureTableFrequency | RelativeFrequency |   PresenceAbsence
-            description: The feature table containing the samples over which
+            argument: 'ARTIFACT FeatureTable[Frequency | RelativeFrequency | PresenceAbsence]'
+            description: The feature table containing the samples over which beta diversity should be computed. [required]
           - names:
               - --i-phylogeny
             argument: ARTIFACT
-            description: Phylogenetic tree containing tip identifiers that   Phylogeny[Rooted] correspond to the feature identifiers in the table.
+            description: Phylogenetic tree containing tip identifiers that correspond to the feature identifiers in the table. This tree can contain tip ids that are not present in the table, but all feature ids in the table must be present in this tree. [required]
+          - names:
+              - --p-metric
+            argument: '{generalized_unifrac, unweighted_unifrac, weighted_normalized_unifrac, weighted_unifrac}'
+            description: The beta diversity metric to be computed. [required]
+          - names:
+              - --p-threads
+            argument: 'VALUE Int % Range(1, None) | Str % Choices(''auto'')'
+            description: 'The number of CPU threads to use in performing this calculation. May not exceed the number of available physical cores. If threads = ''auto'', one thread will be created for each identified CPU core on the host. [default: 1]'
           - names:
               - --p-variance-adjusted
               - --p-no-variance-adjusted
@@ -2473,7 +2667,7 @@ subcommands:
           - names:
               - --o-distance-matrix
             argument: ARTIFACT
-            description: DistanceMatrix The resulting distance matrix. [required]
+            description: The resulting distance matrix. [required]
           - names:
               - --output-dir
             argument: PATH
@@ -2483,6 +2677,26 @@ subcommands:
               - --quiet
             argument: ""
             description: Display verbose output to stdout and/or stderr during execution of this action. Or silence output if execution is successful (silence is golden).
+          - names:
+              - --recycle-pool
+            argument: TEXT
+            description: 'Use a cache pool for pipeline resumption. QIIME 2 will cache your results in this pool for reuse by future invocations. These pool are retained until deleted by the user. If not provided, QIIME 2 will create a pool which is automatically reused by invocations of the same action and removed if the action is successful. Note: these pools are local to the cache you are using.'
+          - names:
+              - --no-recycle
+            argument: ""
+            description: Do not recycle results from a previous failed pipeline run or save the results from this run for future recycling.
+          - names:
+              - --parallel
+            argument: ""
+            description: Execute your action in parallel. This flag will use your default parallel config.
+          - names:
+              - --parallel-config
+            argument: FILE
+            description: Execute your action in parallel using a config at the indicated path.
+          - names:
+              - --use-cache
+            argument: DIRECTORY
+            description: 'Specify the cache to be used for the intermediate work of this pipeline. If not provided, the default cache under $TMP/qiime2/<uname> will be used. IMPORTANT FOR HPC USERS: If you are on an HPC system and are using parallel execution it is important to set this to a location that is globally accessible to all nodes in the cluster.'
           - names:
               - --example-data
             argument: PATH
@@ -2496,7 +2710,7 @@ subcommands:
             argument: ""
             description: Show this message and exit.
       - name: beta-rarefaction
-        description: Beta diversity rarefaction
+        description: Repeatedly rarefy a feature table to compare beta diversity results within a given rarefaction depth.
         usage: qiime diversity beta-rarefaction [OPTIONS]
         options:
           - names:
@@ -2506,15 +2720,23 @@ subcommands:
           - names:
               - --i-phylogeny
             argument: ARTIFACT
-            description: Phylogenetic tree containing tip identifiers that
+            description: Phylogenetic tree containing tip identifiers that correspond to the feature identifiers in the table. This tree can contain tip ids that are not present in the table, but all feature ids in the table must be present in this tree. [required for phylogenetic metrics] [optional]
+          - names:
+              - --p-metric
+            argument: '{aitchison, braycurtis, canberra, canberra_adkins, chebyshev, cityblock, correlation, cosine, dice, euclidean, generalized_unifrac, hamming, jaccard, jensenshannon, kulsinski, matching, minkowski, rogerstanimoto, russellrao, seuclidean, sokalmichener, sokalsneath, sqeuclidean, unweighted_unifrac, weighted_normalized_unifrac, weighted_unifrac, yule}'
+            description: The beta diversity metric to be computed. [required]
+          - names:
+              - --p-clustering-method
+            argument: '{nj, upgma}'
+            description: Samples can be clustered with neighbor joining or UPGMA. An arbitrary rarefaction trial will be used for the tree, and the remaining trials are used to calculate the support of the internal nodes of that tree. [required]
           - names:
               - --m-metadata-file
             argument: METADATA...
-            description: (multiple arguments The sample metadata used for the Emperor jackknifed
+            description: (multiple arguments The sample metadata used for the Emperor jackknifed PCoA plot. [required]
           - names:
               - --p-sampling-depth
             argument: INTEGER
-            description: Range(1, None) The total frequency that each sample should be
+            description: The total frequency that each sample should be rarefied to prior to computing the diversity metric. [required]
           - names:
               - --p-iterations
             argument: INTEGER
@@ -2527,6 +2749,10 @@ subcommands:
               - --p-correlation-method
             argument: TEXT Choices('pearson', 'spearman')
             description: 'The Mantel correlation test to be applied when computing correlation between beta diversity distance matrices. [default: ''spearman'']'
+          - names:
+              - --p-color-scheme
+            argument: '{BrBG, BrBG_r, PRGn, PRGn_r, PiYG, PiYG_r, PuOr, PuOr_r, RdBu, RdBu_r, RdGy, RdGy_r, RdYlBu, RdYlBu_r, RdYlGn, RdYlGn_r}'
+            description: 'The matplotlib color scheme to generate the heatmap with. [default: ''BrBG'']'
           - names:
               - --o-visualization
             argument: VISUALIZATION
@@ -2553,17 +2779,17 @@ subcommands:
             argument: ""
             description: Show this message and exit.
       - name: bioenv
-        description: bioenv
+        description: Find the subsets of variables in metadata whose Euclidean distances are maximally rank-correlated with distance matrix.
         usage: qiime diversity bioenv [OPTIONS]
         options:
           - names:
               - --i-distance-matrix
             argument: ARTIFACT
-            description: DistanceMatrix Matrix of distances between pairs of samples.
+            description: Matrix of distances between pairs of samples.
           - names:
               - --m-metadata-file
             argument: METADATA...
-            description: (multiple The sample metadata.
+            description: The sample metadata.
           - names:
               - --o-visualization
             argument: VISUALIZATION
@@ -2590,7 +2816,7 @@ subcommands:
             argument: ""
             description: Show this message and exit.
       - name: core-metrics
-        description: Core diversity metrics (non-phylogenetic)
+        description: Applies a collection of diversity metrics (non-phylogenetic) to a feature table.
         usage: qiime diversity core-metrics [OPTIONS]
         options:
           - names:
@@ -2598,18 +2824,22 @@ subcommands:
             argument: ARTIFACT FeatureTable[Frequency]
             description: The feature table containing the samples over which diversity metrics should be computed. [required]
           - names:
+              - --p-sampling-depth
+            argument: INTEGER
+            description: The total frequency that each sample should be rarefied to prior to computing diversity metrics. [required]
+          - names:
+              - --m-metadata-file
+            argument: METADATA...
+            description: The sample metadata to use in the emperor plots. [required]
+          - names:
               - --p-with-replacement
               - --p-no-with-replacement
             argument: ""
             description: 'Rarefy with replacement by sampling from the multinomial distribution instead of rarefying without replacement. [default: False]'
           - names:
-              - --p-sampling-depth
-            argument: INTEGER
-            description: Range(1, None) The total frequency that each sample should be
-          - names:
-              - --m-metadata-file
-            argument: METADATA...
-            description: (multiple The sample metadata to use in the emperor plots.
+              - --p-n-jobs
+            argument: 'VALUE Int % Range(1, None) | Str % Choices(''auto'')'
+            description: '[beta methods only] - The number of concurrent jobs to use in performing this calculation. May not exceed the number of available physical cores. If n-jobs = ''auto'', one job will be launched for each identified CPU core on the host. [default: 1]'
           - names:
               - --o-rarefied-table
             argument: ARTIFACT FeatureTable[Frequency]
@@ -2617,39 +2847,39 @@ subcommands:
           - names:
               - --o-observed-features-vector
             argument: ARTIFACT SampleData[AlphaDiversity]
-            description: Vector of Observed Features values by sample.
+            description: Vector of Observed Features values by sample. [required]
           - names:
               - --o-shannon-vector
             argument: ARTIFACT SampleData[AlphaDiversity]
-            description: Vector of Shannon diversity values by sample.
+            description: Vector of Shannon diversity values by sample. [required]
           - names:
               - --o-evenness-vector
             argument: ARTIFACT SampleData[AlphaDiversity]
-            description: Vector of Pielou's evenness values by sample.
+            description: Vector of Pielou's evenness values by sample. [required]
+          - names:
+              - --o-jaccard-distance-matrix
+            argument: ARTIFACT
+            description: Matrix of Jaccard distances between pairs of samples. [required]
+          - names:
+              - --o-bray-curtis-distance-matrix
+            argument: ARTIFACT
+            description: Matrix of Bray-Curtis distances between pairs of samples. [required]
+          - names:
+              - --o-jaccard-pcoa-results
+            argument: ARTIFACT
+            description: PCoA matrix computed from Jaccard distances between samples. [required]
           - names:
               - --o-jaccard-emperor
             argument: VISUALIZATION
-            description: Emperor plot of the PCoA matrix computed from Jaccard.
+            description: Emperor plot of the PCoA matrix computed from Jaccard. [required]
           - names:
               - --o-bray-curtis-emperor
             argument: VISUALIZATION
             description: Emperor plot of the PCoA matrix computed from Bray-Curtis. [required]
           - names:
-              - --o-jaccard-distance-matrix
-            argument: ARTIFACT
-            description: DistanceMatrix Matrix of Jaccard distances between pairs of samples.
-          - names:
-              - --o-bray-curtis-distance-matrix
-            argument: ARTIFACT
-            description: DistanceMatrix Matrix of Bray-Curtis distances between pairs of
-          - names:
-              - --o-jaccard-pcoa-results
-            argument: ARTIFACT
-            description: PCoAResults PCoA matrix computed from Jaccard distances between
-          - names:
               - --o-bray-curtis-pcoa-results
             argument: ARTIFACT
-            description: PCoAResults PCoA matrix computed from Bray-Curtis distances
+            description: PCoAResults PCoA matrix computed from Bray-Curtis distances Bray-Curtis. [required]
           - names:
               - --output-dir
             argument: PATH
@@ -2659,6 +2889,26 @@ subcommands:
               - --quiet
             argument: ""
             description: Display verbose output to stdout and/or stderr during execution of this action. Or silence output if execution is successful (silence is golden).
+          - names:
+              - --recycle-pool
+            argument: TEXT
+            description: 'Use a cache pool for pipeline resumption. QIIME 2 will cache your results in this pool for reuse by future invocations. These pool are retained until deleted by the user. If not provided, QIIME 2 will create a pool which is automatically reused by invocations of the same action and removed if the action is successful. Note: these pools are local to the cache you are using.'
+          - names:
+              - --no-recycle
+            argument: ""
+            description: Do not recycle results from a previous failed pipeline run or save the results from this run for future recycling.
+          - names:
+              - --parallel
+            argument: ""
+            description: Execute your action in parallel. This flag will use your default parallel config.
+          - names:
+              - --parallel-config
+            argument: FILE
+            description: Execute your action in parallel using a config at the indicated path.
+          - names:
+              - --use-cache
+            argument: DIRECTORY
+            description: 'Specify the cache to be used for the intermediate work of this pipeline. If not provided, the default cache under $TMP/qiime2/<uname> will be used. IMPORTANT FOR HPC USERS: If you are on an HPC system and are using parallel execution it is important to set this to a location that is globally accessible to all nodes in the cluster.'
           - names:
               - --example-data
             argument: PATH
@@ -2672,7 +2922,7 @@ subcommands:
             argument: ""
             description: Show this message and exit.
       - name: core-metrics-phylogenetic
-        description: Core diversity metrics (phylogenetic and non-
+        description: Applies a collection of diversity metrics (both phylogenetic and non-phylogenetic) to a feature table.
         usage: qiime diversity core-metrics-phylogenetic [OPTIONS]
         options:
           - names:
@@ -2682,20 +2932,20 @@ subcommands:
           - names:
               - --i-phylogeny
             argument: ARTIFACT
-            description: Phylogenetic tree containing tip identifiers that
+            description: Phylogenetic tree containing tip identifiers that correspond to the feature identifiers in the table. This tree can contain tip ids that are not present in the table, but all feature ids in the table must be present in this tree. [required]
+          - names:
+              - --p-sampling-depth
+            argument: INTEGER
+            description: The total frequency that each sample should be rarefied to prior to computing diversity metrics. [required]
+          - names:
+              - --m-metadata-file
+            argument: METADATA...
+            description: The sample metadata to use in the emperor plots. [required]
           - names:
               - --p-with-replacement
               - --p-no-with-replacement
             argument: ""
             description: 'Rarefy with replacement by sampling from the multinomial distribution instead of rarefying without replacement. [default: False]'
-          - names:
-              - --p-sampling-depth
-            argument: INTEGER
-            description: Range(1, None) The total frequency that each sample should be
-          - names:
-              - --m-metadata-file
-            argument: METADATA...
-            description: (multiple arguments The sample metadata to use in the emperor plots.
           - names:
               - --o-rarefied-table
             argument: ARTIFACT FeatureTable[Frequency]
@@ -2707,19 +2957,47 @@ subcommands:
           - names:
               - --o-observed-features-vector
             argument: ARTIFACT SampleData[AlphaDiversity]
-            description: Vector of Observed Features values by sample.
+            description: Vector of Observed Features values by sample. [required]
           - names:
               - --o-shannon-vector
             argument: ARTIFACT SampleData[AlphaDiversity]
-            description: Vector of Shannon diversity values by sample.
+            description: Vector of Shannon diversity values by sample. [required]
           - names:
               - --o-evenness-vector
             argument: ARTIFACT SampleData[AlphaDiversity]
-            description: Vector of Pielou's evenness values by sample.
+            description: Vector of Pielou's evenness values by sample. [required]
+          - names:
+              - --o-unweighted-unifrac-distance-matrix
+            argument: ARTIFACT
+            description: DistanceMatrix Matrix of unweighted UniFrac distances between pairs of samples. [required]
+          - names:
+              - --o-weighted-unifrac-distance-matrix
+            argument: ARTIFACT
+            description: DistanceMatrix Matrix of weighted UniFrac distances between pairs of samples. [required]
+          - names:
+              - --o-jaccard-distance-matrix
+            argument: ARTIFACT
+            description: DistanceMatrix Matrix of Jaccard distances between pairs of samples. [required]
+          - names:
+              - --o-bray-curtis-distance-matrix
+            argument: ARTIFACT
+            description: DistanceMatrix Matrix of Bray-Curtis distances between pairs of samples. [required]
+          - names:
+              - --o-unweighted-unifrac-pcoa-results
+            argument: ARTIFACT
+            description: PCoAResults PCoA matrix computed from unweighted UniFrac distances between samples. [required]
+          - names:
+              - --o-weighted-unifrac-pcoa-results
+            argument: ARTIFACT
+            description: PCoAResults PCoA matrix computed from weighted UniFrac distances between samples. [required]
           - names:
               - --o-jaccard-pcoa-results
-            argument: ""
-            description: ARTIFACT
+            argument: ARTIFACT
+            description: PCoA matrix computed from Jaccard distances between samples. [required]
+          - names:
+              - --o-bray-curtis-pcoa-results
+            argument: ARTIFACT
+            description: PCoAResults PCoA matrix computed from Bray-Curtis distances samples. [required]
           - names:
               - --o-unweighted-unifrac-emperor
             argument: VISUALIZATION
@@ -2737,34 +3015,6 @@ subcommands:
             argument: VISUALIZATION
             description: Emperor plot of the PCoA matrix computed from Bray-Curtis. [required]
           - names:
-              - --o-unweighted-unifrac-distance-matrix
-            argument: ARTIFACT
-            description: DistanceMatrix Matrix of unweighted UniFrac distances between
-          - names:
-              - --o-weighted-unifrac-distance-matrix
-            argument: ARTIFACT
-            description: DistanceMatrix Matrix of weighted UniFrac distances between pairs
-          - names:
-              - --o-jaccard-distance-matrix
-            argument: ARTIFACT
-            description: DistanceMatrix Matrix of Jaccard distances between pairs of
-          - names:
-              - --o-bray-curtis-distance-matrix
-            argument: ARTIFACT
-            description: DistanceMatrix Matrix of Bray-Curtis distances between pairs of
-          - names:
-              - --o-unweighted-unifrac-pcoa-results
-            argument: ARTIFACT
-            description: PCoAResults PCoA matrix computed from unweighted UniFrac
-          - names:
-              - --o-weighted-unifrac-pcoa-results
-            argument: ARTIFACT
-            description: PCoAResults PCoA matrix computed from weighted UniFrac
-          - names:
-              - --o-bray-curtis-pcoa-results
-            argument: ARTIFACT
-            description: PCoAResults PCoA matrix computed from Bray-Curtis distances
-          - names:
               - --output-dir
             argument: PATH
             description: Output unspecified results to a directory
@@ -2773,6 +3023,26 @@ subcommands:
               - --quiet
             argument: ""
             description: Display verbose output to stdout and/or stderr during execution of this action. Or silence output if execution is successful (silence is golden).
+          - names:
+              - --recycle-pool
+            argument: TEXT
+            description: 'Use a cache pool for pipeline resumption. QIIME 2 will cache your results in this pool for reuse by future invocations. These pool are retained until deleted by the user. If not provided, QIIME 2 will create a pool which is automatically reused by invocations of the same action and removed if the action is successful. Note: these pools are local to the cache you are using.'
+          - names:
+              - --no-recycle
+            argument: ""
+            description: Do not recycle results from a previous failed pipeline run or save the results from this run for future recycling.
+          - names:
+              - --parallel
+            argument: ""
+            description: Execute your action in parallel. This flag will use your default parallel config.
+          - names:
+              - --parallel-config
+            argument: FILE
+            description: Execute your action in parallel using a config at the indicated path.
+          - names:
+              - --use-cache
+            argument: DIRECTORY
+            description: 'Specify the cache to be used for the intermediate work of this pipeline. If not provided, the default cache under $TMP/qiime2/<uname> will be used. IMPORTANT FOR HPC USERS: If you are on an HPC system and are using parallel execution it is important to set this to a location that is globally accessible to all nodes in the cluster.'
           - names:
               - --example-data
             argument: PATH
@@ -2896,11 +3166,11 @@ subcommands:
           - names:
               - --i-distance-matrix
             argument: ARTIFACT
-            description: DistanceMatrix The distance matrix on which PCoA should be computed.
+            description: DistanceMatrix The distance matrix on which PCoA should be computed. [required]
           - names:
               - --p-number-of-dimensions
             argument: INTEGER
-            description: Range(1, None) Dimensions to reduce the distance matrix to. This
+            description: Dimensions to reduce the distance matrix to. This number determines how many eigenvectors and eigenvalues are returned,and influences the choice of algorithm used to compute them. By default, uses the default eigendecomposition method, SciPy's eigh, which computes all eigenvectors and eigenvalues in an exact manner. For very large matrices, this is expected to be slow. If a value is specified for this parameter, then the fast, heuristic eigendecomposition algorithm fsvd is used, which only computes and returns the number of dimensions specified, but suffers some degree of accuracy loss, the magnitude of which varies across different datasets. [optional]
           - names:
               - --o-pcoa
             argument: ARTIFACT
@@ -2927,7 +3197,7 @@ subcommands:
             argument: ""
             description: Show this message and exit.
       - name: pcoa-biplot
-        description: Principal Coordinate Analysis Biplot
+        description: Project features into a principal coordinates matrix.
         usage: qiime diversity pcoa-biplot [OPTIONS]
         options:
           - names:
@@ -2938,6 +3208,10 @@ subcommands:
               - --i-features
             argument: ARTIFACT FeatureTable[RelativeFrequency]
             description: Variables to project onto the PCoA matrix [required]
+          - names:
+              - --o-biplot
+            argument: ARTIFACT
+            description: The resulting PCoA matrix. [required]
           - names:
               - --output-dir
             argument: PATH
@@ -2960,33 +3234,37 @@ subcommands:
             argument: ""
             description: Show this message and exit.
       - name: procrustes-analysis
-        description: Procrustes Analysis
+        description: Fit two ordination matrices with Procrustes analysis
         usage: qiime diversity procrustes-analysis [OPTIONS]
         options:
           - names:
               - --i-reference
             argument: ARTIFACT
-            description: The ordination matrix to which data is fitted to.
+            description: The ordination matrix to which data is fitted to. [required]
           - names:
               - --i-other
             argument: ARTIFACT
-            description: The ordination matrix that's fitted to the
+            description: The ordination matrix that's fitted to the reference ordination. [required]
           - names:
               - --p-dimensions
             argument: INTEGER
-            description: The number of dimensions to use when fitting the
+            description: 'The number of dimensions to use when fitting the two matrices [default: 5]'
+          - names:
+              - --p-permutations
+            argument: 'VALUE Int % Range(1, None) | Str % Choices(''disable'')'
+            description: 'The number of permutations to be run when computing p-values. Supplying a value of `disable` will disable permutation testing and p-values will not be calculated (this results in *much* quicker execution time if p-values are not desired). [default: 999]'
           - names:
               - --o-transformed-reference
             argument: ARTIFACT
-            description: PCoAResults A normalized version of the "reference" ordination
+            description: A normalized version of the "reference" ordination matrix. [required]
           - names:
               - --o-transformed-other
             argument: ARTIFACT
-            description: PCoAResults A normalized and fitted version of the "other"
+            description: A normalized and fitted version of the "other" ordination matrix. [required]
           - names:
               - --o-disparity-results
             argument: ARTIFACT
-            description: ProcrustesStatistics The sum of the squares of the pointwise differences
+            description: The sum of the squares of the pointwise differences between the two input datasets & its p value. [required]
           - names:
               - --output-dir
             argument: PATH
@@ -3009,21 +3287,21 @@ subcommands:
             argument: ""
             description: Show this message and exit.
       - name: tsne
-        description: t-distributed stochastic neighbor embedding
+        description: Apply t-distributed stochastic neighbor embedding.
         usage: qiime diversity tsne [OPTIONS]
         options:
           - names:
               - --i-distance-matrix
             argument: ARTIFACT
-            description: DistanceMatrix The distance matrix on which t-SNE should be
+            description: The distance matrix on which t-SNE should be computed. [required]
           - names:
               - --p-number-of-dimensions
             argument: INTEGER
-            description: Range(2, None) Dimensions to reduce the distance matrix to.
+            description: Dimensions to reduce the distance matrix to. [required]
           - names:
               - --p-perplexity
             argument: NUMBER
-            description: Provide the balance between local and global   Range(1, None) structure. Low values concentrate on local structure.
+            description: 'Provide the balance between local and global structure. Low values concentrate on local structure. [default: 25.0]'
           - names:
               - --p-n-iter
             argument: INTEGER
@@ -3031,11 +3309,11 @@ subcommands:
           - names:
               - --p-learning-rate
             argument: NUMBER
-            description: Range(10.0, None) Controls how much the weights are adjusted at each
+            description: 'Controls how much the weights are adjusted at each update. [default: 200.0]'
           - names:
               - --p-early-exaggeration
             argument: NUMBER
-            description: Range(0, None) Affects the tightness of the shown clusters. Larger
+            description: 'Affects the tightness of the shown clusters. Larger values increase the distance between natural clusters in the embedded space. [default: 12.0]'
           - names:
               - --p-random-state
             argument: INTEGER
@@ -3043,7 +3321,7 @@ subcommands:
           - names:
               - --o-tsne
             argument: ARTIFACT
-            description: The resulting t-SNE matrix.
+            description: The resulting t-SNE matrix. [required]
           - names:
               - --output-dir
             argument: PATH
@@ -3066,25 +3344,25 @@ subcommands:
             argument: ""
             description: Show this message and exit.
       - name: umap
-        description: Uniform Manifold Approximation and Projection
+        description: Apply Uniform Manifold Approximation and Projection.
         usage: qiime diversity umap [OPTIONS]
         options:
           - names:
               - --i-distance-matrix
             argument: ARTIFACT
-            description: DistanceMatrix The distance matrix on which UMAP should be computed.
+            description: The distance matrix on which UMAP should be computed. [required]
           - names:
               - --p-number-of-dimensions
             argument: INTEGER
-            description: Range(2, None) Dimensions to reduce the distance matrix to.
+            description: 'Dimensions to reduce the distance matrix to. [default: 2]'
           - names:
               - --p-n-neighbors
             argument: INTEGER
-            description: Range(1, None) Provide the balance between local and global
+            description: 'Provide the balance between local and global structure. [default: 15]'
           - names:
               - --p-min-dist
             argument: NUMBER
-            description: Controls the cluster size. Low values cause clumpier   Range(0, None) clusters. Higher values preserve a broad topological
+            description: 'Controls the cluster size. Low values cause clumpier clusters. Higher values preserve a broad topological structure. [default: 0.4]'
           - names:
               - --p-random-state
             argument: INTEGER
@@ -3092,7 +3370,7 @@ subcommands:
           - names:
               - --o-umap
             argument: ARTIFACT
-            description: The resulting UMAP matrix.
+            description: The resulting UMAP matrix. required]
           - names:
               - --output-dir
             argument: PATH
@@ -3144,6 +3422,10 @@ subcommands:
             argument: ARTIFACT FeatureTable[Frequency]
             description: The feature table containing the samples for which a selected metric should be computed. [required]
           - names:
+              - --p-metric
+            argument: TEXT
+            description: The alpha diversity metric to be computed. [required]
+          - names:
               - --o-vector
             argument: ARTIFACT SampleData[AlphaDiversity]
             description: Vector containing per-sample values for the chosen metric. [required]
@@ -3177,13 +3459,17 @@ subcommands:
             argument: ARTIFACT FeatureTable[Frequency]
             description: The feature table containing the samples over which beta diversity should be computed. [required]
           - names:
+              - --p-metric
+            argument: TEXT
+            description: The beta diversity metric to be computed. [required]
+          - names:
               - --p-pseudocount
             argument: INTEGER
-            description: Range(1, None) A pseudocount to handle zeros for compositional
+            description: A pseudocount to handle zeros for compositional
           - names:
               - --o-distance-matrix
             argument: ARTIFACT
-            description: DistanceMatrix The resulting distance matrix. [required]
+            description: The resulting distance matrix. [required]
           - names:
               - --output-dir
             argument: PATH
@@ -3220,7 +3506,15 @@ subcommands:
           - names:
               - --i-phylogeny
             argument: ARTIFACT
-            description: Phylogenetic tree containing tip identifiers that
+            description: Phylogenetic tree containing tip identifiers that correspond to the feature identifiers in the table. [required]
+          - names:
+              - --p-metric
+            argument: TEXT
+            description: The beta diversity metric to be computed. [required]
+          - names:
+              - --p-threads
+            argument: VALUE
+            description: 'The number of CPU threads to use in performing this calculation. [default: 1]'
           - names:
               - --p-variance-adjusted
               - --p-no-variance-adjusted
@@ -3228,7 +3522,7 @@ subcommands:
             description: 'Perform variance adjustment based on Chang et al. BMC Bioinformatics 2011. Weights distances based on the proportion of the relative abundance represented between the samples at a given node under evaluation. [default: False]'
           - names:
               - --p-alpha
-            argument: PROPORTION Range(0, 1, inclusive_end=True)
+            argument: PROPORTION
             description: This parameter is only used when the choice of metric is generalized_unifrac. The value of alpha controls importance of sample proportions. 1.0 is weighted normalized UniFrac. 0.0 is close to unweighted UniFrac, but only if the sample proportions are dichotomized. [optional]
           - names:
               - --p-bypass-tips
@@ -3238,7 +3532,7 @@ subcommands:
           - names:
               - --o-distance-matrix
             argument: ARTIFACT
-            description: DistanceMatrix The resulting distance matrix. [required]
+            description: The resulting distance matrix. [required]
           - names:
               - --output-dir
             argument: PATH
@@ -3269,17 +3563,21 @@ subcommands:
             argument: weighted-normalized-unifrac-dm.qza
             description: '# ### example: use bypass tips to trade specificity for reduced compute time'
       - name: bray-curtis
-        description: Bray-Curtis Dissimilarity
+        description: Compute Bray-Curtis dissimilarity for each sample in a feature table.
         usage: qiime diversity-lib bray-curtis [OPTIONS]
         options:
           - names:
               - --i-table
-            argument: ARTIFACT FeatureTable[Frequency]
-            description: The feature table containing the samples for which Bray-Curtis dissimilarity should be computed.
+            argument: ARTIFACT
+            description: The feature table containing the samples for which Bray-Curtis dissimilarity should be computed. [required]
+          - names:
+              - --p-n-jobs
+            argument: VALUE
+            description: 'The number of concurrent jobs to use in performing this calculation. [default: 1]'
           - names:
               - --o-distance-matrix
             argument: ARTIFACT
-            description: DistanceMatrix Distance matrix for Bray-Curtis dissimilarity
+            description: Distance matrix for Bray-Curtis dissimilarity [required]
           - names:
               - --output-dir
             argument: PATH
@@ -3306,24 +3604,24 @@ subcommands:
             argument: bray-curtis-dm.qza
             description: '# ### example: use ''auto'' to run on all of host system''s available CPU cores'
       - name: faith-pd
-        description: Faith's Phylogenetic Diversity
+        description: Computes Faith's Phylogenetic Diversity for all samples in a feature table.
         usage: qiime diversity-lib faith-pd [OPTIONS]
         options:
           - names:
               - --i-table
-            argument: ARTIFACT FeatureTable
-            description: The feature table containing the samples for which
-          - names:
-              - --i-table
-            argument: ARTIFACT FeatureTableFrequency | RelativeFrequency |   PresenceAbsence
-            description: The feature table containing the samples for which
+            argument: ARTIFACT
+            description: The feature table containing the samples for which Faith's phylogenetic diversity should be computed. [required]
           - names:
               - --i-phylogeny
             argument: ARTIFACT
-            description: Phylogenetic tree containing tip identifiers that   Phylogeny[Rooted] correspond to the feature identifiers in the table.
+            description: Phylogenetic tree containing tip identifiers that correspond to the feature identifiers in the table. [required]
+          - names:
+              - --p-threads
+            argument: VALUE
+            description: 'The number of CPU threads to use in performing this calculation. [default: 1]'
           - names:
               - --o-vector
-            argument: ARTIFACT SampleData[AlphaDiversity]
+            argument: ARTIFACT
             description: Vector containing per-sample values for Faith's Phylogenetic Diversity. [required]
           - names:
               - --output-dir
@@ -3347,21 +3645,21 @@ subcommands:
             argument: ""
             description: Show this message and exit.
       - name: jaccard
-        description: Jaccard Distance
+        description: Compute Jaccard distance for each sample in a feature table.
         usage: qiime diversity-lib jaccard [OPTIONS]
         options:
           - names:
               - --i-table
-            argument: ARTIFACT FeatureTable
-            description: The feature table containing the samples for which
+            argument: ARTIFACT
+            description: The feature table containing the samples for which  Jaccard distance should be computed. [required]
           - names:
-              - --i-table
-            argument: ARTIFACT FeatureTableFrequency | RelativeFrequency |   PresenceAbsence
-            description: The feature table containing the samples for which
+              - --p-n-jobs
+            argument: VALUE
+            description: 'The number of concurrent jobs to use in performing this calculation. [default: 1]'
           - names:
               - --o-distance-matrix
             argument: ARTIFACT
-            description: DistanceMatrix Distance matrix for Jaccard index [required]
+            description: Distance matrix for Jaccard index [required]
           - names:
               - --output-dir
             argument: PATH
@@ -3393,12 +3691,8 @@ subcommands:
         options:
           - names:
               - --i-table
-            argument: ARTIFACT FeatureTable
-            description: The feature table containing the samples for which the
-          - names:
-              - --i-table
-            argument: ARTIFACT FeatureTableFrequency | RelativeFrequency |   PresenceAbsence
-            description: The feature table containing the samples for which the
+            argument: ARTIFACT
+            description: The feature table containing the samples for which the number of observed features should be calculated. [required]
           - names:
               - --o-vector
             argument: ARTIFACT SampleData[AlphaDiversity]
@@ -3425,12 +3719,12 @@ subcommands:
             argument: ""
             description: Show this message and exit.
       - name: pielou-evenness
-        description: Pielou's Evenness
+        description: Compute Pielou's Evenness for each sample in a feature table
         usage: qiime diversity-lib pielou-evenness [OPTIONS]
         options:
           - names:
               - --i-table
-            argument: ARTIFACT FeatureTable[Frequency | RelativeFrequency]
+            argument: ARTIFACT
             description: The feature table containing the samples for which Pielou's evenness should be computed. [required]
           - names:
               - --p-drop-undefined-samples
@@ -3439,7 +3733,7 @@ subcommands:
             description: 'Samples with fewer than two observed features produce undefined (NaN) values. If true, these samples are dropped from the output vector. [default: False]'
           - names:
               - --o-vector
-            argument: ARTIFACT SampleData[AlphaDiversity]
+            argument: ARTIFACT
             description: Vector containing per-sample values for Pielou's Evenness. [required]
           - names:
               - --output-dir
@@ -3468,7 +3762,7 @@ subcommands:
         options:
           - names:
               - --i-table
-            argument: ARTIFACT FeatureTable[Frequency | RelativeFrequency]
+            argument: ARTIFACT
             description: The feature table containing the samples for which Shannon's Entropy should be computed. [required]
           - names:
               - --p-drop-undefined-samples
@@ -3506,16 +3800,16 @@ subcommands:
         options:
           - names:
               - --i-table
-            argument: ARTIFACT FeatureTable
-            description: The feature table containing the samples for which
-          - names:
-              - --i-table
-            argument: ARTIFACT FeatureTableFrequency | RelativeFrequency |   PresenceAbsence
-            description: The feature table containing the samples for which
+            argument: ARTIFACT
+            description: The feature table containing the samples for which Unweighted Unifrac should be computed. [required]
           - names:
               - --i-phylogeny
             argument: ARTIFACT
-            description: Phylogenetic tree containing tip identifiers that   Phylogeny[Rooted] correspond to the feature identifiers in the table.
+            description: Phylogenetic tree containing tip identifiers that correspond to the feature identifiers in the table. [required]
+          - names:
+              - --p-threads
+            argument: VALUE
+            description: 'The number of CPU threads to use in performing this calculation. [default: 1]'
           - names:
               - --p-bypass-tips
               - --p-no-bypass-tips
@@ -3524,7 +3818,7 @@ subcommands:
           - names:
               - --o-distance-matrix
             argument: ARTIFACT
-            description: DistanceMatrix Distance matrix for Unweighted Unifrac. [required]
+            description: Distance matrix for Unweighted Unifrac. [required]
           - names:
               - --output-dir
             argument: PATH
@@ -3561,7 +3855,11 @@ subcommands:
           - names:
               - --i-phylogeny
             argument: ARTIFACT
-            description: Phylogenetic tree containing tip identifiers that
+            description: Phylogenetic tree containing tip identifiers that correspond to the feature identifiers in the table. [required]
+          - names:
+              - --p-threads
+            argument: VALUE
+            description: 'The number of CPU threads to use in performing this calculation. [default: 1]'
           - names:
               - --p-bypass-tips
               - --p-no-bypass-tips
@@ -3570,7 +3868,7 @@ subcommands:
           - names:
               - --o-distance-matrix
             argument: ARTIFACT
-            description: DistanceMatrix Distance matrix for Unweighted Unifrac. [required]
+            description: Distance matrix for Unweighted Unifrac. [required]
           - names:
               - --output-dir
             argument: PATH
@@ -3618,9 +3916,21 @@ subcommands:
         description: Show this message and exit.
     subcommands:
       - name: biplot
-        description: Visualize and Interact with Principal Coordinates Analysis
+        description: Visualize and Interact with Principal Coordinates Analysis Biplot
         usage: qiime emperor biplot [OPTIONS]
         options:
+          - names:
+              - --i-biplot
+            argument: ARTIFACT
+            description: The principal coordinates matrix to be plotted. [required]
+          - names:
+              - --m-sample-metadata-file
+            argument: METADATA...
+            description: The sample metadata. [required]
+          - names:
+              - --m-feature-metadata-file
+            argument: METADATA...
+            description: The feature metadata (useful to manipulate the arrows in the plot). [required]
           - names:
               - --p-ignore-missing-samples
               - --p-no-ignore-missing-samples
@@ -3635,14 +3945,6 @@ subcommands:
               - --p-number-of-features
             argument: ""
             description: INTEGER
-          - names:
-              - --m-sample-metadata-file
-            argument: METADATA...
-            description: (multiple The sample metadata
-          - names:
-              - --m-feature-metadata-file
-            argument: METADATA...
-            description: (multiple The feature metadata (useful to manipulate the arrows
           - names:
               - --o-visualization
             argument: VISUALIZATION
@@ -3669,13 +3971,21 @@ subcommands:
             argument: ""
             description: Show this message and exit.
       - name: plot
-        description: Visualize and Interact with Principal Coordinates Analysis
+        description: Visualize and Interact with Principal Coordinates Analysis Plots
         usage: qiime emperor plot [OPTIONS]
         options:
           - names:
               - --i-pcoa
             argument: ARTIFACT
-            description: The principal coordinates matrix to be plotted.
+            description: The principal coordinates matrix to be plotted. [required]
+          - names:
+              - --m-metadata-file
+            argument: METADATA...
+            description: The sample metadata. [required]
+          - names:
+              - --p-custom-axes
+            argument: TEXT...
+            description: Numeric sample metadata columns that should be included as axes in the Emperor plot. [optional]
           - names:
               - --p-ignore-missing-samples
               - --p-no-ignore-missing-samples
@@ -3686,14 +3996,6 @@ subcommands:
               - --p-no-ignore-pcoa-features
             argument: ""
             description: 'Biplot arrows cannot be visualized using this method. If you want to visualize biplot arrows use the `biplot` method. Enabling this setting will ignore any PCoA features that are present, otherwise, if PCoA features are detected an error will be raised. [default: False]'
-          - names:
-              - --m-metadata-file
-            argument: METADATA...
-            description: (multiple The sample metadata.
-          - names:
-              - --p-custom-axes
-            argument: TEXT...
-            description: List[Str] Numeric sample metadata columns that should be
           - names:
               - --o-visualization
             argument: VISUALIZATION
@@ -3724,17 +4026,17 @@ subcommands:
         usage: qiime emperor procrustes-plot [OPTIONS]
         options:
           - names:
-              - --i-m2-stats
-            argument: ARTIFACT ProcrustesStatistics
-            description: The M^2 value of the procrustes analysis & its associated p value. [optional]
-          - names:
               - --i-reference-pcoa
             argument: ARTIFACT
-            description: PCoAResults The reference ordination matrix to be plotted.
+            description: The reference ordination matrix to be plotted. [required]
           - names:
               - --i-other-pcoa
             argument: ARTIFACT
-            description: PCoAResults The "other" ordination matrix to be plotted (the one
+            description: The "other" ordination matrix to be plotted (the one that was fitted to the reference). [required]
+          - names:
+              - --i-m2-stats
+            argument: ARTIFACT
+            description: The M^2 value of the procrustes analysis & its associated p value. [optional]
           - names:
               - --p-ignore-missing-samples
               - --p-no-ignore-missing-samples
@@ -3743,11 +4045,11 @@ subcommands:
           - names:
               - --m-metadata-file
             argument: METADATA...
-            description: (multiple The sample metadata.
+            description: The sample metadata. [required]
           - names:
               - --p-custom-axes
             argument: TEXT...
-            description: List[Str] Numeric sample metadata columns that should be
+            description: Numeric sample metadata columns that should be included as axes in the Emperor plot. [optional]
           - names:
               - --o-visualization
             argument: VISUALIZATION
@@ -3923,6 +4225,26 @@ subcommands:
             argument: ""
             description: Display verbose output to stdout and/or stderr during execution of this action. Or silence output if execution is successful (silence is golden).
           - names:
+              - --recycle-pool
+            argument: TEXT
+            description: 'Use a cache pool for pipeline resumption. QIIME 2 will cache your results in this pool for reuse by future invocations. These pool are retained until deleted by the user. If not provided, QIIME 2 will create a pool which is automatically reused by invocations of the same action and removed if the action is successful. Note: these pools are local to the cache you are using.'
+          - names:
+              - --no-recycle
+            argument: ""
+            description: Do not recycle results from a previous failed pipeline run or save the results from this run for future recycling.
+          - names:
+              - --parallel
+            argument: ""
+            description: Execute your action in parallel. This flag will use your default parallel config.
+          - names:
+              - --parallel-config
+            argument: FILE
+            description: Execute your action in parallel using a config at the indicated path.
+          - names:
+              - --use-cache
+            argument: DIRECTORY
+            description: 'Specify the cache to be used for the intermediate work of this pipeline. If not provided, the default cache under $TMP/qiime2/<uname> will be used. IMPORTANT FOR HPC USERS: If you are on an HPC system and are using parallel execution it is important to set this to a location that is globally accessible to all nodes in the cluster.'
+          - names:
               - --example-data
             argument: PATH
             description: Write example data and exit.
@@ -4010,6 +4332,148 @@ subcommands:
               - --quiet
             argument: ""
             description: Display verbose output to stdout and/or stderr during execution of this action. Or silence output if execution is successful (silence is golden).
+          - names:
+              - --recycle-pool
+            argument: TEXT
+            description: 'Use a cache pool for pipeline resumption. QIIME 2 will cache your results in this pool for reuse by future invocations. These pool are retained until deleted by the user. If not provided, QIIME 2 will create a pool which is automatically reused by invocations of the same action and removed if the action is successful. Note: these pools are local to the cache you are using.'
+          - names:
+              - --no-recycle
+            argument: ""
+            description: Do not recycle results from a previous failed pipeline run or save the results from this run for future recycling.
+          - names:
+              - --parallel
+            argument: ""
+            description: Execute your action in parallel. This flag will use your default parallel config.
+          - names:
+              - --parallel-config
+            argument: FILE
+            description: Execute your action in parallel using a config at the indicated path.
+          - names:
+              - --use-cache
+            argument: DIRECTORY
+            description: 'Specify the cache to be used for the intermediate work of this pipeline. If not provided, the default cache under $TMP/qiime2/<uname> will be used. IMPORTANT FOR HPC USERS: If you are on an HPC system and are using parallel execution it is important to set this to a location that is globally accessible to all nodes in the cluster.'
+          - names:
+              - --example-data
+            argument: PATH
+            description: Write example data and exit.
+          - names:
+              - --citations
+            argument: ""
+            description: Show citations and exit.
+          - names:
+              - --help
+            argument: ""
+            description: Show this message and exit.
+      - name: classify-hybrid-vsearch-sklearn
+        description: 'ALPHA Hybrid classifier: VSEARCH exact match + sklearn classifier'
+        usage: qiime feature-classifier classify-hybrid-vsearch-sklearn
+        options:
+          - names:
+              - --i-query
+            argument: ARTIFACT
+            description: Query Sequences. [required]
+          - names:
+              - --i-reference-reads
+            argument: ARTIFACT
+            description: Reference sequences. [required]
+          - names:
+              - --i-reference-taxonomy
+            argument: ARTIFACT
+            description: Reference taxonomy labels. [required]
+          - names:
+              - --i-classifier
+            argument: ARTIFACT
+            description: Pre-trained sklearn taxonomic classifier for classifying the reads. [required]
+          - names:
+              - --p-maxaccepts
+            argument: VALUE
+            description: 'Maximum number of hits to keep for each query. Set to "all" to keep all hits > perc-identity similarity. Note that if strand=both, maxaccepts will keep N hits for each direction (if searches in the opposite direction yield results that exceed the minimum perc-identity). In those cases use maxhits to control the total number of hits returned. This option works in pair with maxrejects. The search process sorts target sequences by decreasing number of k-mers they have in common with the query sequence, using that information as a proxy for sequence similarity. After pairwise alignments, if the first target sequence passes the acceptation criteria, it is accepted as best hit and the search process stops for that query. If maxaccepts is set to a higher value, more hits are accepted. If maxaccepts and maxrejects are both set to "all", the complete database is searched. [default: 10]'
+          - names:
+              - --p-perc-identity
+            argument: PROPORTION
+            description: 'Percent sequence similarity to use for PREFILTER. Reject match if percent identity to query is lower. Set to a lower value to perform a rough pre-filter. This parameter is ignored if `prefilter` is disabled. [default: 0.5]'
+          - names:
+              - --p-query-cov
+            argument: PROPORTION
+            description: 'Query coverage threshold to use for PREFILTER. Reject match if query alignment coverage per high-scoring pair is lower. Set to a lower value to perform a rough pre-filter. This parameter is ignored if `prefilter` is disabled. [default: 0.8]'
+          - names:
+              - --p-strand
+            argument: '{''both'', ''plus''}'
+            description: 'Align against reference sequences in forward ("plus") or both directions ("both"). [default: ''both'']'
+          - names:
+              - --p-min-consensus
+            argument: NUMBER
+            description: Minimum fraction of assignments must match top hit to be accepted as consensus assignment.
+          - names:
+              - --p-maxhits
+            argument: VALUE
+            description: 'max hits [default: ''all'']'
+          - names:
+              - --p-maxrejects
+            argument: VALUE
+            description: 'max rejects [default: ''all'']'
+          - names:
+              - --p-reads-per-batch
+            argument: VALUE
+            description: 'Number of reads to process in each batch for sklearn classification. If "auto", this parameter is autoscaled to min(number of query sequences / threads, 20000). [default: ''auto'']'
+          - names:
+              - --p-confidence
+            argument: VALUE Float
+            description: Confidence threshold for limiting taxonomic depth. Set to "disable" to disable confidence calculation, or 0 to calculate confidence but not apply it to limit the taxonomic depth of the assignments.
+          - names:
+              - --p-read-orientation
+            argument: '{''same'', ''reverse-complement'', ''auto''}'
+            description: 'Direction of reads with respect to reference sequences in pre-trained sklearn classifier. same will cause reads to be classified unchanged; reverse-complement will cause reads to be reversed and complemented prior to classification. "auto" will autodetect orientation based on the confidence estimates for the first 100 reads. [default: ''auto'']'
+          - names:
+              - --p-threads
+            argument: INTEGER
+            description: 'Number of threads to use for job parallelization. [default: 1]'
+          - names:
+              - --p-prefilter
+              - --p-no-prefilter
+            argument: ""
+            description: 'Toggle positive filter of query sequences on or off. [default: True]'
+          - names:
+              - --p-sample-size
+            argument: INTEGER
+            description: 'Randomly extract the given number of sequences from the reference database to use for prefiltering. This parameter is ignored if `prefilter` is disabled. [default: 1000]'
+          - names:
+              - --p-randseed
+            argument: INTEGER
+            description: Use integer as a seed for the pseudo-random
+          - names:
+              - --o-classification
+            argument: ARTIFACT
+            description: Taxonomy classifications of query sequences. [required]
+          - names:
+              - --output-dir
+            argument: PATH
+            description: Output unspecified results to a directory
+          - names:
+              - --verbose
+              - --quiet
+            argument: ""
+            description: Display verbose output to stdout and/or stderr during execution of this action. Or silence output if execution is successful (silence is golden).
+          - names:
+              - --recycle-pool
+            argument: TEXT
+            description: 'Use a cache pool for pipeline resumption. QIIME 2 will cache your results in this pool for reuse by future invocations. These pool are retained until deleted by the user. If not provided, QIIME 2 will create a pool which is automatically reused by invocations of the same action and removed if the action is successful. Note: these pools are local to the cache you are using.'
+          - names:
+              - --no-recycle
+            argument: ""
+            description: Do not recycle results from a previous failed pipeline run or save the results from this run for future recycling.
+          - names:
+              - --parallel
+            argument: ""
+            description: Execute your action in parallel. This flag will use your default parallel config.
+          - names:
+              - --parallel-config
+            argument: FILE
+            description: Execute your action in parallel using a config at the indicated path.
+          - names:
+              - --use-cache
+            argument: DIRECTORY
+            description: 'Specify the cache to be used for the intermediate work of this pipeline. If not provided, the default cache under $TMP/qiime2/<uname> will be used. IMPORTANT FOR HPC USERS: If you are on an HPC system and are using parallel execution it is important to set this to a location that is globally accessible to all nodes in the cluster.'
           - names:
               - --example-data
             argument: PATH
@@ -4312,7 +4776,7 @@ subcommands:
             argument: ""
             description: Show this message and exit.
       - name: fit-classifier-sklearn
-        description: Train an almost arbitrary scikit-learn
+        description: Train an almost arbitrary scikit-learn classifier
         usage: qiime feature-classifier fit-classifier-sklearn [OPTIONS]
         options:
           - names:
@@ -4562,7 +5026,7 @@ subcommands:
             argument: ""
             description: Show this message and exit.
       - name: filter-features-conditionally
-        description: Filter features from a table based on
+        description: Filter features from a table based on abundance and prevalence
         usage: qiime feature-table filter-features-conditionally [OPTIONS]
         options:
           - names:
@@ -4732,7 +5196,7 @@ subcommands:
             argument: ""
             description: Show this message and exit.
       - name: group
-        description: Group samples or features by a metadata
+        description: Group samples or features by a metadata column
         usage: qiime feature-table group [OPTIONS]
         options:
           - names:
@@ -4778,7 +5242,7 @@ subcommands:
             argument: ""
             description: Show this message and exit.
       - name: heatmap
-        description: Generate a heatmap representation of a
+        description: Generate a heatmap representation of a feature table
         usage: qiime feature-table heatmap [OPTIONS]
         options:
           - names:
@@ -5198,11 +5662,11 @@ subcommands:
         options:
           - names:
               - --i-table
-            argument: ARTIFACT FeatureTable[Frequency]
+            argument: ARTIFACT/VISUALIZATION
             description: The feature table to be transposed. [required]
           - names:
               - --o-transposed-feature-table
-            argument: ARTIFACT FeatureTable[Frequency]
+            argument: ARTIFACT
             description: The resulting transposed feature table. [required]
           - names:
               - --output-dir
@@ -5247,8 +5711,8 @@ subcommands:
         description: Show this message and exit.
     subcommands:
       - name: classify-otus-experimental
-        description: 'Experimental: Obtain taxonomic lineages, by'
-        usage: "qiime fragment-insertion classify-otus-experimental \n    [OPTIONS]"
+        description: 'Experimental: Obtain taxonomic lineages, by finding closest OTU in reference phylogeny.'
+        usage: "qiime fragment-insertion classify-otus-experimental"
         options:
           - names:
               - --i-representative-sequences
@@ -5329,7 +5793,7 @@ subcommands:
             argument: ""
             description: Show this message and exit.
       - name: sepp
-        description: Insert fragment sequences using SEPP into
+        description: Insert fragment sequences using SEPP into reference phylogenies.
         usage: qiime fragment-insertion sepp [OPTIONS]
         options:
           - names:
@@ -5408,7 +5872,7 @@ subcommands:
         description: Show this message and exit.
     subcommands:
       - name: assign-ids
-        description: Assigns ids on internal nodes in the tree,
+        description: Assigns ids on internal nodes in the tree, and makes sure that they are consistent with the table columns.
         usage: qiime gneiss assign-ids [OPTIONS]
         options:
           - names:
@@ -5449,7 +5913,7 @@ subcommands:
             argument: ""
             description: Show this message and exit.
       - name: correlation-clustering
-        description: Hierarchical clustering using feature
+        description: Hierarchical clustering using feature correlation.
         usage: qiime gneiss correlation-clustering [OPTIONS]
         options:
           - names:
@@ -5536,7 +6000,7 @@ subcommands:
             argument: ""
             description: Show this message and exit.
       - name: gradient-clustering
-        description: Hierarchical clustering using gradient
+        description: Hierarchical clustering using gradient information.
         usage: qiime gneiss gradient-clustering [OPTIONS]
         options:
           - names:
@@ -5588,7 +6052,7 @@ subcommands:
             argument: ""
             description: Show this message and exit.
       - name: ilr-hierarchical
-        description: Isometric Log-ratio Transform applied to a
+        description: Isometric Log-ratio Transform applied to a hierarchical clustering
         usage: qiime gneiss ilr-hierarchical [OPTIONS]
         options:
           - names:
@@ -5629,7 +6093,7 @@ subcommands:
             argument: ""
             description: Show this message and exit.
       - name: ilr-phylogenetic
-        description: Isometric Log-ratio Transform applied to a
+        description: Isometric Log-ratio Transform applied to a phylogenetic tree
         usage: qiime gneiss ilr-phylogenetic [OPTIONS]
         options:
           - names:
@@ -5674,7 +6138,7 @@ subcommands:
             argument: ""
             description: Show this message and exit.
       - name: ilr-phylogenetic-differential
-        description: Differentially abundant Phylogenetic Log
+        description: Differentially abundant Phylogenetic Log Ratios.
         usage: qiime gneiss ilr-phylogenetic-differential [OPTIONS]
         options:
           - names:
@@ -5715,7 +6179,7 @@ subcommands:
             argument: ""
             description: Show this message and exit.
       - name: ilr-phylogenetic-ordination
-        description: Ordination through a phylogenetic Isometric
+        description: Ordination through a phylogenetic Isometric Log Ratio transform.
         usage: qiime gneiss ilr-phylogenetic-ordination [OPTIONS]
         options:
           - names:
@@ -5725,11 +6189,11 @@ subcommands:
           - names:
               - --i-tree
             argument: ARTIFACT
-            description: A rooted phylogeny of feature identifiers that
+            description: A rooted phylogeny of feature identifiers that defines the partitions of features. [required]
           - names:
               - --p-pseudocount
             argument: NUMBER
-            description: The value to add to zero counts in the feature
+            description: 'The value to add to zero counts in the feature table [default: 0.5]'
           - names:
               - --p-top-k-var
             argument: INTEGER
@@ -5737,11 +6201,11 @@ subcommands:
           - names:
               - --p-clades
             argument: TEXT...
-            description: The names of clades to focus on (overrides
+            description: 'The names of clades to focus on (overrides top-k-var). [optional]'
           - names:
               - --o-bifurcated-tree
             argument: ARTIFACT
-            description: Phylogeny[Rooted] Bifurcating phylogeny [required]
+            description: Bifurcating phylogeny [required]
           - names:
               - --o-clade-metadata
             argument: ARTIFACT FeatureData[Differential]
@@ -5873,7 +6337,7 @@ subcommands:
           - names:
               - --m-metadata-file
             argument: METADATA...
-            description: (multiple Sample metadata file containing
+            description: Sample metadata file containing
           - names:
               - --p-n-estimators
             argument: INTEGER
@@ -5908,6 +6372,26 @@ subcommands:
             argument: ""
             description: Display verbose output to stdout and/or stderr during execution of this action. Or silence output if execution is successful (silence is golden).
           - names:
+              - --recycle-pool
+            argument: TEXT
+            description: 'Use a cache pool for pipeline resumption. QIIME 2 will cache your results in this pool for reuse by future invocations. These pool are retained until deleted by the user. If not provided, QIIME 2 will create a pool which is automatically reused by invocations of the same action and removed if the action is successful. Note: these pools are local to the cache you are using.'
+          - names:
+              - --no-recycle
+            argument: ""
+            description: Do not recycle results from a previous failed pipeline run or save the results from this run for future recycling.
+          - names:
+              - --parallel
+            argument: ""
+            description: Execute your action in parallel. This flag will use your default parallel config.
+          - names:
+              - --parallel-config
+            argument: FILE
+            description: Execute your action in parallel using a config at the indicated path.
+          - names:
+              - --use-cache
+            argument: DIRECTORY
+            description: 'Specify the cache to be used for the intermediate work of this pipeline. If not provided, the default cache under $TMP/qiime2/<uname> will be used. IMPORTANT FOR HPC USERS: If you are on an HPC system and are using parallel execution it is important to set this to a location that is globally accessible to all nodes in the cluster.'
+          - names:
               - --example-data
             argument: PATH
             description: Write example data and exit.
@@ -5920,7 +6404,7 @@ subcommands:
             argument: ""
             description: Show this message and exit.
       - name: first-differences
-        description: Compute first differences or difference from
+        description: Compute first differences or difference from baseline between sequential states
         usage: qiime longitudinal first-differences [OPTIONS]
         options:
           - names:
@@ -5977,7 +6461,7 @@ subcommands:
             argument: ""
             description: Show this message and exit.
       - name: first-distances
-        description: Compute first distances or distance from baseline
+        description: Compute first distances or distance from baseline between sequential states
         usage: qiime longitudinal first-distances [OPTIONS]
         options:
           - names:
@@ -6118,7 +6602,7 @@ subcommands:
           - names:
               - --p-control
             argument: TEXT
-            description: Value of group-by to use as control group. The regression model will be trained using only control group data, and the maturity scores of other groups consequently will be assessed relative to this group.
+            description: Value of group-by to use as control group. The regression model will be trained using only control group data, and the maturity scores of other groups consequently will be assessed relative to this group. [required]
           - names:
               - --p-individual-id-column
             argument: TEXT
@@ -6148,7 +6632,7 @@ subcommands:
               - --p-optimize-feature-selection
               - --p-no-optimize-feature-selection
             argument: ""
-            description: 'Automatically optimize input feature selection using recursive feature elimination. [default: False]'
+            description: Automatically optimize input feature selection using recursive feature elimination.
           - names:
               - --p-stratify
               - --p-no-stratify
@@ -6161,7 +6645,7 @@ subcommands:
           - names:
               - --m-metadata-file
             argument: METADATA...
-            description: (multiple
+            description: (multiple arguments
           - names:
               - --p-n-estimators
             argument: INTEGER
@@ -6173,7 +6657,7 @@ subcommands:
           - names:
               - --p-feature-count
             argument: INTEGER
-            description: Range(0, None) Filter feature table to include top N most important
+            description: Range(0, None) Filter feature table to include top N most
           - names:
               - --o-sample-estimator
             argument: ARTIFACT SampleEstimator[Regressor]
@@ -6215,6 +6699,26 @@ subcommands:
               - --quiet
             argument: ""
             description: Display verbose output to stdout and/or stderr during execution of this action. Or silence output if execution is successful (silence is golden).
+          - names:
+              - --recycle-pool
+            argument: TEXT
+            description: 'Use a cache pool for pipeline resumption. QIIME 2 will cache your results in this pool for reuse by future invocations. These pool are retained until deleted by the user. If not provided, QIIME 2 will create a pool which is automatically reused by invocations of the same action and removed if the action is successful. Note: these pools are local to the cache you are using.'
+          - names:
+              - --no-recycle
+            argument: ""
+            description: Do not recycle results from a previous failed pipeline run or save the results from this run for future recycling.
+          - names:
+              - --parallel
+            argument: ""
+            description: Execute your action in parallel. This flag will use your default parallel config.
+          - names:
+              - --parallel-config
+            argument: FILE
+            description: Execute your action in parallel using a config at the indicated path.
+          - names:
+              - --use-cache
+            argument: DIRECTORY
+            description: 'Specify the cache to be used for the intermediate work of this pipeline. If not provided, the default cache under $TMP/qiime2/<uname> will be used. IMPORTANT FOR HPC USERS: If you are on an HPC system and are using parallel execution it is important to set this to a location that is globally accessible to all nodes in the cluster.'
           - names:
               - --example-data
             argument: PATH
@@ -6413,7 +6917,7 @@ subcommands:
             argument: ""
             description: Show this message and exit.
       - name: plot-feature-volatility
-        description: Plot longitudinal feature volatility and
+        description: Plot longitudinal feature volatility and importances
         usage: qiime longitudinal plot-feature-volatility [OPTIONS]
         options:
           - names:
@@ -6694,7 +7198,7 @@ subcommands:
         description: Show this message and exit.
     subcommands:
       - name: align-to-tree-mafft-fasttree
-        description: Build a phylogenetic tree using fasttree and
+        description: Build a phylogenetic tree using fasttree and mafft alignment
         usage: qiime phylogeny align-to-tree-mafft-fasttree [OPTIONS]
         options:
           - names:
@@ -6740,6 +7244,26 @@ subcommands:
             argument: ""
             description: Display verbose output to stdout and/or stderr during execution of this action. Or silence output if execution is successful (silence is golden).
           - names:
+              - --recycle-pool
+            argument: TEXT
+            description: 'Use a cache pool for pipeline resumption. QIIME 2 will cache your results in this pool for reuse by future invocations. These pool are retained until deleted by the user. If not provided, QIIME 2 will create a pool which is automatically reused by invocations of the same action and removed if the action is successful. Note: these pools are local to the cache you are using.'
+          - names:
+              - --no-recycle
+            argument: ""
+            description: Do not recycle results from a previous failed pipeline run or save the results from this run for future recycling.
+          - names:
+              - --parallel
+            argument: ""
+            description: Execute your action in parallel. This flag will use your default parallel config.
+          - names:
+              - --parallel-config
+            argument: FILE
+            description: Execute your action in parallel using a config at the indicated path.
+          - names:
+              - --use-cache
+            argument: DIRECTORY
+            description: 'Specify the cache to be used for the intermediate work of this pipeline. If not provided, the default cache under $TMP/qiime2/<uname> will be used. IMPORTANT FOR HPC USERS: If you are on an HPC system and are using parallel execution it is important to set this to a location that is globally accessible to all nodes in the cluster.'
+          - names:
               - --example-data
             argument: PATH
             description: Write example data and exit.
@@ -6752,7 +7276,7 @@ subcommands:
             argument: ""
             description: Show this message and exit.
       - name: align-to-tree-mafft-iqtree
-        description: Build a phylogenetic tree using iqtree and
+        description: Build a phylogenetic tree using iqtree and mafft alignment
         usage: qiime phylogeny align-to-tree-mafft-iqtree [OPTIONS]
         options:
           - names:
@@ -6814,6 +7338,26 @@ subcommands:
             argument: ""
             description: Display verbose output to stdout and/or stderr during execution of this action. Or silence output if execution is successful (silence is golden).
           - names:
+              - --recycle-pool
+            argument: TEXT
+            description: 'Use a cache pool for pipeline resumption. QIIME 2 will cache your results in this pool for reuse by future invocations. These pool are retained until deleted by the user. If not provided, QIIME 2 will create a pool which is automatically reused by invocations of the same action and removed if the action is successful. Note: these pools are local to the cache you are using.'
+          - names:
+              - --no-recycle
+            argument: ""
+            description: Do not recycle results from a previous failed pipeline run or save the results from this run for future recycling.
+          - names:
+              - --parallel
+            argument: ""
+            description: Execute your action in parallel. This flag will use your default parallel config.
+          - names:
+              - --parallel-config
+            argument: FILE
+            description: Execute your action in parallel using a config at the indicated path.
+          - names:
+              - --use-cache
+            argument: DIRECTORY
+            description: 'Specify the cache to be used for the intermediate work of this pipeline. If not provided, the default cache under $TMP/qiime2/<uname> will be used. IMPORTANT FOR HPC USERS: If you are on an HPC system and are using parallel execution it is important to set this to a location that is globally accessible to all nodes in the cluster.'
+          - names:
               - --example-data
             argument: PATH
             description: Write example data and exit.
@@ -6826,7 +7370,7 @@ subcommands:
             argument: ""
             description: Show this message and exit.
       - name: align-to-tree-mafft-raxml
-        description: Build a phylogenetic tree using raxml and
+        description: Build a phylogenetic tree using raxml and mafft alignment
         usage: qiime phylogeny align-to-tree-mafft-raxml [OPTIONS]
         options:
           - names:
@@ -6880,6 +7424,26 @@ subcommands:
             argument: ""
             description: Display verbose output to stdout and/or stderr during execution of this action. Or silence output if execution is successful (silence is golden).
           - names:
+              - --recycle-pool
+            argument: TEXT
+            description: 'Use a cache pool for pipeline resumption. QIIME 2 will cache your results in this pool for reuse by future invocations. These pool are retained until deleted by the user. If not provided, QIIME 2 will create a pool which is automatically reused by invocations of the same action and removed if the action is successful. Note: these pools are local to the cache you are using.'
+          - names:
+              - --no-recycle
+            argument: ""
+            description: Do not recycle results from a previous failed pipeline run or save the results from this run for future recycling.
+          - names:
+              - --parallel
+            argument: ""
+            description: Execute your action in parallel. This flag will use your default parallel config.
+          - names:
+              - --parallel-config
+            argument: FILE
+            description: Execute your action in parallel using a config at the indicated path.
+          - names:
+              - --use-cache
+            argument: DIRECTORY
+            description: 'Specify the cache to be used for the intermediate work of this pipeline. If not provided, the default cache under $TMP/qiime2/<uname> will be used. IMPORTANT FOR HPC USERS: If you are on an HPC system and are using parallel execution it is important to set this to a location that is globally accessible to all nodes in the cluster.'
+          - names:
               - --example-data
             argument: PATH
             description: Write example data and exit.
@@ -6925,7 +7489,7 @@ subcommands:
             argument: ""
             description: Show this message and exit.
       - name: filter-table
-        description: Remove features from table if they're not
+        description: Remove features from table if they're not present in tree.
         usage: qiime phylogeny filter-table [OPTIONS]
         options:
           - names:
@@ -7096,7 +7660,7 @@ subcommands:
             argument: ""
             description: Show this message and exit.
       - name: iqtree-ultrafast-bootstrap
-        description: Construct a phylogenetic tree with IQ-TREE
+        description: Construct a phylogenetic tree with IQ-TREE with bootstrap supports.
         usage: qiime phylogeny iqtree-ultrafast-bootstrap [OPTIONS]
         options:
           - names:
@@ -7291,7 +7855,7 @@ subcommands:
             argument: ""
             description: Show this message and exit.
       - name: raxml-rapid-bootstrap
-        description: Construct a phylogenetic tree with bootstrap
+        description: Construct a phylogenetic tree with bootstrap supports using RAxML.
         usage: qiime phylogeny raxml-rapid-bootstrap [OPTIONS]
         options:
           - names:
@@ -7344,7 +7908,7 @@ subcommands:
             argument: ""
             description: Show this message and exit.
       - name: robinson-foulds
-        description: Calculate Robinson-Foulds distance between
+        description: Calculate Robinson-Foulds distance between phylogenetic trees.
         usage: qiime phylogeny robinson-foulds [OPTIONS]
         options:
           - names:
@@ -7442,8 +8006,152 @@ subcommands:
               - --help
             argument: ""
             description: Show this message and exit.
+      - name: decontam-identify
+        description: Identify contaminants
+        usage: qiime quality-control decontam-identify [OPTIONS]
+        options:
+          - names:
+              - --i-table
+            argument: ARTIFACT FeatureTable[Frequency]
+            description: ASV or OTU table which contaminate sequences will be identified from [required]
+          - names:
+              - --p-method
+            argument: TEXT Choices('combined', 'frequency', 'prevalence')
+            description: 'Select how to which method to id contaminants with; Prevalence: Utilizes control ASVs/OTUs to identify contaminants, Frequency: Utilizes sample concentration information to identify contaminants, Combined: Utilizes both Prevalence and Frequency methods when identifying contaminants [default: ''prevalence'']'
+          - names:
+              - --p-freq-concentration-column
+            argument: TEXT
+            description: Input column name that has concentration information for the samples [optional]
+          - names:
+              - --p-prev-control-column
+            argument: TEXT
+            description: Input column name containing experimental or control sample metadata [optional]
+          - names:
+              - --p-prev-control-indicator
+            argument: TEXT
+            description: indicate the control sample identifier (e.g. "control" or "blank") [optional]
+          - names:
+              - --m-metadata-file
+            argument: METADATA...
+            description: (multiple metadata file indicating which samples in the
+          - names:
+              - --o-decontam-scores
+            argument: ARTIFACT FeatureData[DecontamScore]
+            description: The resulting table of scores from the decontam algorithm which scores each ASV or OTU on how likely they are to be a contaminant sequence [required]
+          - names:
+              - --output-dir
+            argument: PATH
+            description: Output unspecified results to a directory
+          - names:
+              - --verbose
+              - --quiet
+            argument: ""
+            description: Display verbose output to stdout and/or stderr during execution of this action. Or silence output if execution is successful (silence is golden).
+          - names:
+              - --example-data
+            argument: PATH
+            description: Write example data and exit.
+          - names:
+              - --citations
+            argument: ""
+            description: Show citations and exit.
+          - names:
+              - --help
+            argument: ""
+            description: Show this message and exit.
+      - name: decontam-remove
+        description: Removes contaminant
+        usage: qiime quality-control decontam-remove [OPTIONS]
+        options:
+          - names:
+              - --i-decontam-scores
+            argument: ARTIFACT FeatureData[DecontamScore]
+            description: Output table from decontam identify [required]
+          - names:
+              - --i-table
+            argument: ARTIFACT FeatureTable[Frequency]
+            description: ASV or OTU table which contaminate sequences will be identified from [required]
+          - names:
+              - --p-threshold
+            argument: NUMBER
+            description: 'Select threshold cutoff for decontam algorithm scores   [default: 0.1]'
+          - names:
+              - --o-filtered-table
+            argument: ARTIFACT FeatureTable[Frequency]
+            description: The resulting feature table of scores once contaminants are removed [required]
+          - names:
+              - --output-dir
+            argument: PATH
+            description: Output unspecified results to a directory
+          - names:
+              - --verbose
+              - --quiet
+            argument: ""
+            description: Display verbose output to stdout and/or stderr during execution of this action. Or silence output if execution is successful (silence is golden).
+          - names:
+              - --example-data
+            argument: PATH
+            description: Write example data and exit.
+          - names:
+              - --citations
+            argument: ""
+            description: Show citations and exit.
+          - names:
+              - --help
+            argument: ""
+            description: Show this message and exit.
+      - name: decontam-score-viz
+        description: Generate a histogram representation of the scores
+        usage: qiime quality-control decontam-score-viz [OPTIONS]
+        options:
+          - names:
+              - --i-decontam-scores
+            argument: ARTIFACT FeatureData[DecontamScore]
+            description: Output from decontam identify to be visualized
+          - names:
+              - --i-table
+            argument: ARTIFACT FeatureTable[Frequency]
+            description: Raw OTU/ASV table that was used as input to decontam-identify [required]
+          - names:
+              - --p-threshold
+            argument: NUMBER
+            description: Select threshold cutoff for decontam algorithm scores
+          - names:
+              - --p-weighted
+              - --p-no-weighted
+            argument: ""
+            description: weight the decontam scores by their associated read
+          - names:
+              - --p-bin-size
+            argument: NUMBER
+            description: 'Select bin size for the histogram [default: 0.02]'
+          - names:
+              - --o-visualization
+            argument: VISUALIZATION
+            description: '[required]'
+          - names:
+              - --output-dir
+            argument: PATH
+            description: Output unspecified results to a directory
+          - names:
+              - --verbose
+              - --quiet
+            argument: ""
+            description: Display verbose output to stdout and/or stderr during execution of this action. Or silence output if execution is successful (silence is golden).
+          - names:
+              - --example-data
+            argument: PATH
+            description: Write example data and exit.
+          - names:
+              - --citations
+            argument: ""
+            description: Show citations and exit.
+          - names:
+              - --help
+            argument: ""
+            description: Show this message and exit.
       - name: evaluate-composition
-        description: Evaluate expected vs. observed taxonomic composition
+        description: Evaluate expected vs. observed taxonomic composition of samples
         usage: qiime quality-control evaluate-composition [OPTIONS]
         options:
           - names:
@@ -7529,7 +8237,7 @@ subcommands:
             argument: ""
             description: Show this message and exit.
       - name: evaluate-seqs
-        description: Compare query (observed) vs. reference (expected)
+        description: Compare query (observed) vs. reference (expected) sequences.
         usage: qiime quality-control evaluate-seqs [OPTIONS]
         options:
           - names:
@@ -7687,7 +8395,7 @@ subcommands:
             argument: ""
             description: Show this message and exit.
       - name: filter-reads
-        description: Filter demultiplexed sequences by alignment to
+        description: Filter demultiplexed sequences by alignment to reference database.
         usage: qiime quality-control filter-reads [OPTIONS]
         options:
           - names:
@@ -7756,6 +8464,60 @@ subcommands:
           - --help
         argument: ""
         description: Show this message and exit.
+    subcommands:
+      - name: q-score
+        description: Quality filter based on sequence quality scores.
+        usage: qiime quality-filter q-score [OPTIONS]
+        options:
+          - names:
+              - --i-demux
+            argument: ARTIFACT
+            description: The demultiplexed sequence data to be quality filtered. [required]
+          - names:
+              - --p-min-quality
+            argument: INTEGER
+            description: 'The minimum acceptable PHRED score. All PHRED scores less that this value are considered to be low PHRED scores. [default: 4]'
+          - names:
+              - --p-quality-window
+            argument: INTEGER
+            description: 'The maximum number of low PHRED scores that can be observed in direct succession before truncating a sequence read. [default: 3]'
+          - names:
+              - --p-min-length-fraction
+            argument: NUMBER
+            description: 'The minimum length that a sequence read can be following truncation and still be retained. This length should be provided as a fraction of the input sequence length. [default: 0.75]'
+          - names:
+              - --p-max-ambiguous
+            argument: INTEGER
+            description: 'The maximum number of ambiguous (i.e., N) base calls. This is applied after trimming sequences based on `min-length-fraction`. [default: 0]'
+          - names:
+              - --o-filtered-sequences
+            argument: ARTIFACT
+            description: The resulting quality-filtered sequences. [required]
+          - names:
+              - --o-filter-stats
+            argument: ARTIFACT
+            description: Summary statistics of the filtering process. [required]
+          - names:
+              - --output-dir
+            argument: PATH
+            description: Output unspecified results to a directory
+          - names:
+              - --verbose
+              - --quiet
+            argument: ""
+            description: Display verbose output to stdout and/or stderr during execution of this action. Or silence output if execution is successful (silence is golden).
+          - names:
+              - --example-data
+            argument: PATH
+            description: Write example data and exit.
+          - names:
+              - --citations
+            argument: ""
+            description: Show citations and exit.
+          - names:
+              - --help
+            argument: ""
+            description: Show this message and exit.
   - name: sample-classifier
     description: Plugin for machine learning prediction of sample metadata.
     usage: qiime sample-classifier [OPTIONS] COMMAND [ARGS]...
@@ -7778,7 +8540,7 @@ subcommands:
         description: Show this message and exit.
     subcommands:
       - name: classify-samples
-        description: Train and test a cross-validated supervised
+        description: Train and test a cross-validated supervised learning classifier.
         usage: qiime sample-classifier classify-samples [OPTIONS]
         options:
           - names:
@@ -7810,7 +8572,7 @@ subcommands:
               - --p-optimize-feature-selection
               - --p-no-optimize-feature-selection
             argument: ""
-            description: 'Automatically optimize input feature selection using recursive feature elimination. [default: False]'
+            description: Automatically optimize input feature selection using recursive feature elimination.
           - names:
               - --p-parameter-tuning
               - --p-no-parameter-tuning
@@ -7823,7 +8585,7 @@ subcommands:
           - names:
               - --p-test-size
             argument: PROPORTION
-            description: Range(0.0, 1.0) Fraction of input samples to exclude from training set
+            description: Range(0.0, 1.0) Fraction of input samples to exclude from training
           - names:
               - --p-n-estimators
             argument: INTEGER
@@ -7851,7 +8613,7 @@ subcommands:
           - names:
               - --o-probabilities
             argument: ARTIFACT SampleData[Probabilities]
-            description: Predicted class probabilities for each input sample.
+            description: Predicted class probabilities for each input sample. [required]
           - names:
               - --o-heatmap
             argument: VISUALIZATION
@@ -7859,11 +8621,11 @@ subcommands:
           - names:
               - --o-training-targets
             argument: ARTIFACT SampleData[TrueTargets]
-            description: Series containing true target values of train samples
+            description: Series containing true target values of train samples [required]
           - names:
               - --o-test-targets
             argument: ARTIFACT SampleData[TrueTargets]
-            description: Series containing true target values of test samples
+            description: Series containing true target values of test samples [required]
           - names:
               - --output-dir
             argument: PATH
@@ -7873,6 +8635,26 @@ subcommands:
               - --quiet
             argument: ""
             description: Display verbose output to stdout and/or stderr during execution of this action. Or silence output if execution is successful (silence is golden).
+          - names:
+              - --recycle-pool
+            argument: TEXT
+            description: 'Use a cache pool for pipeline resumption. QIIME 2 will cache your results in this pool for reuse by future invocations. These pool are retained until deleted by the user. If not provided, QIIME 2 will create a pool which is automatically reused by invocations of the same action and removed if the action is successful. Note: these pools are local to the cache you are using.'
+          - names:
+              - --no-recycle
+            argument: ""
+            description: Do not recycle results from a previous failed pipeline run or save the results from this run for future recycling.
+          - names:
+              - --parallel
+            argument: ""
+            description: Execute your action in parallel. This flag will use your default parallel config.
+          - names:
+              - --parallel-config
+            argument: FILE
+            description: Execute your action in parallel using a config at the indicated path.
+          - names:
+              - --use-cache
+            argument: DIRECTORY
+            description: 'Specify the cache to be used for the intermediate work of this pipeline. If not provided, the default cache under $TMP/qiime2/<uname> will be used. IMPORTANT FOR HPC USERS: If you are on an HPC system and are using parallel execution it is important to set this to a location that is globally accessible to all nodes in the cluster.'
           - names:
               - --example-data
             argument: PATH
@@ -7886,7 +8668,7 @@ subcommands:
             argument: ""
             description: Show this message and exit.
       - name: classify-samples-from-dist
-        description: Run k-nearest-neighbors on a labeled distance
+        description: Run k-nearest-neighbors on a labeled distance matrix.
         usage: qiime sample-classifier classify-samples-from-dist [OPTIONS]
         options:
           - names:
@@ -7904,7 +8686,11 @@ subcommands:
           - names:
               - --p-n-jobs
             argument: INTEGER
-            description: 'Number of jobs to run in parallel.         [default: 1],--p-palette TEXT Choices(''YellowOrangeBrown'', ''YellowOrangeRed'',   ''OrangeRed'', ''PurpleRed'', ''RedPurple'', ''BluePurple'', ''GreenBlue'', ''PurpleBlue'', ''YellowGreen'', ''summer'', ''copper'', ''viridis'', ''cividis'', ''plasma'', ''inferno'', ''magma'', ''sirocco'', ''drifting'', ''melancholy'', ''enigma'', ''eros'', ''spectre'', ''ambition'', ''mysteriousstains'', ''daydream'', ''solano'', ''navarro'', ''dandelions'', ''deepblue'', ''verve'', ''greyscale'')'
+            description: 'Number of jobs to run in parallel. [default: 1]'
+          - names:
+              - --p-palette
+            argument: TEXT
+            description: Choose color palette
           - names:
               - --m-metadata-file
               - --m-metadata-column
@@ -7932,6 +8718,26 @@ subcommands:
             argument: ""
             description: Display verbose output to stdout and/or stderr during execution of this action. Or silence output if execution is successful (silence is golden).
           - names:
+              - --recycle-pool
+            argument: TEXT
+            description: 'Use a cache pool for pipeline resumption. QIIME 2 will cache your results in this pool for reuse by future invocations. These pool are retained until deleted by the user. If not provided, QIIME 2 will create a pool which is automatically reused by invocations of the same action and removed if the action is successful. Note: these pools are local to the cache you are using.'
+          - names:
+              - --no-recycle
+            argument: ""
+            description: Do not recycle results from a previous failed pipeline run or save the results from this run for future recycling.
+          - names:
+              - --parallel
+            argument: ""
+            description: Execute your action in parallel. This flag will use your default parallel config.
+          - names:
+              - --parallel-config
+            argument: FILE
+            description: Execute your action in parallel using a config at the indicated path.
+          - names:
+              - --use-cache
+            argument: DIRECTORY
+            description: 'Specify the cache to be used for the intermediate work of this pipeline. If not provided, the default cache under $TMP/qiime2/<uname> will be used. IMPORTANT FOR HPC USERS: If you are on an HPC system and are using parallel execution it is important to set this to a location that is globally accessible to all nodes in the cluster.'
+          - names:
               - --example-data
             argument: PATH
             description: Write example data and exit.
@@ -7944,7 +8750,7 @@ subcommands:
             argument: ""
             description: Show this message and exit.
       - name: classify-samples-ncv
-        description: Nested cross-validated supervised learning
+        description: Nested cross-validated supervised learning classifier.
         usage: qiime sample-classifier classify-samples-ncv [OPTIONS]
         options:
           - names:
@@ -8015,7 +8821,7 @@ subcommands:
             argument: ""
             description: Show this message and exit.
       - name: confusion-matrix
-        description: Make a confusion matrix from sample classifier
+        description: Make a confusion matrix from sample classifier predictions.
         usage: qiime sample-classifier confusion-matrix [OPTIONS]
         options:
           - names:
@@ -8226,11 +9032,8 @@ subcommands:
             description: Feature importances. [required]
           - names:
               - --m-sample-metadata-file
-            argument: ""
-            description: METADATA
-          - names:
               - --m-sample-metadata-column
-            argument: COLUMN  MetadataColumn[Categorical]
+            argument: METADATA
             description: Sample metadata column to use for sample labeling or grouping. [optional]
           - names:
               - --m-feature-metadata-file
@@ -8265,7 +9068,7 @@ subcommands:
           - names:
               - --p-feature-count
             argument: INTEGER
-            description: Range(0, None) Filter feature table to include top N most important
+            description: Range(0, None) Filter feature table to include top N most
           - names:
               - --o-heatmap
             argument: VISUALIZATION
@@ -8284,6 +9087,26 @@ subcommands:
             argument: ""
             description: Display verbose output to stdout and/or stderr during execution of this action. Or silence output if execution is successful (silence is golden).
           - names:
+              - --recycle-pool
+            argument: TEXT
+            description: 'Use a cache pool for pipeline resumption. QIIME 2 will cache your results in this pool for reuse by future invocations. These pool are retained until deleted by the user. If not provided, QIIME 2 will create a pool which is automatically reused by invocations of the same action and removed if the action is successful. Note: these pools are local to the cache you are using.'
+          - names:
+              - --no-recycle
+            argument: ""
+            description: Do not recycle results from a previous failed pipeline run or save the results from this run for future recycling.
+          - names:
+              - --parallel
+            argument: ""
+            description: Execute your action in parallel. This flag will use your default parallel config.
+          - names:
+              - --parallel-config
+            argument: FILE
+            description: Execute your action in parallel using a config at the indicated path.
+          - names:
+              - --use-cache
+            argument: DIRECTORY
+            description: 'Specify the cache to be used for the intermediate work of this pipeline. If not provided, the default cache under $TMP/qiime2/<uname> will be used. IMPORTANT FOR HPC USERS: If you are on an HPC system and are using parallel execution it is important to set this to a location that is globally accessible to all nodes in the cluster.'
+          - names:
               - --example-data
             argument: PATH
             description: Write example data and exit.
@@ -8296,7 +9119,7 @@ subcommands:
             argument: ""
             description: Show this message and exit.
       - name: metatable
-        description: Convert (and merge) positive numeric metadata
+        description: Convert (and merge) positive numeric metadata (in)to feature table.
         usage: qiime sample-classifier metatable [OPTIONS]
         options:
           - names:
@@ -8308,6 +9131,10 @@ subcommands:
             argument: TEXT Choices('error', 'ignore')
             description: 'How to handle missing samples in metadata. "error" will fail if missing samples are detected. "ignore" will cause the feature table and metadata to be filtered, so that only samples found in both files are retained. [default: ''ignore'']'
           - names:
+              - --p-missing-values
+            argument: TEXT
+            description: Choices('drop_samples', 'drop_features', 'error',
+          - names:
               - --p-drop-all-unique
               - --p-no-drop-all-unique
             argument: ""
@@ -8315,7 +9142,7 @@ subcommands:
           - names:
               - --m-metadata-file
             argument: METADATA...
-            description: (multiple Metadata file to convert to feature table.
+            description: (multiple arguments Metadata file to convert to feature table.
           - names:
               - --o-converted-table
             argument: ARTIFACT FeatureTable[Frequency]
@@ -8330,6 +9157,26 @@ subcommands:
             argument: ""
             description: Display verbose output to stdout and/or stderr during execution of this action. Or silence output if execution is successful (silence is golden).
           - names:
+              - --recycle-pool
+            argument: TEXT
+            description: 'Use a cache pool for pipeline resumption. QIIME 2 will cache your results in this pool for reuse by future invocations. These pool are retained until deleted by the user. If not provided, QIIME 2 will create a pool which is automatically reused by invocations of the same action and removed if the action is successful. Note: these pools are local to the cache you are using.'
+          - names:
+              - --no-recycle
+            argument: ""
+            description: Do not recycle results from a previous failed pipeline run or save the results from this run for future recycling.
+          - names:
+              - --parallel
+            argument: ""
+            description: Execute your action in parallel. This flag will use your default parallel config.
+          - names:
+              - --parallel-config
+            argument: FILE
+            description: Execute your action in parallel using a config at the indicated path.
+          - names:
+              - --use-cache
+            argument: DIRECTORY
+            description: 'Specify the cache to be used for the intermediate work of this pipeline. If not provided, the default cache under $TMP/qiime2/<uname> will be used. IMPORTANT FOR HPC USERS: If you are on an HPC system and are using parallel execution it is important to set this to a location that is globally accessible to all nodes in the cluster.'
+          - names:
               - --example-data
             argument: PATH
             description: Write example data and exit.
@@ -8342,7 +9189,7 @@ subcommands:
             argument: ""
             description: Show this message and exit.
       - name: predict-classification
-        description: Use trained classifier to predict target values
+        description: Use trained classifier to predict target values for new samples.
         usage: qiime sample-classifier predict-classification [OPTIONS]
         options:
           - names:
@@ -8387,7 +9234,7 @@ subcommands:
             argument: ""
             description: Show this message and exit.
       - name: predict-regression
-        description: Use trained regressor to predict target values
+        description: Use trained regressor to predict target values for new samples.
         usage: qiime sample-classifier predict-regression [OPTIONS]
         options:
           - names:
@@ -8428,7 +9275,7 @@ subcommands:
             argument: ""
             description: Show this message and exit.
       - name: regress-samples
-        description: Train and test a cross-validated supervised
+        description: Train and test a cross-validated supervised learning regressor.
         usage: qiime sample-classifier regress-samples [OPTIONS]
         options:
           - names:
@@ -8439,7 +9286,7 @@ subcommands:
               - --m-metadata-file
               - --m-metadata-column
             argument: METADATA
-            description: Numeric metadata column to use as prediction target.
+            description: Numeric metadata column to use as prediction target. [required]
           - names:
               - --p-step
             argument: PROPORTION Range(0.0, 1.0, inclusive_start=False)
@@ -8460,7 +9307,7 @@ subcommands:
               - --p-optimize-feature-selection
               - --p-no-optimize-feature-selection
             argument: ""
-            description: 'Automatically optimize input feature selection using recursive feature elimination. [default: False]'
+            description: Automatically optimize input feature selection using recursive feature elimination.
           - names:
               - --p-stratify
               - --p-no-stratify
@@ -8478,7 +9325,7 @@ subcommands:
           - names:
               - --p-test-size
             argument: PROPORTION
-            description: Range(0.0, 1.0) Fraction of input samples to exclude from training set
+            description: Range(0.0, 1.0) Fraction of input samples to exclude from training
           - names:
               - --p-n-estimators
             argument: INTEGER
@@ -8513,6 +9360,26 @@ subcommands:
             argument: ""
             description: Display verbose output to stdout and/or stderr during execution of this action. Or silence output if execution is successful (silence is golden).
           - names:
+              - --recycle-pool
+            argument: TEXT
+            description: 'Use a cache pool for pipeline resumption. QIIME 2 will cache your results in this pool for reuse by future invocations. These pool are retained until deleted by the user. If not provided, QIIME 2 will create a pool which is automatically reused by invocations of the same action and removed if the action is successful. Note: these pools are local to the cache you are using.'
+          - names:
+              - --no-recycle
+            argument: ""
+            description: Do not recycle results from a previous failed pipeline run or save the results from this run for future recycling.
+          - names:
+              - --parallel
+            argument: ""
+            description: Execute your action in parallel. This flag will use your default parallel config.
+          - names:
+              - --parallel-config
+            argument: FILE
+            description: Execute your action in parallel using a config at the indicated path.
+          - names:
+              - --use-cache
+            argument: DIRECTORY
+            description: 'Specify the cache to be used for the intermediate work of this pipeline. If not provided, the default cache under $TMP/qiime2/<uname> will be used. IMPORTANT FOR HPC USERS: If you are on an HPC system and are using parallel execution it is important to set this to a location that is globally accessible to all nodes in the cluster.'
+          - names:
               - --example-data
             argument: PATH
             description: Write example data and exit.
@@ -8525,7 +9392,7 @@ subcommands:
             argument: ""
             description: Show this message and exit.
       - name: regress-samples-ncv
-        description: Nested cross-validated supervised learning
+        description: Nested cross-validated supervised learning regressor.
         usage: qiime sample-classifier regress-samples-ncv [OPTIONS]
         options:
           - names:
@@ -8597,7 +9464,7 @@ subcommands:
             argument: ""
             description: Show this message and exit.
       - name: scatterplot
-        description: Make 2D scatterplot and linear regression of
+        description: Make 2D scatterplot and linear regression of regressor predictions.
         usage: qiime sample-classifier scatterplot [OPTIONS]
         options:
           - names:
@@ -8639,7 +9506,7 @@ subcommands:
             argument: ""
             description: Show this message and exit.
       - name: split-table
-        description: Split a feature table into training and testing
+        description: Split a feature table into training and testing sets.
         usage: qiime sample-classifier split-table [OPTIONS]
         options:
           - names:
@@ -8694,7 +9561,7 @@ subcommands:
             argument: ""
             description: Show this message and exit.
       - name: summarize
-        description: Summarize parameter and feature extraction
+        description: Summarize parameter and feature extraction information for a trained estimator.
         usage: qiime sample-classifier summarize [OPTIONS]
         options:
           - names:
@@ -8753,12 +9620,16 @@ subcommands:
         options:
           - names:
               - --i-table
-            argument: ARTIFACT FeatureTable[Frequency]
+            argument: ARTIFACT FeatureTable[Frequency | PresenceAbsence]
             description: Feature table to visualize at various taxonomic levels. [required]
           - names:
               - --i-taxonomy
             argument: ARTIFACT FeatureData[Taxonomy]
-            description: Taxonomic annotations for features in the provided feature table. All features in the feature table must have a corresponding taxonomic annotation. Taxonomic annotations that are not present in the feature table will be ignored. [required]
+            description: Taxonomic annotations for features in the provided feature table. All features in the feature table must have a corresponding taxonomic annotation. Taxonomic annotations that are not present in the feature table will be ignored. If no taxonomy is provided, the feature IDs will be used as labels. [optional]
+          - names:
+              - --p-level-delimiter
+            argument: TEXT
+            description: Attempt to parse hierarchical taxonomic information from feature IDs by separating levels with this character. This parameter is ignored if a taxonomy is provided as input. [optional]
           - names:
               - --m-metadata-file
             argument: METADATA...
@@ -8956,6 +9827,67 @@ subcommands:
         argument: ""
         description: Show this message and exit.
     subcommands:
+      - name: cluster-features-closed-reference
+        description: Closed-reference clustering of features.
+        usage: qiime vsearch cluster-features-closed-reference [OPTIONS]
+        options:
+          - names:
+              - --i-sequences
+            argument: ARTIFACT
+            description: The sequences corresponding to the features in table. [required]
+          - names:
+              - --i-table
+            argument: ARTIFACT
+            description: The feature table to be clustered. [required]
+          - names:
+              - --i-reference-sequences
+            argument: ARTIFACT FeatureData[Sequence]
+            description: The sequences to use as cluster centroids. [required]
+          - names:
+              - --p-perc-identity
+            argument: ""
+            description: The percent identity at which clustering should be performed. This parameter maps to vsearch's --id parameter. [required]
+          - names:
+              - --p-strand
+            argument: '{''plus'', ''both''}'
+            description: 'Search plus (i.e., forward) or both (i.e., forward and reverse complement) strands. [default: ''plus'']'
+          - names:
+              - --p-threads
+            argument: INTEGER
+            description: 'The number of threads to use for computation. Passing 0 will launch one thread per CPU core. [default: 1]'
+          - names:
+              - --o-clustered-table
+            argument: ARTIFACT
+            description: The table following clustering of features. [required]
+          - names:
+              - --o-clustered-sequences
+            argument: ARTIFACT
+            description: The sequences representing clustered features, relabeled by the reference IDs. [required]
+          - names:
+              - --o-unmatched-sequences
+            argument: ARTIFACT
+            description: The sequences which failed to match any reference sequences. This output maps to vsearch's --notmatched parameter. [required]
+          - names:
+              - --output-dir
+            argument: PATH
+            description: Output unspecified results to a directory
+          - names:
+              - --verbose
+              - --quiet
+            argument: ""
+            description: Display verbose output to stdout and/or stderr during execution of this action. Or silence output if execution is successful (silence is golden).
+          - names:
+              - --example-data
+            argument: PATH
+            description: Write example data and exit.
+          - names:
+              - --citations
+            argument: ""
+            description: Show citations and exit.
+          - names:
+              - --help
+            argument: ""
+            description: Show this message and exit.
       - name: cluster-features-de-novo
         description: De novo clustering of features.
         usage: qiime vsearch cluster-features-de-novo [OPTIONS]
@@ -9001,18 +9933,95 @@ subcommands:
               - --help
             argument: ""
             description: Show this message and exit.
+      - name: cluster-features-open-reference
+        description: Open-reference clustering of features.
+        usage: qiime vsearch cluster-features-open-reference [OPTIONS]
+        options:
+          - names:
+              - --i-sequences
+            argument: ARTIFACT
+            description: The sequences corresponding to the features in table. [required]
+          - names:
+              - --i-table
+            argument: ARTIFACT
+            description: The feature table to be clustered. [required]
+          - names:
+              - --i-reference-sequences
+            argument: ARTIFACT
+            description: The sequences to use as cluster centroids. [required]
+          - names:
+              - --p-perc-identity
+            argument: PROPORTION
+            description: The percent identity at which clustering should be performed. This parameter maps to vsearch's --id parameter. [required]
+          - names:
+              - --p-strand
+            argument: '{''plus'', ''both''}'
+            description: 'Search plus (i.e., forward) or both (i.e., forward and reverse complement) strands. [default: ''plus'']'
+          - names:
+              - --p-threads
+            argument: INTEGER
+            description: 'The number of threads to use for computation. Passing 0 will launch one thread per CPU core. [default: 1]'
+          - names:
+              - --o-clustered-table
+            argument: ARTIFACT
+            description: The table following clustering of features. [required]
+          - names:
+              - --o-clustered-sequences
+            argument: ARTIFACT
+            description: Sequences representing clustered features. [required]
+          - names:
+              - --o-new-reference-sequences
+            argument: ARTIFACT
+            description: The new reference sequences. This can be used for subsequent runs of open-reference clustering for consistent definitions of features across open-reference feature tables. [required]
+          - names:
+              - --output-dir
+            argument: PATH
+            description: Output unspecified results to a directory
+          - names:
+              - --verbose
+              - --quiet
+            argument: ""
+            description: Display verbose output to stdout and/or stderr during execution of this action. Or silence output if execution is successful (silence is golden).
+          - names:
+              - --recycle-pool
+            argument: TEXT
+            description: 'Use a cache pool for pipeline resumption. QIIME 2 will cache your results in this pool for reuse by future invocations. These pool are retained until deleted by the user. If not provided, QIIME 2 will create a pool which is automatically reused by invocations of the same action and removed if the action is successful. Note: these pools are local to the cache you are using.'
+          - names:
+              - --no-recycle
+            argument: ""
+            description: Do not recycle results from a previous failed pipeline run or save the results from this run for future recycling.
+          - names:
+              - --parallel
+            argument: ""
+            description: Execute your action in parallel. This flag will use your default parallel config.
+          - names:
+              - --parallel-config
+            argument: FILE
+            description: Execute your action in parallel using a config at the indicated path.
+          - names:
+              - --use-cache
+            argument: DIRECTORY
+            description: 'Specify the cache to be used for the intermediate work of this pipeline. If not provided, the default cache under $TMP/qiime2/<uname> will be used. IMPORTANT FOR HPC USERS: If you are on an HPC system and are using parallel execution it is important to set this to a location that is globally accessible to all nodes in the cluster.'
+          - names:
+              - --example-data
+            argument: PATH
+            description: Write example data and exit.
+          - names:
+              - --citations
+            argument: ""
+            description: Show citations and exit.
+          - names:
+              - --help
+            argument: ""
+            description: Show this message and exit.
       - name: dereplicate-sequences
         description: Dereplicate sequences.
         usage: qiime vsearch dereplicate-sequences [OPTIONS]
         options:
           - names:
               - --i-sequences
-            argument: ARTIFACT SampleData
-            description: '|   SampleData[SequencesWithQuality] | SampleData[JoinedSequencesWithQuality]'
-          - names:
-              - --i-sequences
-            argument: ARTIFACT SampleDataSequences
-            description: '|   SampleData[SequencesWithQuality] | SampleData[JoinedSequencesWithQuality]'
+            argument: ARTIFACT
+            description: 'The sequences to be dereplicated. [required]'
           - names:
               - --p-derep-prefix
               - --p-no-derep-prefix
@@ -9021,11 +10030,11 @@ subcommands:
           - names:
               - --p-min-seq-length
             argument: INTEGER
-            description: Range(1, None) Discard sequences shorter than this integer.
+            description: Discard sequences shorter than this integer.
           - names:
               - --p-min-unique-size
             argument: INTEGER
-            description: Range(1, None) Discard sequences with a post-dereplication
+            description: Discard sequences with a post-dereplication
           - names:
               - --o-dereplicated-table
             argument: ARTIFACT FeatureTable[Frequency]
@@ -9090,20 +10099,20 @@ subcommands:
         options:
           - names:
               - --i-demultiplexed-seqs
-            argument: ""
-            description: ARTIFACT SampleData[PairedEndSequencesWithQuality] The demultiplexed paired-end sequences to be merged.
+            argument: ARTIFACT
+            description:  The demultiplexed paired-end sequences to be merged. [required]
           - names:
               - --p-truncqual
             argument: INTEGER
-            description: Truncate sequences at the first base with the
+            description: Truncate sequences at the first base with the specified quality score value or lower. [optional]
           - names:
               - --p-minlen
             argument: INTEGER
-            description: Sequences shorter than minlen after truncation are
+            description: Sequences shorter than minlen after truncation are discarded.
           - names:
               - --p-maxns
             argument: INTEGER
-            description: Sequences with more than maxns N characters are
+            description: Sequences with more than maxns N characters are discarded.
           - names:
               - --p-allowmergestagger
               - --p-no-allowmergestagger
@@ -9112,30 +10121,30 @@ subcommands:
           - names:
               - --p-minovlen
             argument: INTEGER
-            description: Minimum length of the area of overlap between reads
+            description: 'Minimum length of the area of overlap between reads during merging. [default: 10]'
           - names:
               - --p-maxdiffs
             argument: INTEGER
-            description: Maximum number of mismatches in the area of overlap
+            description: 'Maximum number of mismatches in the area of overlap during merging. [default: 10]'
           - names:
               - --p-minmergelen
             argument: INTEGER
-            description: Range(0, None) Minimum length of the merged read to be retained.
+            description: Minimum length of the merged read to be retained.
           - names:
               - --p-maxmergelen
             argument: INTEGER
-            description: Range(0, None) Maximum length of the merged read to be retained.
+            description: Maximum length of the merged read to be retained.
           - names:
               - --p-maxee
             argument: NUMBER
             description: Maximum number of expected errors in the merged read
           - names:
               - --p-threads
-            argument: INTEGER Range(0, 8, inclusive_end=True)
+            argument: INTEGER
             description: The number of threads to use for computation. Does
           - names:
               - --o-merged-sequences
-            argument: ARTIFACT SampleData[JoinedSequencesWithQuality]
+            argument: ARTIFACT
             description: The merged sequences. [required]
           - names:
               - --output-dir
@@ -9164,31 +10173,31 @@ subcommands:
         options:
           - names:
               - --i-sequences
-            argument: ARTIFACT FeatureData[Sequence]
-            description: The feature sequences to be chimera-checked.
+            argument: ARTIFACT
+            description: The feature sequences to be chimera-checked. [required]
           - names:
               - --i-table
-            argument: ARTIFACT FeatureTable[Frequency]
+            argument: ARTIFACT
             description: Feature table (used for computing total feature abundances). [required]
           - names:
               - --p-dn
             argument: NUMBER
-            description: No vote pseudo-count, corresponding to the
+            description: 'No vote pseudo-count, corresponding to thep arameter n in the chimera scoring function. [default: 1.4]'
           - names:
               - --p-mindiffs
             argument: INTEGER
-            description: Minimum number of differences per segment.
+            description: 'Minimum number of differences per segment. [default: 3]'
           - names:
               - --p-mindiv
             argument: NUMBER
-            description: Minimum divergence from closest parent.
+            description: 'Minimum divergence from closest parent. [default: 0.8]'
           - names:
               - --p-minh
-            argument: PROPORTION Range(0.0, 1.0, inclusive_end=True)
+            argument: PROPORTION
             description: 'Minimum score (h). Increasing this value tends to reduce the number of false positives and to decrease sensitivity. [default: 0.28]'
           - names:
               - --p-xn
-            argument: NUMBER Range(1.0, None, inclusive_start=False)
+            argument: NUMBER
             description: 'No vote weight, corresponding to the parameter beta in the scoring function. [default: 8.0]'
           - names:
               - --o-chimeras
@@ -9296,4 +10305,4 @@ subcommands:
               - --help
             argument: ""
             description: Show this message and exit.
-version: q2cli version 2022.11.1
+version: q2cli version 2023.5.1

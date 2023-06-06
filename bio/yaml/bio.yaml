@@ -542,6 +542,98 @@ subcommands:
           - --scopes
         argument: symbol
         description: scopes
+  - name: gprofiler
+    description: submits genes from a count file to g:Profiler
+    usage: bio gprofiler [-h] [-c edger.csv] [-d mmusculus] [-n gene] [-t 0.05] [-p FDR] [-o gprofiler.csv]
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - -c
+          - --counts
+        argument: edger.csv
+        description: input counts
+      - names:
+          - -d
+          - --organism
+        argument: mmusculus
+        description: input counts
+      - names:
+          - -n
+          - --colname
+        argument: gene
+        description: gene id column name
+      - names:
+          - -t
+          - --pval-cutoff
+        argument: "0.05"
+        description: pvalue cutoff
+      - names:
+          - -p
+          - --pval-column
+        argument: FDR
+        description: pvalue column name
+      - names:
+          - -o
+          - --output
+        argument: gprofiler.csv
+        description: pvalue column name
+  - name: enrichr
+    description: submits genes from a count file to Enrichr
+    usage: bio enrichr [-h] [-c edger.csv] [-d mmusculus] [-n gene] [-t 0.05] [-p FDR] [-o enrichr.csv]
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - -c
+          - --counts
+        argument: edger.csv
+        description: input counts
+      - names:
+          - -d
+          - --organism
+        argument: mmusculus
+        description: input counts
+      - names:
+          - -n
+          - --colname
+        argument: gene
+        description: gene id column name
+      - names:
+          - -t
+          - --pval-cutoff
+        argument: "0.05"
+        description: pvalue cutoff
+      - names:
+          - -p
+          - --pval-column
+        argument: FDR
+        description: pvalue column name
+      - names:
+          - -o
+          - --output
+        argument: enrichr.csv
+        description: pvalue column name
+  - name: code
+    description: downloads the Biostar Handbook code
+    usage: bio code [-h] [-u]
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - -u
+          - --update
+        argument: ""
+        description: update existing files
   - name: comm
     description: find common elements
     usage: bio comm [-h] [-1] [-2] [-3] [-t] [-x 1] [-y 1] file1 file2
@@ -605,18 +697,35 @@ subcommands:
           - --tab
         argument: ""
         description: tab delimited (default is csv)
-  - name: code
-    description: downloads the Biostar Handbook code
-    usage: bio [-h] [-u]
-    options:
-      - names:
-          - -h
-          - --help
-        argument: ""
-        description: show this help message and exit
-      - names:
-          - -u
-          - --update
-        argument: ""
-        description: update existing files
-version: 'Version: 1.5.1'
+version: '1.5.9'
+tldr: |
+  >  bio is a bioinformatics toy to play with.
+  >  More information: <https://github.com/ialbert/bio>.
+
+  - Fetch genbank data
+
+  `bio fetch {{NC_045512}} {{MN996532}} > {{genomes.gb}}`
+
+  - Convert the first then bases of the genomes to FASTA.
+
+  `bio fasta {{genomes.gb}} --end {{10}}`
+
+  - Align the coding sequences for the S protein
+
+  `bio fasta {{genomes.gb}} --gene S --protein | bio align | head`
+
+  - Print the GFF record that corresponds to the coding sequence for gene S
+
+  `bio gff {{genomes.gb}} --gene S`
+
+  - Show the descendants of taxid 117565
+
+  `bio taxon {{117565}} | head`
+
+  - Show the lineage of a taxonomic rank.
+
+  `bio taxon {{117565}} --lineage | head`
+
+  - Get metadata on a viral sample
+
+  `bio meta {{11138}} -H | head`

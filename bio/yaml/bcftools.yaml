@@ -661,6 +661,10 @@ subcommands:
         argument: '-|+TYPE'
         description: 'Split multiallelics (-) or join biallelics (+), type: snps|indels|both|any [both]'
       - names:
+          - --multi-overlaps
+        argument: 0|.
+        description: Fill in the reference (0) or missing (.) allele when splitting multiallelics [0]
+      - names:
           - --no-version
         argument: ""
         description: Do not append version and command line to the header
@@ -1088,7 +1092,7 @@ subcommands:
         description: 'u/b: un/compressed BCF, v/z: un/compressed VCF, 0-9: compression level [v]'
       - names:
           - --ploidy
-        argument: ASSEMBLY
+        argument: ASSEMBLY[?]
         description: Predefined ploidy, 'list' to print available settings, append '?' for details [2]
       - names:
           - --ploidy-file
@@ -1216,89 +1220,86 @@ subcommands:
     usage: bcftools consensus [OPTIONS] <file.vcf.gz>
     options:
       - names:
-          - --sample
-        argument: (and, optionally, --haplotype)
-        description: option will apply genotype
-      - names:
-          - --sample
-        argument: (and, optionally, --haplotype)
-        description: option will apply genotype   (or haplotype) calls from FORMAT/GT. The program ignores allelic depth
-      - names:
           - -c
           - --chain
         argument: FILE
-        description: write a chain file for liftover
+        description: Write a chain file for liftover
       - names:
           - -a
           - --absent
         argument: CHAR
-        description: replace positions absent from VCF with CHAR
+        description: Replace positions absent from VCF with CHAR
       - names:
           - -e
           - --exclude
         argument: EXPR
-        description: exclude sites for which the expression is true (see man page for details)
+        description: Exclude sites for which the expression is true (see man page for details)
       - names:
           - -f
           - --fasta-ref
         argument: FILE
-        description: reference sequence in fasta format
+        description: Reference sequence in fasta format
       - names:
           - -H
           - --haplotype
         argument: WHICH
-        description: 'choose which allele to use from the FORMAT/GT field, note the codes are case-insensitive:'
+        description: 'Choose which allele to use from the FORMAT/GT field, note the codes are case-insensitive:'
       - names:
           - -i
           - --include
         argument: EXPR
-        description: select sites for which the expression is true (see man page for details)
+        description: Select sites for which the expression is true (see man page for details)
       - names:
           - -I
           - --iupac-codes
         argument: ""
-        description: output variants in the form of IUPAC ambiguity codes
+        description: Output IUPAC codes based on FORMAT/GT, use -s/-S to subset samples
       - names:
           - --mark-del
         argument: CHAR
-        description: instead of removing sequence, insert CHAR for deletions
+        description: Instead of removing sequence, insert CHAR for deletions
       - names:
           - --mark-ins
         argument: uc|lc
-        description: highlight insertions in uppercase (uc) or lowercase (lc), leaving the rest as is
+        description: Highlight insertions in uppercase (uc) or lowercase (lc), leaving the rest as is
       - names:
           - --mark-snv
         argument: uc|lc
-        description: highlight substitutions in uppercase (uc) or lowercase (lc), leaving the rest as is
+        description: Highlight substitutions in uppercase (uc) or lowercase (lc), leaving the rest as is
       - names:
           - -m
           - --mask
         argument: FILE
-        description: replace regions according to the next --mask-with option. The default is --mask-with N
+        description: Replace regions according to the next --mask-with option. The default is --mask-with N
       - names:
           - --mask-with
         argument: CHAR|uc|lc
-        description: replace with CHAR (skips overlapping variants); change to uppercase (uc) or lowercase (lc)
+        description: Replace with CHAR (skips overlapping variants); change to uppercase (uc) or lowercase (lc)
       - names:
           - -M
           - --missing
         argument: CHAR
-        description: output CHAR instead of skipping a missing genotype "./."
+        description: Output CHAR instead of skipping a missing genotype "./."
       - names:
           - -o
           - --output
         argument: FILE
-        description: write output to a file [standard output]
+        description: Write output to a file [standard output]
       - names:
           - -p
           - --prefix
         argument: STRING
-        description: prefix to add to output sequence names
+        description: Prefix to add to output sequence names
       - names:
           - -s
-          - --sample
-        argument: NAME
-        description: apply variants of the given sample
+          - --samples
+        argument: LIST
+        description: Comma-separated list of samples to include, "-" to ignore samples and use REF,ALT
+      - names:
+          - -S
+          - --samples-file
+        argument: FILE
+        description: File of samples to include
   - name: cnv
     description: HMM CNV calling
     usage: bcftools cnv [OPTIONS] FILE.vcf
@@ -1867,11 +1868,6 @@ subcommands:
         argument: TYPE
         description: '''b'' compressed BCF; ''u'' uncompressed BCF; ''z'' compressed VCF; ''v'' uncompressed VCF; 0-9 compression level [v]'
       - names:
-          - -U
-          - --mwu-u
-        argument: ""
-        description: Use older probability scale for Mann-Whitney U test
-      - names:
           - --threads
         argument: INT
         description: Use multithreading with INT worker threads [0]
@@ -1943,6 +1939,10 @@ subcommands:
           - --indel-size
         argument: INT
         description: Approximate maximum indel size considered [110]
+      - names:
+          - --indels-2.0
+        argument: ""
+        description: New EXPERIMENTAL indel calling model (diploid reference consensus)
   - name: polysomy
     description: detect number of chromosomal copies
     usage: bcftools polysomy [OPTIONS] FILE.vcf
@@ -2254,7 +2254,7 @@ subcommands:
           - --verbose
         argument: ""
         description: Produce verbose per-site and per-sample output
-version: bcftools 1.16
+version: bcftools 1.17
 tldr: |
   > Tools for variant calling and manipulating VCFs and BCFs
   > More information: <https://www.htslib.org/doc/bcftools.html>.

@@ -341,7 +341,7 @@ subcommands:
         description: Number of input/output compression threads to use in addition to main thread [0].
   - name: markdup
     description: mark duplicates
-    usage: samtools markdup [-l length] [-r] [-T] [-S] [-s] [-f file] [--json] [-d distance] [-c] [-t] [-m] [--mode] [--include-fails] [--no-PG] [-u] [--no-multi-dup] [--read-coords] [--coords-order] [--barcode-tag] [--barcode-name] [--barcode-rgx] [--use-read-groups] in.algsort.bam out.bam
+    usage: samtools markdup [-l length] [-r] [-T] [-S] [-s] [-f file] [--json] [-d distance] [-c] [-t] [---duplicate-count] [-m] [--mode] [--include-fails] [--no-PG] [-u] [--no-multi-dup] [--read-coords] [--coords-order] [--barcode-tag] [--barcode-name] [--barcode-rgx] [--use-read-groups] in.algsort.bam out.bam
     options:
       - names:
           - -l
@@ -383,6 +383,10 @@ subcommands:
           - -t
         argument: ""
         description: Mark duplicates with the name of the original in a do tag.
+      - names:
+          - --duplicate-count
+        argument: ""
+        description: Record the original primary read duplication count(include itself) in a dc tag.
       - names:
           - -m
           - --mode
@@ -524,11 +528,15 @@ subcommands:
       - names:
           - -O
         argument: ""
-        description: Output to stdout. This option cannot be used with '-o'.
+        description: Output to stdout. This option cannot be used with -o.
       - names:
           - -o
         argument: FILE
-        description: Write output to FILE. This option cannot be used with '-O'.
+        description: Write output to FILE. This option cannot be used with -O. If unspecified and -O is not set, the temporary file <prefix> is used, appended by the the appropriate file-format suffix.
+      - names:
+          - -T
+        argument: PREFIX
+        description: Use PREFIX for temporary files. This is the same as specifying PREFIX as the last argument on the command line. This option is included for consistency with samtools sort.
       - names:
           - -u
         argument: ""
@@ -611,7 +619,7 @@ subcommands:
           - -m
           - --mode
         argument: STR
-        description: Select the consensus algorithm. Valid modes are "simple" frequency counting and the "bayesian" (Gap5) method, with Bayesian being the default. (Note case does not matter, so "Bayesian" is accepted too.)
+        description: Select the consensus algorithm. Valid modes are "simple" frequency counting and the "bayesian" (Gap5) methods, with Bayesian being the default. (Note case does not matter, so "Bayesian" is accepted too.) There are a variety of bayesian methods. Straight "bayesian" is the best set suitable for the other parameters selected. The choice of internal parameters may change depending on the "--P-indel" score. This method distinguishes between substitution and indel error rates. The old Samtools consensus in version 1.16 did not distinguish types of errors, but for compatibility the "bayesian_116" mode may be selected to replicate this.
       - names:
           - -a
         argument: ""
@@ -642,6 +650,10 @@ subcommands:
           - --show-ins
         argument: yes/no
         description: Whether to show insertions in the consensus. Defaults to yes.
+      - names:
+          - --mark-ins
+        argument: ""
+        description: Insertions, when shown, are normally recorded in the consensus with plain 7-bit ASCII (ACGT, or acgt if heterozygous). However this makes it impossible to identify the mapping between consensus coordinates and the original reference coordinates. If fasta output is selected then the option adds an underscore before every inserted base, plus a corresponding character in the quality for fastq format. When used in conjunction with -a --show-del yes, this permits an easy derivation of the consensus to reference coordinate mapping.
       - names:
           - -A
           - --ambig
@@ -702,12 +714,29 @@ subcommands:
       - names:
           - --P-het
         argument: FLOAT
-        description: Controls the likelihood of any position being a heterozygous site. Defaults to 1e-4. Smaller numbers makes the algorithm more likely to call a pure base type. Note the algorithm will always compute the probability of the base being homozygous vs heterozygous, irrespective of whether the output is reported as ambiguous (it will be "N" if deemed to be heterozygous without --ambig mode enabled).
+        description: Controls the likelihood of any position being a heterozygous site. This is used in the priors for the Bayesian calculations, and has little difference on deep data. Defaults to 1e-3. Smaller numbers makes the algorithm more likely to call a pure base type. Note the algorithm will always compute the probability of the base being homozygous vs heterozygous, irrespective of whether the output is reported as ambiguous (it will be "N" if deemed to be heterozygous without --ambig mode enabled).
+      - names:
+          - --P-indel
+        argument: FLOAT
+        description: Controls the likelihood of small indels. This is used in the priors for the Bayesian calculations, and has little difference on deep data. Defaults to 2e-4.
+      - names:
+          - --het-scale
+        argument: FLOAT
+        description: This is a multiplicative correction applied per base quality before adding to the heterozygous hypotheses. Reducing it means fewer heterozygous calls are made. This oftens leads a significant reduction in false positive het calls, for some increase in false negatives (mislabelling real heterozygous sites as homozygous). It is usually beneficial to reduce this on instruments where a significant proportion of bases may be aligned in the wrong column due to insertions and deletions leading to alignment errors and reference bias. It can be considered as a het sensitivity tuning parameter. Defaults to 1.0 (nop).
       - names:
           - -p
           - --homopoly-fix
         argument: ""
         description: Some technologies that call runs of the same base type together always put the lowest quality calls at one end. This can cause problems when reverse complementing and comparing alignments with indels. This option averages the qualities at both ends to avoid orientation biases. Recommended for old 454 or PacBio HiFi data sets.
+      - names:
+          - --homopoly-score
+        argument: FLOAT
+        description: The -p option also reduces confidence values within homopolymers due to an additional likelihood of sequence specific errors. The quality values are multiplied by FLOAT. This defaults to 0.5, but is not used if -p was not specified. Adjusting this score also automatically enables -p.
+      - names:
+          - -X
+          - --config
+        argument: STR
+        description: Specifies predefined sets of configuration parameters. Acceptable values for STR are defined below, along with the list of parameters they are equivalent to.
       - names:
           - '-'
         argument: ""
@@ -862,12 +891,12 @@ subcommands:
           - --rf
           - --incl-flags
         argument: STR|INT
-        description: 'Required flags: include reads with any of the mask bits set [null]'
+        description: 'Required flags: only include reads with any of the mask bits set [null]. Note this is implemented as a filter-out rule, rejecting reads that have none of the mask bits set. Hence this does not override the --excl-flags option.'
       - names:
           - --ff
           - --excl-flags
         argument: STR|INT
-        description: 'Filter flags: skip reads with any of the mask bits set [UNMAP,SECONDARY,QCFAIL,DUP]'
+        description: 'Filter flags: skip reads with any of the mask bits set. This defaults to UNMAP,SECONDARY,QCFAIL,DUP. The option is not accumulative, so specifying e.g. --ff UNMAP,QCFAIL will reenable output of secondary and duplicate alignments. Note this does not override the --incl-flags option.'
       - names:
           - -x
           - --ignore-overlaps-removal
@@ -949,12 +978,8 @@ subcommands:
         description: Output absolutely all positions, including unused reference sequences. Note that when used in conjunction with a BED file the -a option may sometimes operate as if -aa was specified if the reference sequence has coverage outside of the region specified in the BED file.
   - name: sort
     description: sort alignment file
-    usage: samtools sort [-l level] [-u] [-m maxMem] [-o out.bam] [-O format] [-M] [-K kmerLen] [-n] [-t tag] [-T tmpprefix] [-@ threads] [in.sam|in.bam|in.cram]
+    usage: samtools sort [options] [in.sam|in.bam|in.cram]
     options:
-      - names:
-          - -K
-        argument: INT
-        description: Sets the kmer size to be used in the -M option. [20]
       - names:
           - -l
         argument: INT
@@ -968,10 +993,6 @@ subcommands:
         argument: INT
         description: Approximately the maximum required memory per thread, specified either in bytes or with a K, M, or G suffix. [768 MiB]
       - names:
-          - -M
-        argument: ""
-        description: Sort unmapped reads (those in chromosome "*") by their sequence minimiser (Schleimer et al., 2003; Roberts et al., 2004), also reverse complementing as appropriate. This has the effect of collating some similar data together, improving the compressibility of the unmapped sequence. The minimiser kmer size is adjusted using the -K option. Note data compressed in this manner may need to be name collated prior to conversion back to fastq.
-      - names:
           - -n
         argument: ""
         description: Sort by read names (i.e., the QNAME field) rather than by chromosomal coordinates.
@@ -979,6 +1000,30 @@ subcommands:
           - -t
         argument: TAG
         description: Sort first by the value in the alignment tag TAG, then by position or name (if also using -n).
+      - names:
+          - -M
+        argument: ""
+        description: Sort unmapped reads (those in chromosome "*") by their sequence minimiser (Schleimer et al., 2003; Roberts et al., 2004), also reverse complementing as appropriate. This has the effect of collating some similar data together, improving the compressibility of the unmapped sequence. The minimiser kmer size is adjusted using the -K option. Note data compressed in this manner may need to be name collated prior to conversion back to fastq.
+      - names:
+          - -R
+        argument: ""
+        description: Do not use reverse strand with minimiser sort (only compatible with -M).
+      - names:
+          - -K
+        argument: INT
+        description: Sets the kmer size to be used in the -M option. [20]
+      - names:
+          - -I
+        argument: FILE
+        description: Build a minimiser index over FILE. The per-read minimisers produced by -M are no longer sorted by their numeric value, but by the reference coordinate this minimiser was found to come from (if found in the index). This further improves compression due to improved sequence similarity between sequences, albeit with a small CPU cost of building and querying the index. Specifying -I automatically implies -M.
+      - names:
+          - -w
+        argument: INT
+        description: Specifies the window size for building the minimiser index on the file specified in -I. This defaults to 100. It may be better to set this closer to 50 for short-read data sets (at a higher CPU and memory cost), or for more speed up to 1000 for long-read data sets.
+      - names:
+          - -H
+        argument: ""
+        description: Squashes base homopolymers down to a single base pair before constructing the minimiser. This is useful for instruments where the primary source of error is in the length of homopolymer.
       - names:
           - -o
         argument: FILE
@@ -1099,9 +1144,11 @@ subcommands:
         argument: INT
         description: Only output alignments with all bits set in INT present in the FLAG field. INT can be specified in hex by beginning with `0x' (i.e. /^0x[0-9A-F]+/) or in octal by beginning with `0' (i.e. /^0[0-7]+/) [0].
       - names:
-          - -F
+          - --rf
+          - --incl-flags
+          - --include-flags
         argument: INT
-        description: Do not output alignments with any bits set in INT present in the FLAG field. INT can be specified in hex by beginning with `0x' (i.e. /^0x[0-9A-F]+/) or in octal by beginning with `0' (i.e. /^0[0-7]+/) [0x900]. This defaults to 0x900 representing filtering of secondary and supplementary alignments.
+        description: Only output alignments with any bits set in INT present in the FLAG field. INT can be specified in hex by beginning with `0x' (i.e. /^0x[0-9A-F]+/), in octal by beginning with `0' (i.e. /^0[0-7]+/), as a decimal number not beginning with '0' or as a comma-separated list of flag names [0].
       - names:
           - -G
         argument: INT
@@ -1190,9 +1237,11 @@ subcommands:
         argument: INT
         description: Only output alignments with all bits set in INT present in the FLAG field. INT can be specified in hex by beginning with `0x' (i.e. /^0x[0-9A-F]+/) or in octal by beginning with `0' (i.e. /^0[0-7]+/) [0].
       - names:
-          - -F
+          - --rf
+          - --incl-flags
+          - --include-flags
         argument: INT
-        description: Do not output alignments with any bits set in INT present in the FLAG field. INT can be specified in hex by beginning with `0x' (i.e. /^0x[0-9A-F]+/) or in octal by beginning with `0' (i.e. /^0[0-7]+/) [0x900]. This defaults to 0x900 representing filtering of secondary and supplementary alignments.
+        description: Only output alignments with any bits set in INT present in the FLAG field. INT can be specified in hex by beginning with `0x' (i.e. /^0x[0-9A-F]+/), in octal by beginning with `0' (i.e. /^0[0-7]+/), as a decimal number not beginning with '0' or as a comma-separated list of flag names [0].
       - names:
           - -G
         argument: INT
@@ -1319,6 +1368,45 @@ subcommands:
           - -@
         argument: INT
         description: The number of BAM/CRAM decompression threads to use in addition to the main thread [0].
+  - name: reset
+    description: Reverts aligner changes in reads
+    usage: samtools reset [-o FILE] [-x,--remove-tag STR] [--keep-tag STR] [--reject-PG pgid] [--no-RG] [--no-PG] [...]
+    options:
+      - names:
+          - -o
+        argument: FILE
+        description: Output file to which reset data is to be written. If not given, standard output will be used.
+      - names:
+          - -x
+          - --remove-tag
+        argument: STR
+        description: Read tag(s) to exclude from output (repeatable) [null]. This can be a single tag or a comma separated list. Alternatively the option itself can be repeated multiple times.
+      - names:
+          - --keep-tag
+        argument: STR
+        description: This keeps only tags listed in STR and is directly equivalent to --remove-tag ^STR. Specifying an empty list will remove all tags. If both --keep-tag and --remove-tag are specified then --keep-tag has precedence.
+      - names:
+          - --reject-PG
+        argument: pgid
+        description: The PG line which has the ID matching pgid and all subsequent PG lines will be removed. If the option itself is absent, the default, all PG entries will be in output.
+      - names:
+          - --no-RG
+        argument: ""
+        description: RG lines in input will be discarded with this option. By default, RG lines will be present in ouput.
+      - names:
+          - --no-PG
+        argument: ""
+        description: Do not add a @PG line to the header of the output file listing the reset command. By default the PG entry for reset will be present in the output.
+      - names:
+          - -@
+          - --thread
+        argument: "N"
+        description: This gives the number of worker threads to be used.
+      - names:
+          - -O
+          - --output-fmt
+        argument: FMT[,options]
+        description: Sets the format of the output file and any associated format-specific options. If this option is not present, the format is identified from the output file name extension.
   - name: bedcov
     description: read depth per BED region
     usage: samtools bedcov [options] region.bed in1.sam|in1.bam|in1.cram[...]
@@ -1519,6 +1607,27 @@ subcommands:
     description: BAM index stats
     usage: samtools idxstats in.sam|in.bam|in.cram
     options: []
+  - name: cram-size
+    description: list CRAM Content-ID and Data-Series sizes
+    usage: samtools cram-size [-ve] [-o file] in.bam
+    options:
+      - names:
+          - -o
+        argument: FILE
+        description: Output size information to FILE.
+      - names:
+          - -v
+        argument: ""
+        description: Verbose mode. This shows one line per combination of Content ID and compression method.
+      - names:
+          - -e
+          - --encodings
+        argument: ""
+        description: CRAM uses an Encoding, which describes how the data is serialised into a data block. This is distinct from the CRAM compression method, which is then applied to the block post-encoding. The encoding methods are stored per CRAM Container.
+      - names:
+          - '-'
+        argument: ""
+        description: List encoding methods per CRAM Data Series. The two letter series are the standard CRAM Data Series and the three letter ones are the optional auxiliary tags with the tag name and type combined.
   - name: phase
     description: phase heterozygotes
     usage: samtools phase [-AF] [-k len] [-b prefix] [-q minLOD] [-Q minBaseQ] in.bam
@@ -1759,7 +1868,11 @@ subcommands:
       - names:
           - -s
         argument: STR
-        description: Display only alignments from this sample or read group
+        description: Display only alignments from this sample or read group. STR must match either an ID or SM field in an @RG header record. For example
+      - names:
+          - -w
+        argument: INT
+        description: Specifies the display width when using the HTML or Text output modes.
       - names:
           - -X
         argument: ""
@@ -2049,7 +2162,7 @@ subcommands:
           - -o
         argument: FILE output file stdout.
         description: -f FILE load an indexed fasta file in the collection of references. Can be used multiple times. Add an extra column with the path to the reference file.
-version: samtools 1.16.1
+version: samtools 1.17
 tldr: |
   > Tools for handling high-throughput sequencing (genomics) data.
   > Used for reading/writing/editing/indexing/viewing of data in SAM/BAM/CRAM format.
@@ -2059,7 +2172,7 @@ tldr: |
 
   `samtools view -S -b {{input.sam}} > {{output.bam}}`
 
-  - Take input from stdin (-) and print the SAM header and any reads overlapping a specific region to stdout:
+  - Take input from `stdin` (-) and print the SAM header and any reads overlapping a specific region to `stdout`:
 
   `{{other_command}} | samtools view -h - chromosome:start-end`
 

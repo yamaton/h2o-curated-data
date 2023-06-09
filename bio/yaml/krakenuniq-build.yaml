@@ -1,0 +1,121 @@
+name: krakenuniq-build
+description: Build the database indices for krakenuniq
+usage: krakenuniq-build [task option] [options]
+options:
+  - names:
+      - --download-taxonomy
+    argument: ""
+    description: Download NCBI taxonomic information
+  - names:
+      - --download-library
+    argument: TYPE
+    description: Download partial library (TYPE = one of "refseq/bacteria", "refseq/archaea", "refseq/viral"). Use krakenuniq-download for more options.
+  - names:
+      - --add-to-library
+    argument: FILE
+    description: Add FILE to library
+  - names:
+      - --build
+    argument: ""
+    description: Create DB from library (requires taxonomy d/l'ed and at least one file in library)
+  - names:
+      - --rebuild
+    argument: ""
+    description: Create DB from library like --build, but remove existing non-library/taxonomy files before build
+  - names:
+      - --clean
+    argument: ""
+    description: Remove unneeded files from a built database
+  - names:
+      - --shrink
+    argument: NEW_CT
+    description: Shrink an existing DB to have only NEW_CT k-mers
+  - names:
+      - --standard
+    argument: ""
+    description: Download and create default database, which contains complete genomes for archaea, bacteria and viruses from RefSeq, as well as viral strains from NCBI. Specify --taxids-for-genomes and --taxids-for-sequences separately, if desired.
+  - names:
+      - --help
+    argument: ""
+    description: Print this message
+  - names:
+      - --version
+    argument: ""
+    description: Print version information
+  - names:
+      - --db
+    argument: DBDIR
+    description: Kraken DB directory (mandatory except for --help/--version)
+  - names:
+      - --threads
+    argument: '#'
+    description: 'Number of threads (def: 1)'
+  - names:
+      - --new-db
+    argument: NAME
+    description: New Kraken DB name (shrink task only; mandatory for shrink task)
+  - names:
+      - --kmer-len
+    argument: NUM
+    description: 'K-mer length in bp (build/shrink tasks only; def: 31)'
+  - names:
+      - --minimizer-len
+    argument: NUM
+    description: 'Minimizer length in bp (build/shrink tasks only; def: 15)'
+  - names:
+      - --jellyfish-hash-size
+    argument: STR
+    description: Pass a specific hash size argument to jellyfish when building database (build task only)
+  - names:
+      - --jellyfish-bin
+    argument: STR
+    description: Use STR as Jellyfish 1 binary.
+  - names:
+      - --max-db-size
+    argument: SIZE
+    description: Shrink the DB before full build, making sure database and index together use <= SIZE gigabytes (build task only)
+  - names:
+      - --shrink-block-offset
+    argument: NUM
+    description: 'When shrinking, select the k-mer that is NUM positions from the end of a block of k-mers (default: 1)'
+  - names:
+      - --work-on-disk
+    argument: ""
+    description: Perform most operations on disk rather than in RAM (will slow down build in most cases)
+  - names:
+      - --taxids-for-genomes
+    argument: ""
+    description: Add taxonomy IDs (starting with 1 billion) for genomes. Only works with 3-column seqid2taxid map with third column being the name
+  - names:
+      - --taxids-for-sequences
+    argument: ""
+    description: Add taxonomy IDs for sequences, starting with 1 billion. Can be useful to resolve classifications with multiple genomes for one taxonomy ID.
+  - names:
+      - --min-contig-size
+    argument: NUM
+    description: Minimum contig size for inclusion in database. Use with draft genomes to reduce contamination, e.g. with values between 1000 and 10000.
+  - names:
+      - --library-dir
+    argument: DIR
+    description: Use DIR for reference sequences instead of DBDIR/library.
+  - names:
+      - --taxonomy-dir
+    argument: DIR
+    description: Use DIR for taxonomy instead of DBDIR/taxonomy.
+  - names:
+      - --uid-database
+    argument: ""
+    description: Build a UID database (default no)
+  - names:
+      - --lca-database
+    argument: ""
+    description: Build a LCA database (default yes)
+  - names:
+      - --no-lca-database
+    argument: ""
+    description: Do not build a LCA database
+  - names:
+      - --lca-order
+    argument: DIR
+    description: Impose a hierarchical order for setting LCAs.
+version: KrakenUniq version 1.0.4

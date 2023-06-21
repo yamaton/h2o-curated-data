@@ -1,0 +1,460 @@
+name: pre-commit
+description: pre-commit
+usage: pre-commit [-h] [-V] {autoupdate,clean,gc,init-templatedir,install,install-hooks,migrate-config,run,sample-config,try-repo,uninstall,validate-config,validate-manifest,help,hook-impl} ...
+options:
+  - names:
+      - -h
+      - --help
+    argument: ""
+    description: show this help message and exit
+  - names:
+      - -V
+      - --version
+    argument: ""
+    description: show program's version number and exit
+subcommands:
+  - name: autoupdate
+    description: Auto-update pre-commit config to the latest repos' versions.
+    usage: pre-commit autoupdate [-h] [--color {auto,always,never}] [-c CONFIG] [--bleeding-edge] [--freeze] [--repo REPO] [-j JOBS]
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --color
+        argument: '{auto,always,never}'
+        description: Whether to use color in output. Defaults to `auto`.
+      - names:
+          - -c
+          - --config
+        argument: CONFIG
+        description: Path to alternate config file
+      - names:
+          - --bleeding-edge
+        argument: ""
+        description: Update to the bleeding edge of `HEAD` instead of the latest tagged version (the default behavior).
+      - names:
+          - --freeze
+        argument: ""
+        description: Store "frozen" hashes in `rev` instead of tag names
+      - names:
+          - --repo
+        argument: REPO
+        description: Only update this repository -- may be specified multiple times.
+      - names:
+          - -j
+          - --jobs
+        argument: JOBS
+        description: Number of threads to use. (default 1).
+  - name: clean
+    description: Clean out pre-commit files.
+    usage: pre-commit clean [-h] [--color {auto,always,never}]
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --color
+        argument: '{auto,always,never}'
+        description: Whether to use color in output. Defaults to `auto`.
+  - name: gc
+    description: Clean unused cached repos.
+    usage: pre-commit gc [-h] [--color {auto,always,never}]
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --color
+        argument: '{auto,always,never}'
+        description: Whether to use color in output. Defaults to `auto`.
+  - name: init-templatedir
+    description: Install hook script in a directory intended for use with `git config init.templateDir`.
+    usage: pre-commit init-templatedir [-h] [--color {auto,always,never}] [-c CONFIG] [--no-allow-missing-config] [-t {commit-msg,post-checkout,post-commit,post-merge,post-rewrite,pre-commit,pre-merge-commit,pre-push,pre-rebase,prepare-commit-msg}] directory
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --color
+        argument: '{auto,always,never}'
+        description: Whether to use color in output. Defaults to `auto`.
+      - names:
+          - -c
+          - --config
+        argument: CONFIG
+        description: Path to alternate config file
+      - names:
+          - --no-allow-missing-config
+        argument: ""
+        description: Assume cloned repos should have a `pre-commit` config.
+      - names:
+          - -t
+        argument: '{commit-msg,post-checkout,post-commit,post-merge,post-rewrite,pre-commit,pre-merge-commit,pre-push,pre-rebase,prepare-commit-msg}'
+        description: ', --hook-type {commit-msg,post-checkout,post-commit,post-merge,post-rewrite,pre-commit,pre-merge-commit,pre-push,pre-rebase,prepare-commit-msg}'
+  - name: install
+    description: Install the pre-commit script.
+    usage: pre-commit install [-h] [--color {auto,always,never}] [-c CONFIG] [-f] [--install-hooks] [-t {commit-msg,post-checkout,post-commit,post-merge,post-rewrite,pre-commit,pre-merge-commit,pre-push,pre-rebase,prepare-commit-msg}] [--allow-missing-config]
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --color
+        argument: '{auto,always,never}'
+        description: Whether to use color in output. Defaults to `auto`.
+      - names:
+          - -c
+          - --config
+        argument: CONFIG
+        description: Path to alternate config file
+      - names:
+          - -f
+          - --overwrite
+        argument: ""
+        description: Overwrite existing hooks / remove migration mode.
+      - names:
+          - --install-hooks
+        argument: ""
+        description: Whether to install hook environments for all environments in the config file.
+      - names:
+          - -t
+          - --hook-type
+          - --allow-missing-config
+        argument: '{commit-msg,post-checkout,post-commit,post-merge,post-rewrite,pre-commit,pre-merge-commit,pre-push,pre-rebase,prepare-commit-msg}'
+        description: Whether to allow a missing `pre-commit` configuration file or exit with a failure code.
+  - name: install-hooks
+    description: Install hook environments for all environments in the config file. You may find `pre-commit install --install-hooks` more useful.
+    usage: pre-commit install-hooks [-h] [--color {auto,always,never}] [-c CONFIG]
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --color
+        argument: '{auto,always,never}'
+        description: Whether to use color in output. Defaults to `auto`.
+      - names:
+          - -c
+          - --config
+        argument: CONFIG
+        description: Path to alternate config file
+  - name: migrate-config
+    description: Migrate list configuration to new map configuration.
+    usage: pre-commit migrate-config [-h] [--color {auto,always,never}] [-c CONFIG]
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --color
+        argument: '{auto,always,never}'
+        description: Whether to use color in output. Defaults to `auto`.
+      - names:
+          - -c
+          - --config
+        argument: CONFIG
+        description: Path to alternate config file
+  - name: run
+    description: Run hooks.
+    usage: pre-commit run [-h] [--color {auto,always,never}] [-c CONFIG] [--verbose] [--all-files | --files [FILES ...]] [--show-diff-on-failure] [--hook-stage {commit-msg,post-checkout,post-commit,post-merge,post-rewrite,pre-commit,pre-merge-commit,pre-push,pre-rebase,prepare-commit-msg,manual}] [--remote-branch REMOTE_BRANCH] [--local-branch LOCAL_BRANCH] [--from-ref FROM_REF] [--to-ref TO_REF] [--pre-rebase-upstream PRE_REBASE_UPSTREAM] [--pre-rebase-branch PRE_REBASE_BRANCH] [--commit-msg-filename COMMIT_MSG_FILENAME] [--prepare-commit-message-source PREPARE_COMMIT_MESSAGE_SOURCE] [--commit-object-name COMMIT_OBJECT_NAME] [--remote-name REMOTE_NAME] [--remote-url REMOTE_URL] [--checkout-type CHECKOUT_TYPE] [--is-squash-merge IS_SQUASH_MERGE] [--rewrite-command REWRITE_COMMAND] [hook]
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --color
+        argument: '{auto,always,never}'
+        description: Whether to use color in output. Defaults to `auto`.
+      - names:
+          - -c
+          - --config
+        argument: CONFIG
+        description: Path to alternate config file
+      - names:
+          - --verbose
+          - -v
+          - --all-files
+          - -a
+        argument: ""
+        description: Run on all the files in the repo.
+      - names:
+          - --files
+        argument: '[FILES ...]'
+        description: Specific filenames to run hooks on.
+      - names:
+          - --show-diff-on-failure
+        argument: ""
+        description: When hooks fail, run `git diff` directly afterward.
+      - names:
+          - --hook-stage
+        argument: '{commit-msg,post-checkout,post-commit,post-merge,post-rewrite,pre-commit,pre-merge-commit,pre-push,pre-rebase,prepare-commit-msg,manual}'
+        description: The stage during which the hook is fired. One of commit-msg, post-checkout, post-commit, post-merge, post-rewrite, pre-commit, pre-merge-commit, pre-push, pre-rebase, prepare-commit-msg, manual
+      - names:
+          - --remote-branch
+        argument: REMOTE_BRANCH
+        description: Remote branch ref used by `git push`.
+      - names:
+          - --local-branch
+        argument: LOCAL_BRANCH
+        description: Local branch ref used by `git push`.
+      - names:
+          - --from-ref
+          - --source
+          - -s
+        argument: FROM_REF
+        description: (for usage with `--to-ref`) -- this option represents the original ref in a `from_ref...to_ref` diff expression. For `pre-push` hooks, this represents the branch you are pushing to. For `post-checkout` hooks, this represents the branch that was previously checked out.
+      - names:
+          - --to-ref
+          - --origin
+          - -o
+        argument: TO_REF
+        description: (for usage with `--from-ref`) -- this option represents the destination ref in a `from_ref...to_ref` diff expression. For `pre-push` hooks, this represents the branch being pushed. For `post-checkout` hooks, this represents the branch that is now checked out.
+      - names:
+          - --pre-rebase-upstream
+        argument: PRE_REBASE_UPSTREAM
+        description: The upstream from which the series was forked.
+      - names:
+          - --pre-rebase-branch
+        argument: PRE_REBASE_BRANCH
+        description: The branch being rebased, and is not set when rebasing the current branch.
+      - names:
+          - --commit-msg-filename
+        argument: COMMIT_MSG_FILENAME
+        description: Filename to check when running during `commit-msg`
+      - names:
+          - --prepare-commit-message-source
+        argument: PREPARE_COMMIT_MESSAGE_SOURCE
+        description: Source of the commit message (typically the second argument to .git/hooks/prepare-commit-msg)
+      - names:
+          - --commit-object-name
+        argument: COMMIT_OBJECT_NAME
+        description: Commit object name (typically the third argument to .git/hooks/prepare-commit-msg)
+      - names:
+          - --remote-name
+        argument: REMOTE_NAME
+        description: Remote name used by `git push`.
+      - names:
+          - --remote-url
+        argument: REMOTE_URL
+        description: Remote url used by `git push`.
+      - names:
+          - --checkout-type
+        argument: CHECKOUT_TYPE
+        description: Indicates whether the checkout was a branch checkout (changing branches, flag=1) or a file checkout (retrieving a file from the index, flag=0).
+      - names:
+          - --is-squash-merge
+        argument: IS_SQUASH_MERGE
+        description: During a post-merge hook, indicates whether the merge was a squash merge
+      - names:
+          - --rewrite-command
+        argument: REWRITE_COMMAND
+        description: During a post-rewrite hook, specifies the command that invoked the rewrite
+  - name: sample-config
+    description: Produce a sample .pre-commit-config.yaml file
+    usage: pre-commit sample-config [-h] [--color {auto,always,never}]
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --color
+        argument: '{auto,always,never}'
+        description: Whether to use color in output. Defaults to `auto`.
+  - name: try-repo
+    description: Try the hooks in a repository, useful for developing new hooks.
+    usage: pre-commit try-repo [-h] [--color {auto,always,never}] [-c CONFIG] [--ref REF] [--verbose] [--all-files | --files [FILES ...]] [--show-diff-on-failure] [--hook-stage {commit-msg,post-checkout,post-commit,post-merge,post-rewrite,pre-commit,pre-merge-commit,pre-push,pre-rebase,prepare-commit-msg,manual}] [--remote-branch REMOTE_BRANCH] [--local-branch LOCAL_BRANCH] [--from-ref FROM_REF] [--to-ref TO_REF] [--pre-rebase-upstream PRE_REBASE_UPSTREAM] [--pre-rebase-branch PRE_REBASE_BRANCH] [--commit-msg-filename COMMIT_MSG_FILENAME] [--prepare-commit-message-source PREPARE_COMMIT_MESSAGE_SOURCE] [--commit-object-name COMMIT_OBJECT_NAME] [--remote-name REMOTE_NAME] [--remote-url REMOTE_URL] [--checkout-type CHECKOUT_TYPE] [--is-squash-merge IS_SQUASH_MERGE] [--rewrite-command REWRITE_COMMAND] repo [hook]
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --color
+        argument: '{auto,always,never}'
+        description: Whether to use color in output. Defaults to `auto`.
+      - names:
+          - -c
+          - --config
+        argument: CONFIG
+        description: Path to alternate config file
+      - names:
+          - --ref
+          - --rev
+        argument: REF
+        description: Manually select a rev to run against, otherwise the `HEAD` revision will be used.
+      - names:
+          - --verbose
+          - -v
+          - --all-files
+          - -a
+        argument: ""
+        description: Run on all the files in the repo.
+      - names:
+          - --files
+        argument: '[FILES ...]'
+        description: Specific filenames to run hooks on.
+      - names:
+          - --show-diff-on-failure
+        argument: ""
+        description: When hooks fail, run `git diff` directly afterward.
+      - names:
+          - --hook-stage
+        argument: '{commit-msg,post-checkout,post-commit,post-merge,post-rewrite,pre-commit,pre-merge-commit,pre-push,pre-rebase,prepare-commit-msg,manual}'
+        description: The stage during which the hook is fired. One of commit-msg, post-checkout, post-commit, post-merge, post-rewrite, pre-commit, pre-merge-commit, pre-push, pre-rebase, prepare-commit-msg, manual
+      - names:
+          - --remote-branch
+        argument: REMOTE_BRANCH
+        description: Remote branch ref used by `git push`.
+      - names:
+          - --local-branch
+        argument: LOCAL_BRANCH
+        description: Local branch ref used by `git push`.
+      - names:
+          - --from-ref
+          - --source
+          - -s
+        argument: FROM_REF
+        description: (for usage with `--to-ref`) -- this option represents the original ref in a `from_ref...to_ref` diff expression. For `pre-push` hooks, this represents the branch you are pushing to. For `post-checkout` hooks, this represents the branch that was previously checked out.
+      - names:
+          - --to-ref
+          - --origin
+          - -o
+        argument: TO_REF
+        description: (for usage with `--from-ref`) -- this option represents the destination ref in a `from_ref...to_ref` diff expression. For `pre-push` hooks, this represents the branch being pushed. For `post-checkout` hooks, this represents the branch that is now checked out.
+      - names:
+          - --pre-rebase-upstream
+        argument: PRE_REBASE_UPSTREAM
+        description: The upstream from which the series was forked.
+      - names:
+          - --pre-rebase-branch
+        argument: PRE_REBASE_BRANCH
+        description: The branch being rebased, and is not set when rebasing the current branch.
+      - names:
+          - --commit-msg-filename
+        argument: COMMIT_MSG_FILENAME
+        description: Filename to check when running during `commit-msg`
+      - names:
+          - --prepare-commit-message-source
+        argument: PREPARE_COMMIT_MESSAGE_SOURCE
+        description: Source of the commit message (typically the second argument to .git/hooks/prepare-commit-msg)
+      - names:
+          - --commit-object-name
+        argument: COMMIT_OBJECT_NAME
+        description: Commit object name (typically the third argument to .git/hooks/prepare-commit-msg)
+      - names:
+          - --remote-name
+        argument: REMOTE_NAME
+        description: Remote name used by `git push`.
+      - names:
+          - --remote-url
+        argument: REMOTE_URL
+        description: Remote url used by `git push`.
+      - names:
+          - --checkout-type
+        argument: CHECKOUT_TYPE
+        description: Indicates whether the checkout was a branch checkout (changing branches, flag=1) or a file checkout (retrieving a file from the index, flag=0).
+      - names:
+          - --is-squash-merge
+        argument: IS_SQUASH_MERGE
+        description: During a post-merge hook, indicates whether the merge was a squash merge
+      - names:
+          - --rewrite-command
+        argument: REWRITE_COMMAND
+        description: During a post-rewrite hook, specifies the command that invoked the rewrite
+  - name: uninstall
+    description: Uninstall the pre-commit script.
+    usage: pre-commit uninstall [-h] [--color {auto,always,never}] [-c CONFIG] [-t {commit-msg,post-checkout,post-commit,post-merge,post-rewrite,pre-commit,pre-merge-commit,pre-push,pre-rebase,prepare-commit-msg}]
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --color
+        argument: '{auto,always,never}'
+        description: Whether to use color in output. Defaults to `auto`.
+      - names:
+          - -c
+          - --config
+        argument: CONFIG
+        description: Path to alternate config file
+      - names:
+          - -t
+        argument: '{commit-msg,post-checkout,post-commit,post-merge,post-rewrite,pre-commit,pre-merge-commit,pre-push,pre-rebase,prepare-commit-msg}'
+        description: ', --hook-type {commit-msg,post-checkout,post-commit,post-merge,post-rewrite,pre-commit,pre-merge-commit,pre-push,pre-rebase,prepare-commit-msg}'
+  - name: validate-config
+    description: Validate .pre-commit-config.yaml files
+    usage: pre-commit validate-config [-h] [--color {auto,always,never}] [filenames ...]
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --color
+        argument: '{auto,always,never}'
+        description: Whether to use color in output. Defaults to `auto`.
+  - name: validate-manifest
+    description: Validate .pre-commit-hooks.yaml files
+    usage: pre-commit validate-manifest [-h] [--color {auto,always,never}] [filenames ...]
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - --color
+        argument: '{auto,always,never}'
+        description: Whether to use color in output. Defaults to `auto`.
+  - name: help
+    description: Show help for a specific command.
+    usage: pre-commit help [-h] [help_cmd]
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+version: pre-commit 3.3.3
+tldr: |
+  > Create Git hooks that get run before a commit.
+  > More information: <https://pre-commit.com>.
+
+  - Install pre-commit into your Git hooks:
+
+  `pre-commit install`
+
+  - Run pre-commit hooks on all staged files:
+
+  `pre-commit run`
+
+  - Run pre-commit hooks on all files, staged or unstaged:
+
+  `pre-commit run --all-files`
+
+  - Clean pre-commit cache:
+
+  `pre-commit clean`

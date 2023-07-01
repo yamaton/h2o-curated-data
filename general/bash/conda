@@ -2,372 +2,353 @@
 
 _conda()
 {
-    local i=1 cmd cur word_list
-    cur="${COMP_WORDS[COMP_CWORD]}"
+    local cur prev words cword
+    _init_completion -s || return
 
-    # take the last word that's NOT starting with -
-    while [[ ( "$i" < "$COMP_CWORD" ) ]]; do
-        local s="${COMP_WORDS[i]}"
-        case "$s" in
-          -*) ;;
-          *)
-            cmd="$s"
-            ;;
-        esac
-        (( i++ ))
+    local cmd i subcommands
+    local subcommands=" activate deactivate clean compare config create info init install list package remove rename run search update notices doctor env"
+
+    for (( i=1; i < cword; i++ )); do
+        if [[ " ${subcommands[*]} " == *" ${words[i]} "* ]]; then
+            cmd=${words[i]}
+            break
+        fi
     done
 
     case "$cmd" in
-          activate) _conda_activate
+        activate) _conda_activate
             return
             ;;
 
-          deactivate) _conda_deactivate
+        deactivate) _conda_deactivate
             return
             ;;
 
-          clean) _conda_clean
+        clean) _conda_clean
             return
             ;;
 
-          compare) _conda_compare
+        compare) _conda_compare
             return
             ;;
 
-          config) _conda_config
+        config) _conda_config
             return
             ;;
 
-          create) _conda_create
+        create) _conda_create
             return
             ;;
 
-          info) _conda_info
+        info) _conda_info
             return
             ;;
 
-          init) _conda_init
+        init) _conda_init
             return
             ;;
 
-          install) _conda_install
+        install) _conda_install
             return
             ;;
 
-          list) _conda_list
+        list) _conda_list
             return
             ;;
 
-          package) _conda_package
+        package) _conda_package
             return
             ;;
 
-          remove) _conda_remove
+        remove) _conda_remove
             return
             ;;
 
-          rename) _conda_rename
+        rename) _conda_rename
             return
             ;;
 
-          run) _conda_run
+        run) _conda_run
             return
             ;;
 
-          search) _conda_search
+        search) _conda_search
             return
             ;;
 
-          uninstall) _conda_uninstall
+        update) _conda_update
             return
             ;;
 
-          update) _conda_update
+        notices) _conda_notices
             return
             ;;
 
-          upgrade) _conda_upgrade
+        doctor) _conda_doctor
             return
             ;;
 
-          notices) _conda_notices
+        env) _conda_env
             return
             ;;
 
-          env) _conda_env
-            return
-            ;;
-
-      *)
-          word_list=" activate deactivate clean compare config create info init install list package remove rename run search uninstall update upgrade notices env -h --help -V --version"
-          COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
-          ;;
     esac
 
+    local word_list=" activate deactivate clean compare config create info init install list package remove rename run search update notices doctor env -h --help -V --version"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_conda_clean ()
+_conda_activate()
 {
-    local cur word_list
-    word_list=" -h --help -a --all -i --index-cache -p --packages -t --tarballs -f --force-pkgs-dirs -c --tempfiles -l --logfiles -d --dry-run --json -q --quiet -v --verbose -y --yes" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  "
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_conda_compare ()
+_conda_deactivate()
 {
-    local cur word_list
-    word_list=" -h --help --json -v --verbose -q --quiet -n --name -p --prefix" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  "
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_conda_config ()
+_conda_clean()
 {
-    local cur word_list
-    word_list=" -h --help --json -v --verbose -q --quiet --system --env --file --show --show-sources --validate --describe --write-default --get --append --prepend --add --set --remove --remove-key --stdin" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  -h --help -a --all -i --index-cache -p --packages -t --tarballs -f --force-pkgs-dirs -c --tempfiles -l --logfiles -d --dry-run --json -q --quiet -v --verbose -y --yes"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_conda_create ()
+_conda_compare()
 {
-    local cur word_list
-    word_list=" -h --help --clone --file --dev -n --name -p --prefix -c --channel --use-local --override-channels --repodata-fn --strict-channel-priority --no-channel-priority --no-deps --only-deps --no-pin --no-default-packages --experimental-solver --copy -C --use-index-cache -k --insecure --offline -d --dry-run --json -q --quiet -v --verbose -y --yes --download-only --show-channel-urls" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  -h --help --json -v --verbose -q --quiet -n --name -p --prefix"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_conda_info ()
+_conda_config()
 {
-    local cur word_list
-    word_list=" -h --help -a --all --base -e --envs -s --system --unsafe-channels --json -v --verbose -q --quiet" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  -h --help --json -v --verbose -q --quiet --system --env --file --show --show-sources --validate --describe --write-default --get --append --prepend --add --set --remove --remove-key --stdin"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_conda_init ()
+_conda_create()
 {
-    local cur word_list
-    word_list=" -h --help --all -d --dry-run --user --no-user --system --reverse --json -v --verbose -q --quiet" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  -h --help --clone --file --dev -n --name -p --prefix -c --channel --use-local --override-channels --repodata-fn --experimental --strict-channel-priority --no-channel-priority --no-deps --only-deps --no-pin --no-default-packages --solver --experimental-solver --copy -C --use-index-cache -k --insecure --offline -d --dry-run --json -q --quiet -v --verbose -y --yes --download-only --show-channel-urls"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_conda_install ()
+_conda_info()
 {
-    local cur word_list
-    word_list=" -h --help --revision --file --dev -n --name -p --prefix -c --channel --use-local --override-channels --repodata-fn --strict-channel-priority --no-channel-priority --no-deps --only-deps --no-pin --experimental-solver --force-reinstall --freeze-installed --no-update-deps --update-deps -S --satisfied-skip-solve --update-all --all --update-specs --copy -m --mkdir --clobber -C --use-index-cache -k --insecure --offline -d --dry-run --json -q --quiet -v --verbose -y --yes --download-only --show-channel-urls" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  -h --help -a --all --base -e --envs -s --system --unsafe-channels --json -v --verbose -q --quiet"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_conda_list ()
+_conda_init()
 {
-    local cur word_list
-    word_list=" -h --help --show-channel-urls -c --canonical -f --full-name --explicit --md5 -e --export -r --revisions --no-pip -n --name -p --prefix --json -v --verbose -q --quiet" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  -h --help --all -d --dry-run --user --no-user --system --reverse --json -v --verbose -q --quiet"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_conda_package ()
+_conda_install()
 {
-    local cur word_list
-    word_list=" -h --help -w --which -r --reset -u --untracked --pkg-name --pkg-version --pkg-build -n --name -p --prefix" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  -h --help --revision --file --dev -n --name -p --prefix -c --channel --use-local --override-channels --repodata-fn --experimental --strict-channel-priority --no-channel-priority --no-deps --only-deps --no-pin --solver --experimental-solver --force-reinstall --freeze-installed --no-update-deps --update-deps -S --satisfied-skip-solve --update-all --all --update-specs --copy -m --mkdir --clobber -C --use-index-cache -k --insecure --offline -d --dry-run --json -q --quiet -v --verbose -y --yes --download-only --show-channel-urls"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_conda_remove ()
+_conda_list()
 {
-    local cur word_list
-    word_list=" -h --help --dev -n --name -p --prefix -c --channel --use-local --override-channels --repodata-fn --all --features --force-remove --force --no-pin --experimental-solver -C --use-index-cache -k --insecure --offline -d --dry-run --json -q --quiet -v --verbose -y --yes" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  -h --help --show-channel-urls --reverse -c --canonical -f --full-name --explicit --md5 -e --export -r --revisions --no-pip -n --name -p --prefix --json -v --verbose -q --quiet"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_conda_rename ()
+_conda_package()
 {
-    local cur word_list
-    word_list=" -h --help --force -d --dry-run -n --name -p --prefix" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  -h --help -w --which -r --reset -u --untracked --pkg-name --pkg-version --pkg-build -n --name -p --prefix"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_conda_run ()
+_conda_remove()
 {
-    local cur word_list
-    word_list=" -h --help -v --verbose --dev --debug-wrapper-scripts --cwd --no-capture-output --live-stream -n --name -p --prefix" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  -h --help --dev -n --name -p --prefix -c --channel --use-local --override-channels --repodata-fn --experimental --all --features --force-remove --force --no-pin --solver --experimental-solver -C --use-index-cache -k --insecure --offline -d --dry-run --json -q --quiet -v --verbose -y --yes"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_conda_search ()
+_conda_rename()
 {
-    local cur word_list
-    word_list=" -h --help --envs -i --info --subdir --platform -c --channel --use-local --override-channels --repodata-fn -C --use-index-cache -k --insecure --offline --json -v --verbose -q --quiet" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  -h --help --force -d --dry-run -n --name -p --prefix"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_conda_uninstall ()
+_conda_run()
 {
-    local cur word_list
-    word_list=" -h --help --dev -n --name -p --prefix -c --channel --use-local --override-channels --repodata-fn --all --features --force-remove --force --no-pin --experimental-solver -C --use-index-cache -k --insecure --offline -d --dry-run --json -q --quiet -v --verbose -y --yes" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  -h --help -v --verbose --dev --debug-wrapper-scripts --cwd --no-capture-output --live-stream -n --name -p --prefix"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_conda_update ()
+_conda_search()
 {
-    local cur word_list
-    word_list=" -h --help --file -n --name -p --prefix -c --channel --use-local --override-channels --repodata-fn --strict-channel-priority --no-channel-priority --no-deps --only-deps --no-pin --experimental-solver --force-reinstall --freeze-installed --no-update-deps --update-deps -S --satisfied-skip-solve --update-all --all --update-specs --copy --clobber -C --use-index-cache -k --insecure --offline -d --dry-run --json -q --quiet -v --verbose -y --yes --download-only --show-channel-urls" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  -h --help --envs -i --info --subdir --platform -c --channel --use-local --override-channels --repodata-fn --experimental -C --use-index-cache -k --insecure --offline --json -v --verbose -q --quiet"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_conda_upgrade ()
+_conda_update()
 {
-    local cur word_list
-    word_list=" -h --help --file -n --name -p --prefix -c --channel --use-local --override-channels --repodata-fn --strict-channel-priority --no-channel-priority --no-deps --only-deps --no-pin --experimental-solver --force-reinstall --freeze-installed --no-update-deps --update-deps -S --satisfied-skip-solve --update-all --all --update-specs --copy --clobber -C --use-index-cache -k --insecure --offline -d --dry-run --json -q --quiet -v --verbose -y --yes --download-only --show-channel-urls" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  -h --help --file -n --name -p --prefix -c --channel --use-local --override-channels --repodata-fn --experimental --strict-channel-priority --no-channel-priority --no-deps --only-deps --no-pin --solver --experimental-solver --force-reinstall --freeze-installed --no-update-deps --update-deps -S --satisfied-skip-solve --update-all --all --update-specs --copy --clobber -C --use-index-cache -k --insecure --offline -d --dry-run --json -q --quiet -v --verbose -y --yes --download-only --show-channel-urls"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_conda_notices ()
+_conda_notices()
 {
-    local cur word_list
-    word_list=" -h --help -c --channel --use-local --override-channels --repodata-fn" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  -h --help -c --channel --use-local --override-channels --repodata-fn --experimental"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_conda_env ()
+_conda_doctor()
 {
-    local cur word_list
-    local i=1 subcommand_index
+    local word_list="  -h --help -v --verbose -n --name -p --prefix"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
+}
 
-    # take the last word that's NOT starting with -
-    while [[ ( $i < $COMP_CWORD ) ]]; do
-        local s="${COMP_WORDS[i]}"
-        case "$s" in
-          env)
-            subcommand_index=$i
+_conda_env()
+{
+    local cmd i subcommands
+    local subcommands=" create export list remove update config"
+
+    for (( i=1; i < cword; i++ )); do
+        if [[ " ${subcommands[*]} " == *" ${words[i]} "* ]]; then
+            cmd=${words[i]}
             break
-            ;;
-        esac
-        (( i++ ))
+        fi
     done
 
-    while [[ ( $subcommand_index < $COMP_CWORD ) ]]; do
-        local s="${COMP_WORDS[subcommand_index}"
-        case "$s" in
-          create) _conda_create
+    case "$cmd" in
+        create) _conda_env_create
             return
             ;;
 
-          export) _conda_export
+        export) _conda_env_export
             return
             ;;
 
-          list) _conda_list
+        list) _conda_env_list
             return
             ;;
 
-          remove) _conda_remove
+        remove) _conda_env_remove
             return
             ;;
 
-          update) _conda_update
+        update) _conda_env_update
             return
             ;;
 
-          config) _conda_config
+        config) _conda_env_config
             return
             ;;
 
-          *)  ;; 
-        esac
-        (( subcommand_index++ ))
-    done
+    esac
 
-    word_list=" create export list remove update config -h --help" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list=" create export list remove update config -h --help"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_env_create ()
+_conda_env_create()
 {
-    local cur word_list
-    word_list=" -h --help -f --file --force -d --dry-run --no-default-packages --experimental-solver -n --name -p --prefix -C --use-index-cache -k --insecure --offline --json -v --verbose -q --quiet" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  -h --help -f --file --force -d --dry-run --no-default-packages --solver --experimental-solver -n --name -p --prefix -C --use-index-cache -k --insecure --offline --json -v --verbose -q --quiet"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_env_export ()
+_conda_env_export()
 {
-    local cur word_list
-    word_list=" -h --help -c --channel --override-channels -f --file --no-builds --ignore-channels --from-history -n --name -p --prefix --json -v --verbose -q --quiet" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  -h --help -c --channel --override-channels -f --file --no-builds --ignore-channels --from-history -n --name -p --prefix --json -v --verbose -q --quiet"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_env_list ()
+_conda_env_list()
 {
-    local cur word_list
-    word_list=" -h --help --json -v --verbose -q --quiet" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  -h --help --json -v --verbose -q --quiet"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_env_remove ()
+_conda_env_remove()
 {
-    local cur word_list
-    word_list=" -h --help --experimental-solver -n --name -p --prefix -d --dry-run --json -q --quiet -v --verbose -y --yes" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  -h --help --solver --experimental-solver -n --name -p --prefix -d --dry-run --json -q --quiet -v --verbose -y --yes"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_env_update ()
+_conda_env_update()
 {
-    local cur word_list
-    word_list=" -h --help -f --file --prune --experimental-solver -n --name -p --prefix --json -v --verbose -q --quiet" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  -h --help -f --file --prune --solver --experimental-solver -n --name -p --prefix --json -v --verbose -q --quiet"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_env_config ()
+_conda_env_config()
 {
-    local cur word_list
-    local i=1 subcommand_index
+    local cmd i subcommands
+    local subcommands=" vars"
 
-    # take the last word that's NOT starting with -
-    while [[ ( $i < $COMP_CWORD ) ]]; do
-        local s="${COMP_WORDS[i]}"
-        case "$s" in
-          config)
-            subcommand_index=$i
+    for (( i=1; i < cword; i++ )); do
+        if [[ " ${subcommands[*]} " == *" ${words[i]} "* ]]; then
+            cmd=${words[i]}
             break
-            ;;
-        esac
-        (( i++ ))
+        fi
     done
 
-    while [[ ( $subcommand_index < $COMP_CWORD ) ]]; do
-        local s="${COMP_WORDS[subcommand_index}"
-        case "$s" in
-          conda) _env_conda
+    case "$cmd" in
+        vars) _conda_env_config_vars
             return
             ;;
 
-          *)  ;; 
-        esac
-        (( subcommand_index++ ))
+    esac
+
+    local word_list=" vars -h --help"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
+}
+
+_conda_env_config_vars()
+{
+    local cmd i subcommands
+    local subcommands=" list set unset"
+
+    for (( i=1; i < cword; i++ )); do
+        if [[ " ${subcommands[*]} " == *" ${words[i]} "* ]]; then
+            cmd=${words[i]}
+            break
+        fi
     done
 
-    word_list=" conda -h --help" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    case "$cmd" in
+        list) _conda_env_config_vars_list
+            return
+            ;;
+
+        set) _conda_env_config_vars_set
+            return
+            ;;
+
+        unset) _conda_env_config_vars_unset
+            return
+            ;;
+
+    esac
+
+    local word_list=" list set unset -h --help"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
+}
+
+_conda_env_config_vars_list()
+{
+    local word_list="  -h --help -n --name -p --prefix --json -v --verbose -q --quiet"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
+}
+
+_conda_env_config_vars_set()
+{
+    local word_list="  -h --help -n --name -p --prefix"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
+}
+
+_conda_env_config_vars_unset()
+{
+    local word_list="  -h --help -n --name -p --prefix"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
 ## -o bashdefault and -o default are fallback

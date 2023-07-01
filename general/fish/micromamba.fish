@@ -15,6 +15,7 @@ complete -c micromamba -n "not __fish_seen_subcommand_from shell create install 
 complete -c micromamba -n "not __fish_seen_subcommand_from shell create install update self-update repoquery remove list package clean config info constructor env activate run ps auth search" -l "experimental" -d "Enable experimental features"
 complete -c micromamba -n "not __fish_seen_subcommand_from shell create install update self-update repoquery remove list package clean config info constructor env activate run ps auth search" -s "r" -l "root-prefix" -d "Path to the root prefix" -r
 complete -c micromamba -n "not __fish_seen_subcommand_from shell create install update self-update repoquery remove list package clean config info constructor env activate run ps auth search" -s "p" -l "prefix" -d "Path to the target prefix" -r
+complete -c micromamba -n "not __fish_seen_subcommand_from shell create install update self-update repoquery remove list package clean config info constructor env activate run ps auth search" -l "relocate-prefix" -d "Path to the relocation prefix" -r
 complete -c micromamba -n "not __fish_seen_subcommand_from shell create install update self-update repoquery remove list package clean config info constructor env activate run ps auth search" -s "n" -l "name" -d "Name of the target prefix" -x
 
 
@@ -42,9 +43,8 @@ complete -k -c micromamba -n __fish_use_subcommand -x -a shell -d "Generate shel
 
 
 complete -c micromamba -n "__fish_seen_subcommand_from shell" -s "h" -l "help" -d "Print this help message and exit"
-complete -c micromamba -n "__fish_seen_subcommand_from shell" -s "s" -l "shell" -d "A shell type" -x
-complete -c micromamba -n "__fish_seen_subcommand_from shell" -l "stack" -d "Stack the environment being activated"
-complete -c micromamba -n "__fish_seen_subcommand_from shell" -s "p" -s "n" -l "prefix" -l "name" -d "The root prefix to configure (for init and hook), and the prefix to activate for activate, either by name or by path" -r
+complete -c micromamba -n "__fish_seen_subcommand_from shell" -s "p" -l "prefix" -d "Path to the target prefix" -r
+complete -c micromamba -n "__fish_seen_subcommand_from shell" -s "n" -l "name" -d "Name of the target prefix" -x
 complete -c micromamba -n "__fish_seen_subcommand_from shell" -l "rc-file" -d "Paths to the configuration files to use" -r
 complete -c micromamba -n "__fish_seen_subcommand_from shell" -l "no-rc" -d "Disable the use of configuration files"
 complete -c micromamba -n "__fish_seen_subcommand_from shell" -l "no-env" -d "Disable the use of environment variables"
@@ -63,7 +63,7 @@ complete -c micromamba -n "__fish_seen_subcommand_from shell" -l "experimental" 
 complete -c micromamba -n "__fish_seen_subcommand_from create" -s "h" -l "help" -d "Print this help message and exit"
 complete -c micromamba -n "__fish_seen_subcommand_from create" -s "c" -l "channel" -d "Define the list of channels" -x
 complete -c micromamba -n "__fish_seen_subcommand_from create" -l "override-channels" -d "Override channels"
-complete -c micromamba -n "__fish_seen_subcommand_from create" -l "channel-priority" -d "e in {disabled->0,flexible->1,strict->2} OR {0,1,2} Define the channel priority ('strict' or 'disabled')" -x
+complete -c micromamba -n "__fish_seen_subcommand_from create" -l "channel-priority" -d "Define the channel priority ('strict' or 'disabled')" -x
 complete -c micromamba -n "__fish_seen_subcommand_from create" -l "channel-alias" -d "The prepended url location to associate with channel names" -x
 complete -c micromamba -n "__fish_seen_subcommand_from create" -l "strict-channel-priority" -d "Enable strict channel priority"
 complete -c micromamba -n "__fish_seen_subcommand_from create" -l "no-channel-priority" -d "Disable channel priority"
@@ -79,7 +79,7 @@ complete -c micromamba -n "__fish_seen_subcommand_from create" -l "always-copy" 
 complete -c micromamba -n "__fish_seen_subcommand_from create" -l "extra-safety-checks" -l "no-extra-safety-checks" -d "Run extra verifications on packages" -x
 complete -c micromamba -n "__fish_seen_subcommand_from create" -l "lock-timeout" -d "Lockfile timeout" -r
 complete -c micromamba -n "__fish_seen_subcommand_from create" -l "shortcuts" -l "no-shortcuts" -d "Install start-menu shortcuts on Windows (not implemented on Linux / macOS)" -x
-complete -c micromamba -n "__fish_seen_subcommand_from create" -l "safety-checks" -d "OR {0,2,1}   Safety checks policy ('enabled', 'warn', or 'disabled')" -x
+complete -c micromamba -n "__fish_seen_subcommand_from create" -l "safety-checks" -d "Safety checks policy ('enabled', 'warn', or 'disabled')" -x
 complete -c micromamba -n "__fish_seen_subcommand_from create" -l "verify-artifacts" -d "Run verifications on packages signatures"
 complete -c micromamba -n "__fish_seen_subcommand_from create" -l "platform" -d "The platform description" -x
 complete -c micromamba -n "__fish_seen_subcommand_from create" -l "no-deps" -d "Do not install dependencies."
@@ -99,6 +99,7 @@ complete -c micromamba -n "__fish_seen_subcommand_from create" -l "download-only
 complete -c micromamba -n "__fish_seen_subcommand_from create" -l "experimental" -d "Enable experimental features"
 complete -c micromamba -n "__fish_seen_subcommand_from create" -s "r" -l "root-prefix" -d "Path to the root prefix" -r
 complete -c micromamba -n "__fish_seen_subcommand_from create" -s "p" -l "prefix" -d "Path to the target prefix" -r
+complete -c micromamba -n "__fish_seen_subcommand_from create" -l "relocate-prefix" -d "Path to the relocation prefix" -r
 complete -c micromamba -n "__fish_seen_subcommand_from create" -s "n" -l "name" -d "Name of the target prefix" -x
 complete -c micromamba -n "__fish_seen_subcommand_from create" -l "ssl-verify" -d "Verify SSL certificates for HTTPS requests" -x
 complete -c micromamba -n "__fish_seen_subcommand_from create" -l "ssl-no-revoke" -d "SSL certificate revocation checks"
@@ -111,7 +112,7 @@ complete -c micromamba -n "__fish_seen_subcommand_from create" -l "retry-clean-c
 complete -c micromamba -n "__fish_seen_subcommand_from install" -s "h" -l "help" -d "Print this help message and exit"
 complete -c micromamba -n "__fish_seen_subcommand_from install" -s "c" -l "channel" -d "Define the list of channels" -x
 complete -c micromamba -n "__fish_seen_subcommand_from install" -l "override-channels" -d "Override channels"
-complete -c micromamba -n "__fish_seen_subcommand_from install" -l "channel-priority" -d "e in {disabled->0,flexible->1,strict->2} OR {0,1,2} Define the channel priority ('strict' or 'disabled')" -x
+complete -c micromamba -n "__fish_seen_subcommand_from install" -l "channel-priority" -d "Define the channel priority ('strict' or 'disabled')" -x
 complete -c micromamba -n "__fish_seen_subcommand_from install" -l "channel-alias" -d "The prepended url location to associate with channel names" -x
 complete -c micromamba -n "__fish_seen_subcommand_from install" -l "strict-channel-priority" -d "Enable strict channel priority"
 complete -c micromamba -n "__fish_seen_subcommand_from install" -l "no-channel-priority" -d "Disable channel priority"
@@ -127,7 +128,7 @@ complete -c micromamba -n "__fish_seen_subcommand_from install" -l "always-copy"
 complete -c micromamba -n "__fish_seen_subcommand_from install" -l "extra-safety-checks" -l "no-extra-safety-checks" -d "Run extra verifications on packages" -x
 complete -c micromamba -n "__fish_seen_subcommand_from install" -l "lock-timeout" -d "Lockfile timeout" -r
 complete -c micromamba -n "__fish_seen_subcommand_from install" -l "shortcuts" -l "no-shortcuts" -d "Install start-menu shortcuts on Windows (not implemented on Linux / macOS)" -x
-complete -c micromamba -n "__fish_seen_subcommand_from install" -l "safety-checks" -d "OR {0,2,1}   Safety checks policy ('enabled', 'warn', or 'disabled')" -x
+complete -c micromamba -n "__fish_seen_subcommand_from install" -l "safety-checks" -d "Safety checks policy ('enabled', 'warn', or 'disabled')" -x
 complete -c micromamba -n "__fish_seen_subcommand_from install" -l "verify-artifacts" -d "Run verifications on packages signatures"
 complete -c micromamba -n "__fish_seen_subcommand_from install" -l "platform" -d "The platform description" -x
 complete -c micromamba -n "__fish_seen_subcommand_from install" -l "no-deps" -d "Do not install dependencies."
@@ -149,6 +150,7 @@ complete -c micromamba -n "__fish_seen_subcommand_from install" -l "download-onl
 complete -c micromamba -n "__fish_seen_subcommand_from install" -l "experimental" -d "Enable experimental features"
 complete -c micromamba -n "__fish_seen_subcommand_from install" -s "r" -l "root-prefix" -d "Path to the root prefix" -r
 complete -c micromamba -n "__fish_seen_subcommand_from install" -s "p" -l "prefix" -d "Path to the target prefix" -r
+complete -c micromamba -n "__fish_seen_subcommand_from install" -l "relocate-prefix" -d "Path to the relocation prefix" -r
 complete -c micromamba -n "__fish_seen_subcommand_from install" -s "n" -l "name" -d "Name of the target prefix" -x
 complete -c micromamba -n "__fish_seen_subcommand_from install" -l "ssl-verify" -d "Verify SSL certificates for HTTPS requests" -x
 complete -c micromamba -n "__fish_seen_subcommand_from install" -l "ssl-no-revoke" -d "SSL certificate revocation checks"
@@ -161,7 +163,7 @@ complete -c micromamba -n "__fish_seen_subcommand_from install" -l "retry-clean-
 complete -c micromamba -n "__fish_seen_subcommand_from update" -s "h" -l "help" -d "Print this help message and exit"
 complete -c micromamba -n "__fish_seen_subcommand_from update" -s "c" -l "channel" -d "Define the list of channels" -x
 complete -c micromamba -n "__fish_seen_subcommand_from update" -l "override-channels" -d "Override channels"
-complete -c micromamba -n "__fish_seen_subcommand_from update" -l "channel-priority" -d "e in {disabled->0,flexible->1,strict->2} OR {0,1,2} Define the channel priority ('strict' or 'disabled')" -x
+complete -c micromamba -n "__fish_seen_subcommand_from update" -l "channel-priority" -d "Define the channel priority ('strict' or 'disabled')" -x
 complete -c micromamba -n "__fish_seen_subcommand_from update" -l "channel-alias" -d "The prepended url location to associate with channel names" -x
 complete -c micromamba -n "__fish_seen_subcommand_from update" -l "strict-channel-priority" -d "Enable strict channel priority"
 complete -c micromamba -n "__fish_seen_subcommand_from update" -l "no-channel-priority" -d "Disable channel priority"
@@ -177,7 +179,7 @@ complete -c micromamba -n "__fish_seen_subcommand_from update" -l "always-copy" 
 complete -c micromamba -n "__fish_seen_subcommand_from update" -l "extra-safety-checks" -l "no-extra-safety-checks" -d "Run extra verifications on packages" -x
 complete -c micromamba -n "__fish_seen_subcommand_from update" -l "lock-timeout" -d "Lockfile timeout" -r
 complete -c micromamba -n "__fish_seen_subcommand_from update" -l "shortcuts" -l "no-shortcuts" -d "Install start-menu shortcuts on Windows (not implemented on Linux / macOS)" -x
-complete -c micromamba -n "__fish_seen_subcommand_from update" -l "safety-checks" -d "OR {0,2,1}   Safety checks policy ('enabled', 'warn', or 'disabled')" -x
+complete -c micromamba -n "__fish_seen_subcommand_from update" -l "safety-checks" -d "Safety checks policy ('enabled', 'warn', or 'disabled')" -x
 complete -c micromamba -n "__fish_seen_subcommand_from update" -l "verify-artifacts" -d "Run verifications on packages signatures"
 complete -c micromamba -n "__fish_seen_subcommand_from update" -l "platform" -d "The platform description" -x
 complete -c micromamba -n "__fish_seen_subcommand_from update" -l "no-deps" -d "Do not install dependencies."
@@ -199,6 +201,7 @@ complete -c micromamba -n "__fish_seen_subcommand_from update" -l "download-only
 complete -c micromamba -n "__fish_seen_subcommand_from update" -l "experimental" -d "Enable experimental features"
 complete -c micromamba -n "__fish_seen_subcommand_from update" -s "r" -l "root-prefix" -d "Path to the root prefix" -r
 complete -c micromamba -n "__fish_seen_subcommand_from update" -s "p" -l "prefix" -d "Path to the target prefix" -r
+complete -c micromamba -n "__fish_seen_subcommand_from update" -l "relocate-prefix" -d "Path to the relocation prefix" -r
 complete -c micromamba -n "__fish_seen_subcommand_from update" -s "n" -l "name" -d "Name of the target prefix" -x
 complete -c micromamba -n "__fish_seen_subcommand_from update" -l "ssl-verify" -d "Verify SSL certificates for HTTPS requests" -x
 complete -c micromamba -n "__fish_seen_subcommand_from update" -l "ssl-no-revoke" -d "SSL certificate revocation checks"
@@ -211,7 +214,7 @@ complete -c micromamba -n "__fish_seen_subcommand_from update" -l "retry-clean-c
 complete -c micromamba -n "__fish_seen_subcommand_from self-update" -s "h" -l "help" -d "Print this help message and exit"
 complete -c micromamba -n "__fish_seen_subcommand_from self-update" -s "c" -l "channel" -d "Define the list of channels" -x
 complete -c micromamba -n "__fish_seen_subcommand_from self-update" -l "override-channels" -d "Override channels"
-complete -c micromamba -n "__fish_seen_subcommand_from self-update" -l "channel-priority" -d "e in {disabled->0,flexible->1,strict->2} OR {0,1,2} Define the channel priority ('strict' or 'disabled')" -x
+complete -c micromamba -n "__fish_seen_subcommand_from self-update" -l "channel-priority" -d "Define the channel priority ('strict' or 'disabled')" -x
 complete -c micromamba -n "__fish_seen_subcommand_from self-update" -l "channel-alias" -d "The prepended url location to associate with channel names" -x
 complete -c micromamba -n "__fish_seen_subcommand_from self-update" -l "strict-channel-priority" -d "Enable strict channel priority"
 complete -c micromamba -n "__fish_seen_subcommand_from self-update" -l "no-channel-priority" -d "Disable channel priority"
@@ -227,7 +230,7 @@ complete -c micromamba -n "__fish_seen_subcommand_from self-update" -l "always-c
 complete -c micromamba -n "__fish_seen_subcommand_from self-update" -l "extra-safety-checks" -l "no-extra-safety-checks" -d "Run extra verifications on packages" -x
 complete -c micromamba -n "__fish_seen_subcommand_from self-update" -l "lock-timeout" -d "Lockfile timeout" -r
 complete -c micromamba -n "__fish_seen_subcommand_from self-update" -l "shortcuts" -l "no-shortcuts" -d "Install start-menu shortcuts on Windows (not implemented on Linux / macOS)" -x
-complete -c micromamba -n "__fish_seen_subcommand_from self-update" -l "safety-checks" -d "OR {0,2,1}   Safety checks policy ('enabled', 'warn', or 'disabled')" -x
+complete -c micromamba -n "__fish_seen_subcommand_from self-update" -l "safety-checks" -d "Safety checks policy ('enabled', 'warn', or 'disabled')" -x
 complete -c micromamba -n "__fish_seen_subcommand_from self-update" -l "verify-artifacts" -d "Run verifications on packages signatures"
 complete -c micromamba -n "__fish_seen_subcommand_from self-update" -l "platform" -d "The platform description" -x
 complete -c micromamba -n "__fish_seen_subcommand_from self-update" -l "no-deps" -d "Do not install dependencies."
@@ -248,6 +251,7 @@ complete -c micromamba -n "__fish_seen_subcommand_from self-update" -l "download
 complete -c micromamba -n "__fish_seen_subcommand_from self-update" -l "experimental" -d "Enable experimental features"
 complete -c micromamba -n "__fish_seen_subcommand_from self-update" -s "r" -l "root-prefix" -d "Path to the root prefix" -r
 complete -c micromamba -n "__fish_seen_subcommand_from self-update" -s "p" -l "prefix" -d "Path to the target prefix" -r
+complete -c micromamba -n "__fish_seen_subcommand_from self-update" -l "relocate-prefix" -d "Path to the relocation prefix" -r
 complete -c micromamba -n "__fish_seen_subcommand_from self-update" -s "n" -l "name" -d "Name of the target prefix" -x
 complete -c micromamba -n "__fish_seen_subcommand_from self-update" -l "ssl-verify" -d "Verify SSL certificates for HTTPS requests" -x
 complete -c micromamba -n "__fish_seen_subcommand_from self-update" -l "ssl-no-revoke" -d "SSL certificate revocation checks"
@@ -260,13 +264,14 @@ complete -c micromamba -n "__fish_seen_subcommand_from self-update" -l "retry-cl
 complete -c micromamba -n "__fish_seen_subcommand_from repoquery" -s "h" -l "help" -d "Print this help message and exit"
 complete -c micromamba -n "__fish_seen_subcommand_from repoquery" -s "c" -l "channel" -d "Define the list of channels" -x
 complete -c micromamba -n "__fish_seen_subcommand_from repoquery" -l "override-channels" -d "Override channels"
-complete -c micromamba -n "__fish_seen_subcommand_from repoquery" -l "channel-priority" -d "e in {disabled->0,flexible->1,strict->2} OR {0,1,2} Define the channel priority ('strict' or 'disabled')" -x
+complete -c micromamba -n "__fish_seen_subcommand_from repoquery" -l "channel-priority" -d "Define the channel priority ('strict' or 'disabled')" -x
 complete -c micromamba -n "__fish_seen_subcommand_from repoquery" -l "channel-alias" -d "The prepended url location to associate with channel names" -x
 complete -c micromamba -n "__fish_seen_subcommand_from repoquery" -l "strict-channel-priority" -d "Enable strict channel priority"
 complete -c micromamba -n "__fish_seen_subcommand_from repoquery" -l "no-channel-priority" -d "Disable channel priority"
 complete -c micromamba -n "__fish_seen_subcommand_from repoquery" -s "t" -l "tree" -d "Show result as a tree"
+complete -c micromamba -n "__fish_seen_subcommand_from repoquery" -l "recursive" -d "Show dependencies recursively, i.e. transitive dependencies (only for `depends`)"
 complete -c micromamba -n "__fish_seen_subcommand_from repoquery" -l "pretty" -d "Pretty print result (only for search)"
-complete -c micromamba -n "__fish_seen_subcommand_from repoquery" -l "local" -l "remote" -d "Use installed data or remote repositories" -x
+complete -c micromamba -n "__fish_seen_subcommand_from repoquery" -l "use-local" -d "Use installed data (--use-local=1, default for `depends` and `whoneeds`) or remote repositories (--use-local=0, default for `search`)." -x
 complete -c micromamba -n "__fish_seen_subcommand_from repoquery" -l "platform" -d "The platform description" -x
 complete -c micromamba -n "__fish_seen_subcommand_from repoquery" -l "rc-file" -d "Paths to the configuration files to use" -r
 complete -c micromamba -n "__fish_seen_subcommand_from repoquery" -l "no-rc" -d "Disable the use of configuration files"
@@ -282,6 +287,7 @@ complete -c micromamba -n "__fish_seen_subcommand_from repoquery" -l "download-o
 complete -c micromamba -n "__fish_seen_subcommand_from repoquery" -l "experimental" -d "Enable experimental features"
 complete -c micromamba -n "__fish_seen_subcommand_from repoquery" -s "r" -l "root-prefix" -d "Path to the root prefix" -r
 complete -c micromamba -n "__fish_seen_subcommand_from repoquery" -s "p" -l "prefix" -d "Path to the target prefix" -r
+complete -c micromamba -n "__fish_seen_subcommand_from repoquery" -l "relocate-prefix" -d "Path to the relocation prefix" -r
 complete -c micromamba -n "__fish_seen_subcommand_from repoquery" -s "n" -l "name" -d "Name of the target prefix" -x
 complete -c micromamba -n "__fish_seen_subcommand_from repoquery" -l "ssl-verify" -d "Verify SSL certificates for HTTPS requests" -x
 complete -c micromamba -n "__fish_seen_subcommand_from repoquery" -l "ssl-no-revoke" -d "SSL certificate revocation checks"
@@ -309,6 +315,7 @@ complete -c micromamba -n "__fish_seen_subcommand_from remove" -l "download-only
 complete -c micromamba -n "__fish_seen_subcommand_from remove" -l "experimental" -d "Enable experimental features"
 complete -c micromamba -n "__fish_seen_subcommand_from remove" -s "r" -l "root-prefix" -d "Path to the root prefix" -r
 complete -c micromamba -n "__fish_seen_subcommand_from remove" -s "p" -l "prefix" -d "Path to the target prefix" -r
+complete -c micromamba -n "__fish_seen_subcommand_from remove" -l "relocate-prefix" -d "Path to the relocation prefix" -r
 complete -c micromamba -n "__fish_seen_subcommand_from remove" -s "n" -l "name" -d "Name of the target prefix" -x
 
 
@@ -328,11 +335,24 @@ complete -c micromamba -n "__fish_seen_subcommand_from list" -l "download-only" 
 complete -c micromamba -n "__fish_seen_subcommand_from list" -l "experimental" -d "Enable experimental features"
 complete -c micromamba -n "__fish_seen_subcommand_from list" -s "r" -l "root-prefix" -d "Path to the root prefix" -r
 complete -c micromamba -n "__fish_seen_subcommand_from list" -s "p" -l "prefix" -d "Path to the target prefix" -r
+complete -c micromamba -n "__fish_seen_subcommand_from list" -l "relocate-prefix" -d "Path to the relocation prefix" -r
 complete -c micromamba -n "__fish_seen_subcommand_from list" -s "n" -l "name" -d "Name of the target prefix" -x
 
 
 
 complete -c micromamba -n "__fish_seen_subcommand_from package" -s "h" -l "help" -d "Print this help message and exit"
+complete -c micromamba -n "__fish_seen_subcommand_from package" -l "rc-file" -d "Paths to the configuration files to use" -r
+complete -c micromamba -n "__fish_seen_subcommand_from package" -l "no-rc" -d "Disable the use of configuration files"
+complete -c micromamba -n "__fish_seen_subcommand_from package" -l "no-env" -d "Disable the use of environment variables"
+complete -c micromamba -n "__fish_seen_subcommand_from package" -s "v" -l "verbose" -d "Set verbosity (higher verbosity with multiple -v, e.g. -vvv)"
+complete -c micromamba -n "__fish_seen_subcommand_from package" -l "log-level" -d "Set the log level" -x
+complete -c micromamba -n "__fish_seen_subcommand_from package" -s "q" -l "quiet" -d "Set quiet mode (print less output)"
+complete -c micromamba -n "__fish_seen_subcommand_from package" -s "y" -l "yes" -d "Automatically answer yes on prompted questions"
+complete -c micromamba -n "__fish_seen_subcommand_from package" -l "json" -d "Report all output as json"
+complete -c micromamba -n "__fish_seen_subcommand_from package" -l "offline" -d "Force use cached repodata"
+complete -c micromamba -n "__fish_seen_subcommand_from package" -l "dry-run" -d "Only display what would have been done"
+complete -c micromamba -n "__fish_seen_subcommand_from package" -l "download-only" -d "Only download and extract packages, do not link them into environment."
+complete -c micromamba -n "__fish_seen_subcommand_from package" -l "experimental" -d "Enable experimental features"
 
 
 
@@ -374,6 +394,7 @@ complete -c micromamba -n "__fish_seen_subcommand_from config" -l "download-only
 complete -c micromamba -n "__fish_seen_subcommand_from config" -l "experimental" -d "Enable experimental features"
 complete -c micromamba -n "__fish_seen_subcommand_from config" -s "r" -l "root-prefix" -d "Path to the root prefix" -r
 complete -c micromamba -n "__fish_seen_subcommand_from config" -s "p" -l "prefix" -d "Path to the target prefix" -r
+complete -c micromamba -n "__fish_seen_subcommand_from config" -l "relocate-prefix" -d "Path to the relocation prefix" -r
 complete -c micromamba -n "__fish_seen_subcommand_from config" -s "n" -l "name" -d "Name of the target prefix" -x
 
 
@@ -394,6 +415,7 @@ complete -c micromamba -n "__fish_seen_subcommand_from info" -l "download-only" 
 complete -c micromamba -n "__fish_seen_subcommand_from info" -l "experimental" -d "Enable experimental features"
 complete -c micromamba -n "__fish_seen_subcommand_from info" -s "r" -l "root-prefix" -d "Path to the root prefix" -r
 complete -c micromamba -n "__fish_seen_subcommand_from info" -s "p" -l "prefix" -d "Path to the target prefix" -r
+complete -c micromamba -n "__fish_seen_subcommand_from info" -l "relocate-prefix" -d "Path to the relocation prefix" -r
 complete -c micromamba -n "__fish_seen_subcommand_from info" -s "n" -l "name" -d "Name of the target prefix" -x
 
 
@@ -420,6 +442,7 @@ complete -c micromamba -n "__fish_seen_subcommand_from env" -l "download-only" -
 complete -c micromamba -n "__fish_seen_subcommand_from env" -l "experimental" -d "Enable experimental features"
 complete -c micromamba -n "__fish_seen_subcommand_from env" -s "r" -l "root-prefix" -d "Path to the root prefix" -r
 complete -c micromamba -n "__fish_seen_subcommand_from env" -s "p" -l "prefix" -d "Path to the target prefix" -r
+complete -c micromamba -n "__fish_seen_subcommand_from env" -l "relocate-prefix" -d "Path to the relocation prefix" -r
 complete -c micromamba -n "__fish_seen_subcommand_from env" -s "n" -l "name" -d "Name of the target prefix" -x
 
 
@@ -438,6 +461,7 @@ complete -c micromamba -n "__fish_seen_subcommand_from run" -s "e" -l "env" -d "
 complete -c micromamba -n "__fish_seen_subcommand_from run" -l "label" -d "Specifies the name of the process." -x
 complete -c micromamba -n "__fish_seen_subcommand_from run" -s "r" -l "root-prefix" -d "Path to the root prefix" -r
 complete -c micromamba -n "__fish_seen_subcommand_from run" -s "p" -l "prefix" -d "Path to the target prefix" -r
+complete -c micromamba -n "__fish_seen_subcommand_from run" -l "relocate-prefix" -d "Path to the relocation prefix" -r
 complete -c micromamba -n "__fish_seen_subcommand_from run" -s "n" -l "name" -d "Name of the target prefix" -x
 
 
@@ -453,13 +477,14 @@ complete -c micromamba -n "__fish_seen_subcommand_from auth" -s "h" -l "help" -d
 complete -c micromamba -n "__fish_seen_subcommand_from search" -s "h" -l "help" -d "Print this help message and exit"
 complete -c micromamba -n "__fish_seen_subcommand_from search" -s "c" -l "channel" -d "Define the list of channels" -x
 complete -c micromamba -n "__fish_seen_subcommand_from search" -l "override-channels" -d "Override channels"
-complete -c micromamba -n "__fish_seen_subcommand_from search" -l "channel-priority" -d "e in {disabled->0,flexible->1,strict->2} OR {0,1,2} Define the channel priority ('strict' or 'disabled')" -x
+complete -c micromamba -n "__fish_seen_subcommand_from search" -l "channel-priority" -d "Define the channel priority ('strict' or 'disabled')" -x
 complete -c micromamba -n "__fish_seen_subcommand_from search" -l "channel-alias" -d "The prepended url location to associate with channel names" -x
 complete -c micromamba -n "__fish_seen_subcommand_from search" -l "strict-channel-priority" -d "Enable strict channel priority"
 complete -c micromamba -n "__fish_seen_subcommand_from search" -l "no-channel-priority" -d "Disable channel priority"
 complete -c micromamba -n "__fish_seen_subcommand_from search" -s "t" -l "tree" -d "Show result as a tree"
+complete -c micromamba -n "__fish_seen_subcommand_from search" -l "recursive" -d "Show dependencies recursively, i.e. transitive dependencies (only for `depends`)"
 complete -c micromamba -n "__fish_seen_subcommand_from search" -l "pretty" -d "Pretty print result (only for search)"
-complete -c micromamba -n "__fish_seen_subcommand_from search" -l "local" -l "remote" -d "Use installed data or remote repositories" -x
+complete -c micromamba -n "__fish_seen_subcommand_from search" -l "use-local" -d "Use installed data (--use-local=1, default for `depends` and `whoneeds`) or remote repositories (--use-local=0, default for `search`)." -x
 complete -c micromamba -n "__fish_seen_subcommand_from search" -l "platform" -d "The platform description" -x
 complete -c micromamba -n "__fish_seen_subcommand_from search" -l "rc-file" -d "Paths to the configuration files to use" -r
 complete -c micromamba -n "__fish_seen_subcommand_from search" -l "no-rc" -d "Disable the use of configuration files"
@@ -475,6 +500,7 @@ complete -c micromamba -n "__fish_seen_subcommand_from search" -l "download-only
 complete -c micromamba -n "__fish_seen_subcommand_from search" -l "experimental" -d "Enable experimental features"
 complete -c micromamba -n "__fish_seen_subcommand_from search" -s "r" -l "root-prefix" -d "Path to the root prefix" -r
 complete -c micromamba -n "__fish_seen_subcommand_from search" -s "p" -l "prefix" -d "Path to the target prefix" -r
+complete -c micromamba -n "__fish_seen_subcommand_from search" -l "relocate-prefix" -d "Path to the relocation prefix" -r
 complete -c micromamba -n "__fish_seen_subcommand_from search" -s "n" -l "name" -d "Name of the target prefix" -x
 complete -c micromamba -n "__fish_seen_subcommand_from search" -l "ssl-verify" -d "Verify SSL certificates for HTTPS requests" -x
 complete -c micromamba -n "__fish_seen_subcommand_from search" -l "ssl-no-revoke" -d "SSL certificate revocation checks"

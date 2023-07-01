@@ -1,5 +1,5 @@
 name: micromamba
-description: micromamba
+description: A tiny version of mamba, the fast conda package installer.
 usage: micromamba [OPTIONS] [SUBCOMMAND]
 options:
   - names:
@@ -69,6 +69,10 @@ options:
     argument: TEXT
     description: Path to the target prefix
   - names:
+      - --relocate-prefix
+    argument: TEXT
+    description: Path to the relocation prefix
+  - names:
       - -n
       - --name
     argument: TEXT
@@ -76,7 +80,7 @@ options:
 subcommands:
   - name: shell
     description: Generate shell init scripts
-    usage: micromamba shell [OPTIONS] [action] [prefix]
+    usage: micromamba shell [OPTIONS] [prefix_or_name] [SUBCOMMAND]
     options:
       - names:
           - -h
@@ -84,21 +88,15 @@ subcommands:
         argument: ""
         description: Print this help message and exit
       - names:
-          - -s
-          - --shell
-        argument: TEXT:{bash,cmd.exe,dash,fish,posix,powershell,tcsh,xonsh,zsh}
-        description: A shell type
-      - names:
-          - --stack
-        argument: ""
-        description: Stack the environment being activated
-      - names:
           - -p
-          - -n
           - --prefix
+        argument: 'TEXT Excludes: --name prefix_or_name'
+        description: Path to the target prefix
+      - names:
+          - -n
           - --name
-        argument: TEXT
-        description: The root prefix to configure (for init and hook), and the prefix to activate for activate, either by name or by path
+        argument: 'TEXT Excludes: --prefix prefix_or_name'
+        description: Name of the target prefix
       - names:
           - --rc-file
         argument: TEXT ...
@@ -152,33 +150,561 @@ subcommands:
         description: Enable experimental features
     subcommands:
       - name: init
-        description: action 'init'
-        usage: ""
-        options: []
+        description: Add initialization in script to rc files
+        usage: micromamba shell init [OPTIONS] [root_prefix]
+        options:
+          - names:
+              - -h
+              - --help
+            argument: ""
+            description: Print this help message and exit
+          - names:
+              - -s
+              - --shell
+            argument: TEXT:{bash,cmd.exe,dash,fish,posix,powershell,tcsh,xonsh,zsh}
+            description: A shell type
+          - names:
+              - -r
+              - -p
+              - -n
+              - --root-prefix
+              - --prefix
+              - --name
+            argument: TEXT
+            description: Path to the root prefix
+          - names:
+              - --rc-file
+            argument: TEXT ...
+            description: Paths to the configuration files to use
+          - names:
+              - --no-rc
+            argument: ""
+            description: Disable the use of configuration files
+          - names:
+              - --no-env
+            argument: ""
+            description: Disable the use of environment variables
+          - names:
+              - -v
+              - --verbose
+            argument: ""
+            description: Set verbosity (higher verbosity with multiple -v, e.g. -vvv)
+          - names:
+              - --log-level
+            argument: ENUM:value in {critical->5,debug->1,error->4,info->2,off->6,trace->0,warning->3} OR {5,1,4,2,6,0,3}
+            description: Set the log level
+          - names:
+              - -q
+              - --quiet
+            argument: ""
+            description: Set quiet mode (print less output)
+          - names:
+              - -y
+              - --yes
+            argument: ""
+            description: Automatically answer yes on prompted questions
+          - names:
+              - --json
+            argument: ""
+            description: Report all output as json
+          - names:
+              - --offline
+            argument: ""
+            description: Force use cached repodata
+          - names:
+              - --dry-run
+            argument: ""
+            description: Only display what would have been done
+          - names:
+              - --download-only
+            argument: ""
+            description: Only download and extract packages, do not link them into environment.
+          - names:
+              - --experimental
+            argument: ""
+            description: Enable experimental features
       - name: deinit
-        description: action 'deinit'
-        usage: ""
-        options: []
+        description: Remove activation script from rc files
+        usage: micromamba shell deinit [OPTIONS] [root_prefix]
+        options:
+          - names:
+              - -h
+              - --help
+            argument: ""
+            description: Print this help message and exit
+          - names:
+              - -s
+              - --shell
+            argument: TEXT:{bash,cmd.exe,dash,fish,posix,powershell,tcsh,xonsh,zsh}
+            description: A shell type
+          - names:
+              - -r
+              - -p
+              - -n
+              - --root-prefix
+              - --prefix
+              - --name
+            argument: TEXT
+            description: Path to the root prefix
+          - names:
+              - --rc-file
+            argument: TEXT ...
+            description: Paths to the configuration files to use
+          - names:
+              - --no-rc
+            argument: ""
+            description: Disable the use of configuration files
+          - names:
+              - --no-env
+            argument: ""
+            description: Disable the use of environment variables
+          - names:
+              - -v
+              - --verbose
+            argument: ""
+            description: Set verbosity (higher verbosity with multiple -v, e.g. -vvv)
+          - names:
+              - --log-level
+            argument: ENUM:value in {critical->5,debug->1,error->4,info->2,off->6,trace->0,warning->3} OR {5,1,4,2,6,0,3}
+            description: Set the log level
+          - names:
+              - -q
+              - --quiet
+            argument: ""
+            description: Set quiet mode (print less output)
+          - names:
+              - -y
+              - --yes
+            argument: ""
+            description: Automatically answer yes on prompted questions
+          - names:
+              - --json
+            argument: ""
+            description: Report all output as json
+          - names:
+              - --offline
+            argument: ""
+            description: Force use cached repodata
+          - names:
+              - --dry-run
+            argument: ""
+            description: Only display what would have been done
+          - names:
+              - --download-only
+            argument: ""
+            description: Only download and extract packages, do not link them into environment.
+          - names:
+              - --experimental
+            argument: ""
+            description: Enable experimental features
       - name: reinit
-        description: action 'reinit'
-        usage: ""
-        options: []
+        description: Restore activation script from rc files
+        usage: micromamba shell reinit [OPTIONS]
+        options:
+          - names:
+              - -h
+              - --help
+            argument: ""
+            description: Print this help message and exit
+          - names:
+              - -s
+              - --shell
+            argument: TEXT:{bash,cmd.exe,dash,fish,posix,powershell,tcsh,xonsh,zsh}
+            description: A shell type
+          - names:
+              - --rc-file
+            argument: TEXT ...
+            description: Paths to the configuration files to use
+          - names:
+              - --no-rc
+            argument: ""
+            description: Disable the use of configuration files
+          - names:
+              - --no-env
+            argument: ""
+            description: Disable the use of environment variables
+          - names:
+              - -v
+              - --verbose
+            argument: ""
+            description: Set verbosity (higher verbosity with multiple -v, e.g. -vvv)
+          - names:
+              - --log-level
+            argument: ENUM:value in {critical->5,debug->1,error->4,info->2,off->6,trace->0,warning->3} OR {5,1,4,2,6,0,3}
+            description: Set the log level
+          - names:
+              - -q
+              - --quiet
+            argument: ""
+            description: Set quiet mode (print less output)
+          - names:
+              - -y
+              - --yes
+            argument: ""
+            description: Automatically answer yes on prompted questions
+          - names:
+              - --json
+            argument: ""
+            description: Report all output as json
+          - names:
+              - --offline
+            argument: ""
+            description: Force use cached repodata
+          - names:
+              - --dry-run
+            argument: ""
+            description: Only display what would have been done
+          - names:
+              - --download-only
+            argument: ""
+            description: Only download and extract packages, do not link them into environment.
+          - names:
+              - --experimental
+            argument: ""
+            description: Enable experimental features
       - name: hook
-        description: action 'hook'
-        usage: ""
-        options: []
+        description: Micromamba hook scripts
+        usage: micromamba shell hook [OPTIONS] [root_prefix]
+        options:
+          - names:
+              - -h
+              - --help
+            argument: ""
+            description: Print this help message and exit
+          - names:
+              - -s
+              - --shell
+            argument: TEXT:{bash,cmd.exe,dash,fish,posix,powershell,tcsh,xonsh,zsh}
+            description: A shell type
+          - names:
+              - -r
+              - -p
+              - -n
+              - --root-prefix
+              - --prefix
+              - --name
+            argument: TEXT
+            description: Path to the root prefix
+          - names:
+              - --rc-file
+            argument: TEXT ...
+            description: Paths to the configuration files to use
+          - names:
+              - --no-rc
+            argument: ""
+            description: Disable the use of configuration files
+          - names:
+              - --no-env
+            argument: ""
+            description: Disable the use of environment variables
+          - names:
+              - -v
+              - --verbose
+            argument: ""
+            description: Set verbosity (higher verbosity with multiple -v, e.g. -vvv)
+          - names:
+              - --log-level
+            argument: ENUM:value in {critical->5,debug->1,error->4,info->2,off->6,trace->0,warning->3} OR {5,1,4,2,6,0,3}
+            description: Set the log level
+          - names:
+              - -q
+              - --quiet
+            argument: ""
+            description: Set quiet mode (print less output)
+          - names:
+              - -y
+              - --yes
+            argument: ""
+            description: Automatically answer yes on prompted questions
+          - names:
+              - --json
+            argument: ""
+            description: Report all output as json
+          - names:
+              - --offline
+            argument: ""
+            description: Force use cached repodata
+          - names:
+              - --dry-run
+            argument: ""
+            description: Only display what would have been done
+          - names:
+              - --download-only
+            argument: ""
+            description: Only download and extract packages, do not link them into environment.
+          - names:
+              - --experimental
+            argument: ""
+            description: Enable experimental features
       - name: activate
-        description: action 'activate'
-        usage: ""
-        options: []
-      - name: deactivate
-        description: action 'deactivate'
-        usage: ""
-        options: []
+        description: Output activation code for the given shell
+        usage: micromamba shell activate [OPTIONS] [prefix_or_name]
+        options:
+          - names:
+              - -h
+              - --help
+            argument: ""
+            description: Print this help message and exit
+          - names:
+              - -s
+              - --shell
+            argument: TEXT:{bash,cmd.exe,dash,fish,posix,powershell,tcsh,xonsh,zsh}
+            description: A shell type
+          - names:
+              - -p
+              - --prefix
+            argument: 'TEXT Excludes: --name prefix_or_name'
+            description: Path to the target prefix
+          - names:
+              - -n
+              - --name
+            argument: 'TEXT Excludes: --prefix prefix_or_name'
+            description: Name of the target prefix
+          - names:
+              - --stack
+            argument: ""
+            description: Stack the environment being activated
+          - names:
+              - --rc-file
+            argument: TEXT ...
+            description: Paths to the configuration files to use
+          - names:
+              - --no-rc
+            argument: ""
+            description: Disable the use of configuration files
+          - names:
+              - --no-env
+            argument: ""
+            description: Disable the use of environment variables
+          - names:
+              - -v
+              - --verbose
+            argument: ""
+            description: Set verbosity (higher verbosity with multiple -v, e.g. -vvv)
+          - names:
+              - --log-level
+            argument: ENUM:value in {critical->5,debug->1,error->4,info->2,off->6,trace->0,warning->3} OR {5,1,4,2,6,0,3}
+            description: Set the log level
+          - names:
+              - -q
+              - --quiet
+            argument: ""
+            description: Set quiet mode (print less output)
+          - names:
+              - -y
+              - --yes
+            argument: ""
+            description: Automatically answer yes on prompted questions
+          - names:
+              - --json
+            argument: ""
+            description: Report all output as json
+          - names:
+              - --offline
+            argument: ""
+            description: Force use cached repodata
+          - names:
+              - --dry-run
+            argument: ""
+            description: Only display what would have been done
+          - names:
+              - --download-only
+            argument: ""
+            description: Only download and extract packages, do not link them into environment.
+          - names:
+              - --experimental
+            argument: ""
+            description: Enable experimental features
       - name: reactivate
-        description: action 'reactivate'
-        usage: ""
-        options: []
+        description: Output reactivateion code for the given shell
+        usage: micromamba shell reactivate [OPTIONS]
+        options:
+          - names:
+              - -h
+              - --help
+            argument: ""
+            description: Print this help message and exit
+          - names:
+              - -s
+              - --shell
+            argument: TEXT:{bash,cmd.exe,dash,fish,posix,powershell,tcsh,xonsh,zsh}
+            description: A shell type
+          - names:
+              - --rc-file
+            argument: TEXT ...
+            description: Paths to the configuration files to use
+          - names:
+              - --no-rc
+            argument: ""
+            description: Disable the use of configuration files
+          - names:
+              - --no-env
+            argument: ""
+            description: Disable the use of environment variables
+          - names:
+              - -v
+              - --verbose
+            argument: ""
+            description: Set verbosity (higher verbosity with multiple -v, e.g. -vvv)
+          - names:
+              - --log-level
+            argument: ENUM:value in {critical->5,debug->1,error->4,info->2,off->6,trace->0,warning->3} OR {5,1,4,2,6,0,3}
+            description: Set the log level
+          - names:
+              - -q
+              - --quiet
+            argument: ""
+            description: Set quiet mode (print less output)
+          - names:
+              - -y
+              - --yes
+            argument: ""
+            description: Automatically answer yes on prompted questions
+          - names:
+              - --json
+            argument: ""
+            description: Report all output as json
+          - names:
+              - --offline
+            argument: ""
+            description: Force use cached repodata
+          - names:
+              - --dry-run
+            argument: ""
+            description: Only display what would have been done
+          - names:
+              - --download-only
+            argument: ""
+            description: Only download and extract packages, do not link them into environment.
+          - names:
+              - --experimental
+            argument: ""
+            description: Enable experimental features
+      - name: deactivate
+        description: Output deactivation code for the given shell
+        usage: micromamba shell deactivate [OPTIONS]
+        options:
+          - names:
+              - -h
+              - --help
+            argument: ""
+            description: Print this help message and exit
+          - names:
+              - -s
+              - --shell
+            argument: TEXT:{bash,cmd.exe,dash,fish,posix,powershell,tcsh,xonsh,zsh}
+            description: A shell type
+          - names:
+              - --rc-file
+            argument: TEXT ...
+            description: Paths to the configuration files to use
+          - names:
+              - --no-rc
+            argument: ""
+            description: Disable the use of configuration files
+          - names:
+              - --no-env
+            argument: ""
+            description: Disable the use of environment variables
+          - names:
+              - -v
+              - --verbose
+            argument: ""
+            description: Set verbosity (higher verbosity with multiple -v, e.g. -vvv)
+          - names:
+              - --log-level
+            argument: ENUM:value in {critical->5,debug->1,error->4,info->2,off->6,trace->0,warning->3} OR {5,1,4,2,6,0,3}
+            description: Set the log level
+          - names:
+              - -q
+              - --quiet
+            argument: ""
+            description: Set quiet mode (print less output)
+          - names:
+              - -y
+              - --yes
+            argument: ""
+            description: Automatically answer yes on prompted questions
+          - names:
+              - --json
+            argument: ""
+            description: Report all output as json
+          - names:
+              - --offline
+            argument: ""
+            description: Force use cached repodata
+          - names:
+              - --dry-run
+            argument: ""
+            description: Only display what would have been done
+          - names:
+              - --download-only
+            argument: ""
+            description: Only download and extract packages, do not link them into environment.
+          - names:
+              - --experimental
+            argument: ""
+            description: Enable experimental features
+      - name: enable_long_path_support
+        description: Output deactivation code for the given shell
+        usage: micromamba shell enable_long_path_support [OPTIONS]
+        options:
+          - names:
+              - -h
+              - --help
+            argument: ""
+            description: Print this help message and exit
+          - names:
+              - --rc-file
+            argument: TEXT ...
+            description: Paths to the configuration files to use
+          - names:
+              - --no-rc
+            argument: ""
+            description: Disable the use of configuration files
+          - names:
+              - --no-env
+            argument: ""
+            description: Disable the use of environment variables
+          - names:
+              - -v
+              - --verbose
+            argument: ""
+            description: Set verbosity (higher verbosity with multiple -v, e.g. -vvv)
+          - names:
+              - --log-level
+            argument: ENUM:value in {critical->5,debug->1,error->4,info->2,off->6,trace->0,warning->3} OR {5,1,4,2,6,0,3}
+            description: Set the log level
+          - names:
+              - -q
+              - --quiet
+            argument: ""
+            description: Set quiet mode (print less output)
+          - names:
+              - -y
+              - --yes
+            argument: ""
+            description: Automatically answer yes on prompted questions
+          - names:
+              - --json
+            argument: ""
+            description: Report all output as json
+          - names:
+              - --offline
+            argument: ""
+            description: Force use cached repodata
+          - names:
+              - --dry-run
+            argument: ""
+            description: Only display what would have been done
+          - names:
+              - --download-only
+            argument: ""
+            description: Only download and extract packages, do not link them into environment.
+          - names:
+              - --experimental
+            argument: ""
+            description: Enable experimental features
   - name: create
     description: Create new environment
     usage: micromamba create [OPTIONS] [specs...]
@@ -199,8 +725,8 @@ subcommands:
         description: Override channels
       - names:
           - --channel-priority
-        argument: ENUM:valu
-        description: e in {disabled->0,flexible->1,strict->2} OR {0,1,2} Define the channel priority ('strict' or 'disabled')
+        argument: ENUM:value in {disabled->0,flexible->1,strict->2} OR {0,1,2}
+        description: Define the channel priority ('strict' or 'disabled')
       - names:
           - --channel-alias
         argument: TEXT
@@ -274,8 +800,8 @@ subcommands:
         description: Install start-menu shortcuts on Windows (not implemented on Linux / macOS)
       - names:
           - --safety-checks
-        argument: ENUM:value in {disabled->0,enabled->2,warn->1}
-        description: OR {0,2,1}   Safety checks policy ('enabled', 'warn', or 'disabled')
+        argument: ENUM:value in {disabled->0,enabled->2,warn->1} OR {0,2,1}
+        description: Safety checks policy ('enabled', 'warn', or 'disabled')
       - names:
           - --verify-artifacts
         argument: ""
@@ -358,6 +884,10 @@ subcommands:
         argument: TEXT
         description: Path to the target prefix
       - names:
+          - --relocate-prefix
+        argument: TEXT
+        description: Path to the relocation prefix
+      - names:
           - -n
           - --name
         argument: TEXT
@@ -402,8 +932,8 @@ subcommands:
         description: Override channels
       - names:
           - --channel-priority
-        argument: ENUM:valu
-        description: e in {disabled->0,flexible->1,strict->2} OR {0,1,2} Define the channel priority ('strict' or 'disabled')
+        argument: ENUM:value in {disabled->0,flexible->1,strict->2} OR {0,1,2}
+        description: Define the channel priority ('strict' or 'disabled')
       - names:
           - --channel-alias
         argument: TEXT
@@ -477,8 +1007,8 @@ subcommands:
         description: Install start-menu shortcuts on Windows (not implemented on Linux / macOS)
       - names:
           - --safety-checks
-        argument: ENUM:value in {disabled->0,enabled->2,warn->1}
-        description: OR {0,2,1}   Safety checks policy ('enabled', 'warn', or 'disabled')
+        argument: ENUM:value in {disabled->0,enabled->2,warn->1} OR {0,2,1}
+        description: Safety checks policy ('enabled', 'warn', or 'disabled')
       - names:
           - --verify-artifacts
         argument: ""
@@ -569,6 +1099,10 @@ subcommands:
         argument: TEXT
         description: Path to the target prefix
       - names:
+          - --relocate-prefix
+        argument: TEXT
+        description: Path to the relocation prefix
+      - names:
           - -n
           - --name
         argument: TEXT
@@ -613,8 +1147,8 @@ subcommands:
         description: Override channels
       - names:
           - --channel-priority
-        argument: ENUM:valu
-        description: e in {disabled->0,flexible->1,strict->2} OR {0,1,2} Define the channel priority ('strict' or 'disabled')
+        argument: ENUM:value in {disabled->0,flexible->1,strict->2} OR {0,1,2}
+        description: Define the channel priority ('strict' or 'disabled')
       - names:
           - --channel-alias
         argument: TEXT
@@ -688,8 +1222,8 @@ subcommands:
         description: Install start-menu shortcuts on Windows (not implemented on Linux / macOS)
       - names:
           - --safety-checks
-        argument: ENUM:value in {disabled->0,enabled->2,warn->1}
-        description: OR {0,2,1}   Safety checks policy ('enabled', 'warn', or 'disabled')
+        argument: ENUM:value in {disabled->0,enabled->2,warn->1} OR {0,2,1}
+        description: Safety checks policy ('enabled', 'warn', or 'disabled')
       - names:
           - --verify-artifacts
         argument: ""
@@ -782,6 +1316,10 @@ subcommands:
         argument: TEXT
         description: Path to the target prefix
       - names:
+          - --relocate-prefix
+        argument: TEXT
+        description: Path to the relocation prefix
+      - names:
           - -n
           - --name
         argument: TEXT
@@ -826,8 +1364,8 @@ subcommands:
         description: Override channels
       - names:
           - --channel-priority
-        argument: ENUM:valu
-        description: e in {disabled->0,flexible->1,strict->2} OR {0,1,2} Define the channel priority ('strict' or 'disabled')
+        argument: ENUM:value in {disabled->0,flexible->1,strict->2} OR {0,1,2}
+        description: Define the channel priority ('strict' or 'disabled')
       - names:
           - --channel-alias
         argument: TEXT
@@ -901,8 +1439,8 @@ subcommands:
         description: Install start-menu shortcuts on Windows (not implemented on Linux / macOS)
       - names:
           - --safety-checks
-        argument: ENUM:value in {disabled->0,enabled->2,warn->1}
-        description: OR {0,2,1}   Safety checks policy ('enabled', 'warn', or 'disabled')
+        argument: ENUM:value in {disabled->0,enabled->2,warn->1} OR {0,2,1}
+        description: Safety checks policy ('enabled', 'warn', or 'disabled')
       - names:
           - --verify-artifacts
         argument: ""
@@ -989,6 +1527,10 @@ subcommands:
         argument: TEXT
         description: Path to the target prefix
       - names:
+          - --relocate-prefix
+        argument: TEXT
+        description: Path to the relocation prefix
+      - names:
           - -n
           - --name
         argument: TEXT
@@ -1033,8 +1575,8 @@ subcommands:
         description: Override channels
       - names:
           - --channel-priority
-        argument: ENUM:valu
-        description: e in {disabled->0,flexible->1,strict->2} OR {0,1,2} Define the channel priority ('strict' or 'disabled')
+        argument: ENUM:value in {disabled->0,flexible->1,strict->2} OR {0,1,2}
+        description: Define the channel priority ('strict' or 'disabled')
       - names:
           - --channel-alias
         argument: TEXT
@@ -1053,14 +1595,17 @@ subcommands:
         argument: ""
         description: Show result as a tree
       - names:
+          - --recursive
+        argument: ""
+        description: Show dependencies recursively, i.e. transitive dependencies (only for `depends`)
+      - names:
           - --pretty
         argument: ""
         description: Pretty print result (only for search)
       - names:
-          - --local
-          - --remote
-        argument: '{false} [0]'
-        description: Use installed data or remote repositories
+          - --use-local
+        argument: INT
+        description: Use installed data (--use-local=1, default for `depends` and `whoneeds`) or remote repositories (--use-local=0, default for `search`). If the `-c,--channel` option is set, it has the priority and --use-local is set to 0
       - names:
           - --platform
         argument: TEXT
@@ -1127,6 +1672,10 @@ subcommands:
         argument: TEXT
         description: Path to the target prefix
       - names:
+          - --relocate-prefix
+        argument: TEXT
+        description: Path to the relocation prefix
+      - names:
           - -n
           - --name
         argument: TEXT
@@ -1152,16 +1701,8 @@ subcommands:
         argument: ""
         description: If solve fails, try to fetch updated repodata
     subcommands:
-      - name: search
-        description: search as query_type
-        usage: ""
-        options: []
-      - name: depends
-        description: depends as query_type
-        usage: ""
-        options: []
-      - name: whoneeds
-        description: whoneeds as query_type
+      - name: query_type
+        description: TEXT:{search,depends,whoneeds} REQUIRED
         usage: ""
         options: []
   - name: remove
@@ -1250,6 +1791,10 @@ subcommands:
         argument: TEXT
         description: Path to the target prefix
       - names:
+          - --relocate-prefix
+        argument: TEXT
+        description: Path to the relocation prefix
+      - names:
           - -n
           - --name
         argument: TEXT
@@ -1325,6 +1870,10 @@ subcommands:
         argument: TEXT
         description: Path to the target prefix
       - names:
+          - --relocate-prefix
+        argument: TEXT
+        description: Path to the relocation prefix
+      - names:
           - -n
           - --name
         argument: TEXT
@@ -1338,6 +1887,57 @@ subcommands:
           - --help
         argument: ""
         description: Print this help message and exit
+      - names:
+          - --rc-file
+        argument: TEXT ...
+        description: Paths to the configuration files to use
+      - names:
+          - --no-rc
+        argument: ""
+        description: Disable the use of configuration files
+      - names:
+          - --no-env
+        argument: ""
+        description: Disable the use of environment variables
+      - names:
+          - -v
+          - --verbose
+        argument: ""
+        description: Set verbosity (higher verbosity with multiple -v, e.g. -vvv)
+      - names:
+          - --log-level
+        argument: ENUM:value in {critical->5,debug->1,error->4,info->2,off->6,trace->0,warning->3} OR {5,1,4,2,6,0,3}
+        description: Set the log level
+      - names:
+          - -q
+          - --quiet
+        argument: ""
+        description: Set quiet mode (print less output)
+      - names:
+          - -y
+          - --yes
+        argument: ""
+        description: Automatically answer yes on prompted questions
+      - names:
+          - --json
+        argument: ""
+        description: Report all output as json
+      - names:
+          - --offline
+        argument: ""
+        description: Force use cached repodata
+      - names:
+          - --dry-run
+        argument: ""
+        description: Only display what would have been done
+      - names:
+          - --download-only
+        argument: ""
+        description: Only download and extract packages, do not link them into environment.
+      - names:
+          - --experimental
+        argument: ""
+        description: Enable experimental features
   - name: clean
     description: Clean package cache
     usage: micromamba clean [OPTIONS]
@@ -1503,6 +2103,10 @@ subcommands:
         argument: TEXT
         description: Path to the target prefix
       - names:
+          - --relocate-prefix
+        argument: TEXT
+        description: Path to the relocation prefix
+      - names:
           - -n
           - --name
         argument: TEXT
@@ -1604,6 +2208,10 @@ subcommands:
             argument: TEXT
             description: Path to the target prefix
           - names:
+              - --relocate-prefix
+            argument: TEXT
+            description: Path to the relocation prefix
+          - names:
               - -n
               - --name
             argument: TEXT
@@ -1678,6 +2286,10 @@ subcommands:
               - --prefix
             argument: TEXT
             description: Path to the target prefix
+          - names:
+              - --relocate-prefix
+            argument: TEXT
+            description: Path to the relocation prefix
           - names:
               - -n
               - --name
@@ -1913,6 +2525,10 @@ subcommands:
         argument: TEXT
         description: Path to the target prefix
       - names:
+          - --relocate-prefix
+        argument: TEXT
+        description: Path to the relocation prefix
+      - names:
           - -n
           - --name
         argument: TEXT
@@ -2010,6 +2626,10 @@ subcommands:
         argument: TEXT
         description: Path to the target prefix
       - names:
+          - --relocate-prefix
+        argument: TEXT
+        description: Path to the relocation prefix
+      - names:
           - -n
           - --name
         argument: TEXT
@@ -2086,10 +2706,221 @@ subcommands:
             argument: TEXT
             description: Path to the target prefix
           - names:
+              - --relocate-prefix
+            argument: TEXT
+            description: Path to the relocation prefix
+          - names:
               - -n
               - --name
             argument: TEXT
             description: Name of the target prefix
+      - name: create
+        description: Create new environment (pre-commit.com compatibility alias for 'micromamba create')
+        usage: micromamba env create [OPTIONS] [specs...]
+        options:
+          - names:
+              - -h
+              - --help
+            argument: ""
+            description: Print this help message and exit
+          - names:
+              - -c
+              - --channel
+            argument: TEXT ...
+            description: Define the list of channels
+          - names:
+              - --override-channels
+            argument: ""
+            description: Override channels
+          - names:
+              - --channel-priority
+            argument: ENUM:value
+            description: in {disabled->0,flexible->1,strict->2} OR {0,1,2} Define the channel priority ('strict' or 'disabled')
+          - names:
+              - --channel-alias
+            argument: TEXT
+            description: The prepended url location to associate with channel names
+          - names:
+              - --strict-channel-priority
+            argument: ""
+            description: Enable strict channel priority
+          - names:
+              - --no-channel-priority
+            argument: ""
+            description: Disable channel priority
+          - names:
+              - -f
+              - --file
+            argument: TEXT ...
+            description: File (yaml, explicit or plain)
+          - names:
+              - --no-pin
+              - --pin
+            argument: '{false}'
+            description: Ignore pinned packages
+          - names:
+              - --no-py-pin
+              - --py-pin
+            argument: '{false}'
+            description: Do not automatically pin Python
+          - names:
+              - --pyc
+              - --no-pyc
+            argument: '{false}'
+            description: Defines if PYC files will be compiled or not
+          - names:
+              - --allow-uninstall
+              - --no-allow-uninstall
+            argument: '{false}'
+            description: Allow uninstall when installing or updating packages. Default is true.
+          - names:
+              - --allow-downgrade
+              - --no-allow-downgrade
+            argument: '{false}'
+            description: Allow downgrade when installing packages. Default is false.
+          - names:
+              - --allow-softlinks
+              - --no-allow-softlinks
+            argument: '{false}'
+            description: Allow to use soft-links when hard-links are not possible
+          - names:
+              - --always-softlink
+              - --no-always-softlink
+            argument: '{false}'
+            description: Use soft-link instead of hard-link
+          - names:
+              - --always-copy
+              - --no-always-copy
+            argument: '{false}'
+            description: Use copy instead of hard-link
+          - names:
+              - --extra-safety-checks
+              - --no-extra-safety-checks
+            argument: '{false}'
+            description: Run extra verifications on packages
+          - names:
+              - --lock-timeout
+            argument: UINT
+            description: Lockfile timeout
+          - names:
+              - --shortcuts
+              - --no-shortcuts
+            argument: '{false}'
+            description: Install start-menu shortcuts on Windows (not implemented on Linux / macOS)
+          - names:
+              - --safety-checks
+            argument: ENUM:value in {disabled->0,enabled->2,warn->1} OR {0,2,1}
+            description: Safety checks policy ('enabled', 'warn', or 'disabled')
+          - names:
+              - --verify-artifacts
+            argument: ""
+            description: Run verifications on packages signatures
+          - names:
+              - --platform
+            argument: TEXT
+            description: The platform description
+          - names:
+              - --no-deps
+            argument: ""
+            description: Do not install dependencies. This WILL lead to broken environments and inconsistent behavior. Use at your own risk
+          - names:
+              - --only-deps
+            argument: ""
+            description: Only install dependencies
+          - names:
+              - --category
+            argument: TEXT ...
+            description: Categories of package to install from environment lockfile
+          - names:
+              - --rc-file
+            argument: TEXT ...
+            description: Paths to the configuration files to use
+          - names:
+              - --no-rc
+            argument: ""
+            description: Disable the use of configuration files
+          - names:
+              - --no-env
+            argument: ""
+            description: Disable the use of environment variables
+          - names:
+              - -v
+              - --verbose
+            argument: ""
+            description: Set verbosity (higher verbosity with multiple -v, e.g. -vvv)
+          - names:
+              - --log-level
+            argument: ENUM:value in {critical->5,debug->1,error->4,info->2,off->6,trace->0,warning->3} OR {5,1,4,2,6,0,3}
+            description: Set the log level
+          - names:
+              - -q
+              - --quiet
+            argument: ""
+            description: Set quiet mode (print less output)
+          - names:
+              - -y
+              - --yes
+            argument: ""
+            description: Automatically answer yes on prompted questions
+          - names:
+              - --json
+            argument: ""
+            description: Report all output as json
+          - names:
+              - --offline
+            argument: ""
+            description: Force use cached repodata
+          - names:
+              - --dry-run
+            argument: ""
+            description: Only display what would have been done
+          - names:
+              - --download-only
+            argument: ""
+            description: Only download and extract packages, do not link them into environment.
+          - names:
+              - --experimental
+            argument: ""
+            description: Enable experimental features
+          - names:
+              - -r
+              - --root-prefix
+            argument: TEXT
+            description: Path to the root prefix
+          - names:
+              - -p
+              - --prefix
+            argument: TEXT
+            description: Path to the target prefix
+          - names:
+              - --relocate-prefix
+            argument: TEXT
+            description: Path to the relocation prefix
+          - names:
+              - -n
+              - --name
+            argument: TEXT
+            description: Name of the target prefix
+          - names:
+              - --ssl-verify
+            argument: TEXT
+            description: Verify SSL certificates for HTTPS requests
+          - names:
+              - --ssl-no-revoke
+            argument: ""
+            description: SSL certificate revocation checks
+          - names:
+              - --cacert-path
+            argument: TEXT
+            description: Path (file or directory) SSL certificate(s)
+          - names:
+              - --repodata-ttl
+            argument: UINT
+            description: Repodata time-to-live
+          - names:
+              - --retry-clean-cache
+            argument: ""
+            description: If solve fails, try to fetch updated repodata
       - name: export
         description: Export environment
         usage: micromamba env export [OPTIONS]
@@ -2180,6 +3011,10 @@ subcommands:
             argument: TEXT
             description: Path to the target prefix
           - names:
+              - --relocate-prefix
+            argument: TEXT
+            description: Path to the relocation prefix
+          - names:
               - -n
               - --name
             argument: TEXT
@@ -2255,6 +3090,10 @@ subcommands:
             argument: TEXT
             description: Path to the target prefix
           - names:
+              - --relocate-prefix
+            argument: TEXT
+            description: Path to the relocation prefix
+          - names:
               - -n
               - --name
             argument: TEXT
@@ -2319,6 +3158,10 @@ subcommands:
         argument: TEXT
         description: Path to the target prefix
       - names:
+          - --relocate-prefix
+        argument: TEXT
+        description: Path to the relocation prefix
+      - names:
           - -n
           - --name
         argument: TEXT
@@ -2367,6 +3210,11 @@ subcommands:
             argument: TEXT
             description: Token for the account
           - names:
+              - -b
+              - --bearer
+            argument: TEXT
+            description: Bearer token for the account
+          - names:
               - --password-stdin
             argument: ""
             description: Read password from stdin
@@ -2374,6 +3222,10 @@ subcommands:
               - --token-stdin
             argument: ""
             description: Read token from stdin
+          - names:
+              - --bearer-stdin
+            argument: ""
+            description: Read bearer token from stdin
       - name: logout
         description: Erase login information for a specific host
         usage: micromamba auth logout [OPTIONS] [host]
@@ -2407,8 +3259,8 @@ subcommands:
         description: Override channels
       - names:
           - --channel-priority
-        argument: ENUM:valu
-        description: e in {disabled->0,flexible->1,strict->2} OR {0,1,2} Define the channel priority ('strict' or 'disabled')
+        argument: ENUM:value in {disabled->0,flexible->1,strict->2} OR {0,1,2}
+        description: Define the channel priority ('strict' or 'disabled')
       - names:
           - --channel-alias
         argument: TEXT
@@ -2427,14 +3279,17 @@ subcommands:
         argument: ""
         description: Show result as a tree
       - names:
+          - --recursive
+        argument: ""
+        description: Show dependencies recursively, i.e. transitive dependencies (only for `depends`)
+      - names:
           - --pretty
         argument: ""
         description: Pretty print result (only for search)
       - names:
-          - --local
-          - --remote
-        argument: '{false} [0]'
-        description: Use installed data or remote repositories
+          - --use-local
+        argument: INT
+        description: Use installed data (--use-local=1, default for `depends` and `whoneeds`) or remote repositories (--use-local=0, default for `search`). If the `-c,--channel` option is set, it has the priority and --use-local is set to 0
       - names:
           - --platform
         argument: TEXT
@@ -2501,6 +3356,10 @@ subcommands:
         argument: TEXT
         description: Path to the target prefix
       - names:
+          - --relocate-prefix
+        argument: TEXT
+        description: Path to the relocation prefix
+      - names:
           - -n
           - --name
         argument: TEXT
@@ -2525,4 +3384,4 @@ subcommands:
           - --retry-clean-cache
         argument: ""
         description: If solve fails, try to fetch updated repodata
-version: 1.0.0
+version: 1.4.6

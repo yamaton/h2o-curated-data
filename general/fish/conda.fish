@@ -1,26 +1,25 @@
 # Auto-generated with h2o
 
-complete -c conda -n "not __fish_seen_subcommand_from activate deactivate clean compare config create info init install list package remove rename run search uninstall update upgrade notices env" -s "h" -l "help" -d "Show this help message and exit."
-complete -c conda -n "not __fish_seen_subcommand_from activate deactivate clean compare config create info init install list package remove rename run search uninstall update upgrade notices env" -s "V" -l "version" -d "Show the conda version number and exit."
+complete -c conda -n "not __fish_seen_subcommand_from activate deactivate clean compare config create info init install list package remove rename run search update notices doctor env" -s "h" -l "help" -d "Show this help message and exit."
+complete -c conda -n "not __fish_seen_subcommand_from activate deactivate clean compare config create info init install list package remove rename run search update notices doctor env" -s "V" -l "version" -d "Show the conda version number and exit."
 
 
 
-complete -k -c conda -n __fish_use_subcommand -x -a env -d "conda environment"
+complete -k -c conda -n __fish_use_subcommand -x -a env -d "conda env available from other packages (legacy)"
+complete -k -c conda -n __fish_use_subcommand -x -a doctor -d "A subcommand that displays environment health report"
 complete -k -c conda -n __fish_use_subcommand -x -a notices -d "Retrieves latest channel notifications."
-complete -k -c conda -n __fish_use_subcommand -x -a upgrade -d "Alias for conda update."
 complete -k -c conda -n __fish_use_subcommand -x -a update -d "Updates conda packages to the latest compatible version."
-complete -k -c conda -n __fish_use_subcommand -x -a uninstall -d "Alias for conda remove."
-complete -k -c conda -n __fish_use_subcommand -x -a search -d "Search for packages and display associated information.The input is a MatchSpec, a query language for conda packages. See examples below."
+complete -k -c conda -n __fish_use_subcommand -x -a search -d "Search for packages and display associated"
 complete -k -c conda -n __fish_use_subcommand -x -a run -d "Run an executable in a conda environment."
 complete -k -c conda -n __fish_use_subcommand -x -a rename -d "Renames an existing environment."
-complete -k -c conda -n __fish_use_subcommand -x -a remove -d "Remove a list of packages from a specified conda environment."
+complete -k -c conda -n __fish_use_subcommand -x -a remove -d "Remove a list of packages from a specified conda"
 complete -k -c conda -n __fish_use_subcommand -x -a package -d "Low-level conda package utility. (EXPERIMENTAL)"
 complete -k -c conda -n __fish_use_subcommand -x -a list -d "List installed packages in a conda environment."
-complete -k -c conda -n __fish_use_subcommand -x -a install -d "Installs a list of packages into a specified conda environment."
+complete -k -c conda -n __fish_use_subcommand -x -a install -d "Installs a list of packages into a specified conda"
 complete -k -c conda -n __fish_use_subcommand -x -a init -d "Initialize conda for shell interaction."
 complete -k -c conda -n __fish_use_subcommand -x -a info -d "Display information about current conda install."
-complete -k -c conda -n __fish_use_subcommand -x -a create -d "Create a new conda environment from a list of specified packages."
-complete -k -c conda -n __fish_use_subcommand -x -a config -d "Modify configuration values in .condarc. This is modeled after the git config command. Writes to the user .condarc file (~/.condarc) by default. Use the --show-sources flag to display all identified configuration locations on your computer."
+complete -k -c conda -n __fish_use_subcommand -x -a create -d "Create a new conda environment from a list of specified"
+complete -k -c conda -n __fish_use_subcommand -x -a config -d "Modify configuration values in .condarc. This is modeled"
 complete -k -c conda -n __fish_use_subcommand -x -a compare -d "Compare packages between conda environments."
 complete -k -c conda -n __fish_use_subcommand -x -a clean -d "Remove unused packages and caches."
 complete -k -c conda -n __fish_use_subcommand -x -a deactivate -d "Dectivate a conda environment"
@@ -29,7 +28,7 @@ complete -k -c conda -n __fish_use_subcommand -x -a activate -d "Activate a cond
 
 
 complete -c conda -n "__fish_seen_subcommand_from clean" -s "h" -l "help" -d "Show this help message and exit."
-complete -c conda -n "__fish_seen_subcommand_from clean" -s "a" -l "all" -d "Remove index cache, lock files, unused cache packages, and tarballs."
+complete -c conda -n "__fish_seen_subcommand_from clean" -s "a" -l "all" -d "Remove index cache, lock files, unused cache packages, tarballs, and logfiles."
 complete -c conda -n "__fish_seen_subcommand_from clean" -s "i" -l "index-cache" -d "Remove index cache."
 complete -c conda -n "__fish_seen_subcommand_from clean" -s "p" -l "packages" -d "Remove unused packages from writable package caches."
 complete -c conda -n "__fish_seen_subcommand_from clean" -s "t" -l "tarballs" -d "Remove cached package tarballs."
@@ -85,13 +84,15 @@ complete -c conda -n "__fish_seen_subcommand_from create" -s "c" -l "channel" -d
 complete -c conda -n "__fish_seen_subcommand_from create" -l "use-local" -d "Use locally built packages."
 complete -c conda -n "__fish_seen_subcommand_from create" -l "override-channels" -d "Do not search default or .condarc channels."
 complete -c conda -n "__fish_seen_subcommand_from create" -l "repodata-fn" -d "Specify file name of repodata on the remote server where your channels are configured or within local backups." -r
+complete -c conda -n "__fish_seen_subcommand_from create" -l "experimental" -d "jlap: Download incremental package index data from repodata.jlap; implies 'lock'." -x
 complete -c conda -n "__fish_seen_subcommand_from create" -l "strict-channel-priority" -d "Packages in lower priority channels are not considered if a package with the same name appears in a higher priority channel."
 complete -c conda -n "__fish_seen_subcommand_from create" -l "no-channel-priority" -d "Package version takes precedence over channel priority."
 complete -c conda -n "__fish_seen_subcommand_from create" -l "no-deps" -d "Do not install, update, remove, or change dependencies."
 complete -c conda -n "__fish_seen_subcommand_from create" -l "only-deps" -d "Only install dependencies."
 complete -c conda -n "__fish_seen_subcommand_from create" -l "no-pin" -d "Ignore pinned file."
 complete -c conda -n "__fish_seen_subcommand_from create" -l "no-default-packages" -d "Ignore create_default_packages in the .condarc file."
-complete -c conda -n "__fish_seen_subcommand_from create" -l "experimental-solver" -d "EXPERIMENTAL." -x
+complete -c conda -n "__fish_seen_subcommand_from create" -l "solver" -d "Choose which solver backend to use." -x
+complete -c conda -n "__fish_seen_subcommand_from create" -l "experimental-solver" -d "DEPRECATED." -x
 complete -c conda -n "__fish_seen_subcommand_from create" -l "copy" -d "Install all packages using copies instead of hard- or soft-linking."
 complete -c conda -n "__fish_seen_subcommand_from create" -s "C" -l "use-index-cache" -d "Use cache of channel index files, even if it has expired."
 complete -c conda -n "__fish_seen_subcommand_from create" -s "k" -l "insecure" -d "Allow conda to perform \"insecure\" SSL connections and transfers."
@@ -122,7 +123,7 @@ complete -c conda -n "__fish_seen_subcommand_from init" -s "h" -l "help" -d "Sho
 complete -c conda -n "__fish_seen_subcommand_from init" -l "all" -d "Initialize all currently available shells."
 complete -c conda -n "__fish_seen_subcommand_from init" -s "d" -l "dry-run" -d "Only display what would have been done."
 complete -c conda -n "__fish_seen_subcommand_from init" -l "user" -d "Initialize conda for the current user (default)."
-complete -c conda -n "__fish_seen_subcommand_from init" -l "no-user" -d "Don't initialize conda for the current user (default)."
+complete -c conda -n "__fish_seen_subcommand_from init" -l "no-user" -d "Don't initialize conda for the current user."
 complete -c conda -n "__fish_seen_subcommand_from init" -l "system" -d "Initialize conda for all users on the system."
 complete -c conda -n "__fish_seen_subcommand_from init" -l "reverse" -d "Undo effects of last conda init."
 complete -c conda -n "__fish_seen_subcommand_from init" -l "json" -d "Report all output as json."
@@ -141,12 +142,14 @@ complete -c conda -n "__fish_seen_subcommand_from install" -s "c" -l "channel" -
 complete -c conda -n "__fish_seen_subcommand_from install" -l "use-local" -d "Use locally built packages."
 complete -c conda -n "__fish_seen_subcommand_from install" -l "override-channels" -d "Do not search default or .condarc channels."
 complete -c conda -n "__fish_seen_subcommand_from install" -l "repodata-fn" -d "Specify file name of repodata on the remote server where your channels are configured or within local backups." -r
+complete -c conda -n "__fish_seen_subcommand_from install" -l "experimental" -d "jlap: Download incremental package index data from repodata.jlap; implies 'lock'." -x
 complete -c conda -n "__fish_seen_subcommand_from install" -l "strict-channel-priority" -d "Packages in lower priority channels are not considered if a package with the same name appears in a higher priority channel."
 complete -c conda -n "__fish_seen_subcommand_from install" -l "no-channel-priority" -d "Package version takes precedence over channel priority."
 complete -c conda -n "__fish_seen_subcommand_from install" -l "no-deps" -d "Do not install, update, remove, or change dependencies."
 complete -c conda -n "__fish_seen_subcommand_from install" -l "only-deps" -d "Only install dependencies."
 complete -c conda -n "__fish_seen_subcommand_from install" -l "no-pin" -d "Ignore pinned file."
-complete -c conda -n "__fish_seen_subcommand_from install" -l "experimental-solver" -d "EXPERIMENTAL." -x
+complete -c conda -n "__fish_seen_subcommand_from install" -l "solver" -d "Choose which solver backend to use." -x
+complete -c conda -n "__fish_seen_subcommand_from install" -l "experimental-solver" -d "DEPRECATED." -x
 complete -c conda -n "__fish_seen_subcommand_from install" -l "force-reinstall" -d "Ensure that any user-requested package for the current operation is uninstalled and reinstalled, even if that package already exists in the environment."
 complete -c conda -n "__fish_seen_subcommand_from install" -l "freeze-installed" -l "no-update-deps" -d "Do not update or change already-installed dependencies."
 complete -c conda -n "__fish_seen_subcommand_from install" -l "update-deps" -d "Update dependencies that have available updates."
@@ -171,6 +174,7 @@ complete -c conda -n "__fish_seen_subcommand_from install" -l "show-channel-urls
 
 complete -c conda -n "__fish_seen_subcommand_from list" -s "h" -l "help" -d "Show this help message and exit."
 complete -c conda -n "__fish_seen_subcommand_from list" -l "show-channel-urls" -d "Show channel urls."
+complete -c conda -n "__fish_seen_subcommand_from list" -l "reverse" -d "List installed packages in reverse order."
 complete -c conda -n "__fish_seen_subcommand_from list" -s "c" -l "canonical" -d "Output canonical names of packages only."
 complete -c conda -n "__fish_seen_subcommand_from list" -s "f" -l "full-name" -d "Only search for full names, i.e., ^<regex>\$."
 complete -c conda -n "__fish_seen_subcommand_from list" -l "explicit" -d "List explicitly all installed conda packages with URL (output may be used by conda create --file)."
@@ -206,11 +210,13 @@ complete -c conda -n "__fish_seen_subcommand_from remove" -s "c" -l "channel" -d
 complete -c conda -n "__fish_seen_subcommand_from remove" -l "use-local" -d "Use locally built packages."
 complete -c conda -n "__fish_seen_subcommand_from remove" -l "override-channels" -d "Do not search default or .condarc channels."
 complete -c conda -n "__fish_seen_subcommand_from remove" -l "repodata-fn" -d "Specify file name of repodata on the remote server where your channels are configured or within local backups." -r
+complete -c conda -n "__fish_seen_subcommand_from remove" -l "experimental" -d "jlap: Download incremental package index data from repodata.jlap; implies 'lock'." -x
 complete -c conda -n "__fish_seen_subcommand_from remove" -l "all" -d "Remove all packages, i.e., the entire environment."
 complete -c conda -n "__fish_seen_subcommand_from remove" -l "features" -d "Remove features (instead of packages)."
 complete -c conda -n "__fish_seen_subcommand_from remove" -l "force-remove" -l "force" -d "Forces removal of a package without removing packages that depend on it."
 complete -c conda -n "__fish_seen_subcommand_from remove" -l "no-pin" -d "Ignore pinned package(s) that apply to the current operation."
-complete -c conda -n "__fish_seen_subcommand_from remove" -l "experimental-solver" -d "EXPERIMENTAL." -x
+complete -c conda -n "__fish_seen_subcommand_from remove" -l "solver" -d "Choose which solver backend to use." -x
+complete -c conda -n "__fish_seen_subcommand_from remove" -l "experimental-solver" -d "DEPRECATED." -x
 complete -c conda -n "__fish_seen_subcommand_from remove" -s "C" -l "use-index-cache" -d "Use cache of channel index files, even if it has expired."
 complete -c conda -n "__fish_seen_subcommand_from remove" -s "k" -l "insecure" -d "Allow conda to perform \"insecure\" SSL connections and transfers."
 complete -c conda -n "__fish_seen_subcommand_from remove" -l "offline" -d "Offline mode."
@@ -249,36 +255,13 @@ complete -c conda -n "__fish_seen_subcommand_from search" -s "c" -l "channel" -d
 complete -c conda -n "__fish_seen_subcommand_from search" -l "use-local" -d "Use locally built packages."
 complete -c conda -n "__fish_seen_subcommand_from search" -l "override-channels" -d "Do not search default or .condarc channels."
 complete -c conda -n "__fish_seen_subcommand_from search" -l "repodata-fn" -d "Specify file name of repodata on the remote server where your channels are configured or within local backups." -r
+complete -c conda -n "__fish_seen_subcommand_from search" -l "experimental" -d "jlap: Download incremental package index data from repodata.jlap; implies 'lock'." -x
 complete -c conda -n "__fish_seen_subcommand_from search" -s "C" -l "use-index-cache" -d "Use cache of channel index files, even if it has expired."
 complete -c conda -n "__fish_seen_subcommand_from search" -s "k" -l "insecure" -d "Allow conda to perform \"insecure\" SSL connections and transfers."
 complete -c conda -n "__fish_seen_subcommand_from search" -l "offline" -d "Offline mode."
 complete -c conda -n "__fish_seen_subcommand_from search" -l "json" -d "Report all output as json."
 complete -c conda -n "__fish_seen_subcommand_from search" -s "v" -l "verbose" -d "Use once for info, twice for debug, three times for trace."
 complete -c conda -n "__fish_seen_subcommand_from search" -s "q" -l "quiet" -d "Do not display progress bar."
-
-
-
-complete -c conda -n "__fish_seen_subcommand_from uninstall" -s "h" -l "help" -d "Show this help message and exit."
-complete -c conda -n "__fish_seen_subcommand_from uninstall" -l "dev" -d "Use `sys.executable -m conda` in wrapper scripts instead of CONDA_EXE."
-complete -c conda -n "__fish_seen_subcommand_from uninstall" -s "n" -l "name" -d "Name of environment." -x
-complete -c conda -n "__fish_seen_subcommand_from uninstall" -s "p" -l "prefix" -d "Full path to environment location (i.e. prefix)." -r
-complete -c conda -n "__fish_seen_subcommand_from uninstall" -s "c" -l "channel" -d "Additional channel to search for packages." -r
-complete -c conda -n "__fish_seen_subcommand_from uninstall" -l "use-local" -d "Use locally built packages."
-complete -c conda -n "__fish_seen_subcommand_from uninstall" -l "override-channels" -d "Do not search default or .condarc channels."
-complete -c conda -n "__fish_seen_subcommand_from uninstall" -l "repodata-fn" -d "Specify file name of repodata on the remote server where your channels are configured or within local backups." -r
-complete -c conda -n "__fish_seen_subcommand_from uninstall" -l "all" -d "Uninstall all packages, i.e., the entire environment."
-complete -c conda -n "__fish_seen_subcommand_from uninstall" -l "features" -d "Uninstall features (instead of packages)."
-complete -c conda -n "__fish_seen_subcommand_from uninstall" -l "force-remove" -l "force" -d "Forces removal of a package without removing packages that depend on it."
-complete -c conda -n "__fish_seen_subcommand_from uninstall" -l "no-pin" -d "Ignore pinned package(s) that apply to the current operation."
-complete -c conda -n "__fish_seen_subcommand_from uninstall" -l "experimental-solver" -d "EXPERIMENTAL." -x
-complete -c conda -n "__fish_seen_subcommand_from uninstall" -s "C" -l "use-index-cache" -d "Use cache of channel index files, even if it has expired."
-complete -c conda -n "__fish_seen_subcommand_from uninstall" -s "k" -l "insecure" -d "Allow conda to perform \"insecure\" SSL connections and transfers."
-complete -c conda -n "__fish_seen_subcommand_from uninstall" -l "offline" -d "Offline mode."
-complete -c conda -n "__fish_seen_subcommand_from uninstall" -s "d" -l "dry-run" -d "Only display what would have been done."
-complete -c conda -n "__fish_seen_subcommand_from uninstall" -l "json" -d "Report all output as json."
-complete -c conda -n "__fish_seen_subcommand_from uninstall" -s "q" -l "quiet" -d "Do not display progress bar."
-complete -c conda -n "__fish_seen_subcommand_from uninstall" -s "v" -l "verbose" -d "Can be used multiple times."
-complete -c conda -n "__fish_seen_subcommand_from uninstall" -s "y" -l "yes" -d "Sets any confirmation values to 'yes' automatically."
 
 
 
@@ -290,12 +273,14 @@ complete -c conda -n "__fish_seen_subcommand_from update" -s "c" -l "channel" -d
 complete -c conda -n "__fish_seen_subcommand_from update" -l "use-local" -d "Use locally built packages."
 complete -c conda -n "__fish_seen_subcommand_from update" -l "override-channels" -d "Do not search default or .condarc channels."
 complete -c conda -n "__fish_seen_subcommand_from update" -l "repodata-fn" -d "Specify file name of repodata on the remote server where your channels are configured or within local backups." -r
+complete -c conda -n "__fish_seen_subcommand_from update" -l "experimental" -d "jlap: Download incremental package index data from repodata.jlap; implies 'lock'." -x
 complete -c conda -n "__fish_seen_subcommand_from update" -l "strict-channel-priority" -d "Packages in lower priority channels are not considered if a package with the same name appears in a higher priority channel."
 complete -c conda -n "__fish_seen_subcommand_from update" -l "no-channel-priority" -d "Package version takes precedence over channel priority."
 complete -c conda -n "__fish_seen_subcommand_from update" -l "no-deps" -d "Do not install, update, remove, or change dependencies."
 complete -c conda -n "__fish_seen_subcommand_from update" -l "only-deps" -d "Only install dependencies."
 complete -c conda -n "__fish_seen_subcommand_from update" -l "no-pin" -d "Ignore pinned file."
-complete -c conda -n "__fish_seen_subcommand_from update" -l "experimental-solver" -d "EXPERIMENTAL." -x
+complete -c conda -n "__fish_seen_subcommand_from update" -l "solver" -d "Choose which solver backend to use." -x
+complete -c conda -n "__fish_seen_subcommand_from update" -l "experimental-solver" -d "DEPRECATED." -x
 complete -c conda -n "__fish_seen_subcommand_from update" -l "force-reinstall" -d "Ensure that any user-requested package for the current operation is uninstalled and reinstalled, even if that package already exists in the environment."
 complete -c conda -n "__fish_seen_subcommand_from update" -l "freeze-installed" -l "no-update-deps" -d "Do not update or change already-installed dependencies."
 complete -c conda -n "__fish_seen_subcommand_from update" -l "update-deps" -d "Update dependencies that have available updates."
@@ -317,46 +302,19 @@ complete -c conda -n "__fish_seen_subcommand_from update" -l "show-channel-urls"
 
 
 
-complete -c conda -n "__fish_seen_subcommand_from upgrade" -s "h" -l "help" -d "Show this help message and exit."
-complete -c conda -n "__fish_seen_subcommand_from upgrade" -l "file" -d "Read package versions from the given file." -r
-complete -c conda -n "__fish_seen_subcommand_from upgrade" -s "n" -l "name" -d "Name of environment." -x
-complete -c conda -n "__fish_seen_subcommand_from upgrade" -s "p" -l "prefix" -d "Full path to environment location (i.e. prefix)." -r
-complete -c conda -n "__fish_seen_subcommand_from upgrade" -s "c" -l "channel" -d "Additional channel to search for packages." -r
-complete -c conda -n "__fish_seen_subcommand_from upgrade" -l "use-local" -d "Use locally built packages."
-complete -c conda -n "__fish_seen_subcommand_from upgrade" -l "override-channels" -d "Do not search default or .condarc channels."
-complete -c conda -n "__fish_seen_subcommand_from upgrade" -l "repodata-fn" -d "Specify file name of repodata on the remote server where your channels are configured or within local backups." -r
-complete -c conda -n "__fish_seen_subcommand_from upgrade" -l "strict-channel-priority" -d "Packages in lower priority channels are not considered if a package with the same name appears in a higher priority channel."
-complete -c conda -n "__fish_seen_subcommand_from upgrade" -l "no-channel-priority" -d "Package version takes precedence over channel priority."
-complete -c conda -n "__fish_seen_subcommand_from upgrade" -l "no-deps" -d "Do not install, update, remove, or change dependencies."
-complete -c conda -n "__fish_seen_subcommand_from upgrade" -l "only-deps" -d "Only install dependencies."
-complete -c conda -n "__fish_seen_subcommand_from upgrade" -l "no-pin" -d "Ignore pinned file."
-complete -c conda -n "__fish_seen_subcommand_from upgrade" -l "experimental-solver" -d "EXPERIMENTAL." -x
-complete -c conda -n "__fish_seen_subcommand_from upgrade" -l "force-reinstall" -d "Ensure that any user-requested package for the current operation is uninstalled and reinstalled, even if that package already exists in the environment."
-complete -c conda -n "__fish_seen_subcommand_from upgrade" -l "freeze-installed" -l "no-update-deps" -d "Do not update or change already-installed dependencies."
-complete -c conda -n "__fish_seen_subcommand_from upgrade" -l "update-deps" -d "Update dependencies that have available updates."
-complete -c conda -n "__fish_seen_subcommand_from upgrade" -s "S" -l "satisfied-skip-solve" -d "Exit early and do not run the solver if the requested specs are satisfied."
-complete -c conda -n "__fish_seen_subcommand_from upgrade" -l "update-all" -l "all" -d "Update all installed packages in the environment."
-complete -c conda -n "__fish_seen_subcommand_from upgrade" -l "update-specs" -d "Update based on provided specifications."
-complete -c conda -n "__fish_seen_subcommand_from upgrade" -l "copy" -d "Install all packages using copies instead of hard- or soft-linking."
-complete -c conda -n "__fish_seen_subcommand_from upgrade" -l "clobber" -d "Allow clobbering of overlapping file paths within packages, and suppress related warnings."
-complete -c conda -n "__fish_seen_subcommand_from upgrade" -s "C" -l "use-index-cache" -d "Use cache of channel index files, even if it has expired."
-complete -c conda -n "__fish_seen_subcommand_from upgrade" -s "k" -l "insecure" -d "Allow conda to perform \"insecure\" SSL connections and transfers."
-complete -c conda -n "__fish_seen_subcommand_from upgrade" -l "offline" -d "Offline mode."
-complete -c conda -n "__fish_seen_subcommand_from upgrade" -s "d" -l "dry-run" -d "Only display what would have been done."
-complete -c conda -n "__fish_seen_subcommand_from upgrade" -l "json" -d "Report all output as json."
-complete -c conda -n "__fish_seen_subcommand_from upgrade" -s "q" -l "quiet" -d "Do not display progress bar."
-complete -c conda -n "__fish_seen_subcommand_from upgrade" -s "v" -l "verbose" -d "Can be used multiple times."
-complete -c conda -n "__fish_seen_subcommand_from upgrade" -s "y" -l "yes" -d "Sets any confirmation values to 'yes' automatically."
-complete -c conda -n "__fish_seen_subcommand_from upgrade" -l "download-only" -d "Solve an environment and ensure package caches are populated, but exit prior to unlinking and linking packages into the prefix."
-complete -c conda -n "__fish_seen_subcommand_from upgrade" -l "show-channel-urls" -d "Show channel urls."
-
-
-
 complete -c conda -n "__fish_seen_subcommand_from notices" -s "h" -l "help" -d "Show this help message and exit."
 complete -c conda -n "__fish_seen_subcommand_from notices" -s "c" -l "channel" -d "Additional channel to search for packages." -r
 complete -c conda -n "__fish_seen_subcommand_from notices" -l "use-local" -d "Use locally built packages."
 complete -c conda -n "__fish_seen_subcommand_from notices" -l "override-channels" -d "Do not search default or .condarc channels."
 complete -c conda -n "__fish_seen_subcommand_from notices" -l "repodata-fn" -d "Specify file name of repodata on the remote server where your channels are configured or within local backups." -r
+complete -c conda -n "__fish_seen_subcommand_from notices" -l "experimental" -d "jlap: Download incremental package index data from repodata.jlap; implies 'lock'." -x
+
+
+
+complete -c conda -n "__fish_seen_subcommand_from doctor" -s "h" -l "help" -d "show this help message and exit"
+complete -c conda -n "__fish_seen_subcommand_from doctor" -s "v" -l "verbose" -d "generate a detailed environment health report"
+complete -c conda -n "__fish_seen_subcommand_from doctor" -s "n" -l "name" -d "Name of environment." -x
+complete -c conda -n "__fish_seen_subcommand_from doctor" -s "p" -l "prefix" -d "Full path to environment location (i.e. prefix)." -r
 
 
 

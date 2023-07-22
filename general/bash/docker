@@ -2,3116 +2,2643 @@
 
 _docker()
 {
-    local i=1 cmd cur word_list
-    cur="${COMP_WORDS[COMP_CWORD]}"
+    local cur prev words cword
+    _init_completion -s || return
 
-    # take the last word that's NOT starting with -
-    while [[ ( "$i" < "$COMP_CWORD" ) ]]; do
-        local s="${COMP_WORDS[i]}"
-        case "$s" in
-          -*) ;;
-          *)
-            cmd="$s"
-            ;;
-        esac
-        (( i++ ))
+    local cmd i subcommands
+    local subcommands=" run exec ps build pull push images login logout search version info attach commit cp create diff events export history import inspect kill load logs pause port rename restart rm rmi save start stats stop tag top unpause update wait builder buildx compose container context dev extension image init manifest network plugin sbom scan scout system trust volume swarm"
+
+    for (( i=1; i < cword; i++ )); do
+        if [[ " ${subcommands[*]} " == *" ${words[i]} "* ]]; then
+            cmd=${words[i]}
+            break
+        fi
     done
 
     case "$cmd" in
-          attach) _docker_attach
+        run) _docker_run
             return
             ;;
 
-          build) _docker_build
+        exec) _docker_exec
             return
             ;;
 
-          commit) _docker_commit
+        ps) _docker_ps
             return
             ;;
 
-          cp) _docker_cp
+        build) _docker_build
             return
             ;;
 
-          create) _docker_create
+        pull) _docker_pull
             return
             ;;
 
-          diff) _docker_diff
+        push) _docker_push
             return
             ;;
 
-          events) _docker_events
+        images) _docker_images
             return
             ;;
 
-          exec) _docker_exec
+        login) _docker_login
             return
             ;;
 
-          export) _docker_export
+        logout) _docker_logout
             return
             ;;
 
-          history) _docker_history
+        search) _docker_search
             return
             ;;
 
-          images) _docker_images
+        version) _docker_version
             return
             ;;
 
-          import) _docker_import
+        info) _docker_info
             return
             ;;
 
-          info) _docker_info
+        attach) _docker_attach
             return
             ;;
 
-          inspect) _docker_inspect
+        commit) _docker_commit
             return
             ;;
 
-          kill) _docker_kill
+        cp) _docker_cp
             return
             ;;
 
-          load) _docker_load
+        create) _docker_create
             return
             ;;
 
-          login) _docker_login
+        diff) _docker_diff
             return
             ;;
 
-          logout) _docker_logout
+        events) _docker_events
             return
             ;;
 
-          logs) _docker_logs
+        export) _docker_export
             return
             ;;
 
-          pause) _docker_pause
+        history) _docker_history
             return
             ;;
 
-          port) _docker_port
+        import) _docker_import
             return
             ;;
 
-          ps) _docker_ps
+        inspect) _docker_inspect
             return
             ;;
 
-          pull) _docker_pull
+        kill) _docker_kill
             return
             ;;
 
-          push) _docker_push
+        load) _docker_load
             return
             ;;
 
-          rename) _docker_rename
+        logs) _docker_logs
             return
             ;;
 
-          restart) _docker_restart
+        pause) _docker_pause
             return
             ;;
 
-          rm) _docker_rm
+        port) _docker_port
             return
             ;;
 
-          rmi) _docker_rmi
+        rename) _docker_rename
             return
             ;;
 
-          run) _docker_run
+        restart) _docker_restart
             return
             ;;
 
-          save) _docker_save
+        rm) _docker_rm
             return
             ;;
 
-          search) _docker_search
+        rmi) _docker_rmi
             return
             ;;
 
-          start) _docker_start
+        save) _docker_save
             return
             ;;
 
-          stats) _docker_stats
+        start) _docker_start
             return
             ;;
 
-          stop) _docker_stop
+        stats) _docker_stats
             return
             ;;
 
-          tag) _docker_tag
+        stop) _docker_stop
             return
             ;;
 
-          top) _docker_top
+        tag) _docker_tag
             return
             ;;
 
-          unpause) _docker_unpause
+        top) _docker_top
             return
             ;;
 
-          update) _docker_update
+        unpause) _docker_unpause
             return
             ;;
 
-          version) _docker_version
+        update) _docker_update
             return
             ;;
 
-          wait) _docker_wait
+        wait) _docker_wait
             return
             ;;
 
-          builder) _docker_builder
+        builder) _docker_builder
             return
             ;;
 
-          buildx) _docker_buildx
+        buildx) _docker_buildx
             return
             ;;
 
-          compose) _docker_compose
+        compose) _docker_compose
             return
             ;;
 
-          config) _docker_config
+        container) _docker_container
             return
             ;;
 
-          container) _docker_container
+        context) _docker_context
             return
             ;;
 
-          context) _docker_context
+        dev) _docker_dev
             return
             ;;
 
-          extension) _docker_extension
+        extension) _docker_extension
             return
             ;;
 
-          image) _docker_image
+        image) _docker_image
             return
             ;;
 
-          manifest) _docker_manifest
+        init) _docker_init
             return
             ;;
 
-          network) _docker_network
+        manifest) _docker_manifest
             return
             ;;
 
-          node) _docker_node
+        network) _docker_network
             return
             ;;
 
-          plugin) _docker_plugin
+        plugin) _docker_plugin
             return
             ;;
 
-          sbom) _docker_sbom
+        sbom) _docker_sbom
             return
             ;;
 
-          scan) _docker_scan
+        scan) _docker_scan
             return
             ;;
 
-          secret) _docker_secret
+        scout) _docker_scout
             return
             ;;
 
-          service) _docker_service
+        system) _docker_system
             return
             ;;
 
-          stack) _docker_stack
+        trust) _docker_trust
             return
             ;;
 
-          swarm) _docker_swarm
+        volume) _docker_volume
             return
             ;;
 
-          system) _docker_system
+        swarm) _docker_swarm
             return
             ;;
 
-          trust) _docker_trust
-            return
-            ;;
-
-          volume) _docker_volume
-            return
-            ;;
-
-      *)
-          word_list=" attach build commit cp create diff events exec export history images import info inspect kill load login logout logs pause port ps pull push rename restart rm rmi run save search start stats stop tag top unpause update version wait builder buildx compose config container context extension image manifest network node plugin sbom scan secret service stack swarm system trust volume --config -c --context -D --debug -H --host -l --log-level --tls --tlscacert --tlscert --tlskey --tlsverify -v --version"
-          COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
-          ;;
     esac
 
+    local word_list=" run exec ps build pull push images login logout search version info attach commit cp create diff events export history import inspect kill load logs pause port rename restart rm rmi save start stats stop tag top unpause update wait builder buildx compose container context dev extension image init manifest network plugin sbom scan scout system trust volume swarm "
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_docker_attach ()
+_docker_run()
 {
-    local cur word_list
-    word_list=" --detach-keys --no-stdin --sig-proxy" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  --add-host --annotation -a --attach --blkio-weight --blkio-weight-device --cap-add --cap-drop --cgroup-parent --cgroupns --cidfile --cpu-period --cpu-quota --cpu-rt-period --cpu-rt-runtime -c --cpu-shares --cpus --cpuset-cpus --cpuset-mems -d --detach --detach-keys --device --device-cgroup-rule --device-read-bps --device-read-iops --device-write-bps --device-write-iops --disable-content-trust --dns --dns-option --dns-search --domainname --entrypoint -e --env --env-file --expose --gpus --group-add --health-cmd --health-interval --health-retries --health-start-period --health-timeout --help -h --hostname --init -i --interactive --ip --ip6 --ipc --isolation --kernel-memory -l --label --label-file --link --link-local-ip --log-driver --log-opt --mac-address -m --memory --memory-reservation --memory-swap --memory-swappiness --mount --name --network --network-alias --no-healthcheck --oom-kill-disable --oom-score-adj --pid --pids-limit --platform --privileged -p --publish -P --publish-all --pull -q --quiet --read-only --restart --rm --runtime --security-opt --shm-size --sig-proxy --stop-signal --stop-timeout --storage-opt --sysctl --tmpfs -t --tty --ulimit -u --user --userns --uts -v --volume --volume-driver --volumes-from -w --workdir"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_docker_build ()
+_docker_exec()
 {
-    local cur word_list
-    word_list=" --add-host --build-arg --cache-from --disable-content-trust -f --file --iidfile --isolation --label --network --no-cache -o --output --platform --progress --pull -q --quiet --secret --ssh -t --tag --target" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  -d --detach --detach-keys -e --env --env-file -i --interactive --privileged -t --tty -u --user -w --workdir"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_docker_commit ()
+_docker_ps()
 {
-    local cur word_list
-    word_list=" -a --author -c --change -m --message -p --pause" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  -a --all -f --filter --format -n --last -l --latest --no-trunc -q --quiet -s --size"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_docker_cp ()
+_docker_build()
 {
-    local cur word_list
-    word_list=" -a --archive -L --follow-link" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  --add-host --allow --attest --build-arg --build-context --builder --cache-from --cache-to --cgroup-parent -f --file --iidfile --label --load --metadata-file --network --no-cache --no-cache-filter -o --output --platform --progress --provenance --pull --push -q --quiet --sbom --secret --shm-size --ssh -t --tag --target --ulimit"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_docker_create ()
+_docker_pull()
 {
-    local cur word_list
-    word_list=" --add-host -a --attach --blkio-weight --blkio-weight-device --cap-add --cap-drop --cgroup-parent --cgroupns --cidfile --cpu-period --cpu-quota --cpu-rt-period --cpu-rt-runtime -c --cpu-shares --cpus --cpuset-cpus --cpuset-mems --device --device-cgroup-rule --device-read-bps --device-read-iops --device-write-bps --device-write-iops --disable-content-trust --dns --dns-option --dns-search --domainname --entrypoint -e --env --env-file --expose --gpus --group-add --health-cmd --health-interval --health-retries --health-start-period --health-timeout --help -h --hostname --init -i --interactive --ip --ip6 --ipc --isolation --kernel-memory -l --label --label-file --link --link-local-ip --log-driver --log-opt --mac-address -m --memory --memory-reservation --memory-swap --memory-swappiness --mount --name --network --network-alias --no-healthcheck --oom-kill-disable --oom-score-adj --pid --pids-limit --platform --privileged -p --publish -P --publish-all --pull --read-only --restart --rm --runtime --security-opt --shm-size --stop-signal --stop-timeout --storage-opt --sysctl --tmpfs -t --tty --ulimit -u --user --userns --uts -v --volume --volume-driver --volumes-from -w --workdir" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  -a --all-tags --disable-content-trust --platform -q --quiet"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_docker_events ()
+_docker_push()
 {
-    local cur word_list
-    word_list=" -f --filter --format --since --until" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  -a --all-tags --disable-content-trust -q --quiet"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_docker_exec ()
+_docker_images()
 {
-    local cur word_list
-    word_list=" -d --detach --detach-keys -e --env --env-file -i --interactive --privileged -t --tty -u --user -w --workdir" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  -a --all --digests -f --filter --format --no-trunc -q --quiet"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_docker_export ()
+_docker_login()
 {
-    local cur word_list
-    word_list=" -o --output" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  -h --help -p --password --password-stdin -u --username"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_docker_history ()
+_docker_logout()
 {
-    local cur word_list
-    word_list=" --format -H --human --no-trunc -q --quiet" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  -h --help"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_docker_images ()
+_docker_search()
 {
-    local cur word_list
-    word_list=" -a --all --digests -f --filter --format --no-trunc -q --quiet" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  -f --filter --format --limit --no-trunc"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_docker_import ()
+_docker_version()
 {
-    local cur word_list
-    word_list=" -c --change -m --message --platform" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  -f --format -h --help --kubeconfig"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_docker_info ()
+_docker_info()
 {
-    local cur word_list
-    word_list=" -f --format" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  -f --format"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_docker_inspect ()
+_docker_attach()
 {
-    local cur word_list
-    word_list=" -f --format -s --size --type" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  --detach-keys --no-stdin --sig-proxy"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_docker_kill ()
+_docker_commit()
 {
-    local cur word_list
-    word_list=" -s --signal" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  -a --author -c --change -m --message -p --pause"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_docker_load ()
+_docker_cp()
 {
-    local cur word_list
-    word_list=" -i --input -q --quiet" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  -a --archive -L --follow-link -q --quiet"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_docker_login ()
+_docker_create()
 {
-    local cur word_list
-    word_list=" -h --help -p --password --password-stdin -u --username" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  --add-host --annotation -a --attach --blkio-weight --blkio-weight-device --cap-add --cap-drop --cgroup-parent --cgroupns --cidfile --cpu-period --cpu-quota --cpu-rt-period --cpu-rt-runtime -c --cpu-shares --cpus --cpuset-cpus --cpuset-mems --device --device-cgroup-rule --device-read-bps --device-read-iops --device-write-bps --device-write-iops --disable-content-trust --dns --dns-option --dns-search --domainname --entrypoint -e --env --env-file --expose --gpus --group-add --health-cmd --health-interval --health-retries --health-start-period --health-timeout --help -h --hostname --init -i --interactive --ip --ip6 --ipc --isolation --kernel-memory -l --label --label-file --link --link-local-ip --log-driver --log-opt --mac-address -m --memory --memory-reservation --memory-swap --memory-swappiness --mount --name --network --network-alias --no-healthcheck --oom-kill-disable --oom-score-adj --pid --pids-limit --platform --privileged -p --publish -P --publish-all --pull -q --quiet --read-only --restart --rm --runtime --security-opt --shm-size --stop-signal --stop-timeout --storage-opt --sysctl --tmpfs -t --tty --ulimit -u --user --userns --uts -v --volume --volume-driver --volumes-from -w --workdir"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_docker_logout ()
+_docker_diff()
 {
-    local cur word_list
-    word_list=" -h --help" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  "
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_docker_logs ()
+_docker_events()
 {
-    local cur word_list
-    word_list=" --details -f --follow --since -n --tail -t --timestamps --until" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  -f --filter --format --since --until"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_docker_ps ()
+_docker_export()
 {
-    local cur word_list
-    word_list=" -a --all -f --filter --format -n --last -l --latest --no-trunc -q --quiet -s --size" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  -o --output"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_docker_pull ()
+_docker_history()
 {
-    local cur word_list
-    word_list=" -a --all-tags --disable-content-trust --platform -q --quiet" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  --format -H --human --no-trunc -q --quiet"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_docker_push ()
+_docker_import()
 {
-    local cur word_list
-    word_list=" -a --all-tags --disable-content-trust -q --quiet" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  -c --change -m --message --platform"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_docker_restart ()
+_docker_inspect()
 {
-    local cur word_list
-    word_list=" -t --time" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  -f --format -s --size --type"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_docker_rm ()
+_docker_kill()
 {
-    local cur word_list
-    word_list=" -f --force -l --link -v --volumes" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  -s --signal"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_docker_rmi ()
+_docker_load()
 {
-    local cur word_list
-    word_list=" -f --force --no-prune" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  -i --input -q --quiet"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_docker_run ()
+_docker_logs()
 {
-    local cur word_list
-    word_list=" --add-host -a --attach --blkio-weight --blkio-weight-device --cap-add --cap-drop --cgroup-parent --cgroupns --cidfile --cpu-period --cpu-quota --cpu-rt-period --cpu-rt-runtime -c --cpu-shares --cpus --cpuset-cpus --cpuset-mems -d --detach --detach-keys --device --device-cgroup-rule --device-read-bps --device-read-iops --device-write-bps --device-write-iops --disable-content-trust --dns --dns-option --dns-search --domainname --entrypoint -e --env --env-file --expose --gpus --group-add --health-cmd --health-interval --health-retries --health-start-period --health-timeout --help -h --hostname --init -i --interactive --ip --ip6 --ipc --isolation --kernel-memory -l --label --label-file --link --link-local-ip --log-driver --log-opt --mac-address -m --memory --memory-reservation --memory-swap --memory-swappiness --mount --name --network --network-alias --no-healthcheck --oom-kill-disable --oom-score-adj --pid --pids-limit --platform --privileged -p --publish -P --publish-all --pull --read-only --restart --rm --runtime --security-opt --shm-size --sig-proxy --stop-signal --stop-timeout --storage-opt --sysctl --tmpfs -t --tty --ulimit -u --user --userns --uts -v --volume --volume-driver --volumes-from -w --workdir" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  --details -f --follow --since -n --tail -t --timestamps --until"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_docker_save ()
+_docker_pause()
 {
-    local cur word_list
-    word_list=" -o --output" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  "
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_docker_search ()
+_docker_port()
 {
-    local cur word_list
-    word_list=" -f --filter --format --limit --no-trunc" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  "
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_docker_start ()
+_docker_rename()
 {
-    local cur word_list
-    word_list=" -a --attach --detach-keys -i --interactive" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  "
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_docker_stats ()
+_docker_restart()
 {
-    local cur word_list
-    word_list=" -a --all --format --no-stream --no-trunc" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  -s --signal -t --time"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_docker_stop ()
+_docker_rm()
 {
-    local cur word_list
-    word_list=" -t --time" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  -f --force -l --link -v --volumes"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_docker_update ()
+_docker_rmi()
 {
-    local cur word_list
-    word_list=" --blkio-weight --cpu-period --cpu-quota --cpu-rt-period --cpu-rt-runtime -c --cpu-shares --cpus --cpuset-cpus --cpuset-mems --kernel-memory -m --memory --memory-reservation --memory-swap --pids-limit --restart" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  -f --force --no-prune"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_docker_version ()
+_docker_save()
 {
-    local cur word_list
-    word_list=" -f --format -h --help --kubeconfig" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  -o --output"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_docker_builder ()
+_docker_start()
 {
-    local cur word_list
-    local i=1 subcommand_index
+    local word_list="  -a --attach --detach-keys -i --interactive"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
+}
 
-    # take the last word that's NOT starting with -
-    while [[ ( $i < $COMP_CWORD ) ]]; do
-        local s="${COMP_WORDS[i]}"
-        case "$s" in
-          builder)
-            subcommand_index=$i
+_docker_stats()
+{
+    local word_list="  -a --all --format --no-stream --no-trunc"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
+}
+
+_docker_stop()
+{
+    local word_list="  -s --signal -t --time"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
+}
+
+_docker_tag()
+{
+    local word_list="  "
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
+}
+
+_docker_top()
+{
+    local word_list="  "
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
+}
+
+_docker_unpause()
+{
+    local word_list="  "
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
+}
+
+_docker_update()
+{
+    local word_list="  --blkio-weight --cpu-period --cpu-quota --cpu-rt-period --cpu-rt-runtime -c --cpu-shares --cpus --cpuset-cpus --cpuset-mems -m --memory --memory-reservation --memory-swap --pids-limit --restart"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
+}
+
+_docker_wait()
+{
+    local word_list="  "
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
+}
+
+_docker_builder()
+{
+    local cmd i subcommands
+    local subcommands=" imagetools bake build create du inspect ls prune rm stop use version"
+
+    for (( i=1; i < cword; i++ )); do
+        if [[ " ${subcommands[*]} " == *" ${words[i]} "* ]]; then
+            cmd=${words[i]}
             break
-            ;;
-        esac
-        (( i++ ))
+        fi
     done
 
-    while [[ ( $subcommand_index < $COMP_CWORD ) ]]; do
-        local s="${COMP_WORDS[subcommand_index}"
-        case "$s" in
-          build) _docker_build
+    case "$cmd" in
+        imagetools) _docker_builder_imagetools
             return
             ;;
 
-          prune) _docker_prune
+        bake) _docker_builder_bake
             return
             ;;
 
-          *)  ;; 
-        esac
-        (( subcommand_index++ ))
-    done
+        build) _docker_builder_build
+            return
+            ;;
 
-    word_list=" build prune" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+        create) _docker_builder_create
+            return
+            ;;
+
+        du) _docker_builder_du
+            return
+            ;;
+
+        inspect) _docker_builder_inspect
+            return
+            ;;
+
+        ls) _docker_builder_ls
+            return
+            ;;
+
+        prune) _docker_builder_prune
+            return
+            ;;
+
+        rm) _docker_builder_rm
+            return
+            ;;
+
+        stop) _docker_builder_stop
+            return
+            ;;
+
+        use) _docker_builder_use
+            return
+            ;;
+
+        version) _docker_builder_version
+            return
+            ;;
+
+    esac
+
+    local word_list=" imagetools bake build create du inspect ls prune rm stop use version --builder"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_builder_build ()
+_docker_builder_imagetools()
 {
-    local cur word_list
-    word_list=" --add-host --build-arg --cache-from --disable-content-trust -f --file --iidfile --isolation --label --network --no-cache -o --output --platform --progress --pull -q --quiet --secret --ssh -t --tag --target" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
-}
+    local cmd i subcommands
+    local subcommands=" create inspect"
 
-_builder_prune ()
-{
-    local cur word_list
-    word_list=" -a --all --filter -f --force --keep-storage" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
-}
-
-_docker_buildx ()
-{
-    local cur word_list
-    local i=1 subcommand_index
-
-    # take the last word that's NOT starting with -
-    while [[ ( $i < $COMP_CWORD ) ]]; do
-        local s="${COMP_WORDS[i]}"
-        case "$s" in
-          buildx)
-            subcommand_index=$i
+    for (( i=1; i < cword; i++ )); do
+        if [[ " ${subcommands[*]} " == *" ${words[i]} "* ]]; then
+            cmd=${words[i]}
             break
-            ;;
-        esac
-        (( i++ ))
+        fi
     done
 
-    while [[ ( $subcommand_index < $COMP_CWORD ) ]]; do
-        local s="${COMP_WORDS[subcommand_index}"
-        case "$s" in
-          imagetools) _docker_imagetools
+    case "$cmd" in
+        create) _docker_builder_imagetools_create
             return
             ;;
 
-          bake) _docker_bake
+        inspect) _docker_builder_imagetools_inspect
             return
             ;;
 
-          build) _docker_build
-            return
-            ;;
+    esac
 
-          create) _docker_create
-            return
-            ;;
-
-          du) _docker_du
-            return
-            ;;
-
-          inspect) _docker_inspect
-            return
-            ;;
-
-          ls) _docker_ls
-            return
-            ;;
-
-          prune) _docker_prune
-            return
-            ;;
-
-          rm) _docker_rm
-            return
-            ;;
-
-          stop) _docker_stop
-            return
-            ;;
-
-          use) _docker_use
-            return
-            ;;
-
-          version) _docker_version
-            return
-            ;;
-
-          *)  ;; 
-        esac
-        (( subcommand_index++ ))
-    done
-
-    word_list=" imagetools bake build create du inspect ls prune rm stop use version --builder" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list=" create inspect --builder"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_buildx_imagetools ()
+_docker_builder_imagetools_create()
 {
-    local cur word_list
-    local i=1 subcommand_index
+    local word_list="  --append --builder --dry-run -f --file --progress -t --tag"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
+}
 
-    # take the last word that's NOT starting with -
-    while [[ ( $i < $COMP_CWORD ) ]]; do
-        local s="${COMP_WORDS[i]}"
-        case "$s" in
-          imagetools)
-            subcommand_index=$i
+_docker_builder_imagetools_inspect()
+{
+    local word_list="  --builder --format --raw"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
+}
+
+_docker_builder_bake()
+{
+    local word_list="  --builder -f --file --load --metadata-file --no-cache --print --progress --provenance --pull --push --sbom --set"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
+}
+
+_docker_builder_build()
+{
+    local word_list="  --add-host --allow --attest --build-arg --build-context --builder --cache-from --cache-to --cgroup-parent -f --file --iidfile --label --load --metadata-file --network --no-cache --no-cache-filter -o --output --platform --progress --provenance --pull --push -q --quiet --sbom --secret --shm-size --ssh -t --tag --target --ulimit"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
+}
+
+_docker_builder_create()
+{
+    local word_list="  --append --bootstrap --buildkitd-flags --config --driver --driver-opt --leave --name --node --platform --use"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
+}
+
+_docker_builder_du()
+{
+    local word_list="  --builder --filter --verbose"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
+}
+
+_docker_builder_inspect()
+{
+    local word_list="  --bootstrap --builder"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
+}
+
+_docker_builder_ls()
+{
+    local word_list="  "
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
+}
+
+_docker_builder_prune()
+{
+    local word_list="  -a --all --builder --filter -f --force --keep-storage --verbose"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
+}
+
+_docker_builder_rm()
+{
+    local word_list="  --all-inactive --builder -f --force --keep-daemon --keep-state"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
+}
+
+_docker_builder_stop()
+{
+    local word_list="  --builder"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
+}
+
+_docker_builder_use()
+{
+    local word_list="  --builder --default --global"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
+}
+
+_docker_builder_version()
+{
+    local word_list="  "
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
+}
+
+_docker_buildx()
+{
+    local cmd i subcommands
+    local subcommands=" imagetools bake build create du inspect ls prune rm stop use version"
+
+    for (( i=1; i < cword; i++ )); do
+        if [[ " ${subcommands[*]} " == *" ${words[i]} "* ]]; then
+            cmd=${words[i]}
             break
-            ;;
-        esac
-        (( i++ ))
+        fi
     done
 
-    while [[ ( $subcommand_index < $COMP_CWORD ) ]]; do
-        local s="${COMP_WORDS[subcommand_index}"
-        case "$s" in
-          create) _buildx_create
+    case "$cmd" in
+        imagetools) _docker_buildx_imagetools
             return
             ;;
 
-          inspect) _buildx_inspect
+        bake) _docker_buildx_bake
             return
             ;;
 
-          *)  ;; 
-        esac
-        (( subcommand_index++ ))
-    done
+        build) _docker_buildx_build
+            return
+            ;;
 
-    word_list=" create inspect --builder" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+        create) _docker_buildx_create
+            return
+            ;;
+
+        du) _docker_buildx_du
+            return
+            ;;
+
+        inspect) _docker_buildx_inspect
+            return
+            ;;
+
+        ls) _docker_buildx_ls
+            return
+            ;;
+
+        prune) _docker_buildx_prune
+            return
+            ;;
+
+        rm) _docker_buildx_rm
+            return
+            ;;
+
+        stop) _docker_buildx_stop
+            return
+            ;;
+
+        use) _docker_buildx_use
+            return
+            ;;
+
+        version) _docker_buildx_version
+            return
+            ;;
+
+    esac
+
+    local word_list=" imagetools bake build create du inspect ls prune rm stop use version --builder"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_imagetools_create ()
+_docker_buildx_imagetools()
 {
-    local cur word_list
-    word_list=" --append --builder --dry-run -f --file -t --tag" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
-}
+    local cmd i subcommands
+    local subcommands=" create inspect"
 
-_imagetools_inspect ()
-{
-    local cur word_list
-    word_list=" --builder --format --raw" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
-}
-
-_buildx_bake ()
-{
-    local cur word_list
-    word_list=" --builder -f --file --load --metadata-file --no-cache --print --progress --pull --push --set" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
-}
-
-_buildx_build ()
-{
-    local cur word_list
-    word_list=" --add-host --allow --build-arg --build-context --builder --cache-from --cache-to --cgroup-parent -f --file --iidfile --label --load --metadata-file --network --no-cache --no-cache-filter -o --output --platform --progress --pull --push -q --quiet --secret --shm-size --ssh -t --tag --target --ulimit" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
-}
-
-_buildx_create ()
-{
-    local cur word_list
-    word_list=" --append --bootstrap --buildkitd-flags --config --driver --driver-opt --leave --name --node --platform --use" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
-}
-
-_buildx_du ()
-{
-    local cur word_list
-    word_list=" --builder --filter --verbose" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
-}
-
-_buildx_inspect ()
-{
-    local cur word_list
-    word_list=" --bootstrap --builder" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
-}
-
-_buildx_prune ()
-{
-    local cur word_list
-    word_list=" -a --all --builder --filter -f --force --keep-storage --verbose" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
-}
-
-_buildx_rm ()
-{
-    local cur word_list
-    word_list=" --all-inactive --builder -f --force --keep-daemon --keep-state" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
-}
-
-_buildx_stop ()
-{
-    local cur word_list
-    word_list=" --builder" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
-}
-
-_buildx_use ()
-{
-    local cur word_list
-    word_list=" --builder --default --global" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
-}
-
-_docker_compose ()
-{
-    local cur word_list
-    local i=1 subcommand_index
-
-    # take the last word that's NOT starting with -
-    while [[ ( $i < $COMP_CWORD ) ]]; do
-        local s="${COMP_WORDS[i]}"
-        case "$s" in
-          compose)
-            subcommand_index=$i
+    for (( i=1; i < cword; i++ )); do
+        if [[ " ${subcommands[*]} " == *" ${words[i]} "* ]]; then
+            cmd=${words[i]}
             break
-            ;;
-        esac
-        (( i++ ))
+        fi
     done
 
-    while [[ ( $subcommand_index < $COMP_CWORD ) ]]; do
-        local s="${COMP_WORDS[subcommand_index}"
-        case "$s" in
-          build) _docker_build
+    case "$cmd" in
+        create) _docker_buildx_imagetools_create
             return
             ;;
 
-          convert) _docker_convert
+        inspect) _docker_buildx_imagetools_inspect
             return
             ;;
 
-          cp) _docker_cp
-            return
-            ;;
+    esac
 
-          create) _docker_create
-            return
-            ;;
-
-          down) _docker_down
-            return
-            ;;
-
-          events) _docker_events
-            return
-            ;;
-
-          exec) _docker_exec
-            return
-            ;;
-
-          images) _docker_images
-            return
-            ;;
-
-          kill) _docker_kill
-            return
-            ;;
-
-          logs) _docker_logs
-            return
-            ;;
-
-          ls) _docker_ls
-            return
-            ;;
-
-          pause) _docker_pause
-            return
-            ;;
-
-          port) _docker_port
-            return
-            ;;
-
-          ps) _docker_ps
-            return
-            ;;
-
-          pull) _docker_pull
-            return
-            ;;
-
-          push) _docker_push
-            return
-            ;;
-
-          restart) _docker_restart
-            return
-            ;;
-
-          rm) _docker_rm
-            return
-            ;;
-
-          run) _docker_run
-            return
-            ;;
-
-          start) _docker_start
-            return
-            ;;
-
-          stop) _docker_stop
-            return
-            ;;
-
-          top) _docker_top
-            return
-            ;;
-
-          unpause) _docker_unpause
-            return
-            ;;
-
-          up) _docker_up
-            return
-            ;;
-
-          version) _docker_version
-            return
-            ;;
-
-          *)  ;; 
-        esac
-        (( subcommand_index++ ))
-    done
-
-    word_list=" build convert cp create down events exec images kill logs ls pause port ps pull push restart rm run start stop top unpause up version --ansi --compatibility --env-file -f --file --profile --project-directory -p --project-name" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list=" create inspect --builder"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_compose_build ()
+_docker_buildx_imagetools_create()
 {
-    local cur word_list
-    word_list=" --build-arg --no-cache --progress --pull -q --quiet --ssh" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  --append --builder --dry-run -f --file --progress -t --tag"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_compose_convert ()
+_docker_buildx_imagetools_inspect()
 {
-    local cur word_list
-    word_list=" --format --hash --images --no-interpolate --no-normalize -o --output --profiles -q --quiet --resolve-image-digests --services --volumes" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  --builder --format --raw"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_compose_cp ()
+_docker_buildx_bake()
 {
-    local cur word_list
-    word_list=" -a --archive -L --follow-link --index" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  --builder -f --file --load --metadata-file --no-cache --print --progress --provenance --pull --push --sbom --set"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_compose_create ()
+_docker_buildx_build()
 {
-    local cur word_list
-    word_list=" --build --force-recreate --no-build --no-recreate" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  --add-host --allow --attest --build-arg --build-context --builder --cache-from --cache-to --cgroup-parent -f --file --iidfile --label --load --metadata-file --network --no-cache --no-cache-filter -o --output --platform --progress --provenance --pull --push -q --quiet --sbom --secret --shm-size --ssh -t --tag --target --ulimit"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_compose_down ()
+_docker_buildx_create()
 {
-    local cur word_list
-    word_list=" --remove-orphans --rmi -t --timeout -v --volumes" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  --append --bootstrap --buildkitd-flags --config --driver --driver-opt --leave --name --node --platform --use"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_compose_events ()
+_docker_buildx_du()
 {
-    local cur word_list
-    word_list=" --json" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  --builder --filter --verbose"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_compose_exec ()
+_docker_buildx_inspect()
 {
-    local cur word_list
-    word_list=" -d --detach -e --env --index -T --no-TTY --privileged -u --user -w --workdir" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  --bootstrap --builder"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_compose_images ()
+_docker_buildx_ls()
 {
-    local cur word_list
-    word_list=" -q --quiet" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  "
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_compose_kill ()
+_docker_buildx_prune()
 {
-    local cur word_list
-    word_list=" -s --signal" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  -a --all --builder --filter -f --force --keep-storage --verbose"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_compose_logs ()
+_docker_buildx_rm()
 {
-    local cur word_list
-    word_list=" -f --follow --no-color --no-log-prefix --since --tail -t --timestamps --until" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  --all-inactive --builder -f --force --keep-daemon --keep-state"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_compose_ls ()
+_docker_buildx_stop()
 {
-    local cur word_list
-    word_list=" -a --all --filter --format -q --quiet" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  --builder"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_compose_port ()
+_docker_buildx_use()
 {
-    local cur word_list
-    word_list=" --index --protocol" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  --builder --default --global"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_compose_ps ()
+_docker_buildx_version()
 {
-    local cur word_list
-    word_list=" -a --all --filter --format -q --quiet --services --status" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  "
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_compose_pull ()
+_docker_compose()
 {
-    local cur word_list
-    word_list=" --ignore-pull-failures --include-deps -q --quiet" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
-}
+    local cmd i subcommands
+    local subcommands=" build config cp create down events exec images kill logs ls pause port ps pull push restart rm run start stop top unpause up version"
 
-_compose_push ()
-{
-    local cur word_list
-    word_list=" --ignore-push-failures" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
-}
-
-_compose_restart ()
-{
-    local cur word_list
-    word_list=" -t --timeout" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
-}
-
-_compose_rm ()
-{
-    local cur word_list
-    word_list=" -f --force -s --stop -v --volumes" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
-}
-
-_compose_run ()
-{
-    local cur word_list
-    word_list=" -d --detach --entrypoint -e --env -i --interactive -l --label --name -T --no-TTY --no-deps -p --publish --quiet-pull --rm --service-ports --use-aliases -u --user -v --volume -w --workdir" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
-}
-
-_compose_stop ()
-{
-    local cur word_list
-    word_list=" -t --timeout" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
-}
-
-_compose_up ()
-{
-    local cur word_list
-    word_list=" --abort-on-container-exit --always-recreate-deps --attach --attach-dependencies --build -d --detach --exit-code-from --force-recreate --no-build --no-color --no-deps --no-log-prefix --no-recreate --no-start --quiet-pull --remove-orphans -V --renew-anon-volumes --scale -t --timeout --wait" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
-}
-
-_compose_version ()
-{
-    local cur word_list
-    word_list=" -f --format --short" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
-}
-
-_docker_config ()
-{
-    local cur word_list
-    local i=1 subcommand_index
-
-    # take the last word that's NOT starting with -
-    while [[ ( $i < $COMP_CWORD ) ]]; do
-        local s="${COMP_WORDS[i]}"
-        case "$s" in
-          config)
-            subcommand_index=$i
+    for (( i=1; i < cword; i++ )); do
+        if [[ " ${subcommands[*]} " == *" ${words[i]} "* ]]; then
+            cmd=${words[i]}
             break
-            ;;
-        esac
-        (( i++ ))
+        fi
     done
 
-    while [[ ( $subcommand_index < $COMP_CWORD ) ]]; do
-        local s="${COMP_WORDS[subcommand_index}"
-        case "$s" in
-          create) _docker_create
+    case "$cmd" in
+        build) _docker_compose_build
             return
             ;;
 
-          inspect) _docker_inspect
+        config) _docker_compose_config
             return
             ;;
 
-          ls) _docker_ls
+        cp) _docker_compose_cp
             return
             ;;
 
-          rm) _docker_rm
+        create) _docker_compose_create
             return
             ;;
 
-          *)  ;; 
-        esac
-        (( subcommand_index++ ))
-    done
+        down) _docker_compose_down
+            return
+            ;;
 
-    word_list=" create inspect ls rm" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+        events) _docker_compose_events
+            return
+            ;;
+
+        exec) _docker_compose_exec
+            return
+            ;;
+
+        images) _docker_compose_images
+            return
+            ;;
+
+        kill) _docker_compose_kill
+            return
+            ;;
+
+        logs) _docker_compose_logs
+            return
+            ;;
+
+        ls) _docker_compose_ls
+            return
+            ;;
+
+        pause) _docker_compose_pause
+            return
+            ;;
+
+        port) _docker_compose_port
+            return
+            ;;
+
+        ps) _docker_compose_ps
+            return
+            ;;
+
+        pull) _docker_compose_pull
+            return
+            ;;
+
+        push) _docker_compose_push
+            return
+            ;;
+
+        restart) _docker_compose_restart
+            return
+            ;;
+
+        rm) _docker_compose_rm
+            return
+            ;;
+
+        run) _docker_compose_run
+            return
+            ;;
+
+        start) _docker_compose_start
+            return
+            ;;
+
+        stop) _docker_compose_stop
+            return
+            ;;
+
+        top) _docker_compose_top
+            return
+            ;;
+
+        unpause) _docker_compose_unpause
+            return
+            ;;
+
+        up) _docker_compose_up
+            return
+            ;;
+
+        version) _docker_compose_version
+            return
+            ;;
+
+    esac
+
+    local word_list=" build config cp create down events exec images kill logs ls pause port ps pull push restart rm run start stop top unpause up version --ansi --compatibility --dry-run --env-file -f --file --parallel --profile --progress --project-directory -p --project-name"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_config_create ()
+_docker_compose_build()
 {
-    local cur word_list
-    word_list=" -l --label --template-driver" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  --build-arg --dry-run -m --memory --no-cache --pull --push -q --quiet --ssh"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_config_inspect ()
+_docker_compose_config()
 {
-    local cur word_list
-    word_list=" -f --format --pretty" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  --dry-run --format --hash --images --no-consistency --no-interpolate --no-normalize --no-path-resolution -o --output --profiles -q --quiet --resolve-image-digests --services --volumes"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_config_ls ()
+_docker_compose_cp()
 {
-    local cur word_list
-    word_list=" -f --filter --format -q --quiet" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  -a --archive --dry-run -L --follow-link --index"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_docker_container ()
+_docker_compose_create()
 {
-    local cur word_list
-    local i=1 subcommand_index
+    local word_list="  --build --dry-run --force-recreate --no-build --no-recreate --pull --remove-orphans --scale"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
+}
 
-    # take the last word that's NOT starting with -
-    while [[ ( $i < $COMP_CWORD ) ]]; do
-        local s="${COMP_WORDS[i]}"
-        case "$s" in
-          container)
-            subcommand_index=$i
+_docker_compose_down()
+{
+    local word_list="  --dry-run --remove-orphans --rmi -t --timeout -v --volumes"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
+}
+
+_docker_compose_events()
+{
+    local word_list="  --dry-run --json"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
+}
+
+_docker_compose_exec()
+{
+    local word_list="  -d --detach --dry-run -e --env --index -T --no-TTY --privileged -u --user -w --workdir"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
+}
+
+_docker_compose_images()
+{
+    local word_list="  --dry-run --format -q --quiet"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
+}
+
+_docker_compose_kill()
+{
+    local word_list="  --dry-run --remove-orphans -s --signal"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
+}
+
+_docker_compose_logs()
+{
+    local word_list="  --dry-run -f --follow --no-color --no-log-prefix --since -n --tail -t --timestamps --until"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
+}
+
+_docker_compose_ls()
+{
+    local word_list="  -a --all --dry-run --filter --format -q --quiet"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
+}
+
+_docker_compose_pause()
+{
+    local word_list="  --dry-run"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
+}
+
+_docker_compose_port()
+{
+    local word_list="  --dry-run --index --protocol"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
+}
+
+_docker_compose_ps()
+{
+    local word_list="  -a --all --dry-run --filter --format -q --quiet --services --status"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
+}
+
+_docker_compose_pull()
+{
+    local word_list="  --dry-run --ignore-buildable --ignore-pull-failures --include-deps -q --quiet"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
+}
+
+_docker_compose_push()
+{
+    local word_list="  --dry-run --ignore-push-failures --include-deps -q --quiet"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
+}
+
+_docker_compose_restart()
+{
+    local word_list="  --dry-run --no-deps -t --timeout"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
+}
+
+_docker_compose_rm()
+{
+    local word_list="  --dry-run -f --force -s --stop -v --volumes"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
+}
+
+_docker_compose_run()
+{
+    local word_list="  --build --cap-add --cap-drop -d --detach --dry-run --entrypoint -e --env -i --interactive -l --label --name -T --no-TTY --no-deps -p --publish --quiet-pull --remove-orphans --rm --service-ports --use-aliases -u --user -v --volume -w --workdir"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
+}
+
+_docker_compose_start()
+{
+    local word_list="  --dry-run"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
+}
+
+_docker_compose_stop()
+{
+    local word_list="  --dry-run -t --timeout"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
+}
+
+_docker_compose_top()
+{
+    local word_list="  --dry-run"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
+}
+
+_docker_compose_unpause()
+{
+    local word_list="  --dry-run"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
+}
+
+_docker_compose_up()
+{
+    local word_list="  --abort-on-container-exit --always-recreate-deps --attach --attach-dependencies --build -d --detach --dry-run --exit-code-from --force-recreate --no-attach --no-build --no-color --no-deps --no-log-prefix --no-recreate --no-start --pull --quiet-pull --remove-orphans -V --renew-anon-volumes --scale -t --timeout --timestamps --wait --wait-timeout"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
+}
+
+_docker_compose_version()
+{
+    local word_list="  --dry-run -f --format --short"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
+}
+
+_docker_container()
+{
+    local cmd i subcommands
+    local subcommands=" attach commit cp create diff exec export inspect kill logs ls pause port prune rename restart rm run start stats stop top unpause update wait"
+
+    for (( i=1; i < cword; i++ )); do
+        if [[ " ${subcommands[*]} " == *" ${words[i]} "* ]]; then
+            cmd=${words[i]}
             break
-            ;;
-        esac
-        (( i++ ))
+        fi
     done
 
-    while [[ ( $subcommand_index < $COMP_CWORD ) ]]; do
-        local s="${COMP_WORDS[subcommand_index}"
-        case "$s" in
-          attach) _docker_attach
+    case "$cmd" in
+        attach) _docker_container_attach
             return
             ;;
 
-          commit) _docker_commit
+        commit) _docker_container_commit
             return
             ;;
 
-          cp) _docker_cp
+        cp) _docker_container_cp
             return
             ;;
 
-          create) _docker_create
+        create) _docker_container_create
             return
             ;;
 
-          diff) _docker_diff
+        diff) _docker_container_diff
             return
             ;;
 
-          exec) _docker_exec
+        exec) _docker_container_exec
             return
             ;;
 
-          export) _docker_export
+        export) _docker_container_export
             return
             ;;
 
-          inspect) _docker_inspect
+        inspect) _docker_container_inspect
             return
             ;;
 
-          kill) _docker_kill
+        kill) _docker_container_kill
             return
             ;;
 
-          logs) _docker_logs
+        logs) _docker_container_logs
             return
             ;;
 
-          ls) _docker_ls
+        ls) _docker_container_ls
             return
             ;;
 
-          pause) _docker_pause
+        pause) _docker_container_pause
             return
             ;;
 
-          port) _docker_port
+        port) _docker_container_port
             return
             ;;
 
-          prune) _docker_prune
+        prune) _docker_container_prune
             return
             ;;
 
-          rename) _docker_rename
+        rename) _docker_container_rename
             return
             ;;
 
-          restart) _docker_restart
+        restart) _docker_container_restart
             return
             ;;
 
-          rm) _docker_rm
+        rm) _docker_container_rm
             return
             ;;
 
-          run) _docker_run
+        run) _docker_container_run
             return
             ;;
 
-          start) _docker_start
+        start) _docker_container_start
             return
             ;;
 
-          stats) _docker_stats
+        stats) _docker_container_stats
             return
             ;;
 
-          stop) _docker_stop
+        stop) _docker_container_stop
             return
             ;;
 
-          top) _docker_top
+        top) _docker_container_top
             return
             ;;
 
-          unpause) _docker_unpause
+        unpause) _docker_container_unpause
             return
             ;;
 
-          update) _docker_update
+        update) _docker_container_update
             return
             ;;
 
-          wait) _docker_wait
+        wait) _docker_container_wait
             return
             ;;
 
-          *)  ;; 
-        esac
-        (( subcommand_index++ ))
-    done
+    esac
 
-    word_list=" attach commit cp create diff exec export inspect kill logs ls pause port prune rename restart rm run start stats stop top unpause update wait" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list=" attach commit cp create diff exec export inspect kill logs ls pause port prune rename restart rm run start stats stop top unpause update wait "
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_container_attach ()
+_docker_container_attach()
 {
-    local cur word_list
-    word_list=" --detach-keys --no-stdin --sig-proxy" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  --detach-keys --no-stdin --sig-proxy"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_container_commit ()
+_docker_container_commit()
 {
-    local cur word_list
-    word_list=" -a --author -c --change -m --message -p --pause" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  -a --author -c --change -m --message -p --pause"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_container_cp ()
+_docker_container_cp()
 {
-    local cur word_list
-    word_list=" -a --archive -L --follow-link" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  -a --archive -L --follow-link -q --quiet"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_container_create ()
+_docker_container_create()
 {
-    local cur word_list
-    word_list=" --add-host -a --attach --blkio-weight --blkio-weight-device --cap-add --cap-drop --cgroup-parent --cgroupns --cidfile --cpu-period --cpu-quota --cpu-rt-period --cpu-rt-runtime -c --cpu-shares --cpus --cpuset-cpus --cpuset-mems --device --device-cgroup-rule --device-read-bps --device-read-iops --device-write-bps --device-write-iops --disable-content-trust --dns --dns-option --dns-search --domainname --entrypoint -e --env --env-file --expose --gpus --group-add --health-cmd --health-interval --health-retries --health-start-period --health-timeout --help -h --hostname --init -i --interactive --ip --ip6 --ipc --isolation --kernel-memory -l --label --label-file --link --link-local-ip --log-driver --log-opt --mac-address -m --memory --memory-reservation --memory-swap --memory-swappiness --mount --name --network --network-alias --no-healthcheck --oom-kill-disable --oom-score-adj --pid --pids-limit --platform --privileged -p --publish -P --publish-all --pull --read-only --restart --rm --runtime --security-opt --shm-size --stop-signal --stop-timeout --storage-opt --sysctl --tmpfs -t --tty --ulimit -u --user --userns --uts -v --volume --volume-driver --volumes-from -w --workdir" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  --add-host --annotation -a --attach --blkio-weight --blkio-weight-device --cap-add --cap-drop --cgroup-parent --cgroupns --cidfile --cpu-period --cpu-quota --cpu-rt-period --cpu-rt-runtime -c --cpu-shares --cpus --cpuset-cpus --cpuset-mems --device --device-cgroup-rule --device-read-bps --device-read-iops --device-write-bps --device-write-iops --disable-content-trust --dns --dns-option --dns-search --domainname --entrypoint -e --env --env-file --expose --gpus --group-add --health-cmd --health-interval --health-retries --health-start-period --health-timeout --help -h --hostname --init -i --interactive --ip --ip6 --ipc --isolation --kernel-memory -l --label --label-file --link --link-local-ip --log-driver --log-opt --mac-address -m --memory --memory-reservation --memory-swap --memory-swappiness --mount --name --network --network-alias --no-healthcheck --oom-kill-disable --oom-score-adj --pid --pids-limit --platform --privileged -p --publish -P --publish-all --pull -q --quiet --read-only --restart --rm --runtime --security-opt --shm-size --stop-signal --stop-timeout --storage-opt --sysctl --tmpfs -t --tty --ulimit -u --user --userns --uts -v --volume --volume-driver --volumes-from -w --workdir"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_container_exec ()
+_docker_container_diff()
 {
-    local cur word_list
-    word_list=" -d --detach --detach-keys -e --env --env-file -i --interactive --privileged -t --tty -u --user -w --workdir" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  "
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_container_export ()
+_docker_container_exec()
 {
-    local cur word_list
-    word_list=" -o --output" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  -d --detach --detach-keys -e --env --env-file -i --interactive --privileged -t --tty -u --user -w --workdir"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_container_inspect ()
+_docker_container_export()
 {
-    local cur word_list
-    word_list=" -f --format -s --size" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  -o --output"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_container_kill ()
+_docker_container_inspect()
 {
-    local cur word_list
-    word_list=" -s --signal" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  -f --format -s --size"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_container_logs ()
+_docker_container_kill()
 {
-    local cur word_list
-    word_list=" --details -f --follow --since -n --tail -t --timestamps --until" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  -s --signal"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_container_ls ()
+_docker_container_logs()
 {
-    local cur word_list
-    word_list=" -a --all -f --filter --format -n --last -l --latest --no-trunc -q --quiet -s --size" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  --details -f --follow --since -n --tail -t --timestamps --until"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_container_prune ()
+_docker_container_ls()
 {
-    local cur word_list
-    word_list=" --filter -f --force" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  -a --all -f --filter --format -n --last -l --latest --no-trunc -q --quiet -s --size"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_container_restart ()
+_docker_container_pause()
 {
-    local cur word_list
-    word_list=" -t --time" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  "
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_container_rm ()
+_docker_container_port()
 {
-    local cur word_list
-    word_list=" -f --force -l --link -v --volumes" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  "
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_container_run ()
+_docker_container_prune()
 {
-    local cur word_list
-    word_list=" --add-host -a --attach --blkio-weight --blkio-weight-device --cap-add --cap-drop --cgroup-parent --cgroupns --cidfile --cpu-period --cpu-quota --cpu-rt-period --cpu-rt-runtime -c --cpu-shares --cpus --cpuset-cpus --cpuset-mems -d --detach --detach-keys --device --device-cgroup-rule --device-read-bps --device-read-iops --device-write-bps --device-write-iops --disable-content-trust --dns --dns-option --dns-search --domainname --entrypoint -e --env --env-file --expose --gpus --group-add --health-cmd --health-interval --health-retries --health-start-period --health-timeout --help -h --hostname --init -i --interactive --ip --ip6 --ipc --isolation --kernel-memory -l --label --label-file --link --link-local-ip --log-driver --log-opt --mac-address -m --memory --memory-reservation --memory-swap --memory-swappiness --mount --name --network --network-alias --no-healthcheck --oom-kill-disable --oom-score-adj --pid --pids-limit --platform --privileged -p --publish -P --publish-all --pull --read-only --restart --rm --runtime --security-opt --shm-size --sig-proxy --stop-signal --stop-timeout --storage-opt --sysctl --tmpfs -t --tty --ulimit -u --user --userns --uts -v --volume --volume-driver --volumes-from -w --workdir" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  --filter -f --force"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_container_start ()
+_docker_container_rename()
 {
-    local cur word_list
-    word_list=" -a --attach --detach-keys -i --interactive" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  "
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_container_stats ()
+_docker_container_restart()
 {
-    local cur word_list
-    word_list=" -a --all --format --no-stream --no-trunc" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  -s --signal -t --time"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_container_stop ()
+_docker_container_rm()
 {
-    local cur word_list
-    word_list=" -t --time" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  -f --force -l --link -v --volumes"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_container_update ()
+_docker_container_run()
 {
-    local cur word_list
-    word_list=" --blkio-weight --cpu-period --cpu-quota --cpu-rt-period --cpu-rt-runtime -c --cpu-shares --cpus --cpuset-cpus --cpuset-mems --kernel-memory -m --memory --memory-reservation --memory-swap --pids-limit --restart" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  --add-host --annotation -a --attach --blkio-weight --blkio-weight-device --cap-add --cap-drop --cgroup-parent --cgroupns --cidfile --cpu-period --cpu-quota --cpu-rt-period --cpu-rt-runtime -c --cpu-shares --cpus --cpuset-cpus --cpuset-mems -d --detach --detach-keys --device --device-cgroup-rule --device-read-bps --device-read-iops --device-write-bps --device-write-iops --disable-content-trust --dns --dns-option --dns-search --domainname --entrypoint -e --env --env-file --expose --gpus --group-add --health-cmd --health-interval --health-retries --health-start-period --health-timeout --help -h --hostname --init -i --interactive --ip --ip6 --ipc --isolation --kernel-memory -l --label --label-file --link --link-local-ip --log-driver --log-opt --mac-address -m --memory --memory-reservation --memory-swap --memory-swappiness --mount --name --network --network-alias --no-healthcheck --oom-kill-disable --oom-score-adj --pid --pids-limit --platform --privileged -p --publish -P --publish-all --pull -q --quiet --read-only --restart --rm --runtime --security-opt --shm-size --sig-proxy --stop-signal --stop-timeout --storage-opt --sysctl --tmpfs -t --tty --ulimit -u --user --userns --uts -v --volume --volume-driver --volumes-from -w --workdir"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_docker_context ()
+_docker_container_start()
 {
-    local cur word_list
-    local i=1 subcommand_index
+    local word_list="  -a --attach --detach-keys -i --interactive"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
+}
 
-    # take the last word that's NOT starting with -
-    while [[ ( $i < $COMP_CWORD ) ]]; do
-        local s="${COMP_WORDS[i]}"
-        case "$s" in
-          context)
-            subcommand_index=$i
+_docker_container_stats()
+{
+    local word_list="  -a --all --format --no-stream --no-trunc"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
+}
+
+_docker_container_stop()
+{
+    local word_list="  -s --signal -t --time"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
+}
+
+_docker_container_top()
+{
+    local word_list="  "
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
+}
+
+_docker_container_unpause()
+{
+    local word_list="  "
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
+}
+
+_docker_container_update()
+{
+    local word_list="  --blkio-weight --cpu-period --cpu-quota --cpu-rt-period --cpu-rt-runtime -c --cpu-shares --cpus --cpuset-cpus --cpuset-mems -m --memory --memory-reservation --memory-swap --pids-limit --restart"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
+}
+
+_docker_container_wait()
+{
+    local word_list="  "
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
+}
+
+_docker_context()
+{
+    local cmd i subcommands
+    local subcommands=" create export import inspect list rm show update use"
+
+    for (( i=1; i < cword; i++ )); do
+        if [[ " ${subcommands[*]} " == *" ${words[i]} "* ]]; then
+            cmd=${words[i]}
             break
-            ;;
-        esac
-        (( i++ ))
+        fi
     done
 
-    while [[ ( $subcommand_index < $COMP_CWORD ) ]]; do
-        local s="${COMP_WORDS[subcommand_index}"
-        case "$s" in
-          create) _docker_create
+    case "$cmd" in
+        create) _docker_context_create
             return
             ;;
 
-          export) _docker_export
+        export) _docker_context_export
             return
             ;;
 
-          import) _docker_import
+        import) _docker_context_import
             return
             ;;
 
-          inspect) _docker_inspect
+        inspect) _docker_context_inspect
             return
             ;;
 
-          list) _docker_list
+        list) _docker_context_list
             return
             ;;
 
-          rm) _docker_rm
+        rm) _docker_context_rm
             return
             ;;
 
-          show) _docker_show
+        show) _docker_context_show
             return
             ;;
 
-          update) _docker_update
+        update) _docker_context_update
             return
             ;;
 
-          use) _docker_use
+        use) _docker_context_use
             return
             ;;
 
-          *)  ;; 
-        esac
-        (( subcommand_index++ ))
-    done
+    esac
 
-    word_list=" create export import inspect list rm show update use -h --help" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list=" create export import inspect list rm show update use -h --help"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_context_create ()
+_docker_context_create()
 {
-    local cur word_list
-    local i=1 subcommand_index
+    local cmd i subcommands
+    local subcommands=" aci ecs"
 
-    # take the last word that's NOT starting with -
-    while [[ ( $i < $COMP_CWORD ) ]]; do
-        local s="${COMP_WORDS[i]}"
-        case "$s" in
-          create)
-            subcommand_index=$i
+    for (( i=1; i < cword; i++ )); do
+        if [[ " ${subcommands[*]} " == *" ${words[i]} "* ]]; then
+            cmd=${words[i]}
             break
-            ;;
-        esac
-        (( i++ ))
+        fi
     done
 
-    while [[ ( $subcommand_index < $COMP_CWORD ) ]]; do
-        local s="${COMP_WORDS[subcommand_index}"
-        case "$s" in
-          aci) _context_aci
+    case "$cmd" in
+        aci) _docker_context_create_aci
             return
             ;;
 
-          ecs) _context_ecs
+        ecs) _docker_context_create_ecs
             return
             ;;
 
-          *)  ;; 
-        esac
-        (( subcommand_index++ ))
-    done
+    esac
 
-    word_list=" aci ecs --default-stack-orchestrator --description --docker --from -h --help --kubernetes" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list=" aci ecs --default-stack-orchestrator --description --docker --from -h --help --kubernetes"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_create_aci ()
+_docker_context_create_aci()
 {
-    local cur word_list
-    word_list=" --description -h --help --location --resource-group --subscription-id" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  --description -h --help --location --resource-group --subscription-id"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_create_ecs ()
+_docker_context_create_ecs()
 {
-    local cur word_list
-    word_list=" --access-keys --description --from-env -h --help --local-simulation --profile" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  --access-keys --description --from-env -h --help --local-simulation --profile"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_context_export ()
+_docker_context_export()
 {
-    local cur word_list
-    word_list=" -h --help --kubeconfig" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  -h --help --kubeconfig"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_context_import ()
+_docker_context_import()
 {
-    local cur word_list
-    word_list=" -h --help" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  -h --help"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_context_inspect ()
+_docker_context_inspect()
 {
-    local cur word_list
-    word_list=" -f --format -h --help" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  -f --format -h --help"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_context_list ()
+_docker_context_list()
 {
-    local cur word_list
-    word_list=" --format -h --help -q --quiet" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  --format -h --help -q --quiet"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_context_rm ()
+_docker_context_rm()
 {
-    local cur word_list
-    word_list=" -f --force -h --help" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  -f --force -h --help"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_context_show ()
+_docker_context_show()
 {
-    local cur word_list
-    word_list=" -h --help" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  -h --help"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_context_update ()
+_docker_context_update()
 {
-    local cur word_list
-    word_list=" --default-stack-orchestrator --description --docker -h --help --kubernetes" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  --default-stack-orchestrator --description --docker -h --help --kubernetes"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_context_use ()
+_docker_context_use()
 {
-    local cur word_list
-    word_list=" -h --help" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  -h --help"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_docker_extension ()
+_docker_dev()
 {
-    local cur word_list
-    local i=1 subcommand_index
+    local cmd i subcommands
+    local subcommands=" service check create list logs open rm start stop version"
 
-    # take the last word that's NOT starting with -
-    while [[ ( $i < $COMP_CWORD ) ]]; do
-        local s="${COMP_WORDS[i]}"
-        case "$s" in
-          extension)
-            subcommand_index=$i
+    for (( i=1; i < cword; i++ )); do
+        if [[ " ${subcommands[*]} " == *" ${words[i]} "* ]]; then
+            cmd=${words[i]}
             break
-            ;;
-        esac
-        (( i++ ))
+        fi
     done
 
-    while [[ ( $subcommand_index < $COMP_CWORD ) ]]; do
-        local s="${COMP_WORDS[subcommand_index}"
-        case "$s" in
-          dev) _docker_dev
+    case "$cmd" in
+        service) _docker_dev_service
             return
             ;;
 
-          disable) _docker_disable
+        check) _docker_dev_check
             return
             ;;
 
-          enable) _docker_enable
+        create) _docker_dev_create
             return
             ;;
 
-          init) _docker_init
+        list) _docker_dev_list
             return
             ;;
 
-          install) _docker_install
+        logs) _docker_dev_logs
             return
             ;;
 
-          ls) _docker_ls
+        open) _docker_dev_open
             return
             ;;
 
-          rm) _docker_rm
+        rm) _docker_dev_rm
             return
             ;;
 
-          update) _docker_update
+        start) _docker_dev_start
             return
             ;;
 
-          validate) _docker_validate
+        stop) _docker_dev_stop
             return
             ;;
 
-          version) _docker_version
+        version) _docker_dev_version
             return
             ;;
 
-          *)  ;; 
-        esac
-        (( subcommand_index++ ))
-    done
+    esac
 
-    word_list=" dev disable enable init install ls rm update validate version --socket" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list=" service check create list logs open rm start stop version -s --socket -v --version"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_extension_dev ()
+_docker_dev_service()
 {
-    local cur word_list
-    local i=1 subcommand_index
+    local cmd i subcommands
+    local subcommands=" start"
 
-    # take the last word that's NOT starting with -
-    while [[ ( $i < $COMP_CWORD ) ]]; do
-        local s="${COMP_WORDS[i]}"
-        case "$s" in
-          dev)
-            subcommand_index=$i
+    for (( i=1; i < cword; i++ )); do
+        if [[ " ${subcommands[*]} " == *" ${words[i]} "* ]]; then
+            cmd=${words[i]}
             break
-            ;;
-        esac
-        (( i++ ))
+        fi
     done
 
-    while [[ ( $subcommand_index < $COMP_CWORD ) ]]; do
-        local s="${COMP_WORDS[subcommand_index}"
-        case "$s" in
-          debug) _extension_debug
+    case "$cmd" in
+        start) _docker_dev_service_start
             return
             ;;
 
-          reset) _extension_reset
-            return
-            ;;
+    esac
 
-          ui-source) _extension_uisource
-            return
-            ;;
-
-          *)  ;; 
-        esac
-        (( subcommand_index++ ))
-    done
-
-    word_list=" debug reset ui-source" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list=" start "
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_extension_install ()
+_docker_dev_service_start()
 {
-    local cur word_list
-    word_list=" -f --force" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  "
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_extension_ls ()
+_docker_dev_check()
 {
-    local cur word_list
-    word_list=" --format -q --quiet" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  -f --format"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_extension_update ()
+_docker_dev_create()
 {
-    local cur word_list
-    word_list=" -f --force" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  --base-image -d --detach --language --name -o --open --path"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_docker_image ()
+_docker_dev_list()
 {
-    local cur word_list
-    local i=1 subcommand_index
+    local word_list="  -f --format -q --quiet"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
+}
 
-    # take the last word that's NOT starting with -
-    while [[ ( $i < $COMP_CWORD ) ]]; do
-        local s="${COMP_WORDS[i]}"
-        case "$s" in
-          image)
-            subcommand_index=$i
+_docker_dev_logs()
+{
+    local word_list="  "
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
+}
+
+_docker_dev_open()
+{
+    local word_list="  -e --editor"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
+}
+
+_docker_dev_rm()
+{
+    local word_list="  "
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
+}
+
+_docker_dev_start()
+{
+    local word_list="  "
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
+}
+
+_docker_dev_stop()
+{
+    local word_list="  "
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
+}
+
+_docker_dev_version()
+{
+    local word_list="  -f --format -s --short"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
+}
+
+_docker_extension()
+{
+    local cmd i subcommands
+    local subcommands=" dev init install ls rm share update validate version"
+
+    for (( i=1; i < cword; i++ )); do
+        if [[ " ${subcommands[*]} " == *" ${words[i]} "* ]]; then
+            cmd=${words[i]}
             break
-            ;;
-        esac
-        (( i++ ))
+        fi
     done
 
-    while [[ ( $subcommand_index < $COMP_CWORD ) ]]; do
-        local s="${COMP_WORDS[subcommand_index}"
-        case "$s" in
-          build) _docker_build
+    case "$cmd" in
+        dev) _docker_extension_dev
             return
             ;;
 
-          history) _docker_history
+        init) _docker_extension_init
             return
             ;;
 
-          import) _docker_import
+        install) _docker_extension_install
             return
             ;;
 
-          inspect) _docker_inspect
+        ls) _docker_extension_ls
             return
             ;;
 
-          load) _docker_load
+        rm) _docker_extension_rm
             return
             ;;
 
-          ls) _docker_ls
+        share) _docker_extension_share
             return
             ;;
 
-          prune) _docker_prune
+        update) _docker_extension_update
             return
             ;;
 
-          pull) _docker_pull
+        validate) _docker_extension_validate
             return
             ;;
 
-          push) _docker_push
+        version) _docker_extension_version
             return
             ;;
 
-          rm) _docker_rm
-            return
-            ;;
+    esac
 
-          save) _docker_save
-            return
-            ;;
-
-          tag) _docker_tag
-            return
-            ;;
-
-          *)  ;; 
-        esac
-        (( subcommand_index++ ))
-    done
-
-    word_list=" build history import inspect load ls prune pull push rm save tag" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list=" dev init install ls rm share update validate version --socket"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_image_build ()
+_docker_extension_dev()
 {
-    local cur word_list
-    word_list=" --add-host --build-arg --cache-from --disable-content-trust -f --file --iidfile --isolation --label --network --no-cache -o --output --platform --progress --pull -q --quiet --secret --ssh -t --tag --target" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
-}
+    local cmd i subcommands
+    local subcommands=" debug reset ui-source"
 
-_image_history ()
-{
-    local cur word_list
-    word_list=" --format -H --human --no-trunc -q --quiet" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
-}
-
-_image_import ()
-{
-    local cur word_list
-    word_list=" -c --change -m --message --platform" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
-}
-
-_image_inspect ()
-{
-    local cur word_list
-    word_list=" -f --format" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
-}
-
-_image_load ()
-{
-    local cur word_list
-    word_list=" -i --input -q --quiet" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
-}
-
-_image_ls ()
-{
-    local cur word_list
-    word_list=" -a --all --digests -f --filter --format --no-trunc -q --quiet" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
-}
-
-_image_prune ()
-{
-    local cur word_list
-    word_list=" -a --all --filter -f --force" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
-}
-
-_image_pull ()
-{
-    local cur word_list
-    word_list=" -a --all-tags --disable-content-trust --platform -q --quiet" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
-}
-
-_image_push ()
-{
-    local cur word_list
-    word_list=" -a --all-tags --disable-content-trust -q --quiet" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
-}
-
-_image_rm ()
-{
-    local cur word_list
-    word_list=" -f --force --no-prune" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
-}
-
-_image_save ()
-{
-    local cur word_list
-    word_list=" -o --output" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
-}
-
-_docker_manifest ()
-{
-    local cur word_list
-    local i=1 subcommand_index
-
-    # take the last word that's NOT starting with -
-    while [[ ( $i < $COMP_CWORD ) ]]; do
-        local s="${COMP_WORDS[i]}"
-        case "$s" in
-          manifest)
-            subcommand_index=$i
+    for (( i=1; i < cword; i++ )); do
+        if [[ " ${subcommands[*]} " == *" ${words[i]} "* ]]; then
+            cmd=${words[i]}
             break
-            ;;
-        esac
-        (( i++ ))
+        fi
     done
 
-    while [[ ( $subcommand_index < $COMP_CWORD ) ]]; do
-        local s="${COMP_WORDS[subcommand_index}"
-        case "$s" in
-          annotate) _docker_annotate
+    case "$cmd" in
+        debug) _docker_extension_dev_debug
             return
             ;;
 
-          create) _docker_create
+        reset) _docker_extension_dev_reset
             return
             ;;
 
-          inspect) _docker_inspect
+        ui-source) _docker_extension_dev_uisource
             return
             ;;
 
-          push) _docker_push
-            return
-            ;;
+    esac
 
-          rm) _docker_rm
-            return
-            ;;
-
-          *)  ;; 
-        esac
-        (( subcommand_index++ ))
-    done
-
-    word_list=" annotate create inspect push rm" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list=" debug reset ui-source "
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_manifest_annotate ()
+_docker_extension_dev_debug()
 {
-    local cur word_list
-    word_list=" --arch --os --os-features --os-version --variant" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  "
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_manifest_create ()
+_docker_extension_dev_reset()
 {
-    local cur word_list
-    word_list=" -a --amend --insecure" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  "
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_manifest_inspect ()
+_docker_extension_dev_uisource()
 {
-    local cur word_list
-    word_list=" --insecure -v --verbose" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  "
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_manifest_push ()
+_docker_extension_init()
 {
-    local cur word_list
-    word_list=" --insecure -p --purge" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  --image-repo -q --quiet --title --version"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_docker_network ()
+_docker_extension_install()
 {
-    local cur word_list
-    local i=1 subcommand_index
+    local word_list="  -f --force"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
+}
 
-    # take the last word that's NOT starting with -
-    while [[ ( $i < $COMP_CWORD ) ]]; do
-        local s="${COMP_WORDS[i]}"
-        case "$s" in
-          network)
-            subcommand_index=$i
+_docker_extension_ls()
+{
+    local word_list="  --format -q --quiet"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
+}
+
+_docker_extension_rm()
+{
+    local word_list="  "
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
+}
+
+_docker_extension_share()
+{
+    local word_list="  "
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
+}
+
+_docker_extension_update()
+{
+    local word_list="  -f --force"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
+}
+
+_docker_extension_validate()
+{
+    local word_list="  -a --auto-resolve-tag -e --errors-only -s --sdk-compatibility -i --validate-install-uninstall -v --verbose"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
+}
+
+_docker_extension_version()
+{
+    local word_list="  "
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
+}
+
+_docker_image()
+{
+    local cmd i subcommands
+    local subcommands=" build history import inspect load ls prune pull push rm save tag"
+
+    for (( i=1; i < cword; i++ )); do
+        if [[ " ${subcommands[*]} " == *" ${words[i]} "* ]]; then
+            cmd=${words[i]}
             break
-            ;;
-        esac
-        (( i++ ))
+        fi
     done
 
-    while [[ ( $subcommand_index < $COMP_CWORD ) ]]; do
-        local s="${COMP_WORDS[subcommand_index}"
-        case "$s" in
-          connect) _docker_connect
+    case "$cmd" in
+        build) _docker_image_build
             return
             ;;
 
-          create) _docker_create
+        history) _docker_image_history
             return
             ;;
 
-          disconnect) _docker_disconnect
+        import) _docker_image_import
             return
             ;;
 
-          inspect) _docker_inspect
+        inspect) _docker_image_inspect
             return
             ;;
 
-          ls) _docker_ls
+        load) _docker_image_load
             return
             ;;
 
-          prune) _docker_prune
+        ls) _docker_image_ls
             return
             ;;
 
-          rm) _docker_rm
+        prune) _docker_image_prune
             return
             ;;
 
-          *)  ;; 
-        esac
-        (( subcommand_index++ ))
-    done
+        pull) _docker_image_pull
+            return
+            ;;
 
-    word_list=" connect create disconnect inspect ls prune rm" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+        push) _docker_image_push
+            return
+            ;;
+
+        rm) _docker_image_rm
+            return
+            ;;
+
+        save) _docker_image_save
+            return
+            ;;
+
+        tag) _docker_image_tag
+            return
+            ;;
+
+    esac
+
+    local word_list=" build history import inspect load ls prune pull push rm save tag "
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_network_connect ()
+_docker_image_build()
 {
-    local cur word_list
-    word_list=" --alias --driver-opt --ip --ip6 --link --link-local-ip" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  --add-host --allow --attest --build-arg --build-context --builder --cache-from --cache-to --cgroup-parent -f --file --iidfile --label --load --metadata-file --network --no-cache --no-cache-filter -o --output --platform --progress --provenance --pull --push -q --quiet --sbom --secret --shm-size --ssh -t --tag --target --ulimit"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_network_create ()
+_docker_image_history()
 {
-    local cur word_list
-    word_list=" --attachable --aux-address --config-from --config-only -d --driver --gateway --ingress --internal --ip-range --ipam-driver --ipam-opt --ipv6 --label -o --opt --scope --subnet" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  --format -H --human --no-trunc -q --quiet"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_network_disconnect ()
+_docker_image_import()
 {
-    local cur word_list
-    word_list=" -f --force" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  -c --change -m --message --platform"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_network_inspect ()
+_docker_image_inspect()
 {
-    local cur word_list
-    word_list=" -f --format -v --verbose" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  -f --format"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_network_ls ()
+_docker_image_load()
 {
-    local cur word_list
-    word_list=" -f --filter --format --no-trunc -q --quiet" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  -i --input -q --quiet"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_network_prune ()
+_docker_image_ls()
 {
-    local cur word_list
-    word_list=" --filter -f --force" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  -a --all --digests -f --filter --format --no-trunc -q --quiet"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_docker_node ()
+_docker_image_prune()
 {
-    local cur word_list
-    local i=1 subcommand_index
+    local word_list="  -a --all --filter -f --force"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
+}
 
-    # take the last word that's NOT starting with -
-    while [[ ( $i < $COMP_CWORD ) ]]; do
-        local s="${COMP_WORDS[i]}"
-        case "$s" in
-          node)
-            subcommand_index=$i
+_docker_image_pull()
+{
+    local word_list="  -a --all-tags --disable-content-trust --platform -q --quiet"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
+}
+
+_docker_image_push()
+{
+    local word_list="  -a --all-tags --disable-content-trust -q --quiet"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
+}
+
+_docker_image_rm()
+{
+    local word_list="  -f --force --no-prune"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
+}
+
+_docker_image_save()
+{
+    local word_list="  -o --output"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
+}
+
+_docker_image_tag()
+{
+    local word_list="  "
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
+}
+
+_docker_init()
+{
+    local word_list="  --version"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
+}
+
+_docker_manifest()
+{
+    local cmd i subcommands
+    local subcommands=" annotate create inspect push rm"
+
+    for (( i=1; i < cword; i++ )); do
+        if [[ " ${subcommands[*]} " == *" ${words[i]} "* ]]; then
+            cmd=${words[i]}
             break
-            ;;
-        esac
-        (( i++ ))
+        fi
     done
 
-    while [[ ( $subcommand_index < $COMP_CWORD ) ]]; do
-        local s="${COMP_WORDS[subcommand_index}"
-        case "$s" in
-          demote) _docker_demote
+    case "$cmd" in
+        annotate) _docker_manifest_annotate
             return
             ;;
 
-          inspect) _docker_inspect
+        create) _docker_manifest_create
             return
             ;;
 
-          ls) _docker_ls
+        inspect) _docker_manifest_inspect
             return
             ;;
 
-          promote) _docker_promote
+        push) _docker_manifest_push
             return
             ;;
 
-          ps) _docker_ps
+        rm) _docker_manifest_rm
             return
             ;;
 
-          rm) _docker_rm
-            return
-            ;;
+    esac
 
-          update) _docker_update
-            return
-            ;;
-
-          *)  ;; 
-        esac
-        (( subcommand_index++ ))
-    done
-
-    word_list=" demote inspect ls promote ps rm update" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list=" annotate create inspect push rm "
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_node_inspect ()
+_docker_manifest_annotate()
 {
-    local cur word_list
-    word_list=" -f --format --pretty" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  --arch --os --os-features --os-version --variant"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_node_ls ()
+_docker_manifest_create()
 {
-    local cur word_list
-    word_list=" -f --filter --format -q --quiet" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  -a --amend --insecure"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_node_ps ()
+_docker_manifest_inspect()
 {
-    local cur word_list
-    word_list=" -f --filter --format --no-resolve --no-trunc -q --quiet" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  --insecure -v --verbose"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_node_rm ()
+_docker_manifest_push()
 {
-    local cur word_list
-    word_list=" -f --force" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  --insecure -p --purge"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_node_update ()
+_docker_manifest_rm()
 {
-    local cur word_list
-    word_list=" --availability --label-add --label-rm --role" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  "
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_docker_plugin ()
+_docker_network()
 {
-    local cur word_list
-    local i=1 subcommand_index
+    local cmd i subcommands
+    local subcommands=" connect create disconnect inspect ls prune rm"
 
-    # take the last word that's NOT starting with -
-    while [[ ( $i < $COMP_CWORD ) ]]; do
-        local s="${COMP_WORDS[i]}"
-        case "$s" in
-          plugin)
-            subcommand_index=$i
+    for (( i=1; i < cword; i++ )); do
+        if [[ " ${subcommands[*]} " == *" ${words[i]} "* ]]; then
+            cmd=${words[i]}
             break
-            ;;
-        esac
-        (( i++ ))
+        fi
     done
 
-    while [[ ( $subcommand_index < $COMP_CWORD ) ]]; do
-        local s="${COMP_WORDS[subcommand_index}"
-        case "$s" in
-          create) _docker_create
+    case "$cmd" in
+        connect) _docker_network_connect
             return
             ;;
 
-          disable) _docker_disable
+        create) _docker_network_create
             return
             ;;
 
-          enable) _docker_enable
+        disconnect) _docker_network_disconnect
             return
             ;;
 
-          inspect) _docker_inspect
+        inspect) _docker_network_inspect
             return
             ;;
 
-          install) _docker_install
+        ls) _docker_network_ls
             return
             ;;
 
-          ls) _docker_ls
+        prune) _docker_network_prune
             return
             ;;
 
-          push) _docker_push
+        rm) _docker_network_rm
             return
             ;;
 
-          rm) _docker_rm
-            return
-            ;;
+    esac
 
-          set) _docker_set
-            return
-            ;;
-
-          upgrade) _docker_upgrade
-            return
-            ;;
-
-          *)  ;; 
-        esac
-        (( subcommand_index++ ))
-    done
-
-    word_list=" create disable enable inspect install ls push rm set upgrade" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list=" connect create disconnect inspect ls prune rm "
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_plugin_create ()
+_docker_network_connect()
 {
-    local cur word_list
-    word_list=" --compress" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  --alias --driver-opt --ip --ip6 --link --link-local-ip"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_plugin_disable ()
+_docker_network_create()
 {
-    local cur word_list
-    word_list=" -f --force" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  --attachable --aux-address --config-from --config-only -d --driver --gateway --ingress --internal --ip-range --ipam-driver --ipam-opt --ipv6 --label -o --opt --scope --subnet"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_plugin_enable ()
+_docker_network_disconnect()
 {
-    local cur word_list
-    word_list=" --timeout" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  -f --force"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_plugin_inspect ()
+_docker_network_inspect()
 {
-    local cur word_list
-    word_list=" -f --format" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  -f --format -v --verbose"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_plugin_install ()
+_docker_network_ls()
 {
-    local cur word_list
-    word_list=" --alias --disable --disable-content-trust --grant-all-permissions" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  -f --filter --format --no-trunc -q --quiet"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_plugin_ls ()
+_docker_network_prune()
 {
-    local cur word_list
-    word_list=" -f --filter --format --no-trunc -q --quiet" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  --filter -f --force"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_plugin_push ()
+_docker_network_rm()
 {
-    local cur word_list
-    word_list=" --disable-content-trust" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  -f --force"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_plugin_rm ()
+_docker_plugin()
 {
-    local cur word_list
-    word_list=" -f --force" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
-}
+    local cmd i subcommands
+    local subcommands=" create disable enable inspect install ls push rm set upgrade"
 
-_plugin_upgrade ()
-{
-    local cur word_list
-    word_list=" --disable-content-trust --grant-all-permissions --skip-remote-check" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
-}
-
-_docker_sbom ()
-{
-    local cur word_list
-    word_list=" -D --debug --exclude --format --layers -o --output --platform --quiet -v --version" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
-}
-
-_docker_scan ()
-{
-    local cur word_list
-    word_list=" --accept-license --dependency-tree --exclude-base -f --file --group-issues --json --login --reject-license --severity --token --version" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
-}
-
-_docker_secret ()
-{
-    local cur word_list
-    local i=1 subcommand_index
-
-    # take the last word that's NOT starting with -
-    while [[ ( $i < $COMP_CWORD ) ]]; do
-        local s="${COMP_WORDS[i]}"
-        case "$s" in
-          secret)
-            subcommand_index=$i
+    for (( i=1; i < cword; i++ )); do
+        if [[ " ${subcommands[*]} " == *" ${words[i]} "* ]]; then
+            cmd=${words[i]}
             break
-            ;;
-        esac
-        (( i++ ))
+        fi
     done
 
-    while [[ ( $subcommand_index < $COMP_CWORD ) ]]; do
-        local s="${COMP_WORDS[subcommand_index}"
-        case "$s" in
-          create) _docker_create
+    case "$cmd" in
+        create) _docker_plugin_create
             return
             ;;
 
-          inspect) _docker_inspect
+        disable) _docker_plugin_disable
             return
             ;;
 
-          ls) _docker_ls
+        enable) _docker_plugin_enable
             return
             ;;
 
-          rm) _docker_rm
+        inspect) _docker_plugin_inspect
             return
             ;;
 
-          *)  ;; 
-        esac
-        (( subcommand_index++ ))
-    done
+        install) _docker_plugin_install
+            return
+            ;;
 
-    word_list=" create inspect ls rm" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+        ls) _docker_plugin_ls
+            return
+            ;;
+
+        push) _docker_plugin_push
+            return
+            ;;
+
+        rm) _docker_plugin_rm
+            return
+            ;;
+
+        set) _docker_plugin_set
+            return
+            ;;
+
+        upgrade) _docker_plugin_upgrade
+            return
+            ;;
+
+    esac
+
+    local word_list=" create disable enable inspect install ls push rm set upgrade "
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_secret_create ()
+_docker_plugin_create()
 {
-    local cur word_list
-    word_list=" -d --driver -l --label --template-driver" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  --compress"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_secret_inspect ()
+_docker_plugin_disable()
 {
-    local cur word_list
-    word_list=" -f --format --pretty" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  -f --force"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_secret_ls ()
+_docker_plugin_enable()
 {
-    local cur word_list
-    word_list=" -f --filter --format -q --quiet" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  --timeout"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_docker_service ()
+_docker_plugin_inspect()
 {
-    local cur word_list
-    local i=1 subcommand_index
+    local word_list="  -f --format"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
+}
 
-    # take the last word that's NOT starting with -
-    while [[ ( $i < $COMP_CWORD ) ]]; do
-        local s="${COMP_WORDS[i]}"
-        case "$s" in
-          service)
-            subcommand_index=$i
+_docker_plugin_install()
+{
+    local word_list="  --alias --disable --disable-content-trust --grant-all-permissions"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
+}
+
+_docker_plugin_ls()
+{
+    local word_list="  -f --filter --format --no-trunc -q --quiet"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
+}
+
+_docker_plugin_push()
+{
+    local word_list="  --disable-content-trust"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
+}
+
+_docker_plugin_rm()
+{
+    local word_list="  -f --force"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
+}
+
+_docker_plugin_set()
+{
+    local word_list="  "
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
+}
+
+_docker_plugin_upgrade()
+{
+    local word_list="  --disable-content-trust --grant-all-permissions --skip-remote-check"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
+}
+
+_docker_sbom()
+{
+    local word_list="  -D --debug --exclude --format --layers -o --output --platform --quiet -v --version"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
+}
+
+_docker_scan()
+{
+    local word_list="  --version"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
+}
+
+_docker_scout()
+{
+    local cmd i subcommands
+    local subcommands=" compare cves entitlement quickview recommendations stream version"
+
+    for (( i=1; i < cword; i++ )); do
+        if [[ " ${subcommands[*]} " == *" ${words[i]} "* ]]; then
+            cmd=${words[i]}
             break
-            ;;
-        esac
-        (( i++ ))
+        fi
     done
 
-    while [[ ( $subcommand_index < $COMP_CWORD ) ]]; do
-        local s="${COMP_WORDS[subcommand_index}"
-        case "$s" in
-          create) _docker_create
+    case "$cmd" in
+        compare) _docker_scout_compare
             return
             ;;
 
-          inspect) _docker_inspect
+        cves) _docker_scout_cves
             return
             ;;
 
-          logs) _docker_logs
+        entitlement) _docker_scout_entitlement
             return
             ;;
 
-          ls) _docker_ls
+        quickview) _docker_scout_quickview
             return
             ;;
 
-          ps) _docker_ps
+        recommendations) _docker_scout_recommendations
             return
             ;;
 
-          rm) _docker_rm
+        stream) _docker_scout_stream
             return
             ;;
 
-          rollback) _docker_rollback
+        version) _docker_scout_version
             return
             ;;
 
-          scale) _docker_scale
-            return
-            ;;
+    esac
 
-          update) _docker_update
-            return
-            ;;
-
-          *)  ;; 
-        esac
-        (( subcommand_index++ ))
-    done
-
-    word_list=" create inspect logs ls ps rm rollback scale update" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list=" compare cves entitlement quickview recommendations stream version "
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_service_create ()
+_docker_scout_compare()
 {
-    local cur word_list
-    word_list=" --cap-add --cap-drop --config --constraint --container-label --credential-spec -d --detach --dns --dns-option --dns-search --endpoint-mode --entrypoint -e --env --env-file --generic-resource --group --health-cmd --health-interval --health-retries --health-start-period --health-timeout --host --hostname --init --isolation -l --label --limit-cpu --limit-memory --limit-pids --log-driver --log-opt --max-concurrent --mode --mount --name --network --no-healthcheck --no-resolve-image --placement-pref -p --publish -q --quiet --read-only --replicas --replicas-max-per-node --reserve-cpu --reserve-memory --restart-condition --restart-delay --restart-max-attempts --restart-window --rollback-delay --rollback-failure-action --rollback-max-failure-ratio --rollback-monitor --rollback-order --rollback-parallelism --secret --stop-grace-period --stop-signal --sysctl -t --tty --ulimit --update-delay --update-failure-action --update-max-failure-ratio --update-monitor --update-order --update-parallelism -u --user --with-registry-auth -w --workdir" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  -e --exit-code --format --ignore-base --ignore-unchanged --only-fixed --only-package-type --only-severity --only-unfixed -o --output --platform --ref --to --to-latest --to-ref --to-stream --to-type --type"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_service_inspect ()
+_docker_scout_cves()
 {
-    local cur word_list
-    word_list=" -f --format --pretty" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  --details -e --exit-code --format --ignore-base --locations --only-cve-id --only-fixed --only-package-type --only-severity --only-unfixed -o --output --platform --ref --type"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_service_logs ()
+_docker_scout_entitlement()
 {
-    local cur word_list
-    word_list=" --details -f --follow --no-resolve --no-task-ids --no-trunc --raw --since -n --tail -t --timestamps" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  --disable"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_service_ls ()
+_docker_scout_quickview()
 {
-    local cur word_list
-    word_list=" -f --filter --format -q --quiet" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  -o --output --platform --ref --type"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_service_ps ()
+_docker_scout_recommendations()
 {
-    local cur word_list
-    word_list=" -f --filter --format --no-resolve --no-trunc -q --quiet" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  --only-refresh --only-update -o --output --platform --ref --tag --type"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_service_rollback ()
+_docker_scout_stream()
 {
-    local cur word_list
-    word_list=" -d --detach -q --quiet" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  --app --platform"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_service_scale ()
+_docker_scout_version()
 {
-    local cur word_list
-    word_list=" -d --detach" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  "
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_service_update ()
+_docker_system()
 {
-    local cur word_list
-    word_list=" --args --cap-add --cap-drop --config-add --config-rm --constraint-add --constraint-rm --container-label-add --container-label-rm --credential-spec -d --detach --dns-add --dns-option-add --dns-option-rm --dns-rm --dns-search-add --dns-search-rm --endpoint-mode --entrypoint --env-add --env-rm --force --generic-resource-add --generic-resource-rm --group-add --group-rm --health-cmd --health-interval --health-retries --health-start-period --health-timeout --host-add --host-rm --hostname --image --init --isolation --label-add --label-rm --limit-cpu --limit-memory --limit-pids --log-driver --log-opt --max-concurrent --mount-add --mount-rm --network-add --network-rm --no-healthcheck --no-resolve-image --placement-pref-add --placement-pref-rm --publish-add --publish-rm -q --quiet --read-only --replicas --replicas-max-per-node --reserve-cpu --reserve-memory --restart-condition --restart-delay --restart-max-attempts --restart-window --rollback --rollback-delay --rollback-failure-action --rollback-max-failure-ratio --rollback-monitor --rollback-order --rollback-parallelism --secret-add --secret-rm --stop-grace-period --stop-signal --sysctl-add --sysctl-rm -t --tty --ulimit-add --ulimit-rm --update-delay --update-failure-action --update-max-failure-ratio --update-monitor --update-order --update-parallelism -u --user --with-registry-auth -w --workdir" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
-}
+    local cmd i subcommands
+    local subcommands=" df events info prune"
 
-_docker_stack ()
-{
-    local cur word_list
-    local i=1 subcommand_index
-
-    # take the last word that's NOT starting with -
-    while [[ ( $i < $COMP_CWORD ) ]]; do
-        local s="${COMP_WORDS[i]}"
-        case "$s" in
-          stack)
-            subcommand_index=$i
+    for (( i=1; i < cword; i++ )); do
+        if [[ " ${subcommands[*]} " == *" ${words[i]} "* ]]; then
+            cmd=${words[i]}
             break
-            ;;
-        esac
-        (( i++ ))
+        fi
     done
 
-    while [[ ( $subcommand_index < $COMP_CWORD ) ]]; do
-        local s="${COMP_WORDS[subcommand_index}"
-        case "$s" in
-          deploy) _docker_deploy
+    case "$cmd" in
+        df) _docker_system_df
             return
             ;;
 
-          ls) _docker_ls
+        events) _docker_system_events
             return
             ;;
 
-          ps) _docker_ps
+        info) _docker_system_info
             return
             ;;
 
-          rm) _docker_rm
+        prune) _docker_system_prune
             return
             ;;
 
-          services) _docker_services
-            return
-            ;;
+    esac
 
-          *)  ;; 
-        esac
-        (( subcommand_index++ ))
-    done
-
-    word_list=" deploy ls ps rm services --orchestrator" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list=" df events info prune "
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_stack_deploy ()
+_docker_system_df()
 {
-    local cur word_list
-    word_list=" -c --compose-file --orchestrator --prune --resolve-image --with-registry-auth" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  --format -v --verbose"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_stack_ls ()
+_docker_system_events()
 {
-    local cur word_list
-    word_list=" --format --orchestrator" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  -f --filter --format --since --until"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_stack_ps ()
+_docker_system_info()
 {
-    local cur word_list
-    word_list=" -f --filter --format --no-resolve --no-trunc --orchestrator -q --quiet" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  -f --format"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_stack_rm ()
+_docker_system_prune()
 {
-    local cur word_list
-    word_list=" --orchestrator" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  -a --all --filter -f --force --volumes"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_stack_services ()
+_docker_trust()
 {
-    local cur word_list
-    word_list=" -f --filter --format --orchestrator -q --quiet" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
-}
+    local cmd i subcommands
+    local subcommands=" key signer inspect revoke sign"
 
-_docker_swarm ()
-{
-    local cur word_list
-    local i=1 subcommand_index
-
-    # take the last word that's NOT starting with -
-    while [[ ( $i < $COMP_CWORD ) ]]; do
-        local s="${COMP_WORDS[i]}"
-        case "$s" in
-          swarm)
-            subcommand_index=$i
+    for (( i=1; i < cword; i++ )); do
+        if [[ " ${subcommands[*]} " == *" ${words[i]} "* ]]; then
+            cmd=${words[i]}
             break
-            ;;
-        esac
-        (( i++ ))
+        fi
     done
 
-    while [[ ( $subcommand_index < $COMP_CWORD ) ]]; do
-        local s="${COMP_WORDS[subcommand_index}"
-        case "$s" in
-          ca) _docker_ca
+    case "$cmd" in
+        key) _docker_trust_key
             return
             ;;
 
-          init) _docker_init
+        signer) _docker_trust_signer
             return
             ;;
 
-          join) _docker_join
+        inspect) _docker_trust_inspect
             return
             ;;
 
-          join-token) _docker_jointoken
+        revoke) _docker_trust_revoke
             return
             ;;
 
-          leave) _docker_leave
+        sign) _docker_trust_sign
             return
             ;;
 
-          unlock) _docker_unlock
-            return
-            ;;
+    esac
 
-          unlock-key) _docker_unlockkey
-            return
-            ;;
-
-          update) _docker_update
-            return
-            ;;
-
-          *)  ;; 
-        esac
-        (( subcommand_index++ ))
-    done
-
-    word_list=" ca init join join-token leave unlock unlock-key update" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list=" key signer inspect revoke sign "
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_swarm_ca ()
+_docker_trust_key()
 {
-    local cur word_list
-    word_list=" --ca-cert --ca-key --cert-expiry -d --detach --external-ca -q --quiet --rotate" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
-}
+    local cmd i subcommands
+    local subcommands=" generate load"
 
-_swarm_init ()
-{
-    local cur word_list
-    word_list=" --advertise-addr --autolock --availability --cert-expiry --data-path-addr --data-path-port --default-addr-pool --default-addr-pool-mask-length --dispatcher-heartbeat --external-ca --force-new-cluster --listen-addr --max-snapshots --snapshot-interval --task-history-limit" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
-}
-
-_swarm_join ()
-{
-    local cur word_list
-    word_list=" --advertise-addr --availability --data-path-addr --listen-addr --token" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
-}
-
-_swarm_jointoken ()
-{
-    local cur word_list
-    word_list=" -q --quiet --rotate" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
-}
-
-_swarm_leave ()
-{
-    local cur word_list
-    word_list=" -f --force" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
-}
-
-_swarm_unlockkey ()
-{
-    local cur word_list
-    word_list=" -q --quiet --rotate" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
-}
-
-_swarm_update ()
-{
-    local cur word_list
-    word_list=" --autolock --cert-expiry --dispatcher-heartbeat --external-ca --max-snapshots --snapshot-interval --task-history-limit" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
-}
-
-_docker_system ()
-{
-    local cur word_list
-    local i=1 subcommand_index
-
-    # take the last word that's NOT starting with -
-    while [[ ( $i < $COMP_CWORD ) ]]; do
-        local s="${COMP_WORDS[i]}"
-        case "$s" in
-          system)
-            subcommand_index=$i
+    for (( i=1; i < cword; i++ )); do
+        if [[ " ${subcommands[*]} " == *" ${words[i]} "* ]]; then
+            cmd=${words[i]}
             break
-            ;;
-        esac
-        (( i++ ))
+        fi
     done
 
-    while [[ ( $subcommand_index < $COMP_CWORD ) ]]; do
-        local s="${COMP_WORDS[subcommand_index}"
-        case "$s" in
-          df) _docker_df
+    case "$cmd" in
+        generate) _docker_trust_key_generate
             return
             ;;
 
-          events) _docker_events
+        load) _docker_trust_key_load
             return
             ;;
 
-          info) _docker_info
-            return
-            ;;
+    esac
 
-          prune) _docker_prune
-            return
-            ;;
-
-          *)  ;; 
-        esac
-        (( subcommand_index++ ))
-    done
-
-    word_list=" df events info prune" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list=" generate load "
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_system_df ()
+_docker_trust_key_generate()
 {
-    local cur word_list
-    word_list=" --format -v --verbose" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  --dir"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_system_events ()
+_docker_trust_key_load()
 {
-    local cur word_list
-    word_list=" -f --filter --format --since --until" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  --name"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_system_info ()
+_docker_trust_signer()
 {
-    local cur word_list
-    word_list=" -f --format" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
-}
+    local cmd i subcommands
+    local subcommands=" add remove"
 
-_system_prune ()
-{
-    local cur word_list
-    word_list=" -a --all --filter -f --force --volumes" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
-}
-
-_docker_trust ()
-{
-    local cur word_list
-    local i=1 subcommand_index
-
-    # take the last word that's NOT starting with -
-    while [[ ( $i < $COMP_CWORD ) ]]; do
-        local s="${COMP_WORDS[i]}"
-        case "$s" in
-          trust)
-            subcommand_index=$i
+    for (( i=1; i < cword; i++ )); do
+        if [[ " ${subcommands[*]} " == *" ${words[i]} "* ]]; then
+            cmd=${words[i]}
             break
-            ;;
-        esac
-        (( i++ ))
+        fi
     done
 
-    while [[ ( $subcommand_index < $COMP_CWORD ) ]]; do
-        local s="${COMP_WORDS[subcommand_index}"
-        case "$s" in
-          key) _docker_key
+    case "$cmd" in
+        add) _docker_trust_signer_add
             return
             ;;
 
-          signer) _docker_signer
+        remove) _docker_trust_signer_remove
             return
             ;;
 
-          inspect) _docker_inspect
-            return
-            ;;
+    esac
 
-          revoke) _docker_revoke
-            return
-            ;;
-
-          sign) _docker_sign
-            return
-            ;;
-
-          *)  ;; 
-        esac
-        (( subcommand_index++ ))
-    done
-
-    word_list=" key signer inspect revoke sign" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list=" add remove "
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_trust_key ()
+_docker_trust_signer_add()
 {
-    local cur word_list
-    local i=1 subcommand_index
+    local word_list="  --key"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
+}
 
-    # take the last word that's NOT starting with -
-    while [[ ( $i < $COMP_CWORD ) ]]; do
-        local s="${COMP_WORDS[i]}"
-        case "$s" in
-          key)
-            subcommand_index=$i
+_docker_trust_signer_remove()
+{
+    local word_list="  -f --force"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
+}
+
+_docker_trust_inspect()
+{
+    local word_list="  --pretty"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
+}
+
+_docker_trust_revoke()
+{
+    local word_list="  -y --yes"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
+}
+
+_docker_trust_sign()
+{
+    local word_list="  --local"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
+}
+
+_docker_volume()
+{
+    local cmd i subcommands
+    local subcommands=" create inspect ls prune rm"
+
+    for (( i=1; i < cword; i++ )); do
+        if [[ " ${subcommands[*]} " == *" ${words[i]} "* ]]; then
+            cmd=${words[i]}
             break
-            ;;
-        esac
-        (( i++ ))
+        fi
     done
 
-    while [[ ( $subcommand_index < $COMP_CWORD ) ]]; do
-        local s="${COMP_WORDS[subcommand_index}"
-        case "$s" in
-          generate) _trust_generate
+    case "$cmd" in
+        create) _docker_volume_create
             return
             ;;
 
-          load) _trust_load
+        inspect) _docker_volume_inspect
             return
             ;;
 
-          *)  ;; 
-        esac
-        (( subcommand_index++ ))
-    done
+        ls) _docker_volume_ls
+            return
+            ;;
 
-    word_list=" generate load" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+        prune) _docker_volume_prune
+            return
+            ;;
+
+        rm) _docker_volume_rm
+            return
+            ;;
+
+    esac
+
+    local word_list=" create inspect ls prune rm "
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_key_generate ()
+_docker_volume_create()
 {
-    local cur word_list
-    word_list=" --dir" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  -d --driver --label -o --opt"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_key_load ()
+_docker_volume_inspect()
 {
-    local cur word_list
-    word_list=" --name" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  -f --format"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_trust_signer ()
+_docker_volume_ls()
 {
-    local cur word_list
-    local i=1 subcommand_index
+    local word_list="  -f --filter --format -q --quiet"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
+}
 
-    # take the last word that's NOT starting with -
-    while [[ ( $i < $COMP_CWORD ) ]]; do
-        local s="${COMP_WORDS[i]}"
-        case "$s" in
-          signer)
-            subcommand_index=$i
+_docker_volume_prune()
+{
+    local word_list="  -a --all --filter -f --force"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
+}
+
+_docker_volume_rm()
+{
+    local word_list="  -f --force"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
+}
+
+_docker_swarm()
+{
+    local cmd i subcommands
+    local subcommands=" init join"
+
+    for (( i=1; i < cword; i++ )); do
+        if [[ " ${subcommands[*]} " == *" ${words[i]} "* ]]; then
+            cmd=${words[i]}
             break
-            ;;
-        esac
-        (( i++ ))
+        fi
     done
 
-    while [[ ( $subcommand_index < $COMP_CWORD ) ]]; do
-        local s="${COMP_WORDS[subcommand_index}"
-        case "$s" in
-          add) _trust_add
+    case "$cmd" in
+        init) _docker_swarm_init
             return
             ;;
 
-          remove) _trust_remove
+        join) _docker_swarm_join
             return
             ;;
 
-          *)  ;; 
-        esac
-        (( subcommand_index++ ))
-    done
+    esac
 
-    word_list=" add remove" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list=" init join "
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_signer_add ()
+_docker_swarm_init()
 {
-    local cur word_list
-    word_list=" --key" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  --config -c --context -D --debug -H --host -l --log-level --tls --tlscacert --tlscert --tlskey --tlsverify"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_signer_remove ()
+_docker_swarm_join()
 {
-    local cur word_list
-    word_list=" -f --force" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
-}
-
-_trust_inspect ()
-{
-    local cur word_list
-    word_list=" --pretty" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
-}
-
-_trust_revoke ()
-{
-    local cur word_list
-    word_list=" -y --yes" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
-}
-
-_trust_sign ()
-{
-    local cur word_list
-    word_list=" --local" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
-}
-
-_docker_volume ()
-{
-    local cur word_list
-    local i=1 subcommand_index
-
-    # take the last word that's NOT starting with -
-    while [[ ( $i < $COMP_CWORD ) ]]; do
-        local s="${COMP_WORDS[i]}"
-        case "$s" in
-          volume)
-            subcommand_index=$i
-            break
-            ;;
-        esac
-        (( i++ ))
-    done
-
-    while [[ ( $subcommand_index < $COMP_CWORD ) ]]; do
-        local s="${COMP_WORDS[subcommand_index}"
-        case "$s" in
-          create) _docker_create
-            return
-            ;;
-
-          inspect) _docker_inspect
-            return
-            ;;
-
-          ls) _docker_ls
-            return
-            ;;
-
-          prune) _docker_prune
-            return
-            ;;
-
-          rm) _docker_rm
-            return
-            ;;
-
-          *)  ;; 
-        esac
-        (( subcommand_index++ ))
-    done
-
-    word_list=" create inspect ls prune rm" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
-}
-
-_volume_create ()
-{
-    local cur word_list
-    word_list=" -d --driver --label -o --opt" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
-}
-
-_volume_inspect ()
-{
-    local cur word_list
-    word_list=" -f --format" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
-}
-
-_volume_ls ()
-{
-    local cur word_list
-    word_list=" -f --filter --format -q --quiet" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
-}
-
-_volume_prune ()
-{
-    local cur word_list
-    word_list=" --filter -f --force" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
-}
-
-_volume_rm ()
-{
-    local cur word_list
-    word_list=" -f --force" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  --advertise-addr --availability --data-path-addr --listen-addr --token"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
 ## -o bashdefault and -o default are fallback

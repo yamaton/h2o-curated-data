@@ -1,91 +1,125 @@
 name: poetry
-description: poetry
-usage: poetry [-h] [-q] [-v [<...>]] [-V] [--ansi] [--no-ansi] [-n] <command> [<arg1>] ... [<argN>]
+description: Python packaging and dependency management made easy
+usage: command [options] [arguments]
 options:
   - names:
       - -h
       - --help
     argument: ""
-    description: Display this help message
+    description: Display help for the given command. When no command is given display help for the list command.
   - names:
       - -q
       - --quiet
     argument: ""
-    description: Do not output any message
-  - names:
-      - -v
-      - --verbose
-    argument: ""
-    description: 'Increase the verbosity of messages: "-v" for normal output, "-vv" for more verbose output and "-vvv" for debug'
+    description: Do not output any message.
   - names:
       - -V
       - --version
     argument: ""
-    description: Display this application version
+    description: Display this application version.
   - names:
       - --ansi
     argument: ""
-    description: Force ANSI output
+    description: Force ANSI output.
   - names:
       - --no-ansi
     argument: ""
-    description: Disable ANSI output
+    description: Disable ANSI output.
   - names:
       - -n
       - --no-interaction
     argument: ""
-    description: Do not ask any interactive question
+    description: Do not ask any interactive question.
+  - names:
+      - --no-plugins
+    argument: ""
+    description: Disables plugins.
+  - names:
+      - --no-cache
+    argument: ""
+    description: Disables Poetry source caches.
+  - names:
+      - -C
+      - --directory
+    argument: DIRECTORY
+    description: The working directory for the Poetry command (defaults to the current working directory).
+inheritedOptions:
+  - names:
+      - -v
+      - -vv
+      - -vvv
+      - --verbose
+    argument: ""
+    description: 'Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug.'
 subcommands:
   - name: about
     description: Shows information about Poetry.
-    usage: poetry about
+    usage: about [options]
     options:
       - names:
           - -h
           - --help
         argument: ""
-        description: Display this help message
+        description: Display help for the given command. When no command is given display help for the list command.
       - names:
           - -q
           - --quiet
         argument: ""
-        description: Do not output any message
-      - names:
-          - -v
-          - --verbose
-        argument: ""
-        description: 'Increase the verbosity of messages: "-v" for normal output, "-vv" for more verbose output and "-vvv" for debug'
+        description: Do not output any message.
       - names:
           - -V
           - --version
         argument: ""
-        description: Display this application version
+        description: Display this application version.
       - names:
           - --ansi
         argument: ""
-        description: Force ANSI output
+        description: Force ANSI output.
       - names:
           - --no-ansi
         argument: ""
-        description: Disable ANSI output
+        description: Disable ANSI output.
       - names:
           - -n
           - --no-interaction
         argument: ""
-        description: Do not ask any interactive question
+        description: Do not ask any interactive question.
+      - names:
+          - --no-plugins
+        argument: ""
+        description: Disables plugins.
+      - names:
+          - --no-cache
+        argument: ""
+        description: Disables Poetry source caches.
+      - names:
+          - -C
+          - --directory
+        argument: DIRECTORY
+        description: The working directory for the Poetry command (defaults to the current working directory).
   - name: add
     description: Adds a new dependency to pyproject.toml.
-    usage: poetry add [-D] [-E <...>] [--optional] [--python <...>] [--platform <...>] [--source <...>] [--allow-prereleases] [--dry-run] [--lock] <name1> ... [<nameN>]
+    usage: add [options] [--] <name>...
     options:
+      - names:
+          - -G
+          - --group
+        argument: GROUP
+        description: 'The group to add the dependency to. [default: "main"]'
       - names:
           - -D
           - --dev
         argument: ""
-        description: Add as a development dependency.
+        description: Add as a development dependency. (Deprecated) Use --group=dev instead.
+      - names:
+          - -e
+          - --editable
+        argument: ""
+        description: Add vcs/path dependencies as editable.
       - names:
           - -E
           - --extras
-        argument: ""
+        argument: EXTRAS
         description: Extras to activate for the dependency. (multiple values allowed)
       - names:
           - --optional
@@ -93,15 +127,15 @@ subcommands:
         description: Add as an optional dependency.
       - names:
           - --python
-        argument: ""
+        argument: PYTHON
         description: Python version for which the dependency must be installed.
       - names:
           - --platform
-        argument: ""
+        argument: PLATFORM
         description: Platforms for which the dependency must be installed.
       - names:
           - --source
-        argument: ""
+        argument: SOURCE
         description: Name of the source to use to install the package.
       - names:
           - --allow-prereleases
@@ -119,161 +153,141 @@ subcommands:
           - -h
           - --help
         argument: ""
-        description: Display this help message
+        description: Display help for the given command. When no command is given display help for the list command.
       - names:
           - -q
           - --quiet
         argument: ""
-        description: Do not output any message
-      - names:
-          - -v
-          - --verbose
-        argument: ""
-        description: 'Increase the verbosity of messages: "-v" for normal output, "-vv" for more verbose output and "-vvv" for debug'
+        description: Do not output any message.
       - names:
           - -V
           - --version
         argument: ""
-        description: Display this application version
+        description: Display this application version.
       - names:
           - --ansi
         argument: ""
-        description: Force ANSI output
+        description: Force ANSI output.
       - names:
           - --no-ansi
         argument: ""
-        description: Disable ANSI output
+        description: Disable ANSI output.
       - names:
           - -n
           - --no-interaction
         argument: ""
-        description: Do not ask any interactive question
+        description: Do not ask any interactive question.
+      - names:
+          - --no-plugins
+        argument: ""
+        description: Disables plugins.
+      - names:
+          - --no-cache
+        argument: ""
+        description: Disables Poetry source caches.
+      - names:
+          - -C
+          - --directory
+        argument: DIRECTORY
+        description: The working directory for the Poetry command (defaults to the current working directory).
   - name: build
     description: Builds a package, as a tarball and a wheel by default.
-    usage: poetry build [-f <...>]
+    usage: build [options]
     options:
       - names:
           - -f
           - --format
-        argument: '{sdist,wheel}'
+        argument: FORMAT
         description: Limit the format to either sdist or wheel.
       - names:
           - -h
           - --help
         argument: ""
-        description: Display this help message
+        description: Display help for the given command. When no command is given display help for the list command.
       - names:
           - -q
           - --quiet
         argument: ""
-        description: Do not output any message
-      - names:
-          - -v
-          - --verbose
-        argument: ""
-        description: 'Increase the verbosity of messages: "-v" for normal output, "-vv" for more verbose output and "-vvv" for debug'
+        description: Do not output any message.
       - names:
           - -V
           - --version
         argument: ""
-        description: Display this application version
+        description: Display this application version.
       - names:
           - --ansi
         argument: ""
-        description: Force ANSI output
+        description: Force ANSI output.
       - names:
           - --no-ansi
         argument: ""
-        description: Disable ANSI output
+        description: Disable ANSI output.
       - names:
           - -n
           - --no-interaction
         argument: ""
-        description: Do not ask any interactive question
-  - name: cache
-    description: Interact with Poetry's cache
-    usage: |-
-      poetry cache
-      poetry cache clear [--all] <cache>
-      poetry cache list
-    options:
+        description: Do not ask any interactive question.
       - names:
-          - --all
+          - --no-plugins
         argument: ""
-        description: Clear all entries in the cache.
+        description: Disables plugins.
       - names:
-          - -h
-          - --help
+          - --no-cache
         argument: ""
-        description: Display this help message
+        description: Disables Poetry source caches.
       - names:
-          - -q
-          - --quiet
-        argument: ""
-        description: Do not output any message
-      - names:
-          - -v
-          - --verbose
-        argument: ""
-        description: 'Increase the verbosity of messages: "-v" for normal output, "-vv" for more verbose output and "-vvv" for debug'
-      - names:
-          - -V
-          - --version
-        argument: ""
-        description: Display this application version
-      - names:
-          - --ansi
-        argument: ""
-        description: Force ANSI output
-      - names:
-          - --no-ansi
-        argument: ""
-        description: Disable ANSI output
-      - names:
-          - -n
-          - --no-interaction
-        argument: ""
-        description: Do not ask any interactive question
+          - -C
+          - --directory
+        argument: DIRECTORY
+        description: The working directory for the Poetry command (defaults to the current working directory).
   - name: check
     description: Checks the validity of the pyproject.toml file.
-    usage: poetry check
+    usage: check [options]
     options:
       - names:
           - -h
           - --help
         argument: ""
-        description: Display this help message
+        description: Display help for the given command. When no command is given display help for the list command.
       - names:
           - -q
           - --quiet
         argument: ""
-        description: Do not output any message
-      - names:
-          - -v
-          - --verbose
-        argument: ""
-        description: 'Increase the verbosity of messages: "-v" for normal output, "-vv" for more verbose output and "-vvv" for debug'
+        description: Do not output any message.
       - names:
           - -V
           - --version
         argument: ""
-        description: Display this application version
+        description: Display this application version.
       - names:
           - --ansi
         argument: ""
-        description: Force ANSI output
+        description: Force ANSI output.
       - names:
           - --no-ansi
         argument: ""
-        description: Disable ANSI output
+        description: Disable ANSI output.
       - names:
           - -n
           - --no-interaction
         argument: ""
-        description: Do not ask any interactive question
+        description: Do not ask any interactive question.
+      - names:
+          - --no-plugins
+        argument: ""
+        description: Disables plugins.
+      - names:
+          - --no-cache
+        argument: ""
+        description: Disables Poetry source caches.
+      - names:
+          - -C
+          - --directory
+        argument: DIRECTORY
+        description: The working directory for the Poetry command (defaults to the current working directory).
   - name: config
     description: Manages configuration settings.
-    usage: poetry config [--list] [--unset] [--local] [<key>] [<value1>] ... [<valueN>]
+    usage: config [options] [--] [<key> [<value>...]]
     options:
       - names:
           - --list
@@ -291,154 +305,85 @@ subcommands:
           - -h
           - --help
         argument: ""
-        description: Display this help message
+        description: Display help for the given command. When no command is given display help for the list command.
       - names:
           - -q
           - --quiet
         argument: ""
-        description: Do not output any message
-      - names:
-          - -v
-          - --verbose
-        argument: ""
-        description: 'Increase the verbosity of messages: "-v" for normal output, "-vv" for more verbose output and "-vvv" for debug'
+        description: Do not output any message.
       - names:
           - -V
           - --version
         argument: ""
-        description: Display this application version
+        description: Display this application version.
       - names:
           - --ansi
         argument: ""
-        description: Force ANSI output
+        description: Force ANSI output.
       - names:
           - --no-ansi
         argument: ""
-        description: Disable ANSI output
+        description: Disable ANSI output.
       - names:
           - -n
           - --no-interaction
         argument: ""
-        description: Do not ask any interactive question
-  - name: debug
-    description: Debug various elements of Poetry.
-    usage: poetry debug info
-    options:
+        description: Do not ask any interactive question.
       - names:
-          - -h
-          - --help
+          - --no-plugins
         argument: ""
-        description: Display this help message
+        description: Disables plugins.
       - names:
-          - -q
-          - --quiet
+          - --no-cache
         argument: ""
-        description: Do not output any message
+        description: Disables Poetry source caches.
       - names:
-          - -v
-          - --verbose
-        argument: ""
-        description: 'Increase the verbosity of messages: "-v" for normal output, "-vv" for more verbose output and "-vvv" for debug'
-      - names:
-          - -V
-          - --version
-        argument: ""
-        description: Display this application version
-      - names:
-          - --ansi
-        argument: ""
-        description: Force ANSI output
-      - names:
-          - --no-ansi
-        argument: ""
-        description: Disable ANSI output
-      - names:
-          - -n
-          - --no-interaction
-        argument: ""
-        description: Do not ask any interactive question
-    subcommands:
-      - name: poetry
-        description: debug info
-        usage: ""
-        options: []
-  - name: env
-    description: Interact with Poetry's project environments.
-    usage: |-
-      poetry env
-      poetry env info [-p]
-      poetry env list [--full-path]
-      poetry env remove <python>
-      poetry env use <python>
-    options:
-      - names:
-          - -p
-          - --path
-        argument: ""
-        description: Only display the environment's path.
-      - names:
-          - --full-path
-        argument: ""
-        description: Output the full paths of the virtualenvs.
-      - names:
-          - -h
-          - --help
-        argument: ""
-        description: Display this help message
-      - names:
-          - -q
-          - --quiet
-        argument: ""
-        description: Do not output any message
-      - names:
-          - -v
-          - --verbose
-        argument: ""
-        description: 'Increase the verbosity of messages: "-v" for normal output, "-vv" for more verbose output and "-vvv" for debug'
-      - names:
-          - -V
-          - --version
-        argument: ""
-        description: Display this application version
-      - names:
-          - --ansi
-        argument: ""
-        description: Force ANSI output
-      - names:
-          - --no-ansi
-        argument: ""
-        description: Disable ANSI output
-      - names:
-          - -n
-          - --no-interaction
-        argument: ""
-        description: Do not ask any interactive question
+          - -C
+          - --directory
+        argument: DIRECTORY
+        description: The working directory for the Poetry command (defaults to the current working directory).
   - name: export
     description: Exports the lock file to alternative formats.
-    usage: poetry export [-f <...>] [-o <...>] [--without-hashes] [--dev] [-E <...>] [--with-credentials]
+    usage: export [options]
     options:
       - names:
           - -f
           - --format
-        argument: ""
-        description: 'Format to export to. Currently, only requirements.txt is supported. (default: "requirements.txt")'
+        argument: FORMAT
+        description: 'Format to export to. Currently, only constraints.txt and requirements.txt are supported. [default: "requirements.txt"]'
       - names:
           - -o
           - --output
-        argument: ""
+        argument: OUTPUT
         description: The name of the output file.
       - names:
           - --without-hashes
         argument: ""
         description: Exclude hashes from the exported file.
       - names:
+          - --without-urls
+        argument: ""
+        description: Exclude source repository urls from the exported file.
+      - names:
           - --dev
         argument: ""
-        description: Include development dependencies.
+        description: Include development dependencies. (Deprecated)
+      - names:
+          - --without
+        argument: WITHOUT
+        description: The dependency groups to ignore. (multiple values allowed)
+      - names:
+          - --with
+        argument: WITH
+        description: The optional dependency groups to include. (multiple values allowed)
+      - names:
+          - --only
+        argument: ONLY
+        description: The only dependency groups to include. (multiple values allowed)
       - names:
           - -E
           - --extras
-        argument: ""
+        argument: EXTRAS
         description: Extra sets of dependencies to include. (multiple values allowed)
       - names:
           - --with-credentials
@@ -448,113 +393,194 @@ subcommands:
           - -h
           - --help
         argument: ""
-        description: Display this help message
+        description: Display help for the given command. When no command is given display help for the list command.
       - names:
           - -q
           - --quiet
         argument: ""
-        description: Do not output any message
-      - names:
-          - -v
-          - --verbose
-        argument: ""
-        description: 'Increase the verbosity of messages: "-v" for normal output, "-vv" for more verbose output and "-vvv" for debug'
+        description: Do not output any message.
       - names:
           - -V
           - --version
         argument: ""
-        description: Display this application version
+        description: Display this application version.
       - names:
           - --ansi
         argument: ""
-        description: Force ANSI output
+        description: Force ANSI output.
       - names:
           - --no-ansi
         argument: ""
-        description: Disable ANSI output
+        description: Disable ANSI output.
       - names:
           - -n
           - --no-interaction
         argument: ""
-        description: Do not ask any interactive question
+        description: Do not ask any interactive question.
+      - names:
+          - --no-plugins
+        argument: ""
+        description: Disables plugins.
+      - names:
+          - --no-cache
+        argument: ""
+        description: Disables Poetry source caches.
+      - names:
+          - -C
+          - --directory
+        argument: DIRECTORY
+        description: The working directory for the Poetry command (defaults to the current working directory).
+  - name: help
+    description: Displays help for a command.
+    usage: help [options] [--] [<command_name>]
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: Display help for the given command. When no command is given display help for the list command.
+      - names:
+          - -q
+          - --quiet
+        argument: ""
+        description: Do not output any message.
+      - names:
+          - -V
+          - --version
+        argument: ""
+        description: Display this application version.
+      - names:
+          - --ansi
+        argument: ""
+        description: Force ANSI output.
+      - names:
+          - --no-ansi
+        argument: ""
+        description: Disable ANSI output.
+      - names:
+          - -n
+          - --no-interaction
+        argument: ""
+        description: Do not ask any interactive question.
+      - names:
+          - --no-plugins
+        argument: ""
+        description: Disables plugins.
+      - names:
+          - --no-cache
+        argument: ""
+        description: Disables Poetry source caches.
+      - names:
+          - -C
+          - --directory
+        argument: DIRECTORY
+        description: The working directory for the Poetry command (defaults to the current working directory).
   - name: init
     description: Creates a basic pyproject.toml file in the current directory.
-    usage: poetry init [--name <...>] [--description <...>] [--author <...>] [--python <...>] [--dependency <...>] [--dev-dependency <...>] [-l <...>]
+    usage: init [options]
     options:
       - names:
           - --name
-        argument: ""
+        argument: NAME
         description: Name of the package.
       - names:
           - --description
-        argument: ""
+        argument: DESCRIPTION
         description: Description of the package.
       - names:
           - --author
-        argument: ""
+        argument: AUTHOR
         description: Author name of the package.
       - names:
           - --python
-        argument: ""
+        argument: PYTHON
         description: Compatible Python versions.
       - names:
           - --dependency
-        argument: ""
+        argument: DEPENDENCY
         description: Package to require, with an optional version constraint, e.g. requests:^2.10.0 or requests=2.11.1. (multiple values allowed)
       - names:
           - --dev-dependency
-        argument: ""
+        argument: DEV-DEPENDENCY
         description: Package to require for development, with an optional version constraint, e.g. requests:^2.10.0 or requests=2.11.1. (multiple values allowed)
       - names:
           - -l
           - --license
-        argument: ""
+        argument: LICENSE
         description: License of the package.
       - names:
           - -h
           - --help
         argument: ""
-        description: Display this help message
+        description: Display help for the given command. When no command is given display help for the list command.
       - names:
           - -q
           - --quiet
         argument: ""
-        description: Do not output any message
-      - names:
-          - -v
-          - --verbose
-        argument: ""
-        description: 'Increase the verbosity of messages: "-v" for normal output, "-vv" for more verbose output and "-vvv" for debug'
+        description: Do not output any message.
       - names:
           - -V
           - --version
         argument: ""
-        description: Display this application version
+        description: Display this application version.
       - names:
           - --ansi
         argument: ""
-        description: Force ANSI output
+        description: Force ANSI output.
       - names:
           - --no-ansi
         argument: ""
-        description: Disable ANSI output
+        description: Disable ANSI output.
       - names:
           - -n
           - --no-interaction
         argument: ""
-        description: Do not ask any interactive question
+        description: Do not ask any interactive question.
+      - names:
+          - --no-plugins
+        argument: ""
+        description: Disables plugins.
+      - names:
+          - --no-cache
+        argument: ""
+        description: Disables Poetry source caches.
+      - names:
+          - -C
+          - --directory
+        argument: DIRECTORY
+        description: The working directory for the Poetry command (defaults to the current working directory).
   - name: install
     description: Installs the project dependencies.
-    usage: poetry install [--no-dev] [--no-root] [--dry-run] [--remove-untracked] [-E <...>]
+    usage: install [options]
     options:
+      - names:
+          - --without
+        argument: WITHOUT
+        description: The dependency groups to ignore. (multiple values allowed)
+      - names:
+          - --with
+        argument: WITH
+        description: The optional dependency groups to include. (multiple values allowed)
+      - names:
+          - --only
+        argument: ONLY
+        description: The only dependency groups to include. (multiple values allowed)
       - names:
           - --no-dev
         argument: ""
-        description: Do not install the development dependencies.
+        description: Do not install the development dependencies. (Deprecated)
+      - names:
+          - --sync
+        argument: ""
+        description: Synchronize the environment with the locked packages and the specified groups.
       - names:
           - --no-root
         argument: ""
         description: Do not install the root package (the current project).
+      - names:
+          - --no-directory
+        argument: ""
+        description: Do not install any directory path dependencies; useful to install dependencies without source code, e.g. for caching of Docker layers)
       - names:
           - --dry-run
         argument: ""
@@ -562,157 +588,246 @@ subcommands:
       - names:
           - --remove-untracked
         argument: ""
-        description: Removes packages not present in the lock file.
+        description: Removes packages not present in the lock file. (Deprecated)
       - names:
           - -E
           - --extras
-        argument: ""
+        argument: EXTRAS
         description: Extra sets of dependencies to install. (multiple values allowed)
+      - names:
+          - --all-extras
+        argument: ""
+        description: Install all extra dependencies.
+      - names:
+          - --only-root
+        argument: ""
+        description: Exclude all dependencies.
+      - names:
+          - --compile
+        argument: ""
+        description: Compile Python source files to bytecode. (This option has no effect if modern-installation is disabled because the old installer always compiles.)
       - names:
           - -h
           - --help
         argument: ""
-        description: Display this help message
+        description: Display help for the given command. When no command is given display help for the list command.
       - names:
           - -q
           - --quiet
         argument: ""
-        description: Do not output any message
-      - names:
-          - -v
-          - --verbose
-        argument: ""
-        description: 'Increase the verbosity of messages: "-v" for normal output, "-vv" for more verbose output and "-vvv" for debug'
+        description: Do not output any message.
       - names:
           - -V
           - --version
         argument: ""
-        description: Display this application version
+        description: Display this application version.
       - names:
           - --ansi
         argument: ""
-        description: Force ANSI output
+        description: Force ANSI output.
       - names:
           - --no-ansi
         argument: ""
-        description: Disable ANSI output
+        description: Disable ANSI output.
       - names:
           - -n
           - --no-interaction
         argument: ""
-        description: Do not ask any interactive question
+        description: Do not ask any interactive question.
+      - names:
+          - --no-plugins
+        argument: ""
+        description: Disables plugins.
+      - names:
+          - --no-cache
+        argument: ""
+        description: Disables Poetry source caches.
+      - names:
+          - -C
+          - --directory
+        argument: DIRECTORY
+        description: The working directory for the Poetry command (defaults to the current working directory).
+  - name: list
+    description: Lists commands.
+    usage: list [options] [--] [<namespace>]
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: Display help for the given command. When no command is given display help for the list command.
+      - names:
+          - -q
+          - --quiet
+        argument: ""
+        description: Do not output any message.
+      - names:
+          - -V
+          - --version
+        argument: ""
+        description: Display this application version.
+      - names:
+          - --ansi
+        argument: ""
+        description: Force ANSI output.
+      - names:
+          - --no-ansi
+        argument: ""
+        description: Disable ANSI output.
+      - names:
+          - -n
+          - --no-interaction
+        argument: ""
+        description: Do not ask any interactive question.
+      - names:
+          - --no-plugins
+        argument: ""
+        description: Disables plugins.
+      - names:
+          - --no-cache
+        argument: ""
+        description: Disables Poetry source caches.
+      - names:
+          - -C
+          - --directory
+        argument: DIRECTORY
+        description: The working directory for the Poetry command (defaults to the current working directory).
   - name: lock
     description: Locks the project dependencies.
-    usage: poetry lock [--no-update]
+    usage: lock [options]
     options:
       - names:
           - --no-update
         argument: ""
         description: Do not update locked versions, only refresh lock file.
       - names:
+          - --check
+        argument: ""
+        description: Check that the poetry.lock file corresponds to the current version of pyproject.toml.
+      - names:
           - -h
           - --help
         argument: ""
-        description: Display this help message
+        description: Display help for the given command. When no command is given display help for the list command.
       - names:
           - -q
           - --quiet
         argument: ""
-        description: Do not output any message
-      - names:
-          - -v
-          - --verbose
-        argument: ""
-        description: 'Increase the verbosity of messages: "-v" for normal output, "-vv" for more verbose output and "-vvv" for debug'
+        description: Do not output any message.
       - names:
           - -V
           - --version
         argument: ""
-        description: Display this application version
+        description: Display this application version.
       - names:
           - --ansi
         argument: ""
-        description: Force ANSI output
+        description: Force ANSI output.
       - names:
           - --no-ansi
         argument: ""
-        description: Disable ANSI output
+        description: Disable ANSI output.
       - names:
           - -n
           - --no-interaction
         argument: ""
-        description: Do not ask any interactive question
+        description: Do not ask any interactive question.
+      - names:
+          - --no-plugins
+        argument: ""
+        description: Disables plugins.
+      - names:
+          - --no-cache
+        argument: ""
+        description: Disables Poetry source caches.
+      - names:
+          - -C
+          - --directory
+        argument: DIRECTORY
+        description: The working directory for the Poetry command (defaults to the current working directory).
   - name: new
     description: Creates a new Python project at <path>.
-    usage: poetry new [--name <...>] [--src] <path>
+    usage: new [options] [--] <path>
     options:
       - names:
           - --name
-        argument: ""
+        argument: NAME
         description: Set the resulting package name.
       - names:
           - --src
         argument: ""
         description: Use the src layout for the project.
       - names:
+          - --readme
+        argument: README
+        description: Specify the readme file format. One of md (default) or rst
+      - names:
           - -h
           - --help
         argument: ""
-        description: Display this help message
+        description: Display help for the given command. When no command is given display help for the list command.
       - names:
           - -q
           - --quiet
         argument: ""
-        description: Do not output any message
-      - names:
-          - -v
-          - --verbose
-        argument: ""
-        description: 'Increase the verbosity of messages: "-v" for normal output, "-vv" for more verbose output and "-vvv" for debug'
+        description: Do not output any message.
       - names:
           - -V
           - --version
         argument: ""
-        description: Display this application version
+        description: Display this application version.
       - names:
           - --ansi
         argument: ""
-        description: Force ANSI output
+        description: Force ANSI output.
       - names:
           - --no-ansi
         argument: ""
-        description: Disable ANSI output
+        description: Disable ANSI output.
       - names:
           - -n
           - --no-interaction
         argument: ""
-        description: Do not ask any interactive question
+        description: Do not ask any interactive question.
+      - names:
+          - --no-plugins
+        argument: ""
+        description: Disables plugins.
+      - names:
+          - --no-cache
+        argument: ""
+        description: Disables Poetry source caches.
+      - names:
+          - -C
+          - --directory
+        argument: DIRECTORY
+        description: The working directory for the Poetry command (defaults to the current working directory).
   - name: publish
     description: Publishes a package to a remote repository.
-    usage: poetry publish [-r <...>] [-u <...>] [-p <...>] [--cert <...>] [--client-cert <...>] [--build] [--dry-run]
+    usage: publish [options]
     options:
       - names:
           - -r
           - --repository
-        argument: ""
+        argument: REPOSITORY
         description: The repository to publish the package to.
       - names:
           - -u
           - --username
-        argument: ""
+        argument: USERNAME
         description: The username to access the repository.
       - names:
           - -p
           - --password
-        argument: ""
+        argument: PASSWORD
         description: The password to access the repository.
       - names:
           - --cert
-        argument: ""
+        argument: CERT
         description: Certificate authority to access the repository.
       - names:
           - --client-cert
-        argument: ""
+        argument: CLIENT-CERT
         description: Client certificate to access the repository.
       - names:
           - --build
@@ -723,251 +838,277 @@ subcommands:
         argument: ""
         description: Perform all actions except upload the package.
       - names:
+          - --skip-existing
+        argument: ""
+        description: Ignore errors from files already existing in the repository.
+      - names:
           - -h
           - --help
         argument: ""
-        description: Display this help message
+        description: Display help for the given command. When no command is given display help for the list command.
       - names:
           - -q
           - --quiet
         argument: ""
-        description: Do not output any message
-      - names:
-          - -v
-          - --verbose
-        argument: ""
-        description: 'Increase the verbosity of messages: "-v" for normal output, "-vv" for more verbose output and "-vvv" for debug'
+        description: Do not output any message.
       - names:
           - -V
           - --version
         argument: ""
-        description: Display this application version
+        description: Display this application version.
       - names:
           - --ansi
         argument: ""
-        description: Force ANSI output
+        description: Force ANSI output.
       - names:
           - --no-ansi
         argument: ""
-        description: Disable ANSI output
+        description: Disable ANSI output.
       - names:
           - -n
           - --no-interaction
         argument: ""
-        description: Do not ask any interactive question
+        description: Do not ask any interactive question.
+      - names:
+          - --no-plugins
+        argument: ""
+        description: Disables plugins.
+      - names:
+          - --no-cache
+        argument: ""
+        description: Disables Poetry source caches.
+      - names:
+          - -C
+          - --directory
+        argument: DIRECTORY
+        description: The working directory for the Poetry command (defaults to the current working directory).
   - name: remove
     description: Removes a package from the project dependencies.
-    usage: poetry remove [-D] [--dry-run] <packages1> ... [<packagesN>]
+    usage: remove [options] [--] <packages>...
     options:
+      - names:
+          - -G
+          - --group
+        argument: GROUP
+        description: The group to remove the dependency from.
       - names:
           - -D
           - --dev
         argument: ""
-        description: Remove a package from the development dependencies.
+        description: Remove a package from the development dependencies. (Deprecated) Use --group=dev instead.
       - names:
           - --dry-run
         argument: ""
         description: Output the operations but do not execute anything (implicitly enables --verbose).
       - names:
+          - --lock
+        argument: ""
+        description: Do not perform operations (only update the lockfile).
+      - names:
           - -h
           - --help
         argument: ""
-        description: Display this help message
+        description: Display help for the given command. When no command is given display help for the list command.
       - names:
           - -q
           - --quiet
         argument: ""
-        description: Do not output any message
-      - names:
-          - -v
-          - --verbose
-        argument: ""
-        description: 'Increase the verbosity of messages: "-v" for normal output, "-vv" for more verbose output and "-vvv" for debug'
+        description: Do not output any message.
       - names:
           - -V
           - --version
         argument: ""
-        description: Display this application version
+        description: Display this application version.
       - names:
           - --ansi
         argument: ""
-        description: Force ANSI output
+        description: Force ANSI output.
       - names:
           - --no-ansi
         argument: ""
-        description: Disable ANSI output
+        description: Disable ANSI output.
       - names:
           - -n
           - --no-interaction
         argument: ""
-        description: Do not ask any interactive question
+        description: Do not ask any interactive question.
+      - names:
+          - --no-plugins
+        argument: ""
+        description: Disables plugins.
+      - names:
+          - --no-cache
+        argument: ""
+        description: Disables Poetry source caches.
+      - names:
+          - -C
+          - --directory
+        argument: DIRECTORY
+        description: The working directory for the Poetry command (defaults to the current working directory).
   - name: run
     description: Runs a command in the appropriate environment.
-    usage: poetry run <args1> ... [<argsN>]
+    usage: run [options] [--] <args>...
     options:
       - names:
           - -h
           - --help
         argument: ""
-        description: Display this help message
+        description: Display help for the given command. When no command is given display help for the list command.
       - names:
           - -q
           - --quiet
         argument: ""
-        description: Do not output any message
-      - names:
-          - -v
-          - --verbose
-        argument: ""
-        description: 'Increase the verbosity of messages: "-v" for normal output, "-vv" for more verbose output and "-vvv" for debug'
+        description: Do not output any message.
       - names:
           - -V
           - --version
         argument: ""
-        description: Display this application version
+        description: Display this application version.
       - names:
           - --ansi
         argument: ""
-        description: Force ANSI output
+        description: Force ANSI output.
       - names:
           - --no-ansi
         argument: ""
-        description: Disable ANSI output
+        description: Disable ANSI output.
       - names:
           - -n
           - --no-interaction
         argument: ""
-        description: Do not ask any interactive question
+        description: Do not ask any interactive question.
+      - names:
+          - --no-plugins
+        argument: ""
+        description: Disables plugins.
+      - names:
+          - --no-cache
+        argument: ""
+        description: Disables Poetry source caches.
+      - names:
+          - -C
+          - --directory
+        argument: DIRECTORY
+        description: The working directory for the Poetry command (defaults to the current working directory).
   - name: search
     description: Searches for packages on remote repositories.
-    usage: poetry search <tokens1> ... [<tokensN>]
+    usage: search [options] [--] <tokens>...
     options:
       - names:
           - -h
           - --help
         argument: ""
-        description: Display this help message
+        description: Display help for the given command. When no command is given display help for the list command.
       - names:
           - -q
           - --quiet
         argument: ""
-        description: Do not output any message
-      - names:
-          - -v
-          - --verbose
-        argument: ""
-        description: 'Increase the verbosity of messages: "-v" for normal output, "-vv" for more verbose output and "-vvv" for debug'
+        description: Do not output any message.
       - names:
           - -V
           - --version
         argument: ""
-        description: Display this application version
+        description: Display this application version.
       - names:
           - --ansi
         argument: ""
-        description: Force ANSI output
+        description: Force ANSI output.
       - names:
           - --no-ansi
         argument: ""
-        description: Disable ANSI output
+        description: Disable ANSI output.
       - names:
           - -n
           - --no-interaction
         argument: ""
-        description: Do not ask any interactive question
-  - name: self
-    description: Interact with Poetry directly.
-    usage: |-
-      poetry self
-      poetry self update [--preview] [<version>]
-    options:
+        description: Do not ask any interactive question.
       - names:
-          - --preview
+          - --no-plugins
         argument: ""
-        description: Install prereleases.
+        description: Disables plugins.
       - names:
-          - -h
-          - --help
+          - --no-cache
         argument: ""
-        description: Display this help message
+        description: Disables Poetry source caches.
       - names:
-          - -q
-          - --quiet
-        argument: ""
-        description: Do not output any message
-      - names:
-          - -v
-          - --verbose
-        argument: ""
-        description: 'Increase the verbosity of messages: "-v" for normal output, "-vv" for more verbose output and "-vvv" for debug'
-      - names:
-          - -V
-          - --version
-        argument: ""
-        description: Display this application version
-      - names:
-          - --ansi
-        argument: ""
-        description: Force ANSI output
-      - names:
-          - --no-ansi
-        argument: ""
-        description: Disable ANSI output
-      - names:
-          - -n
-          - --no-interaction
-        argument: ""
-        description: Do not ask any interactive question
+          - -C
+          - --directory
+        argument: DIRECTORY
+        description: The working directory for the Poetry command (defaults to the current working directory).
   - name: shell
     description: Spawns a shell within the virtual environment.
-    usage: poetry shell
+    usage: shell [options]
     options:
       - names:
           - -h
           - --help
         argument: ""
-        description: Display this help message
+        description: Display help for the given command. When no command is given display help for the list command.
       - names:
           - -q
           - --quiet
         argument: ""
-        description: Do not output any message
-      - names:
-          - -v
-          - --verbose
-        argument: ""
-        description: 'Increase the verbosity of messages: "-v" for normal output, "-vv" for more verbose output and "-vvv" for debug'
+        description: Do not output any message.
       - names:
           - -V
           - --version
         argument: ""
-        description: Display this application version
+        description: Display this application version.
       - names:
           - --ansi
         argument: ""
-        description: Force ANSI output
+        description: Force ANSI output.
       - names:
           - --no-ansi
         argument: ""
-        description: Disable ANSI output
+        description: Disable ANSI output.
       - names:
           - -n
           - --no-interaction
         argument: ""
-        description: Do not ask any interactive question
+        description: Do not ask any interactive question.
+      - names:
+          - --no-plugins
+        argument: ""
+        description: Disables plugins.
+      - names:
+          - --no-cache
+        argument: ""
+        description: Disables Poetry source caches.
+      - names:
+          - -C
+          - --directory
+        argument: DIRECTORY
+        description: The working directory for the Poetry command (defaults to the current working directory).
   - name: show
     description: Shows information about packages.
-    usage: poetry show [--no-dev] [-t] [-l] [-o] [-a] [<package>]
+    usage: show [options] [--] [<package>]
     options:
+      - names:
+          - --without
+        argument: WITHOUT
+        description: The dependency groups to ignore. (multiple values allowed)
+      - names:
+          - --with
+        argument: WITH
+        description: The optional dependency groups to include. (multiple values allowed)
+      - names:
+          - --only
+        argument: ONLY
+        description: The only dependency groups to include. (multiple values allowed)
       - names:
           - --no-dev
         argument: ""
-        description: Do not list the development dependencies.
+        description: Do not list the development dependencies. (Deprecated)
       - names:
           - -t
           - --tree
         argument: ""
         description: List the dependencies as a tree.
+      - names:
+          - --why
+        argument: ""
+        description: When showing the full list, or a --tree for a single package, also display why it's included.
       - names:
           - -l
           - --latest
@@ -984,46 +1125,71 @@ subcommands:
         argument: ""
         description: Show all packages (even those not compatible with current system).
       - names:
+          - -T
+          - --top-level
+        argument: ""
+        description: Show only top-level dependencies.
+      - names:
           - -h
           - --help
         argument: ""
-        description: Display this help message
+        description: Display help for the given command. When no command is given display help for the list command.
       - names:
           - -q
           - --quiet
         argument: ""
-        description: Do not output any message
-      - names:
-          - -v
-          - --verbose
-        argument: ""
-        description: 'Increase the verbosity of messages: "-v" for normal output, "-vv" for more verbose output and "-vvv" for debug'
+        description: Do not output any message.
       - names:
           - -V
           - --version
         argument: ""
-        description: Display this application version
+        description: Display this application version.
       - names:
           - --ansi
         argument: ""
-        description: Force ANSI output
+        description: Force ANSI output.
       - names:
           - --no-ansi
         argument: ""
-        description: Disable ANSI output
+        description: Disable ANSI output.
       - names:
           - -n
           - --no-interaction
         argument: ""
-        description: Do not ask any interactive question
+        description: Do not ask any interactive question.
+      - names:
+          - --no-plugins
+        argument: ""
+        description: Disables plugins.
+      - names:
+          - --no-cache
+        argument: ""
+        description: Disables Poetry source caches.
+      - names:
+          - -C
+          - --directory
+        argument: DIRECTORY
+        description: The working directory for the Poetry command (defaults to the current working directory).
   - name: update
     description: Update the dependencies as according to the pyproject.toml file.
-    usage: poetry update [--no-dev] [--dry-run] [--lock] [<packages1>] ... [<packagesN>]
+    usage: update [options] [--] [<packages>...]
     options:
+      - names:
+          - --without
+        argument: WITHOUT
+        description: The dependency groups to ignore. (multiple values allowed)
+      - names:
+          - --with
+        argument: WITH
+        description: The optional dependency groups to include. (multiple values allowed)
+      - names:
+          - --only
+        argument: ONLY
+        description: The only dependency groups to include. (multiple values allowed)
       - names:
           - --no-dev
         argument: ""
-        description: Do not update the development dependencies.
+        description: Do not update the development dependencies. (Deprecated)
       - names:
           - --dry-run
         argument: ""
@@ -1036,38 +1202,46 @@ subcommands:
           - -h
           - --help
         argument: ""
-        description: Display this help message
+        description: Display help for the given command. When no command is given display help for the list command.
       - names:
           - -q
           - --quiet
         argument: ""
-        description: Do not output any message
-      - names:
-          - -v
-          - --verbose
-        argument: ""
-        description: 'Increase the verbosity of messages: "-v" for normal output, "-vv" for more verbose output and "-vvv" for debug'
+        description: Do not output any message.
       - names:
           - -V
           - --version
         argument: ""
-        description: Display this application version
+        description: Display this application version.
       - names:
           - --ansi
         argument: ""
-        description: Force ANSI output
+        description: Force ANSI output.
       - names:
           - --no-ansi
         argument: ""
-        description: Disable ANSI output
+        description: Disable ANSI output.
       - names:
           - -n
           - --no-interaction
         argument: ""
-        description: Do not ask any interactive question
+        description: Do not ask any interactive question.
+      - names:
+          - --no-plugins
+        argument: ""
+        description: Disables plugins.
+      - names:
+          - --no-cache
+        argument: ""
+        description: Disables Poetry source caches.
+      - names:
+          - -C
+          - --directory
+        argument: DIRECTORY
+        description: The working directory for the Poetry command (defaults to the current working directory).
   - name: version
     description: Shows the version of the project or bumps it when a valid bump rule is provided.
-    usage: poetry version [-s] [<version>]
+    usage: version [options] [--] [<version>]
     options:
       - names:
           - -s
@@ -1075,39 +1249,154 @@ subcommands:
         argument: ""
         description: Output the version number only
       - names:
+          - --dry-run
+        argument: ""
+        description: Do not update pyproject.toml file
+      - names:
           - -h
           - --help
         argument: ""
-        description: Display this help message
+        description: Display help for the given command. When no command is given display help for the list command.
       - names:
           - -q
           - --quiet
         argument: ""
-        description: Do not output any message
-      - names:
-          - -v
-          - --verbose
-        argument: ""
-        description: 'Increase the verbosity of messages: "-v" for normal output, "-vv" for more verbose output and "-vvv" for debug'
+        description: Do not output any message.
       - names:
           - -V
           - --version
         argument: ""
-        description: Display this application version
+        description: Display this application version.
       - names:
           - --ansi
         argument: ""
-        description: Force ANSI output
+        description: Force ANSI output.
       - names:
           - --no-ansi
         argument: ""
-        description: Disable ANSI output
+        description: Disable ANSI output.
       - names:
           - -n
           - --no-interaction
         argument: ""
-        description: Do not ask any interactive question
-version: Poetry version 1.1.15
+        description: Do not ask any interactive question.
+      - names:
+          - --no-plugins
+        argument: ""
+        description: Disables plugins.
+      - names:
+          - --no-cache
+        argument: ""
+        description: Disables Poetry source caches.
+      - names:
+          - -C
+          - --directory
+        argument: DIRECTORY
+        description: The working directory for the Poetry command (defaults to the current working directory).
+
+  - name: cache
+    description: Clear or List Poetry's caches.
+    usage: poetry cache {clear|list} [options]
+    options: []
+    subcommands:
+      - name: clear
+        description: Clears a Poetry cache by name.
+        usage: poetry cache clear
+        options: []
+      - name: list
+        description: List Poetry's caches.
+        usage: poetry cache list
+        options: []
+  - name: debug
+    description: Show debug information or Debugs dependency resolution
+    usage: poetry debug {info|resolve} [options]
+    options: []
+    subcommands:
+      - name: info
+        description: Shows debug information.
+        usage: poetry debug info
+        options: []
+      - name: resolve
+        description: Debugs dependency resolution.
+        usage: poetry debug resolve
+        options: []
+  - name: env
+    description: Poetry's env
+    usage: poetry env {info|list|remove|use} [options]
+    options: []
+    subcommands:
+      - name: info
+        description: Displays information about the current environment.
+        usage: poetry env info
+        options: []
+      - name: list
+        description: Lists all virtualenvs associated with the current project.
+        usage: poetry env list
+        options: []
+      - name: remove
+        description: Remove virtual environments associated with the project.
+        usage: poetry env remove
+        options: []
+      - name: use
+        description: Activates or creates a new virtualenv for the current project.
+        usage: poetry env uses
+        options: []
+  - name: self
+    description: Manage Poetry itself
+    usage: poetry self {add|install|lock|remove|show|update} [options]
+    options: []
+    subcommands:
+      - name: add
+        description: Add additional packages to Poetry's runtime environment.
+        usage: poetry self add
+        options: []
+      - name: install
+        description: Install locked packages (incl. addons) required by this Poetry installation.
+        usage: poetry self install
+        options: []
+      - name: lock
+        description: Lock the Poetry installation's system requirements.
+        usage: poetry self lock
+        options: []
+      - name: remove
+        description: Remove additional packages from Poetry's runtime environment.
+        usage: poetry self remove
+        options: []
+      - name: show
+        description: Show packages from Poetry's runtime environment.
+        usage: poetry self show [plugins]
+        options: []
+        subcommands:
+          - name: plugins
+            description: Shows information about the currently installed plugins.
+            usage: poetry self show plugins
+            options: []
+      - name: update
+        description: Updates Poetry to the latest version.
+        usage: poetry self update
+        options: []
+  - name: source
+    description: Source configuration for project
+    usage: poetry source {add|remove|show} [options]
+    options: []
+    subcommands:
+      - name: add
+        description: Add source configuration for project.
+        usage: poetry source add
+        options: []
+      - name: remove
+        description: Remove source configured for the project.
+        usage: poetry source remove
+        options: []
+      - name: show
+        description: Show information about sources configured for the project.
+        usage: poetry source show
+        options: []
+  - name: list
+    description: List all subcommands
+    usage: poetry list
+    options: []
+version: Poetry (version 1.5.1)
 tldr: |
   > Manage Python packages and dependencies.
   > More information: <https://python-poetry.org/docs/cli/>.
@@ -1122,7 +1411,7 @@ tldr: |
 
   - Install a development dependency and its subdependencies:
 
-  `poetry add --dev {{dependency}}`
+  `poetry add --group dev {{dependency}}`
 
   - Interactively initialize the current directory as a new Poetry project:
 
@@ -1139,7 +1428,3 @@ tldr: |
   - Bump the minor version of the project in `pyproject.toml`:
 
   `poetry version minor`
-
-  - List all poetry subcommands:
-
-  `poetry list`

@@ -1,5 +1,6 @@
 # Auto-generated with h2o
 
+complete -c ffmpeg -s "h" -d "print basic options" -x
 complete -c ffmpeg -s "L" -d "show license"
 complete -c ffmpeg -s "h" -d "show help" -x
 complete -c ffmpeg -s "?" -d "show help" -x
@@ -35,8 +36,7 @@ complete -c ffmpeg -o "ignore_unknown" -d "Ignore unknown stream types"
 complete -c ffmpeg -o "filter_threads" -d "number of non-complex filter threads"
 complete -c ffmpeg -o "filter_complex_threads" -d "number of threads for -filter_complex"
 complete -c ffmpeg -o "stats" -d "print progress report during encoding"
-complete -c ffmpeg -o "max_error_rate" -d "ratio of decoding errors (0.0: no errors, 1.0: 100% errors) above which ffmpeg returns an error instead of success." -x
-complete -c ffmpeg -o "vol" -d "change audio volume (256=normal)" -x
+complete -c ffmpeg -o "max_error_rate" -d "maximum error rate ratio of decoding errors (0.0: no errors, 1.0: 100% errors) above which ffmpeg returns an error instead of success." -x
 complete -c ffmpeg -o "cpuflags" -d "force specific cpu flags" -x
 complete -c ffmpeg -o "cpucount" -d "force specific cpu count" -x
 complete -c ffmpeg -o "hide_banner" -d "do not show program banner" -x
@@ -51,7 +51,6 @@ complete -c ffmpeg -o "dump" -d "dump each input packet"
 complete -c ffmpeg -o "hex" -d "when dumping packets, also dump the payload"
 complete -c ffmpeg -o "vsync" -d "set video sync method globally; deprecated, use -fps_mode"
 complete -c ffmpeg -o "frame_drop_threshold" -d "frame drop threshold"
-complete -c ffmpeg -o "async" -d "audio sync method"
 complete -c ffmpeg -o "adrift_threshold" -d "audio drift threshold" -x
 complete -c ffmpeg -o "copyts" -d "copy timestamps"
 complete -c ffmpeg -o "start_at_zero" -d "shift input timestamps to start at 0 when using copyts"
@@ -66,7 +65,7 @@ complete -c ffmpeg -o "filter_complex_script" -d "read complex filtergraph descr
 complete -c ffmpeg -o "auto_conversion_filters" -d "enable automatic conversion filters globally"
 complete -c ffmpeg -o "stats_period" -d "set the period at which ffmpeg updates stats and -progress output" -x
 complete -c ffmpeg -o "debug_ts" -d "print timestamp debugging info"
-complete -c ffmpeg -o "psnr" -d "calculate PSNR of compressed frames"
+complete -c ffmpeg -o "psnr" -d "calculate PSNR of compressed frames (deprecated, use -flags +psnr)"
 complete -c ffmpeg -o "vstats" -d "dump video coding statistics to file"
 complete -c ffmpeg -o "vstats_file" -d "dump video coding statistics to file" -r
 complete -c ffmpeg -o "vstats_version" -d "Version of the vstats format to use."
@@ -95,9 +94,10 @@ complete -c ffmpeg -o "frames" -d "set the number of frames to output" -x
 complete -c ffmpeg -o "filter" -d "set stream filtergraph" -x
 complete -c ffmpeg -o "filter_script" -d "read stream filtergraph description from a file" -r
 complete -c ffmpeg -o "reinit_filter" -d "reinit filtergraph on input parameter changes"
-complete -c ffmpeg -o "discard" -o "disposition" -d "disposition" -x
+complete -c ffmpeg -o "discard" -d "discard"
+complete -c ffmpeg -o "disposition" -d "disposition"
 complete -c ffmpeg -o "map" -d "set input stream mapping" -r
-complete -c ffmpeg -o "map_channel" -d "map an audio channel from one stream to another" -r
+complete -c ffmpeg -o "map_channel" -d "map an audio channel from one stream to another (deprecated)" -r
 complete -c ffmpeg -o "map_chapters" -d "set chapters mapping" -r
 complete -c ffmpeg -o "accurate_seek" -d "enable/disable accurate seeking with -ss"
 complete -c ffmpeg -o "isync" -d "Indicate the input index for sync reference" -x
@@ -107,6 +107,7 @@ complete -c ffmpeg -o "dframes" -d "set the number of data frames to output" -x
 complete -c ffmpeg -o "re" -d "read input at native frame rate; equivalent to -readrate 1"
 complete -c ffmpeg -o "readrate" -d "read input at specified rate" -x
 complete -c ffmpeg -o "shortest" -d "finish encoding within shortest input"
+complete -c ffmpeg -o "shortest_buf_duration" -d "maximum buffering duration (in seconds) for the -shortest option"
 complete -c ffmpeg -o "bitexact" -d "bitexact mode"
 complete -c ffmpeg -o "copyinkf" -d "copy initial non-keyframes"
 complete -c ffmpeg -o "copypriorss" -d "copy or discard frames before start time"
@@ -119,7 +120,13 @@ complete -c ffmpeg -o "dump_attachment" -d "extract an attachment into a file" -
 complete -c ffmpeg -o "stream_loop" -d "set number of times input stream shall be looped" -x
 complete -c ffmpeg -o "thread_queue_size" -d "set the maximum number of queued packets from the demuxer"
 complete -c ffmpeg -o "find_stream_info" -d "read and decode the streams to fill missing information with heuristics"
-complete -c ffmpeg -o "bits_per_raw_sample" -d "set the number of bits per raw sample" -x
+complete -c ffmpeg -o "bits_per_raw_sample" -d "number set the number of bits per raw sample"
+complete -c ffmpeg -o "stats_enc_pre" -d "write encoding stats before encoding"
+complete -c ffmpeg -o "stats_enc_post" -d "write encoding stats after encoding"
+complete -c ffmpeg -o "stats_mux_pre" -d "write packets stats before muxing"
+complete -c ffmpeg -o "stats_enc_pre_fmt" -d "format of the stats written with -stats_enc_pre"
+complete -c ffmpeg -o "stats_enc_post_fmt" -d "format of the stats written with -stats_enc_post"
+complete -c ffmpeg -o "stats_mux_pre_fmt" -d "format of the stats written with -stats_mux_pre"
 complete -c ffmpeg -o "autorotate" -d "automatically insert correct rotate filters"
 complete -c ffmpeg -o "autoscale" -d "automatically insert a scale filter at the end of the filter graph"
 complete -c ffmpeg -o "muxdelay" -d "set the maximum demux-decode delay" -x
@@ -136,12 +143,14 @@ complete -c ffmpeg -s "r" -d "set frame rate (Hz value, fraction or abbreviation
 complete -c ffmpeg -o "fpsmax" -d "set max frame rate (Hz value, fraction or abbreviation)" -x
 complete -c ffmpeg -s "s" -d "set frame size (WxH or abbreviation)" -x
 complete -c ffmpeg -o "aspect" -d "set aspect ratio (4:3, 16:9 or 1.3333, 1.7777)" -x
+complete -c ffmpeg -o "display_rotation" -d "set pure counter-clockwise rotation in degrees for stream(s)" -x
+complete -c ffmpeg -o "display_hflip" -d "set display horizontal flip for stream(s) (overrides any display rotation if it is not set)"
+complete -c ffmpeg -o "display_vflip" -d "set display vertical flip for stream(s) (overrides any display rotation if it is not set)"
 complete -c ffmpeg -o "vn" -d "disable video"
 complete -c ffmpeg -s "v" -d "force video codec ('copy' to copy stream)" -x
 complete -c ffmpeg -o "timecode" -d "set initial TimeCode value." -x
 complete -c ffmpeg -o "pass" -d "select the pass number (1 to 3)" -x
 complete -c ffmpeg -o "vf" -d "set video filters" -x
-complete -c ffmpeg -o "ab" -d "audio bitrate (please use -b:a)" -x
 complete -c ffmpeg -s "b" -d "video bitrate (please use -b:v)" -x
 complete -c ffmpeg -o "dn" -d "disable data"
 complete -c ffmpeg -o "pix_fmt" -d "set pixel format" -x
@@ -159,6 +168,7 @@ complete -c ffmpeg -o "force_key_frames" -d "force key frames at specified times
 complete -c ffmpeg -o "hwaccel" -d "use HW accelerated decoding" -x
 complete -c ffmpeg -o "hwaccel_device" -d "select a device for HW acceleration" -x
 complete -c ffmpeg -o "hwaccel_output_format" -d "select output format used with HW accelerated decoding" -x
+complete -c ffmpeg -o "fix_sub_duration_heartbeat" -d "set this video output stream to be a heartbeat stream for fix_sub_duration, according to which subtitles should be split at random access points"
 complete -c ffmpeg -o "vbsf" -d "deprecated" -x
 complete -c ffmpeg -o "vpre" -d "set the video options to the indicated preset" -x
 complete -c ffmpeg -o "aframes" -d "set the number of audio frames to output" -x
@@ -167,6 +177,7 @@ complete -c ffmpeg -o "ar" -d "set audio sampling rate (in Hz)" -x
 complete -c ffmpeg -o "ac" -d "set number of audio channels" -x
 complete -c ffmpeg -o "an" -d "disable audio"
 complete -c ffmpeg -s "a" -d "force audio codec ('copy' to copy stream)" -x
+complete -c ffmpeg -o "ab" -d "audio bitrate (please use -b:a)" -x
 complete -c ffmpeg -o "af" -d "set audio filters" -x
 complete -c ffmpeg -o "atag" -d "force audio tag/fourcc" -x
 complete -c ffmpeg -o "sample_fmt" -d "set sample format" -x

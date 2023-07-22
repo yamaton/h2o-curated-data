@@ -1,7 +1,11 @@
 name: ffmpeg
-description: ffmpeg
+description: Hyper fast Audio and Video encoder
 usage: ffmpeg [options] [[infile options] -i infile]... {[outfile options] outfile}...
 options:
+  - names:
+      - -h
+    argument: '{long|full}'
+    description: print basic options
   - names:
       - -L
     argument: ""
@@ -144,12 +148,8 @@ options:
     description: print progress report during encoding
   - names:
       - -max_error_rate
-    argument: maximum error rate
-    description: 'ratio of decoding errors (0.0: no errors, 1.0: 100% errors) above which ffmpeg returns an error instead of success.'
-  - names:
-      - -vol
-    argument: volume
-    description: change audio volume (256=normal)
+    argument: target
+    description: 'maximum error rate ratio of decoding errors (0.0: no errors, 1.0: 100% errors) above which ffmpeg returns an error instead of success.'
   - names:
       - -cpuflags
     argument: flags
@@ -206,10 +206,6 @@ options:
       - -frame_drop_threshold
     argument: ""
     description: frame drop threshold
-  - names:
-      - -async
-    argument: ""
-    description: audio sync method
   - names:
       - -adrift_threshold
     argument: threshold
@@ -269,7 +265,7 @@ options:
   - names:
       - -psnr
     argument: ""
-    description: calculate PSNR of compressed frames
+    description: calculate PSNR of compressed frames (deprecated, use -flags +psnr)
   - names:
       - -vstats
     argument: ""
@@ -384,8 +380,11 @@ options:
     description: reinit filtergraph on input parameter changes
   - names:
       - -discard
+    argument: ""
+    description: discard
+  - names:
       - -disposition
-    argument: discard
+    argument: ""
     description: disposition
   - names:
       - -map
@@ -394,7 +393,7 @@ options:
   - names:
       - -map_channel
     argument: file.stream.channel[:syncfile.syncstream]
-    description: map an audio channel from one stream to another
+    description: map an audio channel from one stream to another (deprecated)
   - names:
       - -map_chapters
     argument: input_file_index
@@ -431,6 +430,10 @@ options:
       - -shortest
     argument: ""
     description: finish encoding within shortest input
+  - names:
+      - -shortest_buf_duration
+    argument: ""
+    description: maximum buffering duration (in seconds) for the -shortest option
   - names:
       - -bitexact
     argument: ""
@@ -481,8 +484,32 @@ options:
     description: read and decode the streams to fill missing information with heuristics
   - names:
       - -bits_per_raw_sample
-    argument: number
-    description: set the number of bits per raw sample
+    argument: ""
+    description: number set the number of bits per raw sample
+  - names:
+      - -stats_enc_pre
+    argument: ""
+    description: write encoding stats before encoding
+  - names:
+      - -stats_enc_post
+    argument: ""
+    description: write encoding stats after encoding
+  - names:
+      - -stats_mux_pre
+    argument: ""
+    description: write packets stats before muxing
+  - names:
+      - -stats_enc_pre_fmt
+    argument: ""
+    description: format of the stats written with -stats_enc_pre
+  - names:
+      - -stats_enc_post_fmt
+    argument: ""
+    description: format of the stats written with -stats_enc_post
+  - names:
+      - -stats_mux_pre_fmt
+    argument: ""
+    description: format of the stats written with -stats_mux_pre
   - names:
       - -autorotate
     argument: ""
@@ -548,6 +575,18 @@ options:
     argument: aspect
     description: set aspect ratio (4:3, 16:9 or 1.3333, 1.7777)
   - names:
+      - -display_rotation
+    argument: angle
+    description: set pure counter-clockwise rotation in degrees for stream(s)
+  - names:
+      - -display_hflip
+    argument: ""
+    description: set display horizontal flip for stream(s) (overrides any display rotation if it is not set)
+  - names:
+      - -display_vflip
+    argument: ""
+    description: set display vertical flip for stream(s) (overrides any display rotation if it is not set)
+  - names:
       - -vn
     argument: ""
     description: disable video
@@ -557,7 +596,7 @@ options:
     description: force video codec ('copy' to copy stream)
   - names:
       - -timecode
-    argument: hh:mm:ssff
+    argument: hh:mm:ss[:;.]ff
     description: set initial TimeCode value.
   - names:
       - -pass
@@ -567,10 +606,6 @@ options:
       - -vf
     argument: filter_graph
     description: set video filters
-  - names:
-      - -ab
-    argument: bitrate
-    description: audio bitrate (please use -b:a)
   - names:
       - -b
     argument: bitrate
@@ -640,6 +675,10 @@ options:
     argument: format
     description: select output format used with HW accelerated decoding
   - names:
+      - -fix_sub_duration_heartbeat
+    argument: ""
+    description: set this video output stream to be a heartbeat stream for fix_sub_duration, according to which subtitles should be split at random access points
+  - names:
       - -vbsf
     argument: video bitstream_filters
     description: deprecated
@@ -671,6 +710,10 @@ options:
       - -a
     argument: codec
     description: force audio codec ('copy' to copy stream)
+  - names:
+      - -ab
+    argument: bitrate
+    description: audio bitrate (please use -b:a)
   - names:
       - -af
     argument: filter_graph
@@ -727,7 +770,7 @@ options:
       - -spre
     argument: preset
     description: set the subtitle options to the indicated preset
-version: ffmpeg version 5.1.2 Copyright (c) 2000-2022 the FFmpeg developers
+version: ffmpeg version 6.0
 tldr: |
   > Video conversion tool.
   > More information: <https://ffmpeg.org>.
@@ -754,12 +797,12 @@ tldr: |
 
   - Convert AVI video to MP4. AAC Audio @ 128kbit, h264 Video @ CRF 23:
 
-  `ffmpeg -i {{input_video}}.avi -codec:audio aac -b:audio 128k -codec:video libx264 -crf 23 {{output_video}}.mp4`
+  `ffmpeg -i {{input_video}}.avi -codec:a aac -b:a 128k -codec:v libx264 -crf 23 {{output_video}}.mp4`
 
   - Remux MKV video to MP4 without re-encoding audio or video streams:
 
   `ffmpeg -i {{input_video}}.mkv -codec copy {{output_video}}.mp4`
 
-  - Convert MP4 video to VP9 codec. For the best quality, use a CRF value (recommended range 15-35) and -b:video MUST be 0:
+  - Convert MP4 video to VP9 codec. For the best quality, use a CRF value (recommended range 15-35) and -b:v MUST be 0:
 
-  `ffmpeg -i {{input_video}}.mp4 -codec:video libvpx-vp9 -crf {{30}} -b:video 0 -codec:audio libopus -vbr on -threads {{number_of_threads}} {{output_video}}.webm`
+  `ffmpeg -i {{input_video}}.mp4 -codec:v libvpx-vp9 -crf {{30}} -b:v 0 -codec:a libopus -vbr on -threads {{number_of_threads}} {{output_video}}.webm`

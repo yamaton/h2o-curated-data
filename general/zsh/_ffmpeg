@@ -1,20 +1,10 @@
-#compdef _ffmpeg ffmpeg
+#compdef ffmpeg
 
 # Auto-generated with h2o
 
-
 function _ffmpeg {
-    local line state
-
-    function _commands {
-        local -a commands
-        commands=(
-        )
-        _describe 'command' commands
-    }
- 
-
-    _arguments -C \
+    _arguments \
+        '-h[print basic options]' \
         '-L[show license]' \
         '-h[show help]' \
         '-?[show help]' \
@@ -50,8 +40,7 @@ function _ffmpeg {
         '-filter_threads[number of non-complex filter threads]' \
         '-filter_complex_threads[number of threads for -filter_complex]' \
         '-stats[print progress report during encoding]' \
-        '-max_error_rate[ratio of decoding errors (0.0: no errors, 1.0: 100% errors) above which ffmpeg returns an error instead of success.]' \
-        '-vol[change audio volume (256=normal)]' \
+        '-max_error_rate[maximum error rate ratio of decoding errors (0.0: no errors, 1.0: 100% errors) above which ffmpeg returns an error instead of success.]' \
         '-cpuflags[force specific cpu flags]' \
         '-cpucount[force specific cpu count]' \
         '-hide_banner[do not show program banner]' \
@@ -66,7 +55,6 @@ function _ffmpeg {
         '-hex[when dumping packets, also dump the payload]' \
         '-vsync[set video sync method globally; deprecated, use -fps_mode]' \
         '-frame_drop_threshold[frame drop threshold]' \
-        '-async[audio sync method]' \
         '-adrift_threshold[audio drift threshold]' \
         '-copyts[copy timestamps]' \
         '-start_at_zero[shift input timestamps to start at 0 when using copyts]' \
@@ -81,7 +69,7 @@ function _ffmpeg {
         '-auto_conversion_filters[enable automatic conversion filters globally]' \
         '-stats_period[set the period at which ffmpeg updates stats and -progress output]' \
         '-debug_ts[print timestamp debugging info]' \
-        '-psnr[calculate PSNR of compressed frames]' \
+        '-psnr[calculate PSNR of compressed frames (deprecated, use -flags +psnr)]' \
         '-vstats[dump video coding statistics to file]' \
         '-vstats_file[dump video coding statistics to file]':file:_files \
         '-vstats_version[Version of the vstats format to use.]' \
@@ -110,9 +98,10 @@ function _ffmpeg {
         '-filter[set stream filtergraph]' \
         '-filter_script[read stream filtergraph description from a file]':file:_files \
         '-reinit_filter[reinit filtergraph on input parameter changes]' \
-        {-discard,-disposition}'[disposition]' \
+        '-discard[discard]' \
+        '-disposition[disposition]' \
         '-map[set input stream mapping]':file:_files \
-        '-map_channel[map an audio channel from one stream to another]':file:_files \
+        '-map_channel[map an audio channel from one stream to another (deprecated)]':file:_files \
         '-map_chapters[set chapters mapping]':file:_files \
         '-accurate_seek[enable/disable accurate seeking with -ss]' \
         '-isync[Indicate the input index for sync reference]' \
@@ -122,6 +111,7 @@ function _ffmpeg {
         '-re[read input at native frame rate; equivalent to -readrate 1]' \
         '-readrate[read input at specified rate]' \
         '-shortest[finish encoding within shortest input]' \
+        '-shortest_buf_duration[maximum buffering duration (in seconds) for the -shortest option]' \
         '-bitexact[bitexact mode]' \
         '-copyinkf[copy initial non-keyframes]' \
         '-copypriorss[copy or discard frames before start time]' \
@@ -134,7 +124,13 @@ function _ffmpeg {
         '-stream_loop[set number of times input stream shall be looped]' \
         '-thread_queue_size[set the maximum number of queued packets from the demuxer]' \
         '-find_stream_info[read and decode the streams to fill missing information with heuristics]' \
-        '-bits_per_raw_sample[set the number of bits per raw sample]' \
+        '-bits_per_raw_sample[number set the number of bits per raw sample]' \
+        '-stats_enc_pre[write encoding stats before encoding]' \
+        '-stats_enc_post[write encoding stats after encoding]' \
+        '-stats_mux_pre[write packets stats before muxing]' \
+        '-stats_enc_pre_fmt[format of the stats written with -stats_enc_pre]' \
+        '-stats_enc_post_fmt[format of the stats written with -stats_enc_post]' \
+        '-stats_mux_pre_fmt[format of the stats written with -stats_mux_pre]' \
         '-autorotate[automatically insert correct rotate filters]' \
         '-autoscale[automatically insert a scale filter at the end of the filter graph]' \
         '-muxdelay[set the maximum demux-decode delay]' \
@@ -151,12 +147,14 @@ function _ffmpeg {
         '-fpsmax[set max frame rate (Hz value, fraction or abbreviation)]' \
         '-s[set frame size (WxH or abbreviation)]' \
         '-aspect[set aspect ratio (4:3, 16:9 or 1.3333, 1.7777)]' \
+        '-display_rotation[set pure counter-clockwise rotation in degrees for stream(s)]' \
+        '-display_hflip[set display horizontal flip for stream(s) (overrides any display rotation if it is not set)]' \
+        '-display_vflip[set display vertical flip for stream(s) (overrides any display rotation if it is not set)]' \
         '-vn[disable video]' \
         '-v[force video codec ('\''copy'\'' to copy stream)]' \
         '-timecode[set initial TimeCode value.]' \
         '-pass[select the pass number (1 to 3)]' \
         '-vf[set video filters]' \
-        '-ab[audio bitrate (please use -b:a)]' \
         '-b[video bitrate (please use -b:v)]' \
         '-dn[disable data]' \
         '-pix_fmt[set pixel format]' \
@@ -174,6 +172,7 @@ function _ffmpeg {
         '-hwaccel[use HW accelerated decoding]' \
         '-hwaccel_device[select a device for HW acceleration]' \
         '-hwaccel_output_format[select output format used with HW accelerated decoding]' \
+        '-fix_sub_duration_heartbeat[set this video output stream to be a heartbeat stream for fix_sub_duration, according to which subtitles should be split at random access points]' \
         '-vbsf[deprecated]' \
         '-vpre[set the video options to the indicated preset]' \
         '-aframes[set the number of audio frames to output]' \
@@ -182,6 +181,7 @@ function _ffmpeg {
         '-ac[set number of audio channels]' \
         '-an[disable audio]' \
         '-a[force audio codec ('\''copy'\'' to copy stream)]' \
+        '-ab[audio bitrate (please use -b:a)]' \
         '-af[set audio filters]' \
         '-atag[force audio tag/fourcc]' \
         '-sample_fmt[set sample format]' \
@@ -196,17 +196,9 @@ function _ffmpeg {
         '-fix_sub_duration[fix subtitles duration]' \
         '-canvas_size[set canvas size (WxH or abbreviation)]' \
         '-spre[set the subtitle options to the indicated preset]' \
-        '*: :_files'
-
-    case $state in
-    (cmd)
-        _commands
-        ;;
-    (subcmd)
-        case $line[1] in
-        esac
-        ;;
-     esac
+        "*: :_files"
 
 }
+
+_ffmpeg "$@"
 

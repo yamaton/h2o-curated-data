@@ -1,7 +1,7 @@
 # Auto-generated with h2o
 
-complete -k -c minikube -n __fish_use_subcommand -x -a completion -d "Generate command completion for a shell"
 complete -k -c minikube -n __fish_use_subcommand -x -a license -d "Outputs the licenses of dependencies to a directory"
+complete -k -c minikube -n __fish_use_subcommand -x -a completion -d "Generate command completion for a shell"
 complete -k -c minikube -n __fish_use_subcommand -x -a options -d "Show a list of global command-line options (applies to all commands)."
 complete -k -c minikube -n __fish_use_subcommand -x -a version -d "Print the version of minikube"
 complete -k -c minikube -n __fish_use_subcommand -x -a update-check -d "Print current and latest version number"
@@ -34,7 +34,10 @@ complete -k -c minikube -n __fish_use_subcommand -x -a start -d "Starts a local 
 
 
 
+complete -c minikube -n "__fish_seen_subcommand_from start" -l "addons" -d "Enable addons." -x
+complete -c minikube -n "__fish_seen_subcommand_from start" -l "apiserver-ips" -d "A set of apiserver IP Addresses which are used in the generated certificate for kubernetes." -x
 complete -c minikube -n "__fish_seen_subcommand_from start" -l "apiserver-name" -d "The authoritative apiserver hostname for apiserver certificates and connectivity." -x
+complete -c minikube -n "__fish_seen_subcommand_from start" -l "apiserver-names" -d "A set of apiserver names which are used in the generated certificate for kubernetes." -x
 complete -c minikube -n "__fish_seen_subcommand_from start" -l "apiserver-port" -d "The apiserver listening port" -x
 complete -c minikube -n "__fish_seen_subcommand_from start" -l "auto-update-drivers" -d "If set, automatically updates drivers to the latest version." -x
 complete -c minikube -n "__fish_seen_subcommand_from start" -l "base-image" -d "The base image to use for docker/podman drivers." -x
@@ -52,13 +55,15 @@ complete -c minikube -n "__fish_seen_subcommand_from start" -l "disable-optimiza
 complete -c minikube -n "__fish_seen_subcommand_from start" -l "disk-size" -d "Disk size allocated to the minikube VM (format: <number>[<unit>], where unit = b, k, m or g)." -x
 complete -c minikube -n "__fish_seen_subcommand_from start" -l "dns-domain" -d "The cluster dns domain name used in the Kubernetes cluster" -x
 complete -c minikube -n "__fish_seen_subcommand_from start" -l "dns-proxy" -d "Enable proxy for NAT DNS requests (virtualbox driver only)" -x
+complete -c minikube -n "__fish_seen_subcommand_from start" -l "docker-env" -d "Environment variables to pass to the Docker daemon." -x
+complete -c minikube -n "__fish_seen_subcommand_from start" -l "docker-opt" -d "Specify arbitrary flags to pass to the Docker daemon." -x
 complete -c minikube -n "__fish_seen_subcommand_from start" -l "download-only" -d "If true, only download and cache files for later use - don't install or start anything." -r
-complete -c minikube -n "__fish_seen_subcommand_from start" -l "driver" -d "Driver is one of: virtualbox, vmwarefusion, kvm2, qemu2 (experimental), qemu (experimental), vmware, none, docker, podman, ssh (defaults to auto-detect)" -x
+complete -c minikube -n "__fish_seen_subcommand_from start" -l "driver" -d "Driver is one of: virtualbox, kvm2, qemu2, qemu, vmware, none, docker, podman, ssh (defaults to auto-detect)" -x
 complete -c minikube -n "__fish_seen_subcommand_from start" -l "dry-run" -d "dry-run mode." -x
 complete -c minikube -n "__fish_seen_subcommand_from start" -l "embed-certs" -d "if true, will embed the certs in kubeconfig." -x
 complete -c minikube -n "__fish_seen_subcommand_from start" -l "enable-default-cni" -d "DEPRECATED: Replaced by --cni=bridge" -x
 complete -c minikube -n "__fish_seen_subcommand_from start" -l "extra-config" -d "A set of key=value pairs that describe configuration that may be passed to different components."
-complete -c minikube -n "__fish_seen_subcommand_from start" -l "extra-disks" -d "Number of extra disks created and attached to the minikube VM (currently only implemented for hyperkit and kvm2 drivers)" -x
+complete -c minikube -n "__fish_seen_subcommand_from start" -l "extra-disks" -d "Number of extra disks created and attached to the minikube VM (currently only implemented for hyperkit, kvm2, and qemu2 drivers)" -x
 complete -c minikube -n "__fish_seen_subcommand_from start" -l "feature-gates" -d "A set of key=value pairs that describe feature gates for alpha/experimental features." -x
 complete -c minikube -n "__fish_seen_subcommand_from start" -l "force" -d "Force minikube to perform possibly dangerous operations" -x
 complete -c minikube -n "__fish_seen_subcommand_from start" -l "force-systemd" -d "If set, force the container runtime to use systemd as cgroup manager." -x
@@ -66,16 +71,18 @@ complete -c minikube -n "__fish_seen_subcommand_from start" -l "host-dns-resolve
 complete -c minikube -n "__fish_seen_subcommand_from start" -l "host-only-cidr" -d "The CIDR to be used for the minikube VM (virtualbox driver only)" -x
 complete -c minikube -n "__fish_seen_subcommand_from start" -l "host-only-nic-type" -d "NIC Type used for host only network." -x
 complete -c minikube -n "__fish_seen_subcommand_from start" -l "hyperkit-vpnkit-sock" -d "Location of the VPNKit socket used for networking." -x
+complete -c minikube -n "__fish_seen_subcommand_from start" -l "hyperkit-vsock-ports" -d "List of guest VSock ports that should be exposed as sockets on the host (hyperkit driver only)" -x
 complete -c minikube -n "__fish_seen_subcommand_from start" -l "hyperv-external-adapter" -d "External Adapter on which external switch will be created if no external switch is found." -x
 complete -c minikube -n "__fish_seen_subcommand_from start" -l "hyperv-use-external-switch" -d "Whether to use external switch over Default Switch if virtual switch not explicitly specified." -x
 complete -c minikube -n "__fish_seen_subcommand_from start" -l "hyperv-virtual-switch" -d "The hyperv virtual switch name." -x
 complete -c minikube -n "__fish_seen_subcommand_from start" -l "image-mirror-country" -d "Country code of the image mirror to be used." -x
 complete -c minikube -n "__fish_seen_subcommand_from start" -l "image-repository" -d "Alternative image repository to pull docker images from." -x
+complete -c minikube -n "__fish_seen_subcommand_from start" -l "insecure-registry" -d "Insecure Docker registries to pass to the Docker daemon." -x
 complete -c minikube -n "__fish_seen_subcommand_from start" -l "install-addons" -d "If set, install addons." -x
 complete -c minikube -n "__fish_seen_subcommand_from start" -l "interactive" -d "Allow user prompts for more information" -x
 complete -c minikube -n "__fish_seen_subcommand_from start" -l "iso-url" -d "Locations to fetch the minikube ISO from." -x
 complete -c minikube -n "__fish_seen_subcommand_from start" -l "keep-context" -d "This will keep the existing kubectl context and will create a minikube context." -x
-complete -c minikube -n "__fish_seen_subcommand_from start" -l "kubernetes-version" -d "The Kubernetes version that the minikube VM will use (ex: v1.2.3, 'stable' for v1.25.3, 'latest' for v1.25.3)." -x
+complete -c minikube -n "__fish_seen_subcommand_from start" -l "kubernetes-version" -d "The Kubernetes version that the minikube VM will use (ex: v1.2.3, 'stable' for v1.27.3, 'latest' for v1.27.3)." -x
 complete -c minikube -n "__fish_seen_subcommand_from start" -l "kvm-gpu" -d "Enable experimental NVIDIA GPU support in minikube" -x
 complete -c minikube -n "__fish_seen_subcommand_from start" -l "kvm-hidden" -d "Hide the hypervisor signature from the guest in minikube (kvm2 driver only)" -x
 complete -c minikube -n "__fish_seen_subcommand_from start" -l "kvm-network" -d "The KVM default network name." -x
@@ -88,6 +95,7 @@ complete -c minikube -n "__fish_seen_subcommand_from start" -l "mount-9p-version
 complete -c minikube -n "__fish_seen_subcommand_from start" -l "mount-gid" -d "Default group id used for the mount" -x
 complete -c minikube -n "__fish_seen_subcommand_from start" -l "mount-ip" -d "Specify the ip that the mount should be setup on" -x
 complete -c minikube -n "__fish_seen_subcommand_from start" -l "mount-msize" -d "The number of bytes to use for 9p packet payload" -x
+complete -c minikube -n "__fish_seen_subcommand_from start" -l "mount-options" -d "Additional mount options, such as cache=fscache" -x
 complete -c minikube -n "__fish_seen_subcommand_from start" -l "mount-port" -d "Specify the port that the mount should be setup on, where 0 means any free port." -x
 complete -c minikube -n "__fish_seen_subcommand_from start" -l "mount-string" -d "The argument to pass the minikube mount command on start." -x
 complete -c minikube -n "__fish_seen_subcommand_from start" -l "mount-type" -d "Specify the mount filesystem type (supported types: 9p)" -r
@@ -97,20 +105,24 @@ complete -c minikube -n "__fish_seen_subcommand_from start" -l "nat-nic-type" -d
 complete -c minikube -n "__fish_seen_subcommand_from start" -l "native-ssh" -d "Use native Golang SSH client (default true)." -x
 complete -c minikube -n "__fish_seen_subcommand_from start" -l "network" -d "network to run minikube with." -x
 complete -c minikube -n "__fish_seen_subcommand_from start" -l "network-plugin" -d "DEPRECATED: Replaced by --cni" -x
+complete -c minikube -n "__fish_seen_subcommand_from start" -l "nfs-share" -d "Local folders to share with Guest via NFS mounts (hyperkit driver only)" -x
 complete -c minikube -n "__fish_seen_subcommand_from start" -l "nfs-shares-root" -d "Where to root the NFS Shares, defaults to /nfsshares (hyperkit driver only)" -x
 complete -c minikube -n "__fish_seen_subcommand_from start" -l "no-kubernetes" -d "If set, minikube VM/container will start without starting or configuring Kubernetes." -x
 complete -c minikube -n "__fish_seen_subcommand_from start" -l "no-vtx-check" -d "Disable checking for the availability of hardware virtualization before the vm is started (virtualbox driver only)" -x
 complete -c minikube -n "__fish_seen_subcommand_from start" -s "n" -l "nodes" -d "The number of nodes to spin up." -x
 complete -c minikube -n "__fish_seen_subcommand_from start" -s "o" -l "output" -d "Format to print stdout in." -x
+complete -c minikube -n "__fish_seen_subcommand_from start" -l "ports" -d "List of ports that should be exposed (docker and podman driver only)" -x
 complete -c minikube -n "__fish_seen_subcommand_from start" -l "preload" -d "If set, download tarball of preloaded images if available to improve start time." -x
 complete -c minikube -n "__fish_seen_subcommand_from start" -l "qemu-firmware-path" -d "Path to the qemu firmware file." -r
+complete -c minikube -n "__fish_seen_subcommand_from start" -l "registry-mirror" -d "Registry mirrors to pass to the Docker daemon" -x
 complete -c minikube -n "__fish_seen_subcommand_from start" -l "service-cluster-ip-range" -d "The CIDR to be used for service cluster IPs." -x
-complete -c minikube -n "__fish_seen_subcommand_from start" -l "socket-vmnet-client-path" -d "Path to the socket vmnet client binary" -r
-complete -c minikube -n "__fish_seen_subcommand_from start" -l "socket-vmnet-path" -d "Path to socket vmnet binary" -r
+complete -c minikube -n "__fish_seen_subcommand_from start" -l "socket-vmnet-client-path" -d "Path to the socket vmnet client binary (QEMU driver only)" -r
+complete -c minikube -n "__fish_seen_subcommand_from start" -l "socket-vmnet-path" -d "Path to socket vmnet binary (QEMU driver only)" -r
 complete -c minikube -n "__fish_seen_subcommand_from start" -l "ssh-ip-address" -d "IP address (ssh driver only)" -x
 complete -c minikube -n "__fish_seen_subcommand_from start" -l "ssh-key" -d "SSH key (ssh driver only)" -x
 complete -c minikube -n "__fish_seen_subcommand_from start" -l "ssh-port" -d "SSH port (ssh driver only)" -x
 complete -c minikube -n "__fish_seen_subcommand_from start" -l "ssh-user" -d "SSH user (ssh driver only)" -x
+complete -c minikube -n "__fish_seen_subcommand_from start" -l "static-ip" -d "Set a static IP for the minikube cluster, the IP must be: private, IPv4, and the last octet must be between 2 and 254, for example 192.168.200.200 (Docker and Podman drivers only)" -x
 complete -c minikube -n "__fish_seen_subcommand_from start" -l "subnet" -d "Subnet to be used on kic cluster." -x
 complete -c minikube -n "__fish_seen_subcommand_from start" -l "trace" -d "Send trace events." -x
 complete -c minikube -n "__fish_seen_subcommand_from start" -l "uuid" -d "Provide VM UUID to restore MAC address (hyperkit driver only)" -x
@@ -148,11 +160,14 @@ complete -c minikube -n "__fish_seen_subcommand_from dashboard" -l "url" -d "Dis
 
 
 
+complete -c minikube -n "__fish_seen_subcommand_from pause" -s "A" -l "all-namespaces" -d "If set, pause all namespaces" -x
+complete -c minikube -n "__fish_seen_subcommand_from pause" -s "n" -l "namespaces" -d "namespaces to pause" -x
 complete -c minikube -n "__fish_seen_subcommand_from pause" -s "o" -l "output" -d "Format to print stdout in." -x
 
 
 
 complete -c minikube -n "__fish_seen_subcommand_from unpause" -s "A" -l "all-namespaces" -d "If set, unpause all namespaces" -x
+complete -c minikube -n "__fish_seen_subcommand_from unpause" -s "n" -l "namespaces" -d "namespaces to unpause" -x
 complete -c minikube -n "__fish_seen_subcommand_from unpause" -s "o" -l "output" -d "Format to print stdout in." -x
 
 
@@ -190,6 +205,7 @@ complete -c minikube -n "__fish_seen_subcommand_from mount" -l "gid" -d "Default
 complete -c minikube -n "__fish_seen_subcommand_from mount" -l "ip" -d "Specify the ip that the mount should be setup on" -x
 complete -c minikube -n "__fish_seen_subcommand_from mount" -l "kill" -d "Kill the mount process spawned by minikube start" -x
 complete -c minikube -n "__fish_seen_subcommand_from mount" -l "msize" -d "The number of bytes to use for 9p packet payload" -x
+complete -c minikube -n "__fish_seen_subcommand_from mount" -l "options" -d "Additional mount options, such as cache=fscache" -x
 complete -c minikube -n "__fish_seen_subcommand_from mount" -l "port" -d "Specify the port that the mount should be setup on, where 0 means any free port." -x
 complete -c minikube -n "__fish_seen_subcommand_from mount" -l "type" -d "Specify the mount filesystem type (supported types: 9p)" -r
 complete -c minikube -n "__fish_seen_subcommand_from mount" -l "uid" -d "Default user id used for the mount" -x
@@ -221,6 +237,7 @@ complete -c minikube -n "__fish_seen_subcommand_from ip" -s "n" -l "node" -d "Th
 complete -c minikube -n "__fish_seen_subcommand_from logs" -l "audit" -d "Show only the audit logs" -x
 complete -c minikube -n "__fish_seen_subcommand_from logs" -l "file" -d "If present, writes to the provided file instead of stdout." -r
 complete -c minikube -n "__fish_seen_subcommand_from logs" -s "f" -l "follow" -d "Show only the most recent journal entries, and continuously print new entries as they are appended to the journal." -x
+complete -c minikube -n "__fish_seen_subcommand_from logs" -l "last-start-only" -d "Show only the last start logs." -x
 complete -c minikube -n "__fish_seen_subcommand_from logs" -s "n" -l "length" -d "Number of lines back to go within the log" -x
 complete -c minikube -n "__fish_seen_subcommand_from logs" -l "node" -d "The node to get logs from." -x
 complete -c minikube -n "__fish_seen_subcommand_from logs" -l "problems" -d "Show only log entries which point to known problems" -x

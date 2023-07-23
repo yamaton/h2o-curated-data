@@ -1,5 +1,5 @@
 name: minikube
-description: minikube
+description: minikube provisions and manages local Kubernetes clusters optimized for development workflows.
 usage: ""
 options: []
 inheritedOptions:
@@ -51,6 +51,10 @@ inheritedOptions:
     argument: "false"
     description: Force to use rootless driver (docker and podman driver only)
   - names:
+      - --skip-audit
+    argument: "false"
+    description: Skip recording the current command in the audit logs.
+  - names:
       - --skip_headers
     argument: "false"
     description: If true, avoid header prefixes in the log messages
@@ -81,9 +85,21 @@ subcommands:
     usage: minikube start [flags] [options]
     options:
       - names:
+          - --addons
+        argument: '[]'
+        description: Enable addons. see `minikube addons list` for a list of valid addon names.
+      - names:
+          - --apiserver-ips
+        argument: '[]'
+        description: A set of apiserver IP Addresses which are used in the generated certificate for kubernetes. This can be used if you want to make the apiserver available from outside the machine
+      - names:
           - --apiserver-name
         argument: '''minikubeCA'''
         description: The authoritative apiserver hostname for apiserver certificates and connectivity. This can be used if you want to make the apiserver available from outside the machine
+      - names:
+          - --apiserver-names
+        argument: '[]'
+        description: A set of apiserver names which are used in the generated certificate for kubernetes. This can be used if you want to make the apiserver available from outside the machine
       - names:
           - --apiserver-port
         argument: "8443"
@@ -94,7 +110,7 @@ subcommands:
         description: If set, automatically updates drivers to the latest version. Defaults to true.
       - names:
           - --base-image
-        argument: '''gcr.io/k8s-minikube/kicbase:v0.0.36@sha256:8debc1b6a335075c5f99bfbf131b4f5566f68c6500dc5991817832e55fcc9456'''
+        argument: IMAGE
         description: The base image to use for docker/podman drivers. Intended for local development.
       - names:
           - --binary-mirror
@@ -153,13 +169,21 @@ subcommands:
         argument: "false"
         description: Enable proxy for NAT DNS requests (virtualbox driver only)
       - names:
+          - --docker-env
+        argument: '[]'
+        description: 'Environment variables to pass to the Docker daemon. (format: key=value)'
+      - names:
+          - --docker-opt
+        argument: '[]'
+        description: 'Specify arbitrary flags to pass to the Docker daemon. (format: key=value)'
+      - names:
           - --download-only
         argument: "false"
         description: If true, only download and cache files for later use - don't install or start anything.
       - names:
           - --driver
         argument: ''''''
-        description: 'Driver is one of: virtualbox, vmwarefusion, kvm2, qemu2 (experimental), qemu (experimental), vmware, none, docker, podman, ssh (defaults to auto-detect)'
+        description: 'Driver is one of: virtualbox, kvm2, qemu2, qemu, vmware, none, docker, podman, ssh (defaults to auto-detect)'
       - names:
           - --dry-run
         argument: "false"
@@ -179,7 +203,7 @@ subcommands:
       - names:
           - --extra-disks
         argument: "0"
-        description: Number of extra disks created and attached to the minikube VM (currently only implemented for hyperkit and kvm2 drivers)
+        description: Number of extra disks created and attached to the minikube VM (currently only implemented for hyperkit, kvm2, and qemu2 drivers)
       - names:
           - --feature-gates
         argument: ''''''
@@ -209,6 +233,10 @@ subcommands:
         argument: ''''''
         description: Location of the VPNKit socket used for networking. If empty, disables Hyperkit VPNKitSock, if 'auto' uses Docker for Mac VPNKit connection, otherwise uses the specified VSock (hyperkit driver only)
       - names:
+          - --hyperkit-vsock-ports
+        argument: '[]'
+        description: List of guest VSock ports that should be exposed as sockets on the host (hyperkit driver only)
+      - names:
           - --hyperv-external-adapter
         argument: ''''''
         description: External Adapter on which external switch will be created if no external switch is found. (hyperv driver only)
@@ -229,6 +257,10 @@ subcommands:
         argument: ''''''
         description: Alternative image repository to pull docker images from. This can be used when you have limited access to gcr.io. Set it to "auto" to let minikube decide one for you. For Chinese mainland users, you may use local gcr.io mirrors such as registry.cn-hangzhou.aliyuncs.com/google_containers
       - names:
+          - --insecure-registry
+        argument: '[]'
+        description: Insecure Docker registries to pass to the Docker daemon. The default service CIDR range will automatically be added.
+      - names:
           - --install-addons
         argument: "true"
         description: If set, install addons. Defaults to true.
@@ -238,7 +270,7 @@ subcommands:
         description: Allow user prompts for more information
       - names:
           - --iso-url
-        argument: '[https://storage.googleapis.com/minikube/iso/minikube-v1.28.0-amd64.iso,https://github.com/kubernetes/minikube/releases/download/v1.28.0/minikube-v1.28.0-amd64.iso,https://kubernetes.oss-cn-hangzhou.aliyuncs.com/minikube/iso/minikube-v1.28.0-amd64.iso]'
+        argument: '[ISO_URL]'
         description: Locations to fetch the minikube ISO from.
       - names:
           - --keep-context
@@ -247,7 +279,7 @@ subcommands:
       - names:
           - --kubernetes-version
         argument: ''''''
-        description: 'The Kubernetes version that the minikube VM will use (ex: v1.2.3, ''stable'' for v1.25.3, ''latest'' for v1.25.3). Defaults to ''stable''.'
+        description: 'The Kubernetes version that the minikube VM will use (ex: v1.2.3, ''stable'' for v1.27.3, ''latest'' for v1.27.3). Defaults to ''stable''.'
       - names:
           - --kvm-gpu
         argument: "false"
@@ -297,6 +329,10 @@ subcommands:
         argument: "262144"
         description: The number of bytes to use for 9p packet payload
       - names:
+          - --mount-options
+        argument: '[]'
+        description: Additional mount options, such as cache=fscache
+      - names:
           - --mount-port
         argument: "0"
         description: Specify the port that the mount should be setup on, where 0 means any free port.
@@ -333,6 +369,10 @@ subcommands:
         argument: ''''''
         description: 'DEPRECATED: Replaced by --cni'
       - names:
+          - --nfs-share
+        argument: '[]'
+        description: Local folders to share with Guest via NFS mounts (hyperkit driver only)
+      - names:
           - --nfs-shares-root
         argument: '''/nfsshares'''
         description: Where to root the NFS Shares, defaults to /nfsshares (hyperkit driver only)
@@ -355,6 +395,10 @@ subcommands:
         argument: '''text'''
         description: 'Format to print stdout in. Options include: [text,json]'
       - names:
+          - --ports
+        argument: '[]'
+        description: List of ports that should be exposed (docker and podman driver only)
+      - names:
           - --preload
         argument: "true"
         description: If set, download tarball of preloaded images if available to improve start time. Defaults to true.
@@ -363,17 +407,21 @@ subcommands:
         argument: ''''''
         description: 'Path to the qemu firmware file. Defaults: For Linux, the default firmware location. For macOS, the brew installation location. For Windows, C:\Program Files\qemu\share'
       - names:
+          - --registry-mirror
+        argument: '[]'
+        description: Registry mirrors to pass to the Docker daemon
+      - names:
           - --service-cluster-ip-range
         argument: '''10.96.0.0/12'''
         description: The CIDR to be used for service cluster IPs.
       - names:
           - --socket-vmnet-client-path
-        argument: '''/opt/socket_vmnet/bin/socket_vmnet_client'''
-        description: Path to the socket vmnet client binary
+        argument: ''''''
+        description: Path to the socket vmnet client binary (QEMU driver only)
       - names:
           - --socket-vmnet-path
-        argument: '''/var/run/socket_vmnet'''
-        description: Path to socket vmnet binary
+        argument: ''''''
+        description: Path to socket vmnet binary (QEMU driver only)
       - names:
           - --ssh-ip-address
         argument: ''''''
@@ -390,6 +438,10 @@ subcommands:
           - --ssh-user
         argument: '''root'''
         description: SSH user (ssh driver only)
+      - names:
+          - --static-ip
+        argument: ''''''
+        description: 'Set a static IP for the minikube cluster, the IP must be: private, IPv4, and the last octet must be between 2 and 254, for example 192.168.200.200 (Docker and Podman drivers only)'
       - names:
           - --subnet
         argument: ''''''
@@ -426,7 +478,7 @@ subcommands:
           - -f
           - --format
         argument: '''{{.Name}}'
-        description: 'type: Control Plane host: {{.Host}} kubelet: {{.Kubelet}} apiserver: {{.APIServer}} kubeconfig: {{.Kubeconfig}} {{- if .TimeToStop }} timeToStop: {{.TimeToStop}} {{- end }} {{- if .DockerEnv }} docker-env: {{.DockerEnv}} {{- end }} {{- if .PodManEnv }} podman-env: {{.PodManEnv}} {{- end }} '': Go template format string for the status output. The format for Go templates can be found here: https://golang.org/pkg/text/template/ For the list accessible variables for the template, see the struct values here: https://godoc.org/k8s.io/minikube/cmd/minikube/cmd#Status'
+        description: 'type: Control Plane host: {{.Host}} kubelet: {{.Kubelet}} apiserver: {{.APIServer}} kubeconfig: {{.Kubeconfig}} {{- if .TimeToStop }} timeToStop: {{.TimeToStop}} {{- end }} {{- if .DockerEnv }} docker-env: {{.DockerEnv}} {{- end }} {{- if .PodManEnv }} podman-env: {{.PodManEnv}} {{- end }} '': Go template format string for the status output. The format for Go templates can be found here: https://pkg.go.dev/text/template For the list accessible variables for the template, see the struct values here: https://pkg.go.dev/k8s.io/minikube/cmd/minikube/cmd#Status'
       - names:
           - -l
           - --layout
@@ -506,6 +558,16 @@ subcommands:
     usage: minikube pause [flags] [options]
     options:
       - names:
+          - -A
+          - --all-namespaces
+        argument: "false"
+        description: If set, pause all namespaces
+      - names:
+          - -n
+          - --namespaces
+        argument: '[kube-system,kubernetes-dashboard,storage-gluster,istio-operator]'
+        description: namespaces to pause
+      - names:
           - -o
           - --output
         argument: '''text'''
@@ -519,6 +581,11 @@ subcommands:
           - --all-namespaces
         argument: "false"
         description: If set, unpause all namespaces
+      - names:
+          - -n
+          - --namespaces
+        argument: '[kube-system,kubernetes-dashboard,storage-gluster,istio-operator]'
+        description: namespaces to unpause
       - names:
           - -o
           - --output
@@ -591,7 +658,7 @@ subcommands:
           - names:
               - --format
             argument: '''{{.CacheImage}}'
-            description: ''': Go template format string for the cache list output. The format for Go templates can be found here: https://golang.org/pkg/text/template/ For the list of accessible variables for the template, see the struct values here: https://godoc.org/k8s.io/minikube/cmd/minikube/cmd#CacheListTemplate'
+            description: ''': Go template format string for the cache list output. The format for Go templates can be found here: https://pkg.go.dev/text/template For the list of accessible variables for the template, see the struct values here: https://pkg.go.dev/k8s.io/minikube/cmd/minikube/cmd#CacheListTemplate'
       - name: reload
         description: reload cached images.
         usage: minikube cache reload [flags] [options]
@@ -609,6 +676,14 @@ subcommands:
               - --all
             argument: "false"
             description: Build image on all nodes.
+          - names:
+              - --build-env
+            argument: '[]'
+            description: 'Environment variables to pass to the build. (format: key=value)'
+          - names:
+              - --build-opt
+            argument: '[]'
+            description: 'Specify arbitrary flags to pass to the build. (format: key=value)'
           - names:
               - -f
               - --file
@@ -788,14 +863,16 @@ subcommands:
           - names:
               - --format
             argument: '''- {{.ConfigKey}}: {{.ConfigValue}}'
-            description: ''': Go template format string for the config view output. The format for Go templates can be found here: https://golang.org/pkg/text/template/ For the list of accessible variables for the template, see the struct values here: https://godoc.org/k8s.io/minikube/cmd/minikube/cmd/config#ConfigViewTemplate'
+            description: ''': Go template format string for the config view output. The format for Go templates can be found here: https://pkg.go.dev/text/template For the list of accessible variables for the template, see the struct values here: https://pkg.go.dev/k8s.io/minikube/cmd/minikube/cmd/config#ConfigViewTemplate'
   - name: profile
     description: Get or list the current profiles (clusters)
-    usage: |-
-      minikube profile [MINIKUBE_PROFILE_NAME]
-
-      You can return to the default minikube profile by running `minikube profile default` [flags] [options]
+    usage: minikube profile [MINIKUBE_PROFILE_NAME].  You can return to the default minikube profile by running `minikube profile default` [flags] [options]
     options: []
+    subcommands:
+      - name: list
+        description: Lists all minikube profiles.
+        usage: ""
+        options: []
   - name: update-context
     description: Update kubeconfig in case of an IP or port change
     usage: minikube update-context [flags] [options]
@@ -839,6 +916,11 @@ subcommands:
               - --namespace
             argument: ''''''
             description: The services namespace
+          - names:
+              - -o
+              - --output
+            argument: '''table'''
+            description: The output format. One of 'json', 'table'
   - name: tunnel
     description: Connect to LoadBalancer services
     usage: minikube tunnel [flags] [options]
@@ -876,6 +958,10 @@ subcommands:
           - --msize
         argument: "262144"
         description: The number of bytes to use for 9p packet payload
+      - names:
+          - --options
+        argument: '[]'
+        description: Additional mount options, such as cache=fscache
       - names:
           - --port
         argument: "0"
@@ -1003,6 +1089,10 @@ subcommands:
         argument: "false"
         description: Show only the most recent journal entries, and continuously print new entries as they are appended to the journal.
       - names:
+          - --last-start-only
+        argument: "false"
+        description: Show only the last start logs.
+      - names:
           - -n
           - --length
         argument: "60"
@@ -1040,15 +1130,6 @@ subcommands:
     description: Show a list of global command-line options (applies to all commands).
     usage: minikube options [flags] [options]
     options: []
-  - name: license
-    description: Outputs the licenses of dependencies to a directory
-    usage: minikube license [flags] [options]
-    options:
-      - names:
-          - -d
-          - --dir
-        argument: '''.'''
-        description: Directory to output licenses to
   - name: completion
     description: Generate command completion for a shell
     usage: minikube completion SHELL [flags] [options]
@@ -1062,11 +1143,24 @@ subcommands:
         description: fish completion.
         usage: minikube completion fish [flags] [options]
         options: []
+      - name: powershell
+        description: powershell completion.
+        usage: minikube completion powershell [flags] [options]
+        options: []
       - name: zsh
         description: zsh completion.
         usage: minikube completion zsh [flags] [options]
         options: []
-version: 'minikube version: v1.28.0'
+  - name: license
+    description: Outputs the licenses of dependencies to a directory
+    usage: minikube license [flags] [options]
+    options:
+      - names:
+          - -d
+          - --dir
+        argument: '''.'''
+        description: Directory to output licenses to
+version: 'minikube version: v1.31.1'
 tldr: |
   > Tool to run Kubernetes locally.
   > More information: <https://github.com/kubernetes/minikube>.
@@ -1094,3 +1188,7 @@ tldr: |
   - Delete the cluster:
 
   `minikube delete`
+
+  - Connect to LoadBalancer services:
+
+  `minikube tunnel`

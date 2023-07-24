@@ -1,57 +1,6 @@
-#compdef _zoxide zoxide
+#compdef zoxide
 
 # Auto-generated with h2o
-
-    function _zoxide_add {
-        _arguments \
-            {-h,--help}'[Print help information]' \
-            {-V,--version}'[Print version information]' \
-            "*: :_files"
-
-    }
-
-    function _zoxide_import {
-        _arguments \
-            '--from[Application to import from \[possible values: autojump, z\]]' \
-            {-h,--help}'[Print help information]' \
-            '--merge[Merge into existing database]' \
-            {-V,--version}'[Print version information]' \
-            "*: :_files"
-
-    }
-
-    function _zoxide_init {
-        _arguments \
-            '--cmd[Changes the prefix of the `z` and `zi` commands \[default: z\]]' \
-            {-h,--help}'[Print help information]' \
-            '--hook[Changes how often zoxide increments a directory'\''s score \[default: pwd\] \[possible values: none, prompt, pwd\]]' \
-            '--no-cmd[Prevents zoxide from defining the `z` and `zi` commands]' \
-            {-V,--version}'[Print version information]' \
-            "*: :_files"
-
-    }
-
-    function _zoxide_query {
-        _arguments \
-            '--all[Show deleted directories]' \
-            '--exclude[Exclude a path from results]':file:_files \
-            {-h,--help}'[Print help information]' \
-            {-i,--interactive}'[Use interactive selection]' \
-            {-l,--list}'[List all matching directories]' \
-            {-s,--score}'[Print score with results]' \
-            {-V,--version}'[Print version information]' \
-            "*: :_files"
-
-    }
-
-    function _zoxide_remove {
-        _arguments \
-            {-h,--help}'[Print help information]' \
-            {-i,--interactive}'[Use interactive selection]' \
-            {-V,--version}'[Print version information]' \
-            "*: :_files"
-
-    }
 
 
 function _zoxide {
@@ -61,6 +10,7 @@ function _zoxide {
         local -a commands
         commands=(
             'add:Add a new directory or increment its rank'
+            'edit:Edit the database'
             'import:Import entries from another application'
             'init:Generate shell configuration'
             'query:Search for a directory in the database'
@@ -71,8 +21,8 @@ function _zoxide {
  
 
     _arguments -C \
-        {-h,--help}'[Print help information]' \
-        {-V,--version}'[Print version information]' \
+        {-h,--help}'[Print help]' \
+        {-V,--version}'[Print version]' \
         ': :->cmd' \
         '*:: :->subcmd'
 
@@ -84,6 +34,10 @@ function _zoxide {
         case $line[1] in
         (add)
             _zoxide_add
+            ;;
+
+        (edit)
+            _zoxide_edit
             ;;
 
         (import)
@@ -107,4 +61,64 @@ function _zoxide {
      esac
 
 }
+
+function _zoxide_add {
+    _arguments \
+        {-h,--help}'[Print help]' \
+        {-V,--version}'[Print version]' \
+        "*: :_files"
+
+}
+
+function _zoxide_edit {
+    _arguments \
+        {-h,--help}'[Print help]' \
+        {-V,--version}'[Print version]' \
+        "*: :_files"
+
+}
+
+function _zoxide_import {
+    _arguments \
+        '--from[Application to import from \[possible values: autojump, z\]]' \
+        '--merge[Merge into existing database]' \
+        {-h,--help}'[Print help]' \
+        {-V,--version}'[Print version]' \
+        "*: :_files"
+
+}
+
+function _zoxide_init {
+    _arguments \
+        '--no-cmd[Prevents zoxide from defining the `z` and `zi` commands]' \
+        '--cmd[Changes the prefix of the `z` and `zi` commands \[default: z\]]' \
+        '--hook[Changes how often zoxide increments a directory'\''s score \[default: pwd\] \[possible values: none, prompt, pwd\]]' \
+        {-h,--help}'[Print help]' \
+        {-V,--version}'[Print version]' \
+        "*: :_files"
+
+}
+
+function _zoxide_query {
+    _arguments \
+        '--all[Show deleted directories]' \
+        {-i,--interactive}'[Use interactive selection]' \
+        {-l,--list}'[List all matching directories]' \
+        {-s,--score}'[Print score with results]' \
+        '--exclude[Exclude the current directory]':file:_files \
+        {-h,--help}'[Print help]' \
+        {-V,--version}'[Print version]' \
+        "*: :_files"
+
+}
+
+function _zoxide_remove {
+    _arguments \
+        {-h,--help}'[Print help]' \
+        {-V,--version}'[Print version]' \
+        "*: :_files"
+
+}
+
+_zoxide "$@"
 

@@ -2,88 +2,84 @@
 
 _zoxide()
 {
-    local i=1 cmd cur word_list
-    cur="${COMP_WORDS[COMP_CWORD]}"
+    local cur prev words cword
+    _init_completion -s || return
 
-    # take the last word that's NOT starting with -
-    while [[ ( "$i" < "$COMP_CWORD" ) ]]; do
-        local s="${COMP_WORDS[i]}"
-        case "$s" in
-          -*) ;;
-          *)
-            cmd="$s"
-            ;;
-        esac
-        (( i++ ))
+    local cmd i subcommands
+    local subcommands=" add edit import init query remove"
+
+    for (( i=1; i < cword; i++ )); do
+        if [[ " ${subcommands[*]} " == *" ${words[i]} "* ]]; then
+            cmd=${words[i]}
+            break
+        fi
     done
 
     case "$cmd" in
-          add) _zoxide_add
+        add) _zoxide_add
             return
             ;;
 
-          import) _zoxide_import
+        edit) _zoxide_edit
             return
             ;;
 
-          init) _zoxide_init
+        import) _zoxide_import
             return
             ;;
 
-          query) _zoxide_query
+        init) _zoxide_init
             return
             ;;
 
-          remove) _zoxide_remove
+        query) _zoxide_query
             return
             ;;
 
-      *)
-          word_list=" add import init query remove -h --help -V --version"
-          COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
-          ;;
+        remove) _zoxide_remove
+            return
+            ;;
+
     esac
 
+    local word_list=" add edit import init query remove -h --help -V --version"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_zoxide_add ()
+_zoxide_add()
 {
-    local cur word_list
-    word_list=" -h --help -V --version" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  -h --help -V --version"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_zoxide_import ()
+_zoxide_edit()
 {
-    local cur word_list
-    word_list=" --from -h --help --merge -V --version" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  -h --help -V --version"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_zoxide_init ()
+_zoxide_import()
 {
-    local cur word_list
-    word_list=" --cmd -h --help --hook --no-cmd -V --version" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  --from --merge -h --help -V --version"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_zoxide_query ()
+_zoxide_init()
 {
-    local cur word_list
-    word_list=" --all --exclude -h --help -i --interactive -l --list -s --score -V --version" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  --no-cmd --cmd --hook -h --help -V --version"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_zoxide_remove ()
+_zoxide_query()
 {
-    local cur word_list
-    word_list=" -h --help -i --interactive -V --version" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  --all -i --interactive -l --list -s --score --exclude -h --help -V --version"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
+}
+
+_zoxide_remove()
+{
+    local word_list="  -h --help -V --version"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
 ## -o bashdefault and -o default are fallback

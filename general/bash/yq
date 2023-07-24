@@ -2,68 +2,74 @@
 
 _yq()
 {
-    local i=1 cmd cur word_list
-    cur="${COMP_WORDS[COMP_CWORD]}"
+    local cur prev words cword
+    _init_completion -s || return
 
-    # take the last word that's NOT starting with -
-    while [[ ( "$i" < "$COMP_CWORD" ) ]]; do
-        local s="${COMP_WORDS[i]}"
-        case "$s" in
-          -*) ;;
-          *)
-            cmd="$s"
-            ;;
-        esac
-        (( i++ ))
+    local cmd i subcommands
+    local subcommands=" completion eval eval-all help shell-completion"
+
+    for (( i=1; i < cword; i++ )); do
+        if [[ " ${subcommands[*]} " == *" ${words[i]} "* ]]; then
+            cmd=${words[i]}
+            break
+        fi
     done
 
     case "$cmd" in
-          eval) _yq_eval
+        completion) _yq_completion
             return
             ;;
 
-          eval-all) _yq_evalall
+        eval) _yq_eval
             return
             ;;
 
-          help) _yq_help
+        eval-all) _yq_evalall
             return
             ;;
 
-          shell-completion) _yq_shellcompletion
+        help) _yq_help
             return
             ;;
 
-      *)
-          word_list=" eval eval-all help shell-completion -C --colors -e --exit-status --expression --from-file -f --front-matter --header-preprocess -h --help -I --indent -i --inplace -p --input-format -M --no-colors -N --no-doc -n --null-input -o --output-format -P --prettyPrint -s --split-exp --split-exp-file -r --unwrapScalar -v --verbose -V --version --xml-attribute-prefix --xml-content-name --xml-directive-name --xml-keep-namespace --xml-proc-inst-prefix --xml-raw-token --xml-skip-directives --xml-skip-proc-inst --xml-strict-mode"
-          COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
-          ;;
+        shell-completion) _yq_shellcompletion
+            return
+            ;;
+
     esac
 
+    local word_list=" completion eval eval-all help shell-completion -C --colors -e --exit-status --expression --from-file -f --front-matter --header-preprocess -h --help -I --indent -i --inplace -p --input-format -M --no-colors -N --no-doc -0 --nul-output -n --null-input -o --output-format -P --prettyPrint -s --split-exp --split-exp-file -r --unwrapScalar -v --verbose -V --version --xml-attribute-prefix --xml-content-name --xml-directive-name --xml-keep-namespace --xml-proc-inst-prefix --xml-raw-token --xml-skip-directives --xml-skip-proc-inst --xml-strict-mode"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_yq_eval ()
+_yq_completion()
 {
-    local cur word_list
-    word_list=" -h --help -C --colors -e --exit-status --expression --from-file -f --front-matter --header-preprocess -I --indent -i --inplace -p --input-format -M --no-colors -N --no-doc -n --null-input -o --output-format -P --prettyPrint -s --split-exp --split-exp-file -r --unwrapScalar -v --verbose --xml-attribute-prefix --xml-content-name --xml-directive-name --xml-keep-namespace --xml-proc-inst-prefix --xml-raw-token --xml-skip-directives --xml-skip-proc-inst --xml-strict-mode" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  -h --help -C --colors -e --exit-status --expression --from-file -f --front-matter --header-preprocess -I --indent -i --inplace -p --input-format -M --no-colors -N --no-doc -0 --nul-output -n --null-input -o --output-format -P --prettyPrint -s --split-exp --split-exp-file -r --unwrapScalar -v --verbose --xml-attribute-prefix --xml-content-name --xml-directive-name --xml-keep-namespace --xml-proc-inst-prefix --xml-raw-token --xml-skip-directives --xml-skip-proc-inst --xml-strict-mode"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_yq_evalall ()
+_yq_eval()
 {
-    local cur word_list
-    word_list=" -h --help -C --colors -e --exit-status --expression --from-file -f --front-matter --header-preprocess -I --indent -i --inplace -p --input-format -M --no-colors -N --no-doc -n --null-input -o --output-format -P --prettyPrint -s --split-exp --split-exp-file -r --unwrapScalar -v --verbose --xml-attribute-prefix --xml-content-name --xml-directive-name --xml-keep-namespace --xml-proc-inst-prefix --xml-raw-token --xml-skip-directives --xml-skip-proc-inst --xml-strict-mode" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  -h --help -C --colors -e --exit-status --expression --from-file -f --front-matter --header-preprocess -I --indent -i --inplace -p --input-format -M --no-colors -N --no-doc -0 --nul-output -n --null-input -o --output-format -P --prettyPrint -s --split-exp --split-exp-file -r --unwrapScalar -v --verbose --xml-attribute-prefix --xml-content-name --xml-directive-name --xml-keep-namespace --xml-proc-inst-prefix --xml-raw-token --xml-skip-directives --xml-skip-proc-inst --xml-strict-mode"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
-_yq_shellcompletion ()
+_yq_evalall()
 {
-    local cur word_list
-    word_list=" -h --help -C --colors -e --exit-status --expression --from-file -f --front-matter --header-preprocess -I --indent -i --inplace -p --input-format -M --no-colors -N --no-doc -n --null-input -o --output-format -P --prettyPrint -s --split-exp --split-exp-file -r --unwrapScalar -v --verbose --xml-attribute-prefix --xml-content-name --xml-directive-name --xml-keep-namespace --xml-proc-inst-prefix --xml-raw-token --xml-skip-directives --xml-skip-proc-inst --xml-strict-mode" 
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $(compgen -W "${word_list}" -- "${cur}") )
+    local word_list="  -h --help -C --colors -e --exit-status --expression --from-file -f --front-matter --header-preprocess -I --indent -i --inplace -p --input-format -M --no-colors -N --no-doc -0 --nul-output -n --null-input -o --output-format -P --prettyPrint -s --split-exp --split-exp-file -r --unwrapScalar -v --verbose --xml-attribute-prefix --xml-content-name --xml-directive-name --xml-keep-namespace --xml-proc-inst-prefix --xml-raw-token --xml-skip-directives --xml-skip-proc-inst --xml-strict-mode"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
+}
+
+_yq_help()
+{
+    local word_list="  "
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
+}
+
+_yq_shellcompletion()
+{
+    local word_list="  -h --help -C --colors -e --exit-status --expression --from-file -f --front-matter --header-preprocess -I --indent -i --inplace -p --input-format -M --no-colors -N --no-doc -0 --nul-output -n --null-input -o --output-format -P --prettyPrint -s --split-exp --split-exp-file -r --unwrapScalar -v --verbose --xml-attribute-prefix --xml-content-name --xml-directive-name --xml-keep-namespace --xml-proc-inst-prefix --xml-raw-token --xml-skip-directives --xml-skip-proc-inst --xml-strict-mode"
+    COMPREPLY=( $(compgen -W "${word_list}" -- "$cur") )
 }
 
 ## -o bashdefault and -o default are fallback

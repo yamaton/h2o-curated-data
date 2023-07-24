@@ -1,5 +1,5 @@
 name: yq
-description: yq
+description: portable command-line YAML processor
 usage: |-
   yq [flags]
   yq [command]
@@ -50,7 +50,7 @@ options:
       - -p
       - --input-format
     argument: string
-    description: '[yaml|y|props|p|xml|x] parse format for input. Note that json is a subset of yaml. (default "yaml")'
+    description: '[auto|a|yaml|y|props|p|xml|x|tsv|t|csv|c|toml] parse format for input. Note that json is a subset of yaml. (default "auto")'
   - names:
       - -M
       - --no-colors
@@ -62,6 +62,11 @@ options:
     argument: ""
     description: Don't print document separators (---)
   - names:
+      - "-0"
+      - --nul-output
+    argument: ""
+    description: Use NUL char to separate values. If unwrap scalar is also set, fail if unwrapped scalar contains NUL char.
+  - names:
       - -n
       - --null-input
     argument: ""
@@ -70,7 +75,7 @@ options:
       - -o
       - --output-format
     argument: string
-    description: '[yaml|y|json|j|props|p|xml|x] output format type. (default "yaml")'
+    description: '[auto|a|yaml|y|json|j|props|p|xml|x|tsv|t|csv|c] output format type. (default "auto")'
   - names:
       - -P
       - --prettyPrint
@@ -137,6 +142,142 @@ options:
     argument: ""
     description: enables strict parsing of XML. See https://pkg.go.dev/encoding/xml for more details.
 subcommands:
+  - name: completion
+    description: Generate the autocompletion script for the specified shell
+    usage: yq eval [expression] [yaml_file1]... [flags]
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: help for eval
+      - names:
+          - -C
+          - --colors
+        argument: ""
+        description: force print with colors
+      - names:
+          - -e
+          - --exit-status
+        argument: ""
+        description: set exit status if there are no matches or null or false is returned
+      - names:
+          - --expression
+        argument: string
+        description: forcibly set the expression argument. Useful when yq argument detection thinks your expression is a file.
+      - names:
+          - --from-file
+        argument: string
+        description: Load expression from specified file.
+      - names:
+          - -f
+          - --front-matter
+        argument: string
+        description: (extract|process) first input as yaml front-matter. Extract will pull out the yaml content, process will run the expression against the yaml content, leaving the remaining data intact
+      - names:
+          - --header-preprocess
+        argument: ""
+        description: Slurp any header comments and separators before processing expression. (default true)
+      - names:
+          - -I
+          - --indent
+        argument: int
+        description: sets indent level for output (default 2)
+      - names:
+          - -i
+          - --inplace
+        argument: ""
+        description: update the file inplace of first file given.
+      - names:
+          - -p
+          - --input-format
+        argument: string
+        description: '[auto|a|yaml|y|props|p|xml|x|tsv|t|csv|c|toml] parse format for input. Note that json is a subset of yaml. (default "auto")'
+      - names:
+          - -M
+          - --no-colors
+        argument: ""
+        description: force print with no colors
+      - names:
+          - -N
+          - --no-doc
+        argument: ""
+        description: Don't print document separators (---)
+      - names:
+          - "-0"
+          - --nul-output
+        argument: ""
+        description: Use NUL char to separate values. If unwrap scalar is also set, fail if unwrapped scalar contains NUL char.
+      - names:
+          - -n
+          - --null-input
+        argument: ""
+        description: Don't read input, simply evaluate the expression given. Useful for creating docs from scratch.
+      - names:
+          - -o
+          - --output-format
+        argument: string
+        description: '[auto|a|yaml|y|json|j|props|p|xml|x|tsv|t|csv|c] output format type. (default "auto")'
+      - names:
+          - -P
+          - --prettyPrint
+        argument: ""
+        description: pretty print, shorthand for '... style = ""'
+      - names:
+          - -s
+          - --split-exp
+        argument: string
+        description: print each result (or doc) into a file named (exp). [exp] argument must return a string. You can use $index in the expression as the result counter.
+      - names:
+          - --split-exp-file
+        argument: string
+        description: Use a file to specify the split-exp expression.
+      - names:
+          - -r
+          - --unwrapScalar
+        argument: ""
+        description: unwrap scalar, print the value with no quotes, colors or comments. Defaults to true for yaml (default true)
+      - names:
+          - -v
+          - --verbose
+        argument: ""
+        description: verbose mode
+      - names:
+          - --xml-attribute-prefix
+        argument: string
+        description: prefix for xml attributes (default "+@")
+      - names:
+          - --xml-content-name
+        argument: string
+        description: name for xml content (if no attribute name is present). (default "+content")
+      - names:
+          - --xml-directive-name
+        argument: string
+        description: name for xml directives (e.g. <!DOCTYPE thing cat>) (default "+directive")
+      - names:
+          - --xml-keep-namespace
+        argument: ""
+        description: enables keeping namespace after parsing attributes (default true)
+      - names:
+          - --xml-proc-inst-prefix
+        argument: string
+        description: prefix for xml processing instructions (e.g. <?xml version="1"?>) (default "+p_")
+      - names:
+          - --xml-raw-token
+        argument: ""
+        description: enables using RawToken method instead Token. Commonly disables namespace translations. See https://pkg.go.dev/encoding/xml#Decoder.RawToken for details. (default true)
+      - names:
+          - --xml-skip-directives
+        argument: ""
+        description: skip over directives (e.g. <!DOCTYPE thing cat>)
+      - names:
+          - --xml-skip-proc-inst
+        argument: ""
+        description: skip over process instructions (e.g. <?xml version="1"?>)
+      - names:
+          - --xml-strict-mode
+        argument: ""
+        description: enables strict parsing of XML. See https://pkg.go.dev/encoding/xml for more details.
   - name: eval
     description: (default) Apply the expression to each document in each yaml file in sequence
     usage: yq eval [expression] [yaml_file1]... [flags]
@@ -187,7 +328,7 @@ subcommands:
           - -p
           - --input-format
         argument: string
-        description: '[yaml|y|props|p|xml|x] parse format for input. Note that json is a subset of yaml. (default "yaml")'
+        description: '[auto|a|yaml|y|props|p|xml|x|tsv|t|csv|c|toml] parse format for input. Note that json is a subset of yaml. (default "auto")'
       - names:
           - -M
           - --no-colors
@@ -199,6 +340,11 @@ subcommands:
         argument: ""
         description: Don't print document separators (---)
       - names:
+          - "-0"
+          - --nul-output
+        argument: ""
+        description: Use NUL char to separate values. If unwrap scalar is also set, fail if unwrapped scalar contains NUL char.
+      - names:
           - -n
           - --null-input
         argument: ""
@@ -207,7 +353,7 @@ subcommands:
           - -o
           - --output-format
         argument: string
-        description: '[yaml|y|json|j|props|p|xml|x] output format type. (default "yaml")'
+        description: '[auto|a|yaml|y|json|j|props|p|xml|x|tsv|t|csv|c] output format type. (default "auto")'
       - names:
           - -P
           - --prettyPrint
@@ -318,7 +464,7 @@ subcommands:
           - -p
           - --input-format
         argument: string
-        description: '[yaml|y|props|p|xml|x] parse format for input. Note that json is a subset of yaml. (default "yaml")'
+        description: '[auto|a|yaml|y|props|p|xml|x|tsv|t|csv|c|toml] parse format for input. Note that json is a subset of yaml. (default "auto")'
       - names:
           - -M
           - --no-colors
@@ -330,6 +476,11 @@ subcommands:
         argument: ""
         description: Don't print document separators (---)
       - names:
+          - "-0"
+          - --nul-output
+        argument: ""
+        description: Use NUL char to separate values. If unwrap scalar is also set, fail if unwrapped scalar contains NUL char.
+      - names:
           - -n
           - --null-input
         argument: ""
@@ -338,7 +489,7 @@ subcommands:
           - -o
           - --output-format
         argument: string
-        description: '[yaml|y|json|j|props|p|xml|x] output format type. (default "yaml")'
+        description: '[auto|a|yaml|y|json|j|props|p|xml|x|tsv|t|csv|c] output format type. (default "auto")'
       - names:
           - -P
           - --prettyPrint
@@ -452,7 +603,7 @@ subcommands:
           - -p
           - --input-format
         argument: string
-        description: '[yaml|y|props|p|xml|x] parse format for input. Note that json is a subset of yaml. (default "yaml")'
+        description: '[auto|a|yaml|y|props|p|xml|x|tsv|t|csv|c|toml] parse format for input. Note that json is a subset of yaml. (default "auto")'
       - names:
           - -M
           - --no-colors
@@ -464,6 +615,11 @@ subcommands:
         argument: ""
         description: Don't print document separators (---)
       - names:
+          - "-0"
+          - --nul-output
+        argument: ""
+        description: Use NUL char to separate values. If unwrap scalar is also set, fail if unwrapped scalar contains NUL char.
+      - names:
           - -n
           - --null-input
         argument: ""
@@ -472,7 +628,7 @@ subcommands:
           - -o
           - --output-format
         argument: string
-        description: '[yaml|y|json|j|props|p|xml|x] output format type. (default "yaml")'
+        description: '[auto|a|yaml|y|json|j|props|p|xml|x|tsv|t|csv|c] output format type. (default "auto")'
       - names:
           - -P
           - --prettyPrint
@@ -533,7 +689,7 @@ subcommands:
           - --xml-strict-mode
         argument: ""
         description: enables strict parsing of XML. See https://pkg.go.dev/encoding/xml for more details.
-version: yq (https://github.com/mikefarah/yq/) version v4.30.4
+version: yq (https://github.com/mikefarah/yq/) version v4.34.2
 tldr: |
   > A lightweight and portable command-line YAML processor.
   > More information: <https://mikefarah.gitbook.io/yq/>.
@@ -562,10 +718,10 @@ tldr: |
 
   `yq write --inplace {{path/to/file.yaml}} '{{key}}' '{{value}}'`
 
-  - Merge two files and print to stdout (v4+):
+  - Merge two files and print to `stdout` (v4+):
 
   `yq eval-all 'select(filename == "{{path/to/file1.yaml}}") * select(filename == "{{path/to/file2.yaml}}")' {{path/to/file1.yaml}} {{path/to/file2.yaml}}`
 
-  - Merge two files and print to stdout (v3):
+  - Merge two files and print to `stdout` (v3):
 
   `yq merge {{path/to/file1.yaml}} {{path/to/file2.yaml}} --colors`

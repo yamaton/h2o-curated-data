@@ -644,6 +644,8 @@ function _helm_install {
         '--devel[use development versions, too. Equivalent to version '\''>0.0.0-0'\''. If --version is set, this is ignored]' \
         '--disable-openapi-validation[if set, the installation process will not validate rendered templates against the Kubernetes OpenAPI Schema]' \
         '--dry-run[simulate an install]' \
+        '--enable-dns[enable DNS lookups when rendering templates]' \
+        '--force[force resource updates through a replacement strategy]' \
         {-g,--generate-name}'[generate the name (and omit the NAME parameter)]' \
         {-h,--help}'[help for install]' \
         '--insecure-skip-tls-verify[skip tls certificate checks for the chart download]' \
@@ -662,6 +664,7 @@ function _helm_install {
         '--set[set values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2)]' \
         '--set-file[set values from respective files specified via the command line (can specify multiple or separate values with commas: key1=path1,key2=path2)]' \
         '--set-json[set JSON values on the command line (can specify multiple or separate values with commas: key1=jsonval1,key2=jsonval2)]' \
+        '--set-literal[set a literal STRING value on the command line]' \
         '--set-string[set STRING values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2)]' \
         '--skip-crds[if set, no CRDs will be installed. By default, CRDs are installed if not already present]' \
         '--timeout[time to wait for any individual Kubernetes operation (like Jobs for hooks) (default 5m0s)]' \
@@ -697,6 +700,7 @@ function _helm_lint {
         '--set[set values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2)]' \
         '--set-file[set values from respective files specified via the command line (can specify multiple or separate values with commas: key1=path1,key2=path2)]' \
         '--set-json[set JSON values on the command line (can specify multiple or separate values with commas: key1=jsonval1,key2=jsonval2)]' \
+        '--set-literal[set a literal STRING value on the command line]' \
         '--set-string[set STRING values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2)]' \
         '--strict[fail on lint warnings]' \
         {-f,--values}'[specify values in a YAML file or a URL (can specify multiple)]' \
@@ -983,7 +987,11 @@ function _helm_pull {
 
 function _helm_push {
     _arguments \
+        '--ca-file[verify certificates of HTTPS-enabled servers using this CA bundle]' \
+        '--cert-file[identify registry client using this SSL certificate file]' \
         {-h,--help}'[help for push]' \
+        '--insecure-skip-tls-verify[skip tls certificate checks for the chart upload]' \
+        '--key-file[identify registry client using this SSL key file]' \
         '--burst-limit[client-side default throttling limit (default 100)]' \
         '--debug[enable verbose output]' \
         '--kube-apiserver[the address and the port for the Kubernetes API server]' \
@@ -1059,8 +1067,11 @@ function _helm_registry {
 
 function _helm_registry_login {
     _arguments \
+        '--ca-file[verify certificates of HTTPS-enabled servers using this CA bundle]' \
+        '--cert-file[identify registry client using this SSL certificate file]' \
         {-h,--help}'[help for login]' \
         '--insecure[allow connections to TLS registry without certs]' \
+        '--key-file[identify registry client using this SSL key file]' \
         {-p,--password}'[registry password or identity token]' \
         '--password-stdin[read password or identity token from stdin]' \
         {-u,--username}'[registry username]' \
@@ -1684,6 +1695,7 @@ function _helm_status {
         {-o,--output}'[prints the output in the specified format. Allowed values: table, json, yaml (default table)]' \
         '--revision[if set, display the status of the named release with revision]' \
         '--show-desc[if set, display the description message of the named release]' \
+        '--show-resources[if set, display the resources of the named release]' \
         '--burst-limit[client-side default throttling limit (default 100)]' \
         '--debug[enable verbose output]' \
         '--kube-apiserver[the address and the port for the Kubernetes API server]' \
@@ -1715,6 +1727,8 @@ function _helm_template {
         '--devel[use development versions, too. Equivalent to version '\''>0.0.0-0'\''. If --version is set, this is ignored]' \
         '--disable-openapi-validation[if set, the installation process will not validate rendered templates against the Kubernetes OpenAPI Schema]' \
         '--dry-run[simulate an install]' \
+        '--enable-dns[enable DNS lookups when rendering templates]' \
+        '--force[force resource updates through a replacement strategy]' \
         {-g,--generate-name}'[generate the name (and omit the NAME parameter)]' \
         {-h,--help}'[help for template]' \
         '--include-crds[include CRDs in the templated output]' \
@@ -1737,6 +1751,7 @@ function _helm_template {
         '--set[set values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2)]' \
         '--set-file[set values from respective files specified via the command line (can specify multiple or separate values with commas: key1=path1,key2=path2)]' \
         '--set-json[set JSON values on the command line (can specify multiple or separate values with commas: key1=jsonval1,key2=jsonval2)]' \
+        '--set-literal[set a literal STRING value on the command line]' \
         '--set-string[set STRING values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2)]' \
         {-s,--show-only}'[only show manifests rendered from the given templates]' \
         '--skip-crds[if set, no CRDs will be installed. By default, CRDs are installed if not already present]' \
@@ -1795,6 +1810,7 @@ function _helm_test {
 
 function _helm_uninstall {
     _arguments \
+        '--cascade[Must be "background", "orphan", or "foreground". Selects the deletion cascading strategy for the dependents. Defaults to background. (default "background")]' \
         '--description[add a custom description]' \
         '--dry-run[simulate a uninstall]' \
         {-h,--help}'[help for uninstall]' \
@@ -1833,6 +1849,7 @@ function _helm_upgrade {
         '--devel[use development versions, too. Equivalent to version '\''>0.0.0-0'\''. If --version is set, this is ignored]' \
         '--disable-openapi-validation[if set, the upgrade process will not validate rendered templates against the Kubernetes OpenAPI Schema]' \
         '--dry-run[simulate an upgrade]' \
+        '--enable-dns[enable DNS lookups when rendering templates]' \
         '--force[force resource updates through a replacement strategy]' \
         {-h,--help}'[help for upgrade]' \
         '--history-max[limit the maximum number of revisions saved per release. Use 0 for no limit (default 10)]' \
@@ -1853,6 +1870,7 @@ function _helm_upgrade {
         '--set[set values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2)]' \
         '--set-file[set values from respective files specified via the command line (can specify multiple or separate values with commas: key1=path1,key2=path2)]' \
         '--set-json[set JSON values on the command line (can specify multiple or separate values with commas: key1=jsonval1,key2=jsonval2)]' \
+        '--set-literal[set a literal STRING value on the command line]' \
         '--set-string[set STRING values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2)]' \
         '--skip-crds[if set, no CRDs will be installed when an upgrade is performed with install flag enabled. By default, CRDs are installed if not already present, when an upgrade is performed with install flag enabled]' \
         '--timeout[time to wait for any individual Kubernetes operation (like Jobs for hooks) (default 5m0s)]' \

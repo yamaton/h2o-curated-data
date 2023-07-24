@@ -194,6 +194,8 @@ complete -c helm -n "__fish_seen_subcommand_from install" -l "description" -d "a
 complete -c helm -n "__fish_seen_subcommand_from install" -l "devel" -d "use development versions, too."
 complete -c helm -n "__fish_seen_subcommand_from install" -l "disable-openapi-validation" -d "if set, the installation process will not validate rendered templates against the Kubernetes OpenAPI Schema"
 complete -c helm -n "__fish_seen_subcommand_from install" -l "dry-run" -d "simulate an install"
+complete -c helm -n "__fish_seen_subcommand_from install" -l "enable-dns" -d "enable DNS lookups when rendering templates"
+complete -c helm -n "__fish_seen_subcommand_from install" -l "force" -d "force resource updates through a replacement strategy"
 complete -c helm -n "__fish_seen_subcommand_from install" -s "g" -l "generate-name" -d "generate the name (and omit the NAME parameter)"
 complete -c helm -n "__fish_seen_subcommand_from install" -s "h" -l "help" -d "help for install"
 complete -c helm -n "__fish_seen_subcommand_from install" -l "insecure-skip-tls-verify" -d "skip tls certificate checks for the chart download"
@@ -212,6 +214,7 @@ complete -c helm -n "__fish_seen_subcommand_from install" -l "repo" -d "chart re
 complete -c helm -n "__fish_seen_subcommand_from install" -l "set" -d "set values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2)" -x
 complete -c helm -n "__fish_seen_subcommand_from install" -l "set-file" -d "set values from respective files specified via the command line (can specify multiple or separate values with commas: key1=path1,key2=path2)" -r
 complete -c helm -n "__fish_seen_subcommand_from install" -l "set-json" -d "set JSON values on the command line (can specify multiple or separate values with commas: key1=jsonval1,key2=jsonval2)" -x
+complete -c helm -n "__fish_seen_subcommand_from install" -l "set-literal" -d "set a literal STRING value on the command line" -x
 complete -c helm -n "__fish_seen_subcommand_from install" -l "set-string" -d "set STRING values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2)" -x
 complete -c helm -n "__fish_seen_subcommand_from install" -l "skip-crds" -d "if set, no CRDs will be installed."
 complete -c helm -n "__fish_seen_subcommand_from install" -l "timeout" -d "time to wait for any individual Kubernetes operation (like Jobs for hooks) (default 5m0s)" -x
@@ -244,6 +247,7 @@ complete -c helm -n "__fish_seen_subcommand_from lint" -l "quiet" -d "print only
 complete -c helm -n "__fish_seen_subcommand_from lint" -l "set" -d "set values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2)" -x
 complete -c helm -n "__fish_seen_subcommand_from lint" -l "set-file" -d "set values from respective files specified via the command line (can specify multiple or separate values with commas: key1=path1,key2=path2)" -r
 complete -c helm -n "__fish_seen_subcommand_from lint" -l "set-json" -d "set JSON values on the command line (can specify multiple or separate values with commas: key1=jsonval1,key2=jsonval2)" -x
+complete -c helm -n "__fish_seen_subcommand_from lint" -l "set-literal" -d "set a literal STRING value on the command line" -x
 complete -c helm -n "__fish_seen_subcommand_from lint" -l "set-string" -d "set STRING values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2)" -x
 complete -c helm -n "__fish_seen_subcommand_from lint" -l "strict" -d "fail on lint warnings"
 complete -c helm -n "__fish_seen_subcommand_from lint" -s "f" -l "values" -d "specify values in a YAML file or a URL (can specify multiple)" -r
@@ -384,7 +388,11 @@ complete -c helm -n "__fish_seen_subcommand_from pull" -l "repository-config" -d
 
 
 
+complete -c helm -n "__fish_seen_subcommand_from push" -l "ca-file" -d "verify certificates of HTTPS-enabled servers using this CA bundle" -x
+complete -c helm -n "__fish_seen_subcommand_from push" -l "cert-file" -d "identify registry client using this SSL certificate file" -r
 complete -c helm -n "__fish_seen_subcommand_from push" -s "h" -l "help" -d "help for push"
+complete -c helm -n "__fish_seen_subcommand_from push" -l "insecure-skip-tls-verify" -d "skip tls certificate checks for the chart upload"
+complete -c helm -n "__fish_seen_subcommand_from push" -l "key-file" -d "identify registry client using this SSL key file" -r
 complete -c helm -n "__fish_seen_subcommand_from push" -l "burst-limit" -d "client-side default throttling limit (default 100)" -x
 complete -c helm -n "__fish_seen_subcommand_from push" -l "debug" -d "enable verbose output"
 complete -c helm -n "__fish_seen_subcommand_from push" -l "kube-apiserver" -d "the address and the port for the Kubernetes API server" -x
@@ -511,6 +519,7 @@ complete -c helm -n "__fish_seen_subcommand_from status" -s "h" -l "help" -d "he
 complete -c helm -n "__fish_seen_subcommand_from status" -s "o" -l "output" -d "prints the output in the specified format." -x
 complete -c helm -n "__fish_seen_subcommand_from status" -l "revision" -d "if set, display the status of the named release with revision" -x
 complete -c helm -n "__fish_seen_subcommand_from status" -l "show-desc" -d "if set, display the description message of the named release"
+complete -c helm -n "__fish_seen_subcommand_from status" -l "show-resources" -d "if set, display the resources of the named release"
 complete -c helm -n "__fish_seen_subcommand_from status" -l "burst-limit" -d "client-side default throttling limit (default 100)" -x
 complete -c helm -n "__fish_seen_subcommand_from status" -l "debug" -d "enable verbose output"
 complete -c helm -n "__fish_seen_subcommand_from status" -l "kube-apiserver" -d "the address and the port for the Kubernetes API server" -x
@@ -539,6 +548,8 @@ complete -c helm -n "__fish_seen_subcommand_from template" -l "description" -d "
 complete -c helm -n "__fish_seen_subcommand_from template" -l "devel" -d "use development versions, too."
 complete -c helm -n "__fish_seen_subcommand_from template" -l "disable-openapi-validation" -d "if set, the installation process will not validate rendered templates against the Kubernetes OpenAPI Schema"
 complete -c helm -n "__fish_seen_subcommand_from template" -l "dry-run" -d "simulate an install"
+complete -c helm -n "__fish_seen_subcommand_from template" -l "enable-dns" -d "enable DNS lookups when rendering templates"
+complete -c helm -n "__fish_seen_subcommand_from template" -l "force" -d "force resource updates through a replacement strategy"
 complete -c helm -n "__fish_seen_subcommand_from template" -s "g" -l "generate-name" -d "generate the name (and omit the NAME parameter)"
 complete -c helm -n "__fish_seen_subcommand_from template" -s "h" -l "help" -d "help for template"
 complete -c helm -n "__fish_seen_subcommand_from template" -l "include-crds" -d "include CRDs in the templated output"
@@ -561,6 +572,7 @@ complete -c helm -n "__fish_seen_subcommand_from template" -l "repo" -d "chart r
 complete -c helm -n "__fish_seen_subcommand_from template" -l "set" -d "set values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2)" -x
 complete -c helm -n "__fish_seen_subcommand_from template" -l "set-file" -d "set values from respective files specified via the command line (can specify multiple or separate values with commas: key1=path1,key2=path2)" -r
 complete -c helm -n "__fish_seen_subcommand_from template" -l "set-json" -d "set JSON values on the command line (can specify multiple or separate values with commas: key1=jsonval1,key2=jsonval2)" -x
+complete -c helm -n "__fish_seen_subcommand_from template" -l "set-literal" -d "set a literal STRING value on the command line" -x
 complete -c helm -n "__fish_seen_subcommand_from template" -l "set-string" -d "set STRING values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2)" -x
 complete -c helm -n "__fish_seen_subcommand_from template" -s "s" -l "show-only" -d "only show manifests rendered from the given templates" -x
 complete -c helm -n "__fish_seen_subcommand_from template" -l "skip-crds" -d "if set, no CRDs will be installed."
@@ -613,6 +625,7 @@ complete -c helm -n "__fish_seen_subcommand_from test" -l "repository-config" -d
 
 
 
+complete -c helm -n "__fish_seen_subcommand_from uninstall" -l "cascade" -d "Must be \"background\", \"orphan\", or \"foreground\"." -x
 complete -c helm -n "__fish_seen_subcommand_from uninstall" -l "description" -d "add a custom description" -x
 complete -c helm -n "__fish_seen_subcommand_from uninstall" -l "dry-run" -d "simulate a uninstall"
 complete -c helm -n "__fish_seen_subcommand_from uninstall" -s "h" -l "help" -d "help for uninstall"
@@ -648,6 +661,7 @@ complete -c helm -n "__fish_seen_subcommand_from upgrade" -l "description" -d "a
 complete -c helm -n "__fish_seen_subcommand_from upgrade" -l "devel" -d "use development versions, too."
 complete -c helm -n "__fish_seen_subcommand_from upgrade" -l "disable-openapi-validation" -d "if set, the upgrade process will not validate rendered templates against the Kubernetes OpenAPI Schema"
 complete -c helm -n "__fish_seen_subcommand_from upgrade" -l "dry-run" -d "simulate an upgrade"
+complete -c helm -n "__fish_seen_subcommand_from upgrade" -l "enable-dns" -d "enable DNS lookups when rendering templates"
 complete -c helm -n "__fish_seen_subcommand_from upgrade" -l "force" -d "force resource updates through a replacement strategy"
 complete -c helm -n "__fish_seen_subcommand_from upgrade" -s "h" -l "help" -d "help for upgrade"
 complete -c helm -n "__fish_seen_subcommand_from upgrade" -l "history-max" -d "limit the maximum number of revisions saved per release." -x
@@ -668,6 +682,7 @@ complete -c helm -n "__fish_seen_subcommand_from upgrade" -l "reuse-values" -d "
 complete -c helm -n "__fish_seen_subcommand_from upgrade" -l "set" -d "set values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2)" -x
 complete -c helm -n "__fish_seen_subcommand_from upgrade" -l "set-file" -d "set values from respective files specified via the command line (can specify multiple or separate values with commas: key1=path1,key2=path2)" -r
 complete -c helm -n "__fish_seen_subcommand_from upgrade" -l "set-json" -d "set JSON values on the command line (can specify multiple or separate values with commas: key1=jsonval1,key2=jsonval2)" -x
+complete -c helm -n "__fish_seen_subcommand_from upgrade" -l "set-literal" -d "set a literal STRING value on the command line" -x
 complete -c helm -n "__fish_seen_subcommand_from upgrade" -l "set-string" -d "set STRING values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2)" -x
 complete -c helm -n "__fish_seen_subcommand_from upgrade" -l "skip-crds" -d "if set, no CRDs will be installed when an upgrade is performed with install flag enabled."
 complete -c helm -n "__fish_seen_subcommand_from upgrade" -l "timeout" -d "time to wait for any individual Kubernetes operation (like Jobs for hooks) (default 5m0s)" -x

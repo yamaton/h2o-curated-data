@@ -67,11 +67,11 @@ options:
   - names:
       - --continue-put
     argument: ""
-    description: 'Continue uploading partially uploaded files or multipart upload parts. Restarts/parts files that don''t have matching size and md5. Skips files/parts that do. Note: md5sum checks are not always sufficient to check (part) file equality. Enable this at your own risk.'
+    description: 'Continue uploading partially uploaded files or multipart upload parts. Restarts parts/files that don''t have matching size and md5. Skips files/parts that do. Note: md5sum checks are not always sufficient to check (part) file equality. Enable this at your own risk.'
   - names:
       - --upload-id
     argument: UPLOAD_ID
-    description: UploadId for Multipart Upload, in case you want continue an existing upload (equivalent to --continue-put) and there are multiple partial uploads. Use s3cmd multipart [URI] to see what UploadIds are associated with the given URI.'
+    description: UploadId for Multipart Upload, in case you want continue an existing upload (equivalent to --continue-put) and there are multiple partial uploads. Use s3cmd multipart [URI] to see what UploadIds are associated with the given URI.
   - names:
       - --skip-existing
     argument: ""
@@ -106,7 +106,7 @@ options:
       - -D
       - --restore-days
     argument: NUM
-    description: Number of days to keep restored file available (only for 'restore' command).
+    description: Number of days to keep restored file available (only for 'restore' command). Default is 1 day.
   - names:
       - --restore-priority
     argument: RESTORE_PRIORITY
@@ -118,7 +118,7 @@ options:
   - names:
       - --no-delete-removed
     argument: ""
-    description: Don't delete destination objects.
+    description: Don't delete destination objects [sync]
   - names:
       - --delete-after
     argument: ""
@@ -214,7 +214,7 @@ options:
   - names:
       - --storage-class
     argument: CLASS
-    description: Store object with specified CLASS (STANDARD, STANDARD_IA, or REDUCED_REDUNDANCY). Lower per-GB price. [put, cp, mv]
+    description: Store object with specified CLASS (STANDARD, STANDARD_IA, ONEZONE_IA, INTELLIGENT_TIERING, GLACIER or DEEP_ARCHIVE). [put, cp, mv]
   - names:
       - --access-logging-target-prefix
     argument: LOG_TARGET_PREFIX
@@ -285,6 +285,10 @@ options:
       - --list-md5
     argument: ""
     description: Include MD5 sums in bucket listings (only for 'ls' command).
+  - names:
+      - --list-allow-unordered
+    argument: ""
+    description: Not an AWS standard. Allow the listing results to be returned in unsorted order. This may be faster when listing very large buckets.
   - names:
       - -H
       - --human-readable-sizes
@@ -371,7 +375,7 @@ options:
   - names:
       - --version
     argument: ""
-    description: Show s3cmd version and exit.
+    description: Show s3cmd version (2.3.0) and exit.
   - names:
       - -F
       - --follow-symlinks
@@ -390,6 +394,14 @@ options:
       - --ca-certs
     argument: CA_CERTS_FILE
     description: Path to SSL CA certificate FILE (instead of system default)
+  - names:
+      - --ssl-cert
+    argument: SSL_CLIENT_CERT_FILE
+    description: Path to client own SSL certificate CRT_FILE
+  - names:
+      - --ssl-key
+    argument: SSL_CLIENT_KEY_FILE
+    description: Path to client own SSL certificate private key KEY_FILE
   - names:
       - --check-certificate
     argument: ""
@@ -414,6 +426,10 @@ options:
       - --limit-rate
     argument: LIMITRATE
     description: Limit the upload or download speed to amount bytes per second. Amount may be expressed in bytes, kilobytes with the k suffix, or megabytes with the m suffix
+  - names:
+      - --no-connection-pooling
+    argument: ""
+    description: Disable connection re-use
   - names:
       - --requester-pays
     argument: ""
@@ -600,7 +616,7 @@ subcommands:
     description: Display CloudFront invalidation request(s) status
     usage: 's3cmd cfinvalinfo cf://DIST_ID[/INVAL_ID]'
     options: []
-version: s3cmd version 2.0.2
+version: s3cmd version 2.3.0
 tldr: |
   > Command line tool and client for uploading, retrieving and managing data in S3 compatible object storage.
   > More information: <https://s3tools.org/s3cmd>.

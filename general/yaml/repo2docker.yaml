@@ -127,14 +127,199 @@ options:
   - names:
       - --cache-from
     argument: CACHE_FROM
-    description: List of images to try & re-use cached image layers from. Docker only tries to re-use image layers from images built locally, not pulled from a registry. We can ask it to explicitly re-use layers from non-locally built images by through the 'cache_from' parameter.
+    description: List of images to try & re-use cached image layers from. Docker only tries to re-use image layers from images built locally, not pulled from a registry. We can ask it to explicitly re-use layers from nonlocally built images by through the 'cache_from' parameter.
   - names:
       - --engine
     argument: ENGINE
-    description: Name of the container engine
+    description: Name of the container engine. Defaults to 'docker'.
+  - names:
+      - --Application.log_datefmt
+    argument: <Unicode>
+    description: 'The date format used by logging formatters for %(asctime)s Default: ''%Y-%m-%d %H:%M:%S'''
+  - names:
+      - --Application.log_format
+    argument: <Unicode>
+    description: 'The Logging format template Default: ''[%(name)s]%(highlevel)s %(message)s'''
+  - names:
+      - --Application.log_level
+    argument: <Enum>
+    description: 'Set the log level by value or name. Choices: any of [0, 10, 20, 30, 40, 50, ''DEBUG'', ''INFO'', ''WARN'', ''ERROR'', ''CRITICAL''] Default: 30'
+  - names:
+      - --Application.logging_config
+    argument: <key-1>=<value-1>...
+    description: 'Configure additional log handlers. The default stderr logs handler is configured by the log_level, log_datefmt and log_format settings. Default: {}'
+  - names:
+      - --Application.show_config
+    argument: <Bool>
+    description: 'Instead of starting the Application, dump configuration to stdout Default: False'
+  - names:
+      - --Application.show_config_json
+    argument: <Bool>
+    description: 'Instead of starting the Application, dump configuration to stdout (as JSON) Default: False'
+  - names:
+      - --Repo2Docker.all_ports
+    argument: <Bool>
+    description: 'Publish all declared ports from container whiel running. Equivalent to -P option to docker run Default: False'
+  - names:
+      - --Repo2Docker.appendix
+    argument: <Unicode>
+    description: 'Appendix of Dockerfile commands to run at the end of the build. Can be used to customize the resulting image after all standard build steps finish. Default: '''''
+  - names:
+      - --Repo2Docker.base_image
+    argument: <Unicode>
+    description: 'Base image to use when building docker images. Only images that match the following criteria are supported:'
+  - names:
+      - --Repo2Docker.build_memory_limit
+    argument: <ByteSpecification>
+    description: 'Total memory that can be used by the docker image building process. Set to 0 for no limits. Default: 0'
+  - names:
+      - --Repo2Docker.buildpacks
+    argument: <list-item-1>...
+    description: 'Ordered list of BuildPacks to try when building a git repository. Default: [<class ''repo2docker.buildpacks.legacy.LegacyBinderDockerBuil...'
+  - names:
+      - --Repo2Docker.cache_from
+    argument: <list-item-1>...
+    description: 'List of images to try & re-use cached image layers from. Docker only tries to re-use image layers from images built locally, not pulled from a registry. We can ask it to explicitly re-use layers from nonlocally built images by through the ''cache_from'' parameter. Default: []'
+  - names:
+      - --Repo2Docker.cleanup_checkout
+    argument: <Bool>
+    description: 'Delete source repository after building is done. Useful when repo2docker is doing the git cloning Default: True'
+  - names:
+      - --Repo2Docker.content_providers
+    argument: <list-item-1>...
+    description: 'Ordered list by priority of ContentProviders to try in turn to fetch the contents specified by the user. Default: [<class ''repo2docker.contentproviders.base.Local''>, <class ''r...'
+  - names:
+      - --Repo2Docker.default_buildpack
+    argument: <Any>
+    description: 'The default build pack to use when no other buildpacks are found. Default: <class ''repo2docker.buildpacks.python.PythonBuildPack''>'
+  - names:
+      - --Repo2Docker.dry_run
+    argument: <Bool>
+    description: 'Do not actually build the docker image, just simulate it. Default: False'
+  - names:
+      - --Repo2Docker.engine
+    argument: <Unicode>
+    description: 'Name of the container engine. Defaults to ''docker''. Default: ''docker'''
+  - names:
+      - --Repo2Docker.environment
+    argument: <list-item-1>...
+    description: 'Environment variables to set when running the built image. Each item must be a string formatted as KEY=VALUE Default: []'
+  - names:
+      - --Repo2Docker.extra_build_args
+    argument: <key-1>=<value-1>...
+    description: 'Extra build args to pass to the image build process. This is pretty much only useful for custom Dockerfile based builds. Default: {}'
+  - names:
+      - --Repo2Docker.extra_build_kwargs
+    argument: <key-1>=<value-1>...
+    description: 'extra kwargs to limit CPU quota when building a docker image. Dictionary that allows the user to set the desired runtime flag to configure the amount of access to CPU resources your container has. Reference https://docs.docker.com/config/containers/resource_constraints/#cpu Default: {}'
+  - names:
+      - --Repo2Docker.extra_run_kwargs
+    argument: <key-1>=<value-1>...
+    description: 'extra kwargs to limit CPU quota when running a docker image. Dictionary that allows the user to set the desired runtime flag to configure the amount of access to CPU resources your container has. Reference https://docs.docker.com/config/containers/resource_constraints/#cpu Default: {}'
+  - names:
+      - --Repo2Docker.git_workdir
+    argument: <Unicode>
+    description: 'Working directory to use for check out of git repositories. The default is to use the system''s temporary directory. Should be somewhere ephemeral, such as /tmp. Default: None'
+  - names:
+      - --Repo2Docker.json_logs
+    argument: <Bool>
+    description: 'Log output in structured JSON format. Useful when stdout is consumed by other tools Default: False'
+  - names:
+      - --Repo2Docker.labels
+    argument: <key-1>=<value-1>...
+    description: 'Extra labels to set on the final image. Each Label is a key-value pair, with the key being the name of the label and the value its value. Default: {}'
+  - names:
+      - --Repo2Docker.log_datefmt
+    argument: <Unicode>
+    description: 'The date format used by logging formatters for %(asctime)s Default: ''%Y-%m-%d %H:%M:%S'''
+  - names:
+      - --Repo2Docker.log_format
+    argument: <Unicode>
+    description: 'The Logging format template Default: ''[%(name)s]%(highlevel)s %(message)s'''
+  - names:
+      - --Repo2Docker.log_level
+    argument: <Enum>
+    description: 'Set the log level by value or name. Choices: any of [0, 10, 20, 30, 40, 50, ''DEBUG'', ''INFO'', ''WARN'', ''ERROR'', ''CRITICAL''] Default: 30'
+  - names:
+      - --Repo2Docker.logging_config
+    argument: <key-1>=<value-1>...
+    description: 'Configure additional log handlers. The default stderr logs handler is configured by the log_level, log_datefmt and log_format settings. Default: {}'
+  - names:
+      - --Repo2Docker.output_image_spec
+    argument: <Unicode>
+    description: 'Docker Image name:tag to tag the built image with. Required parameter. Default: '''''
+  - names:
+      - --Repo2Docker.platform
+    argument: <Unicode>
+    description: 'Platform to build for, linux/amd64 (recommended) or linux/arm64 (experimental). Default: '''''
+  - names:
+      - --Repo2Docker.ports
+    argument: <key-1>=<value-1>...
+    description: 'Port mappings to establish when running the container. Equivalent to -p {key}:{value} options to docker run. {key} refers to port inside container, and {value} refers to port / host:port in the host Default: {}'
+  - names:
+      - --Repo2Docker.push
+    argument: <Bool>
+    description: 'Set to true to push docker image after building Default: False'
+  - names:
+      - --Repo2Docker.ref
+    argument: <Unicode>
+    description: 'Git ref that should be built. If repo is a git repository, this ref is checked out in a local clone before repository is built. Default: None'
+  - names:
+      - --Repo2Docker.repo
+    argument: <Unicode>
+    description: 'Specification of repository to build image for. Could be local path or git URL. Default: ''.'''
+  - names:
+      - --Repo2Docker.run
+    argument: <Bool>
+    description: 'Run docker image after building Default: True'
+  - names:
+      - --Repo2Docker.run_cmd
+    argument: <list-item-1>...
+    description: 'Command to run when running the container When left empty, a jupyter notebook is run. Default: []'
+  - names:
+      - --Repo2Docker.show_config
+    argument: <Bool>
+    description: 'Instead of starting the Application, dump configuration to stdout Default: False'
+  - names:
+      - --Repo2Docker.show_config_json
+    argument: <Bool>
+    description: 'Instead of starting the Application, dump configuration to stdout (as JSON) Default: False'
+  - names:
+      - --Repo2Docker.subdir
+    argument: <Unicode>
+    description: 'Subdirectory of the git repository to examine. Defaults to ''''. Default: '''''
+  - names:
+      - --Repo2Docker.swh_token
+    argument: <Unicode>
+    description: 'Token to use authenticated SWH API access. If unset, default to unauthenticated (limited) usage of the Software Heritage API. Default: None'
+  - names:
+      - --Repo2Docker.target_repo_dir
+    argument: <Unicode>
+    description: 'Path inside the image where contents of the repositories are copied to, and where all the build operations (such as postBuild) happen. Defaults to ${HOME} if not set Default: '''''
+  - names:
+      - --Repo2Docker.user_id
+    argument: <Int>
+    description: 'UID of the user to create inside the built image. Should be a uid that is not currently used by anything in the image. Defaults to uid of currently running user, since that is the most common case when running r2d manually. Might not affect Dockerfile builds. Default: 0'
+  - names:
+      - --Repo2Docker.user_name
+    argument: <Unicode>
+    description: 'Username of the user to create inside the built image. Should be a username that is not currently used by anything in the image, and should conform to the restrictions on user names for Linux. Defaults to username of currently running user, since that is the most common case when running repo2docker manually. Default: ''jovyan'''
+  - names:
+      - --Repo2Docker.volumes
+    argument: <key-1>=<value-1>...
+    description: 'Volumes to mount when running the container. Only used when running, not during build process! Use a key-value pair, with the key being the volume source & value being the destination volume. Both source and destination can be relative. Source is resolved relative to the current working directory on the host, and destination is resolved relative to the working directory of the image - ($HOME by default) Default: {}'
+subcommands:
+  - name: contents
+    description: specified by the user.
+    usage: ""
+    options: []
+  - name: relative
+    description: to the working directory of the image - ($HOME by default)
+    usage: ""
+    options: []
 positionalArguments:
   - name: repo
     description: Path to repository that should be built. Could be local path or a git URL.
   - name: cmd
     description: Custom command to run after building container
-version: 2022.10.0+89.g49162fc
+version: 2023.06.0+8.gd414e99

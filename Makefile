@@ -16,26 +16,37 @@ output_list := $(group).txt
 output_gzip := $(group).json.gz
 outputs := $(output_list) $(output_gzip)
 
-yaml2json_src := scripts/run
-makelist_src := scripts/make-list
+yaml2json := scripts/run
+make_list := scripts/make-list
+validator := scripts/validate-json
 
-.PHONY: all
+.PHONY: all validateJSON
 all: $(outputs) $(json)
 
-$(group)/json/%.json: $(yaml2json_src) $(group)/yaml/%.yaml
-	$(yaml2json_src) $*
 
-$(output_list): $(makelist_src) $(json)
-	$(makelist_src) $(group) > $@
+# For each YAML, convert it to JSON
+$(group)/json/%.json: $(yaml2json) $(group)/yaml/%.yaml
+	@echo "💎  Processing YAML $*"
+	$(yaml2json) $*
+	@echo "💎  Validating $*"
+	$(validator) $(group)/json/$*.json
 
+# Make a list of commands
+$(output_list): $(make_list) $(json)
+	@echo "💎  Making a list of commands in $(group)"
+	$(make_list) $(group) > $@
+
+# Create a single gzip fil from json files
 $(output_gzip): $(json)
-	@echo "Creating $@"
+	@echo "💎  Creating $@"
 	@echo $(json) | tr ' ' '\n' | sort -V | tr '\n' ' ' | xargs jq -cs . | gzip > $@
 
 .PHONY: clean
 clean:
+	@echo "💎  Cleaning"
 	rm -f $(outputs)
 
 .PHONY: cleanall
 cleanall:
+	@echo "💎  Cleaning all"
 	rm -f $(outputs) $(json)

@@ -14,9 +14,9 @@ yaml := $(wildcard $(group)/yaml/*.yaml)
 
 # Outputs
 json := $(yaml:$(group)/yaml/%.yaml=$(group)/json/%.json)
-fish := $(yaml:$(group)/yaml/%.yaml=$(group)/fish/%.fish)
-zsh := $(yaml:$(group)/yaml/%.yaml=$(group)/zsh/_%)
-bash := $(yaml:$(group)/yaml/%.yaml=$(group)/bash/%)
+fish := $(yaml:$(group)/yaml/%.yaml=$(group)/fish/completions/%.fish)
+zsh := $(yaml:$(group)/yaml/%.yaml=$(group)/zsh/completions/_%)
+bash := $(yaml:$(group)/yaml/%.yaml=$(group)/bash/completions/%)
 
 output_list := $(group).txt
 output_gzip := $(group).json.gz

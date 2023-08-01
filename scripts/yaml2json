@@ -1,0 +1,76 @@
+#!/usr/bin/env bash
+#
+# Starting with YAML, make JSON, bash/zsh/fish, gzip, and command list txt files.
+#
+#   $ ./yaml2json bat
+#
+# Require jq, ajv, parallel, and h2o
+#
+#
+set -o errexit
+set -o nounset
+set -o pipefail
+if [[ "${TRACE-0}" == "1" ]]; then
+    set -o xtrace
+fi
+
+basedir="$(dirname "$(readlink -f "$0")")"
+name="$1"
+cd "$basedir"
+
+yaml="$name.yaml"
+
+if [[ -z "$name" ]]; then
+    echo "Set command name as the argument."
+    echo "Usage: yaml2json <command-name>"
+    exit 1
+fi
+
+if [[ -z "$(find .. -name "$yaml" -type f)" ]]; then
+    echo "File not found: $name.yaml"
+    exit 1
+fi
+
+if [[ ! "$(command -v ajv)" ]]; then
+    echo "[error] ajv is missing. Install ajv-cli via"
+    echo "npm install -g ajv-cli"
+    exit 1
+fi
+
+if [[ ! "$(command -v h2o)" ]]; then
+    echo "[error] h2o is missing."
+    exit 1
+fi
+
+if [[ ! "$(command -v jq)" ]]; then
+    echo "[error] jq is missing. Install jq to run this script."
+    exit 1
+fi
+
+if [[ ! "$(command -v yq)" ]]; then
+    echo "[error] yq is missing. Install yq to run this script."
+    exit 1
+fi
+
+if [[ ! "$(command -v parallel)" ]]; then
+    echo "[error] parallel is missing. Install parallel to run this script."
+    exit 1
+fi
+
+
+if [[ "${1-}" =~ ^-*h(elp)?$ ]]; then
+    echo "Usage: ./yaml2json <command-name>"
+    exit
+fi
+
+
+echo "🚀 Fix replace explicit home directory with ~"
+./fix-homedir "$name"
+
+echo "🚀 Adding tldr if possible"
+[[ "$name" != "gt" ]] && ./addtldr "$name"
+
+echo "🚀 Creating JSON"
+./tojson "$name"
+
+echo "🚀 Done. Don't forget to update gzipped files."

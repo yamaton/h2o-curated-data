@@ -1,0 +1,94 @@
+#!/usr/bin/env bash
+#
+# Generate bash/zsh/fish shell script from JSON spec
+#
+#   $ ./json2script general bat
+#
+# Requires h2o
+#
+#
+set -o errexit
+set -o nounset
+set -o pipefail
+if [[ "${TRACE-0}" == "1" ]]; then
+    set -o xtrace
+fi
+
+usage="Usage: json2script <group> <shell-type> <command-name>"
+basedir="$(dirname "$(readlink -f "$0")")"
+group="$1"
+shelltype="$2"
+name="$3"
+
+cd "$basedir"
+
+if [[ -z "$name" ]]; then
+    echo "Set command name as the argument."
+    echo "$usage"
+    exit 1
+fi
+
+if [[ ! "$(command -v h2o)" ]]; then
+    echo "[error] h2o is missing."
+    exit 1
+fi
+
+if (( "$#" != 3 ))  || [[ "${1-}" =~ ^-*h(elp)?$ ]]; then
+    echo "Usage: to-shellcomp.sh {bash|zsh|fish} <command>"
+    exit 1
+fi
+
+
+case "$group" in
+  general)
+    ;;
+  bio)
+    ;;
+  experimental)
+    ;;
+  *)
+    echo "ERROR: The first argument must be either 'general', 'bio', or 'experimental'."
+    exit 1
+    ;;
+esac
+
+
+case "$shelltype" in
+  bash)
+    outpath="$shelltype/$name"
+    ;;
+  zsh)
+    outpath="$shelltype/_$name"
+    ;;
+  fish)
+    outpath="$shelltype/$name.fish"
+    ;;
+  *)
+    echo "ERROR: The second argument must be either 'bash', 'zsh', or 'fish'."
+    exit 1
+    ;;
+esac
+
+
+if "./check-if-completion-available-to" "$shelltype" "$name"; then
+    echo "👀 $name is already supported officially in $shelltype 👀"
+    echo "➡️ $name : Skip creating completion script for $shelltype shell."
+    exit
+fi
+
+echo "Running: json2script $group $shelltype $name ..."
+
+function genScript() {
+  local dir="$1"
+  local json="$basedir/../$dir/json/$name.json"
+  if [[ -f "$json" ]]; then
+      mkdir -p "$basedir/../$dir/$shelltype"
+      output="$basedir/../$dir/$outpath"
+      echo "  from: $json"
+      echo "  to  : $output"
+      h2o --loadjson "$json" --format "$shelltype" > "$output"
+  fi
+}
+
+echo "🚀 Creating fish completion script for $name"
+genScript "$group" "$shelltype" "$name"

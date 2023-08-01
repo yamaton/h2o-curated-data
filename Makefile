@@ -20,7 +20,7 @@ output_gzip := $(group).json.gz
 outputs := $(output_list) $(output_gzip)
 
 yaml2json := scripts/yaml2json
-json2script := scripts/json2script
+json2shellcomp := scripts/json2shellcomp
 make_list := scripts/make-list
 validator := scripts/validate-json
 
@@ -29,17 +29,17 @@ all: $(outputs) $(json) $(bash) $(zsh) $(fish)
 
 
 # For each YAML, convert it to JSON
-$(group)/json/%.json $(group)/bash/% $(group)/zsh/_% $(group)/fish/%.fish: $(yaml2json) $(json2script) $(group)/yaml/%.yaml
+$(group)/json/%.json $(group)/bash/% $(group)/zsh/_% $(group)/fish/%.fish: $(yaml2json) $(json2shellcomp) $(group)/yaml/%.yaml
 	@echo "💎  $*: Generating JSON from YAML "
 	$(yaml2json) $*
 	@echo "✏️  $*: Validating JSON"
 	$(validator) $(group)/json/$*.json
 	@echo "🐟  $*: Generating fish"
-	$(json2script) $(group) fish $*
+	$(json2shellcomp) $(group) fish $*
 	@echo "💤  $*: Generating zsh"
-	$(json2script) $(group) zsh $*
+	$(json2shellcomp) $(group) zsh $*
 	@echo "🦉  $*: Generating bash"
-	$(json2script) $(group) bash $*
+	$(json2shellcomp) $(group) bash $*
 
 # Make a list of commands
 $(output_list): $(make_list) $(json)

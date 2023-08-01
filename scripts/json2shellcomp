@@ -2,7 +2,7 @@
 #
 # Generate bash/zsh/fish shell script from JSON spec
 #
-#   $ ./json2script general bat
+#   $ ./json2shellcomp general fish bat
 #
 # Requires h2o
 #
@@ -14,7 +14,7 @@ if [[ "${TRACE-0}" == "1" ]]; then
     set -o xtrace
 fi
 
-usage="Usage: json2script <group> <shell-type> <command-name>"
+usage="Usage: json2shellcomp <group> <shell-type> <command-name>"
 basedir="$(dirname "$(readlink -f "$0")")"
 group="$1"
 shelltype="$2"
@@ -34,7 +34,7 @@ if [[ ! "$(command -v h2o)" ]]; then
 fi
 
 if (( "$#" != 3 ))  || [[ "${1-}" =~ ^-*h(elp)?$ ]]; then
-    echo "Usage: to-shellcomp.sh {bash|zsh|fish} <command>"
+    echo "Usage: json2shellcomp {general|bio|experimental} {bash|zsh|fish} <command>"
     exit 1
 fi
 
@@ -76,19 +76,15 @@ if "./check-if-completion-available-to" "$shelltype" "$name"; then
     exit
 fi
 
-echo "Running: json2script $group $shelltype $name ..."
-
-function genScript() {
-  local dir="$1"
-  local json="$basedir/../$dir/json/$name.json"
-  if [[ -f "$json" ]]; then
-      mkdir -p "$basedir/../$dir/$shelltype"
-      output="$basedir/../$dir/$outpath"
-      echo "  from: $json"
-      echo "  to  : $output"
-      h2o --loadjson "$json" --format "$shelltype" > "$output"
-  fi
-}
+echo "Running: json2shellcomp $group $shelltype $name ..."
 
 echo "🚀 Creating fish completion script for $name"
-genScript "$group" "$shelltype" "$name"
+
+json="$basedir/../$group/json/$name.json"
+if [[ -f "$json" ]]; then
+    mkdir -p "$basedir/../$group/$shelltype"
+    output="$basedir/../$group/$outpath"
+    echo "  from: $json"
+    echo "  to  : $output"
+    h2o --loadjson "$json" --format "$shelltype" > "$output"
+fi

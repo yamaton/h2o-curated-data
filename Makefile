@@ -51,7 +51,7 @@ $(output_list): $(make_list) $(json)
 # Create a single gzip fil from json files
 $(output_gzip): $(json)
 	@echo "✨  Creating $@"
-	@echo $(json) | tr ' ' '\n' | sort -V | tr '\n' ' ' | xargs jq -cs . | gzip > $@
+	echo $(json) | tr ' ' '\n' | sort -V | tr '\n' ' ' | xargs jq -cs . | gzip > $@
 
 .PHONY: clean
 clean:

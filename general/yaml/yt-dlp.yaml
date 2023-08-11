@@ -1,5 +1,5 @@
 name: yt-dlp
-description: yt-dlp
+description: A youtube-dl fork with additional features and fixes
 usage: yt-dlp [OPTIONS] URL [URL...]
 options:
   - names:
@@ -20,6 +20,10 @@ options:
       - --no-update
     argument: ""
     description: Do not check for updates (default)
+  - names:
+      - --update-to
+    argument: '[CHANNEL]@[TAG]'
+    description: 'Upgrade/downgrade to a specific version. CHANNEL can be a repository as well. CHANNEL and TAG default to "stable" and "latest" respectively if omitted; See "UPDATE" for details. Supported channels: stable, nightly'
   - names:
       - -i
       - --ignore-errors
@@ -72,7 +76,7 @@ options:
   - names:
       - --no-flat-playlist
     argument: ""
-    description: Extract the videos of a playlist
+    description: Fully extract the videos of a playlist (default)
   - names:
       - --live-from-start
     argument: ""
@@ -98,9 +102,9 @@ options:
     argument: ""
     description: Do not mark videos watched (default)
   - names:
-      - --no-colors
-    argument: ""
-    description: 'Do not emit color codes in output (Alias: --no-colours)'
+      - --color
+    argument: '[STREAM:]POLICY'
+    description: Whether to emit color codes in output, optionally prefixed by the STREAM (stdout or stderr) to apply the setting to. Can be one of "always", "auto" (default), "never", or "no_color" (use non color terminal sequences). Can be used multiple times
   - names:
       - --compat-options
     argument: OPTS
@@ -132,30 +136,22 @@ options:
     argument: ""
     description: Make all connections via IPv6
   - names:
+      - --enable-file-urls
+    argument: ""
+    description: Enable file:// URLs. This is disabled by default for security reasons.
+  - names:
       - --geo-verification-proxy
     argument: URL
     description: Use this proxy to verify the IP address for some geo-restricted sites. The default proxy specified by --proxy (or none, if the option is not present) is used for the actual downloading
   - names:
-      - --geo-bypass
-    argument: ""
-    description: Bypass geographic restriction via faking X-Forwarded-For HTTP header (default)
-  - names:
-      - --no-geo-bypass
-    argument: ""
-    description: Do not bypass geographic restriction via faking X-Forwarded-For HTTP header
-  - names:
-      - --geo-bypass-country
-    argument: CODE
-    description: Force bypass geographic restriction with explicitly provided two-letter ISO 3166-2 country code
-  - names:
-      - --geo-bypass-ip-block
-    argument: IP_BLOCK
-    description: Force bypass geographic restriction with explicitly provided IP block in CIDR notation
+      - --xff
+    argument: VALUE
+    description: How to fake X-Forwarded-For HTTP header to try bypassing geographic restriction. One of "default" (only when known to be useful), "never", an IP block in CIDR notation, or a two-letter ISO 3166-2 country code
   - names:
       - -I
       - --playlist-items
     argument: ITEM_SPEC
-    description: Comma separated playlist_index of the videos to download. You can specify a range using "[START]:[STOP][:STEP]". For backward compatibility, START-STOP is also supported. Use negative indices to count from the right and negative STEP to download in reverse order. E.g. "-I 1:3,7,-5::2" used on a playlist of size 15 will download the videos at index 1,2,3,7,11,13,15
+    description: Comma separated playlist_index of the items to download. You can specify a range using "[START]:[STOP][:STEP]". For backward compatibility, START-STOP is also supported. Use negative indices to count from the right and negative STEP to download in reverse order. E.g. "-I 1:3,7,-5::2" used on a playlist of size 15 will download the items at index 1,2,3,7,11,13,15
   - names:
       - --min-filesize
     argument: SIZE
@@ -163,11 +159,11 @@ options:
   - names:
       - --max-filesize
     argument: SIZE
-    description: Abort download if filesize if larger than SIZE, e.g. 50k or 44.6M
+    description: Abort download if filesize is larger than SIZE, e.g. 50k or 44.6M
   - names:
       - --date
     argument: DATE
-    description: Download only videos uploaded on this date. The date can be "YYYYMMDD" or in the format [now|today|yesterday][-N[day|week|month|year]]. E.g. --date today-2weeks
+    description: Download only videos uploaded on this date. The date can be "YYYYMMDD" or in the format [now|today|yesterday][-N[day|week|month|year]]. E.g. "--date today-2weeks" downloads only videos uploaded on the same day two weeks ago
   - names:
       - --datebefore
     argument: DATE
@@ -181,9 +177,17 @@ options:
     argument: FILTER
     description: Generic video filter. Any "OUTPUT TEMPLATE" field can be compared with a number or a string using the operators defined in "Filtering Formats". You can also simply specify a field to match if the field is present, use "!field" to check if the field is not present, and "&" to check multiple conditions. Use a "\" to escape "&" or quotes if needed. If used multiple times, the filter matches if atleast one of the conditions are met. E.g. --match-filter !is_live --match-filter "like_count>?100 & description~='(?i)\bcats \& dogs\b'" matches only videos that are not live OR those that have a like count more than 100 (or the like field is not available) and also has a description that contains the phrase "cats & dogs" (caseless). Use "--match-filter -" to interactively ask whether to download each video
   - names:
-      - --no-match-filter
+      - --no-match-filters
     argument: ""
-    description: Do not use generic video filter (default)
+    description: Do not use any --match-filter (default)
+  - names:
+      - --break-match-filters
+    argument: FILTER
+    description: Same as "--match-filters" but stops the download process when a video is rejected
+  - names:
+      - --no-break-match-filters
+    argument: ""
+    description: Do not use any --break-match-filters (default)
   - names:
       - --no-playlist
     argument: ""
@@ -213,13 +217,9 @@ options:
     argument: ""
     description: Stop the download process when encountering a file that is in the archive
   - names:
-      - --break-on-reject
-    argument: ""
-    description: Stop the download process when encountering a file that has been filtered out
-  - names:
       - --break-per-input
     argument: ""
-    description: --break-on-existing, --break-on-reject, --max-downloads, and autonumber resets per input URL
+    description: Alters --max-downloads, --break-on-existing, --break-match-filter, and autonumber to reset per input URL
   - names:
       - --no-break-per-input
     argument: ""
@@ -262,9 +262,9 @@ options:
   - names:
       - --skip-unavailable-fragments
     argument: ""
-    description: 'Skip unavailable fragments for DASH, hlsnative and ISM downloads (default) (Alias: --no-abort-on-unavailable-fragment)'
+    description: 'Skip unavailable fragments for DASH, hlsnative and ISM downloads (default) (Alias: --no-abort-on-unavailable-fragments)'
   - names:
-      - --abort-on-unavailable-fragment
+      - --abort-on-unavailable-fragments
     argument: ""
     description: 'Abort download if a fragment is unavailable (Alias: --no-skip-unavailable-fragments)'
   - names:
@@ -318,7 +318,7 @@ options:
   - names:
       - --download-sections
     argument: REGEX
-    description: Download only chapters whose title matches the given regular expression. Time ranges prefixed by a "*" can also be used in place of chapters to download the specified range. Needs ffmpeg. This option can be used multiple times to download multiple sections, e.g. --download-sections "*10:15-inf" --download-sections "intro"
+    description: Download only chapters that match the regular expression. A "*" prefix denotes time-range instead of chapter. Negative timestamps are calculated from the end. "*from-url" can be used to download between the "start_time" and "end_time" extracted from the URL. Needs ffmpeg. This option can be used multiple times to download multiple sections, e.g. --download-sections "*10:15-inf" --download-sections "intro"
   - names:
       - --downloader
     argument: '[PROTO:]NAME'
@@ -435,7 +435,7 @@ options:
   - names:
       - --clean-info-json
     argument: ""
-    description: Remove some private fields such as filenames from the infojson. Note that it could still contain some personal information (default)
+    description: Remove some internal metadata such as filenames from the infojson (default)
   - names:
       - --no-clean-info-json
     argument: ""
@@ -463,7 +463,7 @@ options:
   - names:
       - --cookies-from-browser
     argument: BROWSER[+KEYRING][:PROFILE][::CONTAINER]
-    description: 'The name of the browser to load cookies from. Currently supported browsers are: brave, chrome, chromium, edge, firefox, opera, safari, vivaldi. Optionally, the KEYRING used for decrypting Chromium cookies on Linux, the name/path of the PROFILE to load cookies from, and the CONTAINER name (if Firefox) ("none" for no container) can be given with their respective seperators. By default, all containers of the most recently accessed profile are used. Currently supported keyrings are: basictext, gnomekeyring, kwallet'
+    description: 'The name of the browser to load cookies from. Currently supported browsers are: brave, chrome, chromium, edge, firefox, opera, safari, vivaldi. Optionally, the KEYRING used for decrypting Chromium cookies on Linux, the name/path of the PROFILE to load cookies from, and the CONTAINER name (if Firefox) ("none" for no container) can be given with their respective seperators. By default, all containers of the most recently accessed profile are used. Currently supported keyrings are: basictext, gnomekeyring, kwallet, kwallet5, kwallet6'
   - names:
       - --no-cookies-from-browser
     argument: ""
@@ -518,6 +518,10 @@ options:
     argument: ""
     description: Activate quiet mode. If used with --verbose, print the log to stderr
   - names:
+      - --no-quiet
+    argument: ""
+    description: Deactivate quiet mode. (Default)
+  - names:
       - --no-warnings
     argument: ""
     description: Ignore warnings
@@ -546,7 +550,7 @@ options:
       - -O
       - --print
     argument: '[WHEN:]TEMPLATE'
-    description: Field name or output template to print to screen, optionally prefixed with when to print it, separated by a ":". Supported values of "WHEN" are the same as that of --use-postprocessor, and "video" (default). Implies --quiet. Implies --simulate unless --no-simulate or later stages of WHEN are used. This option can be used multiple times
+    description: 'Field name or output template to print to screen, optionally prefixed with when to print it, separated by a ":". Supported values of "WHEN" are the same as that of --use-postprocessor (default: video). Implies --quiet. Implies --simulate unless --no-simulate or later stages of WHEN are used. This option can be used multiple times'
   - names:
       - --print-to-file
     argument: '[WHEN:]TEMPLATE FILE'
@@ -619,7 +623,7 @@ options:
     argument: ""
     description: Use an unencrypted connection to retrieve information about the video (Currently supported only for YouTube)
   - names:
-      - --add-header
+      - --add-headers
     argument: FIELD:VALUE
     description: Specify a custom HTTP header and its value, separated by a colon ":". You can use this option multiple times
   - names:
@@ -758,6 +762,10 @@ options:
     argument: PATH
     description: Location of .netrc authentication data; either the path or its containing directory. Defaults to ~/.netrc
   - names:
+      - --netrc-cmd
+    argument: NETRC_CMD
+    description: Command to execute to get the credentials for an extractor.
+  - names:
       - --video-password
     argument: PASSWORD
     description: Video password (vimeo, youku)
@@ -805,7 +813,7 @@ options:
   - names:
       - --remux-video
     argument: FORMAT
-    description: 'Remux the video into another container if necessary (currently supported: avi, flv, mkv, mov, mp4, webm, aac, aiff, alac, flac, m4a, mka, mp3, ogg, opus, vorbis, wav). If target container does not support the video/audio codec, remuxing will fail. You can specify multiple rules; e.g. "aac>m4a/mov>mp4/mkv" will remux aac to m4a, mov to mp4 and anything else to mkv'
+    description: 'Remux the video into another container if necessary (currently supported: avi, flv, gif, mkv, mov, mp4, webm, aac, aiff, alac, flac, m4a, mka, mp3, ogg, opus, vorbis, wav). If target container does not support the video/audio codec, remuxing will fail. You can specify multiple rules; e.g. "aac>m4a/mov>mp4/mkv" will remux aac to m4a, mov to mp4 and anything else to mkv'
   - names:
       - --recode-video
     argument: FORMAT
@@ -873,12 +881,12 @@ options:
     description: Do not embed the infojson as an attachment to the video file
   - names:
       - --parse-metadata
-    argument: FROM:TO
-    description: Parse additional metadata like title/artist from other fields; see "MODIFYING METADATA" for details
+    argument: '[WHEN:]FROM:TO'
+    description: 'Parse additional metadata like title/artist from other fields; see "MODIFYING METADATA" for details. Supported values of "WHEN" are the same as that of --use-postprocessor (default: pre_process)'
   - names:
       - --replace-in-metadata
-    argument: FIELDS REGEX REPLACE
-    description: Replace text in a metadata field using the given regex. This option can be used multiple times
+    argument: '[WHEN:]FIELDS REGEX REPLACE'
+    description: 'Replace text in a metadata field using the given regex. This option can be used multiple times. Supported values of "WHEN" are the same as that of --use-postprocessor (default: pre_process)'
   - names:
       - --xattrs
     argument: ""
@@ -898,7 +906,7 @@ options:
   - names:
       - --exec
     argument: '[WHEN:]CMD'
-    description: Execute a command, optionally prefixed with when to execute it (after_move if unspecified), separated by a ":". Supported values of "WHEN" are the same as that of --use-postprocessor. Same syntax as the output template can be used to pass any field as arguments to the command. After download, an additional field "filepath" that contains the final path of the downloaded file is also available, and if no fields are passed, %(filepath)q is appended to the end of the command. This option can be used multiple times
+    description: 'Execute a command, optionally prefixed with when to execute it, separated by a ":". Supported values of "WHEN" are the same as that of --use-postprocessor (default: after_move). Same syntax as the output template can be used to pass any field as arguments to the command. If no fields are passed, %(filepath,_filename|)q is appended to the end of the command. This option can be used multiple times'
   - names:
       - --no-exec
     argument: ""
@@ -938,7 +946,7 @@ options:
   - names:
       - --use-postprocessor
     argument: NAME[:ARGS]
-    description: The (case sensitive) name of plugin postprocessors to be enabled, and (optionally) arguments to be passed to it, separated by a colon ":". ARGS are a semicolon ";" delimited list of NAME=VALUE. The "when" argument determines when the postprocessor is invoked. It can be one of "pre_process" (after video extraction), "after_filter" (after video passes filter), "before_dl" (before each video download), "post_process" (after each video download; default), "after_move" (after moving video file to it's final locations), "after_video" (after downloading and processing all formats of a video), or "playlist" (at end of playlist). This option can be used multiple times to add different postprocessors
+    description: The (case sensitive) name of plugin postprocessors to be enabled, and (optionally) arguments to be passed to it, separated by a colon ":". ARGS are a semicolon ";" delimited list of NAME=VALUE. The "when" argument determines when the postprocessor is invoked. It can be one of "pre_process" (after video extraction), "after_filter" (after video passes filter), "video" (after --format; before --print/--output), "before_dl" (before each video download), "post_process" (after each video download; default), "after_move" (after moving video file to it's final locations), "after_video" (after downloading and processing all formats of a video), or "playlist" (at end of playlist). This option can be used multiple times to add different postprocessors
   - names:
       - --sponsorblock-mark
     argument: CATS
@@ -983,7 +991,7 @@ options:
       - --extractor-args
     argument: IE_KEY:ARGS
     description: Pass ARGS arguments to the IE_KEY extractor. See "EXTRACTOR ARGUMENTS" for details. You can use this option multiple times to give arguments for different extractors
-version: 2022.11.11
+version: 2023.07.06
 tldr: |
   > A youtube-dl fork with additional features and fixes.
   > Download videos from YouTube and other websites.
@@ -993,19 +1001,19 @@ tldr: |
 
   `yt-dlp "{{https://www.youtube.com/watch?v=oHg5SJYRHA0}}"`
 
+  - List the available downloadable formats for a video:
+
+  `yt-dlp --list-formats "{{https://www.youtube.com/watch?v=oHg5SJYRHA0}}"`
+
   - Download a video with a defined format, in this case the best mp4 video available (default is "bv\*+ba/b"):
 
   `yt-dlp --format "{{bv*[ext=mp4]+ba[ext=m4a]/b[ext=mp4]}}" "{{https://www.youtube.com/watch?v=oHg5SJYRHA0}}"`
 
-  - Extract audio from videos (required ffmpeg or ffprobe):
+  - Extract audio from a video (requires ffmpeg or ffprobe):
 
   `yt-dlp --extract-audio "{{https://www.youtube.com/watch?v=oHg5SJYRHA0}}"`
 
-  - Specify audio format of extracted audio (the default is "best"):
-
-  `yt-dlp --extract-audio --audio-format {{mp3}} "{{https://www.youtube.com/watch?v=oHg5SJYRHA0}}"`
-
-  - Specify audio quality of extracted audio (between 0 (best) and 10 (worst), default = 5):
+  - Specify audio format and audio quality of extracted audio (between 0 (best) and 10 (worst), default = 5):
 
   `yt-dlp --extract-audio --audio-format {{mp3}} --audio-quality {{0}} "{{https://www.youtube.com/watch?v=oHg5SJYRHA0}}"`
 

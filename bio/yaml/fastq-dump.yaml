@@ -1,6 +1,8 @@
 name: fastq-dump
 description: fastq-dump
-usage: fastq-dump [ options ] [ accessions(s)... ]
+usage: |-
+  fastq-dump [options] <path> [<path>...]
+  fastq-dump [options] <accession>
 options:
   - names:
       - -A
@@ -27,7 +29,7 @@ options:
     description: Maximum spot id
   - names:
       - --spot-groups
-    argument: <[list]>[,...]
+    argument: <[list]>
     description: 'Filter by SPOT_GROUP (member): name[,...]'
   - names:
       - -W
@@ -42,8 +44,8 @@ options:
   - names:
       - -R
       - --read-filter
-    argument: <filter>
-    description: 'Split into files by READ_FILTER value [split], optionally filter by value: [pass|reject|criteria|redacted]'
+    argument: <[filter]>
+    description: 'Split into files by READ_FILTER value optionally filter by value: pass|reject|criteria|redacted'
   - names:
       - -E
       - --qual-filter
@@ -64,11 +66,11 @@ options:
   - names:
       - --aligned-region
     argument: <name[:from-to]>
-    description: 'Filter by position on genome. Name can eiter by accession.version (ex: NC_000001.10) or file specific name (ex: "chr1" or "1". "from" and "to" are 1-based coordinates'
+    description: 'Filter by position on genome. Name can either be accession.version (ex: NC_000001.10) or file specific name (ex: "chr1" or "1"). "from" and "to" are 1-based coordinates'
   - names:
-      - --matepair_distance
+      - --matepair-distance
     argument: <from-to|unknown>
-    description: Filter by distance between matepairs. Use "unknown" to find matepairs split between the references. Use from-to to limit matepair distance on the same reference
+    description: Filter by distance between matepairs.   Use "unknown" to find matepairs split between the references. Use from-to to limit matepair distance on the same reference
   - names:
       - --skip-technical
     argument: ""
@@ -77,7 +79,7 @@ options:
       - -O
       - --outdir
     argument: <path>
-    description: Output directory, default is working directory '.'
+    description: Output directory, default is working directory '.' )
   - names:
       - -Z
       - --stdout
@@ -117,17 +119,22 @@ options:
   - names:
       - -C
       - --dumpcs
-    argument: <cskey>
-    description: Formats sequence using color space (default for SOLiD), "cskey" may be specified for translation or else specify "dflt" to use the default value
+    argument: <[cskey]>
+    description: Formats sequence using color space (default for SOLiD),"cskey" may be specified for translation
   - names:
       - -B
       - --dumpbase
     argument: ""
     description: Formats sequence using base space (default for other than SOLiD).
   - names:
+      - -Q
+      - --offset
+    argument: <integer>
+    description: Offset to use for quality conversion, default is 33
+  - names:
       - --fasta
-    argument: <line-width>
-    description: FASTA only, no qualities, with can be "default" or "0" for no wrapping
+    argument: <[line width]>
+    description: FASTA only, no qualities, optional line wrap width (set to zero for no wrapping)
   - names:
       - --suppress-qual-for-cskey
     argument: ""
@@ -159,46 +166,38 @@ options:
     argument: <path>
     description: <path> to ngc file
   - names:
-      - --perm
-    argument: <path>
-    description: <path> to permission file
-  - names:
-      - --location
-    argument: <location>
-    description: location in cloud
-  - names:
-      - --cart
-    argument: <path>
-    description: <path> to cart file
-  - names:
       - --disable-multithreading
     argument: ""
     description: disable multithreading
+  - names:
+      - -h
+      - --help
+    argument: ""
+    description: Output brief explanation of program usage
   - names:
       - -V
       - --version
     argument: ""
     description: Display the version of the program
   - names:
-      - -v
-      - --verbose
-    argument: ""
-    description: Increase the verbosity of the program status messages. Use multiple times for more verbosity.
-  - names:
       - -L
       - --log-level
     argument: <level>
-    description: Logging level as number or enum string. One of (fatal|sys|int|err|warn|info|debug) or (0-6) Current/default is warn
+    description: Logging level as number or enum string One of (fatal|sys|int|err|warn|info) or (0-5) Current/default is warn
   - names:
-      - --option-file
-    argument: file
-    description: Read more options and parameters from the file.
-  - names:
-      - -h
-      - --help
+      - -v
+      - --verbose
     argument: ""
-    description: print this message
-version: '"fastq-dump" version 3.0.0'
+    description: Increase the verbosity level of the program Use multiple times for more verbosity
+  - names:
+      - --ncbi_error_report
+    argument: ""
+    description: Control program execution environment report generation (if implemented). One of (never|error|always). Default is error
+  - names:
+      - --legacy-report
+    argument: ""
+    description: use legacy style 'Written spots' for tool
+version: '3.0.7'
 tldr: |
   > Extracts data in FASTQ- or FASTA-format from SRA accessions.
 

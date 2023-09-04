@@ -29,6 +29,7 @@ json2shellcomp := scripts/json2shellcomp
 make_list := scripts/make-list
 validator := scripts/validate-json
 
+all: $(output_list) $(output_gzip)
 
 # For each YAML, convert it to JSON. Then to bash/zsh/fish
 $(group)/json/%.json $(group)/bash/% $(group)/zsh/_% $(group)/fish/%.fish: $(yaml2json) $(json2shellcomp) $(group)/yaml/%.yaml

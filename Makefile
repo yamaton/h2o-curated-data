@@ -24,9 +24,9 @@ outputs := $(output_list) $(output_gzip)
 
 # Scripts
 yaml2json := scripts/yaml2json
-json2shellcomp := scripts/json2shellcomp
 make_list := scripts/make-list
 validator := scripts/validate-json
+is_already_available := scripts/check-if-completion-available-to
 
 all: $(output_list) $(output_gzip) $(bash) $(zsh) $(fish)
 
@@ -37,21 +37,35 @@ $(group)/json/%.json: $(yaml2json) $(group)/yaml/%.yaml
 	@echo "✏️  $*: Validating JSON"
 	$(validator) $@
 
-# [TODO] Remove hardcoded output path in json2shellcomp
 # Convert JSON to Bash
-$(group)/bash/completions/%: $(json2shellcomp) $(group)/json/%.json
-	@echo "🦉  $*: Generating bash"
-	$(json2shellcomp) $(group) bash $*
+$(group)/bash/completions/%: $(is_already_available) $(group)/json/%.json
+	@if $(is_already_available) bash $*; then \
+		echo "👀 $* is already supported in bash. Skipping..."; \
+	else \
+		echo "🦉  $*: Generating bash"; \
+		mkdir -p $(group)/bash/completions; \
+		h2o --loadjson $(group)/json/$*.json --format bash > $@; \
+	fi
 
 # Convert JSON to Zsh
-$(group)/zsh/completions/_%: $(json2shellcomp) $(group)/json/%.json
-	@echo "💤  $*: Generating zsh"
-	$(json2shellcomp) $(group) zsh $*
+$(group)/zsh/completions/_%: $(is_already_available) $(group)/json/%.json
+	@if $(is_already_available) zsh $*; then \
+		echo "👀 $* is already supported in zsh. Skipping..."; \
+	else \
+		echo "💤  $*: Generating zsh"; \
+		mkdir -p $(group)/zsh/completions; \
+		h2o --loadjson $(group)/json/$*.json --format zsh > $@; \
+	fi
 
 # Convert JSON to Fish
-$(group)/fish/completions/%.fish: $(json2shellcomp) $(group)/json/%.json
-	@echo "🐟  $*: Generating fish"
-	$(json2shellcomp) $(group) fish $*
+$(group)/fish/completions/%.fish: $(is_already_available) $(group)/json/%.json
+	@if $(is_already_available) fish $*; then \
+		echo "👀 $* is already supported in fish. Skipping..."; \
+	else \
+		echo "🐟  $*: Generating fish"; \
+		mkdir -p $(group)/fish/completions; \
+		h2o --loadjson $(group)/json/$*.json --format fish > $@; \
+	fi
 
 # Make a list of commands
 $(output_list): $(make_list) $(json)

@@ -1,0 +1,285 @@
+name: verkko
+description: Verkko is a hybrid genome assembly pipeline developed for telomere-to-telomere assembly of PacBio HiFi and Oxford Nanopore reads.
+usage: verkko -d <output-directory> --hifi <hifi-reads ...> --nano <nanopore-reads ...>
+options:
+  - names:
+      - -d
+    argument: <output-directory>
+    description: Directory to use for verkko intermediate and final results. Will be created if needed.
+  - names:
+      - --hifi
+    argument: <files ...>
+    description: List of files containing PacBio HiFi reads.
+  - names:
+      - --nano
+    argument: <files ...>
+    description: List of files containing Oxford Nanopore reads.
+  - names:
+      - --no-correction
+    argument: ""
+    description: Do not perform Canu correction on the HiFi reads.
+  - names:
+      - --no-nano
+    argument: ""
+    description: Assemble without ONT data.
+  - names:
+      - --hap-kmers
+    argument: h1 h2 type
+    description: Use rukki to assign paths to haplotypes. 'h1' and 'h2 must be Meryl databases of homopolymer-compressed parental kmers. 'type' must be 'trio', 'hic' or 'strandseq'.
+  - names:
+      - --hic1
+    argument: <files ...>
+    description: List of files containing left hic reads.
+  - names:
+      - --hic2
+    argument: <files ...>
+    description: List of files containing right hic reads. Order of left and right files should be same, no interlaced files allowed. Input reads can be any combination of FASTA/FASTQ, uncompressed or gzip/bzip2/xz compressed. Any number of files can be supplied; *.gz works.
+  - names:
+      - --no-rdna-tangle
+    argument: ""
+    description: Switch off option that helps to proceed large rDNA tangles which may connect multiple chromosomes.
+  - names:
+      - --uneven-depth
+    argument: ""
+    description: Disable coverage-based heuristics in homozygous nodes detection for phasing.
+  - names:
+      - --haplo-divergence
+    argument: ""
+    description: 'Estimation on maximum divergence between haplotypes. Should be increased for species with divergence significantly higher than in human. Default: 0.05, min 0, max 0.2'
+  - names:
+      - --screen
+    argument: <option>
+    description: 'Identify common contaminants and remove from the assembly, saving 1 (circularized) exemplar. For human, ''--screen human'' will attempt to remove rDNA, mitochondria, and EBV. Arbitrary contaminants are supported by supplying a name and fasta: ''screen contaminant /full/path/to/contaminant.fasta'' Multiple screen commands are allowed and are additive.'
+  - names:
+      - --paths
+    argument: <gaf paths>
+    description: 'No assembly, generate consensus given paths and an existing assembly. The gaf file must be formatted as follows: ''name >utig4-1<utig4-2 HAPLOTYPE1''. One per line. where utig4-1 is in fwd orientation and utig4-2 is in reverse complement. Requires ''--assembly''.'
+  - names:
+      - --assembly
+    argument: <output-dir>
+    description: Existing verkko assembly where the nodes given to --paths are defined. The nodes should come from assembly.homopolymer-compressed.gfa Provide -d for the output of new consensus, as well as the hifi and nano reads from previous run.
+  - names:
+      - --python
+    argument: <interpreter>
+    description: 'Path or name of a python interpreter. Default: ''python''.'
+  - names:
+      - --perl
+    argument: <interpreter>
+    description: 'Path of name of a perl interpreter. Default: ''perl''.'
+  - names:
+      - --mbg
+    argument: <path>
+    description: Path to MBG. Default for all three
+  - names:
+      - --graphaligner
+    argument: <path>
+    description: Path to GraphAligner. one packaged with verkko.
+  - names:
+      - --mashmap
+    argument: <path>
+    description: Path to MashMap.
+  - names:
+      - --winnowmap
+    argument: <path>
+    description: Path to Winnowmap.
+  - names:
+      - --bwa
+    argument: <path>
+    description: Path to BWA.
+  - names:
+      - --samtools
+    argument: <path>
+    description: Path to Samtools.
+  - names:
+      - --cleanup
+    argument: ""
+    description: Remove intermediate results.
+  - names:
+      - --no-cleanup
+    argument: ""
+    description: Retain intermediate results (default).
+  - names:
+      - --local
+    argument: ""
+    description: Run on the local machine (default).
+  - names:
+      - --local-memory
+    argument: ""
+    description: Specify the upper limit on memory to use, in GB, default 64
+  - names:
+      - --local-cpus
+    argument: ""
+    description: Specify the number of CPUs to use, default 'all'
+  - names:
+      - --sge
+    argument: ""
+    description: Enable Sun Grid Engine support.
+  - names:
+      - --slurm
+    argument: ""
+    description: Enable Slurm support.
+  - names:
+      - --lsf
+    argument: ""
+    description: Enable IBM Spectrum LSF support.
+  - names:
+      - --snakeopts
+    argument: <string>
+    description: Append snakemake options in "string" to the snakemake command. Options MUST be quoted.
+  - names:
+      - --sto-run
+    argument: ""
+    description: Set resource limits for various stages.
+  - names:
+      - --mer-run
+    argument: ""
+    description: 'Format: number-of-cpus memory-in-gb time-in-hours'
+  - names:
+      - --ovb-run
+    argument: ""
+    description: '--cns-run 8 32 2'
+  - names:
+      - --ovs-run
+    argument: ""
+    description: ""
+  - names:
+      - --red-run
+    argument: ""
+    description: ""
+  - names:
+      - --mbg-run
+    argument: ""
+    description: ""
+  - names:
+      - --utg-run
+    argument: ""
+    description: ""
+  - names:
+      - --spl-run
+    argument: ""
+    description: ""
+  - names:
+      - --ali-run
+    argument: ""
+    description: ""
+  - names:
+      - --pop-run
+    argument: ""
+    description: ""
+  - names:
+      - --utp-run
+    argument: ""
+    description: ""
+  - names:
+      - --lay-run
+    argument: ""
+    description: ""
+  - names:
+      - --sub-run
+    argument: ""
+    description: ""
+  - names:
+      - --par-run
+    argument: ""
+    description: ""
+  - names:
+      - --cns-run
+    argument: ""
+    description: ""
+  - names:
+      - --correct-k-mer-size
+    argument: ""
+    description: ""
+  - names:
+      - --correct-mer-threshold
+    argument: ""
+    description: ""
+  - names:
+      - --correct-mer-filter
+    argument: ""
+    description: ""
+  - names:
+      - --correct-min-read-length
+    argument: ""
+    description: ""
+  - names:
+      - --correct-min-overlap-length
+    argument: ""
+    description: ""
+  - names:
+      - --correct-hash-bits
+    argument: ""
+    description: ""
+  - names:
+      - --base-k
+    argument: <size>
+    description: "MBG: k-mer size"
+  - names:
+      - --max-k
+    argument: <size>
+    description: "MBG: maximum k-mer size"
+  - names:
+      - --window
+    argument: "<size>"
+    description: "MBG: window size"
+  - names:
+      - --threads
+    argument: "<number>"
+    description: "MBG: number of threads"
+  - names:
+      - --unitig-abundance
+    argument: ""
+    description: "MBG: "
+  - names:
+      - --hifi-coverage
+    argument: ""
+    description: "MBG: "
+  - names:
+      - --split-bases
+    argument: ""
+    description: ""
+  - names:
+      - --split-reads
+    argument: ""
+    description: ""
+  - names:
+      - --min-ont-length
+    argument: ""
+    description: ""
+  - names:
+      - --seed-min-length
+    argument: ""
+    description: ""
+  - names:
+      - --seed-max-length
+    argument: ""
+    description: ""
+  - names:
+      - --align-bandwidth
+    argument: ""
+    description: ""
+  - names:
+      - --score-fraction
+    argument: ""
+    description: ""
+  - names:
+      - --min-identity
+    argument: ""
+    description: ""
+  - names:
+      - --min-score
+    argument: ""
+    description: ""
+  - names:
+      - --end-clipping
+    argument: ""
+    description: ""
+  - names:
+      - --incompatible-cutoff
+    argument: ""
+    description: ""
+  - names:
+      - --max-trace
+    argument: ""
+    description: ""
+version: bioconda verkko bioconda 1.4.1

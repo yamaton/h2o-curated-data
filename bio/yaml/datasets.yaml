@@ -1,5 +1,5 @@
 name: datasets
-description: datasets
+description: datasets is a command-line tool that is used to query and download biological sequence data across all domains of life from NCBI databases
 usage: datasets [command]
 options:
   - names:
@@ -22,8 +22,13 @@ subcommands:
   - name: summary
     description: Print a data report containing gene, genome or virus metadata
     usage: |-
-      datasets summary [flags]
-      datasets summary [command]
+      datasets summary genome accession GCF_000001405.40
+      datasets summary genome taxon "mus musculus"
+      datasets summary gene gene-id 672
+      datasets summary gene symbol brca1 --taxon mouse
+      datasets summary gene accession NP_000483.3
+      datasets summary virus genome accession NC_045512.2
+      datasets summary virus genome taxon sars-cov-2 --host dog
     options:
       - names:
           - --api-key
@@ -45,17 +50,22 @@ subcommands:
       - name: gene
         description: Print a summary of a gene dataset
         usage: |-
-          datasets summary gene [flags]
-          datasets summary gene [command]
+          datasets summary gene gene-id 672
+          datasets summary gene symbol brca1 --taxon mouse
+          datasets summary gene accession NP_000483.3
         options:
           - names:
               - --as-json-lines
             argument: ""
-            description: 'Stream results as newline delimited JSON-Lines,--limit string    Limit the number of gene summaries returned   * all: returns all matching gene summaries * a number: returns the specified number of matching gene summaries'
+            description: Stream results as newline delimited JSON-Lines
+          - names:
+              - --limit
+            argument: '{all,<INT>}'
+            description: 'Limit the number of gene summaries returned (default "all")'
           - names:
               - --report
-            argument: string
-            description: 'Choose the output type:   * gene: Retrieve the primary gene report * product: Retrieve product data report * ids_only: Only retrieve gene-ids'
+            argument: '{gene,product,ids_only}'
+            description: 'Choose the output type'
           - names:
               - --api-key
             argument: string
@@ -115,7 +125,9 @@ subcommands:
                 description: Print version of datasets
           - name: symbol
             description: Print a data report containing gene metadata by gene symbol
-            usage: datasets summary gene symbol <gene symbol ...> [flags]
+            usage: |
+              datasets summary gene symbol tp53
+              datasets summary gene symbol brca1 --taxon mouse
             options:
               - names:
                   - --inputfile
@@ -159,7 +171,9 @@ subcommands:
                 description: Print version of datasets
           - name: accession
             description: Print a data report containing gene metadata by RefSeq nucleotide or protein accession
-            usage: datasets summary gene accession <refseq-accession ...> [flags]
+            usage: |-
+              datasets summary gene accession NP_000483.3
+              datasets summary gene accession NM_000546.6 NM_000492.4
             options:
               - names:
                   - --inputfile
@@ -198,8 +212,9 @@ subcommands:
                 argument: ""
                 description: Print version of datasets
           - name: taxon
-            description: Print a data report containing gene metadata by taxon
-            usage: datasets summary gene taxon <taxon> [flags]
+            description: Print a data report containing gene metadata by taxon (NCBI Taxonomy ID, scientific or common name at any tax rank)
+            usage: |-
+              datasets summary gene taxon human
             options:
               - names:
                   - --api-key
@@ -232,8 +247,10 @@ subcommands:
       - name: genome
         description: Print a data report containing genome metadata
         usage: |-
-          datasets summary genome [flags]
-          datasets summary genome [command]
+          datasets summary genome accession GCF_000001405.40
+          datasets summary genome taxon mouse
+          datasets summary genome taxon human --assembly-level chromosome,complete
+          datasets summary genome taxon mouse --search C57BL/6J --search "Broad Institute"
         options:
           - names:
               - --annotated
@@ -259,6 +276,10 @@ subcommands:
               - --limit
             argument: string
             description: Limit the number of genome summaries returned
+          - names:
+              - --mag
+            argument: string
+            description: Limit to metagenome assembled genomes (only) or remove them from the results (exclude) (default "all")
           - names:
               - --reference
             argument: ""
@@ -298,7 +319,11 @@ subcommands:
         subcommands:
           - name: accession
             description: Print a data report containing genome metadata by Assembly or BioProject accession
-            usage: datasets summary genome accession <accession ...> [flags]
+            usage: |-
+              datasets summary genome accession GCF_000001405.40
+              datasets summary genome accession GCA_003774525.2 GCA_000001635
+              datasets summary genome accession GCF_000001405.40 --report sequence --as-json-lines
+              datasets summary genome accession PRJNA31257
             options:
               - names:
                   - --assembly-version
@@ -345,6 +370,10 @@ subcommands:
                 argument: string
                 description: Limit the number of genome summaries returned
               - names:
+                  - --mag
+                argument: string
+                description: Limit to metagenome assembled genomes (only) or remove them from the results (exclude) (default "all")
+              - names:
                   - --reference
                 argument: ""
                 description: Limit to reference genomes
@@ -370,7 +399,10 @@ subcommands:
                 description: Print version of datasets
           - name: taxon
             description: Print a data report containing genome metadata by taxon (NCBI Taxonomy ID, scientific or common name at any tax rank)
-            usage: datasets summary genome taxon [flags]
+            usage: |-
+              datasets summary genome taxon human
+              datasets summary genome taxon "mus musculus"
+              datasets summary genome taxon 10116
             options:
               - names:
                   - --assembly-version
@@ -412,6 +444,10 @@ subcommands:
                   - --limit
                 argument: string
                 description: Limit the number of genome summaries returned
+              - names:
+                  - --mag
+                argument: string
+                description: Limit to metagenome assembled genomes (only) or remove them from the results (exclude) (default "all")
               - names:
                   - --reference
                 argument: ""
@@ -462,8 +498,8 @@ subcommands:
           - name: genome
             description: Print a data report containing virus genome metadata by accession or taxon
             usage: |-
-              datasets summary virus genome [flags]
-              datasets summary virus genome [command]
+              datasets summary virus genome accession NC_045512.2
+              datasets summary virus genome taxon sars-cov-2 --host dog
             options:
               - names:
                   - --annotated
@@ -527,8 +563,9 @@ subcommands:
                 description: Print version of datasets
             subcommands:
               - name: taxon
-                description: Print a data report containing virus genome metadata by taxa
-                usage: datasets summary virus genome taxon [flags]
+                description: Print a data report containing virus genome metadata by taxon (NCBI Taxonomy ID, scientific or common name for any virus at any tax rank)
+                usage: |-
+                  datasets summary virus genome taxon sars-cov-2 --host dog
                 options:
                   - names:
                       - --annotated
@@ -592,7 +629,8 @@ subcommands:
                     description: Print version of datasets
               - name: accession
                 description: Print a data report containing virus genome metadata by accession
-                usage: datasets summary virus genome accession [flags]
+                usage: |-
+                  datasets summary virus genome accession NC_045512.2
                 options:
                   - names:
                       - --inputfile
@@ -660,7 +698,14 @@ subcommands:
                     description: Print version of datasets
   - name: download
     description: Download a gene, genome or virus dataset as a zip file
-    usage: datasets download [command]
+    usage: |
+      datasets download genome accession GCF_000001405.40 --chromosomes X,Y --exclude-gff3 --exclude-rna
+      datasets download genome taxon "bos taurus"
+      datasets download gene gene-id 672
+      datasets download gene symbol brca1 --taxon mouse
+      datasets download gene accession NP_000483.3
+      datasets download virus genome taxon sars-cov-2 --host dog
+      datasets download virus protein S --host dog --filename SARS2-spike-dog.zip
     options:
       - names:
           - --filename
@@ -690,8 +735,10 @@ subcommands:
       - name: gene
         description: Download a gene data package
         usage: |-
-          datasets download gene [flags]
-          datasets download gene [command]
+          datasets download gene gene-id 672
+          datasets download gene symbol brca1 --taxon mouse
+          datasets download gene accession NP_000483.3
+          datasets download gene gene-id 2778 --fasta-filter NC_000020.11,NM_001077490.3,NP_001070958.1
         options:
           - names:
               - --fasta-filter
@@ -732,12 +779,14 @@ subcommands:
         subcommands:
           - name: gene-id
             description: Download a gene data package by NCBI Gene ID
-            usage: datasets download gene gene-id <gene-id ...> [flags]
+            usage: |-
+              datasets download gene gene-id 672
+              datasets download gene gene-id 2597 14433
             options:
               - names:
                   - --include
                 argument: string(,string)
-                description: 'Specify the data files to include (comma-separated).   * gene: gene sequence * rna: transcript * protein: amino acid sequences * cds: nucleotide coding sequences * 5p-utr: 5''-UTR * 3p-utr: 3''-UTR * product-report: gene transcript and protein locations and metadata * none: do not retrieve any sequence files'
+                description: 'Specify the data files to include (comma-separated). {gene, rna, protein, cds, 5p-utr, 3p-utr, product-report, none}. (default [rna,protein])'
               - names:
                   - --inputfile
                 argument: string
@@ -784,12 +833,14 @@ subcommands:
                 description: Print version of datasets
           - name: symbol
             description: Download a gene data package by gene symbol
-            usage: datasets download gene symbol <gene_symbol ...> [flags]
+            usage: |-
+              datasets download gene symbol tp53
+              datasets download gene symbol brca1 --taxon mouse
             options:
               - names:
                   - --include
                 argument: string(,string)
-                description: Specify the data files to include (comma-separated).
+                description: 'Specify the data files to include (comma-separated). {gene, rna, protein, cds, 5p-utr, 3p-utr, product-report, none}. (default [rna,protein])'
               - names:
                   - --inputfile
                 argument: string
@@ -840,12 +891,15 @@ subcommands:
                 description: Print version of datasets
           - name: accession
             description: Download a gene data package by RefSeq nucleotide or protein accession
-            usage: datasets download gene accession <refseq-accession ...> [flags]
+            usage: |-
+              datasets download gene accession NP_000483.3
+              datasets download gene accession NM_000546.6 NM_000492.4
+              datasets download gene accession WP_004675351.1
             options:
               - names:
                   - --include
                 argument: string(,string)
-                description: Specify the data files to include (comma-separated).
+                description: 'Specify the data files to include (comma-separated). {gene, rna, protein, cds, 5p-utr, 3p-utr, product-report, none}. (default [])'
               - names:
                   - --include-flanks-bp
                 argument: int
@@ -899,13 +953,14 @@ subcommands:
                 argument: ""
                 description: Print version of datasets
           - name: taxon
-            description: Download a gene data package by taxon
-            usage: datasets download gene taxon <taxon> [flags]
+            description: Download a gene data package by taxon (NCBI Taxonomy ID, scientific or common name at any tax rank)
+            usage: |-
+              datasets download gene taxon human --include protein,cds
             options:
               - names:
                   - --include
                 argument: string(,string)
-                description: 'Specify the data files to include (comma-separated).   * gene: gene sequence * rna: transcript * protein: amino acid sequences * cds: nucleotide coding sequences * 5p-utr: 5''-UTR * 3p-utr: 3''-UTR * product-report: gene transcript and protein locations and metadata * none: do not retrieve any sequence files'
+                description: 'Specify the data files to include (comma-separated). {gene, rna, protein, cds, 5p-utr, 3p-utr, product-report, none}. (default [rna,protein])'
               - names:
                   - --api-key
                 argument: string
@@ -945,8 +1000,10 @@ subcommands:
       - name: genome
         description: Download a genome data package
         usage: |-
-          datasets download genome [flags]
-          datasets download genome [command]
+          datasets download genome accession GCF_000001405.40 --chromosomes X,Y --include genome,gff3,rna
+          datasets download genome taxon "bos taurus" --dehydrated
+          datasets download genome taxon human --assembly-level chromosome,complete --dehydrated
+          datasets download genome taxon mouse --search C57BL/6J --search "Broad Institute" --dehydrated
         options:
           - names:
               - --annotated
@@ -955,7 +1012,7 @@ subcommands:
           - names:
               - --assembly-level
             argument: string
-            description: 'Limit to genomes at one or more assembly levels (comma-separated):'
+            description: 'Limit to genomes at one or more assembly levels (comma-separated): {chromosome,complete,contig,scaffold} (default "[]")'
           - names:
               - --assembly-source
             argument: string
@@ -972,6 +1029,10 @@ subcommands:
               - --exclude-atypical
             argument: ""
             description: Exclude atypical assemblies
+          - names:
+              - --mag
+            argument: string
+            description: Limit to metagenome assembled genomes (only) or remove them from the results (exclude) (default "all")
           - names:
               - --preview
             argument: ""
@@ -1017,10 +1078,26 @@ subcommands:
             argument: ""
             description: Print version of datasets
         subcommands:
-          - name: taxon
-            description: Print a data report containing virus genome metadata by taxa
-            usage: datasets summary virus genome taxon [flags]
+          - name: accession
+            description: Download a genome data package by Assembly or BioProject accession
+            usage: |-
+              datasets download genome accession GCF_000001405.40 --chromosomes X,Y --include protein,cds
+              datasets download genome accession GCA_003774525.2 GCA_000001635 --chromosomes X,Y,Un.9
+              datasets download genome accession GCA_003774525.2 --preview
+              datasets download genome accession PRJNA289059 --include none
             options:
+              - names:
+                  - --assembly-version
+                argument: '{latest,all}'
+                description: Limit to 'latest' assembly accession version or include 'all' (latest + previous versions)
+              - names:
+                  - --include
+                argument: string(,string)
+                description: 'Specify the data files to include (comma-separated). {genome, rna, protein, cds, gff3, gtf, gbff, seq-report, none}. (default [genome])'
+              - names:
+                  - --inputfile
+                argument: string
+                description: Read a list of NCBI Assembly or BioProject accessions from a file to use as input
               - names:
                   - --annotated
                 argument: ""
@@ -1030,65 +1107,93 @@ subcommands:
                 argument: string
                 description: Specify an NCBI API key
               - names:
-                  - --as-json-lines
-                argument: ""
-                description: Output results in JSON Lines format
+                  - --assembly-level
+                argument: '{chromosome,complete,contig,scaffold}'
+                description: 'Limit to genomes at one or more assembly levels (comma-separated): {chromosome,complete,contig,scaffold} (default "[]")'
               - names:
-                  - --complete-only
-                argument: ""
-                description: Limit to complete genomes
+                  - --assembly-source
+                argument: string
+                description: Limit to 'RefSeq' (GCF_) or 'GenBank' (GCA_) genomes (default "all")
+              - names:
+                  - --chromosomes
+                argument: strings
+                description: Limit to a specified, comma-delimited list of chromosomes, or 'all' for all chromosomes
               - names:
                   - --debug
                 argument: ""
                 description: Emit debugging info
               - names:
-                  - --geo-location
+                  - --dehydrated
+                argument: ""
+                description: Download a dehydrated zip archive including the data report and locations of data files (use the rehydrate command to retrieve data files).
+              - names:
+                  - --exclude-atypical
+                argument: ""
+                description: Exclude atypical assemblies
+              - names:
+                  - --filename
                 argument: string
-                description: Limit to genomes isolated from a specified geographic location (continent, country or U.S. state)
+                description: Specify a custom file name for the downloaded data package (default "ncbi_dataset.zip")
               - names:
                   - --help
                 argument: ""
                 description: Print detailed help about a datasets command
               - names:
-                  - --host
+                  - --mag
                 argument: string
-                description: Limit to virus genomes isolated from a specified host species
+                description: Limit to metagenome assembled genomes (only) or remove them from the results (exclude) (default "all")
               - names:
-                  - --limit
-                argument: string
-                description: Limit the number of virus summaries returned
-              - names:
-                  - --lineage
-                argument: string
-                description: Limit results by Pango lineage (only SARS-CoV-2)
-              - names:
-                  - --refseq
+                  - --no-progressbar
                 argument: ""
-                description: Limit to RefSeq genomes
+                description: Hide progress bar
+              - names:
+                  - --preview
+                argument: ""
+                description: Show information about the requested data package
+              - names:
+                  - --reference
+                argument: ""
+                description: Limit to reference genomes
               - names:
                   - --released-after
                 argument: string
                 description: Limit to genomes released on or after a specified date (MM/DD/YYYY)
               - names:
-                  - --report
+                  - --released-before
                 argument: string
-                description: Specify report virus genome report summary type
+                description: Limit to genomes released on or before a specified date (MM/DD/YYYY)
               - names:
-                  - --updated-after
-                argument: string
-                description: Limit to genomes updated on or after a specified date (MM/DD/YYYY)
+                  - --search
+                argument: strings
+                description: 'Limit results to genomes with specified text in the searchable fields: species and infraspecies, assembly name and submitter. To search multiple strings, use the flag multiple times.'
               - names:
                   - --version
                 argument: ""
                 description: Print version of datasets
-          - name: accession
-            description: Print a data report containing virus genome metadata by accession
-            usage: datasets summary virus genome accession [flags]
+          - name: taxon
+            description: Download a genome data package by taxon (NCBI Taxonomy ID, scientific or common name at any tax rank)
+            usage: |-
+              datasets download genome taxon human --chromosomes 21 --include none
+              datasets download genome taxon "bos taurus"
+              datasets download genome taxon human --preview
+              datasets download genome taxon 10116 --include rna,protein
             options:
               - names:
-                  - --inputfile
+                  - --assembly-version
                 argument: string
-                description: Read a list of nucleotide accessions from a file to use as input
+                description: Limit to 'latest' assembly accession version or include 'all' (latest + previous versions) (default "latest")
+              - names:
+                  - --include
+                argument: string(,string)
+                description: 'Specify the data files to include (comma-separated). {genome, rna, protein, cds, gff3, gtf, gbff, seq-report, none}. (default [genome])'
+              - names:
+                  - --reference
+                argument: ""
+                description: Limit to reference genomes
+              - names:
+                  - --tax-exact-match
+                argument: ""
+                description: Exclude sub-species when a species-level taxon is specified
               - names:
                   - --annotated
                 argument: ""
@@ -1098,53 +1203,61 @@ subcommands:
                 argument: string
                 description: Specify an NCBI API key
               - names:
-                  - --as-json-lines
-                argument: ""
-                description: Output results in JSON Lines format
+                  - --assembly-level
+                argument: string
+                description: 'Limit to genomes at one or more assembly levels (comma-separated):'
               - names:
-                  - --complete-only
-                argument: ""
-                description: Limit to complete genomes
+                  - --assembly-source
+                argument: string
+                description: Limit to 'RefSeq' (GCF_) or 'GenBank' (GCA_) genomes (default "all")
+              - names:
+                  - --chromosomes
+                argument: strings
+                description: Limit to a specified, comma-delimited list of chromosomes, or 'all' for all chromosomes
               - names:
                   - --debug
                 argument: ""
                 description: Emit debugging info
               - names:
-                  - --geo-location
+                  - --dehydrated
+                argument: ""
+                description: Download a dehydrated zip archive including the data report and locations of data files (use the rehydrate command to retrieve data files).
+              - names:
+                  - --exclude-atypical
+                argument: ""
+                description: Exclude atypical assemblies
+              - names:
+                  - --filename
                 argument: string
-                description: Limit to genomes isolated from a specified geographic location (continent, country or U.S. state)
+                description: Specify a custom file name for the downloaded data package (default "ncbi_dataset.zip")
               - names:
                   - --help
                 argument: ""
                 description: Print detailed help about a datasets command
               - names:
-                  - --host
+                  - --mag
                 argument: string
-                description: Limit to virus genomes isolated from a specified host species
+                description: Limit to metagenome assembled genomes (only) or remove them from the results (exclude) (default "all")
               - names:
-                  - --limit
-                argument: string
-                description: Limit the number of virus summaries returned
-              - names:
-                  - --lineage
-                argument: string
-                description: Limit results by Pango lineage (only SARS-CoV-2)
-              - names:
-                  - --refseq
+                  - --no-progressbar
                 argument: ""
-                description: Limit to RefSeq genomes
+                description: Hide progress bar
+              - names:
+                  - --preview
+                argument: ""
+                description: Show information about the requested data package
               - names:
                   - --released-after
                 argument: string
                 description: Limit to genomes released on or after a specified date (MM/DD/YYYY)
               - names:
-                  - --report
+                  - --released-before
                 argument: string
-                description: Specify report virus genome report summary type
+                description: Limit to genomes released on or before a specified date (MM/DD/YYYY)
               - names:
-                  - --updated-after
-                argument: string
-                description: Limit to genomes updated on or after a specified date (MM/DD/YYYY)
+                  - --search
+                argument: strings
+                description: 'Limit results to genomes with specified text in the searchable fields: species and infraspecies, assembly name and submitter. To search multiple strings, use the flag multiple times.'
               - names:
                   - --version
                 argument: ""
@@ -1152,8 +1265,8 @@ subcommands:
       - name: virus
         description: Download a virus data package
         usage: |-
-          datasets download virus [command] [flags]
-          datasets download virus [command]
+          datasets download virus genome taxon sars-cov-2 --host dog
+          datasets download virus protein S --host dog --filename SARS2-spike-dog.zip
         options:
           - names:
               - --api-key
@@ -1183,8 +1296,8 @@ subcommands:
           - name: genome
             description: Download a virus genome dataset by accession or taxon
             usage: |-
-              datasets download virus genome [command]  [flags]
-              datasets download virus genome [command]
+              datasets download virus genome taxon sars-cov-2 --host dog --include protein
+              datasets download virus genome taxon coronaviridae --host "manis javanica"
             options:
               - names:
                   - --annotated
@@ -1205,7 +1318,7 @@ subcommands:
               - names:
                   - --include
                 argument: string(,string)
-                description: Specify virus genome sequence types to download
+                description: 'Specify the data files to include (comma-separated). {genome, cds, protein, annotation, biosample, none}. (default [genome])'
               - names:
                   - --lineage
                 argument: string
@@ -1242,10 +1355,230 @@ subcommands:
                   - --version
                 argument: ""
                 description: Print version of datasets
+            subcommands:
+              - name: accession
+                description: Download a virus genome data package by accession.
+                usage: |-
+                  datasets download virus genome accession NC_045512.2 --include genome,cds,protein
+                options:
+                  - names:
+                      - --inputfile
+                    argument: string
+                    description: Read a list of nucleotide accessions from a file to use as input
+                  - names:
+                      - --annotated
+                    argument: ""
+                    description: Limit to annotated genomes
+                  - names:
+                      - --api-key
+                    argument: string
+                    description: Specify an NCBI API key
+                  - names:
+                      - --complete-only
+                    argument: ""
+                    description: Limit to complete genomes
+                  - names:
+                      - --debug
+                    argument: ""
+                    description: Emit debugging info
+                  - names:
+                      - --filename
+                    argument: string
+                    description: Specify a custom file name for the downloaded data package (default "ncbi_dataset.zip")
+                  - names:
+                      - --geo-location
+                    argument: string
+                    description: Limit to genomes isolated from a specified geographic location (continent, country or U.S. state)
+                  - names:
+                      - --help
+                    argument: ""
+                    description: Print detailed help about a datasets command
+                  - names:
+                      - --host
+                    argument: string
+                    description: Limit to virus genomes isolated from a specified host species
+                  - names:
+                      - --include
+                    argument: string(,string)
+                    description: 'Specify the data files to include (comma-separated). {genome, cds, protein, annotation, biosample, none}. (default [genome])'
+                  - names:
+                      - --lineage
+                    argument: string
+                    description: Limit results by Pango lineage (only SARS-CoV-2)
+                  - names:
+                      - --no-progressbar
+                    argument: ""
+                    description: Hide progress bar
+                  - names:
+                      - --released-after
+                    argument: string
+                    description: Limit to genomes released on or after a specified date (MM/DD/YYYY)
+                  - names:
+                      - --updated-after
+                    argument: string
+                    description: Limit to genomes updated on or after a specified date (MM/DD/YYYY)
+                  - names:
+                      - --version
+                    argument: ""
+                    description: Print version of datasets
+              - name: taxon
+                description: Download a virus genome data package by taxon (NCBI Taxonomy ID, scientific or common name for any virus at any tax rank)
+                usage: |-
+                  datasets download virus genome taxon sars-cov-2 --host dog --include protein
+                  datasets download virus genome taxon coronaviridae --host "manis javanica"
+                options:
+                  - names:
+                      - --refseq
+                    argument: ""
+                    description: Limit to RefSeq genomes
+                  - names:
+                      - --annotated
+                    argument: ""
+                    description: Limit to annotated genomes
+                  - names:
+                      - --api-key
+                    argument: string
+                    description: Specify an NCBI API key
+                  - names:
+                      - --complete-only
+                    argument: ""
+                    description: Limit to complete genomes
+                  - names:
+                      - --debug
+                    argument: ""
+                    description: Emit debugging info
+                  - names:
+                      - --filename
+                    argument: string
+                    description: Specify a custom file name for the downloaded data package (default "ncbi_dataset.zip")
+                  - names:
+                      - --geo-location
+                    argument: string
+                    description: Limit to genomes isolated from a specified geographic location (continent, country or U.S. state)
+                  - names:
+                      - --help
+                    argument: ""
+                    description: Print detailed help about a datasets command
+                  - names:
+                      - --host
+                    argument: string
+                    description: Limit to virus genomes isolated from a specified host species
+                  - names:
+                      - --include
+                    argument: string(,string)
+                    description: 'Specify the data files to include (comma-separated). {genome, cds, protein, annotation, biosample, none}. (default [genome])'
+                  - names:
+                      - --lineage
+                    argument: string
+                    description: Limit results by Pango lineage (only SARS-CoV-2)
+                  - names:
+                      - --no-progressbar
+                    argument: ""
+                    description: Hide progress bar
+                  - names:
+                      - --released-after
+                    argument: string
+                    description: Limit to genomes released on or after a specified date (MM/DD/YYYY)
+                  - names:
+                      - --updated-after
+                    argument: string
+                    description: Limit to genomes updated on or after a specified date (MM/DD/YYYY)
+                  - names:
+                      - --version
+                    argument: ""
+                    description: Print version of datasets
           - name: protein
             description: Download a SARS-CoV-2 protein dataset by protein name
-            usage: datasets download virus protein <protein_name ...> [flags]
-            options:
+            usage: |
+              datasets download virus protein S --host dog --filename SARS2-spike-dog.zip
+              datasets download virus protein rdrp --refseq --filename SARS2-rdrp-refseq.zip
+            options: []
+            subcommands:
+              - name: ORF1ab
+                description: ORF1ab protein
+                options: []
+              - name: ORF1a
+                description: ORF1a protein
+                options: []
+              - name: nsp1
+                description: nsp1 protein
+                options: []
+              - name: nsp2
+                description: nsp2 protein
+                options: []
+              - name: nsp3
+                description: nsp3 protein
+                options: []
+              - name: nsp4
+                description: nsp4 protein
+                options: []
+              - name: nsp5
+                description: nsp5 protein
+                options: []
+              - name: nsp6
+                description: nsp6 protein
+                options: []
+              - name: nsp7
+                description: nsp7 protein
+                options: []
+              - name: nsp8
+                description: nsp8 protein
+                options: []
+              - name: nsp9
+                description: nsp9 protein
+                options: []
+              - name: nsp10
+                description: nsp10 protein
+                options: []
+              - name: rdrp
+                description: rdrp protein
+                options: []
+              - name: nsp11
+                description: nsp11 protein
+                options: []
+              - name: nsp13
+                description: nsp13 protein
+                options: []
+              - name: nsp14
+                description: nsp14 protein
+                options: []
+              - name: nsp15
+                description: nsp15 protein
+                options: []
+              - name: nsp16
+                description: nsp16 protein
+                options: []
+              - name: S
+                description: S protein
+                options: []
+              - name: ORF3a
+                description: ORF3a protein
+                options: []
+              - name: E
+                description: E protein
+                options: []
+              - name: M
+                description: M protein
+                options: []
+              - name: ORF6
+                description: ORF6 protein
+                options: []
+              - name: ORF7a
+                description: ORF7a protein
+                options: []
+              - name: ORF7b
+                description: ORF7b protein
+                options: []
+              - name: ORF8
+                description: ORF8 protein
+                options: []
+              - name: N
+                description: N protein
+                options: []
+              - name: ORF10
+                description: ORF10 protein
+                options: []
+            inheritedOptions:
               - names:
                   - --annotated
                 argument: ""
@@ -1265,7 +1598,7 @@ subcommands:
               - names:
                   - --include
                 argument: string(,string)
-                description: Specify virus genome sequence types to download
+                description: 'Specify the data files to include (comma-separated). {cds, protein, annotation, biosample, none}. (default [protein])'
               - names:
                   - --refseq
                 argument: ""
@@ -1326,6 +1659,10 @@ subcommands:
           - --max-workers
         argument: int
         description: Limit the maximum number of concurrent download workers (allowed range is 1-30) (default 10)
+      - names:
+          - --no-progressbar
+        argument: ""
+        description: Hide progress bar
       - names:
           - --api-key
         argument: string
@@ -1443,4 +1780,4 @@ subcommands:
               - --version
             argument: ""
             description: Print version of datasets
-version: 'datasets version: 14.2.2'
+version: 'datasets version: 15.16.2'

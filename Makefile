@@ -40,7 +40,7 @@ $(group)/json/%.json: $(yaml2json) $(group)/yaml/%.yaml
 # Convert JSON to Bash
 $(group)/bash/completions/%: $(is_already_available) $(group)/json/%.json
 	@if $(is_already_available) bash $*; then \
-		echo "👀 $* is already supported in bash. Skipping..."; \
+		echo "👀  $* is already supported in bash. Skipping..."; \
 	else \
 		echo "🦉  $*: Generating bash"; \
 		mkdir -p $(group)/bash/completions; \
@@ -50,7 +50,7 @@ $(group)/bash/completions/%: $(is_already_available) $(group)/json/%.json
 # Convert JSON to Zsh
 $(group)/zsh/completions/_%: $(is_already_available) $(group)/json/%.json
 	@if $(is_already_available) zsh $*; then \
-		echo "👀 $* is already supported in zsh. Skipping..."; \
+		echo "👀  $* is already supported in zsh. Skipping..."; \
 	else \
 		echo "💤  $*: Generating zsh"; \
 		mkdir -p $(group)/zsh/completions; \
@@ -60,7 +60,7 @@ $(group)/zsh/completions/_%: $(is_already_available) $(group)/json/%.json
 # Convert JSON to Fish
 $(group)/fish/completions/%.fish: $(is_already_available) $(group)/json/%.json
 	@if $(is_already_available) fish $*; then \
-		echo "👀 $* is already supported in fish. Skipping..."; \
+		echo "👀  $* is already supported in fish. Skipping..."; \
 	else \
 		echo "🐟  $*: Generating fish"; \
 		mkdir -p $(group)/fish/completions; \

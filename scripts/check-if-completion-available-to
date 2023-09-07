@@ -17,8 +17,8 @@ if [[ "${TRACE-0}" == "1" ]]; then
     set -o xtrace
 fi
 
-if [[ ! "$(command -v curl)" ]]; then
-    echo "[error] curl is missing"
+if [[ ! "$(command -v git)" ]]; then
+    echo "[error] git is missing"
     exit 1
 fi
 
@@ -30,15 +30,27 @@ if (( "$#" != 2 ))  || [[ "${1-}" =~ ^-*h(elp)?$ ]]; then
     exit 1
 fi
 
+rootdir="$HOME/repos"
+mkdir -p "$rootdir"
+
 case "$toshell" in
   bash)
-    url="https://raw.githubusercontent.com/scop/bash-completion/master/completions/$name"
+    file="$rootdir/bash-completion/completions/$name"
+    url="https://github.com/scop/bash-completion"
     ;;
   zsh)
-    url="https://raw.githubusercontent.com/zsh-users/zsh-completions/master/src/_$name"
+    file="$rootdir/zsh-completions/src/_$name"
+    url="https://github.com/zsh-users/zsh-completions"
+    #
+    # set variable skip=1 if the completion script is 'go'
+    # NOTE: go completion script exists but named as _golang
+    if [[ "$name" == "go" ]]; then
+        skip=1
+    fi
     ;;
   fish)
-    url="https://raw.githubusercontent.com/fish-shell/fish-shell/master/share/completions/$name.fish"
+    file="$rootdir/fish-shell/share/completions/$name.fish"
+    url="https://github.com/fish-shell/fish-shell"
     ;;
   *)
     echo "ERROR: The first argument must be either 'bash', 'zsh', or 'fish'."
@@ -46,6 +58,22 @@ case "$toshell" in
     ;;
 esac
 
-echo "Running: check-if-completion-available-to $toshell $name ..."
-curl --output /dev/null --silent --head --fail "$url"
+dir="$(dirname "$file")"
+# If the directory does not exist, clone the repository
+if [[ ! -d "$dir" ]]; then
+    # get the repository name
+    name="$(basename "$url")";
+    echo "Cloning $name to $rootdir ...";
+    pushd "$rootdir" >/dev/null
+      git clone "$url"
+    popd >/dev/null;
+fi
 
+# Check if the file exists OR skip=1
+if [[ -f "$file" ]] || [[ -n "${skip-}" ]]; then
+    # echo "✨  $name: the completion script is already available to $toshell.";
+    exit 0;
+else
+    # echo "❌  $name: the completion script is NOT available to $toshell.";
+    exit 1;
+fi

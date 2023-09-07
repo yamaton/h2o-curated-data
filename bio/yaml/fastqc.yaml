@@ -2,7 +2,8 @@ name: fastqc
 description: fastqc
 usage: |-
   fastqc seqfile1 seqfile2 .. seqfileN
-  fastqc [-o output dir] [--(no)extract] [-f fastq|bam|sam] [-c contaminant file] seqfile1 .. seqfileN"
+  fastqc [-o output dir] [--(no)extract] [-f fastq|bam|sam]
+         [-c contaminant file] seqfile1 .. seqfileN
 options:
   - names:
       - -h
@@ -17,7 +18,7 @@ options:
   - names:
       - -o
       - --outdir
-    argument: ""
+    argument: <dir>
     description: Create all output files in the specified output directory. Please note that this directory must exist as the program will not create it. If this option is not set then the output file for each sequence file is created in the same directory as the sequence file which was processed.
   - names:
       - --casava
@@ -34,7 +35,7 @@ options:
   - names:
       - --extract
     argument: ""
-    description: If set then the zipped output file will be uncompressed in the same directory after it has been created. By default this option will be set if fastqc is run in non-interactive mode.
+    description: If set then the zipped output file will be uncompressed in the same directory after it has been created. If --delete is also specified then the zip file will be removed after the contents are unzipped.
   - names:
       - -j
       - --java
@@ -50,40 +51,43 @@ options:
     description: 'Disable grouping of bases for reads >50bp. All reports will show data for every base in the read. WARNING: Using this option will cause fastqc to crash and burn if you use it on really long reads, and your plots may end up a ridiculous size. You have been warned!'
   - names:
       - --min_length
-    argument: ""
+    argument: <size>
     description: Sets an artificial lower limit on the length of the sequence to be shown in the report. As long as you set this to a value greater or equal to your longest read length then this will be the sequence length used to create your read groups. This can be useful for making directly comaparable statistics from datasets with somewhat variable read lengths.
+  - names:
+      - --dup_length
+    argument: <size>
+    description: Sets a length to which the sequences will be truncated when defining them to be duplicates, affecting the duplication and overrepresented sequences plot. This can be useful if you have long reads with higher levels of miscalls, or contamination with adapter dimers containing UMI sequences.
   - names:
       - -f
       - --format
-    argument: ""
+    argument: '{bam,sam,bam_mapped,sam_mapped,fastq}'
     description: Bypasses the normal sequence file format detection and forces the program to use the specified format. Valid formats are bam,sam,bam_mapped,sam_mapped and fastq
+  - names:
+      - --memory
+    argument: <str>
+    description: Sets the base amount of memory, in Megabytes, used to process each file. Defaults to 512MB. You may need to increase this if you have a file with very long sequences in it.
+  - names:
+      - --svg
+    argument: ""
+    description: Save the graphs in the report in SVG format.
   - names:
       - -t
       - --threads
-    argument: ""
+    argument: <number>
     description: Specifies the number of files which can be processed simultaneously. Each thread will be allocated 250MB of memory so you shouldn't run more threads than your available memory will cope with, and not more than 6 threads on a 32 bit machine
   - names:
       - -c
-    argument: ""
-    description: Specifies a non-default file which contains the list of
-  - names:
       - --contaminants
-    argument: ""
-    description: contaminants to screen overrepresented sequences against. The file must contain sets of named contaminants in the form name[tab]sequence. Lines prefixed with a hash will be ignored.
+    argument: <file>
+    description: Specifies a non-default file which contains the list of contaminants to screen overrepresented sequences against. The file must contain sets of named contaminants in the form name[tab]sequence. Lines prefixed with a hash will be ignored.
   - names:
       - -a
-    argument: ""
-    description: Specifies a non-default file which contains the list of
-  - names:
       - --adapters
-    argument: ""
-    description: adapter sequences which will be explicity searched against the library. The file must contain sets of named adapters in the form name[tab]sequence. Lines prefixed with a hash will be ignored.
+    argument: <file>
+    description: Specifies a non-default file which contains the list of adapter sequences which will be explicity searched against the library. The file must contain sets of named adapters in the form name[tab]sequence. Lines prefixed with a hash will be ignored.
   - names:
       - -l
-    argument: ""
-    description: Specifies a non-default file which contains a set of criteria
-  - names:
       - --limits
-    argument: ""
-    description: which will be used to determine the warn/error limits for the various modules. This file can also be used to selectively remove some modules from the output all together. The format needs to mirror the default limits.txt file found in the Configuration folder.
-version: FastQC v0.11.9
+    argument: <file>
+    description: Specifies a non-default file which contains a set of criteria which will be used to determine the warn/error limits for the various modules. This file can also be used to selectively remove some modules from the output all together. The format needs to mirror the default limits.txt file found in the Configuration folder.
+version: FastQC v0.12.1

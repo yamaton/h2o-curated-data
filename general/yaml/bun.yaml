@@ -1,7 +1,12 @@
 name: bun
 description: a fast JavaScript runtime, package manager, bundler and test runner
-options: []
-inheritedOptions:
+usage: ""
+options:
+  - names:
+      - -h
+      - --help
+    argument: ""
+    description: Display this help and exit.
   - names:
       - -b
       - --bun
@@ -177,7 +182,7 @@ subcommands:
     description: Run unit tests with Bun
     options: []
   - name: x
-    usage: bun x nuxi
+    usage: bun x <package>
     description: Install and execute a package bin (bunx)
     options: []
   - name: repl
@@ -199,41 +204,722 @@ subcommands:
       - i
     usage: bun install
     description: Install dependencies for a package.json (bun i)
-    options: []
+    options:
+      - names:
+          - -c
+          - --config
+        argument: <STR>?
+        description: Load config (bunfig.toml)
+      - names:
+          - -y
+          - --yarn
+        argument: ""
+        description: Write a yarn.lock file (yarn v1)
+      - names:
+          - -p
+          - --production
+        argument: ""
+        description: Don't install devDependencies
+      - names:
+          - --no-save
+        argument: ""
+        description: Don't save a lockfile
+      - names:
+          - --save
+        argument: ""
+        description: Save to package.json
+      - names:
+          - --dry-run
+        argument: ""
+        description: Don't install anything
+      - names:
+          - --lockfile
+        argument: <PATH>
+        description: Store & load a lockfile at a specific filepath
+      - names:
+          - --frozen-lockfile
+        argument: ""
+        description: Disallow changes to lockfile
+      - names:
+          - -f
+          - --force
+        argument: ""
+        description: Always request the latest versions from the registry & reinstall all dependencies
+      - names:
+          - --cache-dir
+        argument: <PATH>
+        description: Store & load cached data from a specific directory path
+      - names:
+          - --no-cache
+        argument: ""
+        description: Ignore manifest cache entirely
+      - names:
+          - --silent
+        argument: ""
+        description: Don't log anything
+      - names:
+          - --verbose
+        argument: ""
+        description: Excessively verbose logging
+      - names:
+          - --no-progress
+        argument: ""
+        description: Disable the progress bar
+      - names:
+          - --no-summary
+        argument: ""
+        description: Don't print a summary
+      - names:
+          - --no-verify
+        argument: ""
+        description: Skip verifying integrity of newly downloaded packages
+      - names:
+          - --ignore-scripts
+        argument: ""
+        description: Skip lifecycle scripts in the project's package.json (dependency scripts are never run)
+      - names:
+          - -g
+          - --global
+        argument: ""
+        description: Install globally
+      - names:
+          - --cwd
+        argument: <STR>
+        description: Set a specific cwd
+      - names:
+          - --backend
+        argument: <STR>
+        description: 'Platform-specific optimizations for installing dependencies. Possible values: "hardlink" (default), "symlink", "copyfile"'
+      - names:
+          - --link-native-bins
+        argument: <STR>...
+        description: 'Link "bin" from a matching platform-specific "optionalDependencies" instead. Default: esbuild, turbo'
+      - names:
+          - --help
+        argument: ""
+        description: Print this help menu
+      - names:
+          - -d
+          - --dev
+        argument: ""
+        description: Add dependency to "devDependencies"
+      - names:
+          - -D
+          - --development
+          - --optional
+        argument: ""
+        description: Add dependency to "optionalDependencies"
+      - names:
+          - --exact
+        argument: ""
+        description: Add the exact version instead of the ^range
   - name: add
     aliases:
       - a
-    usage: bun add <package-name>
+    usage: bun add <package>
     description: Add a dependency to package.json (bun a)
-    options: []
+    options:
+      - names:
+          - -c
+          - --config
+        argument: <STR>?
+        description: Load config (bunfig.toml)
+      - names:
+          - -y
+          - --yarn
+        argument: ""
+        description: Write a yarn.lock file (yarn v1)
+      - names:
+          - -p
+          - --production
+        argument: ""
+        description: Don't install devDependencies
+      - names:
+          - --no-save
+        argument: ""
+        description: Don't save a lockfile
+      - names:
+          - --save
+        argument: ""
+        description: Save to package.json
+      - names:
+          - --dry-run
+        argument: ""
+        description: Don't install anything
+      - names:
+          - --lockfile
+        argument: <PATH>
+        description: Store & load a lockfile at a specific filepath
+      - names:
+          - --frozen-lockfile
+        argument: ""
+        description: Disallow changes to lockfile
+      - names:
+          - -f
+          - --force
+        argument: ""
+        description: Always request the latest versions from the registry & reinstall all dependencies
+      - names:
+          - --cache-dir
+        argument: <PATH>
+        description: Store & load cached data from a specific directory path
+      - names:
+          - --no-cache
+        argument: ""
+        description: Ignore manifest cache entirely
+      - names:
+          - --silent
+        argument: ""
+        description: Don't log anything
+      - names:
+          - --verbose
+        argument: ""
+        description: Excessively verbose logging
+      - names:
+          - --no-progress
+        argument: ""
+        description: Disable the progress bar
+      - names:
+          - --no-summary
+        argument: ""
+        description: Don't print a summary
+      - names:
+          - --no-verify
+        argument: ""
+        description: Skip verifying integrity of newly downloaded packages
+      - names:
+          - --ignore-scripts
+        argument: ""
+        description: Skip lifecycle scripts in the project's package.json (dependency scripts are never run)
+      - names:
+          - -g
+          - --global
+        argument: ""
+        description: Install globally
+      - names:
+          - --cwd
+        argument: <STR>
+        description: Set a specific cwd
+      - names:
+          - --backend
+        argument: <STR>
+        description: 'Platform-specific optimizations for installing dependencies. Possible values: "hardlink" (default), "symlink", "copyfile"'
+      - names:
+          - --link-native-bins
+        argument: <STR>...
+        description: 'Link "bin" from a matching platform-specific "optionalDependencies" instead. Default: esbuild, turbo'
+      - names:
+          - --help
+        argument: ""
+        description: Print this help menu
+      - names:
+          - -d
+          - --dev
+        argument: ""
+        description: Add dependency to "devDependencies"
+      - names:
+          - -D
+          - --development
+          - --optional
+        argument: ""
+        description: Add dependency to "optionalDependencies"
+      - names:
+          - --exact
+        argument: ""
+        description: Add the exact version instead of the ^range
   - name: remove
     aliases:
       - rm
-    usage: bun remove
+    usage: bun remove <package>
     description: Remove a dependency from package.json (bun rm)
-    options: []
+    options:
+      - names:
+          - -c
+          - --config
+        argument: <STR>?
+        description: Load config (bunfig.toml)
+      - names:
+          - -y
+          - --yarn
+        argument: ""
+        description: Write a yarn.lock file (yarn v1)
+      - names:
+          - -p
+          - --production
+        argument: ""
+        description: Don't install devDependencies
+      - names:
+          - --no-save
+        argument: ""
+        description: Don't save a lockfile
+      - names:
+          - --save
+        argument: ""
+        description: Save to package.json
+      - names:
+          - --dry-run
+        argument: ""
+        description: Don't install anything
+      - names:
+          - --lockfile
+        argument: <PATH>
+        description: Store & load a lockfile at a specific filepath
+      - names:
+          - --frozen-lockfile
+        argument: ""
+        description: Disallow changes to lockfile
+      - names:
+          - -f
+          - --force
+        argument: ""
+        description: Always request the latest versions from the registry & reinstall all dependencies
+      - names:
+          - --cache-dir
+        argument: <PATH>
+        description: Store & load cached data from a specific directory path
+      - names:
+          - --no-cache
+        argument: ""
+        description: Ignore manifest cache entirely
+      - names:
+          - --silent
+        argument: ""
+        description: Don't log anything
+      - names:
+          - --verbose
+        argument: ""
+        description: Excessively verbose logging
+      - names:
+          - --no-progress
+        argument: ""
+        description: Disable the progress bar
+      - names:
+          - --no-summary
+        argument: ""
+        description: Don't print a summary
+      - names:
+          - --no-verify
+        argument: ""
+        description: Skip verifying integrity of newly downloaded packages
+      - names:
+          - --ignore-scripts
+        argument: ""
+        description: Skip lifecycle scripts in the project's package.json (dependency scripts are never run)
+      - names:
+          - -g
+          - --global
+        argument: ""
+        description: Install globally
+      - names:
+          - --cwd
+        argument: <STR>
+        description: Set a specific cwd
+      - names:
+          - --backend
+        argument: <STR>
+        description: 'Platform-specific optimizations for installing dependencies. Possible values: "hardlink" (default), "symlink", "copyfile"'
+      - names:
+          - --link-native-bins
+        argument: <STR>...
+        description: 'Link "bin" from a matching platform-specific "optionalDependencies" instead. Default: esbuild, turbo'
+      - names:
+          - --help
+        argument: ""
+        description: Print this help menu
   - name: update
-    usage: bun update <package-name>
+    usage: bun update <package>
     description: Update outdated dependencies & save to package.json
-    options: []
+    options:
+      - names:
+          - -c
+          - --config
+        argument: <STR>?
+        description: Load config (bunfig.toml)
+      - names:
+          - -y
+          - --yarn
+        argument: ""
+        description: Write a yarn.lock file (yarn v1)
+      - names:
+          - -p
+          - --production
+        argument: ""
+        description: Don't install devDependencies
+      - names:
+          - --no-save
+        argument: ""
+        description: Don't save a lockfile
+      - names:
+          - --save
+        argument: ""
+        description: Save to package.json
+      - names:
+          - --dry-run
+        argument: ""
+        description: Don't install anything
+      - names:
+          - --lockfile
+        argument: <PATH>
+        description: Store & load a lockfile at a specific filepath
+      - names:
+          - --frozen-lockfile
+        argument: ""
+        description: Disallow changes to lockfile
+      - names:
+          - -f
+          - --force
+        argument: ""
+        description: Always request the latest versions from the registry & reinstall all dependencies
+      - names:
+          - --cache-dir
+        argument: <PATH>
+        description: Store & load cached data from a specific directory path
+      - names:
+          - --no-cache
+        argument: ""
+        description: Ignore manifest cache entirely
+      - names:
+          - --silent
+        argument: ""
+        description: Don't log anything
+      - names:
+          - --verbose
+        argument: ""
+        description: Excessively verbose logging
+      - names:
+          - --no-progress
+        argument: ""
+        description: Disable the progress bar
+      - names:
+          - --no-summary
+        argument: ""
+        description: Don't print a summary
+      - names:
+          - --no-verify
+        argument: ""
+        description: Skip verifying integrity of newly downloaded packages
+      - names:
+          - --ignore-scripts
+        argument: ""
+        description: Skip lifecycle scripts in the project's package.json (dependency scripts are never run)
+      - names:
+          - -g
+          - --global
+        argument: ""
+        description: Install globally
+      - names:
+          - --cwd
+        argument: <STR>
+        description: Set a specific cwd
+      - names:
+          - --backend
+        argument: <STR>
+        description: 'Platform-specific optimizations for installing dependencies. Possible values: "hardlink" (default), "symlink", "copyfile"'
+      - names:
+          - --link-native-bins
+        argument: <STR>...
+        description: 'Link "bin" from a matching platform-specific "optionalDependencies" instead. Default: esbuild, turbo'
+      - names:
+          - --help
+        argument: ""
+        description: Print this help menu
   - name: link
     usage: bun link
     description: Link an npm package globally
-    options: []
+    options:
+      - names:
+          - -c
+          - --config
+        argument: <STR>?
+        description: Load config (bunfig.toml)
+      - names:
+          - -y
+          - --yarn
+        argument: ""
+        description: Write a yarn.lock file (yarn v1)
+      - names:
+          - -p
+          - --production
+        argument: ""
+        description: Don't install devDependencies
+      - names:
+          - --no-save
+        argument: ""
+        description: Don't save a lockfile
+      - names:
+          - --save
+        argument: ""
+        description: Save to package.json
+      - names:
+          - --dry-run
+        argument: ""
+        description: Don't install anything
+      - names:
+          - --lockfile
+        argument: <PATH>
+        description: Store & load a lockfile at a specific filepath
+      - names:
+          - --frozen-lockfile
+        argument: ""
+        description: Disallow changes to lockfile
+      - names:
+          - -f
+          - --force
+        argument: ""
+        description: Always request the latest versions from the registry & reinstall all dependencies
+      - names:
+          - --cache-dir
+        argument: <PATH>
+        description: Store & load cached data from a specific directory path
+      - names:
+          - --no-cache
+        argument: ""
+        description: Ignore manifest cache entirely
+      - names:
+          - --silent
+        argument: ""
+        description: Don't log anything
+      - names:
+          - --verbose
+        argument: ""
+        description: Excessively verbose logging
+      - names:
+          - --no-progress
+        argument: ""
+        description: Disable the progress bar
+      - names:
+          - --no-summary
+        argument: ""
+        description: Don't print a summary
+      - names:
+          - --no-verify
+        argument: ""
+        description: Skip verifying integrity of newly downloaded packages
+      - names:
+          - --ignore-scripts
+        argument: ""
+        description: Skip lifecycle scripts in the project's package.json (dependency scripts are never run)
+      - names:
+          - -g
+          - --global
+        argument: ""
+        description: Install globally
+      - names:
+          - --cwd
+        argument: <STR>
+        description: Set a specific cwd
+      - names:
+          - --backend
+        argument: <STR>
+        description: 'Platform-specific optimizations for installing dependencies. Possible values: "hardlink" (default), "symlink", "copyfile"'
+      - names:
+          - --link-native-bins
+        argument: <STR>...
+        description: 'Link "bin" from a matching platform-specific "optionalDependencies" instead. Default: esbuild, turbo'
+      - names:
+          - --help
+        argument: ""
+        description: Print this help menu
   - name: unlink
     usage: bun unlink
     description: Globally unlink an npm package
-    options: []
+    options:
+      - names:
+          - -c
+          - --config
+        argument: <STR>?
+        description: Load config (bunfig.toml)
+      - names:
+          - -y
+          - --yarn
+        argument: ""
+        description: Write a yarn.lock file (yarn v1)
+      - names:
+          - -p
+          - --production
+        argument: ""
+        description: Don't install devDependencies
+      - names:
+          - --no-save
+        argument: ""
+        description: Don't save a lockfile
+      - names:
+          - --save
+        argument: ""
+        description: Save to package.json
+      - names:
+          - --dry-run
+        argument: ""
+        description: Don't install anything
+      - names:
+          - --lockfile
+        argument: <PATH>
+        description: Store & load a lockfile at a specific filepath
+      - names:
+          - --frozen-lockfile
+        argument: ""
+        description: Disallow changes to lockfile
+      - names:
+          - -f
+          - --force
+        argument: ""
+        description: Always request the latest versions from the registry & reinstall all dependencies
+      - names:
+          - --cache-dir
+        argument: <PATH>
+        description: Store & load cached data from a specific directory path
+      - names:
+          - --no-cache
+        argument: ""
+        description: Ignore manifest cache entirely
+      - names:
+          - --silent
+        argument: ""
+        description: Don't log anything
+      - names:
+          - --verbose
+        argument: ""
+        description: Excessively verbose logging
+      - names:
+          - --no-progress
+        argument: ""
+        description: Disable the progress bar
+      - names:
+          - --no-summary
+        argument: ""
+        description: Don't print a summary
+      - names:
+          - --no-verify
+        argument: ""
+        description: Skip verifying integrity of newly downloaded packages
+      - names:
+          - --ignore-scripts
+        argument: ""
+        description: Skip lifecycle scripts in the project's package.json (dependency scripts are never run)
+      - names:
+          - -g
+          - --global
+        argument: ""
+        description: Install globally
+      - names:
+          - --cwd
+        argument: <STR>
+        description: Set a specific cwd
+      - names:
+          - --backend
+        argument: <STR>
+        description: 'Platform-specific optimizations for installing dependencies. Possible values: "hardlink" (default), "symlink", "copyfile"'
+      - names:
+          - --link-native-bins
+        argument: <STR>...
+        description: 'Link "bin" from a matching platform-specific "optionalDependencies" instead. Default: esbuild, turbo'
+      - names:
+          - --help
+        argument: ""
+        description: Print this help menu
   - name: pm
     usage: bun pm
     description: More commands for managing packages
-    options: []
+    options:
+      - names:
+          - -c
+          - --config
+        argument: <STR>?
+        description: Load config (bunfig.toml)
+      - names:
+          - -y
+          - --yarn
+        argument: ""
+        description: Write a yarn.lock file (yarn v1)
+      - names:
+          - -p
+          - --production
+        argument: ""
+        description: Don't install devDependencies
+      - names:
+          - --no-save
+        argument: ""
+        description: Don't save a lockfile
+      - names:
+          - --save
+        argument: ""
+        description: Save to package.json
+      - names:
+          - --dry-run
+        argument: ""
+        description: Don't install anything
+      - names:
+          - --lockfile
+        argument: <PATH>
+        description: Store & load a lockfile at a specific filepath
+      - names:
+          - --frozen-lockfile
+        argument: ""
+        description: Disallow changes to lockfile
+      - names:
+          - -f
+          - --force
+        argument: ""
+        description: Always request the latest versions from the registry & reinstall all dependencies
+      - names:
+          - --cache-dir
+        argument: <PATH>
+        description: Store & load cached data from a specific directory path
+      - names:
+          - --no-cache
+        argument: ""
+        description: Ignore manifest cache entirely
+      - names:
+          - --silent
+        argument: ""
+        description: Don't log anything
+      - names:
+          - --verbose
+        argument: ""
+        description: Excessively verbose logging
+      - names:
+          - --no-progress
+        argument: ""
+        description: Disable the progress bar
+      - names:
+          - --no-summary
+        argument: ""
+        description: Don't print a summary
+      - names:
+          - --no-verify
+        argument: ""
+        description: Skip verifying integrity of newly downloaded packages
+      - names:
+          - --ignore-scripts
+        argument: ""
+        description: Skip lifecycle scripts in the project's package.json (dependency scripts are never run)
+      - names:
+          - -g
+          - --global
+        argument: ""
+        description: Install globally
+      - names:
+          - --cwd
+        argument: <STR>
+        description: Set a specific cwd
+      - names:
+          - --backend
+        argument: <STR>
+        description: 'Platform-specific optimizations for installing dependencies. Possible values: "hardlink" (default), "symlink", "copyfile"'
+      - names:
+          - --link-native-bins
+        argument: <STR>...
+        description: 'Link "bin" from a matching platform-specific "optionalDependencies" instead. Default: esbuild, turbo'
+      - names:
+          - --help
+        argument: ""
+        description: Print this help menu
   - name: build
     usage: bun build ./a.ts ./b.jsx
     description: Bundle TypeScript & JavaScript into a single file
     options: []
   - name: upgrade
-    usage: bun upgrade <package-name>
+    usage: bun upgrade <package>
     description: Get the latest version of Bun
     options: []
 version: 1.0.0

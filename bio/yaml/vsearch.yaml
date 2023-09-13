@@ -1,0 +1,1143 @@
+name: vsearch
+description: Versatile open-source tool for microbiome analysis
+usage: vsearch [OPTIONS]
+options:
+  - names:
+      - --bzip2_decompress
+    argument: ""
+    description: decompress input with bzip2 (required if pipe)
+  - names:
+      - --fasta_width
+    argument: INT
+    description: width of FASTA seq lines, 0 for no wrap (80)
+  - names:
+      - --gzip_decompress
+    argument: ""
+    description: decompress input with gzip (required if pipe)
+  - names:
+      - --help
+      - -h
+    argument: ""
+    description: display help information
+  - names:
+      - --log
+    argument: FILENAME
+    description: write messages, timing and memory info to file
+  - names:
+      - --maxseqlength
+    argument: INT
+    description: maximum sequence length (50000)
+  - names:
+      - --minseqlength
+    argument: INT
+    description: 'min seq length (clust/derep/search: 32, other:1)'
+  - names:
+      - --no_progress
+    argument: ""
+    description: do not show progress indicator
+  - names:
+      - --notrunclabels
+    argument: ""
+    description: do not truncate labels at first space
+  - names:
+      - --quiet
+    argument: ""
+    description: output just warnings and fatal errors to stderr
+  - names:
+      - --threads
+    argument: INT
+    description: number of threads to use, zero for all cores (0)
+  - names:
+      - --version
+      - -v
+    argument: ""
+    description: display version information
+  - names:
+      - --chimeras_denovo
+    argument: FILENAME
+    description: detect chimeras de novo in long exact sequences
+  - names:
+      - --abskew
+    argument: REAL
+    description: minimum abundance ratio (1.0)
+  - names:
+      - --chimeras_length_min
+    argument: ""
+    description: minimum length of each chimeric region (10)
+  - names:
+      - --chimeras_parents_max
+    argument: ""
+    description: maximum number of parent sequences (3)
+  - names:
+      - --chimeras_parts
+    argument: ""
+    description: number of parts to divide sequences (length/100)
+  - names:
+      - --sizein
+    argument: ""
+    description: propagate abundance annotation from input
+  - names:
+      - --alignwidth
+    argument: INT
+    description: width of alignments in alignment output file (60)
+  - names:
+      - --alnout
+    argument: FILENAME
+    description: output chimera alignments to file
+  - names:
+      - --chimeras
+    argument: FILENAME
+    description: output chimeric sequences to file
+  - names:
+      - --nonchimeras
+    argument: FILENAME
+    description: output non-chimeric sequences to file
+  - names:
+      - --relabel
+    argument: STRING
+    description: relabel nonchimeras with this prefix string
+  - names:
+      - --relabel_keep
+    argument: ""
+    description: keep the old label after the new when relabelling
+  - names:
+      - --relabel_md5
+    argument: ""
+    description: relabel with md5 digest of normalized sequence
+  - names:
+      - --relabel_self
+    argument: ""
+    description: relabel with the sequence itself as label
+  - names:
+      - --relabel_sha1
+    argument: ""
+    description: relabel with sha1 digest of normalized sequence
+  - names:
+      - --sizeout
+    argument: ""
+    description: include abundance information when relabelling
+  - names:
+      - --tabbedout
+    argument: FILENAME
+    description: output chimera info to tab-separated file
+  - names:
+      - --xsize
+    argument: ""
+    description: strip abundance information in output
+  - names:
+      - --uchime_denovo
+    argument: FILENAME
+    description: detect chimeras de novo
+  - names:
+      - --uchime2_denovo
+    argument: FILENAME
+    description: detect chimeras de novo in denoised amplicons
+  - names:
+      - --uchime3_denovo
+    argument: FILENAME
+    description: detect chimeras de novo in denoised amplicons
+  - names:
+      - --uchime_ref
+    argument: FILENAME
+    description: detect chimeras using a reference database
+  - names:
+      - --db
+    argument: FILENAME
+    description: reference database for --uchime_ref
+  - names:
+      - --abskew
+    argument: REAL
+    description: minimum abundance ratio (2.0, 16.0 for uchime3)
+  - names:
+      - --dn
+    argument: REAL
+    description: '''no'' vote pseudo-count (1.4)'
+  - names:
+      - --mindiffs
+    argument: INT
+    description: minimum number of differences in segment (3) *
+  - names:
+      - --mindiv
+    argument: REAL
+    description: minimum divergence from closest parent (0.8) *
+  - names:
+      - --minh
+    argument: REAL
+    description: minimum score (0.28) * ignored in uchime2/3
+  - names:
+      - --self
+    argument: ""
+    description: exclude identical labels for --uchime_ref
+  - names:
+      - --selfid
+    argument: ""
+    description: exclude identical sequences for --uchime_ref
+  - names:
+      - --xn
+    argument: REAL
+    description: '''no'' vote weight (8.0)'
+  - names:
+      - --alignwidth
+    argument: INT
+    description: width of alignment in uchimealn output (80)
+  - names:
+      - --borderline
+    argument: FILENAME
+    description: output borderline chimeric sequences to file
+  - names:
+      - --fasta_score
+    argument: ""
+    description: include chimera score in FASTA output
+  - names:
+      - --uchimealns
+    argument: FILENAME
+    description: output chimera alignments to file
+  - names:
+      - --uchimeout
+    argument: FILENAME
+    description: output to chimera info to tab-separated file
+  - names:
+      - --uchimeout5
+    argument: ""
+    description: make output compatible with uchime version 5
+  - names:
+      - --cluster_fast
+    argument: FILENAME
+    description: cluster sequences after sorting by length
+  - names:
+      - --cluster_size
+    argument: FILENAME
+    description: cluster sequences after sorting by abundance
+  - names:
+      - --cluster_smallmem
+    argument: FILENAME
+    description: cluster already sorted sequences (see -usersort)
+  - names:
+      - --cluster_unoise
+    argument: FILENAME
+    description: denoise Illumina amplicon reads
+  - names:
+      - --cons_truncate
+    argument: ""
+    description: do not ignore terminal gaps in MSA for consensus
+  - names:
+      - --id
+    argument: REAL
+    description: 'reject if identity lower, accepted values: 0-1.0'
+  - names:
+      - --iddef
+    argument: INT
+    description: id definition, 0-4=CD-HIT,all,int,MBL,BLAST (2)
+  - names:
+      - --qmask
+    argument: none|dust|soft
+    description: mask seqs with dust, soft or no method (dust)
+  - names:
+      - --strand
+    argument: plus|both
+    description: cluster using plus or both strands (plus)
+  - names:
+      - --usersort
+    argument: ""
+    description: indicate sequences not pre-sorted by length
+  - names:
+      - --minsize
+    argument: INT
+    description: minimum abundance (unoise only) (8)
+  - names:
+      - --unoise_alpha
+    argument: REAL
+    description: alpha parameter (unoise only) (2.0)
+  - names:
+      - --biomout
+    argument: FILENAME
+    description: filename for OTU table output in biom 1.0 format
+  - names:
+      - --centroids
+    argument: FILENAME
+    description: output centroid sequences to FASTA file
+  - names:
+      - --clusterout_id
+    argument: ""
+    description: add cluster id info to consout and profile files
+  - names:
+      - --clusterout_sort
+    argument: ""
+    description: order msaout, consout, profile by decr abundance
+  - names:
+      - --clusters
+    argument: STRING
+    description: output each cluster to a separate FASTA file
+  - names:
+      - --consout
+    argument: FILENAME
+    description: output cluster consensus sequences to FASTA file
+  - names:
+      - --mothur_shared_out
+    argument: FN
+    description: filename for OTU table output in mothur format
+  - names:
+      - --msaout
+    argument: FILENAME
+    description: output multiple seq. alignments to FASTA file
+  - names:
+      - --otutabout
+    argument: FILENAME
+    description: filename for OTU table output in classic format
+  - names:
+      - --profile
+    argument: FILENAME
+    description: output sequence profile of each cluster to file
+  - names:
+      - --relabel
+    argument: STRING
+    description: relabel centroids with this prefix string
+  - names:
+      - --sizeorder
+    argument: ""
+    description: sort accepted centroids by abundance, AGC
+  - names:
+      - --sizeout
+    argument: ""
+    description: write cluster abundances to centroid file
+  - names:
+      - --uc
+    argument: FILENAME
+    description: specify filename for UCLUST-like output
+  - names:
+      - --sff_convert
+    argument: FILENAME
+    description: convert given SFF file to FASTQ format
+  - names:
+      - --sff_clip
+    argument: ""
+    description: clip ends of sequences as indicated in file (no)
+  - names:
+      - --fastq_asciiout
+    argument: INT
+    description: FASTQ output quality score ASCII base char (33)
+  - names:
+      - --fastq_qmaxout
+    argument: INT
+    description: maximum base quality value for FASTQ output (41)
+  - names:
+      - --fastq_qminout
+    argument: INT
+    description: minimum base quality value for FASTQ output (0)
+  - names:
+      - --fastqout
+    argument: FILENAME
+    description: output converted sequences to given FASTQ file
+  - names:
+      - --derep_fulllength
+    argument: FILENAME
+    description: dereplicate sequences in the given FASTA file
+  - names:
+      - --derep_id
+    argument: FILENAME
+    description: dereplicate using both identifiers and sequences
+  - names:
+      - --derep_prefix
+    argument: FILENAME
+    description: dereplicate sequences in file based on prefixes
+  - names:
+      - --derep_smallmem
+    argument: FILENAME
+    description: dereplicate sequences in file using less memory
+  - names:
+      - --fastx_uniques
+    argument: FILENAME
+    description: dereplicate sequences in the FASTA/FASTQ file
+  - names:
+      - --rereplicate
+    argument: FILENAME
+    description: rereplicate sequences in the given FASTA file
+  - names:
+      - --maxuniquesize
+    argument: INT
+    description: maximum abundance for output from dereplication
+  - names:
+      - --minuniquesize
+    argument: INT
+    description: minimum abundance for output from dereplication
+  - names:
+      - --strand
+    argument: plus|both
+    description: dereplicate plus or both strands (plus)
+  - names:
+      - --fastq_ascii
+    argument: INT
+    description: FASTQ input quality score ASCII base char (33)
+  - names:
+      - --fastq_qmax
+    argument: INT
+    description: maximum base quality value for FASTQ input (41)
+  - names:
+      - --fastq_qmin
+    argument: INT
+    description: minimum base quality value for FASTQ input (0)
+  - names:
+      - --fastaout
+    argument: FILENAME
+    description: output FASTA file (for fastx_uniques)
+  - names:
+      - --fastqout
+    argument: FILENAME
+    description: output FASTQ file (for fastx_uniques)
+  - names:
+      - --output
+    argument: FILENAME
+    description: output FASTA file (not for fastx_uniques)
+  - names:
+      - --relabel
+    argument: STRING
+    description: relabel with this prefix string
+  - names:
+      - --sizeout
+    argument: ""
+    description: write abundance annotation to output
+  - names:
+      - --tabbedout
+    argument: FILENAME
+    description: write cluster info to tsv file for fastx_uniques
+  - names:
+      - --topn
+    argument: INT
+    description: output only n most abundant sequences after derep
+  - names:
+      - --uc
+    argument: FILENAME
+    description: filename for UCLUST-like dereplication output
+  - names:
+      - --xsize
+    argument: ""
+    description: strip abundance information in derep output
+  - names:
+      - --fasta2fastq
+    argument: FILENAME
+    description: convert from FASTA to FASTQ, fake quality scores
+  - names:
+      - --fastq_qmaxout
+    argument: INT
+    description: fake quality score for FASTQ output (41)
+  - names:
+      - --fastqout
+    argument: FILENAME
+    description: FASTQ output filename for converted sequences
+  - names:
+      - --fastq_convert
+    argument: FILENAME
+    description: convert between FASTQ file formats
+  - names:
+      - --fastq_chars
+    argument: FILENAME
+    description: analyse FASTQ file for version and quality range
+  - names:
+      - --fastq_tail
+    argument: INT
+    description: min length of tails to count for fastq_chars (4)
+  - names:
+      - --fastq_stats
+    argument: FILENAME
+    description: report statistics on FASTQ file
+  - names:
+      - --fastq_eestats
+    argument: FILENAME
+    description: quality score and expected error statistics
+  - names:
+      - --fastq_eestats2
+    argument: FILENAME
+    description: expected error and length cutoff statistics
+  - names:
+      - --ee_cutoffs
+    argument: REAL,...
+    description: fastq_eestats2 expected error cutoffs (0.5,1,2)
+  - names:
+      - --log
+    argument: FILENAME
+    description: output file for fastq_stats statistics
+  - names:
+      - --output
+    argument: FILENAME
+    description: output file for fastq_eestats(2) statistics
+  - names:
+      - --fastx_mask
+    argument: FILENAME
+    description: mask sequences in the given FASTA or FASTQ file
+  - names:
+      - --hardmask
+    argument: ""
+    description: mask by replacing with N instead of lower case
+  - names:
+      - --max_unmasked_pct
+    argument: ""
+    description: max unmasked % of sequences to keep (100.0)
+  - names:
+      - --min_unmasked_pct
+    argument: ""
+    description: min unmasked % of sequences to keep (0.0)
+  - names:
+      - --fastaout
+    argument: FILENAME
+    description: output to specified FASTA file
+  - names:
+      - --fastqout
+    argument: FILENAME
+    description: output to specified FASTQ file
+  - names:
+      - --maskfasta
+    argument: FILENAME
+    description: mask sequences in the given FASTA file
+  - names:
+      - --output
+    argument: FILENAME
+    description: output to specified FASTA file
+  - names:
+      - --orient
+    argument: FILENAME
+    description: orient sequences in given FASTA/FASTQ file
+  - names:
+      - --db
+    argument: FILENAME
+    description: database of sequences in correct orientation
+  - names:
+      - --dbmask
+    argument: none|dust|soft
+    description: mask db seqs with dust, soft or no method (dust)
+  - names:
+      - --qmask
+    argument: none|dust|soft
+    description: mask query with dust, soft or no method (dust)
+  - names:
+      - --wordlength
+    argument: INT
+    description: length of words used for matching 3-15 (12)
+  - names:
+      - --fastaout
+    argument: FILENAME
+    description: FASTA output filename for oriented sequences
+  - names:
+      - --fastqout
+    argument: FILENAME
+    description: FASTQ output filenamr for oriented sequences
+  - names:
+      - --notmatched
+    argument: FILENAME
+    description: output filename for undetermined sequences
+  - names:
+      - --tabbedout
+    argument: FILENAME
+    description: output filename for result information
+  - names:
+      - --fastq_join
+    argument: FILENAME
+    description: join paired-end reads into one sequence with gap
+  - names:
+      - --reverse
+    argument: FILENAME
+    description: specify FASTQ file with reverse reads
+  - names:
+      - --join_padgap
+    argument: STRING
+    description: sequence string used for padding (NNNNNNNN)
+  - names:
+      - --join_padgapq
+    argument: STRING
+    description: quality string used for padding (IIIIIIII)
+  - names:
+      - --fastaout
+    argument: FILENAME
+    description: FASTA output filename for joined sequences
+  - names:
+      - --fastqout
+    argument: FILENAME
+    description: FASTQ output filename for joined sequences
+  - names:
+      - --fastq_mergepairs
+    argument: FILENAME
+    description: merge paired-end reads into one sequence
+  - names:
+      - --fastq_allowmergestagger
+    argument: ""
+    description: allow merging of staggered reads
+  - names:
+      - --fastq_maxdiffpct
+    argument: REAL
+    description: maximum percentage diff. bases in overlap (100.0)
+  - names:
+      - --fastq_maxdiffs
+    argument: INT
+    description: maximum number of different bases in overlap (10)
+  - names:
+      - --fastq_maxee
+    argument: REAL
+    description: maximum expected error value for merged sequence
+  - names:
+      - --fastq_maxmergelen
+    argument: ""
+    description: maximum length of entire merged sequence
+  - names:
+      - --fastq_maxns
+    argument: INT
+    description: maximum number of N's
+  - names:
+      - --fastq_minlen
+    argument: INT
+    description: minimum input read length after truncation (1)
+  - names:
+      - --fastq_minmergelen
+    argument: ""
+    description: minimum length of entire merged sequence
+  - names:
+      - --fastq_minovlen
+    argument: ""
+    description: minimum length of overlap between reads (10)
+  - names:
+      - --fastq_nostagger
+    argument: ""
+    description: disallow merging of staggered reads (default)
+  - names:
+      - --fastq_truncqual
+    argument: INT
+    description: base quality value for truncation
+  - names:
+      - --eetabbedout
+    argument: FILENAME
+    description: output error statistics to specified file
+  - names:
+      - --fastaout
+    argument: FILENAME
+    description: FASTA output filename for merged sequences
+  - names:
+      - --fastaout_notmerged_fwd
+    argument: FN
+    description: FASTA filename for non-merged forward sequences
+  - names:
+      - --fastaout_notmerged_rev
+    argument: FN
+    description: FASTA filename for non-merged reverse sequences
+  - names:
+      - --fastq_eeout
+    argument: ""
+    description: include expected errors (ee) in FASTQ output
+  - names:
+      - --fastqout
+    argument: FILENAME
+    description: FASTQ output filename for merged sequences
+  - names:
+      - --fastqout_notmerged_fwd
+    argument: FN
+    description: FASTQ filename for non-merged forward sequences
+  - names:
+      - --fastqout_notmerged_rev
+    argument: FN
+    description: FASTQ filename for non-merged reverse sequences
+  - names:
+      - --label_suffix
+    argument: STRING
+    description: suffix to append to label of merged sequences
+  - names:
+      - --xee
+    argument: ""
+    description: remove expected errors (ee) info from output
+  - names:
+      - --allpairs_global
+    argument: FILENAME
+    description: perform global alignment of all sequence pairs
+  - names:
+      - --alnout
+    argument: FILENAME
+    description: filename for human-readable alignment output
+  - names:
+      - --acceptall
+    argument: ""
+    description: output all pairwise alignments
+  - names:
+      - --cut
+    argument: FILENAME
+    description: filename of FASTA formatted input sequences
+  - names:
+      - --cut_pattern
+    argument: STRING
+    description: pattern to match with ^ and _ at cut sites
+  - names:
+      - --fastaout
+    argument: FILENAME
+    description: FASTA filename for fragments on forward strand
+  - names:
+      - --fastaout_rev
+    argument: FILENAME
+    description: FASTA filename for fragments on reverse strand
+  - names:
+      - --fastaout_discarded
+    argument: FN
+    description: FASTA filename for non-matching sequences
+  - names:
+      - --fastaout_discarded_rev
+    argument: FN
+    description: FASTA filename for non-matching, reverse compl.
+  - names:
+      - --fastx_revcomp
+    argument: FILENAME
+    description: reverse-complement seqs in FASTA or FASTQ file
+  - names:
+      - --fastaout
+    argument: FILENAME
+    description: FASTA output filename
+  - names:
+      - --fastqout
+    argument: FILENAME
+    description: FASTQ output filename
+  - names:
+      - --label_suffix
+    argument: STRING
+    description: label to append to identifier in the output
+  - names:
+      - --search_exact
+    argument: FILENAME
+    description: filename of queries for exact match search
+  - names:
+      - --usearch_global
+    argument: FILENAME
+    description: filename of queries for global alignment search
+  - names:
+      - --db
+    argument: FILENAME
+    description: name of UDB or FASTA database for search
+  - names:
+      - --dbmask
+    argument: none|dust|soft
+    description: mask db with dust, soft or no method (dust)
+  - names:
+      - --fulldp
+    argument: ""
+    description: full dynamic programming alignment (always on)
+  - names:
+      - --gapext
+    argument: STRING
+    description: penalties for gap extension (2I/1E)
+  - names:
+      - --gapopen
+    argument: STRING
+    description: penalties for gap opening (20I/2E)
+  - names:
+      - --id
+    argument: REAL
+    description: reject if identity lower
+  - names:
+      - --idprefix
+    argument: INT
+    description: reject if first n nucleotides do not match
+  - names:
+      - --idsuffix
+    argument: INT
+    description: reject if last n nucleotides do not match
+  - names:
+      - --lca_cutoff
+    argument: REAL
+    description: fraction of matching hits required for LCA (1.0)
+  - names:
+      - --leftjust
+    argument: ""
+    description: reject if terminal gaps at alignment left end
+  - names:
+      - --match
+    argument: INT
+    description: score for match (2)
+  - names:
+      - --maxaccepts
+    argument: INT
+    description: number of hits to accept and show per strand (1)
+  - names:
+      - --maxdiffs
+    argument: INT
+    description: reject if more substitutions or indels
+  - names:
+      - --maxgaps
+    argument: INT
+    description: reject if more indels
+  - names:
+      - --maxhits
+    argument: INT
+    description: maximum number of hits to show (unlimited)
+  - names:
+      - --maxid
+    argument: REAL
+    description: reject if identity higher
+  - names:
+      - --maxqsize
+    argument: INT
+    description: reject if query abundance larger
+  - names:
+      - --maxqt
+    argument: REAL
+    description: reject if query/target length ratio higher
+  - names:
+      - --maxrejects
+    argument: INT
+    description: number of non-matching hits to consider (32)
+  - names:
+      - --maxsizeratio
+    argument: REAL
+    description: reject if query/target abundance ratio higher
+  - names:
+      - --maxsl
+    argument: REAL
+    description: reject if shorter/longer length ratio higher
+  - names:
+      - --maxsubs
+    argument: INT
+    description: reject if more substitutions
+  - names:
+      - --mid
+    argument: REAL
+    description: reject if percent identity lower, ignoring gaps
+  - names:
+      - --mincols
+    argument: INT
+    description: reject if alignment length shorter
+  - names:
+      - --minqt
+    argument: REAL
+    description: reject if query/target length ratio lower
+  - names:
+      - --minsizeratio
+    argument: REAL
+    description: reject if query/target abundance ratio lower
+  - names:
+      - --minsl
+    argument: REAL
+    description: reject if shorter/longer length ratio lower
+  - names:
+      - --mintsize
+    argument: INT
+    description: reject if target abundance lower
+  - names:
+      - --minwordmatches
+    argument: INT
+    description: minimum number of word matches required (12)
+  - names:
+      - --mismatch
+    argument: INT
+    description: score for mismatch (-4)
+  - names:
+      - --pattern
+    argument: STRING
+    description: option is ignored
+  - names:
+      - --query_cov
+    argument: REAL
+    description: reject if fraction of query seq. aligned lower
+  - names:
+      - --rightjust
+    argument: ""
+    description: reject if terminal gaps at alignment right end
+  - names:
+      - --self
+    argument: ""
+    description: reject if labels identical
+  - names:
+      - --selfid
+    argument: ""
+    description: reject if sequences identical
+  - names:
+      - --slots
+    argument: INT
+    description: option is ignored
+  - names:
+      - --strand
+    argument: plus|both
+    description: search plus or both strands (plus)
+  - names:
+      - --target_cov
+    argument: REAL
+    description: reject if fraction of target seq. aligned lower
+  - names:
+      - --weak_id
+    argument: REAL
+    description: include aligned hits with >= id; continue search
+  - names:
+      - --wordlength
+    argument: INT
+    description: length of words for database index 3-15 (8)
+  - names:
+      - --blast6out
+    argument: FILENAME
+    description: filename for blast-like tab-separated output
+  - names:
+      - --dbmatched
+    argument: FILENAME
+    description: FASTA file for matching database sequences
+  - names:
+      - --dbnotmatched
+    argument: FILENAME
+    description: FASTA file for non-matching database sequences
+  - names:
+      - --fastapairs
+    argument: FILENAME
+    description: FASTA file with pairs of query and target
+  - names:
+      - --lcaout
+    argument: FILENAME
+    description: output LCA of matching sequences to file
+  - names:
+      - --matched
+    argument: FILENAME
+    description: FASTA file for matching query sequences
+  - names:
+      - --notmatched
+    argument: FILENAME
+    description: FASTA file for non-matching query sequences
+  - names:
+      - --output_no_hits
+    argument: ""
+    description: output non-matching queries to output files
+  - names:
+      - --rowlen
+    argument: INT
+    description: width of alignment lines in alnout output (64)
+  - names:
+      - --samheader
+    argument: ""
+    description: include a header in the SAM output file
+  - names:
+      - --samout
+    argument: FILENAME
+    description: filename for SAM format output
+  - names:
+      - --sizeout
+    argument: ""
+    description: write abundance annotation to dbmatched file
+  - names:
+      - --top_hits_only
+    argument: ""
+    description: output only hits with identity equal to the best
+  - names:
+      - --uc
+    argument: FILENAME
+    description: filename for UCLUST-like output
+  - names:
+      - --uc_allhits
+    argument: ""
+    description: show all, not just top hit with uc output
+  - names:
+      - --userfields
+    argument: STRING
+    description: fields to output in userout file
+  - names:
+      - --userout
+    argument: FILENAME
+    description: filename for user-defined tab-separated output
+  - names:
+      - --shuffle
+    argument: FILENAME
+    description: shuffle order of sequences in FASTA file randomly
+  - names:
+      - --sortbylength
+    argument: FILENAME
+    description: sort sequences by length in given FASTA file
+  - names:
+      - --sortbysize
+    argument: FILENAME
+    description: abundance sort sequences in given FASTA file
+  - names:
+      - --maxsize
+    argument: INT
+    description: maximum abundance for sortbysize
+  - names:
+      - --minsize
+    argument: INT
+    description: minimum abundance for sortbysize
+  - names:
+      - --randseed
+    argument: INT
+    description: seed for PRNG, zero to use random data source (0)
+  - names:
+      - --relabel
+    argument: STRING
+    description: relabel sequences with this prefix string
+  - names:
+      - --topn
+    argument: INT
+    description: output just first n sequences
+  - names:
+      - --fastx_subsample
+    argument: FILENAME
+    description: subsample sequences from given FASTA/FASTQ file
+  - names:
+      - --sample_pct
+    argument: REAL
+    description: sampling percentage between 0.0 and 100.0
+  - names:
+      - --sample_size
+    argument: INT
+    description: sampling size
+  - names:
+      - --sizein
+    argument: ""
+    description: consider abundance info from input, do not ignore
+  - names:
+      - --fastaout
+    argument: FILENAME
+    description: output subsampled sequences to FASTA file
+  - names:
+      - --fastaout_discarded
+    argument: FILE
+    description: output non-subsampled sequences to FASTA file
+  - names:
+      - --fastqout
+    argument: FILENAME
+    description: output subsampled sequences to FASTQ file
+  - names:
+      - --sizeout
+    argument: ""
+    description: update abundance information in output
+  - names:
+      - --sintax
+    argument: FILENAME
+    description: classify sequences in given FASTA/FASTQ file
+  - names:
+      - --db
+    argument: FILENAME
+    description: taxonomic reference db in given FASTA or UDB file
+  - names:
+      - --sintax_cutoff
+    argument: REAL
+    description: confidence value cutoff level (0.0)
+  - names:
+      - --tabbedout
+    argument: FILENAME
+    description: write results to given tab-delimited file
+  - names:
+      - --fastx_filter
+    argument: FILENAME
+    description: trim and filter sequences in FASTA/FASTQ file
+  - names:
+      - --fastq_filter
+    argument: FILENAME
+    description: trim and filter sequences in FASTQ file
+  - names:
+      - --reverse
+    argument: FILENAME
+    description: FASTQ file with other end of paired-end reads
+  - names:
+      - --fastq_maxee
+    argument: REAL
+    description: discard if expected error value is higher
+  - names:
+      - --fastq_maxee_rate
+    argument: REAL
+    description: discard if expected error rate is higher
+  - names:
+      - --fastq_maxlen
+    argument: INT
+    description: discard if length of sequence is longer
+  - names:
+      - --fastq_maxns
+    argument: INT
+    description: discard if number of N's is higher
+  - names:
+      - --fastq_minlen
+    argument: INT
+    description: discard if length of sequence is shorter
+  - names:
+      - --fastq_stripleft
+    argument: INT
+    description: delete given number of bases from the 5' end
+  - names:
+      - --fastq_stripright
+    argument: INT
+    description: delete given number of bases from the 3' end
+  - names:
+      - --fastq_truncee
+    argument: REAL
+    description: truncate to given maximum expected error
+  - names:
+      - --fastq_trunclen
+    argument: INT
+    description: truncate to given length (discard if shorter)
+  - names:
+      - --fastq_trunclen_keep
+    argument: INT
+    description: truncate to given length (keep if shorter)
+  - names:
+      - --fastq_truncqual
+    argument: INT
+    description: truncate to given minimum base quality
+  - names:
+      - --maxsize
+    argument: INT
+    description: discard if abundance of sequence is above
+  - names:
+      - --minsize
+    argument: INT
+    description: discard if abundance of sequence is below
+  - names:
+      - --eeout
+    argument: ""
+    description: include expected errors in output
+  - names:
+      - --fastaout
+    argument: FN
+    description: FASTA filename for passed sequences
+  - names:
+      - --fastaout_discarded
+    argument: FN
+    description: FASTA filename for discarded sequences
+  - names:
+      - --fastaout_discarded_rev
+    argument: FN
+    description: FASTA filename for discarded reverse sequences
+  - names:
+      - --fastaout_rev
+    argument: FN
+    description: FASTA filename for passed reverse sequences
+  - names:
+      - --fastqout
+    argument: FN
+    description: FASTQ filename for passed sequences
+  - names:
+      - --fastqout_discarded
+    argument: FN
+    description: FASTQ filename for discarded sequences
+  - names:
+      - --fastqout_discarded_rev
+    argument: FN
+    description: FASTQ filename for discarded reverse sequences
+  - names:
+      - --fastqout_rev
+    argument: FN
+    description: FASTQ filename for passed reverse sequences
+  - names:
+      - --relabel
+    argument: STRING
+    description: relabel filtered sequences with given prefix
+  - names:
+      - --relabel_md5
+    argument: ""
+    description: relabel filtered sequences with md5 digest
+  - names:
+      - --relabel_sha1
+    argument: ""
+    description: relabel filtered sequences with sha1 digest
+  - names:
+      - --makeudb_usearch
+    argument: FILENAME
+    description: make UDB file from given FASTA file
+  - names:
+      - --udb2fasta
+    argument: FILENAME
+    description: output FASTA file from given UDB file
+  - names:
+      - --udbinfo
+    argument: FILENAME
+    description: show information about UDB file
+  - names:
+      - --udbstats
+    argument: FILENAME
+    description: report statistics about indexed words in UDB file
+  - names:
+      - --output
+    argument: FILENAME
+    description: UDB or FASTA output file
+version: '2.23.0'

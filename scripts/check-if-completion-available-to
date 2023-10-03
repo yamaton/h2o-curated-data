@@ -39,6 +39,8 @@ case "$toshell" in
     url="https://github.com/scop/bash-completion"
     ;;
   zsh)
+    file_unix="/usr/share/zsh/functions/Completion/Unix/_$name"
+    file_debian="/usr/share/zsh/functions/Completion/Debian/_$name"
     file="$rootdir/zsh-completions/src/_$name"
     url="https://github.com/zsh-users/zsh-completions"
     #
@@ -69,8 +71,9 @@ if [[ ! -d "$dir" ]]; then
     popd >/dev/null;
 fi
 
+
 # Check if the file exists OR skip=1
-if [[ -f "$file" ]] || [[ -n "${skip-}" ]]; then
+if [[ -f "$file" ]] || [[ -f "${file_unix-}" ]] || [[ -f "${file_debian-}" ]] || [[ -n "${skip-}" ]]; then
     # echo "✨  $name: the completion script is already available to $toshell.";
     exit 0;
 else

@@ -1,5 +1,6 @@
 name: cellranger
-description: Process 10x Genomics Gene Expression, Feature Barcode, and Immune Profiling data
+description: cellranger
+usage: cellranger <SUBCOMMAND>
 options:
   - names:
       - -h
@@ -13,7 +14,8 @@ options:
     description: Print version information
 subcommands:
   - name: count
-    description: Count gene expression (targeted or whole-transcriptome) and/or feature
+    description: Count gene expression (targeted or whole-transcriptome) and/or feature barcode reads from a single sample and GEM well
+    usage: cellranger count [OPTIONS] --id <ID> --transcriptome <PATH>
     options:
       - names:
           - --id
@@ -157,7 +159,8 @@ subcommands:
         argument: ""
         description: Print help information
   - name: multi
-    description: Analyze multiplexed data or combined gene expression/immune
+    description: Analyze multiplexed data or combined gene expression/immune profiling/feature barcode data
+    usage: cellranger multi [OPTIONS] --id <ID> --csv <CSV>
     options:
       - names:
           - --id
@@ -229,7 +232,8 @@ subcommands:
         argument: ""
         description: Print help information
   - name: vdj
-    description: Assembles single-cell VDJ receptor sequences from 10x Immune Profiling
+    description: Assembles single-cell VDJ receptor sequences from 10x Immune Profiling libraries
+    usage: cellranger vdj [OPTIONS] --id <ID> --fastqs <PATH>
     options:
       - names:
           - --id
@@ -330,6 +334,7 @@ subcommands:
         description: Print help information
   - name: aggr
     description: Aggregate data from multiple Cell Ranger runs
+    usage: cellranger aggr [OPTIONS] --id <ID> --csv <CSV>
     options:
       - names:
           - --id
@@ -410,6 +415,7 @@ subcommands:
         description: Print help information
   - name: reanalyze
     description: Re-run secondary analysis (dimensionality reduction, clustering, etc)
+    usage: cellranger reanalyze [OPTIONS] --id <ID> --matrix <MATRIX_H5>
     options:
       - names:
           - --id
@@ -505,7 +511,8 @@ subcommands:
         argument: ""
         description: Print help information
   - name: targeted-compare
-    description: Analyze targeted enrichment performance by comparing a targeted sample
+    description: Analyze targeted enrichment performance by comparing a targeted sample to its cognate parent WTA sample (used as input for targeted gene expression)
+    usage: cellranger targeted-compare [OPTIONS] --id <ID> --targeted <MOL_INFO_H5> --parent <MOL_INFO_H5> --target-panel <CSV>
     options:
       - names:
           - --id
@@ -585,7 +592,8 @@ subcommands:
         argument: ""
         description: Print help information
   - name: targeted-depth
-    description: Estimate targeted read depth values (mean reads per cell) for a
+    description: Estimate targeted read depth values (mean reads per cell) for a specified input parent WTA sample and a target panel CSV file
+    usage: cellranger targeted-depth [-h] --molecule-h5 MOLECULE_H5 --target-panel TARGET_PANEL
     options:
       - names:
           - -h
@@ -602,6 +610,10 @@ subcommands:
         description: path to target panel CSV file
   - name: mkvdjref
     description: Prepare a reference for use with CellRanger VDJ
+    usage: |-
+      mkvdjref --genome=NAME --fasta=PATH --genes=PATH ...[options]
+      mkvdjref --genome=NAME --seqs=PATH [options]
+      mkvdjref -h | --help | --version
     options:
       - names:
           - --ref-version
@@ -621,7 +633,10 @@ subcommands:
         argument: ""
         description: Show version.
   - name: mkfastq
-    description: Run Illumina demultiplexer on sample sheets that contain 10x-specific
+    description: Run Illumina demultiplexer on sample sheets that contain 10x-specific sample index sets
+    usage: |-
+      cellranger mkfastq --run=PATH [options]
+      cellranger mkfastq -h | --help | --version
     options:
       - names:
           - --fastq-cluster-count
@@ -740,6 +755,7 @@ subcommands:
         description: Show version.
   - name: testrun
     description: Execute the 'count' pipeline on a small test dataset
+    usage: cellranger testrun [OPTIONS] --id <ID>
     options:
       - names:
           - --id
@@ -808,6 +824,9 @@ subcommands:
         description: Print help information
   - name: mat2csv
     description: Convert a gene count matrix to CSV format
+    usage: |-
+      mat2csv <input_path> <output_csv> [--genome=GENOME]
+      mat2csv -h | --help | --version
     options:
       - names:
           - --genome
@@ -823,20 +842,21 @@ subcommands:
         argument: ""
         description: Show version.
   - name: mkref
-    description: Prepare a reference for use with 10x analysis software. Requires a GTF
+    description: Prepare a reference for use with 10x analysis software. Requires a GTF and FASTA
+    usage: |-
+      mkref
+          --genome=NAME ...
+          --fasta=PATH ...
+          --genes=PATH ...
+          [options]
+      mkref -h | --help | --version
     options:
       - names:
           - --genome
-        argument: NAME
-        description: Unique genome name(s), used to name output folder [a-zA-Z0-9_-]+. Specify multiple genomes by specifying the --genome argument multiple times; the output folder will be <name1>_and_<name2>.
-      - names:
           - --fasta
-        argument: PATH
-        description: Path(s) to FASTA file containing your genome reference.
-      - names:
           - --genes
-        argument: PATH
-        description: Path(s) to genes GTF file(S) containing annotated genes for your genome reference. Specify multiple genomes by specifying the --genes argument multiple times.
+        argument: NAME ...
+        description: '[options]'
       - names:
           - --nthreads
         argument: <num>
@@ -858,8 +878,798 @@ subcommands:
           - --version
         argument: ""
         description: Show version.
+    subcommands:
+      - name: genome
+        description: Unique genome name(s), used to name output folder
+        usage: |-
+          mkref
+              --genome=NAME ...
+              --fasta=PATH ...
+              --genes=PATH ...
+              [options]
+          mkref -h | --help | --version
+        options:
+          - names:
+              - --genome
+              - --fasta
+              - --genes
+            argument: NAME ...
+            description: '[options]'
+          - names:
+              - --nthreads
+            argument: <num>
+            description: Number of threads used during STAR genome index
+          - names:
+              - --memgb
+            argument: <num>
+            description: Maximum memory (GB) used when aligning reads with STAR.
+          - names:
+              - --ref-version
+            argument: <str>
+            description: Optional reference version string to include with
+          - names:
+              - -h
+              - --help
+            argument: ""
+            description: Show this message.
+          - names:
+              - --version
+            argument: ""
+            description: Show version.
+        subcommands:
+          - name: fasta
+            description: Path(s) to FASTA file containing your genome reference.
+            usage: |-
+              mkref
+                  --genome=NAME ...
+                  --fasta=PATH ...
+                  --genes=PATH ...
+                  [options]
+              mkref -h | --help | --version
+            options:
+              - names:
+                  - --genome
+                  - --fasta
+                  - --genes
+                argument: NAME ...
+                description: '[options]'
+              - names:
+                  - --nthreads
+                argument: <num>
+                description: Number of threads used during STAR genome index
+              - names:
+                  - --memgb
+                argument: <num>
+                description: Maximum memory (GB) used when aligning reads with STAR.
+              - names:
+                  - --ref-version
+                argument: <str>
+                description: Optional reference version string to include with
+              - names:
+                  - -h
+                  - --help
+                argument: ""
+                description: Show this message.
+              - names:
+                  - --version
+                argument: ""
+                description: Show version.
+            subcommands:
+              - name: genome
+                description: Unique genome name(s), used to name output folder
+                usage: |-
+                  mkref
+                      --genome=NAME ...
+                      --fasta=PATH ...
+                      --genes=PATH ...
+                      [options]
+                  mkref -h | --help | --version
+                options:
+                  - names:
+                      - --genome
+                      - --fasta
+                      - --genes
+                    argument: NAME ...
+                    description: '[options]'
+                  - names:
+                      - --nthreads
+                    argument: <num>
+                    description: Number of threads used during STAR genome index
+                  - names:
+                      - --memgb
+                    argument: <num>
+                    description: Maximum memory (GB) used when aligning reads with STAR.
+                  - names:
+                      - --ref-version
+                    argument: <str>
+                    description: Optional reference version string to include with
+                  - names:
+                      - -h
+                      - --help
+                    argument: ""
+                    description: Show this message.
+                  - names:
+                      - --version
+                    argument: ""
+                    description: Show version.
+              - name: genes
+                description: Path(s) to genes GTF file(S) containing annotated genes
+                usage: |-
+                  mkref
+                      --genome=NAME ...
+                      --fasta=PATH ...
+                      --genes=PATH ...
+                      [options]
+                  mkref -h | --help | --version
+                options:
+                  - names:
+                      - --genome
+                      - --fasta
+                      - --genes
+                    argument: NAME ...
+                    description: '[options]'
+                  - names:
+                      - --nthreads
+                    argument: <num>
+                    description: Number of threads used during STAR genome index
+                  - names:
+                      - --memgb
+                    argument: <num>
+                    description: Maximum memory (GB) used when aligning reads with STAR.
+                  - names:
+                      - --ref-version
+                    argument: <str>
+                    description: Optional reference version string to include with
+                  - names:
+                      - -h
+                      - --help
+                    argument: ""
+                    description: Show this message.
+                  - names:
+                      - --version
+                    argument: ""
+                    description: Show version.
+          - name: genes
+            description: Path(s) to genes GTF file(S) containing annotated genes
+            usage: |-
+              mkref
+                  --genome=NAME ...
+                  --fasta=PATH ...
+                  --genes=PATH ...
+                  [options]
+              mkref -h | --help | --version
+            options:
+              - names:
+                  - --genome
+                  - --fasta
+                  - --genes
+                argument: NAME ...
+                description: '[options]'
+              - names:
+                  - --nthreads
+                argument: <num>
+                description: Number of threads used during STAR genome index
+              - names:
+                  - --memgb
+                argument: <num>
+                description: Maximum memory (GB) used when aligning reads with STAR.
+              - names:
+                  - --ref-version
+                argument: <str>
+                description: Optional reference version string to include with
+              - names:
+                  - -h
+                  - --help
+                argument: ""
+                description: Show this message.
+              - names:
+                  - --version
+                argument: ""
+                description: Show version.
+            subcommands:
+              - name: genome
+                description: Unique genome name(s), used to name output folder
+                usage: |-
+                  mkref
+                      --genome=NAME ...
+                      --fasta=PATH ...
+                      --genes=PATH ...
+                      [options]
+                  mkref -h | --help | --version
+                options:
+                  - names:
+                      - --genome
+                      - --fasta
+                      - --genes
+                    argument: NAME ...
+                    description: '[options]'
+                  - names:
+                      - --nthreads
+                    argument: <num>
+                    description: Number of threads used during STAR genome index
+                  - names:
+                      - --memgb
+                    argument: <num>
+                    description: Maximum memory (GB) used when aligning reads with STAR.
+                  - names:
+                      - --ref-version
+                    argument: <str>
+                    description: Optional reference version string to include with
+                  - names:
+                      - -h
+                      - --help
+                    argument: ""
+                    description: Show this message.
+                  - names:
+                      - --version
+                    argument: ""
+                    description: Show version.
+              - name: fasta
+                description: Path(s) to FASTA file containing your genome reference.
+                usage: |-
+                  mkref
+                      --genome=NAME ...
+                      --fasta=PATH ...
+                      --genes=PATH ...
+                      [options]
+                  mkref -h | --help | --version
+                options:
+                  - names:
+                      - --genome
+                      - --fasta
+                      - --genes
+                    argument: NAME ...
+                    description: '[options]'
+                  - names:
+                      - --nthreads
+                    argument: <num>
+                    description: Number of threads used during STAR genome index
+                  - names:
+                      - --memgb
+                    argument: <num>
+                    description: Maximum memory (GB) used when aligning reads with STAR.
+                  - names:
+                      - --ref-version
+                    argument: <str>
+                    description: Optional reference version string to include with
+                  - names:
+                      - -h
+                      - --help
+                    argument: ""
+                    description: Show this message.
+                  - names:
+                      - --version
+                    argument: ""
+                    description: Show version.
+      - name: fasta
+        description: Path(s) to FASTA file containing your genome reference.
+        usage: |-
+          mkref
+              --genome=NAME ...
+              --fasta=PATH ...
+              --genes=PATH ...
+              [options]
+          mkref -h | --help | --version
+        options:
+          - names:
+              - --genome
+              - --fasta
+              - --genes
+            argument: NAME ...
+            description: '[options]'
+          - names:
+              - --nthreads
+            argument: <num>
+            description: Number of threads used during STAR genome index
+          - names:
+              - --memgb
+            argument: <num>
+            description: Maximum memory (GB) used when aligning reads with STAR.
+          - names:
+              - --ref-version
+            argument: <str>
+            description: Optional reference version string to include with
+          - names:
+              - -h
+              - --help
+            argument: ""
+            description: Show this message.
+          - names:
+              - --version
+            argument: ""
+            description: Show version.
+        subcommands:
+          - name: genome
+            description: Unique genome name(s), used to name output folder
+            usage: |-
+              mkref
+                  --genome=NAME ...
+                  --fasta=PATH ...
+                  --genes=PATH ...
+                  [options]
+              mkref -h | --help | --version
+            options:
+              - names:
+                  - --genome
+                  - --fasta
+                  - --genes
+                argument: NAME ...
+                description: '[options]'
+              - names:
+                  - --nthreads
+                argument: <num>
+                description: Number of threads used during STAR genome index
+              - names:
+                  - --memgb
+                argument: <num>
+                description: Maximum memory (GB) used when aligning reads with STAR.
+              - names:
+                  - --ref-version
+                argument: <str>
+                description: Optional reference version string to include with
+              - names:
+                  - -h
+                  - --help
+                argument: ""
+                description: Show this message.
+              - names:
+                  - --version
+                argument: ""
+                description: Show version.
+            subcommands:
+              - name: fasta
+                description: Path(s) to FASTA file containing your genome reference.
+                usage: |-
+                  mkref
+                      --genome=NAME ...
+                      --fasta=PATH ...
+                      --genes=PATH ...
+                      [options]
+                  mkref -h | --help | --version
+                options:
+                  - names:
+                      - --genome
+                      - --fasta
+                      - --genes
+                    argument: NAME ...
+                    description: '[options]'
+                  - names:
+                      - --nthreads
+                    argument: <num>
+                    description: Number of threads used during STAR genome index
+                  - names:
+                      - --memgb
+                    argument: <num>
+                    description: Maximum memory (GB) used when aligning reads with STAR.
+                  - names:
+                      - --ref-version
+                    argument: <str>
+                    description: Optional reference version string to include with
+                  - names:
+                      - -h
+                      - --help
+                    argument: ""
+                    description: Show this message.
+                  - names:
+                      - --version
+                    argument: ""
+                    description: Show version.
+              - name: genes
+                description: Path(s) to genes GTF file(S) containing annotated genes
+                usage: |-
+                  mkref
+                      --genome=NAME ...
+                      --fasta=PATH ...
+                      --genes=PATH ...
+                      [options]
+                  mkref -h | --help | --version
+                options:
+                  - names:
+                      - --genome
+                      - --fasta
+                      - --genes
+                    argument: NAME ...
+                    description: '[options]'
+                  - names:
+                      - --nthreads
+                    argument: <num>
+                    description: Number of threads used during STAR genome index
+                  - names:
+                      - --memgb
+                    argument: <num>
+                    description: Maximum memory (GB) used when aligning reads with STAR.
+                  - names:
+                      - --ref-version
+                    argument: <str>
+                    description: Optional reference version string to include with
+                  - names:
+                      - -h
+                      - --help
+                    argument: ""
+                    description: Show this message.
+                  - names:
+                      - --version
+                    argument: ""
+                    description: Show version.
+          - name: genes
+            description: Path(s) to genes GTF file(S) containing annotated genes
+            usage: |-
+              mkref
+                  --genome=NAME ...
+                  --fasta=PATH ...
+                  --genes=PATH ...
+                  [options]
+              mkref -h | --help | --version
+            options:
+              - names:
+                  - --genome
+                  - --fasta
+                  - --genes
+                argument: NAME ...
+                description: '[options]'
+              - names:
+                  - --nthreads
+                argument: <num>
+                description: Number of threads used during STAR genome index
+              - names:
+                  - --memgb
+                argument: <num>
+                description: Maximum memory (GB) used when aligning reads with STAR.
+              - names:
+                  - --ref-version
+                argument: <str>
+                description: Optional reference version string to include with
+              - names:
+                  - -h
+                  - --help
+                argument: ""
+                description: Show this message.
+              - names:
+                  - --version
+                argument: ""
+                description: Show version.
+            subcommands:
+              - name: genome
+                description: Unique genome name(s), used to name output folder
+                usage: |-
+                  mkref
+                      --genome=NAME ...
+                      --fasta=PATH ...
+                      --genes=PATH ...
+                      [options]
+                  mkref -h | --help | --version
+                options:
+                  - names:
+                      - --genome
+                      - --fasta
+                      - --genes
+                    argument: NAME ...
+                    description: '[options]'
+                  - names:
+                      - --nthreads
+                    argument: <num>
+                    description: Number of threads used during STAR genome index
+                  - names:
+                      - --memgb
+                    argument: <num>
+                    description: Maximum memory (GB) used when aligning reads with STAR.
+                  - names:
+                      - --ref-version
+                    argument: <str>
+                    description: Optional reference version string to include with
+                  - names:
+                      - -h
+                      - --help
+                    argument: ""
+                    description: Show this message.
+                  - names:
+                      - --version
+                    argument: ""
+                    description: Show version.
+              - name: fasta
+                description: Path(s) to FASTA file containing your genome reference.
+                usage: |-
+                  mkref
+                      --genome=NAME ...
+                      --fasta=PATH ...
+                      --genes=PATH ...
+                      [options]
+                  mkref -h | --help | --version
+                options:
+                  - names:
+                      - --genome
+                      - --fasta
+                      - --genes
+                    argument: NAME ...
+                    description: '[options]'
+                  - names:
+                      - --nthreads
+                    argument: <num>
+                    description: Number of threads used during STAR genome index
+                  - names:
+                      - --memgb
+                    argument: <num>
+                    description: Maximum memory (GB) used when aligning reads with STAR.
+                  - names:
+                      - --ref-version
+                    argument: <str>
+                    description: Optional reference version string to include with
+                  - names:
+                      - -h
+                      - --help
+                    argument: ""
+                    description: Show this message.
+                  - names:
+                      - --version
+                    argument: ""
+                    description: Show version.
+      - name: genes
+        description: Path(s) to genes GTF file(S) containing annotated genes
+        usage: |-
+          mkref
+              --genome=NAME ...
+              --fasta=PATH ...
+              --genes=PATH ...
+              [options]
+          mkref -h | --help | --version
+        options:
+          - names:
+              - --genome
+              - --fasta
+              - --genes
+            argument: NAME ...
+            description: '[options]'
+          - names:
+              - --nthreads
+            argument: <num>
+            description: Number of threads used during STAR genome index
+          - names:
+              - --memgb
+            argument: <num>
+            description: Maximum memory (GB) used when aligning reads with STAR.
+          - names:
+              - --ref-version
+            argument: <str>
+            description: Optional reference version string to include with
+          - names:
+              - -h
+              - --help
+            argument: ""
+            description: Show this message.
+          - names:
+              - --version
+            argument: ""
+            description: Show version.
+        subcommands:
+          - name: genome
+            description: Unique genome name(s), used to name output folder
+            usage: |-
+              mkref
+                  --genome=NAME ...
+                  --fasta=PATH ...
+                  --genes=PATH ...
+                  [options]
+              mkref -h | --help | --version
+            options:
+              - names:
+                  - --genome
+                  - --fasta
+                  - --genes
+                argument: NAME ...
+                description: '[options]'
+              - names:
+                  - --nthreads
+                argument: <num>
+                description: Number of threads used during STAR genome index
+              - names:
+                  - --memgb
+                argument: <num>
+                description: Maximum memory (GB) used when aligning reads with STAR.
+              - names:
+                  - --ref-version
+                argument: <str>
+                description: Optional reference version string to include with
+              - names:
+                  - -h
+                  - --help
+                argument: ""
+                description: Show this message.
+              - names:
+                  - --version
+                argument: ""
+                description: Show version.
+            subcommands:
+              - name: fasta
+                description: Path(s) to FASTA file containing your genome reference.
+                usage: |-
+                  mkref
+                      --genome=NAME ...
+                      --fasta=PATH ...
+                      --genes=PATH ...
+                      [options]
+                  mkref -h | --help | --version
+                options:
+                  - names:
+                      - --genome
+                      - --fasta
+                      - --genes
+                    argument: NAME ...
+                    description: '[options]'
+                  - names:
+                      - --nthreads
+                    argument: <num>
+                    description: Number of threads used during STAR genome index
+                  - names:
+                      - --memgb
+                    argument: <num>
+                    description: Maximum memory (GB) used when aligning reads with STAR.
+                  - names:
+                      - --ref-version
+                    argument: <str>
+                    description: Optional reference version string to include with
+                  - names:
+                      - -h
+                      - --help
+                    argument: ""
+                    description: Show this message.
+                  - names:
+                      - --version
+                    argument: ""
+                    description: Show version.
+              - name: genes
+                description: Path(s) to genes GTF file(S) containing annotated genes
+                usage: |-
+                  mkref
+                      --genome=NAME ...
+                      --fasta=PATH ...
+                      --genes=PATH ...
+                      [options]
+                  mkref -h | --help | --version
+                options:
+                  - names:
+                      - --genome
+                      - --fasta
+                      - --genes
+                    argument: NAME ...
+                    description: '[options]'
+                  - names:
+                      - --nthreads
+                    argument: <num>
+                    description: Number of threads used during STAR genome index
+                  - names:
+                      - --memgb
+                    argument: <num>
+                    description: Maximum memory (GB) used when aligning reads with STAR.
+                  - names:
+                      - --ref-version
+                    argument: <str>
+                    description: Optional reference version string to include with
+                  - names:
+                      - -h
+                      - --help
+                    argument: ""
+                    description: Show this message.
+                  - names:
+                      - --version
+                    argument: ""
+                    description: Show version.
+          - name: fasta
+            description: Path(s) to FASTA file containing your genome reference.
+            usage: |-
+              mkref
+                  --genome=NAME ...
+                  --fasta=PATH ...
+                  --genes=PATH ...
+                  [options]
+              mkref -h | --help | --version
+            options:
+              - names:
+                  - --genome
+                  - --fasta
+                  - --genes
+                argument: NAME ...
+                description: '[options]'
+              - names:
+                  - --nthreads
+                argument: <num>
+                description: Number of threads used during STAR genome index
+              - names:
+                  - --memgb
+                argument: <num>
+                description: Maximum memory (GB) used when aligning reads with STAR.
+              - names:
+                  - --ref-version
+                argument: <str>
+                description: Optional reference version string to include with
+              - names:
+                  - -h
+                  - --help
+                argument: ""
+                description: Show this message.
+              - names:
+                  - --version
+                argument: ""
+                description: Show version.
+            subcommands:
+              - name: genome
+                description: Unique genome name(s), used to name output folder
+                usage: |-
+                  mkref
+                      --genome=NAME ...
+                      --fasta=PATH ...
+                      --genes=PATH ...
+                      [options]
+                  mkref -h | --help | --version
+                options:
+                  - names:
+                      - --genome
+                      - --fasta
+                      - --genes
+                    argument: NAME ...
+                    description: '[options]'
+                  - names:
+                      - --nthreads
+                    argument: <num>
+                    description: Number of threads used during STAR genome index
+                  - names:
+                      - --memgb
+                    argument: <num>
+                    description: Maximum memory (GB) used when aligning reads with STAR.
+                  - names:
+                      - --ref-version
+                    argument: <str>
+                    description: Optional reference version string to include with
+                  - names:
+                      - -h
+                      - --help
+                    argument: ""
+                    description: Show this message.
+                  - names:
+                      - --version
+                    argument: ""
+                    description: Show version.
+              - name: genes
+                description: Path(s) to genes GTF file(S) containing annotated genes
+                usage: |-
+                  mkref
+                      --genome=NAME ...
+                      --fasta=PATH ...
+                      --genes=PATH ...
+                      [options]
+                  mkref -h | --help | --version
+                options:
+                  - names:
+                      - --genome
+                      - --fasta
+                      - --genes
+                    argument: NAME ...
+                    description: '[options]'
+                  - names:
+                      - --nthreads
+                    argument: <num>
+                    description: Number of threads used during STAR genome index
+                  - names:
+                      - --memgb
+                    argument: <num>
+                    description: Maximum memory (GB) used when aligning reads with STAR.
+                  - names:
+                      - --ref-version
+                    argument: <str>
+                    description: Optional reference version string to include with
+                  - names:
+                      - -h
+                      - --help
+                    argument: ""
+                    description: Show this message.
+                  - names:
+                      - --version
+                    argument: ""
+                    description: Show version.
   - name: mkgtf
     description: Filter a GTF file by attribute prior to creating a 10x reference
+    usage: |-
+      mkgtf <input_gtf> <output_gtf> [--attribute=KEY:VALUE...]
+      mkgtf -h | --help | --version
     options:
       - names:
           - --attribute
@@ -876,10 +1686,13 @@ subcommands:
         description: Show version.
   - name: upload
     description: Upload analysis logs to 10x Genomics support
-    options: []
     usage: cellranger upload <your_email> <file>
+    options: []
   - name: sitecheck
     description: Collect linux system configuration information
+    usage: |-
+      sitecheck
+      sitecheck -h | --help | --version
     options:
       - names:
           - -h
@@ -890,4 +1703,8 @@ subcommands:
           - --version
         argument: ""
         description: Show version.
+  - name: help
+    description: Print this message or the help of the given subcommand(s)
+    usage: cellranger help [SUBCOMMAND]...
+    options: []
 version: cellranger cellranger-7.0.0

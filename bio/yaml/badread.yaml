@@ -1,0 +1,211 @@
+name: badread
+description: a long read simulator that can imitate manytypes of read problems
+usage: badread [-h] [--version] {simulate,error_model,qscore_model,plot} ...
+options:
+  - names:
+      - -h
+      - --help
+    argument: ""
+    description: Show this help message and exit
+  - names:
+      - --version
+    argument: ""
+    description: Show program's version number and exit
+subcommands:
+  - name: simulate
+    description: generate fake long reads
+    usage: badread simulate --reference REFERENCE --quantity QUANTITY [--length LENGTH] [--identity IDENTITY] [--error_model ERROR_MODEL] [--qscore_model QSCORE_MODEL] [--seed SEED] [--start_adapter START_ADAPTER] [--end_adapter END_ADAPTER] [--start_adapter_seq START_ADAPTER_SEQ] [--end_adapter_seq END_ADAPTER_SEQ] [--junk_reads JUNK_READS] [--random_reads RANDOM_READS] [--chimeras CHIMERAS] [--glitches GLITCHES] [--small_plasmid_bias] [-h] [--version]
+    options:
+      - names:
+          - --reference
+        argument: REFERENCE
+        description: Reference FASTA file (can be gzipped)
+      - names:
+          - --quantity
+        argument: QUANTITY
+        description: Either an absolute value (e.g. 250M) or a relative depth (e.g. 25x)
+      - names:
+          - --length
+        argument: LENGTH
+        description: 'Fragment length distribution (mean and stdev, default: 15000,13000)'
+      - names:
+          - --identity
+        argument: IDENTITY
+        description: 'Sequencing identity distribution (mean,max,stdev for beta distribution, or mean,stdev for normal qscore distribution, default: 95,99,2.5)'
+      - names:
+          - --error_model
+        argument: ERROR_MODEL
+        description: 'Can be "nanopore2018", "nanopore2020", "nanopore2023", "pacbio2016", "random" or a model filename (default: nanopore2023)'
+      - names:
+          - --qscore_model
+        argument: QSCORE_MODEL
+        description: 'Can be "nanopore2018", "nanopore2020", "nanopore2023", "pacbio2016", "random", "ideal" or a model filename (default: nanopore2023)'
+      - names:
+          - --seed
+        argument: SEED
+        description: 'Random number generator seed for deterministic output (default: different output each time)'
+      - names:
+          - --start_adapter
+        argument: START_ADAPTER
+        description: 'Adapter parameters for read starts (rate and amount, default: 90,60)'
+      - names:
+          - --end_adapter
+        argument: END_ADAPTER
+        description: 'Adapter parameters for read ends (rate and amount, default: 50,20)'
+      - names:
+          - --start_adapter_seq
+        argument: START_ADAPTER_SEQ
+        description: 'Adapter sequence for read starts (default: AATGTACTTCGTTCAGTTACGTATTGCT)'
+      - names:
+          - --end_adapter_seq
+        argument: END_ADAPTER_SEQ
+        description: 'Adapter sequence for read ends (default: GCAATACGTAACTGAACGAAGT)'
+      - names:
+          - --junk_reads
+        argument: JUNK_READS
+        description: 'This percentage of reads will be low-complexity junk (default: 1)'
+      - names:
+          - --random_reads
+        argument: RANDOM_READS
+        description: 'This percentage of reads will be random sequence (default: 1)'
+      - names:
+          - --chimeras
+        argument: CHIMERAS
+        description: 'Percentage at which separate fragments join together (default: 1)'
+      - names:
+          - --glitches
+        argument: GLITCHES
+        description: 'Read glitch parameters (rate, size and skip, default: 10000,25,25)'
+      - names:
+          - --small_plasmid_bias
+        argument: ""
+        description: 'If set, then small circular plasmids are lost when the fragment length is too high (default: small plasmids are included regardless of fragment length)'
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: Show this help message and exit
+      - names:
+          - --version
+        argument: ""
+        description: Show program's version number and exit
+  - name: error_model
+    description: build a Badread error model
+    usage: badread error_model --reference REFERENCE --reads READS --alignment ALIGNMENT [--k_size K_SIZE] [--max_alignments MAX_ALIGNMENTS] [--max_alt MAX_ALT] [-h] [--version]
+    options:
+      - names:
+          - --reference
+        argument: REFERENCE
+        description: Reference FASTA file
+      - names:
+          - --reads
+        argument: READS
+        description: FASTQ of real reads
+      - names:
+          - --alignment
+        argument: ALIGNMENT
+        description: PAF alignment of reads aligned to reference
+      - names:
+          - --k_size
+        argument: K_SIZE
+        description: 'Error model k-mer size (default: 7)'
+      - names:
+          - --max_alignments
+        argument: MAX_ALIGNMENTS
+        description: 'Only use this many alignments when generating error model (default: use all alignments)'
+      - names:
+          - --max_alt
+        argument: MAX_ALT
+        description: 'Only save up to this many alternatives to each k-mer (default: 25)'
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: Show this help message and exit
+      - names:
+          - --version
+        argument: ""
+        description: Show program's version number and exit
+  - name: qscore_model
+    description: build a Badread qscore model
+    usage: badread qscore_model --reference REFERENCE --reads READS --alignment ALIGNMENT [--k_size K_SIZE] [--max_alignments MAX_ALIGNMENTS] [--max_del MAX_DEL] [--min_occur MIN_OCCUR] [--max_output MAX_OUTPUT] [-h] [--version]
+    options:
+      - names:
+          - --reference
+        argument: REFERENCE
+        description: Reference FASTA file
+      - names:
+          - --reads
+        argument: READS
+        description: FASTQ of real reads
+      - names:
+          - --alignment
+        argument: ALIGNMENT
+        description: PAF alignment of reads aligned to reference
+      - names:
+          - --k_size
+        argument: K_SIZE
+        description: 'Qscore model k-mer size (must be odd, default: 9)'
+      - names:
+          - --max_alignments
+        argument: MAX_ALIGNMENTS
+        description: 'Only use this many alignments when generating qscore model (default: use all alignments)'
+      - names:
+          - --max_del
+        argument: MAX_DEL
+        description: 'Deletion runs longer than this will be collapsed to reduce the number of possible alignments (default: 6)'
+      - names:
+          - --min_occur
+        argument: MIN_OCCUR
+        description: 'CIGARs which occur less than this many times will not be included in the model (default: 100)'
+      - names:
+          - --max_output
+        argument: MAX_OUTPUT
+        description: 'The outputted model will be limited to this many lines (default: 10000)'
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: Show this help message and exit
+      - names:
+          - --version
+        argument: ""
+        description: Show program's version number and exit
+  - name: plot
+    description: view read identities over a sliding window
+    usage: badread plot --reference REFERENCE --reads READS --alignment ALIGNMENT [--window WINDOW] [--qual] [--no_plot] [-h] [--version]
+    options:
+      - names:
+          - --reference
+        argument: REFERENCE
+        description: Reference FASTA file
+      - names:
+          - --reads
+        argument: READS
+        description: FASTQ of real reads
+      - names:
+          - --alignment
+        argument: ALIGNMENT
+        description: PAF alignment of reads aligned to reference
+      - names:
+          - --window
+        argument: WINDOW
+        description: 'Window size in bp (default: 100)'
+      - names:
+          - --qual
+        argument: ""
+        description: 'Include qscores in plot (default: only show identity)'
+      - names:
+          - --no_plot
+        argument: ""
+        description: 'Do not display plots (for testing purposes) (default: False)'
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: Show this help message and exit
+      - names:
+          - --version
+        argument: ""
+        description: Show program's version number and exit
+version: Badread v0.4.0

@@ -42,11 +42,11 @@ def create_db(paths: Iterable[Path]) -> None:
             raw = f.read()
         d = json.loads(raw)
         if "name" not in d:
-            logging.error(f"Failed to read: {path})")
+            logging.error("Failed to read: %s", path)
             continue
         name = d['name']
         if name in names:
-            logging.warning(f"Duplicate command name: {name}")
+            logging.warning("Duplicate command name: %s", name)
             continue
         names.add(name)
         cur.execute("insert into command values (?, json(?))", (name, raw))
@@ -63,10 +63,10 @@ def validate(paths: Iterable[Path]) -> None:
     for p in paths:
         res = subprocess.run([str(validator), str(p)])
         if res.returncode != 0:
-            logging.error(f"Failed to validate: {p}")
+            logging.error("Failed to validate: %s", p)
             exit(1)
 
 
 if __name__ == "__main__":
-    paths = get_json_paths()
-    create_db(paths)
+    ps = get_json_paths()
+    create_db(ps)

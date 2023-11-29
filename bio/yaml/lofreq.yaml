@@ -1,0 +1,775 @@
+name: lofreq
+description: Fast and sensitive inference of SNVs and indels
+usage: lofreq <command> [options]
+options: []
+subcommands:
+  - name: call
+    description: Call variants
+    usage: lofreq call [options] in.bam
+    options:
+      - names:
+          - -f
+          - --ref
+        argument: FILE
+        description: Indexed reference fasta file (gzip supported) [null]
+      - names:
+          - -o
+          - --out
+        argument: FILE
+        description: Vcf output file [- = stdout]
+      - names:
+          - -r
+          - --region
+        argument: STR
+        description: Limit calls to this region (chrom:start-end) [null]
+      - names:
+          - -l
+          - --bed
+        argument: FILE
+        description: List of positions (chr pos) or regions (BED) [null]
+      - names:
+          - -q
+          - --min-bq
+        argument: INT
+        description: Skip any base with baseQ smaller than INT [6]
+      - names:
+          - -Q
+          - --min-alt-bq
+        argument: INT
+        description: Skip alternate bases with baseQ smaller than INT [6]
+      - names:
+          - -R
+          - --def-alt-bq
+        argument: INT
+        description: 'Overwrite baseQs of alternate bases (that passed bq filter) with this value (-1: use median ref-bq; 0: keep) [0]'
+      - names:
+          - -j
+          - --min-jq
+        argument: INT
+        description: Skip any base with joinedQ smaller than INT [0]
+      - names:
+          - -J
+          - --min-alt-jq
+        argument: INT
+        description: Skip alternate bases with joinedQ smaller than INT [0]
+      - names:
+          - -K
+          - --def-alt-jq
+        argument: INT
+        description: 'Overwrite joinedQs of alternate bases (that passed jq filter) with this value (-1: use median ref-bq; 0: keep) [0]'
+      - names:
+          - -B
+          - --no-baq
+        argument: ""
+        description: Disable use of base-alignment quality (BAQ)
+      - names:
+          - -A
+          - --no-idaq
+        argument: ""
+        description: Don't use IDAQ values (NOT recommended under ANY circumstances other than debugging)
+      - names:
+          - -D
+          - --del-baq
+        argument: ""
+        description: Delete pre-existing BAQ values, i.e. compute even if already present in BAM
+      - names:
+          - -e
+          - --no-ext-baq
+        argument: ""
+        description: Use 'normal' BAQ (samtools default) instead of extended BAQ (both computed on the fly if not already present in lb tag)
+      - names:
+          - -m
+          - --min-mq
+        argument: INT
+        description: Skip reads with mapping quality smaller than INT [0]
+      - names:
+          - -M
+          - --max-mq
+        argument: INT
+        description: Cap mapping quality at INT [255]
+      - names:
+          - -N
+          - --no-mq
+        argument: ""
+        description: Don't merge mapping quality in LoFreq's model
+      - names:
+          - --call-indels
+        argument: ""
+        description: 'Enable indel calls (note: preprocess your file to include indel alignment qualities!)'
+      - names:
+          - --only-indels
+        argument: ""
+        description: Only call indels; no SNVs
+      - names:
+          - -s
+          - --src-qual
+        argument: ""
+        description: Enable computation of source quality
+      - names:
+          - -S
+          - --ign-vcf
+        argument: FILE
+        description: Ignore variants in this vcf file for source quality computation. Multiple files can be given separated by commas
+      - names:
+          - -T
+          - --def-nm-q
+        argument: INT
+        description: If >= 0, then replace non-match base qualities with this default value [-1]
+      - names:
+          - -a
+          - --sig
+        argument: ""
+        description: P-Value cutoff / significance level [0.010000]
+      - names:
+          - -b
+          - --bonf
+        argument: ""
+        description: Bonferroni factor. 'dynamic' (increase per actually performed test) or INT ['dynamic']
+      - names:
+          - -C
+          - --min-cov
+        argument: INT
+        description: 'Test only positions having at least this coverage [1] (note: without --no-default-filter default filters (incl. coverage) kick in after predictions are done)'
+      - names:
+          - -d
+          - --max-depth
+        argument: INT
+        description: Cap coverage at this depth [1000000]
+      - names:
+          - --illumina-1.3
+        argument: ""
+        description: Assume the quality is Illumina-1.3-1.7/ASCII+64 encoded
+      - names:
+          - --use-orphan
+        argument: ""
+        description: Count anomalous read pairs (i.e. where mate is not aligned properly)
+      - names:
+          - --plp-summary-only
+        argument: ""
+        description: No variant calling. Just output pileup summary per column
+      - names:
+          - --no-default-filter
+        argument: ""
+        description: Don't run default 'lofreq filter' automatically after calling variants
+      - names:
+          - --force-overwrite
+        argument: ""
+        description: Overwrite any existing output
+      - names:
+          - --verbose
+        argument: ""
+        description: Be verbose
+      - names:
+          - --debug
+        argument: ""
+        description: Enable debugging
+  - name: call-parallel
+    description: Call variants in parallel
+    usage: ""
+    options: []
+  - name: somatic
+    description: Call somatic variants
+    usage: lofreq somatic [-h] [-v] -n NORMAL -t TUMOR -o OUTPREFIX -f REF [-l BED] [-d DBSNP] [--threads NUM_THREADS] [--tumor-mtc {bonf,holm-bonf,fdr}] [--tumor-mtc-alpha TUMOR_MTC_ALPHA] [--indel-tumor-mtc {bonf,holm-bonf,fdr}] [--indel-tumor-mtc-alpha INDEL_TUMOR_MTC_ALPHA] [--call-indels] [--min-cov MIN_COV] [--germline] [-S IGN_VCF] [--use-orphan] [--baq-off] [--call-rlx-extra-args CALL_RLX_EXTRA_ARGS] [--no-src-qual] [--debug] [--continue]
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: show this help message and exit
+      - names:
+          - -v
+          - --verbose
+        argument: ""
+        description: Be verbose
+      - names:
+          - -n
+          - --normal
+        argument: NORMAL
+        description: Normal BAM file
+      - names:
+          - -t
+          - --tumor
+        argument: TUMOR
+        description: Tumor BAM file
+      - names:
+          - -o
+          - --outprefix
+        argument: OUTPREFIX
+        description: Prefix for output files
+      - names:
+          - -f
+          - --ref
+        argument: REF
+        description: Reference fasta file
+      - names:
+          - -l
+          - --bed
+        argument: BED
+        description: BED file listing regions to restrict analysis to
+      - names:
+          - -d
+          - --dbsnp
+        argument: DBSNP
+        description: vcf-file (bgzipped and index with tabix) containing known germline variants (e.g. dbsnp for human
+      - names:
+          - --threads
+        argument: NUM_THREADS
+        description: Use this many threads for each call
+      - names:
+          - --tumor-mtc
+        argument: '{bonf,holm-bonf,fdr}'
+        description: 'Type of multiple testing correction for tumor (default: bonf)'
+      - names:
+          - --tumor-mtc-alpha
+        argument: TUMOR_MTC_ALPHA
+        description: 'Multiple testing correction alpha for tumor (default: 1.000000)'
+      - names:
+          - --indel-tumor-mtc
+        argument: '{bonf,holm-bonf,fdr}'
+        description: 'Type of multiple testing correction for tumor (default: bonf)'
+      - names:
+          - --indel-tumor-mtc-alpha
+        argument: INDEL_TUMOR_MTC_ALPHA
+        description: 'Multiple testing correction alpha for tumor (default: 0.010000)'
+      - names:
+          - --call-indels
+        argument: ""
+        description: Also call indels (see documentation on how to preprocess your BAM files)
+      - names:
+          - --min-cov
+        argument: MIN_COV
+        description: 'Minimum coverage for somatic calls (default: 7)'
+      - names:
+          - --germline
+        argument: ""
+        description: Also list germline calls in separate file
+      - names:
+          - -S
+          - --ign-vcf
+        argument: IGN_VCF
+        description: Ignore variants in this vcf-file for source quality computation in tumor (collides with --no-src-qual). Default is to use (stringently filtered) predictions in normal sample
+      - names:
+          - --use-orphan
+        argument: ""
+        description: Use orphaned/anomalous reads from pairs in all samples
+      - names:
+          - --baq-off
+        argument: ""
+        description: Switch use of BAQ off in all samples
+      - names:
+          - --call-rlx-extra-args
+        argument: CALL_RLX_EXTRA_ARGS
+        description: Extra arguments to call_rlx (replace dashes with @)
+      - names:
+          - --no-src-qual
+        argument: ""
+        description: Disable use of source quality in tumor (see also -V)
+      - names:
+          - --debug
+        argument: ""
+        description: Enable debugging
+      - names:
+          - --continue
+        argument: ""
+        description: continue interrupted run. Will reuse existing files, assuming they are complete and created with identical options!
+  - name: viterbi
+    description: Viterbi realignment
+    usage: lofreq viterbi [options] in.bam
+    options:
+      - names:
+          - -f
+          - --ref
+        argument: FILE
+        description: Indexed reference fasta file [null]
+      - names:
+          - -k
+          - --keepflags
+        argument: ""
+        description: Don't delete flags MC, MD, NM and A, which are all prone to change during realignment.
+      - names:
+          - -q
+          - --defqual
+        argument: INT
+        description: Assume INT as quality for all bases with BQ2. Default (=-1) is to use median quality of bases in read.
+      - names:
+          - -o
+          - --out
+        argument: FILE
+        description: Output BAM file [- = stdout = default]
+      - names:
+          - --verbose
+        argument: ""
+        description: Be verbose
+  - name: indelqual
+    description: Insert indel qualities
+    usage: lofreq indelqual [options] in.bam
+    options:
+      - names:
+          - -u
+          - --uniform
+        argument: INT[,INT]
+        description: Add this indel quality uniformly to all bases. Use two comma separated values to specify insertion and deletion quality separately. (clashes with --dindel)
+      - names:
+          - --dindel
+        argument: ""
+        description: Add Dindel's indel qualities (Illumina specific) (clashes with -u; needs --ref)
+      - names:
+          - -f
+          - --ref
+        argument: ""
+        description: Reference sequence used for mapping (Only required for --dindel)
+      - names:
+          - -o
+          - --out
+        argument: FILE
+        description: Output BAM file [- = stdout = default]
+      - names:
+          - --verbose
+        argument: ""
+        description: Be verbose
+  - name: alnqual
+    description: Insert base and indel alignment qualities
+    usage: lofreq alnqual [options] <aln.bam> <ref.fasta>
+    options:
+      - names:
+          - -b
+        argument: ""
+        description: BAM output (instead of SAM)
+      - names:
+          - -u
+        argument: ""
+        description: Uncompressed BAM output (for piping)
+      - names:
+          - -S
+        argument: ""
+        description: The input is SAM with header
+      - names:
+          - -e
+        argument: ""
+        description: Use default instead of extended BAQ (the latter gives better sensitivity but lower specificity)
+      - names:
+          - -B
+        argument: ""
+        description: Don't compute base alignment qualities
+      - names:
+          - -A
+        argument: ""
+        description: Don't compute indel alignment qualities
+      - names:
+          - -r
+        argument: ""
+        description: Recompute i.e. overwrite existing values
+  - name: checkref
+    description: Check that reference fasta and BAM file match
+    usage: lofreq checkref ref.fa in.bam
+    options: []
+  - name: filter
+    description: Filter variants in VCF file
+    usage: lofreq filter [options] -i input.vcf -o output.vcf
+    options:
+      - names:
+          - -i
+          - --in
+        argument: FILE
+        description: VCF input file (no streaming supported; gzip supported)
+      - names:
+          - -o
+          - --out
+        argument: FILE
+        description: 'VCF output file (default: - for stdout; gzip supported).'
+      - names:
+          - -v
+          - --cov-min
+        argument: INT
+        description: Minimum coverage allowed (<1=off)
+      - names:
+          - -V
+          - --cov-max
+        argument: INT
+        description: Maximum coverage allowed (<1=off)
+      - names:
+          - -a
+          - --af-min
+        argument: FLOAT
+        description: Minimum allele freq allowed (<1=off)
+      - names:
+          - -A
+          - --af-max
+        argument: FLOAT
+        description: Maximum allele freq allowed (<1=off)
+      - names:
+          - -B
+          - --sb-thresh
+        argument: INT
+        description: Maximum phred-value allowed. Conflicts with -b.
+      - names:
+          - -b
+          - --sb-mtc
+        argument: STRING
+        description: Multiple testing correction type. One of 'bonf', 'holm' or 'fdr'. Conflicts with -B
+      - names:
+          - -c
+          - --sb-alpha
+        argument: FLOAT
+        description: Multiple testing correction pvalue threshold
+      - names:
+          - --sb-no-compound
+        argument: ""
+        description: Don't use compound filter
+      - names:
+          - --sb-incl-indels
+        argument: ""
+        description: Apply SB filter to indels as well
+      - names:
+          - -Q
+          - --snvqual-thresh
+        argument: INT
+        description: Minimum phred-value allowed. Conflicts with -q
+      - names:
+          - -q
+          - --snvqual-mtc
+        argument: STRING
+        description: Multiple testing correction type. One of 'bonf', 'holm' or 'fdr'. Conflicts with -Q
+      - names:
+          - -r
+          - --snvqual-alpha
+        argument: FLOAT
+        description: Multiple testing correction pvalue threshold
+      - names:
+          - -s
+          - --snvqual-ntests
+        argument: INT
+        description: Number of performed SNV tests for multiple testing correction
+      - names:
+          - -K
+          - --indelqual-thresh
+        argument: INT
+        description: Minimum phred-value allowed. Conflicts with -q
+      - names:
+          - -k
+          - --indelqual-mtc
+        argument: STRING
+        description: Multiple testing correction type. One of 'bonf', 'holm' or 'fdr'. Conflicts with -Q
+      - names:
+          - -l
+          - --indelqual-alpha
+        argument: FLOAT
+        description: Multiple testing correction pvalue threshold
+      - names:
+          - -m
+          - --indelqual-ntests
+        argument: INT
+        description: Number of performed indel tests for multiple testing correction
+      - names:
+          - --only-indels
+        argument: ""
+        description: Keep InDels only
+      - names:
+          - --only-snvs
+        argument: ""
+        description: Keep SNVs only
+      - names:
+          - --print-all
+        argument: ""
+        description: Print all, not just passed variants
+      - names:
+          - --no-defaults
+        argument: ""
+        description: Remove all default filter settings
+      - names:
+          - --verbose
+        argument: ""
+        description: Be verbose
+      - names:
+          - --debug
+        argument: ""
+        description: Enable debugging
+  - name: uniq
+    description: Test whether variants predicted in only one sample really are unique
+    usage: lofreq uniq [options] indexed-in.bam
+    options:
+      - names:
+          - -v
+          - --vcf-in
+        argument: FILE
+        description: Input vcf file listing variants [- = stdin; gzip supported]
+      - names:
+          - -o
+          - --vcf-out
+        argument: FILE
+        description: Output vcf file [- = stdout; gzip supported]
+      - names:
+          - -f
+          - --uni-freq
+        argument: ""
+        description: Assume variants have uniform test frequency of this value (unused if <=0) [-1.000000]
+      - names:
+          - -t
+          - --uniq-thresh
+        argument: INT
+        description: Minimum uniq phred-value required. Conflicts with -m. 0 for off (default=0)
+      - names:
+          - -m
+          - --uniq-mtc
+        argument: STRING
+        description: Uniq multiple testing correction type. One of 'bonf', 'holm' or 'fdr'. (default=MTC_FDR)
+      - names:
+          - -a
+          - --uniq-alpha
+        argument: FLOAT
+        description: Uniq Multiple testing correction p-value threshold (default=0.001000)
+      - names:
+          - -n
+          - --uniq-ntests
+        argument: INT
+        description: Uniq multiple testing correction p-value threshold (default=#vars)
+      - names:
+          - --output-all
+        argument: ""
+        description: Report all variants instead of only the ones, marked unique. Note, that variants already filtered in input will not be printed.
+      - names:
+          - --use-det-lim
+        argument: ""
+        description: Report variants if they are above implied detection limit Default is to use binomial test to check for frequency differences
+      - names:
+          - --use-orphan
+        argument: ""
+        description: Don't ignore anomalous read pairs / orphan reads
+      - names:
+          - --verbose
+        argument: ""
+        description: Be verbose
+      - names:
+          - --debug
+        argument: ""
+        description: Enable debugging
+  - name: plpsummary
+    description: Print pileup summary per position
+    usage: lofreq call [options] in.bam
+    options:
+      - names:
+          - -f
+          - --ref
+        argument: FILE
+        description: Indexed reference fasta file (gzip supported) [null]
+      - names:
+          - -o
+          - --out
+        argument: FILE
+        description: Vcf output file [- = stdout]
+      - names:
+          - -r
+          - --region
+        argument: STR
+        description: Limit calls to this region (chrom:start-end) [null]
+      - names:
+          - -l
+          - --bed
+        argument: FILE
+        description: List of positions (chr pos) or regions (BED) [null]
+      - names:
+          - -q
+          - --min-bq
+        argument: INT
+        description: Skip any base with baseQ smaller than INT [6]
+      - names:
+          - -Q
+          - --min-alt-bq
+        argument: INT
+        description: Skip alternate bases with baseQ smaller than INT [6]
+      - names:
+          - -R
+          - --def-alt-bq
+        argument: INT
+        description: 'Overwrite baseQs of alternate bases (that passed bq filter) with this value (-1: use median ref-bq; 0: keep) [0]'
+      - names:
+          - -j
+          - --min-jq
+        argument: INT
+        description: Skip any base with joinedQ smaller than INT [0]
+      - names:
+          - -J
+          - --min-alt-jq
+        argument: INT
+        description: Skip alternate bases with joinedQ smaller than INT [0]
+      - names:
+          - -K
+          - --def-alt-jq
+        argument: INT
+        description: 'Overwrite joinedQs of alternate bases (that passed jq filter) with this value (-1: use median ref-bq; 0: keep) [0]'
+      - names:
+          - -B
+          - --no-baq
+        argument: ""
+        description: Disable use of base-alignment quality (BAQ)
+      - names:
+          - -A
+          - --no-idaq
+        argument: ""
+        description: Don't use IDAQ values (NOT recommended under ANY circumstances other than debugging)
+      - names:
+          - -D
+          - --del-baq
+        argument: ""
+        description: Delete pre-existing BAQ values, i.e. compute even if already present in BAM
+      - names:
+          - -e
+          - --no-ext-baq
+        argument: ""
+        description: Use 'normal' BAQ (samtools default) instead of extended BAQ (both computed on the fly if not already present in lb tag)
+      - names:
+          - -m
+          - --min-mq
+        argument: INT
+        description: Skip reads with mapping quality smaller than INT [0]
+      - names:
+          - -M
+          - --max-mq
+        argument: INT
+        description: Cap mapping quality at INT [255]
+      - names:
+          - -N
+          - --no-mq
+        argument: ""
+        description: Don't merge mapping quality in LoFreq's model
+      - names:
+          - --call-indels
+        argument: ""
+        description: 'Enable indel calls (note: preprocess your file to include indel alignment qualities!)'
+      - names:
+          - --only-indels
+        argument: ""
+        description: Only call indels; no SNVs
+      - names:
+          - -s
+          - --src-qual
+        argument: ""
+        description: Enable computation of source quality
+      - names:
+          - -S
+          - --ign-vcf
+        argument: FILE
+        description: Ignore variants in this vcf file for source quality computation. Multiple files can be given separated by commas
+      - names:
+          - -T
+          - --def-nm-q
+        argument: INT
+        description: If >= 0, then replace non-match base qualities with this default value [-1]
+      - names:
+          - -a
+          - --sig
+        argument: ""
+        description: P-Value cutoff / significance level [0.010000]
+      - names:
+          - -b
+          - --bonf
+        argument: ""
+        description: Bonferroni factor. 'dynamic' (increase per actually performed test) or INT ['dynamic']
+      - names:
+          - -C
+          - --min-cov
+        argument: INT
+        description: 'Test only positions having at least this coverage [1] (note: without --no-default-filter default filters (incl. coverage) kick in after predictions are done)'
+      - names:
+          - -d
+          - --max-depth
+        argument: INT
+        description: Cap coverage at this depth [1000000]
+      - names:
+          - --illumina-1.3
+        argument: ""
+        description: Assume the quality is Illumina-1.3-1.7/ASCII+64 encoded
+      - names:
+          - --use-orphan
+        argument: ""
+        description: Count anomalous read pairs (i.e. where mate is not aligned properly)
+      - names:
+          - --plp-summary-only
+        argument: ""
+        description: No variant calling. Just output pileup summary per column
+      - names:
+          - --no-default-filter
+        argument: ""
+        description: Don't run default 'lofreq filter' automatically after calling variants
+      - names:
+          - --force-overwrite
+        argument: ""
+        description: Overwrite any existing output
+      - names:
+          - --verbose
+        argument: ""
+        description: Be verbose
+      - names:
+          - --debug
+        argument: ""
+        description: Enable debugging
+  - name: vcfset
+    description: VCF set operations
+    usage: lofreq vcfset [options] -a op -1 1.vcf -2 2.vcf
+    options:
+      - names:
+          - "-1"
+          - --vcf1
+        argument: FILE
+        description: 1st VCF input file (bgzip supported)
+      - names:
+          - "-2"
+          - --vcf2
+        argument: FILE
+        description: 2nd VCF input file (mandatory - except for concat - and needs to be tabix indexed)
+      - names:
+          - -o
+          - --vcfout
+        argument: ""
+        description: 'VCF output file (default: - for stdout; gzip supported).'
+      - names:
+          - -a
+          - --action
+        argument: ""
+        description: 'Set operation to perform: intersect, complement or concat. - intersect = vcf1 AND vcf2. - complement = vcf1 \ vcf2. - concat = vcf1 + vcf2 ... vcfn (output as in file order, i.e. output not necessarily sorted!)'
+      - names:
+          - -I
+          - --add-info
+        argument: STR
+        description: Add info field, e.g. 'SOMATIC'
+      - names:
+          - --count-only
+        argument: ""
+        description: Don't print bases, just numbers
+      - names:
+          - --only-pos
+        argument: ""
+        description: Disable allele-awareness by using position only (ignoring bases) as key for storing and comparison
+      - names:
+          - --only-passed
+        argument: ""
+        description: Ignore variants marked as filtered
+      - names:
+          - --only-snvs
+        argument: ""
+        description: Ignore anything but SNVs in both input files
+      - names:
+          - --only-indels
+        argument: ""
+        description: Ignore anything but indels in both input files
+      - names:
+          - --verbose
+        argument: ""
+        description: Be verbose
+      - names:
+          - --debug
+        argument: ""
+        description: Enable debugging
+  - name: version
+    description: Print version info
+    usage: ""
+    options: []
+  - name: idxstats
+    description: Print stats for indexed BAM file
+    usage: samtools idxstats <in.bam>
+    options: []
+  - name: vcfplot
+    description: Plot VCF statistics
+    usage: ""
+    options: []
+version: 'version: 2.1.5'

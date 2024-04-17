@@ -1,6 +1,6 @@
 name: falco
-description: A C++ drop-in replacement of FastQC to assess the quality of sequence read data
-usage: ~/.local/share/condax/envs/falco/bin/falco [OPTIONS] <seqfile1> <seqfile2> ...
+description: A high throughput sequence QC analysis tool
+usage: falco [OPTIONS] <seqfile1> <seqfile2> ...
 options:
   - names:
       - -h
@@ -15,7 +15,7 @@ options:
   - names:
       - -o
       - --outdir
-    argument: ""
+    argument: "<DIR>"
     description: 'Create all output files in the specified output directory. FALCO-SPECIFIC: If the directory does not exists, the program will create it. If this option is not set then the output file for each sequence file is created in the same directory as the sequence file which was processed.'
   - names:
       - --casava
@@ -36,7 +36,7 @@ options:
   - names:
       - -j
       - --java
-    argument: ""
+    argument: "<FILE>"
     description: '[IGNORED BY FALCO] Provides the full path to the java binary you want to use to launch fastqc. If not supplied then java is assumed to be in your path.'
   - names:
       - --noextract
@@ -48,17 +48,17 @@ options:
     description: 'Disable grouping of bases for reads >50bp. All reports will show data for every base in the read. WARNING: When using this option, your plots may end up a ridiculous size. You have been warned!'
   - names:
       - --min_length
-    argument: ""
+    argument: "<NUM>"
     description: '[NOT YET IMPLEMENTED IN FALCO] Sets an artificial lower limit on the length of the sequence to be shown in the report. As long as you set this to a value greater or equal to your longest read length then this will be the sequence length used to create your read groups. This can be useful for making directly comaparable statistics from datasets with somewhat variable read lengths.'
   - names:
       - -f
       - --format
-    argument: ""
+    argument: "<FORMAT>"
     description: Bypasses the normal sequence file format detection and forces the program to use the specified format. Validformats are bam, sam, bam_mapped, sam_mapped, fastq, fq, fastq.gz or fq.gz.
   - names:
       - -t
       - --threads
-    argument: ""
+    argument: "<NUM>"
     description: '[NOT YET IMPLEMENTED IN FALCO] Specifies the number of files which can be processed simultaneously. Each thread will be allocated 250MB of memory so you shouldn''t run more threads than your available memory will cope with, and not more than 6 threads on a 32 bit machine [1]'
   - names:
       - -c
@@ -73,12 +73,12 @@ options:
   - names:
       - -l
       - --limits
-    argument: ""
+    argument: "<FILE>"
     description: 'Specifies a non-default file which contains a set of criteria which will be used to determine the warn/error limits for the various modules. This file can also be used to selectively remove some modules from the output all together. The format needs to mirror the default limits.txt file found in the Configuration folder. Default: ~/.local/share/condax/envs/falco/opt/falco/Configuration/limits.txt'
   - names:
       - -k
       - --kmers
-    argument: ""
+    argument: "<NUM>"
     description: '[IGNORED BY FALCO AND ALWAYS SET TO 7] Specifies the length of Kmer to look for in the Kmer content module. Specified Kmer length must be between 2 and 10. Default length is 7 if not specified.'
   - names:
       - -q
@@ -88,7 +88,7 @@ options:
   - names:
       - -d
       - --dir
-    argument: ""
+    argument: "<DIR>"
     description: '[IGNORED: FALCO DOES NOT CREATE TMP FILES] Selects a directory to be used for temporary files written when generating report images. Defaults to system temp directory if not specified.'
   - names:
       - -s
@@ -120,17 +120,17 @@ options:
   - names:
       - -D
       - -data-filename
-    argument: ""
+    argument: "<STR>"
     description: '[Falco only] Specify filename for FastQC data output (TXT). If not specified, it will be called fastq_data.txt in either the input file''s directory or the one specified in the --output flag. Only available when running falco with a single input.'
   - names:
       - -R
       - -report-filename
-    argument: ""
+    argument: "<STR>"
     description: '[Falco only] Specify filename for FastQC report output (HTML). If not specified, it will be called fastq_report.html in either the input file''s directory or the one specified in the --output flag. Only available when running falco with a single input.'
   - names:
       - -S
       - -summary-filename
-    argument: ""
+    argument: "<STR>"
     description: '[Falco only] Specify filename for the short summary output (TXT). If not specified, it will be called fastq_report.html in either the input file''s directory or the one specified in the --output flag. Only available when running falco with a single input.'
   - names:
       - -K

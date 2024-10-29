@@ -1,39 +1,100 @@
 name: polypolish
 description: short-read polishing of long-read assemblies
-usage: polypolish [OPTIONS] <ASSEMBLY> <SAM>...
+usage: polypolish <COMMAND>
 options:
-  - names:
-      - -d
-      - --min_depth
-    argument: <MIN_DEPTH>
-    description: 'A base must occur at least this many times in the pileup to be considered valid [default: 5]'
-  - names:
-      - --debug
-    argument: <DEBUG>
-    description: Optional file to store per-base information for debugging purposes
   - names:
       - -h
       - --help
     argument: ""
-    description: Print help information
-  - names:
-      - -i
-      - --fraction_invalid
-    argument: <FRACTION_INVALID>
-    description: 'A base must make up less than this fraction of the read depth to be considered invalid [default: 0.2]'
-  - names:
-      - -m
-      - --max_errors
-    argument: <MAX_ERRORS>
-    description: 'Ignore alignments with more than this many mismatches and indels [default: 10]'
-  - names:
-      - -v
-      - --fraction_valid
-    argument: <FRACTION_VALID>
-    description: 'A base must make up at least this fraction of the read depth to be considered valid [default: 0.5]'
+    description: Print help
   - names:
       - -V
       - --version
     argument: ""
-    description: Print version information
-version: Polypolish v0.5.0
+    description: Print version
+subcommands:
+  - name: filter
+    description: filter paired-end alignments based on insert size
+    usage: polypolish filter [OPTIONS] --in1 <IN1> --in2 <IN2> --out1 <OUT1> --out2 <OUT2>
+    options:
+      - names:
+          - --in1
+        argument: <IN1>
+        description: Input SAM file - first read in pairs
+      - names:
+          - --in2
+        argument: <IN2>
+        description: Input SAM file - first second in pairs
+      - names:
+          - --out1
+        argument: <OUT1>
+        description: Output SAM file - first read in pairs
+      - names:
+          - --out2
+        argument: <OUT2>
+        description: Output SAM file - first second in pairs
+      - names:
+          - --orientation
+        argument: <ORIENTATION>
+        description: 'Expected pair orientation [default: auto]'
+      - names:
+          - --low
+        argument: <LOW>
+        description: 'Low percentile threshold [default: 0.1]'
+      - names:
+          - --high
+        argument: <HIGH>
+        description: 'High percentile threshold [default: 99.9]'
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: Print help
+      - names:
+          - -V
+          - --version
+        argument: ""
+        description: Print version
+  - name: polish
+    description: polish a long-read assembly using short-read alignments
+    usage: polypolish polish [OPTIONS] <ASSEMBLY> [SAM]...
+    options:
+      - names:
+          - --debug
+        argument: <DEBUG>
+        description: Optional file to store per-base information for debugging purposes
+      - names:
+          - -i
+          - --fraction_invalid
+        argument: <FRACTION_INVALID>
+        description: 'A base must make up less than this fraction of the read depth to be considered invalid [default: 0.2]'
+      - names:
+          - -v
+          - --fraction_valid
+        argument: <FRACTION_VALID>
+        description: 'A base must make up at least this fraction of the read depth to be considered valid [default: 0.5]'
+      - names:
+          - -m
+          - --max_errors
+        argument: <MAX_ERRORS>
+        description: 'Ignore alignments with more than this many mismatches and indels [default: 10]'
+      - names:
+          - -d
+          - --min_depth
+        argument: <MIN_DEPTH>
+        description: 'A base must occur at least this many times in the pileup to be considered valid [default: 5]'
+      - names:
+          - --careful
+        argument: ""
+        description: Ignore any reads with multiple alignments
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: Print help
+      - names:
+          - -V
+          - --version
+        argument: ""
+        description: Print version
+version: Polypolish 0.6.0

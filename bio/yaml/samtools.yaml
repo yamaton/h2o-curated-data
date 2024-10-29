@@ -1,5 +1,5 @@
 name: samtools
-description: samtools
+description: Utilities for the Sequence Alignment/Map (SAM) format
 usage: samtools <command> [options]
 options: []
 subcommands:
@@ -51,7 +51,7 @@ subcommands:
           - -o
           - --output
         argument: FILE
-        description: Write FASTA to file rather than to stdout.
+        description: Write FASTA to file rather than to stdout. With .gz, .bgz, .bgzf file extensions the output will be BGZF compressed.
       - names:
           - -n
           - --length
@@ -94,6 +94,15 @@ subcommands:
           - --help
         argument: ""
         description: Print help message and exit.
+      - names:
+          - --output-fmt-option
+        argument: OPT=VAL
+        description: Set the output format options, level=0..9 for compression level 0 to 9.
+      - names:
+          - -@
+          - --threads
+        argument: "N"
+        description: Set the number of extra threads for operations on compressed files.
   - name: fqidx
     description: index/extract FASTQ
     usage: samtools fqidx ref.fastq [region1 [...]]
@@ -149,14 +158,17 @@ subcommands:
     options:
       - names:
           - -b
+          - --bai
         argument: ""
         description: Create a BAI index. This is currently the default when no format options are used.
       - names:
           - -c
+          - --csi
         argument: ""
         description: Create a CSI index. By default, the minimum interval size for the index is 2^14, which is the same as the fixed value used by the BAI format.
       - names:
           - -m
+          - --min-shift
         argument: INT
         description: Create a CSI index, with a minimum interval size of 2^INT.
       - names:
@@ -165,6 +177,7 @@ subcommands:
         description: Interpret all filename arguments as alignment files to be indexed individually. (Without -M, filename arguments are interpreted solely as per the second synopsis.)
       - names:
           - -o
+          - --output
         argument: FILE
         description: Write the output index to FILE. (Currently may only be used when exactly one alignment file is being indexed.)
       - names:
@@ -220,7 +233,7 @@ subcommands:
       - names:
           - -r
         argument: ""
-        description: Remove secondary and unmapped reads.
+        description: Remove secondary and unmapped reads. If one of a pair is removed, the PAIRED flag will not be unset on the remaining read. This is a change from the older behaviour in samtools versions up to 1.20.
       - names:
           - -p
         argument: ""
@@ -233,6 +246,10 @@ subcommands:
           - -m
         argument: ""
         description: Add ms (mate score) tags. These are used by markdup to select the best reads to keep.
+      - names:
+          - -M
+        argument: ""
+        description: Fix any base modification tags (MM, ML and MN). If we have secondary alignments with hard-clipping and the hard clipped reads do not have an MN tag then we use the base modification tags in the primary alignment to clip the secondary alignment modifications, adding MN tags in the process.
       - names:
           - -u
         argument: ""
@@ -257,7 +274,7 @@ subcommands:
         description: Perform basic sanitizing of records. FLAGs is a comma-separated list of keywords, defined in the samtools-view(1) man page. By default all FLAGs are enabled. Use -z off to disable this.
   - name: reheader
     description: replace BAM header
-    usage: samtools reheader [-iP] [-c CMD | in.header.sam ] in.bam
+    usage: samtools reheader [-iP] [-c CMD | in.header.sam] in.bam
     options:
       - names:
           - -P
@@ -386,7 +403,7 @@ subcommands:
       - names:
           - --duplicate-count
         argument: ""
-        description: Record the original primary read duplication count(include itself) in a dc tag.
+        description: Record the original primary read duplication count (including itself) in a dc tag.
       - names:
           - -m
           - --mode
@@ -447,7 +464,7 @@ subcommands:
         description: 'To use a barcode from the read name matching the Illumina example of NDX550136:7:H2MTNBDXX:1:13302:3141:10799:AAGGATG+TCGGAGA use:'
   - name: ampliconclip
     description: clip oligos from the end of reads
-    usage: samtools ampliconclip [-o out.file] [-f stat.file] [--soft-clip] [--hard-clip] [--both-ends] [--strand] [--clipped] [--fail] [--filter-len INT] [--fail-len INT] [--no-excluded] [--rejects-file rejects.file] [--original] [--keep-tag] [--tolerance] [--no-PG] [-u] -b bed.file in.file
+    usage: samtools ampliconclip [-o out.file] [-f stat.file] [--soft-clip] [--hard-clip] [--both-ends] [--strand] [--clipped] [--fail] [--filter-len INT] [--fail-len INT] [--unmap-len INT] [--no-excluded] [--rejects-file rejects.file] [--original] [--keep-tag] [--tolerance] [--no-PG] [-u] -b bed.file in.file
     options:
       - names:
           - -b
@@ -476,7 +493,7 @@ subcommands:
       - names:
           - --both-ends
         argument: ""
-        description: Clip at both the 5' and the 3' ends where regions match.
+        description: Clip at both the 5' and the 3' ends where regions match. When using this option the --strand option is ignored.
       - names:
           - --strand
         argument: ""
@@ -498,6 +515,10 @@ subcommands:
         argument: INT
         description: As --filter-len but mark as QC fail rather then filter out.
       - names:
+          - --unmap-len
+        argument: INT
+        description: As --filter-len but mark as unmapped. Default is 0 (no matching reads). -1 will disable.
+      - names:
           - --no-excluded
         argument: ""
         description: Filter out any reads that are marked as QCFAIL or are unmapped. This works on the state of the reads before clipping takes place.
@@ -505,6 +526,10 @@ subcommands:
           - --rejects-file
         argument: FILE
         description: Write any filtered reads out to a file.
+      - names:
+          - --primer-counts
+        argument: FILE
+        description: File to write with read counts per bed entry (bedgraph format).
       - names:
           - --original
         argument: ""
@@ -583,6 +608,22 @@ subcommands:
         argument: FILE
         description: Write the concatenated output to FILE. By default this is sent to stdout.
       - names:
+          - -q
+        argument: ""
+        description: '[CRAM only] Query the number of containers in the CRAM file. The output is the filename, the number of containers, and the first and last container number as an inclusive range, with one file per line.'
+      - names:
+          - -r
+        argument: RANGE
+        description: '[CRAM only] Filter the CRAM file to a specific RANGE. This can be the usual chromosome:start-end syntax, or "*" for unmapped records at the end of alignments.'
+      - names:
+          - -p
+        argument: A/B
+        description: '[CRAM only] Filter the CRAM file using a specific fraction. The file is split into B approximately equal parts and returns element A where A is between 1 and B inclusive. If there are more parts specified than CRAM containers then some of the output will be empty CRAMs.'
+      - names:
+          - -f
+        argument: ""
+        description: '[CRAM only] Enable fast mode. When filtering by chromosome range with -r we normally do careful recoding of any containers that overlap the start and end of the range so the record count precisely matches that returned by a samtools view equivalent. Fast mode does no filtering, so may return additional alignments in the same container but outside of the requested region.'
+      - names:
           - --no-PG
         argument: ""
         description: Do not add a @PG line to the header of the output file.
@@ -645,7 +686,7 @@ subcommands:
       - names:
           - --show-del
         argument: yes/no
-        description: Whether to show deletions as "*" (no) or to omit from the output (yes). Defaults to no.
+        description: Whether to show deletions as "*" (yes) or to omit from the output (no). Defaults to no.
       - names:
           - --show-ins
         argument: yes/no
@@ -660,15 +701,15 @@ subcommands:
         argument: ""
         description: Enables IUPAC ambiguity codes in the consensus output. Without this the output will be limited to A, C, G, T, N and *.
       - names:
-          - -q
-          - --use-qual
-        argument: ""
-        description: For the simple consensus algorithm, this enables use of base quality values. Instead of summing 1 per base called, it sums the base quality instead. These sums are also used in the --call-fract and --het-fract parameters too. Quality values are always used for the "Gap5" consensus method and this option has no affect. Note currently quality values only affect SNPs and not inserted sequences, which still get scores with a fixed +1 per base type occurrence.
-      - names:
           - -d
           - --min-depth
         argument: D
         description: The minimum depth required to make a call. Defaults to 1. Failing this depth check will produce consensus "N", or absent if it is an insertion. Note this check is performed after filtering by flags and mapping/base quality.
+      - names:
+          - -q
+          - --use-qual
+        argument: ""
+        description: For the simple consensus algorithm, this enables use of base quality values. Instead of summing 1 per base called, it sums the base quality instead. These sums are also used in the --call-fract and --het-fract parameters too. Quality values are always used for the "Gap5" consensus method and this option has no affect. Note currently quality values only affect SNPs and not inserted sequences, which still get scores with a fixed +1 per base type occurrence.
       - names:
           - -H
           - --het-fract
@@ -679,10 +720,6 @@ subcommands:
           - --call-fract
         argument: C
         description: Only used for the simple consensus algorithm. Require at least C fraction of bases agreeing with the most likely consensus call to emit that base type. This defaults to 0.75. Failing this check will output "N".
-      - names:
-          - "-5"
-        argument: ""
-        description: Enable Bayesian consensus algorithm.
       - names:
           - -C
           - --cutoff
@@ -733,6 +770,11 @@ subcommands:
         argument: FLOAT
         description: The -p option also reduces confidence values within homopolymers due to an additional likelihood of sequence specific errors. The quality values are multiplied by FLOAT. This defaults to 0.5, but is not used if -p was not specified. Adjusting this score also automatically enables -p.
       - names:
+          - -t
+          - --qual-calibration
+        argument: FILE
+        description: 'Loads a quality calibration table from FILE. The format of this is a series of lines with the following fields, each starting with the literal text "QUAL":'
+      - names:
           - -X
           - --config
         argument: STR
@@ -767,7 +809,11 @@ subcommands:
       - names:
           - -n
         argument: ""
-        description: The input alignments are sorted by read names rather than by chromosomal coordinates
+        description: The input alignments are sorted by read names using an alpha-numeric ordering, rather than by chromosomal coordinates. The alpha-numeric or “natural” sort order detects runs of digits in the strings and sorts these numerically. Hence "a7b" appears before "a12b". Note this is not suitable where hexadecimal values are in use.
+      - names:
+          - -N
+        argument: ""
+        description: The input alignments are sorted by read names using a lexicographical ordering, rather than by chromosomal coordinates. Unlike -n no detection of numeric components is used, instead relying purely on the ASCII value of each character. Hence "x12" comes before "x7" as "1" is before "7" in ASCII. This is a more appropriate name sort order where all digits in names are already zero-padded and/or hexadecimal values are being used.
       - names:
           - -o
         argument: FILE
@@ -841,7 +887,7 @@ subcommands:
           - -C
           - --adjust-MQ
         argument: INT
-        description: Coefficient for downgrading mapping quality for reads containing excessive mismatches. Given a read with a phred-scaled probability q of being generated from the mapped position, the new mapping quality is about sqrt((INT-q)/INT)*INT. A zero value disables this functionality; if enabled, the recommended value for BWA is 50. [0]
+        description: Coefficient for downgrading mapping quality for reads containing excessive mismatches. Mismatches are counted as a proportion of the number of aligned bases ("M", "X" or "=" CIGAR operations), along with their quality, to derive an upper-bound of the mapping quality. Original mapping qualities lower than this are left intact, while higher ones are capped at the new adjusted score.
       - names:
           - -d
           - --max-depth
@@ -896,7 +942,7 @@ subcommands:
           - --ff
           - --excl-flags
         argument: STR|INT
-        description: 'Filter flags: skip reads with any of the mask bits set. This defaults to UNMAP,SECONDARY,QCFAIL,DUP. The option is not accumulative, so specifying e.g. --ff UNMAP,QCFAIL will reenable output of secondary and duplicate alignments. Note this does not override the --incl-flags option.'
+        description: 'Filter flags: skip reads with any of the mask bits set. This defaults to SECONDARY,QCFAIL,DUP. The option is not accumulative, so specifying e.g. --ff QCFAIL will reenable output of secondary and duplicate alignments. Note this does not override the --incl-flags option.'
       - names:
           - -x
           - --ignore-overlaps-removal
@@ -995,11 +1041,15 @@ subcommands:
       - names:
           - -n
         argument: ""
-        description: Sort by read names (i.e., the QNAME field) rather than by chromosomal coordinates.
+        description: Sort by read names (i.e., the QNAME field) using an alpha-numeric ordering, rather than by chromosomal coordinates. The alpha-numeric or “natural” sort order detects runs of digits in the strings and sorts these numerically. Hence "a7b" appears before "a12b". Note this is not suitable where hexadecimal values are in use. Sets the header sub-sort (@HD SS) tag to queryname:natural.
+      - names:
+          - -N
+        argument: ""
+        description: Sort by read names (i.e., the QNAME field) using the lexicographical ordering, rather than by chromosomal coordinates. Unlike -n no detection of numeric components is used, instead relying purely on the ASCII value of each character. Hence "x12" comes before "x7" as "1" is before "7" in ASCII. This is a more appropriate name sort order where all digits in names are already zero-padded and/or hexadecimal values are being used. Sets the header sub-sort (@HD SS) tag to queryname:lexicographical.
       - names:
           - -t
         argument: TAG
-        description: Sort first by the value in the alignment tag TAG, then by position or name (if also using -n).
+        description: Sort first by the value in the alignment tag TAG, then by position or name (if also using -n or -N).
       - names:
           - -M
         argument: ""
@@ -1055,7 +1105,7 @@ subcommands:
       - names:
           - -u
         argument: FILE1
-        description: Put reads with no RG tag or an unrecognised RG tag into FILE1
+        description: Put reads with no tag or an unrecognised tag into FILE1
       - names:
           - -h
         argument: FILE2
@@ -1064,6 +1114,19 @@ subcommands:
           - -f
         argument: STRING
         description: Output filename format string (see below) ["%*_%#.%."]
+      - names:
+          - -d
+        argument: TAG
+        description: Split reads by TAG value into distinct files. Only the TAG key must be supplied with the option. The value of the TAG has to be a string (i.e. key:Z:value) or an integer (key:i:value).
+      - names:
+          - -p
+        argument: NUMBER
+        description: Pad numeric values in %# and %! format expansions to this many digits using leading zeros. For %!, only integer tag values will be padded. String tag values will be left unchanged, even if the value only includes digits.
+      - names:
+          - -M
+          - --max-split
+        argument: NUM
+        description: Limit the number of files created by the -d option to NUM (default 100). This prevents accidents where trying to split on a tag with high cardinality could result in the creation of a very large number of output files. Once the file limit is reached, any tag values not already seen will be treated as unmatched and the program will exit with an error unless the -u option is in use.
       - names:
           - -v
         argument: ""
@@ -1153,6 +1216,14 @@ subcommands:
           - -G
         argument: INT
         description: Only EXCLUDE reads with all of the bits set in INT present in the FLAG field. INT can be specified in hex by beginning with `0x' (i.e. /^0x[0-9A-F]+/) or in octal by beginning with `0' (i.e. /^0[0-7]+/) [0].
+      - names:
+          - -d
+        argument: TAG[:VAL]
+        description: Only output alignments containing an auxiliary tag matching both TAG and VAL. If VAL is omitted then any value is accepted. The tag types supported are i, f, Z, A and H. "B" arrays are not supported. This is comparable to the method used in samtools view -d. The option may be specified multiple times and is equivalent to using the -D option.
+      - names:
+          - -D
+        argument: TAG:FILE
+        description: Only output alignments containing an auxiliary tag matching TAG and having a value listed in FILE. The format of the file is one line per value. This is equivalent to specifying -d multiple times.
       - names:
           - -i
         argument: ""
@@ -1246,6 +1317,14 @@ subcommands:
           - -G
         argument: INT
         description: Only EXCLUDE reads with all of the bits set in INT present in the FLAG field. INT can be specified in hex by beginning with `0x' (i.e. /^0x[0-9A-F]+/) or in octal by beginning with `0' (i.e. /^0[0-7]+/) [0].
+      - names:
+          - -d
+        argument: TAG[:VAL]
+        description: Only output alignments containing an auxiliary tag matching both TAG and VAL. If VAL is omitted then any value is accepted. The tag types supported are i, f, Z, A and H. "B" arrays are not supported. This is comparable to the method used in samtools view -d. The option may be specified multiple times and is equivalent to using the -D option.
+      - names:
+          - -D
+        argument: TAG:FILE
+        description: Only output alignments containing an auxiliary tag matching TAG and having a value listed in FILE. The format of the file is one line per value. This is equivalent to specifying -d multiple times.
       - names:
           - -i
         argument: ""
@@ -1370,7 +1449,7 @@ subcommands:
         description: The number of BAM/CRAM decompression threads to use in addition to the main thread [0].
   - name: reset
     description: Reverts aligner changes in reads
-    usage: samtools reset [-o FILE] [-x,--remove-tag STR] [--keep-tag STR] [--reject-PG pgid] [--no-RG] [--no-PG] [...]
+    usage: samtools reset [-o FILE] [-x,--remove-tag STR] [--keep-tag STR] [--reject-PG pgid] [--no-RG] [--no-PG] [--dupflag] [...]
     options:
       - names:
           - -o
@@ -1392,11 +1471,15 @@ subcommands:
       - names:
           - --no-RG
         argument: ""
-        description: RG lines in input will be discarded with this option. By default, RG lines will be present in ouput.
+        description: RG lines in input will be discarded with this option. By default, RG lines will be present in output.
       - names:
           - --no-PG
         argument: ""
         description: Do not add a @PG line to the header of the output file listing the reset command. By default the PG entry for reset will be present in the output.
+      - names:
+          - --dupflag
+        argument: ""
+        description: Keep the duplicate flag as it is. This option is absent by default and alignments are marked non-duplicates.
       - names:
           - -@
           - --thread
@@ -1433,6 +1516,10 @@ subcommands:
         argument: INT
         description: Print an additional column, for each file, containing the number of bases having a depth above and including the given threshold. If the option is not used, the extra column is not displayed. The option value must be an integer >= 0.
       - names:
+          - --max-depth
+        argument: INT
+        description: Specifies the maximum depth used for the mpileup algorithm. If -d is used and is larger then this value will be used instead. Defaults to 2 billion, but smaller values may be used when we do not require an exact count in excessively deep regions and are interested in maximising speed of results.
+      - names:
           - -c
         argument: ""
         description: Print an additional column with the read count for this region. This will be +1 for every read covering the region, not just starting within in. The whole read filtering options -Q, -g and -G options will also have an affect on this count, but -d will not.
@@ -1440,6 +1527,10 @@ subcommands:
           - -X
         argument: ""
         description: 'If this option is set, it will allows user to specify customized index file location(s) if the data folder does not contain any index file. Example usage: samtools bedcov [options] -X <in.bed> </data_folder/in1.bam> [...] </index_folder/index1.bai> [...]'
+      - names:
+          - -H
+        argument: ""
+        description: print a comment/header describing columns
   - name: coverage
     description: alignment depth and percent coverage
     usage: samtools coverage [options] [in1.sam|in1.bam|in1.cram [in2.sam|in2.bam|in2.cram] [...]]
@@ -1484,6 +1575,11 @@ subcommands:
           - --histogram
         argument: ""
         description: Show histogram instead of tabular output.
+      - names:
+          - -D
+          - --plot-depth
+        argument: ""
+        description: As above but displays the depth of coverage instead of the percent of coverage. This option can be used to visualize copy number variations in the terminal.
       - names:
           - -A
           - --ascii
@@ -1606,7 +1702,11 @@ subcommands:
   - name: idxstats
     description: BAM index stats
     usage: samtools idxstats in.sam|in.bam|in.cram
-    options: []
+    options:
+      - names:
+          - -X
+        argument: ""
+        description: This option will allow the user to specify a customised index file location. e.g.
   - name: cram-size
     description: list CRAM Content-ID and Data-Series sizes
     usage: samtools cram-size [-ve] [-o file] in.bam
@@ -1971,7 +2071,7 @@ subcommands:
           - -N
           - --qname-file
         argument: FILE
-        description: Output only alignments with read names listed in FILE.
+        description: Output only alignments with read names listed in FILE. If FILE starts with ^ then the operation is negated and only outputs alignment with read groups not listed in FILE. It is not permissible to mix both the filter-in and filter-out style syntax in the same command.
       - names:
           - -r
           - --read-group
@@ -1981,7 +2081,7 @@ subcommands:
           - -R
           - --read-group-file
         argument: FILE
-        description: Output alignments in read groups listed in FILE [null]. Note that records with no RG tag will also be output when using this option. This behaviour may change in a future release.
+        description: Output alignments in read groups listed in FILE [null]. If FILE starts with ^ then the operation is negated and only outputs alignment with read names not listed in FILE. It is not permissible to mix both the filter-in and filter-out style syntax in the same command. Note that records with no RG tag will also be output when using this option. This behaviour may change in a future release.
       - names:
           - -d
           - --tag
@@ -2162,7 +2262,7 @@ subcommands:
           - -o
         argument: FILE output file stdout.
         description: -f FILE load an indexed fasta file in the collection of references. Can be used multiple times. Add an extra column with the path to the reference file.
-version: samtools 1.17
+version: samtools 1.21
 tldr: |
   > Tools for handling high-throughput sequencing (genomics) data.
   > Used for reading/writing/editing/indexing/viewing of data in SAM/BAM/CRAM format.
@@ -2180,7 +2280,7 @@ tldr: |
 
   `samtools sort {{input}} -o {{output.bam}}`
 
-  - Index a sorted BAM file (creates {{sorted_input.bam.bai}}):
+  - Index a sorted BAM file (creates `sorted_input.bam.bai`):
 
   `samtools index {{sorted_input.bam}}`
 
@@ -2188,13 +2288,13 @@ tldr: |
 
   `samtools flagstat {{sorted_input}}`
 
-  - Count alignments to each index (chromosome / contig):
+  - Count alignments to each index (chromosome/contig):
 
   `samtools idxstats {{sorted_indexed_input}}`
 
   - Merge multiple files:
 
-  `samtools merge {{output}} {{input1 input2 …}}`
+  `samtools merge {{output}} {{input1 input2 ...}}`
 
   - Split input file according to read groups:
 

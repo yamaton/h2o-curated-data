@@ -181,6 +181,11 @@ subcommands:
           - --threads
         argument: INT
         description: Number of extra output compression threads [0]
+      - names:
+          - -W
+          - --write-index
+        argument: '[=FMT]'
+        description: Automatically index the output files [off]
   - name: concat
     description: concatenate VCF/BCF files from the same set of samples
     usage: bcftools concat [options] <A.vcf.gz> [<B.vcf.gz> [...]]
@@ -210,6 +215,11 @@ subcommands:
           - --file-list
         argument: FILE
         description: Read the list of files from a file.
+      - names:
+          - -G
+          - --drop-genotypes
+        argument: ""
+        description: Drop individual genotype information.
       - names:
           - -l
           - --ligate
@@ -274,6 +284,16 @@ subcommands:
           - --verbose
         argument: 0|1
         description: Set verbosity level [1]
+      - names:
+          - -W
+          - --write-index
+        argument: '[=FMT]'
+        description: Automatically index the output files [off]
+    subcommands:
+      - name: concatenate
+        description: chromosome VCFs into one VCF, or combine a SNP VCF and an indel
+        usage: ""
+        options: []
   - name: convert
     description: convert VCF/BCF files to different formats and back
     usage: bcftools convert [OPTIONS] INPUT_FILE
@@ -345,6 +365,11 @@ subcommands:
         argument: INT
         description: Use multithreading with INT worker threads [0]
       - names:
+          - -W
+          - --write-index
+        argument: '[=FMT]'
+        description: Automatically index the output files [off]
+      - names:
           - -G
           - --gensample2vcf
         argument: '...'
@@ -415,13 +440,10 @@ subcommands:
         description: <PREFIX>|<HAP-FILE>,<LEGEND-FILE>,<SAMPLE-FILE>
       - names:
           - --tsv2vcf
-        argument: FILE
-        description: Convert TSV to VCF.
-      - names:
           - -c
           - --columns
-        argument: STRING
-        description: Columns of the input tsv file [ID,CHROM,POS,AA]
+        argument: FILE
+        description: Columns of the input tsv file, see man page for details [ID,CHROM,POS,AA]
       - names:
           - -s
           - --samples
@@ -432,6 +454,186 @@ subcommands:
           - --samples-file
         argument: FILE
         description: File of sample names
+    subcommands:
+      - name: formats
+        description: details. When specifying output files explicitly instead
+        usage: bcftools convert [OPTIONS] INPUT_FILE
+        options:
+          - names:
+              - -e
+              - --exclude
+            argument: EXPR
+            description: Exclude sites for which the expression is true
+          - names:
+              - -i
+              - --include
+            argument: EXPR
+            description: Select sites for which the expression is true
+          - names:
+              - -r
+              - --regions
+            argument: REGION
+            description: Restrict to comma-separated list of regions
+          - names:
+              - -R
+              - --regions-file
+            argument: FILE
+            description: Restrict to regions listed in a file
+          - names:
+              - --regions-overlap
+            argument: 0|1|2
+            description: Include if POS in the region (0), record overlaps (1), variant overlaps (2) [1]
+          - names:
+              - -s
+              - --samples
+            argument: LIST
+            description: List of samples to include
+          - names:
+              - -S
+              - --samples-file
+            argument: FILE
+            description: File of samples to include
+          - names:
+              - -t
+              - --targets
+            argument: REGION
+            description: Similar to -r but streams rather than index-jumps
+          - names:
+              - -T
+              - --targets-file
+            argument: FILE
+            description: Similar to -R but streams rather than index-jumps
+          - names:
+              - --targets-overlap
+            argument: 0|1|2
+            description: Include if POS in the region (0), record overlaps (1), variant overlaps (2) [0]
+          - names:
+              - --no-version
+            argument: ""
+            description: Do not append version and command line to the header
+          - names:
+              - -o
+              - --output
+            argument: FILE
+            description: Output file name [stdout]
+          - names:
+              - -O
+              - --output-type
+            argument: u|b|v|z[0-9]
+            description: 'u/b: un/compressed BCF, v/z: un/compressed VCF, 0-9: compression level [v]'
+          - names:
+              - --threads
+            argument: INT
+            description: Use multithreading with INT worker threads [0]
+          - names:
+              - -W
+              - --write-index
+            argument: '[=FMT]'
+            description: Automatically index the output files [off]
+          - names:
+              - -G
+              - --gensample2vcf
+            argument: '...'
+            description: <PREFIX>|<GEN-FILE>,<SAMPLE-FILE>
+          - names:
+              - -g
+              - --gensample
+            argument: '...'
+            description: <PREFIX>|<GEN-FILE>,<SAMPLE-FILE>
+          - names:
+              - --3N6
+            argument: ""
+            description: Use 3*N+6 column format instead of the old 3*N+5 column format
+          - names:
+              - --tag
+            argument: STRING
+            description: 'Tag to take values for .gen file: GT,PL,GL,GP [GT]'
+          - names:
+              - --chrom
+            argument: ""
+            description: Output chromosome in first column instead of CHROM:POS_REF_ALT
+          - names:
+              - --keep-duplicates
+            argument: ""
+            description: Keep duplicate positions
+          - names:
+              - --sex
+            argument: FILE
+            description: 'Output sex column in the sample-file, input format is: Sample\t[MF]'
+          - names:
+              - --vcf-ids
+            argument: ""
+            description: Output VCF IDs in second column instead of CHROM:POS_REF_ALT
+          - names:
+              - --gvcf2vcf
+            argument: ""
+            description: Expand gVCF reference blocks
+          - names:
+              - -f
+              - --fasta-ref
+            argument: FILE
+            description: Reference sequence in fasta format
+          - names:
+              - --hapsample2vcf
+            argument: '...'
+            description: <PREFIX>|<HAP-FILE>,<SAMPLE-FILE>
+          - names:
+              - --hapsample
+            argument: '...'
+            description: <PREFIX>|<HAP-FILE>,<SAMPLE-FILE>
+          - names:
+              - --haploid2diploid
+            argument: ""
+            description: Convert haploid genotypes to diploid homozygotes
+          - names:
+              - --vcf-ids
+            argument: ""
+            description: Output VCF IDs instead of CHROM:POS_REF_ALT
+          - names:
+              - -H
+              - --haplegendsample2vcf
+            argument: '...'
+            description: <PREFIX>|<HAP-FILE>,<LEGEND-FILE>,<SAMPLE-FILE>
+          - names:
+              - -h
+              - --haplegendsample
+            argument: '...'
+            description: <PREFIX>|<HAP-FILE>,<LEGEND-FILE>,<SAMPLE-FILE>
+          - names:
+              - --tsv2vcf
+              - -c
+              - --columns
+            argument: FILE
+            description: Columns of the input tsv file, see man page for details [ID,CHROM,POS,AA]
+          - names:
+              - -s
+              - --samples
+            argument: LIST
+            description: List of sample names
+          - names:
+              - -S
+              - --samples-file
+            argument: FILE
+            description: File of sample names
+  - name: head
+    description: view VCF/BCF file headers
+    usage: bcftools head [OPTION]... [FILE]
+    options:
+      - names:
+          - -h
+          - --headers
+        argument: INT
+        description: Display INT header lines [all]
+      - names:
+          - -n
+          - --records
+        argument: INT
+        description: Display INT variant record lines [none]
+      - names:
+          - -s
+          - --samples
+        argument: INT
+        description: 'Display INT records starting with the #CHROM header line [none]'
   - name: isec
     description: intersections of VCF/BCF files
     usage: bcftools isec [options] <A.vcf.gz> <B.vcf.gz> [...]
@@ -461,6 +663,11 @@ subcommands:
           - --include
         argument: EXPR
         description: Include only sites for which the expression is true
+      - names:
+          - -l
+          - --file-list
+        argument: FILE
+        description: Read the input file names from the file
       - names:
           - --no-version
         argument: ""
@@ -522,14 +729,27 @@ subcommands:
           - --write
         argument: LIST
         description: List of files to write with -p given as 1-based indexes. By default, all files are written
+      - names:
+          - -W
+          - --write-index
+        argument: '[=FMT]'
+        description: Automatically index the output files [off]
   - name: merge
     description: merge VCF/BCF files files from non-overlapping sample sets
     usage: bcftools merge [options] <A.vcf.gz> <B.vcf.gz> [...]
     options:
       - names:
+          - --force-no-index
+        argument: ""
+        description: Merge unindexed files, synonymous to --no-index
+      - names:
           - --force-samples
         argument: ""
         description: Resolve duplicate sample names
+      - names:
+          - --force-single
+        argument: ""
+        description: Run even if there is only one file on input
       - names:
           - --print-header
         argument: ""
@@ -554,11 +774,6 @@ subcommands:
         argument: x|+
         description: Remove filters if some input is PASS ("x"), or apply all filters ("+") [+]
       - names:
-          - -g
-          - --gvcf
-        argument: '-|ref.fa'
-        description: Merge gVCF blocks, INFO/END tag is expected. Implies -i QS:sum,MinDP:min,I16:sum,IDV:max,IMF:max
-      - names:
           - -i
           - --info-rules
         argument: TAG:METHOD,..
@@ -572,12 +787,17 @@ subcommands:
           - -L
           - --local-alleles
         argument: INT
-        description: 'EXPERIMENTAL: if more than <int> ALT alleles are encountered, drop FMT/PL and output LAA+LPL instead; 0=unlimited [0]'
+        description: If more than INT alt alleles are encountered, drop FMT/PL and output LAA+LPL instead; 0=unlimited [0]
       - names:
           - -m
           - --merge
-        argument: STRING
-        description: Allow multiallelic records for <snps|indels|both|snp-ins-del|all|none|id>, see man page for details [both]
+        argument: STRING[*|**]
+        description: Allow multiallelic records for snps,indels,both,snp-ins-del,all,none,id,*,**; see man page for details [both]
+      - names:
+          - -M
+          - --missing-rules
+        argument: TAG:METHOD
+        description: Rules for replacing missing values in numeric vectors (.,0,max) when unknown allele <*> is not present [.]
       - names:
           - --no-index
         argument: ""
@@ -613,7 +833,12 @@ subcommands:
       - names:
           - --threads
         argument: INT
-        description: Use multithreading with <int> worker threads [0]
+        description: Use multithreading with INT worker threads [0]
+      - names:
+          - -W
+          - --write-index
+        argument: '[=FMT]'
+        description: Automatically index the output files [off]
   - name: norm
     description: left-align and normalize indels
     usage: bcftools norm [options] <in.vcf.gz>
@@ -643,6 +868,11 @@ subcommands:
         argument: TYPE
         description: Remove duplicate snps|indels|both|all|exact
       - names:
+          - -e
+          - --exclude
+        argument: EXPR
+        description: Do not normalize records for which the expression is true (see man page for details)
+      - names:
           - -f
           - --fasta-ref
         argument: FILE
@@ -652,14 +882,19 @@ subcommands:
         argument: ""
         description: Try to proceed even if malformed tags are encountered. Experimental, use at your own risk
       - names:
+          - -g
+          - --gff-annot
+        argument: FILE
+        description: Follow HGVS 3'rule and right-align variants in transcripts on the forward strand
+      - names:
+          - -i
+          - --include
+        argument: EXPR
+        description: Normalize only records for which the expression is true (see man page for details)
+      - names:
           - --keep-sum
         argument: TAG,..
         description: 'Keep vector sum constant when splitting multiallelics (see github issue #360)'
-      - names:
-          - -m
-          - --multiallelics
-        argument: '-|+TYPE'
-        description: 'Split multiallelics (-) or join biallelics (+), type: snps|indels|both|any [both]'
       - names:
           - --multi-overlaps
         argument: 0|.
@@ -707,6 +942,11 @@ subcommands:
         argument: ""
         description: When merging (-m+), merged site is PASS only if all sites being merged PASS
       - names:
+          - -S
+          - --sort
+        argument: METHOD
+        description: 'Sort order: chr_pos,lex [chr_pos]'
+      - names:
           - -t
           - --targets
         argument: REGION
@@ -723,12 +963,22 @@ subcommands:
       - names:
           - --threads
         argument: INT
-        description: Use multithreading with <int> worker threads [0]
+        description: Use multithreading with INT worker threads [0]
+      - names:
+          - -v
+          - --verbose
+        argument: INT
+        description: Verbosity level (0-2) of GFF parsing [1]
       - names:
           - -w
           - --site-win
         argument: INT
         description: Buffer for sorting lines which changed position during realignment [1000]
+      - names:
+          - -W
+          - --write-index
+        argument: '[=FMT]'
+        description: Automatically index the output files [off]
   - name: plugin
     description: user-defined plugins
     usage: |-
@@ -811,6 +1061,11 @@ subcommands:
           - --version
         argument: ""
         description: Print version string and exit
+      - names:
+          - -W
+          - --write-index
+        argument: '[=FMT]'
+        description: Automatically index the output files [off]
   - name: query
     description: transform VCF/BCF into user-defined formats
     usage: bcftools query [options] <A.vcf.gz> [<B.vcf.gz> [...]]
@@ -825,6 +1080,11 @@ subcommands:
         argument: ""
         description: Only warn about unknown subset samples
       - names:
+          - -F
+          - --print-filtered
+        argument: STR
+        description: Output STR for samples failing the -i/-e filtering expression
+      - names:
           - -f
           - --format
         argument: STRING
@@ -833,7 +1093,7 @@ subcommands:
           - -H
           - --print-header
         argument: ""
-        description: Print header
+        description: Print header, -HH to omit column indices
       - names:
           - -i
           - --include
@@ -844,6 +1104,11 @@ subcommands:
           - --list-samples
         argument: ""
         description: Print the list of samples and exit
+      - names:
+          - -N
+          - --disable-automatic-newline
+        argument: ""
+        description: Disable automatic addition of newline character when not present
       - names:
           - -o
           - --output
@@ -925,7 +1190,7 @@ subcommands:
           - -T
           - --temp-prefix
         argument: PATH
-        description: template for temporary file name [/tmp/bcftools.XXXXXX]
+        description: ignored; was template for temporary file name
       - names:
           - --threads
         argument: INT
@@ -947,11 +1212,6 @@ subcommands:
       - names:
           - -O
           - --output-type
-        argument: b|u|z|v
-        description: 'b: compressed BCF, u: uncompressed BCF, z: compressed VCF, v: uncompressed VCF [v]'
-      - names:
-          - -O
-          - --output-type
         argument: u|b|v|z[0-9]
         description: 'u/b: un/compressed BCF, v/z: un/compressed VCF, 0-9: compression level [v]'
       - names:
@@ -959,6 +1219,11 @@ subcommands:
           - --temp-dir
         argument: DIR
         description: temporary files [/tmp/bcftools.XXXXXX]
+      - names:
+          - -W
+          - --write-index
+        argument: '[=FMT]'
+        description: Automatically index the output files [off]
   - name: view
     description: VCF/BCF conversion, view, subset and filter VCF/BCF files
     usage: bcftools view [options] <in.vcf.gz> [region1 [...]]
@@ -1034,6 +1299,11 @@ subcommands:
         argument: INT
         description: Use multithreading with INT worker threads [0]
       - names:
+          - -A
+          - --trim-unseen-allele
+        argument: ""
+        description: Remove '<*>' or '<NON_REF>' at variant (-A) or at all (-AA) sites
+      - names:
           - -a
           - --trim-alt-alleles
         argument: ""
@@ -1047,7 +1317,7 @@ subcommands:
           - -s
           - --samples
         argument: '[^]LIST'
-        description: Comma separated list of samples to include (or exclude with "^" prefix)
+        description: Comma separated list of samples to include (or exclude with "^" prefix). Be careful
       - names:
           - -S
           - --samples-file
@@ -1067,6 +1337,11 @@ subcommands:
           - --genotype
         argument: '[^]hom|het|miss'
         description: Require one or more hom/het/missing genotype or, if prefixed with "^", exclude such sites
+      - names:
+          - -W
+          - --write-index
+        argument: '[=FMT]'
+        description: Automatically index the output files [off]
   - name: call
     description: SNP/indel calling
     usage: bcftools call [options] <in.vcf.gz>
@@ -1186,6 +1461,11 @@ subcommands:
         argument: ""
         description: Output variant sites only
       - names:
+          - -W
+          - --write-index
+        argument: '[=FMT]'
+        description: Automatically index the output files [off]
+      - names:
           - -c
           - --consensus-caller
         argument: ""
@@ -1219,6 +1499,14 @@ subcommands:
     description: create consensus sequence by applying VCF variants
     usage: bcftools consensus [OPTIONS] <file.vcf.gz>
     options:
+      - names:
+          - --samples
+        argument: (and, optionally, --haplotype)
+        description: option will apply genotype
+      - names:
+          - --samples
+        argument: (and, optionally, --haplotype)
+        description: option will apply genotype   (or haplotype) calls from FORMAT/GT. The program ignores allelic depth
       - names:
           - -c
           - --chain
@@ -1257,15 +1545,15 @@ subcommands:
       - names:
           - --mark-del
         argument: CHAR
-        description: Instead of removing sequence, insert CHAR for deletions
+        description: Instead of removing sequence, insert character CHAR for deletions
       - names:
           - --mark-ins
-        argument: uc|lc
-        description: Highlight insertions in uppercase (uc) or lowercase (lc), leaving the rest as is
+        argument: uc|lc|CHAR
+        description: Highlight insertions in uppercase (uc), lowercase (lc), or use CHAR, leaving the rest as is
       - names:
           - --mark-snv
-        argument: uc|lc
-        description: Highlight substitutions in uppercase (uc) or lowercase (lc), leaving the rest as is
+        argument: uc|lc|CHAR
+        description: Highlight substitutions in uppercase (uc), lowercase (lc), or use CHAR, leaving the rest as is
       - names:
           - -m
           - --mask
@@ -1290,6 +1578,10 @@ subcommands:
           - --prefix
         argument: STRING
         description: Prefix to add to output sequence names
+      - names:
+          - --regions-overlap
+        argument: 0|1|2
+        description: Include if POS in the region (0), record overlaps (1), variant overlaps (2) [1]
       - names:
           - -s
           - --samples
@@ -1444,14 +1736,22 @@ subcommands:
         argument: a|m|r|R|s
         description: 'How to handle unphased heterozygous genotypes: [r]'
       - names:
-          - -e
-          - --exclude
-        argument: EXPR
-        description: Exclude sites for which the expression is true
+          - --dump-gff
+        argument: FILE.gz
+        description: Dump the parsed GFF file (for debugging purposes)
       - names:
           - --force
         argument: ""
         description: Run even if some sanity checks fail
+      - names:
+          - --unify-chr-names
+        argument: 1|0
+        description: Automatically unify chromosome naming (e.g. chrX vs X) in GFF, fasta, and VCF [1]
+      - names:
+          - -e
+          - --exclude
+        argument: EXPR
+        description: Exclude sites for which the expression is true
       - names:
           - -i
           - --include
@@ -1518,6 +1818,11 @@ subcommands:
           - --verbose
         argument: INT
         description: Verbosity level 0-2 [1]
+      - names:
+          - -W
+          - --write-index
+        argument: '[=FMT]'
+        description: Automatically index the output files [off]
   - name: filter
     description: filter VCF/BCF files using fixed thresholds
     usage: bcftools filter [options] <in.vcf.gz>
@@ -1616,23 +1921,33 @@ subcommands:
           - --threads
         argument: INT
         description: Use multithreading with <int> worker threads [0]
+      - names:
+          - -W
+          - --write-index
+        argument: '[=FMT]'
+        description: Automatically index the output files [off]
   - name: gtcheck
     description: check sample concordance, detect sample swaps and contamination
     usage: bcftools gtcheck [options] [-g <genotypes.vcf.gz>] <query.vcf.gz>
     options:
       - names:
           - --distinctive-sites
-        argument: NUM[,MEM[,TMP]]
+        argument: ""
         description: Find sites that can distinguish between at least NUM sample pairs.
       - names:
           - --dry-run
         argument: ""
         description: Stop after first record to estimate required time
       - names:
-          - -e
+          - -E
           - --error-probability
         argument: INT
         description: Phred-scaled probability of genotyping error, 0 for faster but less accurate results [40]
+      - names:
+          - -e
+          - --exclude
+        argument: '[qry|gt]:EXPR'
+        description: Exclude sites for which the expression is true
       - names:
           - -g
           - --genotypes
@@ -1644,6 +1959,11 @@ subcommands:
         argument: ""
         description: Homozygous genotypes only, useful with low coverage data (requires -g)
       - names:
+          - -i
+          - --include
+        argument: '[qry|gt]:EXPR'
+        description: Include sites for which the expression is true
+      - names:
           - --n-matches
         argument: INT
         description: Print only top INT matches for each sample (sorted by average score), 0 for unlimited.
@@ -1651,6 +1971,16 @@ subcommands:
           - --no-HWE-prob
         argument: ""
         description: Disable calculation of HWE probability
+      - names:
+          - -o
+          - --output
+        argument: FILE
+        description: Write output to a file [standard output]
+      - names:
+          - -O
+          - --output-type
+        argument: t|z
+        description: 't: plain tab-delimited text output, z: compressed [t]'
       - names:
           - -p
           - --pairs
@@ -1717,7 +2047,7 @@ subcommands:
           - -A
           - --count-orphans
         argument: ""
-        description: Do not discard anomalous read pairs
+        description: Include anomalous read pairs, with flag PAIRED but not PROPER_PAIR set
       - names:
           - -b
           - --bam-list
@@ -1783,17 +2113,13 @@ subcommands:
       - names:
           - -r
           - --regions
-        argument: REG[,...]
+        argument: REG
         description: Comma separated list of regions in which pileup is generated
       - names:
-          - -R
-          - --regions-file
-        argument: FILE
-        description: Restrict to regions listed in a file
-      - names:
-          - --ignore-RG
-        argument: ""
-        description: Ignore RG tags (one BAM = one sample)
+          - -r
+          - --regions
+        argument: REG,...
+        description: Comma separated list of regions in which pileup is generated
       - names:
           - --ls
           - --skip-all-set
@@ -1819,26 +2145,6 @@ subcommands:
           - --samples
         argument: LIST
         description: Comma separated list of samples to include
-      - names:
-          - -S
-          - --samples-file
-        argument: FILE
-        description: File of samples to include
-      - names:
-          - -t
-          - --targets
-        argument: REG[,...]
-        description: Similar to -r but streams rather than index-jumps
-      - names:
-          - -T
-          - --targets-file
-        argument: FILE
-        description: Similar to -R but streams rather than index-jumps
-      - names:
-          - -x
-          - --ignore-overlaps
-        argument: ""
-        description: Disable read-pair overlap detection
       - names:
           - --seed
         argument: INT
@@ -1872,10 +2178,15 @@ subcommands:
         argument: INT
         description: Use multithreading with INT worker threads [0]
       - names:
+          - -W
+          - --write-index
+        argument: '[=FMT]'
+        description: Automatically index the output files [off]
+      - names:
           - -X
           - --config
         argument: STR
-        description: Specify platform specific profiles (see below)
+        description: Specify platform profile (use "-X list" for details)
       - names:
           - -e
           - --ext-prob
@@ -1936,6 +2247,14 @@ subcommands:
         argument: FLOAT
         description: Raise to favour recall over precision [1.00]
       - names:
+          - --del-bias
+        argument: FLOAT
+        description: Relative likelihood of insertion to deletion [0.00]
+      - names:
+          - --score-vs-ref
+        argument: FLOAT
+        description: Ratio of score vs ref (1) or 2nd-best allele (0) [0.00]
+      - names:
           - --indel-size
         argument: INT
         description: Approximate maximum indel size considered [110]
@@ -1943,6 +2262,22 @@ subcommands:
           - --indels-2.0
         argument: ""
         description: New EXPERIMENTAL indel calling model (diploid reference consensus)
+      - names:
+          - --indels-cns
+        argument: ""
+        description: New EXPERIMENTAL indel calling model with edlib
+      - names:
+          - --seqq-offset
+        argument: ""
+        description: Indel-cns tuning for indel seq-qual scores [120]
+      - names:
+          - --no-indels-cns
+        argument: ""
+        description: Disable CNS mode, to use after a -X profile
+      - names:
+          - --poly-mqual
+        argument: ""
+        description: (Edlib mode) Use minimum quality within homopolymers
   - name: polysomy
     description: detect number of chromosomal copies
     usage: bcftools polysomy [OPTIONS] FILE.vcf
@@ -1950,12 +2285,9 @@ subcommands:
       - names:
           - -o
           - --output-dir
-        argument: PATH
-        description: Output directory
-      - names:
           - -r
           - --regions
-        argument: REGION
+        argument: PATH
         description: Restrict to comma-separated list of regions
       - names:
           - -R
@@ -2040,7 +2372,7 @@ subcommands:
           - -e
           - --estimate-AF
         argument: '[TAG],<file>'
-        description: estimate AF from FORMAT/TAG (GT or PL) of all samples ("-") or samples listed in <file>.
+        description: estimate AF from FORMAT/TAG (GT or PL) of all samples ("-") or samples listed
       - names:
           - --exclude
         argument: <expr>
@@ -2072,7 +2404,7 @@ subcommands:
           - -m
           - --genetic-map
         argument: <file>
-        description: genetic map in IMPUTE2 format, single file or mask, where string "{CHROM}" is replaced with chromosome name
+        description: genetic map in IMPUTE2 format, single file or mask, where string "{CHROM}"
       - names:
           - -M
           - --rec-rate
@@ -2254,36 +2586,4 @@ subcommands:
           - --verbose
         argument: ""
         description: Produce verbose per-site and per-sample output
-version: bcftools 1.17
-tldr: |
-  > Tools for variant calling and manipulating VCFs and BCFs
-  > More information: <https://www.htslib.org/doc/bcftools.html>.
-
-  - Quick look at a VCF file:
-
-  `bcftools view -H {{sample.vcf.gz}} | head -5`
-
-  - Compute the genotypes from an alignment file in BAM:
-
-  `bcftools mpileup -Ovu -f {{ref.fa}} {{align.bam}} > {{genotypes.vcf}}`
-
-  - Call the variant from the genotypes:
-
-  `bcftools call -vc -O v {{genotypes.vcf}} > {{observed-mutations.vcf}}`
-
-  - Normalize a variant:
-
-  `bcftools norm -f {{ref.fa}} {{samples.vcf}}`
-
-  - Extract just the CHROM, POS, REF and ALT fields:
-
-  `bcftools query -f '%CHROM %POS %REF %ALT\n' {{subset.vcf.gz}} | head -3`
-
-  - Print genotype (GT) of all samples at each position:
-
-  `bcftools query -f '%CHROM\t%POS[\t%GT\t]\n' {{subset.vcf.gz}} | head -3`
-
-  - Find variant sites present in all vcf files:
-
-  `bcftools isec -p outdir -n=3 {{sample1.vcf.gz}} {{sample2.vcf.gz}} {{sample3.vcf.gz}}`
-
+version: bcftools 1.21

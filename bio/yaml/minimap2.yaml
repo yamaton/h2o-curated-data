@@ -4,7 +4,7 @@ usage: minimap2 [options] <target.fa>|<target.idx> [query.fa] [...]
 options:
   - names:
       - -x
-    argument: '{map-pb|map_ont|map-hifi|ava-pb|ava-ont|asm5|asm10|asm20|splice|splice:hg|sr}'
+    argument: '{map-ont|lr:hq|map-hifi|map-pb|map-iclr|asm5|asm10|asm20|splice|splice:hg|sr|ava-pb|ava-ont}'
     description: preset (always applied before other options; see minimap2.1 for details) []
   - names:
       - -H
@@ -21,7 +21,7 @@ options:
   - names:
       - -I
     argument: NUM
-    description: split index for every ~NUM input bases [4G]
+    description: split index for every ~NUM input bases [8G]
   - names:
       - -d
     argument: FILE
@@ -73,7 +73,7 @@ options:
   - names:
       - -B
     argument: INT
-    description: mismatch penalty [4]
+    description: mismatch penalty (larger value for lower divergence) [4]
   - names:
       - -O
     argument: INT[,INT]
@@ -94,6 +94,10 @@ options:
       - -u
     argument: CHAR
     description: how to find GT-AG. f:transcript strand, b:both strands, n:don't match GT-AG [n]
+  - names:
+      - -J
+    argument: INT
+    description: 'splice mode. 0: original minimap2 model; 1: miniprot model [1]'
   - names:
       - -a
     argument: ""
@@ -119,6 +123,10 @@ options:
     argument: '[=STR]'
     description: output the cs tag; STR is 'short' (if absent) or 'long' [none]
   - names:
+      - --ds
+    argument: ""
+    description: output the ds tag, which is an extension to cs
+  - names:
       - --MD
     argument: ""
     description: output the MD tag
@@ -142,7 +150,7 @@ options:
       - --version
     argument: ""
     description: show version number
-version: 2.24-r1122
+version: 2.28-r1209
 tldr: |
   > Map and align between collections of DNA sequences.
   > More information: <https://lh3.github.io/minimap2/>.

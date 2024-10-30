@@ -746,10 +746,6 @@ subcommands:
           - --abort
         argument: ""
         description: Cancel the operation and return to the pre-sequence state.
-  - name: citool
-    description: Graphical alternative to git-commit
-    usage: ""
-    options: []
   - name: clean
     description: Remove untracked files from the working tree
     usage: git clean [-d] [-f] [-i] [-n] [-q] [-e <pattern>] [-x | -X] [--] <path>...
@@ -6531,10 +6527,6 @@ subcommands:
           - --no-progress
         argument: ""
         description: Progress status is reported on the standard error stream by default when it is attached to a terminal, unless --no-progress or --verbose is specified. --progress forces progress status even if the standard error stream is not directed to a terminal.
-  - name: gitweb
-    description: Git web interface (web frontend to Git repositories)
-    usage: To get started with gitweb, run git-instaweb(1) from a Git repository. This would configure and start your web server, and run web browser pointing to gitweb.
-    options: []
   - name: help
     description: Display help information about Git
     usage: |-
@@ -6754,10 +6746,6 @@ subcommands:
           - --no-curl
         argument: ""
         description: Talk to the IMAP server using git’s own IMAP routines instead of using libcurl. Ignored if Git was built with the NO_OPENSSL option set.
-  - name: p4
-    description: Import from and submit to Perforce repositories
-    usage: ""
-    options: []
   - name: quiltimport
     description: Applies a quilt patchset onto the current branch
     usage: |-
@@ -6793,10 +6781,6 @@ subcommands:
           - -p
         argument: ""
         description: Include patch text in the output.
-  - name: svn
-    description: Bidirectional operation between a Subversion repository and Git
-    usage: ""
-    options: []
   - name: apply
     description: Apply a patch to files and/or to the index
     usage: |-
@@ -10665,32 +10649,415 @@ subcommands:
           - --comment-lines
         argument: ""
         description: Prepend comment character and blank to each line. Lines will automatically be terminated with a newline. On empty lines, only the comment character will be prepended.
+  - name: lfs
+    description: Work with large files in Git repositories
+    usage: git lfs command [args]
+    options: []
+    subcommands:
+      - name: env
+        description: Display the Git LFS environment.
+        usage: git lfs env
+        options: []
+      - name: checkout
+        description: Populate working copy with real content from Git LFS files.
+        usage: git lfs checkout filespec... git lfs checkout --to path { --ours | --theirs | --base } file...
+        options:
+          - names:
+              - --base
+            argument: ""
+            description: Check out the merge base of the specified file.
+          - names:
+              - --ours
+            argument: ""
+            description: Check out our side (that of the current branch) of the conflict for the specified file.
+          - names:
+              - --theirs
+            argument: ""
+            description: Check out their side (that of the other branch) of the conflict for the specified file.
+          - names:
+              - --to
+            argument: path
+            description: If the working tree is in a conflicted state, check out the portion of the conflict specified by --base, --ours, or --theirs to the given path.
+      - name: dedup
+        description: De-duplicate Git LFS files.
+        usage: git lfs dedup
+        options: []
+      - name: ext
+        description: Display Git LFS extension details.
+        usage: git lfs ext list [name...]
+        options: []
+      - name: fetch
+        description: Download Git LFS files from a remote.
+        usage: git lfs fetch [options] [remote [ref...]]
+        options:
+          - names:
+              - -I
+              - --include
+            argument: paths
+            description: Specify lfs.fetchinclude just for this invocation; see INCLUDE AND EXCLUDE
+          - names:
+              - -X
+              - --exclude
+            argument: paths
+            description: Specify lfs.fetchexclude just for this invocation; see INCLUDE AND EXCLUDE
+          - names:
+              - --recent
+            argument: ""
+            description: Download objects referenced by recent branches & commits in addition to those that would otherwise be downloaded. See RECENT CHANGES
+          - names:
+              - --all
+            argument: ""
+            description: Download all objects that are referenced by any commit reachable from the refs provided as arguments. If no refs are provided, then all refs are fetched. This is primarily for backup and migration purposes. Cannot be combined with --recent or --include/--exclude. Ignores any globally configured include and exclude paths to ensure that all objects are downloaded.
+          - names:
+              - --prune
+              - -p
+            argument: ""
+            description: Prune old and unreferenced objects after fetching, equivalent to running git lfs prune afterwards. See git-lfs-prune(1) for more details.
+      - name: fsck
+        description: Check Git LFS files for consistency.
+        usage: git lfs fsck [options] [revisions]
+        options:
+          - names:
+              - --objects
+            argument: ""
+            description: Check that each object in HEAD matches its expected hash and that each object exists on disk.
+          - names:
+              - --pointers
+            argument: ""
+            description: Check that each pointer is canonical and that each file which should be stored as a Git LFS file is so stored.
+      - name: install
+        description: Install Git LFS configuration.
+        usage: git lfs install options
+        options:
+          - names:
+              - --force
+            argument: ""
+            description: Sets the "lfs" smudge and clean filters, overwriting existing values.
+          - names:
+              - --local
+            argument: ""
+            description: Sets the "lfs" smudge and clean filters in the local repository's git config, instead of the global git config (~/.gitconfig).
+          - names:
+              - --worktree
+            argument: ""
+            description: Sets the "lfs" smudge and clean filters in the current working tree's git config, instead of the global git config (~/.gitconfig) or local repository's git config ($GIT_DIR/config). If multiple working trees are in use, the Git config extension worktreeConfig must be enabled to use this option. If only one working tree is in use, --worktree has the same effect as --local. This option is only available if the installed Git version is at least 2.20.0 and therefore supports the "worktreeConfig" extension.
+          - names:
+              - --manual
+            argument: ""
+            description: Print instructions for manually updating your hooks to include git-lfs functionality. Use this option if git lfs install fails because of existing hooks and you want to retain their functionality.
+          - names:
+              - --system
+            argument: ""
+            description: Sets the "lfs" smudge and clean filters in the system git config, e.g. /etc/gitconfig instead of the global git config (~/.gitconfig).
+          - names:
+              - --skip-smudge
+            argument: ""
+            description: Skips automatic downloading of objects on clone or pull. This requires a manual "git lfs pull" every time a new commit is checked out on your repository.
+          - names:
+              - --skip-repo
+            argument: ""
+            description: Skips setup of the local repo; use if you want to install the global lfs filters but not make changes to the current repo.
+      - name: lock
+        description: Set a file as "locked" on the Git LFS server.
+        usage: git lfs lock options path
+        options:
+          - names:
+              - -r
+              - --remote
+            argument: name
+            description: Specify the Git LFS server to use. Ignored if the lfs.url config key is set.
+          - names:
+              - --json
+            argument: ""
+            description: Writes lock info as JSON to STDOUT if the command exits successfully. Intended for interoperation with external tools. If the command returns with a non-zero exit code, plain text messages will be sent to STDERR.
+      - name: locks
+        description: List currently "locked" files from the Git LFS server.
+        usage: git lfs locks options
+        options:
+          - names:
+              - -r
+              - --remote
+            argument: name
+            description: Specify the Git LFS server to use. Ignored if the lfs.url config key is set.
+          - names:
+              - -i
+              - --id
+            argument: <id>
+            description: Specifies a lock by its ID. Returns a single result.
+          - names:
+              - -p
+              - --path
+            argument: <path>
+            description: Specifies a lock by its path. Returns a single result.
+          - names:
+              - --local
+            argument: ""
+            description: Lists only our own locks which are cached locally. Skips a remote call.
+          - names:
+              - --cached
+            argument: ""
+            description: Lists cached locks from the last remote call. Contrary to --local, this will include locks of other users as well. This option is intended to display the last known locks in case you are offline. There is no guarantee that locks on the server have not changed in the meanwhile.
+          - names:
+              - --verify
+            argument: ""
+            description: Verifies the lock owner on the server and marks our own locks by 'O'. Own locks are actually held by us and corresponding files can be updated for the next push. All other locks are held by someone else. Contrary to --local, this option will also detect locks which are held by us despite no local lock information being available (e.g. because the file had been locked from a different clone); it will also detect 'broken' locks (e.g. if someone else has forcefully unlocked our files).
+          - names:
+              - -l
+              - --limit
+            argument: <num>
+            description: Specifies number of results to return.
+          - names:
+              - --json
+            argument: ""
+            description: Writes lock info as JSON to STDOUT if the command exits successfully. Intended for interoperation with external tools. If the command returns with a non-zero exit code, plain text messages will be sent to STDERR.
+      - name: logs
+        description: Show errors from the Git LFS command.
+        usage: |-
+          git lfs logs
+          git lfs logs file
+          git lfs logs clear
+          git lfs logs boomtown
+        options: []
+      - name: ls-files
+        description: Show information about Git LFS files in the index and working tree.
+        usage: |-
+          git lfs ls-files [ref]
+          git lfs ls-files ref ref
+        options:
+          - names:
+              - -l
+              - --long
+            argument: ""
+            description: Show the entire 64 character OID, instead of just first 10.
+          - names:
+              - -s
+              - --size
+            argument: ""
+            description: Show the size of the LFS object between parenthesis at the end of a line.
+          - names:
+              - -d
+              - --debug
+            argument: ""
+            description: Show as much information as possible about a LFS file. This is intended for manual inspection; the exact format may change at any time.
+          - names:
+              - -a
+              - --all
+            argument: ""
+            description: Inspects the full history of the repository, not the current HEAD (or other provided reference). This will include previous versions of LFS objects that are no longer found in the current tree.
+          - names:
+              - --deleted
+            argument: ""
+            description: Shows the full history of the given reference, including objects that have been deleted.
+          - names:
+              - -I
+              - --include
+            argument: paths
+            description: Include paths matching only these patterns; see [FETCH SETTINGS].
+          - names:
+              - -X
+              - --exclude
+            argument: paths
+            description: Exclude paths matching any of these patterns; see [FETCH SETTINGS].
+          - names:
+              - -n
+              - --name-only
+            argument: ""
+            description: 'Show only the lfs tracked file names. ## SEE ALSO'
+      - name: migrate
+        description: Migrate history to or from Git LFS
+        usage: git lfs migrate mode [options] [--] [branch ...]
+        options:
+          - names:
+              - -I
+              - --include
+            argument: paths
+            description: See INCLUDE AND EXCLUDE.
+          - names:
+              - -X
+              - --exclude
+            argument: paths
+            description: See INCLUDE AND EXCLUDE.
+          - names:
+              - --include-ref
+            argument: refname
+            description: See [INCLUDE AND EXCLUDE (REFS)].
+          - names:
+              - --exclude-ref
+            argument: refname
+            description: See [INCLUDE AND EXCLUDE (REFS)].
+          - names:
+              - --skip-fetch
+            argument: ""
+            description: Assumes that the known set of remote references is complete, and should not be refreshed when determining the set of "un-pushed" commits to migrate. Has no effect when combined with --include-ref or --exclude-ref.
+          - names:
+              - --everything
+            argument: ""
+            description: See [INCLUDE AND EXCLUDE (REFS)].
+          - names:
+              - --yes
+            argument: ""
+            description: Assume a yes answer to any prompts, permitting noninteractive use. Currently, the only such prompt is the one asking whether to overwrite (destroy) any working copy changes. Thus, specifying this option may cause data loss if you are not careful.
+      - name: prune
+        description: Delete old Git LFS files from local storage
+        usage: git lfs prune options
+        options: []
+      - name: pull
+        description: Fetch Git LFS changes from the remote & checkout any required working tree files.
+        usage: git lfs pull [options] [remote]
+        options:
+          - names:
+              - -I
+              - --include
+            argument: paths
+            description: Specify lfs.fetchinclude just for this invocation; see [INCLUSION & EXCLUSION]
+          - names:
+              - -X
+              - --exclude
+            argument: paths
+            description: Specify lfs.fetchexclude just for this invocation; see [INCLUSION & EXCLUSION]
+      - name: push
+        description: Push queued large files to the Git LFS endpoint.
+        usage: |-
+          git lfs push options remote [ref...]
+          git lfs push remote [ref...]
+          git lfs push --object-id remote [oid...]
+        options:
+          - names:
+              - --dry-run
+            argument: ""
+            description: Print the files that would be pushed, without actually pushing them.
+          - names:
+              - --all
+            argument: ""
+            description: This pushes all objects to the remote that are referenced by any commit reachable from the refs provided as arguments. If no refs are provided, then all refs are pushed.
+          - names:
+              - --object-id
+            argument: ""
+            description: This pushes only the object OIDs listed at the end of the command, separated by spaces.
+      - name: status
+        description: Show the status of Git LFS files in the working tree.
+        usage: git lfs status [options]
+        options:
+          - names:
+              - --porcelain
+            argument: ""
+            description: Give the output in an easy-to-parse format for scripts.
+          - names:
+              - --json
+            argument: ""
+            description: Give the output in a stable json format for scripts.
+      - name: track
+        description: View or add Git LFS paths to Git attributes.
+        usage: git lfs track [options] [pattern...]
+        options: []
+      - name: uninstall
+        description: Uninstall Git LFS by removing hooks and smudge/clean filter configuration.
+        usage: git lfs uninstall
+        options:
+          - names:
+              - --local
+            argument: ""
+            description: Removes the "lfs" smudge and clean filters from the local repository's git config, instead of the global git config (~/.gitconfig).
+          - names:
+              - --worktree
+            argument: ""
+            description: Removes the "lfs" smudge and clean filters from the current working tree's git config, instead of the global git config (~/.gitconfig) or local repository's git config ($GIT_DIR/config). If multiple working trees are in use, the Git config extension worktreeConfig must be enabled to use this option. If only one working tree is in use, --worktree has the same effect as --local. This option is only available if the installed Git version is at least 2.20.0 and therefore supports the "worktreeConfig" extension.
+          - names:
+              - --system
+            argument: ""
+            description: Removes the "lfs" smudge and clean filters from the system git config, instead of the global git config (~/.gitconfig).
+          - names:
+              - --skip-repo
+            argument: ""
+            description: Skips cleanup of the local repo; use if you want to uninstall the global lfs filters but not make changes to the current repo.
+      - name: unlock
+        description: Remove "locked" setting for a file on the Git LFS server.
+        usage: git lfs unlock OPTIONS path
+        options:
+          - names:
+              - -r
+              - --remote
+            argument: name
+            description: Specify the Git LFS server to use. Ignored if the lfs.url config key is set.
+          - names:
+              - -f
+              - --force
+            argument: ""
+            description: Tells the server to remove the lock, even if it's owned by another user.
+          - names:
+              - -i
+              - --id
+            argument: <id>
+            description: Specifies a lock by its ID instead of path.
+          - names:
+              - --json
+            argument: ""
+            description: Writes lock info as JSON to STDOUT if the command exits successfully. Intended for interoperation with external tools. If the command returns with a non-zero exit code, plain text messages will be sent to STDERR.
+      - name: untrack
+        description: Remove Git LFS paths from Git Attributes.
+        usage: git lfs untrack path...
+        options: []
+      - name: update
+        description: Update Git hooks for the current Git repository.
+        usage: ""
+        options: []
+      - name: clean
+        description: Git clean filter that converts large files to pointers.
+        usage: git lfs clean path
+        options: []
+      - name: filter-process
+        description: Git process filter that converts between large files and pointers.
+        usage: git lfs filter-process git lfs filter-process --skip
+        options: []
+      - name: pointer
+        description: Build and compare pointers.
+        usage: |-
+          git lfs pointer --file=path/to/file
+          git lfs pointer --file=path/to/file --pointer=path/to/pointer
+          git lfs pointer --file=path/to/file --stdin git lfs pointer --check --file=path/to/file
+        options:
+          - names:
+              - --file
+            argument: ""
+            description: A local file to build the pointer from.
+          - names:
+              - --pointer
+            argument: ""
+            description: A local file including the contents of a pointer generated from another implementation. This is compared to the pointer generated from --file.
+          - names:
+              - --stdin
+            argument: ""
+            description: Reads the pointer from STDIN to compare with the pointer generated from --file.
+          - names:
+              - --check
+            argument: ""
+            description: Reads the pointer from STDIN (if --stdin is given) or the filepath (if --file) is given. If neither or both of --stdin and --file are given, the invocation is invalid. Exits 0 if the data read is a valid Git LFS pointer. Exits 1 otherwise.
+          - names:
+              - --no-strict
+            argument: ""
+            description: In conjunction with --check, --strict verifies that the pointer is canonical; that is, it would be the one created by Git LFS. If it is not, exits 2. The default, for backwards compatibility, is --no-strict, but this may change in a future version.
+      - name: post-checkout
+        description: Git post-checkout hook implementation.
+        usage: git lfs post-checkout rev_before ref_after is_branch_checkout
+        options: []
+      - name: post-commit
+        description: Git post-commit hook implementation.
+        usage: git lfs post-commit
+        options: []
+      - name: post-merge
+        description: Git post-merge hook implementation.
+        usage: git lfs post-merge is_squash
+        options: []
+      - name: pre-push
+        description: Git pre-push hook implementation.
+        usage: git lfs pre-push remote [remoteurl]
+        options: []
+      - name: smudge
+        description: Git smudge filter that converts pointer in blobs to the actual content.
+        usage: git lfs smudge [path] git lfs smudge --skip [path]
+        options: []
+      - name: standalone-file
+        description: Git LFS standalone transfer adapter for file URLs (local paths).
+        usage: git lfs standalone-file
+        options: []
 version: git version 2.37.2
-tldr: |
-  > Distributed version control system.
-  > Some subcommands such as `commit`, `add`, `branch`, `checkout`, `push`, etc. have their own usage documentation, accessible via `tldr git subcommand`.
-  > More information: <https://git-scm.com/>.
-
-  - Check the Git version:
-
-  `git --version`
-
-  - Show general help:
-
-  `git --help`
-
-  - Show help on a Git subcommand (like `clone`, `add`, `push`, `log`, etc.):
-
-  `git help {{subcommand}}`
-
-  - Execute a Git subcommand:
-
-  `git {{subcommand}}`
-
-  - Execute a Git subcommand on a custom repository root path:
-
-  `git -C {{path/to/repo}} {{subcommand}}`
-
-  - Execute a Git subcommand with a given configuration set:
-
-  `git -c '{{config.key}}={{value}}' {{subcommand}}`

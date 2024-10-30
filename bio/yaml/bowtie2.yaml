@@ -2,6 +2,22 @@ name: bowtie2
 description: A fast and sensitive gapped read aligner
 usage: |-
   bowtie2 [options]* -x <bt2-idx> {-1 <m1> -2 <m2> | -U <r> | --interleaved <i> | -b <bam>} [-S <sam>]
+
+  <bt2-idx>  Index filename prefix (minus trailing .X.bt2).
+             NOTE: Bowtie 1 and Bowtie 2 indexes are not compatible.
+  <m1>       Files with #1 mates, paired with files in <m2>.
+             Could be gzip'ed (extension: .gz) or bzip2'ed (extension: .bz2).
+  <m2>       Files with #2 mates, paired with files in <m1>.
+             Could be gzip'ed (extension: .gz) or bzip2'ed (extension: .bz2).
+  <r>        Files with unpaired reads.
+             Could be gzip'ed (extension: .gz) or bzip2'ed (extension: .bz2).
+  <i>        Files with interleaved paired-end FASTQ/FASTA reads
+             Could be gzip'ed (extension: .gz) or bzip2'ed (extension: .bz2).
+  <bam>      Files are unaligned BAM sorted by read name.
+  <sam>      File for SAM output (default: stdout)
+
+  <m1>, <m2>, <r> can be comma-separated lists (no whitespace) and can be
+  specified many times.  E.g. '-U file1.fq,file2.fq -U file3.fq'.
 options:
   - names:
       - -x
@@ -58,7 +74,7 @@ options:
   - names:
       - -F
     argument: k:<int>,i:<int>
-    description: query input files are continuous FASTA where reads are substrings (k-mers) extracted from a FASTA file <s> and aligned at offsets 1, 1+i, 1+2i ... end of reference
+    description: query input files are continuous FASTA where reads are substrings (k-mers) extracted from the FASTA file and aligned at offsets 1, 1+i, 1+2i ... end of reference
   - names:
       - -c
     argument: ""
@@ -336,11 +352,15 @@ options:
   - names:
       - --soft-clipped-unmapped-tlen
     argument: ""
-    description: Exclude soft-clipped bases when reporting TLEN
+    description: Exclude soft-clipped bases when reporting TLEN.
   - names:
       - --sam-append-comment
     argument: ""
-    description: Append FASTA/FASTQ comment to SAM record
+    description: Append FASTA/FASTQ comment to SAM record.
+  - names:
+      - --sam-opt-config
+    argument: <config>
+    description: Use <config>, example '-MD,YP,-AS', to toggle SAM Optional fields.
   - names:
       - -p
       - --threads
@@ -375,7 +395,7 @@ options:
       - --help
     argument: ""
     description: print this usage message
-version: version 2.5.0
+version: version 2.5.4
 tldr: |
   > A fast and sensitive gapped read aligner
   > More information: <https://github.com/BenLangmead/bowtie2>

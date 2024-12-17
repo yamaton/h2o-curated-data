@@ -1,5 +1,5 @@
 name: micromamba
-description: A tiny version of mamba, the fast conda package installer.
+description: micromamba
 usage: micromamba [OPTIONS] [SUBCOMMAND]
 options:
   - names:
@@ -161,15 +161,11 @@ subcommands:
           - names:
               - -s
               - --shell
-            argument: TEXT:{bash,cmd.exe,dash,fish,posix,powershell,tcsh,xonsh,zsh}
+            argument: TEXT:{bash,cmd.exe,dash,fish,nu,posix,powershell,tcsh,xonsh,zsh}
             description: A shell type
           - names:
               - -r
-              - -p
-              - -n
               - --root-prefix
-              - --prefix
-              - --name
             argument: TEXT
             description: Path to the root prefix
           - names:
@@ -235,15 +231,11 @@ subcommands:
           - names:
               - -s
               - --shell
-            argument: TEXT:{bash,cmd.exe,dash,fish,posix,powershell,tcsh,xonsh,zsh}
+            argument: TEXT:{bash,cmd.exe,dash,fish,nu,posix,powershell,tcsh,xonsh,zsh}
             description: A shell type
           - names:
               - -r
-              - -p
-              - -n
               - --root-prefix
-              - --prefix
-              - --name
             argument: TEXT
             description: Path to the root prefix
           - names:
@@ -307,11 +299,6 @@ subcommands:
             argument: ""
             description: Print this help message and exit
           - names:
-              - -s
-              - --shell
-            argument: TEXT:{bash,cmd.exe,dash,fish,posix,powershell,tcsh,xonsh,zsh}
-            description: A shell type
-          - names:
               - --rc-file
             argument: TEXT ...
             description: Paths to the configuration files to use
@@ -374,15 +361,11 @@ subcommands:
           - names:
               - -s
               - --shell
-            argument: TEXT:{bash,cmd.exe,dash,fish,posix,powershell,tcsh,xonsh,zsh}
+            argument: TEXT:{bash,cmd.exe,dash,fish,nu,posix,powershell,tcsh,xonsh,zsh}
             description: A shell type
           - names:
               - -r
-              - -p
-              - -n
               - --root-prefix
-              - --prefix
-              - --name
             argument: TEXT
             description: Path to the root prefix
           - names:
@@ -448,7 +431,7 @@ subcommands:
           - names:
               - -s
               - --shell
-            argument: TEXT:{bash,cmd.exe,dash,fish,posix,powershell,tcsh,xonsh,zsh}
+            argument: TEXT:{bash,cmd.exe,dash,fish,nu,posix,powershell,tcsh,xonsh,zsh}
             description: A shell type
           - names:
               - -p
@@ -527,7 +510,7 @@ subcommands:
           - names:
               - -s
               - --shell
-            argument: TEXT:{bash,cmd.exe,dash,fish,posix,powershell,tcsh,xonsh,zsh}
+            argument: TEXT:{bash,cmd.exe,dash,fish,nu,posix,powershell,tcsh,xonsh,zsh}
             description: A shell type
           - names:
               - --rc-file
@@ -592,7 +575,7 @@ subcommands:
           - names:
               - -s
               - --shell
-            argument: TEXT:{bash,cmd.exe,dash,fish,posix,powershell,tcsh,xonsh,zsh}
+            argument: TEXT:{bash,cmd.exe,dash,fish,nu,posix,powershell,tcsh,xonsh,zsh}
             description: A shell type
           - names:
               - --rc-file
@@ -781,14 +764,10 @@ subcommands:
         description: Use soft-link instead of hard-link
       - names:
           - --always-copy
+          - --copy
           - --no-always-copy
         argument: '{false}'
         description: Use copy instead of hard-link
-      - names:
-          - --extra-safety-checks
-          - --no-extra-safety-checks
-        argument: '{false}'
-        description: Run extra verifications on packages
       - names:
           - --lock-timeout
         argument: UINT
@@ -803,9 +782,23 @@ subcommands:
         argument: ENUM:value in {disabled->0,enabled->2,warn->1} OR {0,2,1}
         description: Safety checks policy ('enabled', 'warn', or 'disabled')
       - names:
+          - --extra-safety-checks
+          - --no-extra-safety-checks
+        argument: '{false}'
+        description: Run extra verifications on packages
+      - names:
           - --verify-artifacts
         argument: ""
-        description: Run verifications on packages signatures
+        description: Run verifications on packages signatures. This is still experimental and may not be stable yet.
+      - names:
+          - --trusted-channels
+        argument: TEXT ...
+        description: The list of trusted channels allowing artifacts verification. See `verify-artifacts` for more details.
+      - names:
+          - --exp-repodata-parsing
+          - --no-exp-repodata-parsing
+        argument: '{false}'
+        description: Enable experimental parsing of `repodata.json` using simdjson. Default is `true`. `false` means libsolv is used.
       - names:
           - --platform
         argument: TEXT
@@ -988,14 +981,10 @@ subcommands:
         description: Use soft-link instead of hard-link
       - names:
           - --always-copy
+          - --copy
           - --no-always-copy
         argument: '{false}'
         description: Use copy instead of hard-link
-      - names:
-          - --extra-safety-checks
-          - --no-extra-safety-checks
-        argument: '{false}'
-        description: Run extra verifications on packages
       - names:
           - --lock-timeout
         argument: UINT
@@ -1010,9 +999,23 @@ subcommands:
         argument: ENUM:value in {disabled->0,enabled->2,warn->1} OR {0,2,1}
         description: Safety checks policy ('enabled', 'warn', or 'disabled')
       - names:
+          - --extra-safety-checks
+          - --no-extra-safety-checks
+        argument: '{false}'
+        description: Run extra verifications on packages
+      - names:
           - --verify-artifacts
         argument: ""
-        description: Run verifications on packages signatures
+        description: Run verifications on packages signatures. This is still experimental and may not be stable yet.
+      - names:
+          - --trusted-channels
+        argument: TEXT ...
+        description: The list of trusted channels allowing artifacts verification. See `verify-artifacts` for more details.
+      - names:
+          - --exp-repodata-parsing
+          - --no-exp-repodata-parsing
+        argument: '{false}'
+        description: Enable experimental parsing of `repodata.json` using simdjson. Default is `true`. `false` means libsolv is used.
       - names:
           - --platform
         argument: TEXT
@@ -1203,14 +1206,10 @@ subcommands:
         description: Use soft-link instead of hard-link
       - names:
           - --always-copy
+          - --copy
           - --no-always-copy
         argument: '{false}'
         description: Use copy instead of hard-link
-      - names:
-          - --extra-safety-checks
-          - --no-extra-safety-checks
-        argument: '{false}'
-        description: Run extra verifications on packages
       - names:
           - --lock-timeout
         argument: UINT
@@ -1225,9 +1224,23 @@ subcommands:
         argument: ENUM:value in {disabled->0,enabled->2,warn->1} OR {0,2,1}
         description: Safety checks policy ('enabled', 'warn', or 'disabled')
       - names:
+          - --extra-safety-checks
+          - --no-extra-safety-checks
+        argument: '{false}'
+        description: Run extra verifications on packages
+      - names:
           - --verify-artifacts
         argument: ""
-        description: Run verifications on packages signatures
+        description: Run verifications on packages signatures. This is still experimental and may not be stable yet.
+      - names:
+          - --trusted-channels
+        argument: TEXT ...
+        description: The list of trusted channels allowing artifacts verification. See `verify-artifacts` for more details.
+      - names:
+          - --exp-repodata-parsing
+          - --no-exp-repodata-parsing
+        argument: '{false}'
+        description: Enable experimental parsing of `repodata.json` using simdjson. Default is `true`. `false` means libsolv is used.
       - names:
           - --platform
         argument: TEXT
@@ -1245,8 +1258,8 @@ subcommands:
         argument: TEXT ...
         description: Categories of package to install from environment lockfile
       - names:
-          - --prune
-          - --no-prune
+          - --prune-deps
+          - --no-prune-deps
         argument: '{false}'
         description: Prune dependencies (default)
       - names:
@@ -1420,14 +1433,10 @@ subcommands:
         description: Use soft-link instead of hard-link
       - names:
           - --always-copy
+          - --copy
           - --no-always-copy
         argument: '{false}'
         description: Use copy instead of hard-link
-      - names:
-          - --extra-safety-checks
-          - --no-extra-safety-checks
-        argument: '{false}'
-        description: Run extra verifications on packages
       - names:
           - --lock-timeout
         argument: UINT
@@ -1442,9 +1451,23 @@ subcommands:
         argument: ENUM:value in {disabled->0,enabled->2,warn->1} OR {0,2,1}
         description: Safety checks policy ('enabled', 'warn', or 'disabled')
       - names:
+          - --extra-safety-checks
+          - --no-extra-safety-checks
+        argument: '{false}'
+        description: Run extra verifications on packages
+      - names:
           - --verify-artifacts
         argument: ""
-        description: Run verifications on packages signatures
+        description: Run verifications on packages signatures. This is still experimental and may not be stable yet.
+      - names:
+          - --trusted-channels
+        argument: TEXT ...
+        description: The list of trusted channels allowing artifacts verification. See `verify-artifacts` for more details.
+      - names:
+          - --exp-repodata-parsing
+          - --no-exp-repodata-parsing
+        argument: '{false}'
+        description: Enable experimental parsing of `repodata.json` using simdjson. Default is `true`. `false` means libsolv is used.
       - names:
           - --platform
         argument: TEXT
@@ -1557,248 +1580,449 @@ subcommands:
         description: If solve fails, try to fetch updated repodata
   - name: repoquery
     description: Find and analyze packages in active environment or channels
-    usage: micromamba repoquery [OPTIONS] query_type specs...
+    usage: micromamba repoquery [OPTIONS] [SUBCOMMAND]
     options:
       - names:
           - -h
           - --help
         argument: ""
         description: Print this help message and exit
-      - names:
-          - -c
-          - --channel
-        argument: TEXT ...
-        description: Define the list of channels
-      - names:
-          - --override-channels
-        argument: ""
-        description: Override channels
-      - names:
-          - --channel-priority
-        argument: ENUM:value in {disabled->0,flexible->1,strict->2} OR {0,1,2}
-        description: Define the channel priority ('strict' or 'disabled')
-      - names:
-          - --channel-alias
-        argument: TEXT
-        description: The prepended url location to associate with channel names
-      - names:
-          - --strict-channel-priority
-        argument: ""
-        description: Enable strict channel priority
-      - names:
-          - --no-channel-priority
-        argument: ""
-        description: Disable channel priority
-      - names:
-          - -t
-          - --tree
-        argument: ""
-        description: Show result as a tree
-      - names:
-          - --recursive
-        argument: ""
-        description: Show dependencies recursively, i.e. transitive dependencies (only for `depends`)
-      - names:
-          - --pretty
-        argument: ""
-        description: Pretty print result (only for search)
-      - names:
-          - --use-local
-        argument: INT
-        description: Use installed data (--use-local=1, default for `depends` and `whoneeds`) or remote repositories (--use-local=0, default for `search`). If the `-c,--channel` option is set, it has the priority and --use-local is set to 0
-      - names:
-          - --platform
-        argument: TEXT
-        description: The platform description
-      - names:
-          - --rc-file
-        argument: TEXT ...
-        description: Paths to the configuration files to use
-      - names:
-          - --no-rc
-        argument: ""
-        description: Disable the use of configuration files
-      - names:
-          - --no-env
-        argument: ""
-        description: Disable the use of environment variables
-      - names:
-          - -v
-          - --verbose
-        argument: ""
-        description: Set verbosity (higher verbosity with multiple -v, e.g. -vvv)
-      - names:
-          - --log-level
-        argument: ENUM:value in {critical->5,debug->1,error->4,info->2,off->6,trace->0,warning->3} OR {5,1,4,2,6,0,3}
-        description: Set the log level
-      - names:
-          - -q
-          - --quiet
-        argument: ""
-        description: Set quiet mode (print less output)
-      - names:
-          - -y
-          - --yes
-        argument: ""
-        description: Automatically answer yes on prompted questions
-      - names:
-          - --json
-        argument: ""
-        description: Report all output as json
-      - names:
-          - --offline
-        argument: ""
-        description: Force use cached repodata
-      - names:
-          - --dry-run
-        argument: ""
-        description: Only display what would have been done
-      - names:
-          - --download-only
-        argument: ""
-        description: Only download and extract packages, do not link them into environment.
-      - names:
-          - --experimental
-        argument: ""
-        description: Enable experimental features
-      - names:
-          - -r
-          - --root-prefix
-        argument: TEXT
-        description: Path to the root prefix
-      - names:
-          - -p
-          - --prefix
-        argument: TEXT
-        description: Path to the target prefix
-      - names:
-          - --relocate-prefix
-        argument: TEXT
-        description: Path to the relocation prefix
-      - names:
-          - -n
-          - --name
-        argument: TEXT
-        description: Name of the target prefix
-      - names:
-          - --ssl-verify
-        argument: TEXT
-        description: Verify SSL certificates for HTTPS requests
-      - names:
-          - --ssl-no-revoke
-        argument: ""
-        description: SSL certificate revocation checks
-      - names:
-          - --cacert-path
-        argument: TEXT
-        description: Path (file or directory) SSL certificate(s)
-      - names:
-          - --repodata-ttl
-        argument: UINT
-        description: Repodata time-to-live
-      - names:
-          - --retry-clean-cache
-        argument: ""
-        description: If solve fails, try to fetch updated repodata
     subcommands:
-      - name: query_type
-        description: TEXT:{search,depends,whoneeds} REQUIRED
-        usage: ""
-        options: []
-  - name: remove
-    description: Remove packages from active environment
-    usage: micromamba remove [OPTIONS] [specs...]
-    options:
-      - names:
-          - -h
-          - --help
-        argument: ""
-        description: Print this help message and exit
-      - names:
-          - -a
-          - --all
-        argument: ""
-        description: Remove all packages in the environment
-      - names:
-          - -f
-          - --force
-        argument: ""
-        description: 'Force removal of package (note: consistency of environment is not guaranteed!'
-      - names:
-          - --prune
-          - --no-prune
-        argument: '{false}'
-        description: Prune dependencies (default)
-      - names:
-          - --rc-file
-        argument: TEXT ...
-        description: Paths to the configuration files to use
-      - names:
-          - --no-rc
-        argument: ""
-        description: Disable the use of configuration files
-      - names:
-          - --no-env
-        argument: ""
-        description: Disable the use of environment variables
-      - names:
-          - -v
-          - --verbose
-        argument: ""
-        description: Set verbosity (higher verbosity with multiple -v, e.g. -vvv)
-      - names:
-          - --log-level
-        argument: ENUM:value in {critical->5,debug->1,error->4,info->2,off->6,trace->0,warning->3} OR {5,1,4,2,6,0,3}
-        description: Set the log level
-      - names:
-          - -q
-          - --quiet
-        argument: ""
-        description: Set quiet mode (print less output)
-      - names:
-          - -y
-          - --yes
-        argument: ""
-        description: Automatically answer yes on prompted questions
-      - names:
-          - --json
-        argument: ""
-        description: Report all output as json
-      - names:
-          - --offline
-        argument: ""
-        description: Force use cached repodata
-      - names:
-          - --dry-run
-        argument: ""
-        description: Only display what would have been done
-      - names:
-          - --download-only
-        argument: ""
-        description: Only download and extract packages, do not link them into environment.
-      - names:
-          - --experimental
-        argument: ""
-        description: Enable experimental features
-      - names:
-          - -r
-          - --root-prefix
-        argument: TEXT
-        description: Path to the root prefix
-      - names:
-          - -p
-          - --prefix
-        argument: TEXT
-        description: Path to the target prefix
-      - names:
-          - --relocate-prefix
-        argument: TEXT
-        description: Path to the relocation prefix
-      - names:
-          - -n
-          - --name
-        argument: TEXT
-        description: Name of the target prefix
+      - name: search
+        description: Search for packages matching a given query
+        usage: micromamba repoquery search [OPTIONS] specs...
+        options:
+          - names:
+              - -h
+              - --help
+            argument: ""
+            description: Print this help message and exit
+          - names:
+              - -c
+              - --channel
+            argument: TEXT ...
+            description: Define the list of channels
+          - names:
+              - --override-channels
+            argument: ""
+            description: Override channels
+          - names:
+              - --channel-priority
+            argument: ENUM:value
+            description: in {disabled->0,flexible->1,strict->2} OR {0,1,2} Define the channel priority ('strict' or 'disabled')
+          - names:
+              - --channel-alias
+            argument: TEXT
+            description: The prepended url location to associate with channel names
+          - names:
+              - --strict-channel-priority
+            argument: ""
+            description: Enable strict channel priority
+          - names:
+              - --no-channel-priority
+            argument: ""
+            description: Disable channel priority
+          - names:
+              - -t
+              - --tree
+            argument: ""
+            description: Show result as a tree
+          - names:
+              - --recursive
+            argument: ""
+            description: Show dependencies recursively, i.e. transitive dependencies (only for `depends`)
+          - names:
+              - --pretty
+            argument: ""
+            description: Pretty print result (only for search)
+          - names:
+              - --platform
+            argument: TEXT
+            description: The platform description
+          - names:
+              - --local
+            argument: ""
+            description: Use installed prefix instead of remote repositories.
+          - names:
+              - --rc-file
+            argument: TEXT ...
+            description: Paths to the configuration files to use
+          - names:
+              - --no-rc
+            argument: ""
+            description: Disable the use of configuration files
+          - names:
+              - --no-env
+            argument: ""
+            description: Disable the use of environment variables
+          - names:
+              - -v
+              - --verbose
+            argument: ""
+            description: Set verbosity (higher verbosity with multiple -v, e.g. -vvv)
+          - names:
+              - --log-level
+            argument: ENUM:value in {critical->5,debug->1,error->4,info->2,off->6,trace->0,warning->3} OR {5,1,4,2,6,0,3}
+            description: Set the log level
+          - names:
+              - -q
+              - --quiet
+            argument: ""
+            description: Set quiet mode (print less output)
+          - names:
+              - -y
+              - --yes
+            argument: ""
+            description: Automatically answer yes on prompted questions
+          - names:
+              - --json
+            argument: ""
+            description: Report all output as json
+          - names:
+              - --offline
+            argument: ""
+            description: Force use cached repodata
+          - names:
+              - --dry-run
+            argument: ""
+            description: Only display what would have been done
+          - names:
+              - --download-only
+            argument: ""
+            description: Only download and extract packages, do not link them into environment.
+          - names:
+              - --experimental
+            argument: ""
+            description: Enable experimental features
+          - names:
+              - -r
+              - --root-prefix
+            argument: TEXT
+            description: Path to the root prefix
+          - names:
+              - -p
+              - --prefix
+            argument: TEXT
+            description: Path to the target prefix
+          - names:
+              - --relocate-prefix
+            argument: TEXT
+            description: Path to the relocation prefix
+          - names:
+              - -n
+              - --name
+            argument: TEXT
+            description: Name of the target prefix
+          - names:
+              - --ssl-verify
+            argument: TEXT
+            description: Verify SSL certificates for HTTPS requests
+          - names:
+              - --ssl-no-revoke
+            argument: ""
+            description: SSL certificate revocation checks
+          - names:
+              - --cacert-path
+            argument: TEXT
+            description: Path (file or directory) SSL certificate(s)
+          - names:
+              - --repodata-ttl
+            argument: UINT
+            description: Repodata time-to-live
+          - names:
+              - --retry-clean-cache
+            argument: ""
+            description: If solve fails, try to fetch updated repodata
+      - name: whoneeds
+        description: List packages that needs the given query as a dependency
+        usage: micromamba repoquery whoneeds [OPTIONS] specs...
+        options:
+          - names:
+              - -h
+              - --help
+            argument: ""
+            description: Print this help message and exit
+          - names:
+              - -c
+              - --channel
+            argument: TEXT ...
+            description: Define the list of channels
+          - names:
+              - --override-channels
+            argument: ""
+            description: Override channels
+          - names:
+              - --channel-priority
+            argument: ENUM:value
+            description: in {disabled->0,flexible->1,strict->2} OR {0,1,2} Define the channel priority ('strict' or 'disabled')
+          - names:
+              - --channel-alias
+            argument: TEXT
+            description: The prepended url location to associate with channel names
+          - names:
+              - --strict-channel-priority
+            argument: ""
+            description: Enable strict channel priority
+          - names:
+              - --no-channel-priority
+            argument: ""
+            description: Disable channel priority
+          - names:
+              - -t
+              - --tree
+            argument: ""
+            description: Show result as a tree
+          - names:
+              - --recursive
+            argument: ""
+            description: Show dependencies recursively, i.e. transitive dependencies (only for `depends`)
+          - names:
+              - --pretty
+            argument: ""
+            description: Pretty print result (only for search)
+          - names:
+              - --platform
+            argument: TEXT
+            description: The platform description
+          - names:
+              - --remote
+            argument: ""
+            description: Use installed prefix instead of remote repositories.
+          - names:
+              - --rc-file
+            argument: TEXT ...
+            description: Paths to the configuration files to use
+          - names:
+              - --no-rc
+            argument: ""
+            description: Disable the use of configuration files
+          - names:
+              - --no-env
+            argument: ""
+            description: Disable the use of environment variables
+          - names:
+              - -v
+              - --verbose
+            argument: ""
+            description: Set verbosity (higher verbosity with multiple -v, e.g. -vvv)
+          - names:
+              - --log-level
+            argument: ENUM:value in {critical->5,debug->1,error->4,info->2,off->6,trace->0,warning->3} OR {5,1,4,2,6,0,3}
+            description: Set the log level
+          - names:
+              - -q
+              - --quiet
+            argument: ""
+            description: Set quiet mode (print less output)
+          - names:
+              - -y
+              - --yes
+            argument: ""
+            description: Automatically answer yes on prompted questions
+          - names:
+              - --json
+            argument: ""
+            description: Report all output as json
+          - names:
+              - --offline
+            argument: ""
+            description: Force use cached repodata
+          - names:
+              - --dry-run
+            argument: ""
+            description: Only display what would have been done
+          - names:
+              - --download-only
+            argument: ""
+            description: Only download and extract packages, do not link them into environment.
+          - names:
+              - --experimental
+            argument: ""
+            description: Enable experimental features
+          - names:
+              - -r
+              - --root-prefix
+            argument: TEXT
+            description: Path to the root prefix
+          - names:
+              - -p
+              - --prefix
+            argument: TEXT
+            description: Path to the target prefix
+          - names:
+              - --relocate-prefix
+            argument: TEXT
+            description: Path to the relocation prefix
+          - names:
+              - -n
+              - --name
+            argument: TEXT
+            description: Name of the target prefix
+          - names:
+              - --ssl-verify
+            argument: TEXT
+            description: Verify SSL certificates for HTTPS requests
+          - names:
+              - --ssl-no-revoke
+            argument: ""
+            description: SSL certificate revocation checks
+          - names:
+              - --cacert-path
+            argument: TEXT
+            description: Path (file or directory) SSL certificate(s)
+          - names:
+              - --repodata-ttl
+            argument: UINT
+            description: Repodata time-to-live
+          - names:
+              - --retry-clean-cache
+            argument: ""
+            description: If solve fails, try to fetch updated repodata
+      - name: depends
+        description: List dependencies of a given query
+        usage: micromamba repoquery depends [OPTIONS] specs...
+        options:
+          - names:
+              - -h
+              - --help
+            argument: ""
+            description: Print this help message and exit
+          - names:
+              - -c
+              - --channel
+            argument: TEXT ...
+            description: Define the list of channels
+          - names:
+              - --override-channels
+            argument: ""
+            description: Override channels
+          - names:
+              - --channel-priority
+            argument: ENUM:value
+            description: in {disabled->0,flexible->1,strict->2} OR {0,1,2} Define the channel priority ('strict' or 'disabled')
+          - names:
+              - --channel-alias
+            argument: TEXT
+            description: The prepended url location to associate with channel names
+          - names:
+              - --strict-channel-priority
+            argument: ""
+            description: Enable strict channel priority
+          - names:
+              - --no-channel-priority
+            argument: ""
+            description: Disable channel priority
+          - names:
+              - -t
+              - --tree
+            argument: ""
+            description: Show result as a tree
+          - names:
+              - --recursive
+            argument: ""
+            description: Show dependencies recursively, i.e. transitive dependencies (only for `depends`)
+          - names:
+              - --pretty
+            argument: ""
+            description: Pretty print result (only for search)
+          - names:
+              - --platform
+            argument: TEXT
+            description: The platform description
+          - names:
+              - --remote
+            argument: ""
+            description: Use installed prefix instead of remote repositories.
+          - names:
+              - --rc-file
+            argument: TEXT ...
+            description: Paths to the configuration files to use
+          - names:
+              - --no-rc
+            argument: ""
+            description: Disable the use of configuration files
+          - names:
+              - --no-env
+            argument: ""
+            description: Disable the use of environment variables
+          - names:
+              - -v
+              - --verbose
+            argument: ""
+            description: Set verbosity (higher verbosity with multiple -v, e.g. -vvv)
+          - names:
+              - --log-level
+            argument: ENUM:value in {critical->5,debug->1,error->4,info->2,off->6,trace->0,warning->3} OR {5,1,4,2,6,0,3}
+            description: Set the log level
+          - names:
+              - -q
+              - --quiet
+            argument: ""
+            description: Set quiet mode (print less output)
+          - names:
+              - -y
+              - --yes
+            argument: ""
+            description: Automatically answer yes on prompted questions
+          - names:
+              - --json
+            argument: ""
+            description: Report all output as json
+          - names:
+              - --offline
+            argument: ""
+            description: Force use cached repodata
+          - names:
+              - --dry-run
+            argument: ""
+            description: Only display what would have been done
+          - names:
+              - --download-only
+            argument: ""
+            description: Only download and extract packages, do not link them into environment.
+          - names:
+              - --experimental
+            argument: ""
+            description: Enable experimental features
+          - names:
+              - -r
+              - --root-prefix
+            argument: TEXT
+            description: Path to the root prefix
+          - names:
+              - -p
+              - --prefix
+            argument: TEXT
+            description: Path to the target prefix
+          - names:
+              - --relocate-prefix
+            argument: TEXT
+            description: Path to the relocation prefix
+          - names:
+              - -n
+              - --name
+            argument: TEXT
+            description: Name of the target prefix
+          - names:
+              - --ssl-verify
+            argument: TEXT
+            description: Verify SSL certificates for HTTPS requests
+          - names:
+              - --ssl-no-revoke
+            argument: ""
+            description: SSL certificate revocation checks
+          - names:
+              - --cacert-path
+            argument: TEXT
+            description: Path (file or directory) SSL certificate(s)
+          - names:
+              - --repodata-ttl
+            argument: UINT
+            description: Repodata time-to-live
+          - names:
+              - --retry-clean-cache
+            argument: ""
+            description: If solve fails, try to fetch updated repodata
   - name: list
     description: List packages in active environment
     usage: micromamba list [OPTIONS] [regex]
@@ -1808,6 +2032,11 @@ subcommands:
           - --help
         argument: ""
         description: Print this help message and exit
+      - names:
+          - -f
+          - --full-name
+        argument: ""
+        description: Only search for full names, i.e., ^<regex>$.
       - names:
           - --rc-file
         argument: TEXT ...
@@ -2334,7 +2563,7 @@ subcommands:
           - names:
               - --file
             argument: 'TEXT Excludes: --system --env'
-            description: Set configuration on system's rc file
+            description: Set configuration on specified file
         subcommands:
           - name: specs
             description: '[TEXT,TEXT] ... REQUIRED'
@@ -2360,7 +2589,7 @@ subcommands:
           - names:
               - --file
             argument: 'TEXT Excludes: --system --env'
-            description: Set configuration on system's rc file
+            description: Set configuration on specified file
         subcommands:
           - name: specs
             description: '[TEXT,TEXT] ... REQUIRED'
@@ -2386,7 +2615,7 @@ subcommands:
           - names:
               - --file
             argument: 'TEXT Excludes: --system --env'
-            description: Set configuration on system's rc file
+            description: Set configuration on specified file
       - name: remove
         description: Remove a configuration value from a list key. This removes all instances of the value.
         usage: micromamba config remove [OPTIONS] [remove...]
@@ -2407,7 +2636,7 @@ subcommands:
           - names:
               - --file
             argument: 'TEXT Excludes: --system --env'
-            description: Set configuration on system's rc file
+            description: Set configuration on specified file
       - name: set
         description: Set a configuration value
         usage: micromamba config set [OPTIONS] [set_value...]
@@ -2428,7 +2657,7 @@ subcommands:
           - names:
               - --file
             argument: 'TEXT Excludes: --system --env'
-            description: Set configuration on system's rc file
+            description: Set configuration on specified file
       - name: get
         description: Get a configuration value
         usage: micromamba config get [OPTIONS] [get_value]
@@ -2449,7 +2678,7 @@ subcommands:
           - names:
               - --file
             argument: 'TEXT Excludes: --system --env'
-            description: Set configuration on system's rc file
+            description: Set configuration on specified file
   - name: info
     description: Information about micromamba
     usage: micromamba info [OPTIONS]
@@ -2556,7 +2785,7 @@ subcommands:
         argument: ""
         description: Extract given tarball into prefix
   - name: env
-    description: List environments
+    description: See `mamba/micromamba env --help`
     usage: micromamba env [OPTIONS] [SUBCOMMAND]
     options:
       - names:
@@ -2790,14 +3019,10 @@ subcommands:
             description: Use soft-link instead of hard-link
           - names:
               - --always-copy
+              - --copy
               - --no-always-copy
             argument: '{false}'
             description: Use copy instead of hard-link
-          - names:
-              - --extra-safety-checks
-              - --no-extra-safety-checks
-            argument: '{false}'
-            description: Run extra verifications on packages
           - names:
               - --lock-timeout
             argument: UINT
@@ -2812,9 +3037,23 @@ subcommands:
             argument: ENUM:value in {disabled->0,enabled->2,warn->1} OR {0,2,1}
             description: Safety checks policy ('enabled', 'warn', or 'disabled')
           - names:
+              - --extra-safety-checks
+              - --no-extra-safety-checks
+            argument: '{false}'
+            description: Run extra verifications on packages
+          - names:
               - --verify-artifacts
             argument: ""
-            description: Run verifications on packages signatures
+            description: Run verifications on packages signatures. This is still experimental and may not be stable yet.
+          - names:
+              - --trusted-channels
+            argument: TEXT ...
+            description: The list of trusted channels allowing artifacts verification. See `verify-artifacts` for more details.
+          - names:
+              - --exp-repodata-parsing
+              - --no-exp-repodata-parsing
+            argument: '{false}'
+            description: Enable experimental parsing of `repodata.json` using simdjson. Default is `true`. `false` means libsolv is used.
           - names:
               - --platform
             argument: TEXT
@@ -2938,13 +3177,18 @@ subcommands:
           - names:
               - --no-md5
               - --md5
-            argument: '{false}'
+            argument: '{false} [0]'
             description: Disable md5
           - names:
               - --no-build
+              - --no-builds
               - --build
             argument: '{false}'
             description: Disable the build string in spec
+          - names:
+              - --channel-subdir
+            argument: ""
+            description: Enable channel/subdir in spec
           - names:
               - --from-history
             argument: ""
@@ -3028,6 +3272,94 @@ subcommands:
               - --help
             argument: ""
             description: Print this help message and exit
+          - names:
+              - --rc-file
+            argument: TEXT ...
+            description: Paths to the configuration files to use
+          - names:
+              - --no-rc
+            argument: ""
+            description: Disable the use of configuration files
+          - names:
+              - --no-env
+            argument: ""
+            description: Disable the use of environment variables
+          - names:
+              - -v
+              - --verbose
+            argument: ""
+            description: Set verbosity (higher verbosity with multiple -v, e.g. -vvv)
+          - names:
+              - --log-level
+            argument: ENUM:value in {critical->5,debug->1,error->4,info->2,off->6,trace->0,warning->3} OR {5,1,4,2,6,0,3}
+            description: Set the log level
+          - names:
+              - -q
+              - --quiet
+            argument: ""
+            description: Set quiet mode (print less output)
+          - names:
+              - -y
+              - --yes
+            argument: ""
+            description: Automatically answer yes on prompted questions
+          - names:
+              - --json
+            argument: ""
+            description: Report all output as json
+          - names:
+              - --offline
+            argument: ""
+            description: Force use cached repodata
+          - names:
+              - --dry-run
+            argument: ""
+            description: Only display what would have been done
+          - names:
+              - --download-only
+            argument: ""
+            description: Only download and extract packages, do not link them into environment.
+          - names:
+              - --experimental
+            argument: ""
+            description: Enable experimental features
+          - names:
+              - -r
+              - --root-prefix
+            argument: TEXT
+            description: Path to the root prefix
+          - names:
+              - -p
+              - --prefix
+            argument: TEXT
+            description: Path to the target prefix
+          - names:
+              - --relocate-prefix
+            argument: TEXT
+            description: Path to the relocation prefix
+          - names:
+              - -n
+              - --name
+            argument: TEXT
+            description: Name of the target prefix
+      - name: update
+        description: Update an environment
+        usage: micromamba env update [OPTIONS]
+        options:
+          - names:
+              - -h
+              - --help
+            argument: ""
+            description: Print this help message and exit
+          - names:
+              - -f
+              - --file
+            argument: TEXT ...
+            description: File (yaml, explicit or plain)
+          - names:
+              - --prune
+            argument: ""
+            description: Remove installed packages not specified in the command and in environment file
           - names:
               - --rc-file
             argument: TEXT ...
@@ -3287,13 +3619,13 @@ subcommands:
         argument: ""
         description: Pretty print result (only for search)
       - names:
-          - --use-local
-        argument: INT
-        description: Use installed data (--use-local=1, default for `depends` and `whoneeds`) or remote repositories (--use-local=0, default for `search`). If the `-c,--channel` option is set, it has the priority and --use-local is set to 0
-      - names:
           - --platform
         argument: TEXT
         description: The platform description
+      - names:
+          - --local
+        argument: ""
+        description: Use installed prefix instead of remote repositories.
       - names:
           - --rc-file
         argument: TEXT ...
@@ -3384,4 +3716,4 @@ subcommands:
           - --retry-clean-cache
         argument: ""
         description: If solve fails, try to fetch updated repodata
-version: 1.4.6
+version: 2.0.5

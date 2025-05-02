@@ -1,0 +1,871 @@
+name: hybracter
+description: Automated long-read first bacterial genome assembly tool
+usage: hybracter [OPTIONS] COMMAND [ARGS]...
+options:
+  - names:
+      - -h
+      - --help
+    argument: ""
+    description: Show this message and exit.
+subcommands:
+  - name: install
+    description: Downloads and installs the plassembler database
+    usage: hybracter install [OPTIONS] [SNAKE_ARGS]...
+    options:
+      - names:
+          - --use-conda
+          - --no-use-conda
+        argument: ""
+        description: 'Use conda for Snakemake rules [default: useconda]'
+      - names:
+          - --snake-default
+        argument: TEXT
+        description: 'Customise Snakemake runtime args [default: --rerun-incomplete, --printshellcmds, --nolock, --show-failed-logs, --conda-frontend conda]'
+      - names:
+          - -d
+          - --databases
+        argument: TEXT
+        description: Directory where the Plassembler Database will be installed to (optional).
+      - names:
+          - -m
+          - --medaka
+        argument: ""
+        description: Download medaka models.
+      - names:
+          - --mac
+        argument: ""
+        description: If you are running Hybracter on Mac - installs v1.8.0 of Medaka as higher versions break.
+      - names:
+          - -o
+          - --output
+        argument: PATH
+        description: 'Temporary directory where intermediate files will be stored for hybracter install. This will be deleted. [default: hybracter_install_intermediate_files]'
+      - names:
+          - --configfile
+        argument: TEXT
+        description: 'Custom config file [default: (outputDir)/config.yaml]'
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: Show this message and exit.
+  - name: hybrid
+    description: Run hybracter with hybrid long and paired end short reads
+    usage: hybracter hybrid [OPTIONS] [SNAKE_ARGS]...
+    options:
+      - names:
+          - -i
+          - --input
+        argument: TEXT
+        description: Input csv [required]
+      - names:
+          - --datadir
+        argument: TEXT
+        description: Directory/ies where FASTQs are. Can specify 1 directory (long and short FASTQs in the same directory) or 2 (long and short FASTQs in separate directories). If you specify 2, they must be separated by a comma e.g. dirlong,dirshort. Will be added to the filenames in the input csv.
+      - names:
+          - --no_pypolca
+        argument: ""
+        description: Do not use pypolca to polish assemblies with short reads
+      - names:
+          - --logic
+        argument: '[best|last]'
+        description: 'Hybracter logic to select best assembly. Use --last to pick the last polishing round. Use --best to pick best assembly based on ALE (hybrid). [default: last]'
+      - names:
+          - -o
+          - --output
+        argument: PATH
+        description: 'Output directory [default: hybracter_out]'
+      - names:
+          - --configfile
+        argument: TEXT
+        description: 'Custom config file [default: config.yaml]'
+      - names:
+          - -t
+          - --threads
+        argument: INTEGER
+        description: 'Number of threads to use [default: 1]'
+      - names:
+          - --min_length
+        argument: INTEGER
+        description: 'min read length for long reads [default: 1000]'
+      - names:
+          - --min_quality
+        argument: INTEGER
+        description: 'min read quality score for long reads in bp. [default: 9]'
+      - names:
+          - --skip_qc
+        argument: ""
+        description: Do not run porechop_abi, filtlong and fastp to QC the reads
+      - names:
+          - -d
+          - --databases
+        argument: PATH
+        description: Plassembler Databases directory.
+      - names:
+          - --subsample_depth
+        argument: INTEGER
+        description: 'subsampled long read depth to subsample with Filtlong. By default is 100x. [default: 100]'
+      - names:
+          - --min_depth
+        argument: INTEGER
+        description: 'minimum long read depth to continue the run. By default is 0x. Hybracter will error and exit if a sample has less than min_depth*chromosome_size bases of longreads left AFTER filtlong and porechop-ABI steps are run. [default: 0]'
+      - names:
+          - --medakaModel
+        argument: '[r1041_e82_400bps_bacterial_methylation|r1041_e82_400bps_sup_v5.0.0|r1041_e82_400bps_hac_v5.0.0|r1041_e82_400bps_hac_v4.3.0|r1041_e82_400bps_sup_v4.3.0|r1041_e82_400bps_hac_v4.2.0|r1041_e82_400bps_sup_v4.2.0|r941_sup_plant_g610|r941_min_fast_g507|r941_prom_fast_g507|r941_min_fast_g303|r941_min_high_g303|r941_min_high_g330|r941_prom_fast_g303|r941_prom_high_g303|r941_prom_high_g330|r941_min_high_g344|r941_min_high_g351|r941_min_high_g360|r941_prom_high_g344|r941_prom_high_g360|r941_prom_high_g4011|r10_min_high_g303|r10_min_high_g340|r103_min_high_g345|r103_min_high_g360|r103_prom_high_g360|r103_fast_g507|r103_hac_g507|r103_sup_g507|r104_e81_fast_g5015|r104_e81_sup_g5015|r104_e81_hac_g5015|r104_e81_sup_g610|r1041_e82_400bps_hac_g615|r1041_e82_400bps_fast_g615|r1041_e82_400bps_fast_g632|r1041_e82_260bps_fast_g632|r1041_e82_400bps_hac_g632|r1041_e82_400bps_sup_g615|r1041_e82_260bps_hac_g632|r1041_e82_260bps_sup_g632|r1041_e82_400bps_hac_v4.0.0|r1041_e82_400bps_sup_v4.0.0|r1041_e82_260bps_hac_v4.0.0|r1041_e82_260bps_sup_v4.0.0|r1041_e82_260bps_hac_v4.1.0|r1041_e82_260bps_sup_v4.1.0|r1041_e82_400bps_hac_v4.1.0|r1041_e82_400bps_sup_v4.1.0|r941_min_high_g340_rle|r941_min_hac_g507|r941_min_sup_g507|r941_prom_hac_g507|r941_prom_sup_g507|r941_e81_fast_g514|r941_e81_hac_g514|r941_e81_sup_g514]'
+        description: 'Medaka Model. [default: r1041_e82_400bps_sup_v5.0.0]'
+      - names:
+          - --flyeModel
+        argument: '[--nano-hq|--nano-corr|--nano-raw|--pacbio-raw|--pacbio-corr|--pacbio-hifi]'
+        description: 'Flye Assembly Parameter [default: --nanohq]'
+      - names:
+          - --contaminants
+        argument: PATH
+        description: Contaminants FASTA file to map long readsagainst to filter out. Choose --contaminants lambda to filter out phage lambda long reads.
+      - names:
+          - --dnaapler_custom_db
+        argument: PATH
+        description: Custom amino acid FASTA file of sequences to be used as a database with dnaapler custom.
+      - names:
+          - --no_medaka
+        argument: ""
+        description: Do not polish the long read assembly with Medaka.
+      - names:
+          - --auto
+        argument: ""
+        description: Automatically estimate the chromosome size using KMC.
+      - names:
+          - --depth_filter
+        argument: FLOAT
+        description: Depth filter to pass to Plassembler. Filters out all putative plasmid contigs below this fraction of the chromosome read depth (needs to be below in both long and short read sets for hybrid).
+      - names:
+          - --mac
+        argument: ""
+        description: If you are running Hybracter on Mac - installs v1.8.0 of Medaka as higher versions break.
+      - names:
+          - --medaka_override
+        argument: ""
+        description: Use this if you do NOT want to use the --bacteria option with Medaka. Instead your specified --medakaModel will be used.
+      - names:
+          - --extra_params_flye
+        argument: TEXT
+        description: Use this if want to add extra parameters to Flye.
+      - names:
+          - --use-conda
+          - --no-use-conda
+        argument: ""
+        description: 'Use conda for Snakemake rules [default: use-conda]'
+      - names:
+          - --conda-prefix
+        argument: PATH
+        description: Custom conda env directory
+      - names:
+          - --snake-default
+        argument: TEXT
+        description: 'Customise Snakemake runtime args [default: --rerun-incomplete, --printshellcmds, --nolock, --show-failed-logs, --condafrontend conda]'
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: Show this message and exit.
+  - name: hybrid-single
+    description: Run hybracter hybrid on 1 isolate
+    usage: hybracter hybrid-single [OPTIONS] [SNAKE_ARGS]...
+    options:
+      - names:
+          - -l
+          - --longreads
+        argument: TEXT
+        description: FASTQ file of longreads [required]
+      - names:
+          - "-1"
+          - --short_one
+        argument: TEXT
+        description: R1 FASTQ file of paired end short reads [required]
+      - names:
+          - "-2"
+          - --short_two
+        argument: TEXT
+        description: R2 FASTQ file of paired end short reads [required]
+      - names:
+          - -s
+          - --sample
+        argument: TEXT
+        description: 'Sample name. [default: sample]'
+      - names:
+          - -c
+          - --chromosome
+        argument: INTEGER
+        description: 'Approximate lower-bound chromosome length (in base pairs). [default: 1000000]'
+      - names:
+          - --no_pypolca
+        argument: ""
+        description: Do not use pypolca to polish assemblies with short reads
+      - names:
+          - --logic
+        argument: '[best|last]'
+        description: 'Hybracter logic to select best assembly. Use --best to pick best assembly based on ALE (hybrid) or pyrodigal mean length (long). Use --last to pick the last polishing round regardless. [default: last]'
+      - names:
+          - -o
+          - --output
+        argument: PATH
+        description: 'Output directory [default: hybracter_out]'
+      - names:
+          - --configfile
+        argument: TEXT
+        description: 'Custom config file [default: config.yaml]'
+      - names:
+          - -t
+          - --threads
+        argument: INTEGER
+        description: 'Number of threads to use [default: 1]'
+      - names:
+          - --min_length
+        argument: INTEGER
+        description: 'min read length for long reads [default: 1000]'
+      - names:
+          - --min_quality
+        argument: INTEGER
+        description: 'min read quality score for long reads in bp. [default: 9]'
+      - names:
+          - --skip_qc
+        argument: ""
+        description: Do not run porechop_abi, filtlong and fastp to QC the reads
+      - names:
+          - -d
+          - --databases
+        argument: PATH
+        description: Plassembler Databases directory.
+      - names:
+          - --subsample_depth
+        argument: INTEGER
+        description: 'subsampled long read depth to subsample with Filtlong. By default is 100x. [default: 100]'
+      - names:
+          - --min_depth
+        argument: INTEGER
+        description: 'minimum long read depth to continue the run. By default is 0x. Hybracter will error and exit if a sample has less than min_depth*chromosome_size bases of longreads left AFTER filtlong and porechop-ABI steps are run. [default: 0]'
+      - names:
+          - --medakaModel
+        argument: '[r1041_e82_400bps_bacterial_methylation|r1041_e82_400bps_sup_v5.0.0|r1041_e82_400bps_hac_v5.0.0|r1041_e82_400bps_hac_v4.3.0|r1041_e82_400bps_sup_v4.3.0|r1041_e82_400bps_hac_v4.2.0|r1041_e82_400bps_sup_v4.2.0|r941_sup_plant_g610|r941_min_fast_g507|r941_prom_fast_g507|r941_min_fast_g303|r941_min_high_g303|r941_min_high_g330|r941_prom_fast_g303|r941_prom_high_g303|r941_prom_high_g330|r941_min_high_g344|r941_min_high_g351|r941_min_high_g360|r941_prom_high_g344|r941_prom_high_g360|r941_prom_high_g4011|r10_min_high_g303|r10_min_high_g340|r103_min_high_g345|r103_min_high_g360|r103_prom_high_g360|r103_fast_g507|r103_hac_g507|r103_sup_g507|r104_e81_fast_g5015|r104_e81_sup_g5015|r104_e81_hac_g5015|r104_e81_sup_g610|r1041_e82_400bps_hac_g615|r1041_e82_400bps_fast_g615|r1041_e82_400bps_fast_g632|r1041_e82_260bps_fast_g632|r1041_e82_400bps_hac_g632|r1041_e82_400bps_sup_g615|r1041_e82_260bps_hac_g632|r1041_e82_260bps_sup_g632|r1041_e82_400bps_hac_v4.0.0|r1041_e82_400bps_sup_v4.0.0|r1041_e82_260bps_hac_v4.0.0|r1041_e82_260bps_sup_v4.0.0|r1041_e82_260bps_hac_v4.1.0|r1041_e82_260bps_sup_v4.1.0|r1041_e82_400bps_hac_v4.1.0|r1041_e82_400bps_sup_v4.1.0|r941_min_high_g340_rle|r941_min_hac_g507|r941_min_sup_g507|r941_prom_hac_g507|r941_prom_sup_g507|r941_e81_fast_g514|r941_e81_hac_g514|r941_e81_sup_g514]'
+        description: 'Medaka Model. [default: r1041_e82_400bps_sup_v5.0.0]'
+      - names:
+          - --flyeModel
+        argument: '[--nano-hq|--nano-corr|--nano-raw|--pacbio-raw|--pacbio-corr|--pacbio-hifi]'
+        description: 'Flye Assembly Parameter [default: --nanohq]'
+      - names:
+          - --contaminants
+        argument: PATH
+        description: Contaminants FASTA file to map long readsagainst to filter out. Choose --contaminants lambda to filter out phage lambda long reads.
+      - names:
+          - --dnaapler_custom_db
+        argument: PATH
+        description: Custom amino acid FASTA file of sequences to be used as a database with dnaapler custom.
+      - names:
+          - --no_medaka
+        argument: ""
+        description: Do not polish the long read assembly with Medaka.
+      - names:
+          - --auto
+        argument: ""
+        description: Automatically estimate the chromosome size using KMC.
+      - names:
+          - --depth_filter
+        argument: FLOAT
+        description: Depth filter to pass to Plassembler. Filters out all putative plasmid contigs below this fraction of the chromosome read depth (needs to be below in both long and short read sets for hybrid).
+      - names:
+          - --mac
+        argument: ""
+        description: If you are running Hybracter on Mac - installs v1.8.0 of Medaka as higher versions break.
+      - names:
+          - --medaka_override
+        argument: ""
+        description: Use this if you do NOT want to use the --bacteria option with Medaka. Instead your specified --medakaModel will be used.
+      - names:
+          - --extra_params_flye
+        argument: TEXT
+        description: Use this if want to add extra parameters to Flye.
+      - names:
+          - --use-conda
+          - --no-use-conda
+        argument: ""
+        description: 'Use conda for Snakemake rules [default: use-conda]'
+      - names:
+          - --conda-prefix
+        argument: PATH
+        description: Custom conda env directory
+      - names:
+          - --snake-default
+        argument: TEXT
+        description: 'Customise Snakemake runtime args [default: --rerun-incomplete, --printshellcmds, --nolock, --show-failed-logs, --condafrontend conda]'
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: Show this message and exit.
+  - name: long
+    description: Run hybracter with only long reads
+    usage: hybracter long [OPTIONS] [SNAKE_ARGS]...
+    options:
+      - names:
+          - -i
+          - --input
+        argument: TEXT
+        description: Input csv [required]
+      - names:
+          - --datadir
+        argument: TEXT
+        description: Directory where FASTQs are. Will be added to the filenames in the input csv.
+      - names:
+          - -o
+          - --output
+        argument: PATH
+        description: 'Output directory [default: hybracter_out]'
+      - names:
+          - --configfile
+        argument: TEXT
+        description: 'Custom config file [default: config.yaml]'
+      - names:
+          - -t
+          - --threads
+        argument: INTEGER
+        description: 'Number of threads to use [default: 1]'
+      - names:
+          - --min_length
+        argument: INTEGER
+        description: 'min read length for long reads [default: 1000]'
+      - names:
+          - --min_quality
+        argument: INTEGER
+        description: 'min read quality score for long reads in bp. [default: 9]'
+      - names:
+          - --skip_qc
+        argument: ""
+        description: Do not run porechop_abi, filtlong and fastp to QC the reads
+      - names:
+          - -d
+          - --databases
+        argument: PATH
+        description: Plassembler Databases directory.
+      - names:
+          - --subsample_depth
+        argument: INTEGER
+        description: 'subsampled long read depth to subsample with Filtlong. By default is 100x. [default: 100]'
+      - names:
+          - --min_depth
+        argument: INTEGER
+        description: 'minimum long read depth to continue the run. By default is 0x. Hybracter will error and exit if a sample has less than min_depth*chromosome_size bases of longreads left AFTER filtlong and porechop-ABI steps are run. [default: 0]'
+      - names:
+          - --medakaModel
+        argument: '[r1041_e82_400bps_bacterial_methylation|r1041_e82_400bps_sup_v5.0.0|r1041_e82_400bps_hac_v5.0.0|r1041_e82_400bps_hac_v4.3.0|r1041_e82_400bps_sup_v4.3.0|r1041_e82_400bps_hac_v4.2.0|r1041_e82_400bps_sup_v4.2.0|r941_sup_plant_g610|r941_min_fast_g507|r941_prom_fast_g507|r941_min_fast_g303|r941_min_high_g303|r941_min_high_g330|r941_prom_fast_g303|r941_prom_high_g303|r941_prom_high_g330|r941_min_high_g344|r941_min_high_g351|r941_min_high_g360|r941_prom_high_g344|r941_prom_high_g360|r941_prom_high_g4011|r10_min_high_g303|r10_min_high_g340|r103_min_high_g345|r103_min_high_g360|r103_prom_high_g360|r103_fast_g507|r103_hac_g507|r103_sup_g507|r104_e81_fast_g5015|r104_e81_sup_g5015|r104_e81_hac_g5015|r104_e81_sup_g610|r1041_e82_400bps_hac_g615|r1041_e82_400bps_fast_g615|r1041_e82_400bps_fast_g632|r1041_e82_260bps_fast_g632|r1041_e82_400bps_hac_g632|r1041_e82_400bps_sup_g615|r1041_e82_260bps_hac_g632|r1041_e82_260bps_sup_g632|r1041_e82_400bps_hac_v4.0.0|r1041_e82_400bps_sup_v4.0.0|r1041_e82_260bps_hac_v4.0.0|r1041_e82_260bps_sup_v4.0.0|r1041_e82_260bps_hac_v4.1.0|r1041_e82_260bps_sup_v4.1.0|r1041_e82_400bps_hac_v4.1.0|r1041_e82_400bps_sup_v4.1.0|r941_min_high_g340_rle|r941_min_hac_g507|r941_min_sup_g507|r941_prom_hac_g507|r941_prom_sup_g507|r941_e81_fast_g514|r941_e81_hac_g514|r941_e81_sup_g514]'
+        description: 'Medaka Model. [default: r1041_e82_400bps_sup_v5.0.0]'
+      - names:
+          - --flyeModel
+        argument: '[--nano-hq|--nano-corr|--nano-raw|--pacbio-raw|--pacbio-corr|--pacbio-hifi]'
+        description: 'Flye Assembly Parameter [default: --nanohq]'
+      - names:
+          - --contaminants
+        argument: PATH
+        description: Contaminants FASTA file to map long readsagainst to filter out. Choose --contaminants lambda to filter out phage lambda long reads.
+      - names:
+          - --dnaapler_custom_db
+        argument: PATH
+        description: Custom amino acid FASTA file of sequences to be used as a database with dnaapler custom.
+      - names:
+          - --no_medaka
+        argument: ""
+        description: Do not polish the long read assembly with Medaka.
+      - names:
+          - --auto
+        argument: ""
+        description: Automatically estimate the chromosome size using KMC.
+      - names:
+          - --depth_filter
+        argument: FLOAT
+        description: Depth filter to pass to Plassembler. Filters out all putative plasmid contigs below this fraction of the chromosome read depth (needs to be below in both long and short read sets for hybrid).
+      - names:
+          - --mac
+        argument: ""
+        description: If you are running Hybracter on Mac - installs v1.8.0 of Medaka as higher versions break.
+      - names:
+          - --medaka_override
+        argument: ""
+        description: Use this if you do NOT want to use the --bacteria option with Medaka. Instead your specified --medakaModel will be used.
+      - names:
+          - --extra_params_flye
+        argument: TEXT
+        description: Use this if want to add extra parameters to Flye.
+      - names:
+          - --use-conda
+          - --no-use-conda
+        argument: ""
+        description: 'Use conda for Snakemake rules [default: use-conda]'
+      - names:
+          - --conda-prefix
+        argument: PATH
+        description: Custom conda env directory
+      - names:
+          - --snake-default
+        argument: TEXT
+        description: 'Customise Snakemake runtime args [default: --rerun-incomplete, --printshellcmds, --nolock, --show-failed-logs, --condafrontend conda]'
+      - names:
+          - --logic
+        argument: '[best|last]'
+        description: 'Hybracter logic to select best assembly. Use --best to pick best assembly based on ALE (hybrid) or pyrodigal mean length (long). Use --last to pick the last polishing round regardless. [default: best]'
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: Show this message and exit.
+  - name: long-single
+    description: Run hybracter long on 1 isolate
+    usage: hybracter long-single [OPTIONS] [SNAKE_ARGS]...
+    options:
+      - names:
+          - -l
+          - --longreads
+        argument: TEXT
+        description: FASTQ file of longreads [required]
+      - names:
+          - -s
+          - --sample
+        argument: TEXT
+        description: 'Sample name. [default: sample]'
+      - names:
+          - -c
+          - --chromosome
+        argument: INTEGER
+        description: 'FApproximate lower-bound chromosome length (in base pairs). [default: 1000000]'
+      - names:
+          - -o
+          - --output
+        argument: PATH
+        description: 'Output directory [default: hybracter_out]'
+      - names:
+          - --configfile
+        argument: TEXT
+        description: 'Custom config file [default: config.yaml]'
+      - names:
+          - -t
+          - --threads
+        argument: INTEGER
+        description: 'Number of threads to use [default: 1]'
+      - names:
+          - --min_length
+        argument: INTEGER
+        description: 'min read length for long reads [default: 1000]'
+      - names:
+          - --min_quality
+        argument: INTEGER
+        description: 'min read quality score for long reads in bp. [default: 9]'
+      - names:
+          - --skip_qc
+        argument: ""
+        description: Do not run porechop_abi, filtlong and fastp to QC the reads
+      - names:
+          - -d
+          - --databases
+        argument: PATH
+        description: Plassembler Databases directory.
+      - names:
+          - --subsample_depth
+        argument: INTEGER
+        description: 'subsampled long read depth to subsample with Filtlong. By default is 100x. [default: 100]'
+      - names:
+          - --min_depth
+        argument: INTEGER
+        description: 'minimum long read depth to continue the run. By default is 0x. Hybracter will error and exit if a sample has less than min_depth*chromosome_size bases of longreads left AFTER filtlong and porechop-ABI steps are run. [default: 0]'
+      - names:
+          - --medakaModel
+        argument: '[r1041_e82_400bps_bacterial_methylation|r1041_e82_400bps_sup_v5.0.0|r1041_e82_400bps_hac_v5.0.0|r1041_e82_400bps_hac_v4.3.0|r1041_e82_400bps_sup_v4.3.0|r1041_e82_400bps_hac_v4.2.0|r1041_e82_400bps_sup_v4.2.0|r941_sup_plant_g610|r941_min_fast_g507|r941_prom_fast_g507|r941_min_fast_g303|r941_min_high_g303|r941_min_high_g330|r941_prom_fast_g303|r941_prom_high_g303|r941_prom_high_g330|r941_min_high_g344|r941_min_high_g351|r941_min_high_g360|r941_prom_high_g344|r941_prom_high_g360|r941_prom_high_g4011|r10_min_high_g303|r10_min_high_g340|r103_min_high_g345|r103_min_high_g360|r103_prom_high_g360|r103_fast_g507|r103_hac_g507|r103_sup_g507|r104_e81_fast_g5015|r104_e81_sup_g5015|r104_e81_hac_g5015|r104_e81_sup_g610|r1041_e82_400bps_hac_g615|r1041_e82_400bps_fast_g615|r1041_e82_400bps_fast_g632|r1041_e82_260bps_fast_g632|r1041_e82_400bps_hac_g632|r1041_e82_400bps_sup_g615|r1041_e82_260bps_hac_g632|r1041_e82_260bps_sup_g632|r1041_e82_400bps_hac_v4.0.0|r1041_e82_400bps_sup_v4.0.0|r1041_e82_260bps_hac_v4.0.0|r1041_e82_260bps_sup_v4.0.0|r1041_e82_260bps_hac_v4.1.0|r1041_e82_260bps_sup_v4.1.0|r1041_e82_400bps_hac_v4.1.0|r1041_e82_400bps_sup_v4.1.0|r941_min_high_g340_rle|r941_min_hac_g507|r941_min_sup_g507|r941_prom_hac_g507|r941_prom_sup_g507|r941_e81_fast_g514|r941_e81_hac_g514|r941_e81_sup_g514]'
+        description: 'Medaka Model. [default: r1041_e82_400bps_sup_v5.0.0]'
+      - names:
+          - --flyeModel
+        argument: '[--nano-hq|--nano-corr|--nano-raw|--pacbio-raw|--pacbio-corr|--pacbio-hifi]'
+        description: 'Flye Assembly Parameter [default: --nanohq]'
+      - names:
+          - --contaminants
+        argument: PATH
+        description: Contaminants FASTA file to map long readsagainst to filter out. Choose --contaminants lambda to filter out phage lambda long reads.
+      - names:
+          - --dnaapler_custom_db
+        argument: PATH
+        description: Custom amino acid FASTA file of sequences to be used as a database with dnaapler custom.
+      - names:
+          - --no_medaka
+        argument: ""
+        description: Do not polish the long read assembly with Medaka.
+      - names:
+          - --auto
+        argument: ""
+        description: Automatically estimate the chromosome size using KMC.
+      - names:
+          - --depth_filter
+        argument: FLOAT
+        description: Depth filter to pass to Plassembler. Filters out all putative plasmid contigs below this fraction of the chromosome read depth (needs to be below in both long and short read sets for hybrid).
+      - names:
+          - --mac
+        argument: ""
+        description: If you are running Hybracter on Mac - installs v1.8.0 of Medaka as higher versions break.
+      - names:
+          - --medaka_override
+        argument: ""
+        description: Use this if you do NOT want to use the --bacteria option with Medaka. Instead your specified --medakaModel will be used.
+      - names:
+          - --extra_params_flye
+        argument: TEXT
+        description: Use this if want to add extra parameters to Flye.
+      - names:
+          - --use-conda
+          - --no-use-conda
+        argument: ""
+        description: 'Use conda for Snakemake rules [default: use-conda]'
+      - names:
+          - --conda-prefix
+        argument: PATH
+        description: Custom conda env directory
+      - names:
+          - --snake-default
+        argument: TEXT
+        description: 'Customise Snakemake runtime args [default: --rerun-incomplete, --printshellcmds, --nolock, --show-failed-logs, --condafrontend conda]'
+      - names:
+          - --logic
+        argument: '[best|last]'
+        description: 'Hybracter logic to select best assembly. Use --best to pick best assembly based on ALE (hybrid) or pyrodigal mean length (long). Use --last to pick the last polishing round regardless. [default: best]'
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: Show this message and exit.
+  - name: test-hybrid
+    description: Test hybracter hybrid
+    usage: hybracter test-hybrid [OPTIONS] [SNAKE_ARGS]...
+    options:
+      - names:
+          - -o
+          - --output
+        argument: PATH
+        description: 'Output directory [default: hybracter_out]'
+      - names:
+          - --configfile
+        argument: TEXT
+        description: 'Custom config file [default: config.yaml]'
+      - names:
+          - -t
+          - --threads
+        argument: INTEGER
+        description: 'Number of threads to use [default: 1]'
+      - names:
+          - --min_length
+        argument: INTEGER
+        description: 'min read length for long reads [default: 1000]'
+      - names:
+          - --min_quality
+        argument: INTEGER
+        description: 'min read quality score for long reads in bp. [default: 9]'
+      - names:
+          - --skip_qc
+        argument: ""
+        description: Do not run porechop_abi, filtlong and fastp to QC the reads
+      - names:
+          - -d
+          - --databases
+        argument: PATH
+        description: Plassembler Databases directory.
+      - names:
+          - --subsample_depth
+        argument: INTEGER
+        description: 'subsampled long read depth to subsample with Filtlong. By default is 100x. [default: 100]'
+      - names:
+          - --min_depth
+        argument: INTEGER
+        description: 'minimum long read depth to continue the run. By default is 0x. Hybracter will error and exit if a sample has less than min_depth*chromosome_size bases of longreads left AFTER filtlong and porechop-ABI steps are run. [default: 0]'
+      - names:
+          - --medakaModel
+        argument: '[r1041_e82_400bps_bacterial_methylation|r1041_e82_400bps_sup_v5.0.0|r1041_e82_400bps_hac_v5.0.0|r1041_e82_400bps_hac_v4.3.0|r1041_e82_400bps_sup_v4.3.0|r1041_e82_400bps_hac_v4.2.0|r1041_e82_400bps_sup_v4.2.0|r941_sup_plant_g610|r941_min_fast_g507|r941_prom_fast_g507|r941_min_fast_g303|r941_min_high_g303|r941_min_high_g330|r941_prom_fast_g303|r941_prom_high_g303|r941_prom_high_g330|r941_min_high_g344|r941_min_high_g351|r941_min_high_g360|r941_prom_high_g344|r941_prom_high_g360|r941_prom_high_g4011|r10_min_high_g303|r10_min_high_g340|r103_min_high_g345|r103_min_high_g360|r103_prom_high_g360|r103_fast_g507|r103_hac_g507|r103_sup_g507|r104_e81_fast_g5015|r104_e81_sup_g5015|r104_e81_hac_g5015|r104_e81_sup_g610|r1041_e82_400bps_hac_g615|r1041_e82_400bps_fast_g615|r1041_e82_400bps_fast_g632|r1041_e82_260bps_fast_g632|r1041_e82_400bps_hac_g632|r1041_e82_400bps_sup_g615|r1041_e82_260bps_hac_g632|r1041_e82_260bps_sup_g632|r1041_e82_400bps_hac_v4.0.0|r1041_e82_400bps_sup_v4.0.0|r1041_e82_260bps_hac_v4.0.0|r1041_e82_260bps_sup_v4.0.0|r1041_e82_260bps_hac_v4.1.0|r1041_e82_260bps_sup_v4.1.0|r1041_e82_400bps_hac_v4.1.0|r1041_e82_400bps_sup_v4.1.0|r941_min_high_g340_rle|r941_min_hac_g507|r941_min_sup_g507|r941_prom_hac_g507|r941_prom_sup_g507|r941_e81_fast_g514|r941_e81_hac_g514|r941_e81_sup_g514]'
+        description: 'Medaka Model. [default: r1041_e82_400bps_sup_v5.0.0]'
+      - names:
+          - --flyeModel
+        argument: '[--nano-hq|--nano-corr|--nano-raw|--pacbio-raw|--pacbio-corr|--pacbio-hifi]'
+        description: 'Flye Assembly Parameter [default: --nanohq]'
+      - names:
+          - --contaminants
+        argument: PATH
+        description: Contaminants FASTA file to map long readsagainst to filter out. Choose --contaminants lambda to filter out phage lambda long reads.
+      - names:
+          - --dnaapler_custom_db
+        argument: PATH
+        description: Custom amino acid FASTA file of sequences to be used as a database with dnaapler custom.
+      - names:
+          - --no_medaka
+        argument: ""
+        description: Do not polish the long read assembly with Medaka.
+      - names:
+          - --auto
+        argument: ""
+        description: Automatically estimate the chromosome size using KMC.
+      - names:
+          - --depth_filter
+        argument: FLOAT
+        description: Depth filter to pass to Plassembler. Filters out all putative plasmid contigs below this fraction of the chromosome read depth (needs to be below in both long and short read sets for hybrid).
+      - names:
+          - --mac
+        argument: ""
+        description: If you are running Hybracter on Mac - installs v1.8.0 of Medaka as higher versions break.
+      - names:
+          - --medaka_override
+        argument: ""
+        description: Use this if you do NOT want to use the --bacteria option with Medaka. Instead your specified --medakaModel will be used.
+      - names:
+          - --extra_params_flye
+        argument: TEXT
+        description: Use this if want to add extra parameters to Flye.
+      - names:
+          - --use-conda
+          - --no-use-conda
+        argument: ""
+        description: 'Use conda for Snakemake rules [default: use-conda]'
+      - names:
+          - --conda-prefix
+        argument: PATH
+        description: Custom conda env directory
+      - names:
+          - --snake-default
+        argument: TEXT
+        description: 'Customise Snakemake runtime args [default: --rerun-incomplete, --printshellcmds, --nolock, --show-failed-logs, --condafrontend conda]'
+      - names:
+          - --no_pypolca
+        argument: ""
+        description: Do not use pypolca to polish assemblies with short reads
+      - names:
+          - --logic
+        argument: '[best|last]'
+        description: 'Hybracter logic to select best assembly. Use --best to pick best assembly based on ALE (hybrid) or pyrodigal mean length (long). Use --last to pick the last polishing round regardless. [default: last]'
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: Show this message and exit.
+  - name: test-long
+    description: Test hybracter long
+    usage: hybracter test-long [OPTIONS] [SNAKE_ARGS]...
+    options:
+      - names:
+          - --logic
+        argument: '[best|last]'
+        description: 'Hybracter logic to select best assembly. Use --best to pick best assembly based on ALE (hybrid) or pyrodigal mean length (long). Use --last to pick the last polishing round regardless. [default: best]'
+      - names:
+          - -o
+          - --output
+        argument: PATH
+        description: 'Output directory [default: hybracter_out]'
+      - names:
+          - --configfile
+        argument: TEXT
+        description: 'Custom config file [default: config.yaml]'
+      - names:
+          - -t
+          - --threads
+        argument: INTEGER
+        description: 'Number of threads to use [default: 1]'
+      - names:
+          - --min_length
+        argument: INTEGER
+        description: 'min read length for long reads [default: 1000]'
+      - names:
+          - --min_quality
+        argument: INTEGER
+        description: 'min read quality score for long reads in bp. [default: 9]'
+      - names:
+          - --skip_qc
+        argument: ""
+        description: Do not run porechop_abi, filtlong and fastp to QC the reads
+      - names:
+          - -d
+          - --databases
+        argument: PATH
+        description: Plassembler Databases directory.
+      - names:
+          - --subsample_depth
+        argument: INTEGER
+        description: 'subsampled long read depth to subsample with Filtlong. By default is 100x. [default: 100]'
+      - names:
+          - --min_depth
+        argument: INTEGER
+        description: 'minimum long read depth to continue the run. By default is 0x. Hybracter will error and exit if a sample has less than min_depth*chromosome_size bases of longreads left AFTER filtlong and porechop-ABI steps are run. [default: 0]'
+      - names:
+          - --medakaModel
+        argument: '[r1041_e82_400bps_bacterial_methylation|r1041_e82_400bps_sup_v5.0.0|r1041_e82_400bps_hac_v5.0.0|r1041_e82_400bps_hac_v4.3.0|r1041_e82_400bps_sup_v4.3.0|r1041_e82_400bps_hac_v4.2.0|r1041_e82_400bps_sup_v4.2.0|r941_sup_plant_g610|r941_min_fast_g507|r941_prom_fast_g507|r941_min_fast_g303|r941_min_high_g303|r941_min_high_g330|r941_prom_fast_g303|r941_prom_high_g303|r941_prom_high_g330|r941_min_high_g344|r941_min_high_g351|r941_min_high_g360|r941_prom_high_g344|r941_prom_high_g360|r941_prom_high_g4011|r10_min_high_g303|r10_min_high_g340|r103_min_high_g345|r103_min_high_g360|r103_prom_high_g360|r103_fast_g507|r103_hac_g507|r103_sup_g507|r104_e81_fast_g5015|r104_e81_sup_g5015|r104_e81_hac_g5015|r104_e81_sup_g610|r1041_e82_400bps_hac_g615|r1041_e82_400bps_fast_g615|r1041_e82_400bps_fast_g632|r1041_e82_260bps_fast_g632|r1041_e82_400bps_hac_g632|r1041_e82_400bps_sup_g615|r1041_e82_260bps_hac_g632|r1041_e82_260bps_sup_g632|r1041_e82_400bps_hac_v4.0.0|r1041_e82_400bps_sup_v4.0.0|r1041_e82_260bps_hac_v4.0.0|r1041_e82_260bps_sup_v4.0.0|r1041_e82_260bps_hac_v4.1.0|r1041_e82_260bps_sup_v4.1.0|r1041_e82_400bps_hac_v4.1.0|r1041_e82_400bps_sup_v4.1.0|r941_min_high_g340_rle|r941_min_hac_g507|r941_min_sup_g507|r941_prom_hac_g507|r941_prom_sup_g507|r941_e81_fast_g514|r941_e81_hac_g514|r941_e81_sup_g514]'
+        description: 'Medaka Model. [default: r1041_e82_400bps_sup_v5.0.0]'
+      - names:
+          - --flyeModel
+        argument: '[--nano-hq|--nano-corr|--nano-raw|--pacbio-raw|--pacbio-corr|--pacbio-hifi]'
+        description: 'Flye Assembly Parameter [default: --nanohq]'
+      - names:
+          - --contaminants
+        argument: PATH
+        description: Contaminants FASTA file to map long readsagainst to filter out. Choose --contaminants lambda to filter out phage lambda long reads.
+      - names:
+          - --dnaapler_custom_db
+        argument: PATH
+        description: Custom amino acid FASTA file of sequences to be used as a database with dnaapler custom.
+      - names:
+          - --no_medaka
+        argument: ""
+        description: Do not polish the long read assembly with Medaka.
+      - names:
+          - --auto
+        argument: ""
+        description: Automatically estimate the chromosome size using KMC.
+      - names:
+          - --depth_filter
+        argument: FLOAT
+        description: Depth filter to pass to Plassembler. Filters out all putative plasmid contigs below this fraction of the chromosome read depth (needs to be below in both long and short read sets for hybrid).
+      - names:
+          - --mac
+        argument: ""
+        description: If you are running Hybracter on Mac - installs v1.8.0 of Medaka as higher versions break.
+      - names:
+          - --medaka_override
+        argument: ""
+        description: Use this if you do NOT want to use the --bacteria option with Medaka. Instead your specified --medakaModel will be used.
+      - names:
+          - --extra_params_flye
+        argument: TEXT
+        description: Use this if want to add extra parameters to Flye.
+      - names:
+          - --use-conda
+          - --no-use-conda
+        argument: ""
+        description: 'Use conda for Snakemake rules [default: use-conda]'
+      - names:
+          - --conda-prefix
+        argument: PATH
+        description: Custom conda env directory
+      - names:
+          - --snake-default
+        argument: TEXT
+        description: 'Customise Snakemake runtime args [default: --rerun-incomplete, --printshellcmds, --nolock, --show-failed-logs, --condafrontend conda]'
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: Show this message and exit.
+  - name: config
+    description: Copy the system default config file
+    usage: hybracter config [OPTIONS] [SNAKE_ARGS]...
+    options:
+      - names:
+          - -o
+          - --output
+        argument: PATH
+        description: 'Output directory [default: hybracter_out]'
+      - names:
+          - --configfile
+        argument: TEXT
+        description: 'Custom config file [default: config.yaml]'
+      - names:
+          - -t
+          - --threads
+        argument: INTEGER
+        description: 'Number of threads to use [default: 1]'
+      - names:
+          - --min_length
+        argument: INTEGER
+        description: 'min read length for long reads [default: 1000]'
+      - names:
+          - --min_quality
+        argument: INTEGER
+        description: 'min read quality score for long reads in bp. [default: 9]'
+      - names:
+          - --skip_qc
+        argument: ""
+        description: Do not run porechop_abi, filtlong and fastp to QC the reads
+      - names:
+          - -d
+          - --databases
+        argument: PATH
+        description: Plassembler Databases directory.
+      - names:
+          - --subsample_depth
+        argument: INTEGER
+        description: 'subsampled long read depth to subsample with Filtlong. By default is 100x. [default: 100]'
+      - names:
+          - --min_depth
+        argument: INTEGER
+        description: 'minimum long read depth to continue the run. By default is 0x. Hybracter will error and exit if a sample has less than min_depth*chromosome_size bases of longreads left AFTER filtlong and porechop-ABI steps are run. [default: 0]'
+      - names:
+          - --medakaModel
+        argument: '[r1041_e82_400bps_bacterial_methylation|r1041_e82_400bps_sup_v5.0.0|r1041_e82_400bps_hac_v5.0.0|r1041_e82_400bps_hac_v4.3.0|r1041_e82_400bps_sup_v4.3.0|r1041_e82_400bps_hac_v4.2.0|r1041_e82_400bps_sup_v4.2.0|r941_sup_plant_g610|r941_min_fast_g507|r941_prom_fast_g507|r941_min_fast_g303|r941_min_high_g303|r941_min_high_g330|r941_prom_fast_g303|r941_prom_high_g303|r941_prom_high_g330|r941_min_high_g344|r941_min_high_g351|r941_min_high_g360|r941_prom_high_g344|r941_prom_high_g360|r941_prom_high_g4011|r10_min_high_g303|r10_min_high_g340|r103_min_high_g345|r103_min_high_g360|r103_prom_high_g360|r103_fast_g507|r103_hac_g507|r103_sup_g507|r104_e81_fast_g5015|r104_e81_sup_g5015|r104_e81_hac_g5015|r104_e81_sup_g610|r1041_e82_400bps_hac_g615|r1041_e82_400bps_fast_g615|r1041_e82_400bps_fast_g632|r1041_e82_260bps_fast_g632|r1041_e82_400bps_hac_g632|r1041_e82_400bps_sup_g615|r1041_e82_260bps_hac_g632|r1041_e82_260bps_sup_g632|r1041_e82_400bps_hac_v4.0.0|r1041_e82_400bps_sup_v4.0.0|r1041_e82_260bps_hac_v4.0.0|r1041_e82_260bps_sup_v4.0.0|r1041_e82_260bps_hac_v4.1.0|r1041_e82_260bps_sup_v4.1.0|r1041_e82_400bps_hac_v4.1.0|r1041_e82_400bps_sup_v4.1.0|r941_min_high_g340_rle|r941_min_hac_g507|r941_min_sup_g507|r941_prom_hac_g507|r941_prom_sup_g507|r941_e81_fast_g514|r941_e81_hac_g514|r941_e81_sup_g514]'
+        description: 'Medaka Model. [default: r1041_e82_400bps_sup_v5.0.0]'
+      - names:
+          - --flyeModel
+        argument: '[--nano-hq|--nano-corr|--nano-raw|--pacbio-raw|--pacbio-corr|--pacbio-hifi]'
+        description: 'Flye Assembly Parameter [default: --nanohq]'
+      - names:
+          - --contaminants
+        argument: PATH
+        description: Contaminants FASTA file to map long readsagainst to filter out. Choose --contaminants lambda to filter out phage lambda long reads.
+      - names:
+          - --dnaapler_custom_db
+        argument: PATH
+        description: Custom amino acid FASTA file of sequences to be used as a database with dnaapler custom.
+      - names:
+          - --no_medaka
+        argument: ""
+        description: Do not polish the long read assembly with Medaka.
+      - names:
+          - --auto
+        argument: ""
+        description: Automatically estimate the chromosome size using KMC.
+      - names:
+          - --depth_filter
+        argument: FLOAT
+        description: Depth filter to pass to Plassembler. Filters out all putative plasmid contigs below this fraction of the chromosome read depth (needs to be below in both long and short read sets for hybrid).
+      - names:
+          - --mac
+        argument: ""
+        description: If you are running Hybracter on Mac - installs v1.8.0 of Medaka as higher versions break.
+      - names:
+          - --medaka_override
+        argument: ""
+        description: Use this if you do NOT want to use the --bacteria option with Medaka. Instead your specified --medakaModel will be used.
+      - names:
+          - --extra_params_flye
+        argument: TEXT
+        description: Use this if want to add extra parameters to Flye.
+      - names:
+          - --use-conda
+          - --no-use-conda
+        argument: ""
+        description: 'Use conda for Snakemake rules [default: use-conda]'
+      - names:
+          - --conda-prefix
+        argument: PATH
+        description: Custom conda env directory
+      - names:
+          - --snake-default
+        argument: TEXT
+        description: 'Customise Snakemake runtime args [default: --rerun-incomplete, --printshellcmds, --nolock, --show-failed-logs, --condafrontend conda]'
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: Show this message and exit.
+  - name: citation
+    description: Print the citation(s) for hybracter
+    usage: hybracter citation [OPTIONS]
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: Show this message and exit.
+  - name: version
+    description: Print the version for hybracter
+    usage: hybracter version [OPTIONS]
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: Show this message and exit.
+version: "0.11.2"

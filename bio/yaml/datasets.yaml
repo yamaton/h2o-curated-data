@@ -20,13 +20,14 @@ options:
     description: Print version of datasets
 subcommands:
   - name: summary
-    description: Print a data report containing gene, genome or virus metadata
+    description: Print a data report containing gene, genome, taxonomy or virus metadata
     usage: |-
       datasets summary genome accession GCF_000001405.40
       datasets summary genome taxon "mus musculus"
       datasets summary gene gene-id 672
-      datasets summary gene symbol brca1 --taxon mouse
+      datasets summary gene symbol brca1 --taxon "mus musculus"
       datasets summary gene accession NP_000483.3
+      datasets summary taxonomy taxon "mus musculus"
       datasets summary virus genome accession NC_045512.2
       datasets summary virus genome taxon sars-cov-2 --host dog
     options:
@@ -224,6 +225,48 @@ subcommands:
                   - --as-json-lines
                 argument: ""
                 description: Stream results as newline delimited JSON-Lines
+              - names:
+                  - --debug
+                argument: ""
+                description: Emit debugging info
+              - names:
+                  - --help
+                argument: ""
+                description: Print detailed help about a datasets command
+              - names:
+                  - --limit
+                argument: string
+                description: Limit the number of gene summaries returned
+              - names:
+                  - --report
+                argument: string
+                description: 'Choose the output type:'
+              - names:
+                  - --version
+                argument: ""
+                description: Print version of datasets
+          - name: locus-tag
+            description: Print a data report containing gene metadata by locus tag
+            usage: |
+                datasets summary gene locus-tag b0001
+                datasets summary gene locus-tag b0001 ArthCt125
+            options:
+              - names:
+                  - --inputfile
+                argument: string
+                description: Read a list of NCBI Gene Locus Tags from a file to use as input
+              - names:
+                  - --ortholog
+                argument: strings
+                description: Retrieves data for an ortholog set. Provide one or more taxa (any rank, limited to vertebrates and insects) to filter results or 'all' for the complete set.
+              - names:
+                  - --api-key
+                argument: string
+                description: Specify an NCBI API key
+              - names:
+                  - --as-json-lines
+                argument: ""
+                description: Output results in JSON Lines format
               - names:
                   - --debug
                 argument: ""
@@ -696,14 +739,94 @@ subcommands:
                       - --version
                     argument: ""
                     description: Print version of datasets
+      - name: taxonomy
+        description: Print a data report containing taxonomy metadata
+        usage: |
+          datasets summary taxonomy taxon human
+          datasets summary taxonomy taxon human "mus musculus"
+          datasets summary taxonomy taxon human --report names
+          datasets summary taxonomy taxon "mus musculus" --report ids_only
+        options:
+          - names:
+              - --api-key
+            argument: string
+            description: Specify an NCBI API key
+          - names:
+              - --debug
+            argument: ""
+            description: Emit debugging info
+          - names:
+              - --help
+            argument: ""
+            description: Print detailed help about a datasets command
+          - names:
+              - --version
+            argument: ""
+            description: Print version of datasets
+        subcommands:
+          - name: taxon
+            description: Print a data report containing taxonomy metadata by taxon (NCBI Taxonomy ID, scientific or common name at any tax rank)
+            usage: |
+              datasets summary taxonomy taxon human
+              datasets summary taxonomy taxon "mus musculus" "human" --report names
+              datasets summary taxonomy taxon "human" --children
+              datasets summary taxonomy taxon "mus musculus" --rank genus
+              datasets summary taxonomy taxon "human" --parents --report names
+              datasets summary taxonomy taxon 10116 --report ids_only
+            options:
+              - names:
+                  - --as-json-lines
+                argument: ""
+                description: Output results in JSON Lines format
+              - names:
+                  - --children
+                argument: ""
+                description: Return all taxonomic children of the requested taxon
+              - names:
+                  - --inputfile
+                argument: string
+                description: Read a list of NCBI taxonomy identifiers (taxid or current scientific name) from a file to use as input
+              - names:
+                  - --limit
+                argument: string
+                description: Limit the number of taxonomy summaries returned
+              - names:
+                  - --parents
+                argument: ""
+                description: Include all parents of the requested taxon
+              - names:
+                  - --rank
+                argument: strings
+                description: Limit taxons to only those with the specified ranks. When enabled, the children and parents flags will be enabled as well.
+              - names:
+                  - --report
+                argument: string
+                description: 'Choose the output type:'
+              - names:
+                  - --api-key
+                argument: string
+                description: Specify an NCBI API key
+              - names:
+                  - --debug
+                argument: ""
+                description: Emit debugging info
+              - names:
+                  - --help
+                argument: ""
+                description: Print detailed help about a datasets command
+              - names:
+                  - --version
+                argument: ""
+                description: Print version of datasets
   - name: download
     description: Download a gene, genome or virus dataset as a zip file
-    usage: |
+    usage: |-
       datasets download genome accession GCF_000001405.40 --chromosomes X,Y --exclude-gff3 --exclude-rna
       datasets download genome taxon "bos taurus"
       datasets download gene gene-id 672
-      datasets download gene symbol brca1 --taxon mouse
+      datasets download gene symbol brca1 --taxon "mus musculus"
       datasets download gene accession NP_000483.3
+      datasets download taxonomy taxon human,sars-cov-2
       datasets download virus genome taxon sars-cov-2 --host dog
       datasets download virus protein S --host dog --filename SARS2-spike-dog.zip
     options:
@@ -736,7 +859,7 @@ subcommands:
         description: Download a gene data package
         usage: |-
           datasets download gene gene-id 672
-          datasets download gene symbol brca1 --taxon mouse
+          datasets download gene symbol brca1 --taxon "mus musculus"
           datasets download gene accession NP_000483.3
           datasets download gene gene-id 2778 --fasta-filter NC_000020.11,NM_001077490.3,NP_001070958.1
         options:
@@ -985,6 +1108,68 @@ subcommands:
                   - --help
                 argument: ""
                 description: Print detailed help about a datasets command
+              - names:
+                  - --no-progressbar
+                argument: ""
+                description: Hide progress bar
+              - names:
+                  - --preview
+                argument: ""
+                description: Show information about the requested data package
+              - names:
+                  - --version
+                argument: ""
+                description: Print version of datasets
+          - name: locus-tag
+            description: Download a gene data package by locus tag
+            usage: |-
+              datasets download gene locus-tag b0001
+              datasets download gene locus-tag b0001 ArthCt125
+            options:
+              - names:
+                  - --fast-zip-validation
+                argument: ""
+                description: Skip zip checksum validation after download
+              - names:
+                  - --inputfile
+                argument: string
+                description: Read a list of NCBI Gene Locus Tags from a file to use as input
+              - names:
+                  - --ortholog
+                argument: strings
+                description: Retrieves data for an ortholog set. Provide one or more taxa (any rank, limited to vertebrates and insects) to filter results or 'all' for the complete set.
+              - names:
+                  - --taxon
+                argument: string
+                description: Define species (NCBI taxid, common or scientific name) for gene symbol (default "human")
+              - names:
+                  - --api-key
+                argument: string
+                description: Specify an NCBI API key
+              - names:
+                  - --debug
+                argument: ""
+                description: Emit debugging info
+              - names:
+                  - --fasta-filter
+                argument: strings
+                description: Limit protein and RNA sequence files to the specified RefSeq nucleotide and protein accessions
+              - names:
+                  - --fasta-filter-file
+                argument: string
+                description: Limit protein and RNA sequence files to the specified RefSeq nucleotide and protein accessions included in the specified file
+              - names:
+                  - --filename
+                argument: string
+                description: Specify a custom file name for the downloaded data package (default "ncbi_dataset.zip")
+              - names:
+                  - --help
+                argument: ""
+                description: Print detailed help about a datasets command
+              - names:
+                  - --include
+                argument: string(,string)
+                description: Specify the data files to include (comma-separated).
               - names:
                   - --no-progressbar
                 argument: ""
@@ -1258,6 +1443,93 @@ subcommands:
                   - --search
                 argument: strings
                 description: 'Limit results to genomes with specified text in the searchable fields: species and infraspecies, assembly name and submitter. To search multiple strings, use the flag multiple times.'
+              - names:
+                  - --version
+                argument: ""
+                description: Print version of datasets
+      - name: taxonomy
+        description: Download a taxonomy data package
+        usage: |-
+          datasets download taxonomy taxon "bos taurus"
+          datasets download taxonomy taxon human,"drosophila melanogaster" --include names
+          datasets download taxonomy taxon 10116 --parents --children
+        options:
+          - names:
+              - --api-key
+            argument: string
+            description: Specify an NCBI API key
+          - names:
+              - --debug
+            argument: ""
+            description: Emit debugging info
+          - names:
+              - --filename
+            argument: string
+            description: Specify a custom file name for the downloaded data package (default "ncbi_dataset.zip")
+          - names:
+              - --help
+            argument: ""
+            description: Print detailed help about a datasets command
+          - names:
+              - --no-progressbar
+            argument: ""
+            description: Hide progress bar
+          - names:
+              - --version
+            argument: ""
+            description: Print version of datasets
+        subcommands:
+          - name: taxon
+            description: Download a taxonomy package by taxonomy taxon (NCBI Taxonomy ID, scientific or common name at any tax rank)
+            usage: |-
+              datasets download taxonomy taxon "bos taurus"
+              datasets download taxonomy taxon human,"drosophila melanogaster" --include names
+              datasets download taxonomy taxon 10116 --parents --children
+            options:
+              - names:
+                  - --children
+                argument: ""
+                description: Return all taxonomic children of the requested taxon
+              - names:
+                  - --fast-zip-validation
+                argument: ""
+                description: Skip zip checksum validation after download
+              - names:
+                  - --include
+                argument: string
+                description: 'Add report to download:'
+              - names:
+                  - --inputfile
+                argument: string
+                description: Read a list of NCBI taxonomy identifiers (taxid or current scientific name) from a file to use as input
+              - names:
+                  - --parents
+                argument: ""
+                description: Include all parents of the requested taxon
+              - names:
+                  - --rank
+                argument: strings
+                description: Limit taxons to only those with the specified ranks. When enabled, the children and parents flags will be enabled as well.
+              - names:
+                  - --api-key
+                argument: string
+                description: Specify an NCBI API key
+              - names:
+                  - --debug
+                argument: ""
+                description: Emit debugging info
+              - names:
+                  - --filename
+                argument: string
+                description: Specify a custom file name for the downloaded data package (default "ncbi_dataset.zip")
+              - names:
+                  - --help
+                argument: ""
+                description: Print detailed help about a datasets command
+              - names:
+                  - --no-progressbar
+                argument: ""
+                description: Hide progress bar
               - names:
                   - --version
                 argument: ""
@@ -1780,4 +2052,4 @@ subcommands:
               - --version
             argument: ""
             description: Print version of datasets
-version: 'datasets version: 15.16.2'
+version: 'datasets version: 18.0.5'

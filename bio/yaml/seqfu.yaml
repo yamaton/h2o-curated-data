@@ -1,5 +1,5 @@
 name: seqfu
-description: seqfu
+description: Sequece Fastx Utilities
 usage: ""
 options: []
 subcommands:
@@ -61,6 +61,11 @@ subcommands:
       seqfu check [options] <FQFILE> [<REV>]
       seqfu check [options] --dir <FQDIR>
     options:
+      - names:
+          - -d
+          - --deep
+        argument: ""
+        description: 'Perform a deep check of the file and will not lsupport multiline Sanger FASTQ [default: false]'
       - names:
           - -n
           - --no-paired
@@ -397,11 +402,7 @@ subcommands:
           - -f
           - --format
         argument: TYPE
-        description: 'Output format: dadaist, irida, manifest, metaphage, qiime1, qiime2 [default: manifest]'
-      - names:
-          - --pe
-        argument: ""
-        description: Enforce paired-end reads (not supported)
+        description: 'Output format: dadaist, irida, manifest,... list to list [default: manifest]'
       - names:
           - -p
           - --add-path
@@ -411,12 +412,41 @@ subcommands:
           - -c
           - --counts
         argument: ""
-        description: Add the number of reads as a property column
+        description: Add the number of reads as a property column (experimental)
       - names:
           - -t
           - --threads
         argument: INT
-        description: 'Number of simultaneously opened files [default: 2]'
+        description: 'Number of simultaneously opened files (legacy: ignored)'
+      - names:
+          - --pe
+        argument: ""
+        description: Enforce paired-end reads (not supported)
+      - names:
+          - --ont
+        argument: ""
+        description: 'Long reads (Oxford Nanopore) [default: false]'
+      - names:
+          - --abs
+        argument: ""
+        description: Force absolute path
+      - names:
+          - --basename
+        argument: ""
+        description: Use basename instead of full path
+      - names:
+          - --force-tsv
+        argument: ""
+        description: Force '\t' separator, otherwise selected by the format
+      - names:
+          - --force-csv
+        argument: ""
+        description: Force ',' separator, otherwise selected by the format
+      - names:
+          - -R
+          - --rand-meta
+        argument: INT
+        description: Add a random metadata column with INT categories
       - names:
           - -P
           - --project
@@ -439,6 +469,10 @@ subcommands:
           - --verbose
         argument: ""
         description: Verbose output
+      - names:
+          - --debug
+        argument: ""
+        description: Debug output
       - names:
           - -h
           - --help
@@ -562,6 +596,10 @@ subcommands:
         argument: ""
         description: Also print %GC
       - names:
+          - --index
+        argument: ""
+        description: Also print contig index (L50, L90)
+      - names:
           - --multiqc
         argument: FILE
         description: 'Saves a MultiQC report to FILE (suggested: name_mqc.txt)'
@@ -569,6 +607,10 @@ subcommands:
           - --precision
         argument: INT
         description: 'Number of decimal places to round to [default: 2]'
+      - names:
+          - --noheader
+        argument: ""
+        description: Do not print header
       - names:
           - -v
           - --verbose
@@ -636,6 +678,10 @@ subcommands:
           - --basename-sep
         argument: STRING
         description: 'Separate basename from the rest with this [default: _]'
+      - names:
+          - --zero-pad
+        argument: INT
+        description: 'Zero pad the counter to INT digits [default: 0]'
       - names:
           - -s
           - --strip-comments
@@ -717,9 +763,17 @@ subcommands:
         argument: ""
         description: Force FASTQ output
       - names:
+          - --report
+        argument: FILE
+        description: Save a report to FILE (original name, new name)
+      - names:
           - --list
         argument: ""
         description: Output a list of sequence names
+      - names:
+          - --anvio
+        argument: ""
+        description: Output in Anvio format (-p c_ -s -z --zeropad 12 --report rename_report.txt)
       - names:
           - -q
           - --fastq-qual
@@ -1042,4 +1096,4 @@ subcommands:
           - --help
         argument: ""
         description: Show this help
-version: 1.16.0
+version: 1.22.3

@@ -1,0 +1,126 @@
+name: minisplice
+description: Scoring GT/AG sites for improving spliced alignment
+usage: minisplice <command> <arguments>
+options: []
+subcommands:
+  - name: gentrain
+    description: generate training data
+    usage: minisplice gentrain [options] <in.bed> <in.fastx>
+    options:
+      - names:
+          - -l
+        argument: INT
+        description: length of flanking sequences [100]
+      - names:
+          - -p
+        argument: FLOAT
+        description: fraction of positive sites [0.25]
+  - name: train
+    description: model training
+    usage: minisplice train [options] <in.data>
+    options:
+      - names:
+          - -k
+        argument: INT
+        description: 1D-CNN kernel size [5]
+      - names:
+          - -f
+        argument: INT
+        description: number of features per 1D-CNN layer [16]
+      - names:
+          - -F
+        argument: INT
+        description: number of neurons in the dense layer [16]
+      - names:
+          - -d
+        argument: FLOAT
+        description: dropout rate (use for large models) [0]
+      - names:
+          - -r
+        argument: FLOAT
+        description: learning rate [0.001]
+      - names:
+          - -e
+        argument: INT
+        description: min number of epoches [3]
+      - names:
+          - -E
+        argument: INT
+        description: max number of epoches [100]
+      - names:
+          - -m
+        argument: INT
+        description: minibatch size [64]
+      - names:
+          - -s
+        argument: INT
+        description: random seed [11]
+      - names:
+          - -t
+        argument: INT
+        description: number of threads [1]
+      - names:
+          - -i
+        argument: FILE
+        description: input model []
+      - names:
+          - -o
+        argument: FILE
+        description: output model []
+  - name: inspect
+    description: print the model structure
+    usage: minisplice inspect <ann.kan>
+    options: []
+  - name: predict
+    description: predict splice sites
+    usage: minisplice predict [options] <in.kan> <in.fastx>|<train.txt>
+    options:
+      - names:
+          - -t
+        argument: INT
+        description: number of threads [1]
+      - names:
+          - -m
+        argument: INT
+        description: minibatch size [128]
+      - names:
+          - -d
+        argument: ""
+        description: donor only
+      - names:
+          - -a
+        argument: ""
+        description: acceptor only
+      - names:
+          - -E
+        argument: ""
+        description: print calibration data
+      - names:
+          - -c
+        argument: FILE
+        description: calibration data []
+      - names:
+          - -l
+        argument: INT
+        description: min score [-6]
+      - names:
+          - -h
+        argument: INT
+        description: max score [13]
+      - names:
+          - -p
+        argument: ""
+        description: print values at the last max1d layer
+      - names:
+          - -b
+        argument: FILE
+        description: annotated splice sites in BED12 []
+      - names:
+          - -s
+        argument: FLOAT
+        description: score bin size [0.02]
+      - names:
+          - -r
+        argument: ""
+        description: input formatted as training data
+version: 0.4-r118

@@ -1,5 +1,5 @@
 name: miniprot
-description: miniprot
+description: Align proteins to genomes with splicing and frameshift
 usage: miniprot [options] <ref.fa> <query.faa> [...]
 options:
   - names:
@@ -7,9 +7,17 @@ options:
     argument: INT
     description: k-mer size [6]
   - names:
-      - -s
+      - -M
     argument: INT
-    description: 'submer size (density: 1/(2*(k-s)+1)) [4]'
+    description: modimisers bit (sample rate = 1/2**M) [1]
+  - names:
+      - -L
+    argument: INT
+    description: min ORF length to index [30]
+  - names:
+      - -T
+    argument: INT
+    description: NCBI translation table (1 through 33) [1]
   - names:
       - -b
     argument: INT
@@ -25,11 +33,15 @@ options:
   - names:
       - -c
     argument: NUM
-    description: max k-mer occurrence [50000]
+    description: max k-mer occurrence [20000]
   - names:
       - -G
     argument: NUM
-    description: max intron size [200k]
+    description: max intron size; override -I [200k]
+  - names:
+      - -I
+    argument: ""
+    description: set max intron size to 3.6*sqrt(refLen)
   - names:
       - -w
     argument: FLOAT
@@ -37,7 +49,7 @@ options:
   - names:
       - -n
     argument: NUM
-    description: minimum number of syncmers in a chain [5]
+    description: minimum number of syncmers in a chain [3]
   - names:
       - -m
     argument: NUM
@@ -73,7 +85,7 @@ options:
   - names:
       - -F
     argument: INT
-    description: penalty for frameshifts or in-frame stop codons [17]
+    description: penalty for frameshifts or in-frame stop codons [23]
   - names:
       - -C
     argument: FLOAT
@@ -83,6 +95,18 @@ options:
     argument: INT
     description: bonus score for alignment reaching query ends [5]
   - names:
+      - -j
+    argument: INT
+    description: 'splice model: 2=vertebrate/insect, 1=general, 0=none (see manual) [1]'
+  - names:
+      - --spsc
+    argument: FILE
+    description: splice score file in format "ctg offset +|- D|A score" []
+  - names:
+      - --spsc0
+    argument: INT
+    description: splice score for sites not in --spsc [-7]
+  - names:
       - -t
     argument: INT
     description: number of threads [4]
@@ -90,6 +114,18 @@ options:
       - --gff
     argument: ""
     description: output in the GFF3 format
+  - names:
+      - --gtf
+    argument: ""
+    description: basic GTF output without detailed alignment
+  - names:
+      - --aln
+    argument: ""
+    description: output residue alignment
+  - names:
+      - --trans
+    argument: ""
+    description: output translated protein sequences (skipping frameshift)
   - names:
       - -P
     argument: STR
@@ -103,7 +139,15 @@ options:
     argument: NUM
     description: output up to min{NUM,-N} alignments per query [1000]
   - names:
+      - --outs
+    argument: FLOAT
+    description: output if score at least FLOAT*bestScore [0.99]
+  - names:
+      - --outc
+    argument: FLOAT
+    description: output if at least FLOAT fraction of query is aligned [0.1]
+  - names:
       - -K
     argument: NUM
     description: query batch size [2M]
-version: 0.4-r165
+version: 0.18-r281

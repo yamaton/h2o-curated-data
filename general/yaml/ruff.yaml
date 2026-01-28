@@ -1,0 +1,629 @@
+name: ruff
+description: An extremely fast Python linter and code formatter.
+usage: ruff [OPTIONS] <COMMAND>
+options:
+  - names:
+      - -h
+      - --help
+    argument: ""
+    description: Print help
+  - names:
+      - -V
+      - --version
+    argument: ""
+    description: Print version
+  - names:
+      - -v
+      - --verbose
+    argument: ""
+    description: Enable verbose logging
+  - names:
+      - -q
+      - --quiet
+    argument: ""
+    description: Print diagnostics, but nothing else
+  - names:
+      - -s
+      - --silent
+    argument: ""
+    description: Disable all logging (but still exit with status code "1" upon detecting diagnostics)
+  - names:
+      - --config
+    argument: <CONFIG_OPTION>
+    description: Either a path to a TOML configuration file (`pyproject.toml` or `ruff.toml`), or a TOML `<KEY> = <VALUE>` pair (such as you might find in a `ruff.toml` configuration file) overriding a specific configuration option. Overrides of individual settings using this option always take precedence over all configuration files, including configuration files that were also specified using `--config`
+  - names:
+      - --isolated
+    argument: ""
+    description: Ignore all configuration files
+subcommands:
+  - name: check
+    description: Run Ruff on the given files or directories
+    usage: ruff check [OPTIONS] [FILES]...
+    options:
+      - names:
+          - --fix
+        argument: ""
+        description: Apply fixes to resolve lint violations. Use `--no-fix` to disable or `--unsafe-fixes` to include unsafe fixes
+      - names:
+          - --unsafe-fixes
+        argument: ""
+        description: Include fixes that may not retain the original intent of the code. Use `--no-unsafe-fixes` to disable
+      - names:
+          - --show-fixes
+        argument: ""
+        description: Show an enumeration of all fixed lint violations. Use `--no-show-fixes` to disable
+      - names:
+          - --diff
+        argument: ""
+        description: Avoid writing any fixed files back; instead, output a diff for each changed file to stdout, and exit 0 if there are no diffs. Implies `--fix-only`
+      - names:
+          - -w
+          - --watch
+        argument: ""
+        description: Run in watch mode by re-running whenever files change
+      - names:
+          - --fix-only
+        argument: ""
+        description: Apply fixes to resolve lint violations, but don't report on, or exit non-zero for, leftover violations. Implies `--fix`. Use `--no-fix-only` to disable or `--unsafe-fixes` to include unsafe fixes
+      - names:
+          - --ignore-noqa
+        argument: ""
+        description: Ignore any `# noqa` comments
+      - names:
+          - --output-format
+        argument: <OUTPUT_FORMAT>
+        description: 'Output serialization format for violations. The default serialization format is "full" [env: RUFF_OUTPUT_FORMAT=] [possible values: concise, full, json, json-lines, junit, grouped, github, gitlab, pylint, rdjson, azure, sarif]'
+      - names:
+          - -o
+          - --output-file
+        argument: <OUTPUT_FILE>
+        description: 'Specify file to write the linter output to (default: stdout) [env: RUFF_OUTPUT_FILE=]'
+      - names:
+          - --target-version
+        argument: <TARGET_VERSION>
+        description: 'The minimum Python version that should be supported [possible values: py37, py38, py39, py310, py311, py312, py313, py314, py315]'
+      - names:
+          - --preview
+        argument: ""
+        description: Enable preview mode; checks will include unstable rules and fixes. Use `--no-preview` to disable
+      - names:
+          - --extension
+        argument: <EXTENSION>
+        description: List of mappings from file extension to language (one of `python`, `ipynb`, `pyi`). For example, to treat `.ipy` files as IPython notebooks, use `--extension ipy:ipynb`
+      - names:
+          - --statistics
+        argument: ""
+        description: Show counts for every rule with at least one violation
+      - names:
+          - --add-noqa
+        argument: '[=<REASON>]'
+        description: Enable automatic additions of `noqa` directives to failing lines. Optionally provide a reason to append after the codes
+      - names:
+          - --show-files
+        argument: ""
+        description: See the files Ruff will be run against with the current settings
+      - names:
+          - --show-settings
+        argument: ""
+        description: See the settings Ruff will use to lint a given Python file
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: Print help
+      - names:
+          - --select
+        argument: <RULE_CODE>
+        description: Comma-separated list of rule codes to enable (or ALL, to enable all rules)
+      - names:
+          - --ignore
+        argument: <RULE_CODE>
+        description: Comma-separated list of rule codes to disable
+      - names:
+          - --extend-select
+        argument: <RULE_CODE>
+        description: Like --select, but adds additional rule codes on top of those already specified
+      - names:
+          - --per-file-ignores
+        argument: <PER_FILE_IGNORES>
+        description: List of mappings from file pattern to code to exclude
+      - names:
+          - --extend-per-file-ignores
+        argument: <EXTEND_PER_FILE_IGNORES>
+        description: Like `--per-file-ignores`, but adds additional ignores on top of those already specified
+      - names:
+          - --fixable
+        argument: <RULE_CODE>
+        description: List of rule codes to treat as eligible for fix. Only applicable when fix itself is enabled (e.g., via `--fix`)
+      - names:
+          - --unfixable
+        argument: <RULE_CODE>
+        description: List of rule codes to treat as ineligible for fix. Only applicable when fix itself is enabled (e.g., via `--fix`)
+      - names:
+          - --extend-fixable
+        argument: <RULE_CODE>
+        description: Like --fixable, but adds additional rule codes on top of those already specified
+      - names:
+          - --exclude
+        argument: <FILE_PATTERN>
+        description: List of paths, used to omit files and/or directories from analysis
+      - names:
+          - --extend-exclude
+        argument: <FILE_PATTERN>
+        description: Like --exclude, but adds additional files and directories on top of those already excluded
+      - names:
+          - --respect-gitignore
+        argument: ""
+        description: Respect file exclusions via `.gitignore` and other standard ignore files. Use `--no-respect-gitignore` to disable
+      - names:
+          - --force-exclude
+        argument: ""
+        description: Enforce exclusions, even for paths passed to Ruff directly on the command-line. Use `--no-force-exclude` to disable
+      - names:
+          - -n
+          - --no-cache
+        argument: ""
+        description: 'Disable cache reads [env: RUFF_NO_CACHE=]'
+      - names:
+          - --cache-dir
+        argument: <CACHE_DIR>
+        description: 'Path to the cache directory [env: RUFF_CACHE_DIR=]'
+      - names:
+          - --stdin-filename
+        argument: <STDIN_FILENAME>
+        description: The name of the file when passing it through stdin
+      - names:
+          - -e
+          - --exit-zero
+        argument: ""
+        description: Exit with status code "0", even upon detecting lint violations
+      - names:
+          - --exit-non-zero-on-fix
+        argument: ""
+        description: Exit with a non-zero status code if any files were modified via fix, even if no lint violations remain
+      - names:
+          - -v
+          - --verbose
+        argument: ""
+        description: Enable verbose logging
+      - names:
+          - -q
+          - --quiet
+        argument: ""
+        description: Print diagnostics, but nothing else
+      - names:
+          - -s
+          - --silent
+        argument: ""
+        description: Disable all logging (but still exit with status code "1" upon detecting diagnostics)
+      - names:
+          - --config
+        argument: <CONFIG_OPTION>
+        description: Either a path to a TOML configuration file (`pyproject.toml` or `ruff.toml`), or a TOML `<KEY> = <VALUE>` pair (such as you might find in a `ruff.toml` configuration file) overriding a specific configuration option. Overrides of individual settings using this option always take precedence over all configuration files, including configuration files that were also specified using `--config`
+      - names:
+          - --isolated
+        argument: ""
+        description: Ignore all configuration files
+  - name: rule
+    description: Explain a rule (or all rules)
+    usage: ruff rule [OPTIONS] <RULE|--all>
+    options:
+      - names:
+          - --all
+        argument: ""
+        description: Explain all rules
+      - names:
+          - --output-format
+        argument: <OUTPUT_FORMAT>
+        description: 'Output format [default: text] [possible values: text, json]'
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: Print help
+      - names:
+          - -v
+          - --verbose
+        argument: ""
+        description: Enable verbose logging
+      - names:
+          - -q
+          - --quiet
+        argument: ""
+        description: Print diagnostics, but nothing else
+      - names:
+          - -s
+          - --silent
+        argument: ""
+        description: Disable all logging (but still exit with status code "1" upon detecting diagnostics)
+      - names:
+          - --config
+        argument: <CONFIG_OPTION>
+        description: Either a path to a TOML configuration file (`pyproject.toml` or `ruff.toml`), or a TOML `<KEY> = <VALUE>` pair (such as you might find in a `ruff.toml` configuration file) overriding a specific configuration option. Overrides of individual settings using this option always take precedence over all configuration files, including configuration files that were also specified using `--config`
+      - names:
+          - --isolated
+        argument: ""
+        description: Ignore all configuration files
+  - name: config
+    description: List or describe the available configuration options
+    usage: ruff config [OPTIONS] [OPTION]
+    options:
+      - names:
+          - --output-format
+        argument: <OUTPUT_FORMAT>
+        description: 'Output format [default: text] [possible values: text, json]'
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: Print help
+      - names:
+          - -v
+          - --verbose
+        argument: ""
+        description: Enable verbose logging
+      - names:
+          - -q
+          - --quiet
+        argument: ""
+        description: Print diagnostics, but nothing else
+      - names:
+          - -s
+          - --silent
+        argument: ""
+        description: Disable all logging (but still exit with status code "1" upon detecting diagnostics)
+      - names:
+          - --config
+        argument: <CONFIG_OPTION>
+        description: Either a path to a TOML configuration file (`pyproject.toml` or `ruff.toml`), or a TOML `<KEY> = <VALUE>` pair (such as you might find in a `ruff.toml` configuration file) overriding a specific configuration option. Overrides of individual settings using this option always take precedence over all configuration files, including configuration files that were also specified using `--config`
+      - names:
+          - --isolated
+        argument: ""
+        description: Ignore all configuration files
+  - name: linter
+    description: List all supported upstream linters
+    usage: ruff linter [OPTIONS]
+    options:
+      - names:
+          - --output-format
+        argument: <OUTPUT_FORMAT>
+        description: 'Output format [default: text] [possible values: text, json]'
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: Print help
+      - names:
+          - -v
+          - --verbose
+        argument: ""
+        description: Enable verbose logging
+      - names:
+          - -q
+          - --quiet
+        argument: ""
+        description: Print diagnostics, but nothing else
+      - names:
+          - -s
+          - --silent
+        argument: ""
+        description: Disable all logging (but still exit with status code "1" upon detecting diagnostics)
+      - names:
+          - --config
+        argument: <CONFIG_OPTION>
+        description: Either a path to a TOML configuration file (`pyproject.toml` or `ruff.toml`), or a TOML `<KEY> = <VALUE>` pair (such as you might find in a `ruff.toml` configuration file) overriding a specific configuration option. Overrides of individual settings using this option always take precedence over all configuration files, including configuration files that were also specified using `--config`
+      - names:
+          - --isolated
+        argument: ""
+        description: Ignore all configuration files
+  - name: clean
+    description: Clear any caches in the current directory and any subdirectories
+    usage: ruff clean [OPTIONS]
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: Print help
+      - names:
+          - -v
+          - --verbose
+        argument: ""
+        description: Enable verbose logging
+      - names:
+          - -q
+          - --quiet
+        argument: ""
+        description: Print diagnostics, but nothing else
+      - names:
+          - -s
+          - --silent
+        argument: ""
+        description: Disable all logging (but still exit with status code "1" upon detecting diagnostics)
+      - names:
+          - --config
+        argument: <CONFIG_OPTION>
+        description: Either a path to a TOML configuration file (`pyproject.toml` or `ruff.toml`), or a TOML `<KEY> = <VALUE>` pair (such as you might find in a `ruff.toml` configuration file) overriding a specific configuration option. Overrides of individual settings using this option always take precedence over all configuration files, including configuration files that were also specified using `--config`
+      - names:
+          - --isolated
+        argument: ""
+        description: Ignore all configuration files
+  - name: format
+    description: Run the Ruff formatter on the given files or directories
+    usage: ruff format [OPTIONS] [FILES]...
+    options:
+      - names:
+          - --check
+        argument: ""
+        description: Avoid writing any formatted files back; instead, exit with a non-zero status code if any files would have been modified, and zero otherwise
+      - names:
+          - --diff
+        argument: ""
+        description: Avoid writing any formatted files back; instead, exit with a non-zero status code and the difference between the current file and how the formatted file would look like
+      - names:
+          - --extension
+        argument: <EXTENSION>
+        description: List of mappings from file extension to language (one of `python`, `ipynb`, `pyi`). For example, to treat `.ipy` files as IPython notebooks, use `--extension ipy:ipynb`
+      - names:
+          - --target-version
+        argument: <TARGET_VERSION>
+        description: The minimum Python version that should be supported
+      - names:
+          - --preview
+        argument: ""
+        description: Enable preview mode; enables unstable formatting. Use `--no-preview` to disable
+      - names:
+          - --output-format
+        argument: <OUTPUT_FORMAT>
+        description: Output serialization format for violations, when used with `--check`. The default serialization format is "full".
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: Print help (see a summary with '-h')
+      - names:
+          - -n
+          - --no-cache
+        argument: ""
+        description: Disable cache reads
+      - names:
+          - --cache-dir
+        argument: <CACHE_DIR>
+        description: Path to the cache directory
+      - names:
+          - --stdin-filename
+        argument: <STDIN_FILENAME>
+        description: The name of the file when passing it through stdin
+      - names:
+          - --exit-non-zero-on-format
+        argument: ""
+        description: Exit with a non-zero status code if any files were modified via format, even if all files were formatted successfully
+      - names:
+          - --respect-gitignore
+        argument: ""
+        description: Respect file exclusions via `.gitignore` and other standard ignore files. Use `--no-respect-gitignore` to disable
+      - names:
+          - --exclude
+        argument: <FILE_PATTERN>
+        description: List of paths, used to omit files and/or directories from analysis
+      - names:
+          - --force-exclude
+        argument: ""
+        description: Enforce exclusions, even for paths passed to Ruff directly on the command-line. Use `--no-force-exclude` to disable
+      - names:
+          - --line-length
+        argument: <LINE_LENGTH>
+        description: Set the line-length
+      - names:
+          - --range
+        argument: <RANGE>
+        description: When specified, Ruff will try to only format the code in the given range. It might be necessary to extend the start backwards or the end forwards, to fully enclose a logical line. The `<RANGE>` uses the format `<start_line>:<start_column>-<end_line>:<end_column>`.
+      - names:
+          - -v
+          - --verbose
+        argument: ""
+        description: Enable verbose logging
+      - names:
+          - -q
+          - --quiet
+        argument: ""
+        description: Print diagnostics, but nothing else
+      - names:
+          - -s
+          - --silent
+        argument: ""
+        description: Disable all logging (but still exit with status code "1" upon detecting diagnostics)
+      - names:
+          - --config
+        argument: <CONFIG_OPTION>
+        description: Either a path to a TOML configuration file (`pyproject.toml` or `ruff.toml`), or a TOML `<KEY> = <VALUE>` pair (such as you might find in a `ruff.toml` configuration file) overriding a specific configuration option. Overrides of individual settings using this option always take precedence over all configuration files, including configuration files that were also specified using `--config`
+      - names:
+          - --isolated
+        argument: ""
+        description: Ignore all configuration files
+  - name: server
+    description: Run the language server
+    usage: ruff server [OPTIONS]
+    options:
+      - names:
+          - --preview
+        argument: ""
+        description: Enable preview mode. Use `--no-preview` to disable.
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: Print help (see a summary with '-h')
+      - names:
+          - -v
+          - --verbose
+        argument: ""
+        description: Enable verbose logging
+      - names:
+          - -q
+          - --quiet
+        argument: ""
+        description: Print diagnostics, but nothing else
+      - names:
+          - -s
+          - --silent
+        argument: ""
+        description: Disable all logging (but still exit with status code "1" upon detecting diagnostics)
+      - names:
+          - --config
+        argument: <CONFIG_OPTION>
+        description: Either a path to a TOML configuration file (`pyproject.toml` or `ruff.toml`), or a TOML `<KEY> = <VALUE>` pair (such as you might find in a `ruff.toml` configuration file) overriding a specific configuration option. Overrides of individual settings using this option always take precedence over all configuration files, including configuration files that were also specified using `--config`
+      - names:
+          - --isolated
+        argument: ""
+        description: Ignore all configuration files
+  - name: analyze
+    description: Run analysis over Python source code
+    usage: ruff analyze [OPTIONS] <COMMAND>
+    options:
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: Print help
+      - names:
+          - -v
+          - --verbose
+        argument: ""
+        description: Enable verbose logging
+      - names:
+          - -q
+          - --quiet
+        argument: ""
+        description: Print diagnostics, but nothing else
+      - names:
+          - -s
+          - --silent
+        argument: ""
+        description: Disable all logging (but still exit with status code "1" upon detecting diagnostics)
+      - names:
+          - --config
+        argument: <CONFIG_OPTION>
+        description: Either a path to a TOML configuration file (`pyproject.toml` or `ruff.toml`), or a TOML `<KEY> = <VALUE>` pair (such as you might find in a `ruff.toml` configuration file) overriding a specific configuration option. Overrides of individual settings using this option always take precedence over all configuration files, including configuration files that were also specified using `--config`
+      - names:
+          - --isolated
+        argument: ""
+        description: Ignore all configuration files
+    subcommands:
+      - name: graph
+        description: Generate a map of Python file dependencies or dependents
+        usage: ruff analyze graph [OPTIONS] [FILES]...
+        options:
+          - names:
+              - --direction
+            argument: <DIRECTION>
+            description: The direction of the import map. By default, generates a dependency map, i.e., a map from file to files that it depends on. Use
+          - names:
+              - --detect-string-imports
+            argument: ""
+            description: Attempt to detect imports from string literals
+          - names:
+              - --min-dots
+            argument: <MIN_DOTS>
+            description: The minimum number of dots in a string import to consider it a valid import
+          - names:
+              - --preview
+            argument: ""
+            description: Enable preview mode. Use `--no-preview` to disable
+          - names:
+              - --target-version
+            argument: <TARGET_VERSION>
+            description: The minimum Python version that should be supported
+          - names:
+              - --python
+            argument: <PYTHON>
+            description: Path to a virtual environment to use for resolving additional dependencies
+          - names:
+              - --type-checking-imports
+            argument: ""
+            description: Include imports that are only used for type checking (i.e., imports within `if TYPE_CHECKING:` blocks). Use
+          - names:
+              - -h
+              - --help
+            argument: ""
+            description: Print help (see a summary with '-h')
+          - names:
+              - -v
+              - --verbose
+            argument: ""
+            description: Enable verbose logging
+          - names:
+              - -q
+              - --quiet
+            argument: ""
+            description: Print diagnostics, but nothing else
+          - names:
+              - -s
+              - --silent
+            argument: ""
+            description: Disable all logging (but still exit with status code "1" upon detecting diagnostics)
+          - names:
+              - --config
+            argument: <CONFIG_OPTION>
+            description: Either a path to a TOML configuration file (`pyproject.toml` or `ruff.toml`), or a TOML `<KEY> = <VALUE>` pair (such as you might find in a `ruff.toml` configuration file) overriding a specific configuration option. Overrides of individual settings using this option always take precedence over all configuration files, including configuration files that were also specified using `--config`
+          - names:
+              - --isolated
+            argument: ""
+            description: Ignore all configuration files
+      - name: help
+        description: Print this message or the help of the given subcommand(s)
+        usage: ruff analyze help [COMMAND]...
+        options: []
+  - name: version
+    description: Display Ruff's version
+    usage: ruff version [OPTIONS]
+    options:
+      - names:
+          - --output-format
+        argument: <OUTPUT_FORMAT>
+        description: '[default: text] [possible values: text, json]'
+      - names:
+          - -h
+          - --help
+        argument: ""
+        description: Print help
+      - names:
+          - -v
+          - --verbose
+        argument: ""
+        description: Enable verbose logging
+      - names:
+          - -q
+          - --quiet
+        argument: ""
+        description: Print diagnostics, but nothing else
+      - names:
+          - -s
+          - --silent
+        argument: ""
+        description: Disable all logging (but still exit with status code "1" upon detecting diagnostics)
+      - names:
+          - --config
+        argument: <CONFIG_OPTION>
+        description: Either a path to a TOML configuration file (`pyproject.toml` or `ruff.toml`), or a TOML `<KEY> = <VALUE>` pair (such as you might find in a `ruff.toml` configuration file) overriding a specific configuration option. Overrides of individual settings using this option always take precedence over all configuration files, including configuration files that were also specified using `--config`
+      - names:
+          - --isolated
+        argument: ""
+        description: Ignore all configuration files
+  - name: help
+    description: Print this message or the help of the given subcommand(s)
+    usage: ruff help [COMMAND]...
+    options: []
+version: ruff 0.14.14
+tldr: |
+  > An extremely fast Python linter and code formatter, written in Rust.
+  > See also: `black`.
+  > More information: <https://docs.astral.sh/ruff/tutorial/>.
+
+  - View documentation for the Ruff linter:
+
+  `tldr ruff check`
+
+  - View documentation for the Ruff code formatter:
+
+  `tldr ruff format`

@@ -35,5 +35,11 @@ if [[ "$dir" != "general" ]] && [[ "$dir" != "bio" ]] && [[ "$dir" != "experimen
 fi
 
 yaml="$basedir/../$dir/yaml/$name.yaml"
-h2o --command "$name" --format json --skip-man | yq eval -P > "$yaml"
+yaml_dir="$(dirname "$yaml")"
+tmp_yaml="$(mktemp "$yaml_dir/.${name}.yaml.XXXXXX")"
+trap 'rm -f "$tmp_yaml"' EXIT
+
+h2o --command "$name" --format json --skip-man | yq eval -P > "$tmp_yaml"
+mv "$tmp_yaml" "$yaml"
+trap - EXIT
 echo "Created: $yaml"

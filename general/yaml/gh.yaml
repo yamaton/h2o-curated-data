@@ -25,6 +25,11 @@ subcommands:
         usage: gh auth login [flags]
         options:
           - names:
+              - -c
+              - --clipboard
+            argument: ""
+            description: Copy one-time OAuth device code to clipboard
+          - names:
               - -p
               - --git-protocol
             argument: string
@@ -82,6 +87,11 @@ subcommands:
         description: Refresh stored authentication credentials
         usage: gh auth refresh [flags]
         options:
+          - names:
+              - -c
+              - --clipboard
+            argument: ""
+            description: Copy one-time OAuth device code to clipboard
           - names:
               - -h
               - --hostname
@@ -143,10 +153,22 @@ subcommands:
             argument: string
             description: Check only a specific hostname's auth status
           - names:
+              - --jq
+            argument: expression
+            description: Filter JSON output using a jq expression
+          - names:
+              - --json
+            argument: fields
+            description: Output JSON with the specified fields
+          - names:
               - -t
               - --show-token
             argument: ""
             description: Display the auth token
+          - names:
+              - --template
+            argument: string
+            description: Format JSON output using a Go template; see "gh help formatting"
           - names:
               - --help
             argument: ""
@@ -188,9 +210,18 @@ subcommands:
             argument: ""
             description: Show help for command
   - name: browse
-    description: Open the repository in the browser
-    usage: gh browse [<number> | <path> | <commit-SHA>] [flags]
+    description: Open repositories, issues, pull requests, and more in the browser
+    usage: gh browse [<number> | <path> | <commit-sha>] [flags]
     options:
+      - names:
+          - -a
+          - --actions
+        argument: ""
+        description: Open repository actions
+      - names:
+          - --blame
+        argument: ""
+        description: Open blame view for a file
       - names:
           - -b
           - --branch
@@ -320,53 +351,53 @@ subcommands:
               - -b
               - --branch
             argument: string
-            description: repository branch
+            description: Repository branch
           - names:
               - --default-permissions
             argument: ""
-            description: do not prompt to accept additional permissions requested by the codespace
+            description: Do not prompt to accept additional permissions requested by the codespace
           - names:
               - --devcontainer-path
             argument: string
-            description: path to the devcontainer.json file to use when creating codespace
+            description: Path to the devcontainer.json file to use when creating codespace
           - names:
               - -d
               - --display-name
             argument: string
-            description: display name for the codespace (48 characters or less)
+            description: Display name for the codespace (48 characters or less)
           - names:
               - --idle-timeout
             argument: duration
-            description: allowed inactivity before codespace is stopped, e.g. "10m", "1h"
+            description: Allowed inactivity before codespace is stopped, e.g. "10m", "1h"
           - names:
               - -l
               - --location
             argument: string
-            description: 'location: {EastUs|SouthEastAsia|WestEurope|WestUs2} (determined automatically if not provided)'
+            description: 'Location: {EastUs|SouthEastAsia|WestEurope|WestUs2} (determined automatically if not provided)'
           - names:
               - -m
               - --machine
             argument: string
-            description: hardware specifications for the VM
+            description: Hardware specifications for the VM
           - names:
               - -R
               - --repo
             argument: string
-            description: 'repository name with owner: user/repo'
+            description: 'Repository name with owner: user/repo'
           - names:
               - --retention-period
             argument: duration
-            description: allowed time after shutting down before the codespace is automatically deleted (maximum 30 days), e.g. "1h", "72h"
+            description: Allowed time after shutting down before the codespace is automatically deleted (maximum 30 days), e.g. "1h", "72h"
           - names:
               - -s
               - --status
             argument: ""
-            description: show status of post-create command and dotfiles
+            description: Show status of post-create command and dotfiles
           - names:
               - -w
               - --web
             argument: ""
-            description: create codespace from browser, cannot be used with --display-name, --idle-timeout, or --retention-period
+            description: Create codespace from browser, cannot be used with --display-name, --idle-timeout, or --retention-period
           - names:
               - --help
             argument: ""
@@ -637,7 +668,7 @@ subcommands:
           - names:
               - --full
             argument: ""
-            description: perform a full rebuild
+            description: Perform a full rebuild
           - names:
               - -R
               - --repo
@@ -781,7 +812,7 @@ subcommands:
             description: Show help for command
       - name: create
         description: Create a new gist
-        usage: gh gist create [<filename>... | -] [flags]
+        usage: gh gist create [<filename>... | <pattern>... | -] [flags]
         options:
           - names:
               - -d
@@ -811,6 +842,10 @@ subcommands:
         description: Delete a gist
         usage: gh gist delete {<id> | <url>} [flags]
         options:
+          - names:
+              - --yes
+            argument: ""
+            description: Confirm deletion without prompting
           - names:
               - --help
             argument: ""
@@ -874,7 +909,7 @@ subcommands:
             description: Show help for command
       - name: rename
         description: Rename a file in a gist
-        usage: gh gist rename {<id> | <url>} <oldFilename> <newFilename> [flags]
+        usage: gh gist rename {<id> | <url>} <old-filename> <new-filename> [flags]
         options:
           - names:
               - --help
@@ -967,8 +1002,8 @@ subcommands:
           - names:
               - -T
               - --template
-            argument: file
-            description: Template file to use as starting body text
+            argument: name
+            description: Template name to use as starting body text
           - names:
               - -t
               - --title
@@ -1100,10 +1135,14 @@ subcommands:
             argument: string
             description: Leave a closing comment
           - names:
+              - --duplicate-of
+            argument: string
+            description: Mark as duplicate of another issue by number or URL
+          - names:
               - -r
               - --reason
             argument: string
-            description: 'Reason for closing: {completed|not planned}'
+            description: 'Reason for closing: {completed|not planned|duplicate}'
           - names:
               - --help
             argument: ""
@@ -1128,9 +1167,17 @@ subcommands:
             argument: file
             description: Read body text from file (use "-" to read from standard input)
           - names:
+              - --create-if-none
+            argument: ""
+            description: Create a new comment if no comments are found. Can be used only with --edit-last
+          - names:
+              - --delete-last
+            argument: ""
+            description: Delete the last comment of the current user
+          - names:
               - --edit-last
             argument: ""
-            description: Edit the last comment of the same author
+            description: Edit the last comment of the current user
           - names:
               - -e
               - --editor
@@ -1141,6 +1188,10 @@ subcommands:
               - --web
             argument: ""
             description: Open the web browser to write the comment
+          - names:
+              - --yes
+            argument: ""
+            description: Skip the delete confirmation prompt when --delete-last is provided
           - names:
               - --help
             argument: ""
@@ -1157,7 +1208,7 @@ subcommands:
           - names:
               - --yes
             argument: ""
-            description: confirm deletion without prompting
+            description: Confirm deletion without prompting
           - names:
               - --help
             argument: ""
@@ -1211,7 +1262,7 @@ subcommands:
           - names:
               - --add-assignee
             argument: login
-            description: Add assigned users by their login. Use "@me" to assign yourself.
+            description: Add assigned users by their login. Use "@me" to assign yourself, or "@copilot" to assign Copilot.
           - names:
               - --add-label
             argument: name
@@ -1238,7 +1289,7 @@ subcommands:
           - names:
               - --remove-assignee
             argument: login
-            description: Remove assigned users by their login. Use "@me" to unassign yourself.
+            description: Remove assigned users by their login. Use "@me" to unassign yourself, or "@copilot" to unassign Copilot.
           - names:
               - --remove-label
             argument: name
@@ -1566,7 +1617,7 @@ subcommands:
               - -H
               - --head
             argument: string
-            description: Filter by head branch
+            description: Filter by head branch ("<owner>:<branch>" syntax not supported)
           - names:
               - -q
               - --jq
@@ -1649,7 +1700,7 @@ subcommands:
             description: Select another repository using the [HOST/]OWNER/REPO format
       - name: checkout
         description: Check out a pull request in git
-        usage: gh pr checkout {<number> | <url> | <branch>} [flags]
+        usage: gh pr checkout [<number> | <url> | <branch>] [flags]
         options:
           - names:
               - -b
@@ -1689,9 +1740,8 @@ subcommands:
           - names:
               - -i
               - --interval
-              - --watch
-            argument: ""
-            description: Refresh interval in seconds when using --watch flag (default 10)
+            argument: int
+            description: Refresh interval in seconds in watch mode (default 10)
           - names:
               - -q
               - --jq
@@ -1766,9 +1816,17 @@ subcommands:
             argument: file
             description: Read body text from file (use "-" to read from standard input)
           - names:
+              - --create-if-none
+            argument: ""
+            description: Create a new comment if no comments are found. Can be used only with --edit-last
+          - names:
+              - --delete-last
+            argument: ""
+            description: Delete the last comment of the current user
+          - names:
               - --edit-last
             argument: ""
-            description: Edit the last comment of the same author
+            description: Edit the last comment of the current user
           - names:
               - -e
               - --editor
@@ -1779,6 +1837,10 @@ subcommands:
               - --web
             argument: ""
             description: Open the web browser to write the comment
+          - names:
+              - --yes
+            argument: ""
+            description: Skip the delete confirmation prompt when --delete-last is provided
           - names:
               - --help
             argument: ""
@@ -1796,6 +1858,11 @@ subcommands:
               - --color
             argument: string
             description: 'Use color in diff output: {always|never|auto} (default "auto")'
+          - names:
+              - -e
+              - --exclude
+            argument: patterns
+            description: Exclude files matching glob patterns from the diff
           - names:
               - --name-only
             argument: ""
@@ -1825,7 +1892,7 @@ subcommands:
           - names:
               - --add-assignee
             argument: login
-            description: Add assigned users by their login. Use "@me" to assign yourself.
+            description: Add assigned users by their login. Use "@me" to assign yourself, or "@copilot" to assign Copilot.
           - names:
               - --add-label
             argument: name
@@ -1837,7 +1904,7 @@ subcommands:
           - names:
               - --add-reviewer
             argument: login
-            description: Add reviewers by their login.
+            description: Add or re-request reviewers by their login. Use "@copilot" to request review from Copilot.
           - names:
               - -B
               - --base
@@ -1861,7 +1928,7 @@ subcommands:
           - names:
               - --remove-assignee
             argument: login
-            description: Remove assigned users by their login. Use "@me" to unassign yourself.
+            description: Remove assigned users by their login. Use "@me" to unassign yourself, or "@copilot" to unassign Copilot.
           - names:
               - --remove-label
             argument: name
@@ -1877,7 +1944,7 @@ subcommands:
           - names:
               - --remove-reviewer
             argument: login
-            description: Remove reviewers by their login.
+            description: Remove reviewers by their login. Use "@copilot" to remove review request from Copilot.
           - names:
               - -t
               - --title
@@ -2005,6 +2072,39 @@ subcommands:
               - --comment
             argument: string
             description: Add a reopening comment
+          - names:
+              - --help
+            argument: ""
+            description: Show help for command
+          - names:
+              - -R
+              - --repo
+            argument: '[HOST/]OWNER/REPO'
+            description: Select another repository using the [HOST/]OWNER/REPO format
+      - name: revert
+        description: Revert a pull request
+        usage: gh pr revert {<number> | <url> | <branch>} [flags]
+        options:
+          - names:
+              - -b
+              - --body
+            argument: string
+            description: Body for the revert pull request
+          - names:
+              - -F
+              - --body-file
+            argument: file
+            description: Read body text from file (use "-" to read from standard input)
+          - names:
+              - -d
+              - --draft
+            argument: ""
+            description: Mark revert pull request as a draft
+          - names:
+              - -t
+              - --title
+            argument: string
+            description: Title for the revert pull request
           - names:
               - --help
             argument: ""
@@ -2361,7 +2461,7 @@ subcommands:
             description: Show help for command
       - name: field-list
         description: List the fields in a project
-        usage: gh project field-list number [flags]
+        usage: gh project field-list [<number>] [flags]
         options:
           - names:
               - --format
@@ -2557,7 +2657,7 @@ subcommands:
             description: Filter JSON output using a jq expression
           - names:
               - --number
-            argument: float32
+            argument: float
             description: Number value for the field
           - names:
               - --project-id
@@ -2605,7 +2705,11 @@ subcommands:
           - names:
               - --owner
             argument: string
-            description: Login of the owner. Use "@me" for the current user.
+            description: Login of the owner. Use "@me" for the current user
+          - names:
+              - --query
+            argument: string
+            description: Filter items using the Projects filter syntax, e.g. "assignee:octocat -status:Done"
           - names:
               - -t
               - --template
@@ -2617,7 +2721,7 @@ subcommands:
             description: Show help for command
       - name: link
         description: Link a project to a repository or a team
-        usage: gh project link [<number>] [flag] [flags]
+        usage: gh project link [<number>] [flags]
         options:
           - names:
               - --owner
@@ -2709,7 +2813,7 @@ subcommands:
             description: Show help for command
       - name: unlink
         description: Unlink a project from a repository or a team
-        usage: gh project unlink [<number>] [flag] [flags]
+        usage: gh project unlink [<number>] [flags]
         options:
           - names:
               - --owner
@@ -2776,7 +2880,7 @@ subcommands:
     subcommands:
       - name: create
         description: Create a new release
-        usage: gh release create [<tag>] [<files>...]
+        usage: gh release create [<tag>] [<filename>... | <pattern>...]
         options:
           - names:
               - --discussion-category
@@ -2788,9 +2892,13 @@ subcommands:
             argument: ""
             description: Save the release as a draft instead of publishing it
           - names:
+              - --fail-on-no-commits
+            argument: ""
+            description: Fail if there are no commits since the last release (no impact on the first release)
+          - names:
               - --generate-notes
             argument: ""
-            description: Automatically generate title and notes for the release
+            description: Automatically generate title and notes for the release via GitHub Release Notes API
           - names:
               - --latest
             argument: ""
@@ -2808,7 +2916,7 @@ subcommands:
           - names:
               - --notes-from-tag
             argument: ""
-            description: Automatically generate notes from annotated tag
+            description: Fetch notes from the tag annotation or message of commit associated with tag
           - names:
               - --notes-start-tag
             argument: string
@@ -3029,7 +3137,61 @@ subcommands:
           - names:
               - --clobber
             argument: ""
-            description: Overwrite existing assets of the same name
+            description: Delete and re-upload existing assets of the same name
+          - names:
+              - --help
+            argument: ""
+            description: Show help for command
+          - names:
+              - -R
+              - --repo
+            argument: '[HOST/]OWNER/REPO'
+            description: Select another repository using the [HOST/]OWNER/REPO format
+      - name: verify
+        description: Verify the attestation for a release
+        usage: gh release verify [<tag>] [flags]
+        options:
+          - names:
+              - --format
+            argument: string
+            description: 'Output format: {json}'
+          - names:
+              - -q
+              - --jq
+            argument: expression
+            description: Filter JSON output using a jq expression
+          - names:
+              - -t
+              - --template
+            argument: string
+            description: Format JSON output using a Go template; see "gh help formatting"
+          - names:
+              - --help
+            argument: ""
+            description: Show help for command
+          - names:
+              - -R
+              - --repo
+            argument: '[HOST/]OWNER/REPO'
+            description: Select another repository using the [HOST/]OWNER/REPO format
+      - name: verify-asset
+        description: Verify that a given asset originated from a release
+        usage: gh release verify-asset [<tag>] <file-path> [flags]
+        options:
+          - names:
+              - --format
+            argument: string
+            description: 'Output format: {json}'
+          - names:
+              - -q
+              - --jq
+            argument: expression
+            description: Filter JSON output using a jq expression
+          - names:
+              - -t
+              - --template
+            argument: string
+            description: Format JSON output using a Go template; see "gh help formatting"
           - names:
               - --help
             argument: ""
@@ -3234,10 +3396,122 @@ subcommands:
               - --help
             argument: ""
             description: Show help for command
+      - name: autolink
+        description: Manage autolink references
+        usage: gh repo autolink <command> [flags]
+        options:
+          - names:
+              - -R
+              - --repo
+            argument: '[HOST/]OWNER/REPO'
+            description: Select another repository using the [HOST/]OWNER/REPO format
+          - names:
+              - --help
+            argument: ""
+            description: Show help for command
+        subcommands:
+          - name: create
+            description: Create a new autolink reference
+            usage: gh repo autolink create <keyPrefix> <urlTemplate> [flags]
+            options:
+              - names:
+                  - -n
+                  - --numeric
+                argument: ""
+                description: Mark autolink as numeric
+              - names:
+                  - --help
+                argument: ""
+                description: Show help for command
+              - names:
+                  - -R
+                  - --repo
+                argument: '[HOST/]OWNER/REPO'
+                description: Select another repository using the [HOST/]OWNER/REPO format
+          - name: delete
+            description: Delete an autolink reference
+            usage: gh repo autolink delete <id> [flags]
+            options:
+              - names:
+                  - --yes
+                argument: ""
+                description: Confirm deletion without prompting
+              - names:
+                  - --help
+                argument: ""
+                description: Show help for command
+              - names:
+                  - -R
+                  - --repo
+                argument: '[HOST/]OWNER/REPO'
+                description: Select another repository using the [HOST/]OWNER/REPO format
+          - name: list
+            description: List autolink references for a GitHub repository
+            usage: gh repo autolink list [flags]
+            options:
+              - names:
+                  - -q
+                  - --jq
+                argument: expression
+                description: Filter JSON output using a jq expression
+              - names:
+                  - --json
+                argument: fields
+                description: Output JSON with the specified fields
+              - names:
+                  - -t
+                  - --template
+                argument: string
+                description: Format JSON output using a Go template; see "gh help formatting"
+              - names:
+                  - -w
+                  - --web
+                argument: ""
+                description: List autolink references in the web browser
+              - names:
+                  - --help
+                argument: ""
+                description: Show help for command
+              - names:
+                  - -R
+                  - --repo
+                argument: '[HOST/]OWNER/REPO'
+                description: Select another repository using the [HOST/]OWNER/REPO format
+          - name: view
+            description: View an autolink reference
+            usage: gh repo autolink view <id> [flags]
+            options:
+              - names:
+                  - -q
+                  - --jq
+                argument: expression
+                description: Filter JSON output using a jq expression
+              - names:
+                  - --json
+                argument: fields
+                description: Output JSON with the specified fields
+              - names:
+                  - -t
+                  - --template
+                argument: string
+                description: Format JSON output using a Go template; see "gh help formatting"
+              - names:
+                  - --help
+                argument: ""
+                description: Show help for command
+              - names:
+                  - -R
+                  - --repo
+                argument: '[HOST/]OWNER/REPO'
+                description: Select another repository using the [HOST/]OWNER/REPO format
       - name: clone
         description: Clone a repository locally
         usage: gh repo clone <repository> [<directory>] [-- <gitflags>...]
         options:
+          - names:
+              - --no-upstream
+            argument: ""
+            description: Do not add an upstream remote when cloning a fork
           - names:
               - -u
               - --upstream-remote-name
@@ -3254,7 +3528,7 @@ subcommands:
           - names:
               - --yes
             argument: ""
-            description: confirm deletion without prompting
+            description: Confirm deletion without prompting
           - names:
               - --help
             argument: ""
@@ -3370,6 +3644,10 @@ subcommands:
             argument: string
             description: Description of the repository
           - names:
+              - --enable-advanced-security
+            argument: ""
+            description: Enable advanced security in the repository
+          - names:
               - --enable-auto-merge
             argument: ""
             description: Enable auto-merge functionality
@@ -3394,6 +3672,14 @@ subcommands:
             argument: ""
             description: Enable merging pull requests via rebase
           - names:
+              - --enable-secret-scanning
+            argument: ""
+            description: Enable secret scanning in the repository
+          - names:
+              - --enable-secret-scanning-push-protection
+            argument: ""
+            description: Enable secret scanning push protection in the repository. Secret scanning must be enabled first
+          - names:
               - --enable-squash-merge
             argument: ""
             description: Enable merging pull requests via squashed commit
@@ -3410,6 +3696,10 @@ subcommands:
               - --remove-topic
             argument: strings
             description: Remove repository topic
+          - names:
+              - --squash-merge-commit-message
+            argument: string
+            description: 'The default value for a squash merge commit message: {default|pr-title|pr-title-commits|pr-title-description}'
           - names:
               - --template
             argument: ""
@@ -3498,7 +3788,7 @@ subcommands:
                 description: Show help for command
           - name: view
             description: View a specific repository license
-            usage: gh repo license view {<license-key> | <SPDX-ID>} [flags]
+            usage: gh repo license view {<license-key> | <spdx-id>} [flags]
             options:
               - names:
                   - -w
@@ -3535,12 +3825,12 @@ subcommands:
               - -u
               - --unset
             argument: ""
-            description: unset the current default repository
+            description: Unset the current default repository
           - names:
               - -v
               - --view
             argument: ""
-            description: view the current default repository
+            description: View the current default repository
           - names:
               - --help
             argument: ""
@@ -3612,6 +3902,151 @@ subcommands:
               - --help
             argument: ""
             description: Show help for command
+  - name: skill
+    description: Install and manage agent skills (preview)
+    usage: gh skill <command> [flags]
+    options:
+      - names:
+          - --help
+        argument: ""
+        description: Show help for command
+    subcommands:
+      - name: install
+        description: Install agent skills from a GitHub repository (preview)
+        usage: gh skill install <repository> [<skill[@version]>] [flags]
+        options:
+          - names:
+              - --agent
+            argument: string
+            description: Target agent (see supported values above)
+          - names:
+              - --allow-hidden-dirs
+            argument: ""
+            description: Include skills in hidden directories (e.g. .claude/skills/, .agents/skills/)
+          - names:
+              - --dir
+            argument: string
+            description: Install to a custom directory (overrides --agent and --scope)
+          - names:
+              - -f
+              - --force
+            argument: ""
+            description: Overwrite existing skills without prompting
+          - names:
+              - --from-local
+            argument: ""
+            description: Treat the argument as a local directory path instead of a repository
+          - names:
+              - --pin
+            argument: string
+            description: Pin to a specific git tag or commit SHA
+          - names:
+              - --scope
+            argument: string
+            description: 'Installation scope: {project|user} (default "project")'
+          - names:
+              - --upstream
+            argument: ""
+            description: Install from the upstream source when a re-published skill is detected
+          - names:
+              - --help
+            argument: ""
+            description: Show help for command
+      - name: preview
+        description: Preview a skill from a GitHub repository (preview)
+        usage: gh skill preview <repository> [<skill>] [flags]
+        options:
+          - names:
+              - --allow-hidden-dirs
+            argument: ""
+            description: Include skills in hidden directories (e.g. .claude/skills/, .agents/skills/)
+          - names:
+              - --help
+            argument: ""
+            description: Show help for command
+      - name: publish
+        description: Validate and publish skills to a GitHub repository (preview)
+        usage: gh skill publish [<directory>] [flags]
+        options:
+          - names:
+              - --dry-run
+            argument: ""
+            description: Validate without publishing
+          - names:
+              - --fix
+            argument: ""
+            description: Auto-fix issues where possible without publishing (e.g. strip install metadata)
+          - names:
+              - --tag
+            argument: string
+            description: Version tag for the release (e.g. v1.0.0)
+          - names:
+              - --help
+            argument: ""
+            description: Show help for command
+      - name: search
+        description: Search for skills across GitHub (preview)
+        usage: gh skill search <query> [flags]
+        options:
+          - names:
+              - -q
+              - --jq
+            argument: expression
+            description: Filter JSON output using a jq expression
+          - names:
+              - --json
+            argument: fields
+            description: Output JSON with the specified fields
+          - names:
+              - -L
+              - --limit
+            argument: int
+            description: Maximum number of results per page (default 15)
+          - names:
+              - --owner
+            argument: string
+            description: Filter results to a specific GitHub user or organization
+          - names:
+              - --page
+            argument: int
+            description: Page number of results to fetch (default 1)
+          - names:
+              - -t
+              - --template
+            argument: string
+            description: Format JSON output using a Go template; see "gh help formatting"
+          - names:
+              - --help
+            argument: ""
+            description: Show help for command
+      - name: update
+        description: Update installed skills to their latest versions (preview)
+        usage: gh skill update [<skill>...] [flags]
+        options:
+          - names:
+              - --all
+            argument: ""
+            description: Update all skills without prompting
+          - names:
+              - --dir
+            argument: string
+            description: Scan a custom directory for installed skills
+          - names:
+              - --dry-run
+            argument: ""
+            description: Report available updates without modifying files
+          - names:
+              - --force
+            argument: ""
+            description: Re-download even if already up to date
+          - names:
+              - --unpin
+            argument: ""
+            description: Clear pinned version and include pinned skills in update
+          - names:
+              - --help
+            argument: ""
+            description: Show help for command
   - name: cache
     description: Manage GitHub Actions caches
     usage: gh cache <command> [flags]
@@ -3628,13 +4063,23 @@ subcommands:
     subcommands:
       - name: delete
         description: Delete GitHub Actions caches
-        usage: gh cache delete [<cache-id>| <cache-key> | --all] [flags]
+        usage: gh cache delete [<cache-id> | <cache-key> | --all] [flags]
         options:
           - names:
               - -a
               - --all
             argument: ""
-            description: Delete all caches
+            description: Delete all caches, can be used with --ref to delete all caches for a specific ref
+          - names:
+              - -r
+              - --ref
+            argument: string
+            description: Delete by cache key and ref, formatted as refs/heads/<branch name> or refs/pull/<number>/merge
+          - names:
+              - --succeed-on-no-caches
+              - --all
+            argument: ""
+            description: Return exit code 0 if no caches found. Must be used in conjunction with --all
           - names:
               - --help
             argument: ""
@@ -3714,6 +4159,10 @@ subcommands:
         description: Cancel a workflow run
         usage: gh run cancel [<run-id>] [flags]
         options:
+          - names:
+              - --force
+            argument: ""
+            description: Force cancel a workflow run
           - names:
               - --help
             argument: ""
@@ -3810,7 +4259,7 @@ subcommands:
               - -s
               - --status
             argument: string
-            description: 'Filter runs by status: {queued|completed|in_progress|requested|waiting|action_required|cancelled|failure|neutral|skipped|stale|startup_failure|success|timed_out}'
+            description: 'Filter runs by status: {queued|completed|in_progress|requested|waiting|pending|action_required|cancelled|failure|neutral|skipped|stale|startup_failure|success|timed_out}'
           - names:
               - -t
               - --template
@@ -3925,6 +4374,10 @@ subcommands:
         description: Watch a run until it completes, showing its progress
         usage: gh run watch <run-id> [flags]
         options:
+          - names:
+              - --compact
+            argument: ""
+            description: Show only relevant/failed steps
           - names:
               - --exit-status
             argument: ""
@@ -4042,7 +4495,7 @@ subcommands:
               - -r
               - --ref
             argument: string
-            description: The branch or tag name which contains the version of the workflow file you'd like to run
+            description: Branch or tag name which contains the version of the workflow file you'd like to run
           - names:
               - --help
             argument: ""
@@ -4080,90 +4533,9 @@ subcommands:
               - --repo
             argument: '[HOST/]OWNER/REPO'
             description: Select another repository using the [HOST/]OWNER/REPO format
-  - name: copilot
-    description: Extension copilot
-    usage: copilot [command]
-    options:
-      - names:
-          - -h
-          - --help
-        argument: ""
-        description: help for copilot
-      - names:
-          - --hostname
-        argument: string
-        description: The GitHub host to use for authentication
-      - names:
-          - -v
-          - --version
-        argument: ""
-        description: version for copilot
-    subcommands:
-      - name: alias
-        description: Generate shell-specific aliases for convenience
-        usage: copilot alias <shell> [flags]
-        options:
-          - names:
-              - -h
-              - --help
-            argument: ""
-            description: help for alias
-          - names:
-              - --hostname
-            argument: string
-            description: The GitHub host to use for authentication
-      - name: config
-        description: Configure options
-        usage: copilot config [flags]
-        options:
-          - names:
-              - -h
-              - --help
-            argument: ""
-            description: help for config
-          - names:
-              - --hostname
-            argument: string
-            description: The GitHub host to use for authentication
-      - name: explain
-        description: Explain a command
-        usage: copilot explain [command] [flags]
-        options:
-          - names:
-              - -h
-              - --help
-            argument: ""
-            description: help for explain
-          - names:
-              - --hostname
-            argument: string
-            description: The GitHub host to use for authentication
-      - name: suggest
-        description: Suggest a command
-        usage: copilot suggest [prompt] [flags]
-        options:
-          - names:
-              - -h
-              - --help
-            argument: ""
-            description: help for suggest
-          - names:
-              - -s
-              - --shell-out
-            argument: string
-            description: Path to file for outputting command to execute
-          - names:
-              - -t
-              - --target
-            argument: target
-            description: Target for suggestion; must be shell, gh, git
-          - names:
-              - --hostname
-            argument: string
-            description: The GitHub host to use for authentication
   - name: co
     description: Alias for "pr checkout"
-    usage: gh pr checkout {<number> | <url> | <branch>} [flags]
+    usage: gh pr checkout [<number> | <url> | <branch>] [flags]
     options:
       - names:
           - -b
@@ -4192,6 +4564,119 @@ subcommands:
           - --repo
         argument: '[HOST/]OWNER/REPO'
         description: Select another repository using the [HOST/]OWNER/REPO format
+  - name: agent-task
+    description: Work with agent tasks (preview)
+    usage: gh agent-task <command> [flags]
+    options:
+      - names:
+          - --help
+        argument: ""
+        description: Show help for command
+    subcommands:
+      - name: create
+        description: Create an agent task (preview)
+        usage: gh agent-task create [<task description>] [flags]
+        options:
+          - names:
+              - -b
+              - --base
+            argument: string
+            description: Base branch for the pull request (use default branch if not provided)
+          - names:
+              - -a
+              - --custom-agent
+            argument: string
+            description: Use a custom agent for the task. e.g., use 'my-agent' for the 'my-agent.md' agent
+          - names:
+              - --follow
+            argument: ""
+            description: Follow agent session logs
+          - names:
+              - -F
+              - --from-file
+            argument: file
+            description: Read task description from file (use "-" to read from standard input)
+          - names:
+              - -R
+              - --repo
+            argument: '[HOST/]OWNER/REPO'
+            description: Select another repository using the [HOST/]OWNER/REPO format
+          - names:
+              - --help
+            argument: ""
+            description: Show help for command
+      - name: list
+        description: List agent tasks (preview)
+        usage: gh agent-task list [flags]
+        options:
+          - names:
+              - -q
+              - --jq
+            argument: expression
+            description: Filter JSON output using a jq expression
+          - names:
+              - --json
+            argument: fields
+            description: Output JSON with the specified fields
+          - names:
+              - -L
+              - --limit
+            argument: int
+            description: Maximum number of agent tasks to fetch (default 30)
+          - names:
+              - -t
+              - --template
+            argument: string
+            description: Format JSON output using a Go template; see "gh help formatting"
+          - names:
+              - -w
+              - --web
+            argument: ""
+            description: Open agent tasks in the browser
+          - names:
+              - --help
+            argument: ""
+            description: Show help for command
+      - name: view
+        description: View an agent task session (preview)
+        usage: gh agent-task view [<session-id> | <pr-number> | <pr-url> | <pr-branch>] [flags]
+        options:
+          - names:
+              - --follow
+            argument: ""
+            description: Follow agent session logs
+          - names:
+              - -q
+              - --jq
+            argument: expression
+            description: Filter JSON output using a jq expression
+          - names:
+              - --json
+            argument: fields
+            description: Output JSON with the specified fields
+          - names:
+              - --log
+            argument: ""
+            description: Show agent session logs
+          - names:
+              - -R
+              - --repo
+            argument: '[HOST/]OWNER/REPO'
+            description: Select another repository using the [HOST/]OWNER/REPO format
+          - names:
+              - -t
+              - --template
+            argument: string
+            description: Format JSON output using a Go template; see "gh help formatting"
+          - names:
+              - -w
+              - --web
+            argument: ""
+            description: Open agent task in the browser
+          - names:
+              - --help
+            argument: ""
+            description: Show help for command
   - name: alias
     description: Create command shortcuts
     usage: gh alias <command> [flags]
@@ -4262,7 +4747,7 @@ subcommands:
           - -F
           - --field
         argument: key=value
-        description: Add a typed parameter in key=value format
+        description: Add a typed parameter in key=value format (use "@<path>" or "@-" to read value from file or stdin)
       - names:
           - -H
           - --header
@@ -4298,8 +4783,8 @@ subcommands:
       - names:
           - -p
           - --preview
-        argument: names
-        description: GitHub API preview names to request (without the "-preview" suffix)
+        argument: strings
+        description: Opt into GitHub API previews (names should omit '-preview')
       - names:
           - -f
           - --raw-field
@@ -4357,7 +4842,7 @@ subcommands:
               - -o
               - --owner
             argument: string
-            description: a GitHub organization to scope attestation lookup by
+            description: GitHub organization to scope attestation lookup by
           - names:
               - --predicate-type
             argument: string
@@ -4411,16 +4896,16 @@ subcommands:
           - names:
               - --cert-identity
             argument: string
-            description: Enforce that the certificate's subject alternative name matches the provided value exactly
+            description: Enforce that the certificate's SubjectAlternativeName matches the provided value exactly
           - names:
               - -i
               - --cert-identity-regex
             argument: string
-            description: Enforce that the certificate's subject alternative name matches the provided regex
+            description: Enforce that the certificate's SubjectAlternativeName matches the provided regex
           - names:
               - --cert-oidc-issuer
             argument: string
-            description: Issuer of the OIDC token (default "https://token.actions.githubusercontent.com")
+            description: Enforce that the issuer of the OIDC token matches the provided value (default "https://token.actions.githubusercontent.com")
           - names:
               - --custom-trusted-root
             argument: string
@@ -4464,20 +4949,32 @@ subcommands:
           - names:
               - --predicate-type
             argument: string
-            description: Filter attestations by provided predicate type (default "https://slsa.dev/provenance/v1")
+            description: Enforce that verified attestations' predicate type matches the provided value (default "https://slsa.dev/provenance/v1")
           - names:
               - -R
               - --repo
             argument: string
             description: Repository name in the format <owner>/<repo>
           - names:
+              - --signer-digest
+            argument: string
+            description: Enforce that the digest associated with the signer workflow matches the provided value
+          - names:
               - --signer-repo
             argument: string
-            description: Repository of reusable workflow that signed attestation in the format <owner>/<repo>
+            description: Enforce that the workflow that signed the attestation's repository matches the provided value (<owner>/<repo>)
           - names:
               - --signer-workflow
             argument: string
-            description: Workflow that signed attestation in the format [host/]<owner>/<repo>/<path>/<to>/<workflow>
+            description: Enforce that the workflow that signed the attestation matches the provided value ([host/]<owner>/<repo>/<path>/<to>/<workflow>)
+          - names:
+              - --source-digest
+            argument: string
+            description: Enforce that the digest associated with the source repository matches the provided value
+          - names:
+              - --source-ref
+            argument: string
+            description: Enforce that the git ref associated with the source repository matches the provided value
           - names:
               - -t
               - --template
@@ -4556,6 +5053,18 @@ subcommands:
               - --help
             argument: ""
             description: Show help for command
+  - name: copilot
+    description: Run the GitHub Copilot CLI (preview)
+    usage: gh copilot [flags] [args]
+    options:
+      - names:
+          - --remove
+        argument: ""
+        description: Remove the downloaded Copilot CLI
+      - names:
+          - --help
+        argument: ""
+        description: Show help for command
   - name: extension
     description: Manage gh extensions
     usage: gh extension [flags]
@@ -4572,7 +5081,7 @@ subcommands:
           - names:
               - --debug
             argument: ""
-            description: log to /tmp/extBrowse-*
+            description: Log to /tmp/extBrowse-*
           - names:
               - -s
               - --single-column
@@ -4601,11 +5110,11 @@ subcommands:
           - names:
               - --force
             argument: ""
-            description: force upgrade extension, or ignore if latest already installed
+            description: Force upgrade extension, or ignore if latest already installed
           - names:
               - --pin
             argument: string
-            description: pin extension to a release tag or commit ref
+            description: Pin extension to a release tag or commit ref
           - names:
               - --help
             argument: ""
@@ -4892,6 +5401,31 @@ subcommands:
               - --repo
             argument: '[HOST/]OWNER/REPO'
             description: Select another repository using the [HOST/]OWNER/REPO format
+  - name: licenses
+    description: View third-party license information
+    usage: gh licenses [flags]
+    options:
+      - names:
+          - --help
+        argument: ""
+        description: Show help for command
+  - name: preview
+    description: Execute previews for gh features
+    usage: gh preview <command> [flags]
+    options:
+      - names:
+          - --help
+        argument: ""
+        description: Show help for command
+    subcommands:
+      - name: prompter
+        description: Execute a test program to preview the prompter
+        usage: gh preview prompter [prompt type] [flags]
+        options:
+          - names:
+              - --help
+            argument: ""
+            description: Show help for command
   - name: ruleset
     description: View info about repo rulesets
     usage: gh ruleset <command> [flags]
@@ -5735,6 +6269,10 @@ subcommands:
             argument: file
             description: Load secret names and values from a dotenv-formatted file
           - names:
+              - --no-repos-selected
+            argument: ""
+            description: No repositories can access the organization secret
+          - names:
               - --no-store
             argument: ""
             description: Print the encrypted, base64-encoded value instead of storing it on GitHub
@@ -5986,7 +6524,7 @@ subcommands:
               - --repo
             argument: '[HOST/]OWNER/REPO'
             description: Select another repository using the [HOST/]OWNER/REPO format
-version: gh version 2.63.1 (2024-12-03)
+version: gh version 2.92.0 (2026-04-28)
 tldr: |
   > Work seamlessly with GitHub.
   > Some subcommands such as `config` have their own usage documentation.

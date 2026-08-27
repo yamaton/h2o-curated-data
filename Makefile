@@ -39,33 +39,39 @@ $(group)/json/%.json: $(yaml2json) $(group)/yaml/%.yaml
 
 # Convert JSON to Bash
 $(group)/bash/completions/%: $(is_already_available) $(group)/json/%.json
-	@if $(is_already_available) bash $*; then \
-		echo "👀  $* is already supported in bash. Skipping..."; \
-	else \
-		echo "🦉  $*: Generating bash"; \
-		mkdir -p $(group)/bash/completions; \
-		h2o --loadjson $(group)/json/$*.json --format bash > $@; \
-	fi
+	@status=0; $(is_already_available) bash $* || status=$$?; \
+	case $$status in \
+		0) echo "👀  $* is already officially supported in bash. Skipping..." ;; \
+		1) echo "🦉  $*: Generating bash"; \
+		   mkdir -p $(group)/bash/completions; \
+		   h2o --loadjson $(group)/json/$*.json --format bash > $@ ;; \
+		*) echo "❌  $*: Could not check official bash completion support." >&2; \
+		   exit $$status ;; \
+	esac
 
 # Convert JSON to Zsh
 $(group)/zsh/completions/_%: $(is_already_available) $(group)/json/%.json
-	@if $(is_already_available) zsh $*; then \
-		echo "👀  $* is already supported in zsh. Skipping..."; \
-	else \
-		echo "💤  $*: Generating zsh"; \
-		mkdir -p $(group)/zsh/completions; \
-		h2o --loadjson $(group)/json/$*.json --format zsh > $@; \
-	fi
+	@status=0; $(is_already_available) zsh $* || status=$$?; \
+	case $$status in \
+		0) echo "👀  $* is already officially supported in zsh. Skipping..." ;; \
+		1) echo "💤  $*: Generating zsh"; \
+		   mkdir -p $(group)/zsh/completions; \
+		   h2o --loadjson $(group)/json/$*.json --format zsh > $@ ;; \
+		*) echo "❌  $*: Could not check official zsh completion support." >&2; \
+		   exit $$status ;; \
+	esac
 
 # Convert JSON to Fish
 $(group)/fish/completions/%.fish: $(is_already_available) $(group)/json/%.json
-	@if $(is_already_available) fish $*; then \
-		echo "👀  $* is already supported in fish. Skipping..."; \
-	else \
-		echo "🐟  $*: Generating fish"; \
-		mkdir -p $(group)/fish/completions; \
-		h2o --loadjson $(group)/json/$*.json --format fish > $@; \
-	fi
+	@status=0; $(is_already_available) fish $* || status=$$?; \
+	case $$status in \
+		0) echo "👀  $* is already officially supported in fish. Skipping..." ;; \
+		1) echo "🐟  $*: Generating fish"; \
+		   mkdir -p $(group)/fish/completions; \
+		   h2o --loadjson $(group)/json/$*.json --format fish > $@ ;; \
+		*) echo "❌  $*: Could not check official fish completion support." >&2; \
+		   exit $$status ;; \
+	esac
 
 # Make a list of commands
 $(output_list): $(make_list) $(json)

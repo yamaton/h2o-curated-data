@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 #
-# Check if completion script is provided in the official Bash/Zsh/Fish channels
+# Check if completion script is provided in the official Bash/Zsh/Fish channels.
+# Fish and Zsh are checked against their remote GitHub repositories. Repository
+# trees are cached briefly to avoid a network request for every Make target.
 #
 # Usage: check-if-completion-available-to {bash|zsh|fish} <command-name>
 #
@@ -17,42 +19,314 @@ if [[ "${TRACE-0}" == "1" ]]; then
     set -o xtrace
 fi
 
-if [[ ! "$(command -v git)" ]]; then
-    echo "[error] git is missing"
-    exit 1
-fi
-
-toshell=$1
-name="$2"
-
 if (( "$#" != 2 ))  || [[ "${1-}" =~ ^-*h(elp)?$ ]]; then
     echo "Usage: check-if-completion-available-to {bash|zsh|fish} <command>"
     exit 1
 fi
 
-rootdir="$HOME/repos"
-mkdir -p "$rootdir"
+toshell="$1"
+name="$2"
+completion_cache_lock_dir=""
+completion_cache_tmp_file=""
+completion_remote_tree_file=""
+completion_remote_match_path=""
+
+function require_command() {
+    local command_name="$1"
+    if ! command -v "$command_name" >/dev/null; then
+        echo "[error] $command_name is missing" >&2
+        return 2
+    fi
+}
+
+function file_mtime() {
+    local file="$1"
+    local modified
+
+    if [[ ! -e "$file" ]]; then
+        echo 0
+        return 0
+    fi
+    if modified="$(stat -c %Y -- "$file" 2>/dev/null)"; then
+        echo "$modified"
+        return 0
+    fi
+    if modified="$(stat -f %m "$file" 2>/dev/null)"; then
+        echo "$modified"
+        return 0
+    fi
+
+    echo "[error] failed to read the modification time of $file" >&2
+    return 2
+}
+
+# Invoked indirectly by the EXIT trap installed after acquiring a cache lock.
+# shellcheck disable=SC2329
+function cleanup_remote_tree_cache() {
+    local status=$?
+
+    trap - EXIT INT TERM
+    if [[ -n "$completion_cache_tmp_file" ]]; then
+        rm -f "$completion_cache_tmp_file" || true
+        completion_cache_tmp_file=""
+    fi
+    if [[ -n "$completion_cache_lock_dir" ]]; then
+        rmdir "$completion_cache_lock_dir" 2>/dev/null || true
+        completion_cache_lock_dir=""
+    fi
+    return "$status"
+}
+
+function acquire_cache_lock() {
+    local lock_dir="$1"
+    local stale_after="$2"
+    local started now modified
+
+    started="$(date +%s)"
+    while ! mkdir "$lock_dir" 2>/dev/null; do
+        now="$(date +%s)"
+        modified="$(file_mtime "$lock_dir")" || return $?
+        if (( modified > 0 && now - modified >= stale_after )); then
+            rmdir "$lock_dir" 2>/dev/null || true
+            continue
+        fi
+        if (( now - started >= stale_after )); then
+            echo "[error] timed out waiting for the completion cache lock: $lock_dir" >&2
+            return 2
+        fi
+        sleep 0.1
+    done
+}
+
+function release_cache_lock() {
+    local lock_dir="$1"
+    if ! rmdir "$lock_dir"; then
+        echo "[error] failed to release the completion cache lock: $lock_dir" >&2
+        return 2
+    fi
+    if [[ "$completion_cache_lock_dir" == "$lock_dir" ]]; then
+        completion_cache_lock_dir=""
+    fi
+}
+
+function download_remote_tree() {
+    local repository="$1"
+    local branch="$2"
+    local cache_file="$3"
+    local connect_timeout="$4"
+    local max_time="$5"
+    local tmp_file
+
+    require_command curl || return $?
+    require_command jq || return $?
+    if ! tmp_file="$(mktemp "$cache_file.XXXXXX")"; then
+        echo "[error] failed to create a temporary completion index for $repository" >&2
+        return 2
+    fi
+    completion_cache_tmp_file="$tmp_file"
+
+    if curl --fail --silent --show-error --location \
+        --connect-timeout "$connect_timeout" \
+        --max-time "$max_time" \
+        "https://api.github.com/repos/$repository/git/trees/$branch?recursive=1" \
+        | jq --exit-status --raw-output \
+            'if .truncated == true then
+                error("GitHub tree response was truncated")
+             else
+                .tree[] | select(.type == "blob") | .path
+             end' \
+        > "$tmp_file"; then
+        if mv "$tmp_file" "$cache_file"; then
+            completion_cache_tmp_file=""
+            return 0
+        fi
+    fi
+
+    rm -f "$tmp_file"
+    completion_cache_tmp_file=""
+    return 2
+}
+
+function remote_tree() {
+    local repository="$1"
+    local branch="$2"
+    local cache_root="${H2O_COMPLETION_CACHE_DIR:-${XDG_CACHE_HOME:-$HOME/.cache}/h2o-curated-data/completion-indexes}"
+    local cache_ttl="${H2O_COMPLETION_CACHE_TTL_SECONDS:-300}"
+    local retry_ttl="${H2O_COMPLETION_RETRY_TTL_SECONDS:-30}"
+    local connect_timeout="${H2O_COMPLETION_CONNECT_TIMEOUT_SECONDS:-5}"
+    local max_time="${H2O_COMPLETION_MAX_TIME_SECONDS:-15}"
+    local cache_key="${repository//\//-}-$branch"
+    local cache_file="$cache_root/$cache_key.paths"
+    local retry_file="$cache_file.retry"
+    local lock_dir="$cache_file.lock"
+    local lock_stale_after
+    local now modified retry_modified refresh_status
+
+    [[ "$cache_ttl" =~ ^[0-9]+$ ]] || cache_ttl=300
+    [[ "$retry_ttl" =~ ^[0-9]+$ ]] || retry_ttl=30
+    [[ "$connect_timeout" =~ ^[1-9][0-9]*$ ]] || connect_timeout=5
+    [[ "$max_time" =~ ^[1-9][0-9]*$ ]] || max_time=15
+    lock_stale_after=$(( max_time + 10 ))
+    if ! mkdir -p "$cache_root"; then
+        echo "[error] failed to create the completion cache directory: $cache_root" >&2
+        return 2
+    fi
+
+    now="$(date +%s)"
+    modified="$(file_mtime "$cache_file")" || return $?
+    if [[ -f "$cache_file" ]] && (( now - modified < cache_ttl )); then
+        completion_remote_tree_file="$cache_file"
+        return 0
+    fi
+
+    retry_modified="$(file_mtime "$retry_file")" || return $?
+    if [[ -f "$retry_file" ]] && (( now - retry_modified < retry_ttl )); then
+        if [[ -f "$cache_file" ]]; then
+            echo "[warning] using a stale completion index for $repository after a recent refresh failure" >&2
+            completion_remote_tree_file="$cache_file"
+            return 0
+        fi
+        echo "[error] a recent completion-index refresh failed for $repository" >&2
+        return 2
+    fi
+
+    acquire_cache_lock "$lock_dir" "$lock_stale_after" || return $?
+    completion_cache_lock_dir="$lock_dir"
+    trap cleanup_remote_tree_cache EXIT
+    trap 'exit 130' INT
+    trap 'exit 143' TERM
+
+    # Another process may have refreshed the index while this one waited.
+    now="$(date +%s)"
+    if modified="$(file_mtime "$cache_file")"; then
+        :
+    else
+        refresh_status=$?
+        release_cache_lock "$lock_dir" || true
+        return "$refresh_status"
+    fi
+    if [[ -f "$cache_file" ]] && (( now - modified < cache_ttl )); then
+        release_cache_lock "$lock_dir" || return $?
+        completion_remote_tree_file="$cache_file"
+        return 0
+    fi
+
+    if retry_modified="$(file_mtime "$retry_file")"; then
+        :
+    else
+        refresh_status=$?
+        release_cache_lock "$lock_dir" || true
+        return "$refresh_status"
+    fi
+    if [[ -f "$retry_file" ]] && (( now - retry_modified < retry_ttl )); then
+        release_cache_lock "$lock_dir" || return $?
+        if [[ -f "$cache_file" ]]; then
+            echo "[warning] using a stale completion index for $repository after a recent refresh failure" >&2
+            completion_remote_tree_file="$cache_file"
+            return 0
+        fi
+        echo "[error] a recent completion-index refresh failed for $repository" >&2
+        return 2
+    fi
+
+    refresh_status=0
+    download_remote_tree "$repository" "$branch" "$cache_file" "$connect_timeout" "$max_time" \
+        || refresh_status=$?
+    if (( refresh_status == 0 )); then
+        rm -f "$retry_file"
+    else
+        touch "$retry_file" || refresh_status=2
+    fi
+    release_cache_lock "$lock_dir" || return $?
+
+    if (( refresh_status == 0 )); then
+        completion_remote_tree_file="$cache_file"
+        return 0
+    fi
+    if [[ -f "$cache_file" ]]; then
+        echo "[warning] using a stale completion index for $repository" >&2
+        completion_remote_tree_file="$cache_file"
+        return 0
+    fi
+    echo "[error] failed to read the remote tree for $repository" >&2
+    return 2
+}
+
+function remote_tree_has_path() {
+    local repository="$1"
+    local branch="$2"
+    local path="$3"
+    local status
+    if remote_tree "$repository" "$branch"; then
+        :
+    else
+        status=$?
+        return "$status"
+    fi
+    grep -Fqx -- "$path" "$completion_remote_tree_file"
+}
+
+function remote_tree_find_basename() {
+    local repository="$1"
+    local branch="$2"
+    local basename="$3"
+    local status
+    if remote_tree "$repository" "$branch"; then
+        :
+    else
+        status=$?
+        return "$status"
+    fi
+    if completion_remote_match_path="$(
+        awk -F/ -v basename="$basename" \
+            '$NF == basename { print; found = 1; exit } END { exit !found }' \
+            "$completion_remote_tree_file"
+    )"; then
+        return 0
+    fi
+    return 1
+}
 
 case "$toshell" in
   bash)
+    require_command git
+    rootdir="$HOME/repos"
+    mkdir -p "$rootdir"
     file="$rootdir/bash-completion/completions/$name"
     url="https://github.com/scop/bash-completion"
     ;;
   zsh)
-    file_unix="/usr/share/zsh/functions/Completion/Unix/_$name"
-    file_debian="/usr/share/zsh/functions/Completion/Debian/_$name"
-    file="$rootdir/zsh-completions/src/_$name"
-    url="https://github.com/zsh-users/zsh-completions"
-    #
-    # set variable skip=1 if the completion script is 'go'
-    # NOTE: go completion script exists but named as _golang
+    zsh_completions_name="$name"
+    # Go completion is published under the historical name `_golang`.
     if [[ "$name" == "go" ]]; then
-        skip=1
+        zsh_completions_name="golang"
     fi
+    if remote_tree_has_path zsh-users/zsh-completions master "src/_$zsh_completions_name"; then
+        echo "Official zsh completion found: zsh-users/zsh-completions/src/_$zsh_completions_name"
+        exit 0
+    else
+        status=$?
+        (( status == 1 )) || exit "$status"
+    fi
+    if remote_tree_find_basename zsh-users/zsh master "_$name"; then
+        zsh_path="$completion_remote_match_path"
+        echo "Official zsh completion found: zsh-users/zsh/$zsh_path"
+        exit 0
+    else
+        status=$?
+        (( status == 1 )) || exit "$status"
+    fi
+    exit 1
     ;;
   fish)
-    file="$rootdir/fish-shell/share/completions/$name.fish"
-    url="https://github.com/fish-shell/fish-shell"
+    if remote_tree_has_path fish-shell/fish-shell master "share/completions/$name.fish"; then
+        echo "Official fish completion found: fish-shell/fish-shell/share/completions/$name.fish"
+        exit 0
+    else
+        status=$?
+        (( status == 1 )) || exit "$status"
+    fi
+    exit 1
     ;;
   *)
     echo "ERROR: The first argument must be either 'bash', 'zsh', or 'fish'."
@@ -60,10 +334,9 @@ case "$toshell" in
     ;;
 esac
 
+# Bash still uses its existing local mirror.
 dir="$(dirname "$file")"
-# If the directory does not exist, clone the repository
 if [[ ! -d "$dir" ]]; then
-    # get the repository name
     name="$(basename "$url")";
     echo "Cloning $name to $rootdir ...";
     pushd "$rootdir" >/dev/null
@@ -71,12 +344,8 @@ if [[ ! -d "$dir" ]]; then
     popd >/dev/null;
 fi
 
-
-# Check if the file exists OR skip=1
-if [[ -f "$file" ]] || [[ -f "${file_unix-}" ]] || [[ -f "${file_debian-}" ]] || [[ -n "${skip-}" ]]; then
-    # echo "✨  $name: the completion script is already available to $toshell.";
+if [[ -f "$file" ]]; then
     exit 0;
 else
-    # echo "❌  $name: the completion script is NOT available to $toshell.";
     exit 1;
 fi

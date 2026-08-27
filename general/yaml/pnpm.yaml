@@ -1,0 +1,2843 @@
+name: pnpm
+description: Experimental package manager for node.js
+usage: pnpm [OPTIONS] <COMMAND>
+options:
+  - names:
+      - -v
+      - --version
+    argument: ""
+    description: Print the pnpm version
+  - names:
+      - --color
+    argument: '[=<COLOR>]'
+    description: Force colored output
+  - names:
+      - -y
+      - --yes
+    argument: ""
+    description: Automatically answer yes to prompts
+  - names:
+      - -C
+      - --dir
+    argument: <DIR>
+    description: Set working directory. Accepted anywhere on the command line, before or after the subcommand, like every other rc-option
+  - names:
+      - --store-dir
+    argument: <DIR>
+    description: Directory in which the package store is created. Relative paths are resolved from the workspace root, or from `--dir` outside a workspace
+  - names:
+      - --state-dir
+    argument: <DIR>
+    description: Directory in which pnpm persists machine-local state
+  - names:
+      - --npmrc-auth-file
+      - --userconfig
+    argument: <NPMRC_AUTH_FILE>
+    description: Path to an `.npmrc` to read auth settings from, overriding the default `~/.npmrc`
+  - names:
+      - --registry
+    argument: <REGISTRY>
+    description: 'Base URL of the npm registry to resolve and fetch packages from. Universal rc-option: accepted on every command and layered onto the config like `--config.registry=<url>`. Commands that expose their own `--registry` still read the same value'
+  - names:
+      - --https-proxy
+    argument: <HTTPS_PROXY>
+    description: Proxy for HTTPS registry and tarball requests
+  - names:
+      - --http-proxy
+    argument: <HTTP_PROXY>
+    description: Proxy for HTTP registry and tarball requests
+  - names:
+      - --no-proxy
+    argument: <NO_PROXY>
+    description: Hosts that bypass configured proxies
+  - names:
+      - -r
+      - --recursive
+    argument: ""
+    description: Run the command for every project in the workspace instead of only the project in `--dir`
+  - names:
+      - --reporter
+    argument: <REPORTER>
+    description: Reporter output format
+  - names:
+      - --loglevel
+    argument: <LOGLEVEL>
+    description: 'What level of logs to print. Mirrors pnpm''s universal `--loglevel` option: `silent` selects the silent reporter over any `--reporter` choice; the other levels cap the default reporter''s output'
+  - names:
+      - -F
+      - --filter
+    argument: <FILTER>
+    description: Select which workspace projects to run on. Repeat to add more. Each selector can be a name pattern (`@scope/*`), a path (`./pkg`), a dependency query (`foo...`), an exclusion (`!bar`), a directory (`{dir}`), or a changed-since query (`[since]`)
+  - names:
+      - --filter-prod
+    argument: <FILTER_PROD>
+    description: Like `--filter`, but follow only production dependencies when selecting projects
+  - names:
+      - -w
+      - --workspace-root
+    argument: ""
+    description: Run the command on the root workspace project
+  - names:
+      - --fail-if-no-match
+    argument: ""
+    description: Exit with code 1 when the `--filter` / `--filter-prod` selectors match no workspace project
+  - names:
+      - --include-workspace-root
+    argument: ""
+    description: Also run a recursive command on the root workspace project, which `run` / `exec` / `add` / `test` otherwise leave out
+  - names:
+      - --no-include-workspace-root
+    argument: ""
+    description: 'Leave the root workspace project out of a recursive command, overriding an `includeWorkspaceRoot: true` setting'
+  - names:
+      - --test-pattern
+    argument: <TEST_PATTERN>
+    description: Glob patterns naming test files, used by the `[since]` `--filter` selector to decide which changes count
+  - names:
+      - --changed-files-ignore-pattern
+    argument: <CHANGED_FILES_IGNORE_PATTERN>
+    description: Glob patterns of changed files that the `[since]` `--filter` selector should ignore
+  - names:
+      - --sort
+    argument: ""
+    description: Keep recursive workspace projects sorted topologically
+  - names:
+      - --no-sort
+    argument: ""
+    description: Run recursive workspace projects in workspace order
+  - names:
+      - --reverse
+    argument: ""
+    description: Process recursive workspace projects in reverse order
+  - names:
+      - --workspace-concurrency
+    argument: <WORKSPACE_CONCURRENCY>
+    description: Maximum number of workspace projects to process in parallel
+  - names:
+      - --parallel
+    argument: ""
+    description: Run scripts in every selected workspace project concurrently, disregarding topological sorting
+  - names:
+      - --stream
+    argument: ""
+    description: Stream a recursive command's script output as it arrives, one prefixed line at a time
+  - names:
+      - --aggregate-output
+    argument: ""
+    description: Hold each script's streamed output until the script exits, then print it as one block
+  - names:
+      - --use-stderr
+    argument: ""
+    description: Divert the reporter's output to stderr, leaving stdout for the command's own result
+  - names:
+      - --ignore-workspace
+    argument: ""
+    description: Run as if the project were standalone, ignoring any `pnpm-workspace.yaml` above it
+  - names:
+      - --workspace-packages
+    argument: <WORKSPACE_PACKAGES>
+    description: Glob patterns selecting the workspace's projects, overriding the `packages` field of `pnpm-workspace.yaml`. Repeat to add more
+  - names:
+      - -h
+      - --help
+    argument: ""
+    description: Print help (see a summary with '-h')
+inheritedOptions:
+  - names:
+      - --color
+    argument: '[=<COLOR>]'
+    description: Force colored output
+  - names:
+      - -y
+      - --yes
+    argument: ""
+    description: Automatically answer yes to prompts
+  - names:
+      - -C
+      - --dir
+    argument: <DIR>
+    description: Set working directory. Accepted anywhere on the command line, before or after the subcommand, like every other rc-option
+  - names:
+      - --store-dir
+    argument: <DIR>
+    description: Directory in which the package store is created. Relative paths are resolved from the workspace root, or from `--dir` outside a workspace
+  - names:
+      - --state-dir
+    argument: <DIR>
+    description: Directory in which pnpm persists machine-local state
+  - names:
+      - --npmrc-auth-file
+      - --userconfig
+    argument: <NPMRC_AUTH_FILE>
+    description: Path to an `.npmrc` to read auth settings from, overriding the default `~/.npmrc`
+  - names:
+      - --registry
+    argument: <REGISTRY>
+    description: 'Base URL of the npm registry to resolve and fetch packages from. Universal rc-option: accepted on every command and layered onto the config like `--config.registry=<url>`. Commands that expose their own `--registry` still read the same value'
+  - names:
+      - --https-proxy
+    argument: <HTTPS_PROXY>
+    description: Proxy for HTTPS registry and tarball requests
+  - names:
+      - --http-proxy
+    argument: <HTTP_PROXY>
+    description: Proxy for HTTP registry and tarball requests
+  - names:
+      - --no-proxy
+    argument: <NO_PROXY>
+    description: Hosts that bypass configured proxies
+  - names:
+      - -r
+      - --recursive
+    argument: ""
+    description: Run the command for every project in the workspace instead of only the project in `--dir`
+  - names:
+      - --reporter
+    argument: <REPORTER>
+    description: Reporter output format
+  - names:
+      - --loglevel
+    argument: <LOGLEVEL>
+    description: 'What level of logs to print. Mirrors pnpm''s universal `--loglevel` option: `silent` selects the silent reporter over any `--reporter` choice; the other levels cap the default reporter''s output'
+  - names:
+      - -F
+      - --filter
+    argument: <FILTER>
+    description: Select which workspace projects to run on. Repeat to add more. Each selector can be a name pattern (`@scope/*`), a path (`./pkg`), a dependency query (`foo...`), an exclusion (`!bar`), a directory (`{dir}`), or a changed-since query (`[since]`)
+  - names:
+      - --filter-prod
+    argument: <FILTER_PROD>
+    description: Like `--filter`, but follow only production dependencies when selecting projects
+  - names:
+      - -w
+      - --workspace-root
+    argument: ""
+    description: Run the command on the root workspace project
+  - names:
+      - --fail-if-no-match
+    argument: ""
+    description: Exit with code 1 when the `--filter` / `--filter-prod` selectors match no workspace project
+  - names:
+      - --include-workspace-root
+    argument: ""
+    description: Also run a recursive command on the root workspace project, which `run` / `exec` / `add` / `test` otherwise leave out
+  - names:
+      - --no-include-workspace-root
+    argument: ""
+    description: 'Leave the root workspace project out of a recursive command, overriding an `includeWorkspaceRoot: true` setting'
+  - names:
+      - --test-pattern
+    argument: <TEST_PATTERN>
+    description: Glob patterns naming test files, used by the `[since]` `--filter` selector to decide which changes count
+  - names:
+      - --changed-files-ignore-pattern
+    argument: <CHANGED_FILES_IGNORE_PATTERN>
+    description: Glob patterns of changed files that the `[since]` `--filter` selector should ignore
+  - names:
+      - --sort
+    argument: ""
+    description: Keep recursive workspace projects sorted topologically
+  - names:
+      - --no-sort
+    argument: ""
+    description: Run recursive workspace projects in workspace order
+  - names:
+      - --reverse
+    argument: ""
+    description: Process recursive workspace projects in reverse order
+  - names:
+      - --workspace-concurrency
+    argument: <WORKSPACE_CONCURRENCY>
+    description: Maximum number of workspace projects to process in parallel
+  - names:
+      - --parallel
+    argument: ""
+    description: Run scripts in every selected workspace project concurrently, disregarding topological sorting
+  - names:
+      - --stream
+    argument: ""
+    description: Stream a recursive command's script output as it arrives, one prefixed line at a time
+  - names:
+      - --aggregate-output
+    argument: ""
+    description: Hold each script's streamed output until the script exits, then print it as one block
+  - names:
+      - --use-stderr
+    argument: ""
+    description: Divert the reporter's output to stderr, leaving stdout for the command's own result
+  - names:
+      - --ignore-workspace
+    argument: ""
+    description: Run as if the project were standalone, ignoring any `pnpm-workspace.yaml` above it
+  - names:
+      - --workspace-packages
+    argument: <WORKSPACE_PACKAGES>
+    description: Glob patterns selecting the workspace's projects, overriding the `packages` field of `pnpm-workspace.yaml`. Repeat to add more
+  - names:
+      - -h
+      - --help
+    argument: ""
+    description: Print help (see a summary with '-h')
+subcommands:
+  - name: access
+    description: Manage package access and visibility on the registry
+    usage: pnpm access [OPTIONS] [PARAMS]...
+    options:
+      - names:
+          - --json
+        argument: ""
+        description: Output results in JSON format
+      - names:
+          - --otp
+        argument: <OTP>
+        description: One-time password for registries that require two-factor authentication
+    positionalArguments:
+      - name: '[PARAMS]...'
+        description: Subcommand and arguments
+  - name: init
+    description: Initialize a package.json
+    usage: pnpm init [OPTIONS]
+    options:
+      - names:
+          - --init-type
+        argument: <commonjs|module>
+        description: Set the module system for the package. Defaults to "module"
+      - names:
+          - --init-package-manager
+        argument: ""
+        description: Pin the latest pnpm version in package.json, through "devEngines.packageManager" and "packageManager", and auto-download pnpm when it is missing
+      - names:
+          - --no-init-package-manager
+        argument: ""
+        description: Scaffold the manifest without a pnpm version pin
+  - name: recursive
+    aliases:
+      - multi
+      - m
+    description: Concurrently runs a command in all subdirectory projects
+    usage: pnpm recursive [OPTIONS]
+    options: []
+  - name: add
+    description: Add a package
+    usage: pnpm add [OPTIONS] <PACKAGE_NAMES>...
+    options:
+      - names:
+          - -P
+          - --save-prod
+        argument: ""
+        description: Install the specified packages as regular dependencies
+      - names:
+          - -D
+          - --save-dev
+        argument: ""
+        description: Install the specified packages as devDependencies
+      - names:
+          - -O
+          - --save-optional
+        argument: ""
+        description: Install the specified packages as optionalDependencies
+      - names:
+          - --save-peer
+        argument: ""
+        description: Using --save-peer will add one or more packages to peerDependencies and install them as dev dependencies
+      - names:
+          - --no-save-peer
+        argument: ""
+        description: 'Don''t add the packages to peerDependencies, overriding a `savePeer: true` setting'
+      - names:
+          - --cpu
+        argument: <CPU>...
+        description: CPU architectures whose platform-specific optional dependencies should be installed. Repeat or comma-separate for multiple values
+      - names:
+          - --os
+        argument: <OS>...
+        description: Operating systems whose platform-specific optional dependencies should be installed. Repeat or comma-separate for multiple values
+      - names:
+          - --libc
+        argument: <LIBC>...
+        description: libc families whose platform-specific optional dependencies should be installed (`glibc`, `musl`). Repeat or comma-separate for multiple values
+      - names:
+          - -E
+          - --save-exact
+        argument: ""
+        description: Saved dependencies will be configured with an exact version rather than using the default semver range operator
+      - names:
+          - --save-prefix
+        argument: <prefix>
+        description: 'The prefix of the saved version range: `^` (default), `~`, `=` for an explicit exact pin, or empty for a bare exact version'
+      - names:
+          - --save-catalog
+        argument: ""
+        description: Save the new dependency to the default catalog. Shorthand for `--save-catalog-name=default`
+      - names:
+          - --save-catalog-name
+        argument: <name>
+        description: Save the new dependency to the named catalog `<name>`
+      - names:
+          - --config
+        argument: ""
+        description: Add the package as a configuration dependency
+      - names:
+          - --allow-build
+        argument: <ALLOW_BUILD>
+        description: Package names allowed to run lifecycle (build) scripts during this install, appended to `allowBuilds`. May be repeated
+      - names:
+          - --lockfile-only
+        argument: ""
+        description: Dependencies are not downloaded. Only `pnpm-lock.yaml` is updated
+      - names:
+          - --lockfile-dir
+        argument: <dir>
+        description: The directory in which `pnpm-lock.yaml` is created. Several projects may share a single lockfile
+      - names:
+          - --virtual-store-dir
+        argument: <VIRTUAL_STORE_DIR>
+        description: The directory with links to the store (default is `node_modules/.pnpm`). All direct and indirect dependencies of the project are linked into this directory
+      - names:
+          - -g
+          - --global
+        argument: ""
+        description: Install the package globally, linking its bins into the global bin directory
+      - names:
+          - --ignore-scripts
+        argument: ""
+        description: Don't run lifecycle scripts of the added package or its dependencies
+      - names:
+          - --no-ignore-scripts
+        argument: ""
+        description: Force-enable lifecycle scripts for this invocation
+      - names:
+          - --ignore-workspace-root-check
+        argument: ""
+        description: Permit adding dependencies to a multi-package workspace root without `-w`
+      - names:
+          - --optional
+        argument: ""
+        description: Include optionalDependencies while materializing the updated project
+      - names:
+          - --no-optional
+        argument: ""
+        description: Exclude optionalDependencies while materializing the updated project
+      - names:
+          - --ignore-pnpmfile
+        argument: ""
+        description: Disable pnpm hooks defined in `.pnpmfile.cjs`, including the pnpmfiles of config dependencies
+      - names:
+          - --force
+        argument: ""
+        description: 'Reinstall every package the lockfile names: relink packages an earlier install already materialized, and install optional dependencies whose `cpu` / `os` / `libc` / `engines` don''t match the host instead of skipping them'
+    positionalArguments:
+      - name: <PACKAGE_NAMES>...
+        description: Names of the packages to add
+  - name: install
+    aliases:
+      - i
+    description: Install packages
+    usage: pnpm install [OPTIONS]
+    options:
+      - names:
+          - -P
+          - --prod
+          - --production
+        argument: ""
+        description: Install only production dependencies. devDependencies are skipped, and removed if already installed. Takes precedence over `NODE_ENV`
+      - names:
+          - -D
+          - --dev
+        argument: ""
+        description: Install only devDependencies. Regular dependencies are skipped, and removed if already installed, regardless of `NODE_ENV`
+      - names:
+          - --optional
+        argument: ""
+        description: Include optionalDependencies even when the configured default excludes them
+      - names:
+          - --no-optional
+        argument: ""
+        description: Don't install optionalDependencies
+      - names:
+          - --cpu
+        argument: <CPU>...
+        description: CPU architectures whose platform-specific optional dependencies should be installed. Repeat or comma-separate for multiple values
+      - names:
+          - --os
+        argument: <OS>...
+        description: Operating systems whose platform-specific optional dependencies should be installed. Repeat or comma-separate for multiple values
+      - names:
+          - --libc
+        argument: <LIBC>...
+        description: libc families whose platform-specific optional dependencies should be installed (`glibc`, `musl`). Repeat or comma-separate for multiple values
+      - names:
+          - --frozen-lockfile
+        argument: ""
+        description: Don't generate a lockfile, and fail if an update to it is needed. This setting is enabled by default in CI when a lockfile is present
+      - names:
+          - --no-frozen-lockfile
+        argument: ""
+        description: 'Allow the lockfile to be updated, overriding a `frozenLockfile: true` setting'
+      - names:
+          - --lockfile-only
+        argument: ""
+        description: Only update `pnpm-lock.yaml`. Don't download packages or write `node_modules`
+      - names:
+          - --lockfile-dir
+        argument: <dir>
+        description: The directory in which `pnpm-lock.yaml` is created. Several projects may share a single lockfile
+      - names:
+          - --merge-git-branch-lockfiles
+        argument: ""
+        description: Fold every per-branch lockfile (`pnpm-lock.<branch>.yaml`, written under the `gitBranchLockfile` setting) into `pnpm-lock.yaml` and delete them
+      - names:
+          - --merge-git-branch-lockfiles-branch-pattern
+        argument: <MERGE_GIT_BRANCH_LOCKFILES_BRANCH_PATTERN>
+        description: Glob patterns naming the branches that merge the per-branch lockfiles, so a mainline branch does not have to pass `--merge-git-branch-lockfiles` by hand
+      - names:
+          - --dry-run
+        argument: ""
+        description: Show what an install would change without writing anything to disk
+      - names:
+          - --force
+        argument: ""
+        description: 'Reinstall every package the lockfile names: relink packages an earlier install already materialized, and install optional dependencies whose `cpu` / `os` / `libc` / `engines` don''t match the host instead of skipping them'
+      - names:
+          - --prefer-frozen-lockfile
+        argument: ""
+        description: Prefer the existing lockfile over re-resolving, even when the manifest may have changed
+      - names:
+          - --no-prefer-frozen-lockfile
+        argument: ""
+        description: Always re-resolve against the registry instead of preferring the existing lockfile
+      - names:
+          - --ignore-manifest-check
+        argument: ""
+        description: Skip the check that `pnpm-lock.yaml` is up to date with `package.json` under `--frozen-lockfile`. For callers that just wrote the lockfile themselves and know the manifest is about to catch up
+      - names:
+          - --no-runtime
+        argument: ""
+        description: Don't install runtime dependencies (`node`, `deno`, `bun`). Their archives aren't fetched and their bins aren't linked; the rest of the install proceeds normally
+      - names:
+          - --ignore-scripts
+        argument: ""
+        description: Don't run lifecycle scripts of the project or its dependencies. Packages are still installed; only their build scripts are skipped, and the install won't fail because of it
+      - names:
+          - --no-ignore-scripts
+        argument: ""
+        description: Run lifecycle scripts even when the configuration disables them
+      - names:
+          - --ignore-pnpmfile
+        argument: ""
+        description: Disable pnpm hooks defined in `.pnpmfile.cjs`, including the pnpmfiles of config dependencies
+      - names:
+          - --node-linker
+        argument: <NODE_LINKER>
+        description: 'Which node linker to use: `isolated` (the default, a symlinked store), `hoisted` (a flat `node_modules`), or `pnp` (Plug''n''Play). Overrides the configured value'
+      - names:
+          - --offline
+        argument: ""
+        description: Fail on a cache miss instead of fetching from the registry, using only packages already in the store
+      - names:
+          - --no-offline
+        argument: ""
+        description: Allow network fetches even when the configuration enables offline mode
+      - names:
+          - --frozen-store
+        argument: ""
+        description: Open the store read-only and skip all store writes. For installing against a store on a read-only filesystem (e.g. a Nix store); pair with `--offline --frozen-lockfile`
+      - names:
+          - --no-frozen-store
+        argument: ""
+        description: Allow store writes even when the configuration enables the read-only store
+      - names:
+          - --prefer-offline
+        argument: ""
+        description: Prefer packages already in the cache over the network, even past their freshness window
+      - names:
+          - --no-prefer-offline
+        argument: ""
+        description: Don't prefer cached packages even when the configuration enables it
+      - names:
+          - --trust-lockfile
+        argument: ""
+        description: Skip verifying the lockfile against supply-chain policies
+      - names:
+          - --no-trust-lockfile
+        argument: ""
+        description: Verify the lockfile against supply-chain policies even when the configuration trusts it
+      - names:
+          - --update-checksums
+        argument: ""
+        description: Refresh the integrity checksums in `pnpm-lock.yaml` from the registry. Cannot be combined with `--frozen-lockfile`
+      - names:
+          - --network-concurrency
+        argument: <NETWORK_CONCURRENCY>
+        description: Maximum number of concurrent network requests during install
+      - names:
+          - --fetch-timeout
+        argument: <FETCH_TIMEOUT>
+        description: Per-request network timeout, in milliseconds
+      - names:
+          - --fetch-warn-timeout-ms
+        argument: <FETCH_WARN_TIMEOUT_MS>
+        description: Warn when a registry metadata request takes longer than this many milliseconds
+      - names:
+          - --fetch-min-speed-ki-bps
+        argument: <FETCH_MIN_SPEED_KI_BPS>
+        description: Warn when a tarball download's average speed is below this many KiB/s
+      - names:
+          - --user-agent
+        argument: <USER_AGENT>
+        description: '`User-Agent` header to send on registry requests'
+      - names:
+          - --pnpr-server
+        argument: <PNPR_SERVER>
+        description: URL of a pnpr server to offload resolution and file fetching to. `node_modules` is still linked locally from the server-produced lockfile
+  - name: install-test
+    aliases:
+      - it
+    description: Runs a `pnpm install` followed immediately by a `pnpm test`. It takes exactly the same arguments as `pnpm install`
+    usage: pnpm install-test [OPTIONS] [ARGS]...
+    options:
+      - names:
+          - -P
+          - --prod
+          - --production
+        argument: ""
+        description: Install only production dependencies. devDependencies are skipped, and removed if already installed. Takes precedence over `NODE_ENV`
+      - names:
+          - -D
+          - --dev
+        argument: ""
+        description: Install only devDependencies. Regular dependencies are skipped, and removed if already installed, regardless of `NODE_ENV`
+      - names:
+          - --optional
+        argument: ""
+        description: Include optionalDependencies even when the configured default excludes them
+      - names:
+          - --no-optional
+        argument: ""
+        description: Don't install optionalDependencies
+      - names:
+          - --cpu
+        argument: <CPU>...
+        description: CPU architectures whose platform-specific optional dependencies should be installed. Repeat or comma-separate for multiple values
+      - names:
+          - --os
+        argument: <OS>...
+        description: Operating systems whose platform-specific optional dependencies should be installed. Repeat or comma-separate for multiple values
+      - names:
+          - --libc
+        argument: <LIBC>...
+        description: libc families whose platform-specific optional dependencies should be installed (`glibc`, `musl`). Repeat or comma-separate for multiple values
+      - names:
+          - --frozen-lockfile
+        argument: ""
+        description: Don't generate a lockfile, and fail if an update to it is needed. This setting is enabled by default in CI when a lockfile is present
+      - names:
+          - --no-frozen-lockfile
+        argument: ""
+        description: 'Allow the lockfile to be updated, overriding a `frozenLockfile: true` setting'
+      - names:
+          - --lockfile-only
+        argument: ""
+        description: Only update `pnpm-lock.yaml`. Don't download packages or write `node_modules`
+      - names:
+          - --lockfile-dir
+        argument: <dir>
+        description: The directory in which `pnpm-lock.yaml` is created. Several projects may share a single lockfile
+      - names:
+          - --merge-git-branch-lockfiles
+        argument: ""
+        description: Fold every per-branch lockfile (`pnpm-lock.<branch>.yaml`, written under the `gitBranchLockfile` setting) into `pnpm-lock.yaml` and delete them
+      - names:
+          - --merge-git-branch-lockfiles-branch-pattern
+        argument: <MERGE_GIT_BRANCH_LOCKFILES_BRANCH_PATTERN>
+        description: Glob patterns naming the branches that merge the per-branch lockfiles, so a mainline branch does not have to pass `--merge-git-branch-lockfiles` by hand
+      - names:
+          - --dry-run
+        argument: ""
+        description: Show what an install would change without writing anything to disk
+      - names:
+          - --force
+        argument: ""
+        description: 'Reinstall every package the lockfile names: relink packages an earlier install already materialized, and install optional dependencies whose `cpu` / `os` / `libc` / `engines` don''t match the host instead of skipping them'
+      - names:
+          - --prefer-frozen-lockfile
+        argument: ""
+        description: Prefer the existing lockfile over re-resolving, even when the manifest may have changed
+      - names:
+          - --no-prefer-frozen-lockfile
+        argument: ""
+        description: Always re-resolve against the registry instead of preferring the existing lockfile
+      - names:
+          - --ignore-manifest-check
+        argument: ""
+        description: Skip the check that `pnpm-lock.yaml` is up to date with `package.json` under `--frozen-lockfile`. For callers that just wrote the lockfile themselves and know the manifest is about to catch up
+      - names:
+          - --no-runtime
+        argument: ""
+        description: Don't install runtime dependencies (`node`, `deno`, `bun`). Their archives aren't fetched and their bins aren't linked; the rest of the install proceeds normally
+      - names:
+          - --ignore-scripts
+        argument: ""
+        description: Don't run lifecycle scripts of the project or its dependencies. Packages are still installed; only their build scripts are skipped, and the install won't fail because of it
+      - names:
+          - --no-ignore-scripts
+        argument: ""
+        description: Run lifecycle scripts even when the configuration disables them
+      - names:
+          - --ignore-pnpmfile
+        argument: ""
+        description: Disable pnpm hooks defined in `.pnpmfile.cjs`, including the pnpmfiles of config dependencies
+      - names:
+          - --node-linker
+        argument: <NODE_LINKER>
+        description: 'Which node linker to use: `isolated` (the default, a symlinked store), `hoisted` (a flat `node_modules`), or `pnp` (Plug''n''Play). Overrides the configured value'
+      - names:
+          - --offline
+        argument: ""
+        description: Fail on a cache miss instead of fetching from the registry, using only packages already in the store
+      - names:
+          - --no-offline
+        argument: ""
+        description: Allow network fetches even when the configuration enables offline mode
+      - names:
+          - --frozen-store
+        argument: ""
+        description: Open the store read-only and skip all store writes. For installing against a store on a read-only filesystem (e.g. a Nix store); pair with `--offline --frozen-lockfile`
+      - names:
+          - --no-frozen-store
+        argument: ""
+        description: Allow store writes even when the configuration enables the read-only store
+      - names:
+          - --prefer-offline
+        argument: ""
+        description: Prefer packages already in the cache over the network, even past their freshness window
+      - names:
+          - --no-prefer-offline
+        argument: ""
+        description: Don't prefer cached packages even when the configuration enables it
+      - names:
+          - --trust-lockfile
+        argument: ""
+        description: Skip verifying the lockfile against supply-chain policies
+      - names:
+          - --no-trust-lockfile
+        argument: ""
+        description: Verify the lockfile against supply-chain policies even when the configuration trusts it
+      - names:
+          - --update-checksums
+        argument: ""
+        description: Refresh the integrity checksums in `pnpm-lock.yaml` from the registry. Cannot be combined with `--frozen-lockfile`
+      - names:
+          - --network-concurrency
+        argument: <NETWORK_CONCURRENCY>
+        description: Maximum number of concurrent network requests during install
+      - names:
+          - --fetch-timeout
+        argument: <FETCH_TIMEOUT>
+        description: Per-request network timeout, in milliseconds
+      - names:
+          - --fetch-warn-timeout-ms
+        argument: <FETCH_WARN_TIMEOUT_MS>
+        description: Warn when a registry metadata request takes longer than this many milliseconds
+      - names:
+          - --fetch-min-speed-ki-bps
+        argument: <FETCH_MIN_SPEED_KI_BPS>
+        description: Warn when a tarball download's average speed is below this many KiB/s
+      - names:
+          - --user-agent
+        argument: <USER_AGENT>
+        description: '`User-Agent` header to send on registry requests'
+      - names:
+          - --pnpr-server
+        argument: <PNPR_SERVER>
+        description: URL of a pnpr server to offload resolution and file fetching to. `node_modules` is still linked locally from the server-produced lockfile
+    positionalArguments:
+      - name: '[ARGS]...'
+        description: Arguments passed to the script after the script name
+  - name: update
+    aliases:
+      - up
+      - upgrade
+    description: Update packages to their newest version based on the specified range
+    usage: pnpm update [OPTIONS] [PACKAGES]...
+    options:
+      - names:
+          - -P
+          - --prod
+          - --production
+        argument: ""
+        description: Update packages only in "dependencies" and "optionalDependencies"
+      - names:
+          - -D
+          - --dev
+        argument: ""
+        description: Update packages only in "devDependencies"
+      - names:
+          - --optional
+        argument: ""
+        description: Update packages only in "optionalDependencies"
+      - names:
+          - --no-optional
+        argument: ""
+        description: Don't update packages in "optionalDependencies"
+      - names:
+          - --cpu
+        argument: <CPU>...
+        description: CPU architectures whose platform-specific optional dependencies should be installed. Repeat or comma-separate for multiple values
+      - names:
+          - --os
+        argument: <OS>...
+        description: Operating systems whose platform-specific optional dependencies should be installed. Repeat or comma-separate for multiple values
+      - names:
+          - --libc
+        argument: <LIBC>...
+        description: libc families whose platform-specific optional dependencies should be installed (`glibc`, `musl`). Repeat or comma-separate for multiple values
+      - names:
+          - -L
+          - --latest
+        argument: ""
+        description: 'Ignore version ranges in package.json: bump the matched packages to their latest version and rewrite the manifest ranges'
+      - names:
+          - --patches
+        argument: ""
+        description: Refresh registry revisions without changing package versions
+      - names:
+          - -E
+          - --save-exact
+        argument: ""
+        description: Write the resolved version without a range operator when rewriting the manifest under `--latest`
+      - names:
+          - --no-save
+        argument: ""
+        description: Do not write the updated ranges back to package.json. The lockfile is still updated (the `--no-save` flag)
+      - names:
+          - --depth
+        argument: <DEPTH>
+        description: How deep to inspect dependencies. `0` means top-level dependencies only. Defaults to unlimited
+      - names:
+          - --lockfile-only
+        argument: ""
+        description: Dependencies are not downloaded; only `pnpm-lock.yaml` is updated
+      - names:
+          - --lockfile-dir
+        argument: <dir>
+        description: The directory in which `pnpm-lock.yaml` is created. Several projects may share a single lockfile
+      - names:
+          - -i
+          - --interactive
+        argument: ""
+        description: Show outdated dependencies and select which ones to update
+      - names:
+          - --include-github-actions
+        argument: ""
+        description: Also update GitHub Actions dependencies in workflow and action files
+      - names:
+          - -g
+          - --global
+        argument: ""
+        description: Update globally installed packages
+      - names:
+          - --workspace
+        argument: ""
+        description: Tries to link all packages from the workspace, updating versions to match the workspace packages
+      - names:
+          - --changeset
+        argument: ""
+        description: Generate a changeset file declaring a patch bump for every workspace package whose production dependencies were changed by the update
+      - names:
+          - --no-changeset
+        argument: ""
+        description: Do not generate a changeset, even when `updateConfig.changeset` enables changeset generation by default
+      - names:
+          - --ignore-pnpmfile
+        argument: ""
+        description: Disable pnpm hooks defined in `.pnpmfile.cjs`, including the pnpmfiles of config dependencies
+      - names:
+          - --pnpr-server
+        argument: <PNPR_SERVER>
+        description: URL of a pnpr server to offload revision refresh resolution to
+    positionalArguments:
+      - name: '[PACKAGES]...'
+        description: Dependencies to update. Package names (`foo`, `@scope/bar`), GitHub Actions (`actions/checkout`, with `--include-github-actions`), glob patterns (`@scope/bar-*`), and versioned selectors (`foo@2`) are accepted. With no arguments, every direct dependency in the included groups is updated
+  - name: outdated
+    description: Check for outdated package and GitHub Actions dependencies
+    usage: pnpm outdated [OPTIONS] [PACKAGES]...
+    options:
+      - names:
+          - -P
+          - --prod
+          - --production
+        argument: ""
+        description: Check only "dependencies" and "optionalDependencies"
+      - names:
+          - -D
+          - --dev
+        argument: ""
+        description: Check only "devDependencies"
+      - names:
+          - --no-optional
+        argument: ""
+        description: Don't check "optionalDependencies"
+      - names:
+          - --optional
+        argument: ""
+        description: Include "optionalDependencies"
+      - names:
+          - --compatible
+        argument: ""
+        description: Print only versions that satisfy the ranges in package.json
+      - names:
+          - --long
+        argument: ""
+        description: Print details about the outdated packages (homepage, deprecation notice)
+      - names:
+          - --format
+        argument: <FORMAT>
+        description: Output format
+      - names:
+          - --no-table
+        argument: ""
+        description: Shorthand for `--format list`. Good for small consoles
+      - names:
+          - --json
+        argument: ""
+        description: Shorthand for `--format json`
+      - names:
+          - --sort-by
+        argument: <SORT_BY>
+        description: Sorting method. Currently only `name` is supported; the default sorts by the size of the version change, then by name
+      - names:
+          - --include-github-actions
+        argument: ""
+        description: Also check GitHub Actions dependencies in workflow and action files
+      - names:
+          - -g
+          - --global
+        argument: ""
+        description: Check globally installed packages
+    positionalArguments:
+      - name: '[PACKAGES]...'
+        description: Restrict the check to dependencies whose name matches one of these patterns (`*` wildcard, leading `!` to negate). With no arguments, every direct dependency in the included groups is checked
+  - name: audit
+    description: Checks for known security issues with the installed packages
+    usage: pnpm audit [OPTIONS] [PARAMS]...
+    options:
+      - names:
+          - --json
+        argument: ""
+        description: Output audit report in JSON format
+      - names:
+          - --audit-level
+        argument: <AUDIT_LEVEL>
+        description: Only print advisories with severity greater than or equal to this level
+      - names:
+          - -P
+          - --prod
+          - --production
+        argument: ""
+        description: Only audit "dependencies" and "optionalDependencies"
+      - names:
+          - -D
+          - --dev
+        argument: ""
+        description: Only audit "devDependencies"
+      - names:
+          - --no-optional
+        argument: ""
+        description: Don't audit "optionalDependencies"
+      - names:
+          - --optional
+        argument: ""
+        description: Include "optionalDependencies"
+      - names:
+          - --ignore-registry-errors
+        argument: ""
+        description: Use exit code 0 if the registry responds with an error
+      - names:
+          - --fix
+        argument: '[<METHOD>]'
+        description: 'Fix the audited vulnerabilities using the specified method: "override" or "update". "override" adds overrides to `pnpm-workspace.yaml` to force non-vulnerable versions; "update" re-resolves the lockfile to non-vulnerable versions. Defaults to "override" when no method is given'
+      - names:
+          - --ignore
+        argument: <GHSA>
+        description: Ignore a vulnerability by its GitHub advisory ID (e.g. GHSA-xxxx-xxxx-xxxx). May be repeated
+      - names:
+          - --ignore-unfixable
+        argument: ""
+        description: Ignore all vulnerabilities for which no fix exists
+      - names:
+          - -i
+          - --interactive
+        argument: ""
+        description: Show vulnerabilities and select which ones to fix interactively
+    positionalArguments:
+      - name: '[PARAMS]...'
+        description: Audit subcommand. The only supported subcommand is `signatures`, which verifies registry signatures for the installed packages
+  - name: change
+    description: 'Record a change intent: which packages a change affects, the bump type for each, and a summary that becomes the changelog entry'
+    usage: pnpm change [OPTIONS] [PARAMS]...
+    options:
+      - names:
+          - --bump
+        argument: <BUMP>
+        description: 'Bump type for the named packages: none, patch, minor, major. "none" records an explicit decline — the change needs no release'
+      - names:
+          - --summary
+        argument: <SUMMARY>
+        description: The summary for the changelog entry. Runs non-interactively when given together with package names
+    positionalArguments:
+      - name: '[PARAMS]...'
+        description: '`status` to print the pending intents and the release plan they produce; otherwise the packages the change affects'
+  - name: version
+    description: Apply the pending change intents (`pnpm version -r`)
+    usage: pnpm version [OPTIONS] [PARAMS]...
+    options:
+      - names:
+          - --dry-run
+        argument: ""
+        description: Print what the command would do without changing anything
+      - names:
+          - --no-git-checks
+        argument: ""
+        description: Don't check if the working tree is clean
+      - names:
+          - --preid
+        argument: <PREID>
+        description: Sets the prerelease identifier (e.g. alpha, beta, rc)
+      - names:
+          - --allow-same-version
+        argument: ""
+        description: Allow bumping to the same version
+      - names:
+          - --message
+        argument: <MESSAGE>
+        description: Commit message. "%s" is replaced with the new version. Default is "%s"
+      - names:
+          - --no-git-tag-version
+        argument: ""
+        description: Don't create a commit or tag for the version bump. Git commits and tags are always skipped in recursive mode
+      - names:
+          - --no-commit-hooks
+        argument: ""
+        description: Skip running git commit hooks when committing the version bump
+      - names:
+          - --sign-git-tag
+        argument: ""
+        description: Sign the generated git tag with GPG
+      - names:
+          - --tag-version-prefix
+        argument: <TAG_VERSION_PREFIX>
+        description: Sets the tag prefix. Default is "v". Set to empty string to remove the prefix
+      - names:
+          - --json
+        argument: ""
+        description: Show information in JSON format
+    positionalArguments:
+      - name: '[PARAMS]...'
+        description: 'A valid semver version (e.g. 1.2.3) or one of: major, minor, patch, premajor, preminor, prepatch, prerelease, from-git. Omit it and pass `-r` to apply the pending change intents instead'
+  - name: lane
+    description: Manage per-package release lanes
+    usage: pnpm lane [OPTIONS] [NAME]
+    options: []
+    positionalArguments:
+      - name: '[NAME]'
+        description: The lane to move the `--filter`-selected packages onto (`main` moves them back to the default lane). With no name, shows lane membership
+  - name: bugs
+    aliases:
+      - issues
+    description: Opens the bug tracker URL of a package in the default browser
+    usage: pnpm bugs [OPTIONS] [PACKAGES]...
+    options: []
+    positionalArguments:
+      - name: '[PACKAGES]...'
+        description: Package names whose bug tracker URLs to open
+  - name: list
+    aliases:
+      - ls
+    description: List installed packages
+    usage: pnpm list [OPTIONS] [PACKAGES]...
+    options:
+      - names:
+          - --long
+        argument: ""
+        description: Show extended information
+      - names:
+          - --json
+        argument: ""
+        description: Show information in JSON format
+      - names:
+          - --parseable
+        argument: ""
+        description: Show parseable output instead of tree view
+      - names:
+          - --depth
+        argument: <DEPTH>
+        description: Max display depth of the dependency tree. `0` lists direct dependencies only; `-1` lists projects only
+      - names:
+          - -P
+          - --prod
+          - --production
+        argument: ""
+        description: Display only the dependency graph for packages in `dependencies` and `optionalDependencies`
+      - names:
+          - -D
+          - --dev
+        argument: ""
+        description: Display only the dependency graph for packages in `devDependencies`
+      - names:
+          - --no-optional
+        argument: ""
+        description: Don't display packages from `optionalDependencies`
+      - names:
+          - --optional
+        argument: ""
+        description: Include packages from `optionalDependencies`
+      - names:
+          - --exclude-peers
+        argument: ""
+        description: Exclude peer dependencies
+      - names:
+          - --only-projects
+        argument: ""
+        description: Display only dependencies that are also projects within the workspace
+      - names:
+          - --lockfile-only
+        argument: ""
+        description: List packages from the lockfile only, without checking `node_modules`
+      - names:
+          - --find-by
+        argument: <FIND_BY>
+        description: Search by a finder function declared in `.pnpmfile.cjs`
+    positionalArguments:
+      - name: '[PACKAGES]...'
+        description: Package names or patterns to list
+  - name: ll
+    aliases:
+      - la
+    description: List installed packages in long format
+    usage: pnpm ll [OPTIONS] [PACKAGES]...
+    options:
+      - names:
+          - --long
+        argument: ""
+        description: Show extended information
+      - names:
+          - --json
+        argument: ""
+        description: Show information in JSON format
+      - names:
+          - --parseable
+        argument: ""
+        description: Show parseable output instead of tree view
+      - names:
+          - --depth
+        argument: <DEPTH>
+        description: Max display depth of the dependency tree. `0` lists direct dependencies only; `-1` lists projects only
+      - names:
+          - -P
+          - --prod
+          - --production
+        argument: ""
+        description: Display only the dependency graph for packages in `dependencies` and `optionalDependencies`
+      - names:
+          - -D
+          - --dev
+        argument: ""
+        description: Display only the dependency graph for packages in `devDependencies`
+      - names:
+          - --no-optional
+        argument: ""
+        description: Don't display packages from `optionalDependencies`
+      - names:
+          - --optional
+        argument: ""
+        description: Include packages from `optionalDependencies`
+      - names:
+          - --exclude-peers
+        argument: ""
+        description: Exclude peer dependencies
+      - names:
+          - --only-projects
+        argument: ""
+        description: Display only dependencies that are also projects within the workspace
+      - names:
+          - --lockfile-only
+        argument: ""
+        description: List packages from the lockfile only, without checking `node_modules`
+      - names:
+          - --find-by
+        argument: <FIND_BY>
+        description: Search by a finder function declared in `.pnpmfile.cjs`
+    positionalArguments:
+      - name: '[PACKAGES]...'
+        description: Package names or patterns to list in long format
+  - name: licenses
+    aliases:
+      - licences
+    description: Check the licenses of the installed packages
+    usage: pnpm licenses [OPTIONS] [PARAMS]...
+    options:
+      - names:
+          - --json
+        argument: ""
+        description: Output the information in JSON format
+      - names:
+          - --long
+        argument: ""
+        description: Show more details (such as a link to the repo)
+      - names:
+          - -P
+          - --prod
+          - --production
+        argument: ""
+        description: Only dependencies in "dependencies"
+      - names:
+          - -D
+          - --dev
+        argument: ""
+        description: Only dependencies in "devDependencies"
+      - names:
+          - --no-optional
+        argument: ""
+        description: Don't check "optionalDependencies"
+      - names:
+          - -O
+          - --optional
+        argument: ""
+        description: Only dependencies in "optionalDependencies"
+    positionalArguments:
+      - name: '[PARAMS]...'
+        description: Subcommand and arguments
+  - name: why
+    description: Shows the packages that depend on `pkg`
+    usage: pnpm why [OPTIONS] [PACKAGES]...
+    options:
+      - names:
+          - --depth
+        argument: <DEPTH>
+        description: Max display depth of the reverse dependency tree
+      - names:
+          - --long
+        argument: ""
+        description: Show extended information
+      - names:
+          - --json
+        argument: ""
+        description: Show information in JSON format
+      - names:
+          - --parseable
+        argument: ""
+        description: Show parseable output instead of tree view
+      - names:
+          - -P
+          - --prod
+          - --production
+        argument: ""
+        description: Display only the dependency graph for packages in `dependencies` and `optionalDependencies`
+      - names:
+          - -D
+          - --dev
+        argument: ""
+        description: Display only the dependency graph for packages in `devDependencies`
+      - names:
+          - --no-optional
+        argument: ""
+        description: Don't display packages from `optionalDependencies`
+      - names:
+          - --optional
+        argument: ""
+        description: Include packages from `optionalDependencies`
+      - names:
+          - --exclude-peers
+        argument: ""
+        description: Exclude peer dependencies.
+      - names:
+          - --find-by
+        argument: <FIND_BY>
+        description: Search by a finder function declared in `.pnpmfile.cjs`
+    positionalArguments:
+      - name: '[PACKAGES]...'
+        description: Package names whose dependents to show
+  - name: view
+    aliases:
+      - info
+      - show
+      - v
+    description: View registry information about a package
+    usage: pnpm view [OPTIONS] [PARAMS]...
+    options:
+      - names:
+          - --json
+        argument: ""
+        description: Show information in JSON format
+    positionalArguments:
+      - name: '[PARAMS]...'
+        description: '`<package-name>[@<version>]` followed by optional fields to print (e.g. `view foo dist.tarball version`). When the package name is omitted, the nearest project manifest''s name is used'
+  - name: sbom
+    description: Generate a Software Bill of Materials (SBOM)
+    usage: pnpm sbom [OPTIONS] --sbom-format <FORMAT>
+    options:
+      - names:
+          - --sbom-format
+        argument: <FORMAT>
+        description: The SBOM output format (required)
+      - names:
+          - --sbom-type
+        argument: <SBOM_TYPE>
+        description: 'The component type for the root package (default: library)'
+      - names:
+          - --sbom-spec-version
+        argument: <SPEC_VERSION>
+        description: 'The `CycloneDX` specification version (`1.5`, `1.6`, or `1.7`; default: `1.7`). Only valid with `--sbom-format cyclonedx`'
+      - names:
+          - --lockfile-only
+        argument: ""
+        description: Only use lockfile data (skip reading from the store)
+      - names:
+          - --sbom-authors
+        argument: <AUTHORS>
+        description: Comma-separated list of SBOM authors (`CycloneDX` `metadata.authors`)
+      - names:
+          - --sbom-supplier
+        argument: <SUPPLIER>
+        description: SBOM supplier name (`CycloneDX` `metadata.supplier`)
+      - names:
+          - -P
+          - --prod
+          - --production
+        argument: ""
+        description: Only include production dependencies
+      - names:
+          - -D
+          - --dev
+        argument: ""
+        description: Only include dev dependencies
+      - names:
+          - --no-optional
+        argument: ""
+        description: Exclude optional dependencies
+      - names:
+          - --optional
+        argument: ""
+        description: Include optional dependencies
+      - names:
+          - --exclude-peers
+        argument: ""
+        description: Exclude peer dependencies
+      - names:
+          - --out
+        argument: <OUT>
+        description: Write SBOM to a file instead of stdout. Use `%s` for the package name and `%v` for the version
+      - names:
+          - --split
+        argument: ""
+        description: Generate a separate SBOM for each matched workspace package
+  - name: whoami
+    description: Displays your pnpm username
+    usage: pnpm whoami [OPTIONS]
+    options: []
+  - name: deprecate
+    description: Deprecates a version of a package in the registry
+    usage: pnpm deprecate [OPTIONS] [PARAMS]...
+    options:
+      - names:
+          - --otp
+        argument: <OTP>
+        description: One-time password for registries that require two-factor authentication
+    positionalArguments:
+      - name: '[PARAMS]...'
+        description: The package name and the deprecation message
+  - name: undeprecate
+    description: Removes deprecation from a version of a package in the registry. Only works on already deprecated versions
+    usage: pnpm undeprecate [OPTIONS] [PARAMS]...
+    options:
+      - names:
+          - --otp
+        argument: <OTP>
+        description: One-time password for registries that require two-factor authentication
+    positionalArguments:
+      - name: '[PARAMS]...'
+        description: The package name
+  - name: unpublish
+    description: Removes a package from the registry
+    usage: pnpm unpublish [OPTIONS] [PARAMS]...
+    options:
+      - names:
+          - --otp
+        argument: <OTP>
+        description: One-time password for registries that require two-factor authentication
+      - names:
+          - --force
+        argument: ""
+        description: Removes the package from the registry regardless of what version is currently published. Without this flag, pnpm refuses to unpublish an entire package
+    positionalArguments:
+      - name: '[PARAMS]...'
+        description: The package to remove, optionally with a version range (pkg@1.x)
+  - name: star
+    description: Marks a package as a favorite
+    usage: pnpm star [OPTIONS] <PACKAGE_NAME>
+    options: []
+    positionalArguments:
+      - name: <PACKAGE_NAME>
+        description: Package name to mark as a favorite
+  - name: unstar
+    description: Unmarks a package as a favorite
+    usage: pnpm unstar [OPTIONS] <PACKAGE_NAME>
+    options: []
+    positionalArguments:
+      - name: <PACKAGE_NAME>
+        description: Package name to remove from favorites
+  - name: stars
+    description: Lists all packages starred by a specific user
+    usage: pnpm stars [OPTIONS] [USERNAME]
+    options: []
+    positionalArguments:
+      - name: '[USERNAME]'
+        description: User whose starred packages to list
+  - name: dist-tag
+    aliases:
+      - dist-tags
+    description: Manage a package's distribution tags
+    usage: pnpm dist-tag [OPTIONS] [PARAMS]...
+    options:
+      - names:
+          - --otp
+        argument: <OTP>
+        description: One-time password for registries that require two-factor authentication
+    positionalArguments:
+      - name: '[PARAMS]...'
+        description: dist-tag subcommand and arguments
+  - name: ping
+    description: Test connectivity to the configured registry
+    usage: pnpm ping [OPTIONS]
+    options: []
+  - name: doctor
+    description: Run diagnostics on the pnpm installation and environment
+    usage: pnpm doctor [OPTIONS]
+    options:
+      - names:
+          - --offline
+        argument: ""
+        description: Skip checks that need network access
+      - names:
+          - --benchmark
+        argument: ""
+        description: Also time filesystem and install operations
+      - names:
+          - --json
+        argument: ""
+        description: Report the results as JSON
+  - name: search
+    aliases:
+      - s
+      - se
+      - find
+    description: Search for packages in the registry
+    usage: pnpm search [OPTIONS] [QUERY]...
+    options:
+      - names:
+          - --json
+        argument: ""
+        description: Show search results in JSON format
+      - names:
+          - --search-limit
+        argument: <SEARCH_LIMIT>
+        description: 'Maximum number of results to show (default: 20)'
+    positionalArguments:
+      - name: '[QUERY]...'
+        description: Search query terms
+  - name: rebuild
+    aliases:
+      - rb
+    description: Rebuild a package
+    usage: pnpm rebuild [OPTIONS] [PACKAGES]...
+    options:
+      - names:
+          - --pending
+        argument: ""
+        description: Rebuild packages that were not built during installation, such as under `--ignore-scripts`
+    positionalArguments:
+      - name: '[PACKAGES]...'
+        description: Rebuild only the named packages. With no names, every dependency that requires a build is rebuilt
+  - name: pack
+    description: Create a tarball from a package
+    usage: pnpm pack [OPTIONS]
+    options:
+      - names:
+          - --dry-run
+        argument: ""
+        description: Do everything `pack` would do except writing the tarball to disk
+      - names:
+          - --pack-destination
+        argument: <PACK_DESTINATION>
+        description: Directory in which to save the tarball. Defaults to the current working directory
+      - names:
+          - --json
+        argument: ""
+        description: Print the packed tarball and its contents in JSON
+      - names:
+          - --out
+        argument: <OUT>
+        description: Customize the output path. `%s` expands to the package name and `%v` to the version, e.g. `%s.tgz` or `some-dir/%s-%v.tgz`
+      - names:
+          - --pack-gzip-level
+        argument: <PACK_GZIP_LEVEL>
+        description: gzip compression level (`0`–`9`) for the tarball
+      - names:
+          - --skip-manifest-obfuscation
+        argument: ""
+        description: Keep the original `packageManager` field and publish-lifecycle scripts in the packed manifest instead of stripping them
+  - name: publish
+    description: Publish a package to the registry
+    usage: pnpm publish [OPTIONS] [PACKAGE]
+    options:
+      - names:
+          - --dry-run
+        argument: ""
+        description: Do everything `publish` would do except uploading to the registry
+      - names:
+          - --json
+        argument: ""
+        description: Print the per-package publish summary in JSON
+      - names:
+          - --tag
+        argument: <TAG>
+        description: Register the published package under this tag instead of `latest`
+      - names:
+          - --access
+        argument: <ACCESS>
+        description: Publish the package as `public` or `restricted`
+      - names:
+          - --provenance
+        argument: ""
+        description: Generate a provenance attestation for the published package
+      - names:
+          - --ignore-scripts
+        argument: ""
+        description: Don't run publish-related lifecycle scripts
+      - names:
+          - --embed-readme
+        argument: ""
+        description: Embed the README contents in the published manifest
+      - names:
+          - --skip-manifest-obfuscation
+        argument: ""
+        description: Keep the original `packageManager` field and publish-lifecycle scripts in the published manifest instead of stripping them
+      - names:
+          - --otp
+        argument: <OTP>
+        description: One-time password for two-factor-authenticated registries
+      - names:
+          - --publish-branch
+        argument: <PUBLISH_BRANCH>
+        description: The branch publishing is allowed from. Defaults to `master` / `main`
+      - names:
+          - --no-git-checks
+        argument: ""
+        description: Skip the git working-tree / branch / remote checks
+      - names:
+          - --force
+        argument: ""
+        description: Publish even if the version is already in the registry
+      - names:
+          - --batch
+        argument: ""
+        description: Send all workspace packages in a single request (requires `--recursive`)
+      - names:
+          - --report-summary
+        argument: ""
+        description: 'Recursive only: write a `pnpm-publish-summary.json` report listing the packages that were published'
+    positionalArguments:
+      - name: '[PACKAGE]'
+        description: Tarball or directory to publish. Defaults to the current directory
+  - name: stage
+    description: Stage packages for publishing, deferring proof-of-presence (2FA) to a later point in time
+    usage: pnpm stage [OPTIONS] [PARAMS]...
+    options:
+      - names:
+          - --dry-run
+        argument: ""
+        description: Do everything `publish` would do except uploading to the registry
+      - names:
+          - --json
+        argument: ""
+        description: Print the per-package publish summary in JSON
+      - names:
+          - --tag
+        argument: <TAG>
+        description: Register the published package under this tag instead of `latest`
+      - names:
+          - --access
+        argument: <ACCESS>
+        description: Publish the package as `public` or `restricted`
+      - names:
+          - --provenance
+        argument: ""
+        description: Generate a provenance attestation for the published package
+      - names:
+          - --ignore-scripts
+        argument: ""
+        description: Don't run publish-related lifecycle scripts
+      - names:
+          - --embed-readme
+        argument: ""
+        description: Embed the README contents in the published manifest
+      - names:
+          - --skip-manifest-obfuscation
+        argument: ""
+        description: Keep the original `packageManager` field and publish-lifecycle scripts in the published manifest instead of stripping them
+      - names:
+          - --otp
+        argument: <OTP>
+        description: One-time password for two-factor-authenticated registries
+      - names:
+          - --publish-branch
+        argument: <PUBLISH_BRANCH>
+        description: The branch publishing is allowed from. Defaults to `master` / `main`
+      - names:
+          - --no-git-checks
+        argument: ""
+        description: Skip the git working-tree / branch / remote checks
+      - names:
+          - --force
+        argument: ""
+        description: Publish even if the version is already in the registry
+      - names:
+          - --batch
+        argument: ""
+        description: Send all workspace packages in a single request (requires `--recursive`)
+      - names:
+          - --report-summary
+        argument: ""
+        description: 'Recursive only: write a `pnpm-publish-summary.json` report listing the packages that were published'
+    positionalArguments:
+      - name: '[PARAMS]...'
+        description: Stage subcommand and arguments
+  - name: remove
+    aliases:
+      - uninstall
+      - rm
+      - un
+      - uni
+    description: Removes packages from `node_modules` and from the project's `package.json`
+    usage: pnpm remove [OPTIONS] [PACKAGE_NAMES]...
+    options:
+      - names:
+          - -P
+          - --save-prod
+        argument: ""
+        description: Remove the dependency only from "dependencies"
+      - names:
+          - -D
+          - --save-dev
+        argument: ""
+        description: Remove the dependency only from "devDependencies"
+      - names:
+          - -O
+          - --save-optional
+        argument: ""
+        description: Remove the dependency only from "optionalDependencies"
+      - names:
+          - --lockfile-only
+        argument: ""
+        description: Dependencies are not removed from `node_modules`. Only the manifest and `pnpm-lock.yaml` are updated
+      - names:
+          - --lockfile-dir
+        argument: <dir>
+        description: The directory in which `pnpm-lock.yaml` is created. Several projects may share a single lockfile
+      - names:
+          - -g
+          - --global
+        argument: ""
+        description: Remove the package from the global packages directory and unlink its bins
+    positionalArguments:
+      - name: '[PACKAGE_NAMES]...'
+        description: Names of the packages to remove
+  - name: patch
+    description: Prepare a package for patching
+    usage: pnpm patch [OPTIONS] [PACKAGE_NAME]
+    options:
+      - names:
+          - -d
+          - --edit-dir
+        argument: <dir>
+        description: The package that needs to be modified will be extracted to this directory
+      - names:
+          - --ignore-existing
+        argument: ""
+        description: Ignore existing patch files when patching
+    positionalArguments:
+      - name: '[PACKAGE_NAME]'
+        description: Name of the package to patch
+  - name: patch-commit
+    description: Generate a patch out of a directory
+    usage: pnpm patch-commit [OPTIONS] <PATCH_DIR>
+    options:
+      - names:
+          - --patches-dir
+        argument: <dir>
+        description: The generated patch file will be saved to this directory
+    positionalArguments:
+      - name: <PATCH_DIR>
+        description: Directory created by `pnpm patch`
+  - name: patch-remove
+    description: Remove existing patch files
+    usage: pnpm patch-remove [OPTIONS] [pkg]...
+    options: []
+    positionalArguments:
+      - name: '[pkg]...'
+        description: Patches to remove
+  - name: peers
+    description: Checks for unmet or missing peer dependency issues
+    usage: pnpm peers [OPTIONS] [PARAMS]...
+    options: []
+    positionalArguments:
+      - name: '[PARAMS]...'
+        description: Subcommand and arguments. The only subcommand is `check`, which is also what a bare `pnpm peers` runs
+  - name: set-script
+    aliases:
+      - ss
+    description: Set a script in package.json
+    usage: pnpm set-script [OPTIONS] [PARAMS]...
+    options: []
+    positionalArguments:
+      - name: '[PARAMS]...'
+        description: The script name followed by the command and its arguments
+  - name: test
+    description: Runs a package's "test" script, if one was provided
+    usage: pnpm test [OPTIONS] [ARGS]...
+    options: []
+    positionalArguments:
+      - name: '[ARGS]...'
+        description: Arguments passed to the script, verbatim
+  - name: run
+    description: Runs a defined package script
+    usage: pnpm run [OPTIONS] [SCRIPT]...
+    options:
+      - names:
+          - --if-present
+        argument: ""
+        description: Avoid exiting with a non-zero exit code when the script is undefined
+      - names:
+          - -s
+          - --sequential
+        argument: ""
+        description: Run the specified scripts one by one
+    positionalArguments:
+      - name: '[SCRIPT]...'
+        description: A pre-defined package script followed by the arguments passed to it. When empty, the available scripts are listed.  One positional rather than a script name plus a separate argument list, so parsing stops *at* the script name — pnpm puts `run` in `SPECIALLY_ESCAPED_CMDS` to the same effect. Every later token reaches the script verbatim, including a `--` separator and anything shaped like a pnpm flag. Splitting the two lets clap keep parsing past the script name, which swallows both (pnpm/pnpm#13295). `exec` / `dlx` / `with` take the same shape.
+  - name: exec
+    description: Run a shell command in the context of a project
+    usage: pnpm exec [OPTIONS] [COMMAND]...
+    options:
+      - names:
+          - -c
+          - --shell-mode
+        argument: ""
+        description: Run the command inside of a shell. Uses `/bin/sh` on UNIX and `cmd.exe` on Windows
+    positionalArguments:
+      - name: '[COMMAND]...'
+        description: The command to run, followed by its arguments
+  - name: dlx
+    description: Run a package in a temporary environment
+    usage: pnpm dlx [OPTIONS] [COMMAND]...
+    options:
+      - names:
+          - --package
+        argument: <PACKAGE>
+        description: The package to install before running the command. May be repeated. When omitted, the command name is the package
+      - names:
+          - --allow-build
+        argument: <ALLOW_BUILD>
+        description: Package names allowed to run lifecycle (build) scripts during the dlx install. May be repeated
+      - names:
+          - -c
+          - --shell-mode
+        argument: ""
+        description: Run the command inside of a shell. Uses `/bin/sh` on UNIX and `cmd.exe` on Windows
+      - names:
+          - --cpu
+        argument: <CPU>
+        description: CPU architectures whose platform-tagged optional dependencies the dlx install should keep. Repeat or comma-separate for multiple
+      - names:
+          - --os
+        argument: <OS>
+        description: Operating systems whose platform-tagged optional dependencies the dlx install should keep
+      - names:
+          - --libc
+        argument: <LIBC>
+        description: libc families (`glibc`, `musl`) whose platform-tagged optional dependencies the dlx install should keep
+    positionalArguments:
+      - name: '[COMMAND]...'
+        description: The command to run, followed by its arguments
+  - name: create
+    description: Creates a project from a `create-*` starter kit
+    usage: pnpm create [OPTIONS] [COMMAND]...
+    options:
+      - names:
+          - --allow-build
+        argument: <ALLOW_BUILD>
+        description: Package names allowed to run lifecycle (build) scripts during the install. May be repeated
+      - names:
+          - -c
+          - --shell-mode
+        argument: ""
+        description: Run the command inside of a shell. Uses `/bin/sh` on UNIX and `cmd.exe` on Windows
+      - names:
+          - --cpu
+        argument: <CPU>
+        description: CPU architectures whose platform-tagged optional dependencies the install should keep. Repeat or comma-separate for multiple
+      - names:
+          - --os
+        argument: <OS>
+        description: Operating systems whose platform-tagged optional dependencies the install should keep
+      - names:
+          - --libc
+        argument: <LIBC>
+        description: libc families (`glibc`, `musl`) whose platform-tagged optional dependencies the install should keep
+    positionalArguments:
+      - name: '[COMMAND]...'
+        description: The template name (e.g., `vite`, `create-vite`, `@scope/foo`), followed by any arguments forwarded to the created package
+  - name: completion
+    description: Print shell completion code to stdout
+    usage: pnpm completion [OPTIONS] [SHELL]
+    options: []
+    positionalArguments:
+      - name: '[SHELL]'
+        description: Shell for which to generate completion code
+  - name: start
+    description: Runs an arbitrary command specified in the package's start property of its scripts object
+    usage: pnpm start [OPTIONS] [ARGS]...
+    options: []
+    positionalArguments:
+      - name: '[ARGS]...'
+        description: Arguments passed to the script, verbatim
+  - name: stop
+    description: Runs a package's "stop" script, if one was provided
+    usage: pnpm stop [OPTIONS] [ARGS]...
+    options: []
+    positionalArguments:
+      - name: '[ARGS]...'
+        description: Arguments passed to the script, verbatim
+  - name: restart
+    description: Restarts a package. Runs "stop", "restart", and "start" scripts, and associated pre- and post- scripts
+    usage: pnpm restart [OPTIONS] [ARGS]...
+    options:
+      - names:
+          - --if-present
+        argument: ""
+        description: Avoid exiting with a non-zero exit code when a script is undefined
+    positionalArguments:
+      - name: '[ARGS]...'
+        description: Arguments passed to each script after the script name
+  - name: find-hash
+    description: Lists the packages that include the file with the specified hash
+    usage: pnpm find-hash [OPTIONS] <HASH>
+    options: []
+    positionalArguments:
+      - name: <HASH>
+        description: The hash of the file to search for. Can be a hex string or shaN-base64 format
+  - name: runtime
+    aliases:
+      - rt
+    description: Manage runtimes
+    usage: pnpm runtime [OPTIONS] [PARAMS]...
+    options:
+      - names:
+          - -g
+          - --global
+        argument: ""
+        description: Install the runtime globally
+      - names:
+          - -D
+          - --save-dev
+        argument: ""
+        description: Save the runtime to `devEngines.runtime`. This is the default
+      - names:
+          - -P
+          - --save-prod
+        argument: ""
+        description: Save the runtime to `engines.runtime`
+    positionalArguments:
+      - name: '[PARAMS]...'
+        description: Runtime subcommand and arguments
+  - name: env
+    description: Manage Node.js versions. Deprecated in favour of `pnpm runtime`
+    usage: pnpm env [OPTIONS] [PARAMS]...
+    options:
+      - names:
+          - -g
+          - --global
+        argument: ""
+        description: Manage Node.js versions globally
+    positionalArguments:
+      - name: '[PARAMS]...'
+        description: Subcommand (`use`, `list`) and its arguments
+  - name: shim
+    description: Manage context-aware shims for packages that are not installed globally, so a project decides which version runs
+    usage: pnpm shim [OPTIONS] [PARAMS]...
+    options: []
+    positionalArguments:
+      - name: '[PARAMS]...'
+        description: The subcommand (`add`, `rm`, `ls`) and the packages it applies to
+  - name: bin
+    description: Print the directory where pnpm will install executables
+    usage: pnpm bin [OPTIONS]
+    options:
+      - names:
+          - -g
+          - --global
+        argument: ""
+        description: Print the global executables directory
+  - name: clean
+    description: Safely remove `node_modules` directories from the current project (or every workspace project) without following NTFS junctions into their targets. A `clean` script in `package.json` overrides the built-in command
+    usage: pnpm clean [OPTIONS]
+    options:
+      - names:
+          - -l
+          - --lockfile
+        argument: ""
+        description: Also remove `pnpm-lock.yaml` files
+  - name: purge
+    description: 'Alias of `clean`: same behavior, except a `purge` script (not a `clean` script) overrides it when present'
+    usage: pnpm purge [OPTIONS]
+    options:
+      - names:
+          - -l
+          - --lockfile
+        argument: ""
+        description: Also remove `pnpm-lock.yaml` files
+  - name: ci
+    aliases:
+      - clean-install
+      - ic
+      - install-clean
+    description: Runs clean then install with a frozen lockfile
+    usage: pnpm ci [OPTIONS]
+    options:
+      - names:
+          - -P
+          - --prod
+          - --production
+        argument: ""
+        description: Install only production dependencies. devDependencies are skipped, and removed if already installed. Takes precedence over `NODE_ENV`
+      - names:
+          - -D
+          - --dev
+        argument: ""
+        description: Install only devDependencies. Regular dependencies are skipped, and removed if already installed, regardless of `NODE_ENV`
+      - names:
+          - --optional
+        argument: ""
+        description: Include optionalDependencies even when the configured default excludes them
+      - names:
+          - --no-optional
+        argument: ""
+        description: Don't install optionalDependencies
+      - names:
+          - --cpu
+        argument: <CPU>...
+        description: CPU architectures whose platform-specific optional dependencies should be installed. Repeat or comma-separate for multiple values
+      - names:
+          - --os
+        argument: <OS>...
+        description: Operating systems whose platform-specific optional dependencies should be installed. Repeat or comma-separate for multiple values
+      - names:
+          - --libc
+        argument: <LIBC>...
+        description: libc families whose platform-specific optional dependencies should be installed (`glibc`, `musl`). Repeat or comma-separate for multiple values
+      - names:
+          - --frozen-lockfile
+        argument: ""
+        description: Don't generate a lockfile, and fail if an update to it is needed. This setting is enabled by default in CI when a lockfile is present
+      - names:
+          - --no-frozen-lockfile
+        argument: ""
+        description: 'Allow the lockfile to be updated, overriding a `frozenLockfile: true` setting'
+      - names:
+          - --lockfile-only
+        argument: ""
+        description: Only update `pnpm-lock.yaml`. Don't download packages or write `node_modules`
+      - names:
+          - --lockfile-dir
+        argument: <dir>
+        description: The directory in which `pnpm-lock.yaml` is created. Several projects may share a single lockfile
+      - names:
+          - --merge-git-branch-lockfiles
+        argument: ""
+        description: Fold every per-branch lockfile (`pnpm-lock.<branch>.yaml`, written under the `gitBranchLockfile` setting) into `pnpm-lock.yaml` and delete them
+      - names:
+          - --merge-git-branch-lockfiles-branch-pattern
+        argument: <MERGE_GIT_BRANCH_LOCKFILES_BRANCH_PATTERN>
+        description: Glob patterns naming the branches that merge the per-branch lockfiles, so a mainline branch does not have to pass `--merge-git-branch-lockfiles` by hand
+      - names:
+          - --dry-run
+        argument: ""
+        description: Show what an install would change without writing anything to disk
+      - names:
+          - --force
+        argument: ""
+        description: 'Reinstall every package the lockfile names: relink packages an earlier install already materialized, and install optional dependencies whose `cpu` / `os` / `libc` / `engines` don''t match the host instead of skipping them'
+      - names:
+          - --prefer-frozen-lockfile
+        argument: ""
+        description: Prefer the existing lockfile over re-resolving, even when the manifest may have changed
+      - names:
+          - --no-prefer-frozen-lockfile
+        argument: ""
+        description: Always re-resolve against the registry instead of preferring the existing lockfile
+      - names:
+          - --ignore-manifest-check
+        argument: ""
+        description: Skip the check that `pnpm-lock.yaml` is up to date with `package.json` under `--frozen-lockfile`. For callers that just wrote the lockfile themselves and know the manifest is about to catch up
+      - names:
+          - --no-runtime
+        argument: ""
+        description: Don't install runtime dependencies (`node`, `deno`, `bun`). Their archives aren't fetched and their bins aren't linked; the rest of the install proceeds normally
+      - names:
+          - --ignore-scripts
+        argument: ""
+        description: Don't run lifecycle scripts of the project or its dependencies. Packages are still installed; only their build scripts are skipped, and the install won't fail because of it
+      - names:
+          - --no-ignore-scripts
+        argument: ""
+        description: Run lifecycle scripts even when the configuration disables them
+      - names:
+          - --ignore-pnpmfile
+        argument: ""
+        description: Disable pnpm hooks defined in `.pnpmfile.cjs`, including the pnpmfiles of config dependencies
+      - names:
+          - --node-linker
+        argument: <NODE_LINKER>
+        description: 'Which node linker to use: `isolated` (the default, a symlinked store), `hoisted` (a flat `node_modules`), or `pnp` (Plug''n''Play). Overrides the configured value'
+      - names:
+          - --offline
+        argument: ""
+        description: Fail on a cache miss instead of fetching from the registry, using only packages already in the store
+      - names:
+          - --no-offline
+        argument: ""
+        description: Allow network fetches even when the configuration enables offline mode
+      - names:
+          - --frozen-store
+        argument: ""
+        description: Open the store read-only and skip all store writes. For installing against a store on a read-only filesystem (e.g. a Nix store); pair with `--offline --frozen-lockfile`
+      - names:
+          - --no-frozen-store
+        argument: ""
+        description: Allow store writes even when the configuration enables the read-only store
+      - names:
+          - --prefer-offline
+        argument: ""
+        description: Prefer packages already in the cache over the network, even past their freshness window
+      - names:
+          - --no-prefer-offline
+        argument: ""
+        description: Don't prefer cached packages even when the configuration enables it
+      - names:
+          - --trust-lockfile
+        argument: ""
+        description: Skip verifying the lockfile against supply-chain policies
+      - names:
+          - --no-trust-lockfile
+        argument: ""
+        description: Verify the lockfile against supply-chain policies even when the configuration trusts it
+      - names:
+          - --update-checksums
+        argument: ""
+        description: Refresh the integrity checksums in `pnpm-lock.yaml` from the registry. Cannot be combined with `--frozen-lockfile`
+      - names:
+          - --network-concurrency
+        argument: <NETWORK_CONCURRENCY>
+        description: Maximum number of concurrent network requests during install
+      - names:
+          - --fetch-timeout
+        argument: <FETCH_TIMEOUT>
+        description: Per-request network timeout, in milliseconds
+      - names:
+          - --fetch-warn-timeout-ms
+        argument: <FETCH_WARN_TIMEOUT_MS>
+        description: Warn when a registry metadata request takes longer than this many milliseconds
+      - names:
+          - --fetch-min-speed-ki-bps
+        argument: <FETCH_MIN_SPEED_KI_BPS>
+        description: Warn when a tarball download's average speed is below this many KiB/s
+      - names:
+          - --user-agent
+        argument: <USER_AGENT>
+        description: '`User-Agent` header to send on registry requests'
+      - names:
+          - --pnpr-server
+        argument: <PNPR_SERVER>
+        description: URL of a pnpr server to offload resolution and file fetching to. `node_modules` is still linked locally from the server-produced lockfile
+      - names:
+          - -l
+          - --lockfile
+        argument: ""
+        description: Also remove `pnpm-lock.yaml` files
+  - name: root
+    description: Print the effective `node_modules` directory
+    usage: pnpm root [OPTIONS]
+    options:
+      - names:
+          - -g
+          - --global
+        argument: ""
+        description: Print the global packages directory
+  - name: prefix
+    description: Print the current package prefix
+    usage: pnpm prefix [OPTIONS]
+    options:
+      - names:
+          - -g
+          - --global
+        argument: ""
+        description: Print the global prefix
+  - name: config
+    aliases:
+      - c
+    description: Manage the pnpm configuration files
+    usage: pnpm config [OPTIONS] <COMMAND>
+    options: []
+    subcommands:
+      - name: set
+        description: Set the config key to the value provided
+        usage: pnpm config set [OPTIONS] [KEY] [VALUE]
+        options:
+          - names:
+              - -g
+              - --global
+            argument: ""
+            description: Operate on the global config file
+          - names:
+              - --location
+            argument: <LOCATION>
+            description: 'Which config to read or write: `project` for the project''s config, `global` for the global config'
+          - names:
+              - --json
+            argument: ""
+            description: Show all types of values in JSON format (not just objects and arrays)
+        positionalArguments:
+          - name: '[KEY]'
+            description: Configuration key to set
+          - name: '[VALUE]'
+            description: Value to assign
+      - name: get
+        description: Print the config value for the provided key
+        usage: pnpm config get [OPTIONS] [KEY]
+        options:
+          - names:
+              - -g
+              - --global
+            argument: ""
+            description: Operate on the global config file
+          - names:
+              - --location
+            argument: <LOCATION>
+            description: 'Which config to read or write: `project` for the project''s config, `global` for the global config'
+          - names:
+              - --json
+            argument: ""
+            description: Show all types of values in JSON format (not just objects and arrays)
+        positionalArguments:
+          - name: '[KEY]'
+            description: Configuration key to read
+      - name: delete
+        description: Remove the config key from the config file
+        usage: pnpm config delete [OPTIONS] [KEY]
+        options:
+          - names:
+              - -g
+              - --global
+            argument: ""
+            description: Operate on the global config file
+          - names:
+              - --location
+            argument: <LOCATION>
+            description: 'Which config to read or write: `project` for the project''s config, `global` for the global config'
+          - names:
+              - --json
+            argument: ""
+            description: Show all types of values in JSON format (not just objects and arrays)
+        positionalArguments:
+          - name: '[KEY]'
+            description: Configuration key to remove
+      - name: list
+        description: Show all the config settings
+        usage: pnpm config list [OPTIONS]
+        options:
+          - names:
+              - -g
+              - --global
+            argument: ""
+            description: Operate on the global config file
+          - names:
+              - --location
+            argument: <LOCATION>
+            description: 'Which config to read or write: `project` for the project''s config, `global` for the global config'
+          - names:
+              - --json
+            argument: ""
+            description: Show all types of values in JSON format (not just objects and arrays)
+      - name: help
+        description: Print this message or the help of the given subcommand(s)
+        usage: pnpm config help [COMMAND]...
+        options: []
+        positionalArguments:
+          - name: '[COMMAND]...'
+            description: Command whose help to print
+  - name: get
+    description: Print the config value for the provided key. Shorthand for `pnpm config get`
+    usage: pnpm get [OPTIONS] [KEY]
+    options:
+      - names:
+          - -g
+          - --global
+        argument: ""
+        description: Operate on the global config file
+      - names:
+          - --location
+        argument: <LOCATION>
+        description: 'Which config to read or write: `project` for the project''s config, `global` for the global config'
+      - names:
+          - --json
+        argument: ""
+        description: Show all types of values in JSON format (not just objects and arrays)
+    positionalArguments:
+      - name: '[KEY]'
+        description: Configuration key to read
+  - name: set
+    description: Set the config key to the value provided. Shorthand for `pnpm config set`
+    usage: pnpm set [OPTIONS] [KEY] [VALUE]
+    options:
+      - names:
+          - -g
+          - --global
+        argument: ""
+        description: Operate on the global config file
+      - names:
+          - --location
+        argument: <LOCATION>
+        description: 'Which config to read or write: `project` for the project''s config, `global` for the global config'
+      - names:
+          - --json
+        argument: ""
+        description: Show all types of values in JSON format (not just objects and arrays)
+    positionalArguments:
+      - name: '[KEY]'
+        description: Configuration key to set
+      - name: '[VALUE]'
+        description: Value to assign
+  - name: pkg
+    description: Manages your package.json
+    usage: pnpm pkg [OPTIONS] <COMMAND>
+    options:
+      - names:
+          - --json
+        argument: ""
+        description: When setting, parse the value as JSON. When getting a single key, return its JSON-encoded form instead of the raw value
+    subcommands:
+      - name: get
+        description: Retrieves a value from package.json
+        usage: pnpm pkg get [OPTIONS] [KEYS]...
+        options:
+          - names:
+              - --json
+            argument: ""
+            description: When setting, parse the value as JSON. When getting a single key, return its JSON-encoded form instead of the raw value
+        positionalArguments:
+          - name: '[KEYS]...'
+            description: Keys to retrieve from package.json
+      - name: set
+        description: Sets a value in package.json
+        usage: pnpm pkg set [OPTIONS] <PAIRS>...
+        options:
+          - names:
+              - --json
+            argument: ""
+            description: When setting, parse the value as JSON. When getting a single key, return its JSON-encoded form instead of the raw value
+        positionalArguments:
+          - name: <PAIRS>...
+            description: key=value pairs to set in package.json
+      - name: delete
+        description: Deletes a key from package.json
+        usage: pnpm pkg delete [OPTIONS] <KEYS>...
+        options:
+          - names:
+              - --json
+            argument: ""
+            description: When setting, parse the value as JSON. When getting a single key, return its JSON-encoded form instead of the raw value
+        positionalArguments:
+          - name: <KEYS>...
+            description: Keys to delete from package.json
+      - name: fix
+        description: Auto corrects common errors in package.json
+        usage: pnpm pkg fix [OPTIONS]
+        options:
+          - names:
+              - --json
+            argument: ""
+            description: When setting, parse the value as JSON. When getting a single key, return its JSON-encoded form instead of the raw value
+      - name: help
+        description: Print this message or the help of the given subcommand(s)
+        usage: pnpm pkg help [COMMAND]...
+        options: []
+        positionalArguments:
+          - name: '[COMMAND]...'
+            description: Command whose help to print
+  - name: pack-app
+    description: Pack a `CommonJS` entry file into a standalone executable for one or more target platforms
+    usage: pnpm pack-app [OPTIONS] [PARAMS]...
+    options:
+      - names:
+          - --entry
+        argument: <ENTRY>
+        description: Path to the CJS entry file to embed in the executable
+      - names:
+          - -t
+          - --target
+        argument: <TARGET>
+        description: 'Target to build for. May be specified multiple times. Supported: linux-x64, linux-x64-musl, linux-arm64, linux-arm64-musl, darwin-x64, darwin-arm64, win32-x64, win32-arm64'
+      - names:
+          - --runtime
+        argument: <RUNTIME>
+        description: Runtime to embed, as a `<name>@<version>` spec (e.g. `node@25`, `node@25.5.0`). Only `node` is supported, and the version must be >= v25.5. Defaults to the minimum SEA-capable version (v25.5.0)
+      - names:
+          - -o
+          - --output-dir
+        argument: <OUTPUT_DIR>
+        description: Output directory for the built executables. Defaults to `dist-app`
+      - names:
+          - --output-name
+        argument: <OUTPUT_NAME>
+        description: Name for the output executable (without extension). Defaults to the unscoped package name
+    positionalArguments:
+      - name: '[PARAMS]...'
+        description: Positional arguments. The first is used as the CJS entry file when `--entry` is omitted; the rest are ignored
+  - name: store
+    description: Managing the package store
+    usage: pnpm store [OPTIONS] <COMMAND>
+    options: []
+    subcommands:
+      - name: status
+        description: Checks for modified packages in the store. Returns exit code 0 if the content of the package is the same as it was at the time of unpacking
+        usage: pnpm store status [OPTIONS]
+        options: []
+      - name: add
+        description: Functionally equivalent to pnpm add, except this adds new packages to the store directly without modifying any projects or files outside of the store
+        usage: pnpm store add [OPTIONS] [PACKAGES]...
+        options: []
+        positionalArguments:
+          - name: '[PACKAGES]...'
+            description: The packages to fetch into the store, e.g. `express@4`
+      - name: prune
+        description: Removes unreferenced packages from the store. Unreferenced packages are packages that are not used by any projects on the system. Packages can become unreferenced after most installation operations, for instance when dependencies are made redundant
+        usage: pnpm store prune [OPTIONS]
+        options: []
+      - name: path
+        description: Returns the path to the active store directory
+        usage: pnpm store path [OPTIONS]
+        options: []
+      - name: help
+        description: Print this message or the help of the given subcommand(s)
+        usage: pnpm store help [COMMAND]...
+        options: []
+        positionalArguments:
+          - name: '[COMMAND]...'
+            description: Command whose help to print
+  - name: cache
+    description: Inspect and manage the metadata cache
+    usage: pnpm cache [OPTIONS] <COMMAND>
+    options: []
+    subcommands:
+      - name: list
+        description: Lists the available packages metadata cache. Supports filtering by glob
+        usage: pnpm cache list [OPTIONS] [PACKAGES]...
+        options: []
+        positionalArguments:
+          - name: '[PACKAGES]...'
+            description: Package names to list from the cache
+      - name: list-registries
+        description: Lists all registries that have their metadata cache locally
+        usage: pnpm cache list-registries [OPTIONS]
+        options: []
+      - name: path
+        description: Prints the path to the cache directory
+        usage: pnpm cache path [OPTIONS]
+        options: []
+      - name: view
+        description: Views information from the specified package's cache
+        usage: pnpm cache view [OPTIONS] <PACKAGE>
+        options: []
+        positionalArguments:
+          - name: <PACKAGE>
+            description: Package whose cached metadata to display
+      - name: delete
+        description: Deletes metadata cache for the specified package(s). Supports patterns
+        usage: pnpm cache delete [OPTIONS] [PACKAGES]...
+        options: []
+        positionalArguments:
+          - name: '[PACKAGES]...'
+            description: Package names to delete from the cache
+      - name: help
+        description: Print this message or the help of the given subcommand(s)
+        usage: pnpm cache help [COMMAND]...
+        options: []
+        positionalArguments:
+          - name: '[COMMAND]...'
+            description: Command whose help to print
+  - name: cat-file
+    description: Prints the contents of a file based on the hash value stored in the index file
+    usage: pnpm cat-file [OPTIONS] <HASH>
+    options: []
+    positionalArguments:
+      - name: <HASH>
+        description: The hash of the file to read (e.g. sha512-...)
+  - name: cat-index
+    description: Prints the index file of a specific package from the store
+    usage: pnpm cat-index [OPTIONS] <WANTED_DEPENDENCY>
+    options: []
+    positionalArguments:
+      - name: <WANTED_DEPENDENCY>
+        description: The package specifier (e.g., `pkg@version`)
+  - name: ignored-builds
+    description: Print the list of packages with blocked build scripts
+    usage: pnpm ignored-builds [OPTIONS]
+    options: []
+  - name: approve-builds
+    description: Approve dependencies for running scripts during installation
+    usage: pnpm approve-builds [OPTIONS] [PACKAGES]...
+    options:
+      - names:
+          - --all
+        argument: ""
+        description: Approve all pending dependencies without interactive prompts
+      - names:
+          - -g
+          - --global
+        argument: ""
+        description: Approve builds for globally installed packages
+    positionalArguments:
+      - name: '[PACKAGES]...'
+        description: Packages to approve (`<pkg>`) or deny (`!<pkg>`). With no packages, the packages awaiting approval are chosen interactively
+  - name: link
+    aliases:
+      - ln
+    description: Links a local package as a dependency
+    usage: pnpm link [OPTIONS] [PACKAGE_PATHS]...
+    options: []
+    positionalArguments:
+      - name: '[PACKAGE_PATHS]...'
+        description: Paths to local packages to link
+  - name: import
+    description: Generates a pnpm-lock.yaml from an external lockfile
+    usage: pnpm import [OPTIONS]
+    options:
+      - names:
+          - --pnpr-server
+        argument: <PNPR_SERVER>
+        description: URL of a pnpr server to offload lockfile resolution to
+  - name: dedupe
+    description: Deduplicate packages in the lockfile
+    usage: pnpm dedupe [OPTIONS]
+    options:
+      - names:
+          - --check
+        argument: ""
+        description: Check if running dedupe would result in changes without installing packages or editing the lockfile. Exits with a non-zero status code if changes are possible
+      - names:
+          - --lockfile-only
+        argument: ""
+        description: Only update `pnpm-lock.yaml`. Don't download packages or write `node_modules`
+      - names:
+          - --ignore-scripts
+        argument: ""
+        description: Don't run lifecycle scripts of the project or its dependencies. Packages are still installed; only their build scripts are skipped, and the install won't fail because of it
+      - names:
+          - --no-ignore-scripts
+        argument: ""
+        description: Run lifecycle scripts even when the configuration disables them
+      - names:
+          - --offline
+        argument: ""
+        description: Fail on a cache miss instead of fetching from the registry, using only packages already in the store
+      - names:
+          - --no-offline
+        argument: ""
+        description: Allow network fetches even when the configuration enables offline mode
+      - names:
+          - --prefer-offline
+        argument: ""
+        description: Prefer packages already in the cache over the network, even past their freshness window
+      - names:
+          - --no-prefer-offline
+        argument: ""
+        description: Don't prefer cached packages even when the configuration enables it
+      - names:
+          - --ignore-pnpmfile
+        argument: ""
+        description: Disable pnpm hooks defined in `.pnpmfile.cjs`, including the pnpmfiles of config dependencies
+  - name: deploy
+    description: Deploy a package from a workspace
+    usage: pnpm deploy [OPTIONS] [DIR]...
+    options:
+      - names:
+          - -P
+          - --prod
+          - --production
+        argument: ""
+        description: Install only production dependencies. devDependencies are skipped, and removed if already installed. Takes precedence over `NODE_ENV`
+      - names:
+          - -D
+          - --dev
+        argument: ""
+        description: Install only devDependencies. Regular dependencies are skipped, and removed if already installed, regardless of `NODE_ENV`
+      - names:
+          - --optional
+        argument: ""
+        description: Include optionalDependencies even when the configured default excludes them
+      - names:
+          - --no-optional
+        argument: ""
+        description: Don't install optionalDependencies
+      - names:
+          - --cpu
+        argument: <CPU>...
+        description: CPU architectures whose platform-specific optional dependencies should be installed. Repeat or comma-separate for multiple values
+      - names:
+          - --os
+        argument: <OS>...
+        description: Operating systems whose platform-specific optional dependencies should be installed. Repeat or comma-separate for multiple values
+      - names:
+          - --libc
+        argument: <LIBC>...
+        description: libc families whose platform-specific optional dependencies should be installed (`glibc`, `musl`). Repeat or comma-separate for multiple values
+      - names:
+          - --frozen-lockfile
+        argument: ""
+        description: Don't generate a lockfile, and fail if an update to it is needed. This setting is enabled by default in CI when a lockfile is present
+      - names:
+          - --no-frozen-lockfile
+        argument: ""
+        description: 'Allow the lockfile to be updated, overriding a `frozenLockfile: true` setting'
+      - names:
+          - --lockfile-only
+        argument: ""
+        description: Only update `pnpm-lock.yaml`. Don't download packages or write `node_modules`
+      - names:
+          - --lockfile-dir
+        argument: <dir>
+        description: The directory in which `pnpm-lock.yaml` is created. Several projects may share a single lockfile
+      - names:
+          - --merge-git-branch-lockfiles
+        argument: ""
+        description: Fold every per-branch lockfile (`pnpm-lock.<branch>.yaml`, written under the `gitBranchLockfile` setting) into `pnpm-lock.yaml` and delete them
+      - names:
+          - --merge-git-branch-lockfiles-branch-pattern
+        argument: <MERGE_GIT_BRANCH_LOCKFILES_BRANCH_PATTERN>
+        description: Glob patterns naming the branches that merge the per-branch lockfiles, so a mainline branch does not have to pass `--merge-git-branch-lockfiles` by hand
+      - names:
+          - --dry-run
+        argument: ""
+        description: Show what an install would change without writing anything to disk
+      - names:
+          - --force
+        argument: ""
+        description: 'Reinstall every package the lockfile names: relink packages an earlier install already materialized, and install optional dependencies whose `cpu` / `os` / `libc` / `engines` don''t match the host instead of skipping them'
+      - names:
+          - --prefer-frozen-lockfile
+        argument: ""
+        description: Prefer the existing lockfile over re-resolving, even when the manifest may have changed
+      - names:
+          - --no-prefer-frozen-lockfile
+        argument: ""
+        description: Always re-resolve against the registry instead of preferring the existing lockfile
+      - names:
+          - --ignore-manifest-check
+        argument: ""
+        description: Skip the check that `pnpm-lock.yaml` is up to date with `package.json` under `--frozen-lockfile`. For callers that just wrote the lockfile themselves and know the manifest is about to catch up
+      - names:
+          - --no-runtime
+        argument: ""
+        description: Don't install runtime dependencies (`node`, `deno`, `bun`). Their archives aren't fetched and their bins aren't linked; the rest of the install proceeds normally
+      - names:
+          - --ignore-scripts
+        argument: ""
+        description: Don't run lifecycle scripts of the project or its dependencies. Packages are still installed; only their build scripts are skipped, and the install won't fail because of it
+      - names:
+          - --no-ignore-scripts
+        argument: ""
+        description: Run lifecycle scripts even when the configuration disables them
+      - names:
+          - --ignore-pnpmfile
+        argument: ""
+        description: Disable pnpm hooks defined in `.pnpmfile.cjs`, including the pnpmfiles of config dependencies
+      - names:
+          - --node-linker
+        argument: <NODE_LINKER>
+        description: 'Which node linker to use: `isolated` (the default, a symlinked store), `hoisted` (a flat `node_modules`), or `pnp` (Plug''n''Play). Overrides the configured value'
+      - names:
+          - --offline
+        argument: ""
+        description: Fail on a cache miss instead of fetching from the registry, using only packages already in the store
+      - names:
+          - --no-offline
+        argument: ""
+        description: Allow network fetches even when the configuration enables offline mode
+      - names:
+          - --frozen-store
+        argument: ""
+        description: Open the store read-only and skip all store writes. For installing against a store on a read-only filesystem (e.g. a Nix store); pair with `--offline --frozen-lockfile`
+      - names:
+          - --no-frozen-store
+        argument: ""
+        description: Allow store writes even when the configuration enables the read-only store
+      - names:
+          - --prefer-offline
+        argument: ""
+        description: Prefer packages already in the cache over the network, even past their freshness window
+      - names:
+          - --no-prefer-offline
+        argument: ""
+        description: Don't prefer cached packages even when the configuration enables it
+      - names:
+          - --trust-lockfile
+        argument: ""
+        description: Skip verifying the lockfile against supply-chain policies
+      - names:
+          - --no-trust-lockfile
+        argument: ""
+        description: Verify the lockfile against supply-chain policies even when the configuration trusts it
+      - names:
+          - --update-checksums
+        argument: ""
+        description: Refresh the integrity checksums in `pnpm-lock.yaml` from the registry. Cannot be combined with `--frozen-lockfile`
+      - names:
+          - --network-concurrency
+        argument: <NETWORK_CONCURRENCY>
+        description: Maximum number of concurrent network requests during install
+      - names:
+          - --fetch-timeout
+        argument: <FETCH_TIMEOUT>
+        description: Per-request network timeout, in milliseconds
+      - names:
+          - --fetch-warn-timeout-ms
+        argument: <FETCH_WARN_TIMEOUT_MS>
+        description: Warn when a registry metadata request takes longer than this many milliseconds
+      - names:
+          - --fetch-min-speed-ki-bps
+        argument: <FETCH_MIN_SPEED_KI_BPS>
+        description: Warn when a tarball download's average speed is below this many KiB/s
+      - names:
+          - --user-agent
+        argument: <USER_AGENT>
+        description: '`User-Agent` header to send on registry requests'
+      - names:
+          - --pnpr-server
+        argument: <PNPR_SERVER>
+        description: URL of a pnpr server to offload resolution and file fetching to. `node_modules` is still linked locally from the server-produced lockfile
+      - names:
+          - --legacy
+        argument: ""
+        description: Use the legacy deploy implementation
+    positionalArguments:
+      - name: '[DIR]...'
+        description: Target deploy directory
+  - name: prune
+    description: Remove extraneous packages
+    usage: pnpm prune [OPTIONS]
+    options:
+      - names:
+          - -P
+          - --prod
+          - --production
+        argument: ""
+        description: '[alias: --production]'
+      - names:
+          - --no-ignore-scripts
+        argument: ""
+        description: Run lifecycle scripts even if scripts are disabled by configuration
+  - name: fetch
+    description: Fetch packages from the lockfile into the virtual store
+    usage: pnpm fetch [OPTIONS]
+    options:
+      - names:
+          - -P
+          - --prod
+          - --production
+        argument: ""
+        description: '[alias: --production]'
+      - names:
+          - --ignore-pnpmfile
+        argument: ""
+        description: Disable pnpm hooks defined in `.pnpmfile.cjs`, including the pnpmfiles of config dependencies
+  - name: unlink
+    aliases:
+      - dislink
+    description: Removes links to a local package and reinstalls it
+    usage: pnpm unlink [OPTIONS] [PACKAGE_NAMES]...
+    options:
+      - names:
+          - --ignore-pnpmfile
+        argument: ""
+        description: Disable pnpm hooks defined in `.pnpmfile.cjs`, including the pnpmfiles of config dependencies
+    positionalArguments:
+      - name: '[PACKAGE_NAMES]...'
+        description: Package names to unlink
+  - name: docs
+    aliases:
+      - home
+    description: Opens the documentation of a package in the browser
+    usage: pnpm docs [OPTIONS] <PACKAGE>
+    options: []
+    positionalArguments:
+      - name: <PACKAGE>
+        description: Package name (optionally with @version)
+  - name: repo
+    description: Opens the URL of the package's repository in a browser
+    usage: pnpm repo [OPTIONS] [PACKAGES]...
+    options: []
+    positionalArguments:
+      - name: '[PACKAGES]...'
+        description: Package names (optionally with @version) to look up
+  - name: self-update
+    description: Updates pnpm to the latest version (or the one specified)
+    usage: pnpm self-update [OPTIONS] [VERSION]
+    options: []
+    positionalArguments:
+      - name: '[VERSION]'
+        description: The version, range, or dist-tag to update to. Defaults to the `latest` dist-tag (which refuses to downgrade)
+  - name: setup
+    description: Sets up pnpm
+    usage: pnpm setup [OPTIONS]
+    options:
+      - names:
+          - -f
+          - --force
+        argument: ""
+        description: Override the PNPM_HOME env variable in case it already exists
+  - name: login
+    aliases:
+      - adduser
+    description: Log in to an npm registry
+    usage: pnpm login [OPTIONS]
+    options:
+      - names:
+          - --scope
+        argument: <SCOPE>
+        description: Associate the login token with a package scope and record the scope-to-registry mapping
+  - name: team
+    description: Manage organization teams and team memberships
+    usage: pnpm team [OPTIONS] [PARAMS]...
+    options:
+      - names:
+          - --otp
+        argument: <OTP>
+        description: One-time password for registries that require two-factor authentication
+      - names:
+          - --parseable
+        argument: ""
+        description: Output parseable results (tab-separated)
+      - names:
+          - --json
+        argument: ""
+        description: Output results as JSON
+    positionalArguments:
+      - name: '[PARAMS]...'
+        description: Subcommand and arguments
+  - name: owner
+    aliases:
+      - owners
+    description: Manage package owners on the registry
+    usage: pnpm owner [OPTIONS] [PARAMS]...
+    options:
+      - names:
+          - --otp
+        argument: <OTP>
+        description: One-time password for registries that require two-factor authentication
+    positionalArguments:
+      - name: '[PARAMS]...'
+        description: Subcommand and arguments
+  - name: logout
+    description: Log out of an npm registry
+    usage: pnpm logout [OPTIONS]
+    options: []
+  - name: with
+    description: Runs pnpm at a specific version (or the currently running one) for a single invocation, ignoring the "packageManager" and "devEngines.packageManager" fields of the project's manifest
+    usage: pnpm with [OPTIONS] [PARAMS]...
+    options: []
+    positionalArguments:
+      - name: '[PARAMS]...'
+        description: The pnpm version, range, or dist-tag to run — or `current` to use the pnpm that is already running — followed by the pnpm command and its arguments
+  - name: edit
+    description: Not implemented in pnpm. Use the npm CLI directly
+    usage: pnpm edit [OPTIONS] [PARAMS]...
+    options: []
+    positionalArguments:
+      - name: '[PARAMS]...'
+        description: Arguments accepted for npm compatibility
+  - name: profile
+    description: Not implemented in pnpm. Use the npm CLI directly
+    usage: pnpm profile [OPTIONS] [PARAMS]...
+    options: []
+    positionalArguments:
+      - name: '[PARAMS]...'
+        description: Arguments accepted for npm compatibility
+  - name: token
+    description: Not implemented in pnpm. Use the npm CLI directly
+    usage: pnpm token [OPTIONS] [PARAMS]...
+    options: []
+    positionalArguments:
+      - name: '[PARAMS]...'
+        description: Arguments accepted for npm compatibility
+  - name: xmas
+    description: Not implemented in pnpm. Use the npm CLI directly
+    usage: pnpm xmas [OPTIONS] [PARAMS]...
+    options: []
+    positionalArguments:
+      - name: '[PARAMS]...'
+        description: Arguments accepted for npm compatibility
+  - name: help
+    description: Print this message or the help of the given subcommand(s)
+    usage: pnpm help [COMMAND]...
+    options: []
+    positionalArguments:
+      - name: '[COMMAND]...'
+        description: Command whose help to print
+version: 12.0.0
+tldr: |
+  > Fast, disk space efficient package manager for Node.js.
+  > Manage Node.js projects and their module dependencies.
+  > More information: <https://pnpm.io/pnpm-cli>.
+
+  - Create a `package.json` file:
+
+  `pnpm init`
+
+  - Download all the packages listed as dependencies in `package.json`:
+
+  `pnpm {{[i|install]}}`
+
+  - Download a specific version of a package and add it to the list of dependencies in `package.json`:
+
+  `pnpm add {{module_name}}@{{version}}`
+
+  - Download a package and add it to the list of dev dependencies in `package.json`:
+
+  `pnpm add {{module_name}} {{[-D|--save-dev]}}`
+
+  - Download a package and install it globally:
+
+  `pnpm add {{module_name}} {{[-g|--global]}}`
+
+  - Uninstall a package and remove it from the list of dependencies in `package.json`:
+
+  `pnpm {{[rm|remove]}} {{module_name}}`
+
+  - Print a tree of locally installed modules:
+
+  `pnpm {{[ls|list]}}`
+
+  - List top-level globally installed modules:
+
+  `pnpm {{[ls|list]}} {{[-g|--global]}} --depth {{0}}`
